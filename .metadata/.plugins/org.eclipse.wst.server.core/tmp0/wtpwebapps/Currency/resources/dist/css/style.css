@@ -1,0 +1,271 @@
+[genuitec-file-id="wc1-383"],[genuitec-lp-path="/Currency/src/main/webapp/resources/dist/css/style.css"],[genuitec-lp-enabled=false]{
+  /* for codelive */
+}
+
+body{ font-family: Helvetica, Arial, sans-serif;}
+
+.dataTable_wrapper{    width: 941px;
+    overflow-x: scroll;
+}
+
+.navbar-static-top {
+    background: #DC5E12 url(top1bg.gif);
+}
+
+.sidebar-nav {
+    background-color: #053c6d;
+}
+
+.nav>li>a:focus, .nav>li>a:hover{ background-color:#DC5E12;}
+
+.sidebar ul li a.active {
+    background-color: #DC5E12;
+}
+
+.navbar-default .navbar-brand{ color:#fff;}
+
+i.fa.fa-caret-down {
+    color: #fff;
+}
+
+.dropdown-toggle i {
+    color: #fff;
+}
+
+.panel-primary>.panel-heading {
+    background-color: #DC5E12;
+    border-color: #DC5E12;
+}
+
+.panel-primary {
+    border-color: #DC5E12;
+}
+
+.panel-green .panel-heading {
+    border-color: #053c6d;
+    background-color: #053c6d;
+}
+
+.panel-green {
+    border-color: #053c6d;
+}
+
+.panel-yellow .panel-heading {
+    border-color: #DC5E12;
+    background-color: #DC5E12;
+}
+
+.panel-yellow {
+    border-color: #DC5E12;
+}
+
+.panel-red .panel-heading {
+    border-color: #053c6d;
+    color: #fff;
+    background-color: #053c6d;
+}
+
+.panel-red {
+    border-color: #053c6d;
+}
+
+.nav>li>a{ color:#fff;}
+
+.panel-primary span.pull-left {
+    color: #DC5E12;
+}
+
+.panel-primary span.pull-right {
+    color: #DC5E12;
+}
+
+.panel-green span.pull-right {
+    color: #053C6D;
+}
+
+.panel-green span.pull-left {
+    color: #053C6D;
+}
+
+.panel-yellow span.pull-right {
+    color: #DC5E12;
+}
+
+.panel-yellow span.pull-left {
+    color: #DC5E12;
+}
+
+.panel-red span.pull-right {
+    color: #053C6D;
+}
+
+.panel-red span.pull-left {
+    color: #053C6D;
+}
+
+.logo img {
+    width: 75%;
+    margin-top: -10px;
+}
+
+.btn-xs.dropdown-toggle {
+    background: #DC5E12;
+    color: #fff;
+}
+
+.panel-default>.panel-heading {
+    color: #FFF;
+    background-color: #053C6D;
+    border-color: #053C6D;
+}
+
+.list-group i {
+    color: #DC5E12;
+}
+
+.btn-success {
+    color: #fff;
+    background-color: #053c6d;
+    border-color: #053c6d;
+}
+
+.panel-default>.panel-heading.signin {
+    color: #FFF;
+    background: #DC5E12 url(top1bg.gif);
+    border-color: #DC5E12;
+}
+
+.signin img {
+    max-width: 162px;
+}
+
+.btn-success:hover {
+    color: #fff;
+    background-color: #053c6d ;
+    border-color: #053c6d ;
+}
+
+
+.panel-heading ul li{ float:right; list-style:none;}
+
+.panel-heading ul li a {
+    color: #fff;
+}
+
+
+
+
+
+.dropdown-toggle {
+    background: #053c6d !important;
+}
+.panel-default > .panel-heading ul {
+    float: right;
+}
+.btn.btn-default {
+    background: #053c6d;
+    border-radius: 5p.x;
+    color: #fff;
+}
+.form-control.input-margin {
+    margin-bottom: 10px;
+}
+td.qr-button {
+    vertical-align: top;
+}
+.unproccessed-bundle {
+background:#9ACD32;	
+font-weight:bold;
+}
+.issuable-bundle {
+	background:#0000FF;
+	font-weight:bold;
+}
+.soiled-bundle {
+background:#FF0000;
+font-weight:bold;
+}
+
+.atm-bundle{
+	background:#FFFF00;
+	font-weight:bold;
+}
+
+.navbar-default .navbar-toggle .icon-bar {
+    background-color: #fff;
+}
+.navbar-default .navbar-toggle {
+    border-color: #fff !important;
+}
+.bins {
+    margin: 10px 0;
+}
+.bins .col-sm-1 {
+    margin: 5px 22px 15px 0;
+    padding: 5px;
+    text-align: center;
+    width:18%;
+}
+.bins .col-sm-1 a {
+    color: #000;
+}
+.col-sm-2.no-margin {
+    margin: 0 0 10px;
+    padding: 0;
+}
+.col-sm-2.no-margin input.form-control {
+    border-radius: 0;
+}
+.col-sm-2.no-margin .btn.btn-default {
+    border-radius: 0;
+    width:90%;
+}
+.bins .col-sm-4 {
+    padding: 0;
+}
+table.bundle-controling tr td {
+    display: inline-block;
+    margin: 5px;
+    text-align: center;
+    padding: 0 15px;
+    line-height: 49px;
+}
+table.bundle-controling tr td a {
+    color: #000;
+}
+
+
+.deno-value {
+    margin: 0 5px;
+}
+
+.deno-figure-select {
+	color:#999;
+	background:#fff;
+	width:120px;
+}
+.remove-padding {
+    padding: 0 !important;
+}
+.remove-padding td {
+    border-right: 1px solid;
+}
+.remove-padding td input {
+    border: 0 none;
+    width: 32px !important;
+}
+
+
+.form-group span {
+    margin-right: 15px;
+}
+
+.form-group span input {
+    margin-right: 5px;
+}
+label.error{ color:red;}
+
+/*chenges on header ()*/
+#headerRightsAction > li {float:left; margin-right: 10px;}
+#headerRightsAction #loggedInUser {color: #fff; margin-top: 15px;}
+

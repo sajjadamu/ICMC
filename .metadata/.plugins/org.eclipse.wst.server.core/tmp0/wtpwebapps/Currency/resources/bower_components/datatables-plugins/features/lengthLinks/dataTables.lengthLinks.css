@@ -1,0 +1,8 @@
+[genuitec-file-id="wc1-284"],[genuitec-lp-path="/Currency/src/main/webapp/resources/bower_components/datatables-plugins/features/lengthLinks/dataTables.lengthLinks.css"],[genuitec-lp-enabled=false]{
+  /* for codelive */
+}
+
+
+div.dataTables_length a.active {
+	color: black;
+}

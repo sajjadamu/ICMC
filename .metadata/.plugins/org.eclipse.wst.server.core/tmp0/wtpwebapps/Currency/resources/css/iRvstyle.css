@@ -1,0 +1,51 @@
+[genuitec-file-id="wc1-377"],[genuitec-lp-path="/Currency/src/main/webapp/resources/css/iRvstyle.css"],[genuitec-lp-enabled=false]{
+  /* for codelive */
+}
+
+
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+}
+body {
+	margin: 0;
+	padding: 0;
+	overflow: auto;
+	font-family: roboto;
+}
+.Outer_Cont {border:3px solid #ddd; padding:10px;}
+header {text-align:center; padding:10px; border:1px solid #ddd;}
+header h1 {font-size:28px; font-weight:700; font-style:italic; text-align:center;}
+header h1 > span {font-weight:300; margin-left:5px;}
+
+header h2, h3 {font-size:18px; padding-top:5px;}
+header h3 >input {border:0; border-bottom:1px solid #000; font-weight:normal; margin-left:10px;}
+
+.Date_Contnr {float:right; padding:20px; text-align:left; width:280px;}
+.Date_Contnr > table tr td h3 input{font-size:12px;}
+.main_contnr {border:1px solid #ddd; overflow:hidden; padding:10px;}
+.text {border:0; border-bottom:1px solid #000; margin-left:5px; width:75%;}
+.main_contnr p {margin:0; padding:10px 0;}
+.lable_Contnr {height:110px;}
+.lable_Contnr span {display:block;}
+.main_contnr > table {width:100%;}
+.table-bordered {text-align:center; margin-bottom:5px;}
+.space {margin-top:5px; clear:both; overflow:hidden;}
+.sackLock_Contnr {text-align:left; padding:10px 20px 0;}
+
+/*2nd*/
+.Header_logosec {padding-left:20%;}
+.Header_logosec>h1 {padding-bottom:10px;}
+.Header_logosec>h1, .Header_logosec>h2, .Header_logosec>h3 {text-align:left;}
+.align_left {text-align:left !important;}
+header > div:nth-child(2)>.align_left:nth-child(1) {padding-left:25px;}
+header p {text-align:left;}
+
+.head_Tbl {width:87%;margin:auto;}
+.head_Tbl tr td { text-align:left; padding:5px; 0}
+.head_Tbl tr td:nth-child(1) {width:32%;}
+.NoBorder tr td, th {border:none !important; padding:3px !important; text-align:center;}
+.header_Contr {border:none;}
+
+.bottom_Table {width:85%; margin:auto;}

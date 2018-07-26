@@ -1,0 +1,17 @@
+[genuitec-file-id="wc1-357"],[genuitec-lp-path="/Currency/src/main/webapp/resources/bower_components/morrisjs/examples/lib/example.css"],[genuitec-lp-enabled=false]{
+  /* for codelive */
+}
+
+body {
+  width: 800px;
+  margin: 0 auto;
+}
+#graph {
+  width: 800px;
+  height: 250px;
+  margin: 20px auto 0 auto;
+}
+pre {
+  height: 250px;
+  overflow: auto;
+}

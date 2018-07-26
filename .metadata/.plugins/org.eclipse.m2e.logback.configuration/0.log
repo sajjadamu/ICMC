@@ -1,0 +1,280 @@
+2018-03-27 11:04:37,588 [Worker-18] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.maven.ide.eclipse.wtp.WarLifecycleMapping lifecycle mapping for MavenProject: Currency:Currency:0.0.1-SNAPSHOT @ /home/indic/Documents/workspace_git27/Currency/pom.xml.
+2018-03-27 11:04:37,838 [Worker-18] WARN  o.e.m.c.i.embedder.EclipseLogger - The POM for com.oracle:ojdbc6:jar:11.2.0 is missing, no dependency information available
+2018-03-27 11:04:41,965 [Worker-18] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding source folder /Currency/src/main/java
+2018-03-27 11:04:41,971 [Worker-18] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding resource folder /Currency/src/main/resources
+2018-03-27 11:04:41,975 [Worker-18] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding source folder /Currency/src/test/java
+2018-03-27 11:04:56,333 [Worker-18] WARN  o.e.m.c.i.embedder.EclipseLogger - The POM for com.oracle:ojdbc6:jar:11.2.0 is missing, no dependency information available
+2018-03-27 11:04:57,261 [Worker-18] INFO  o.e.m.c.i.p.ProjectConfigurationManager - Imported and configured 1 project(s) in 25 sec
+2018-03-27 11:05:01,895 [Worker-15] INFO  o.e.m.i.discovery.MavenDiscovery - No lifecyle mapping found at jar:file:/tmp/RemoteBundleDiscoveryStrategy1032499382916000221.tmp/org.eclipse.m2e.discovery.oss_catalog_1.6.jar_8881956194611183716.jar!/lifecycle%2Forg.eclipse.m2e.discovery.lifecyclemapping.m2e-egit.xml
+2018-03-27 11:05:01,962 [Worker-15] WARN  o.e.m.i.discovery.MavenDiscovery - CatalogItem org.eclipse.m2e.discovery.lifecyclemapping.m2e-egit does not contain lifecycle mapping metadata
+2018-03-27 11:05:01,972 [Worker-15] INFO  o.e.m.i.discovery.MavenDiscovery - No lifecyle mapping found at jar:file:/tmp/RemoteBundleDiscoveryStrategy1032499382916000221.tmp/org.eclipse.m2e.discovery.oss_catalog_1.6.jar_8881956194611183716.jar!/lifecycle%2Forg.eclipse.m2e.discovery.lifecyclemapping.m2e-subversive.xml
+2018-03-27 11:05:01,973 [Worker-15] WARN  o.e.m.i.discovery.MavenDiscovery - CatalogItem org.eclipse.m2e.discovery.lifecyclemapping.m2e-subversive does not contain lifecycle mapping metadata
+2018-03-27 11:05:03,102 [Worker-15] WARN  o.e.m.c.i.embedder.EclipseLogger - The POM for com.oracle:ojdbc6:jar:11.2.0 is missing, no dependency information available
+2018-03-27 11:05:03,842 [Worker-15] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-03-27 11:05:04,059 [Worker-15] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 14 resources
+2018-03-27 11:05:04,227 [Worker-15] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-03-27 11:05:04,228 [Worker-15] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/indic/Documents/workspace_git27/Currency/src/test/resources
+2018-03-27 11:06:59,323 [Worker-2] INFO  o.e.m.c.i.p.ProjectConfigurationManager - Update started
+2018-03-27 11:07:00,958 [Worker-2] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.maven.ide.eclipse.wtp.WarLifecycleMapping lifecycle mapping for MavenProject: Currency:Currency:0.0.1-SNAPSHOT @ /home/indic/Documents/workspace_git27/Currency/pom.xml.
+2018-03-27 11:07:03,746 [Worker-2] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded https://repo.maven.apache.org/maven2/com/oracle/ojdbc6/11.2.0/ojdbc6-11.2.0.pom
+2018-03-27 11:07:03,749 [Worker-2] WARN  o.e.m.c.i.embedder.EclipseLogger - The POM for com.oracle:ojdbc6:jar:11.2.0 is missing, no dependency information available
+2018-03-27 11:07:05,692 [Worker-2] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded https://repo.maven.apache.org/maven2/com/oracle/ojdbc6/11.2.0/ojdbc6-11.2.0.jar
+2018-03-27 11:07:05,837 [Worker-2] WARN  o.e.m.c.i.embedder.EclipseLogger - The POM for com.oracle:ojdbc6:jar:11.2.0 is missing, no dependency information available
+2018-03-27 11:07:08,751 [Worker-2] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding source folder /Currency/src/main/java
+2018-03-27 11:07:08,751 [Worker-2] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding resource folder /Currency/src/main/resources
+2018-03-27 11:07:08,752 [Worker-2] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding source folder /Currency/src/test/java
+2018-03-27 11:07:11,984 [Worker-2] WARN  o.e.m.c.i.embedder.EclipseLogger - The POM for com.oracle:ojdbc6:jar:11.2.0 is missing, no dependency information available
+2018-03-27 11:07:12,584 [Worker-2] INFO  o.e.m.w.i.f.ResourceFilteringBuildParticipant - Cleaning filtered folder for Currency
+2018-03-27 11:07:12,610 [Worker-2] INFO  o.e.m.c.i.p.ProjectConfigurationManager - Update completed: 13 sec
+2018-03-27 11:07:15,703 [Worker-25] WARN  o.e.m.c.i.embedder.EclipseLogger - The POM for com.oracle:ojdbc6:jar:11.2.0 is missing, no dependency information available
+2018-03-27 11:07:16,098 [Worker-25] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-03-27 11:07:16,107 [Worker-25] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 14 resources
+2018-03-27 11:07:16,163 [Worker-25] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-03-27 11:07:16,164 [Worker-25] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/indic/Documents/workspace_git27/Currency/src/test/resources
+2018-03-27 11:07:16,165 [Worker-25] INFO  o.e.m.w.i.f.ResourceFilteringBuildParticipant - Changed resources require a complete clean of filtered resources of Currency
+2018-03-27 11:07:16,167 [Worker-25] INFO  o.e.m.w.i.f.ResourceFilteringBuildParticipant - Executing resource filtering for Currency
+2018-03-27 11:07:16,186 [Worker-25] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-03-27 11:07:45,174 [Worker-14] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-03-27 11:07:45,196 [Worker-14] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2018-03-27 11:07:45,200 [Worker-14] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-03-27 11:07:45,201 [Worker-14] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/indic/Documents/workspace_git27/Currency/src/test/resources
+2018-03-27 11:08:44,176 [Worker-7] INFO  o.e.m.c.i.p.ProjectConfigurationManager - Update started
+2018-03-27 11:08:44,873 [Worker-7] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.maven.ide.eclipse.wtp.WarLifecycleMapping lifecycle mapping for MavenProject: Currency:Currency:0.0.1-SNAPSHOT @ /home/indic/Documents/workspace_git27/Currency/pom.xml.
+2018-03-27 11:08:46,359 [Worker-7] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding source folder /Currency/src/main/java
+2018-03-27 11:08:46,360 [Worker-7] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding resource folder /Currency/src/main/resources
+2018-03-27 11:08:46,361 [Worker-7] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding source folder /Currency/src/test/java
+2018-03-27 11:08:48,813 [Worker-7] INFO  o.e.m.w.i.f.ResourceFilteringBuildParticipant - Cleaning filtered folder for Currency
+2018-03-27 11:08:48,841 [Worker-7] INFO  o.e.m.c.i.p.ProjectConfigurationManager - Update completed: 4 sec
+2018-03-27 11:08:56,631 [Worker-19] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-03-27 11:08:56,641 [Worker-19] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 14 resources
+2018-03-27 11:08:56,702 [Worker-19] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-03-27 11:08:56,703 [Worker-19] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/indic/Documents/workspace_git27/Currency/src/test/resources
+2018-03-27 11:08:56,704 [Worker-19] INFO  o.e.m.w.i.f.ResourceFilteringBuildParticipant - Changed resources require a complete clean of filtered resources of Currency
+2018-03-27 11:08:56,704 [Worker-19] INFO  o.e.m.w.i.f.ResourceFilteringBuildParticipant - Executing resource filtering for Currency
+2018-03-27 11:08:56,716 [Worker-19] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-03-27 11:10:27,465 [Worker-24] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-03-27 11:10:27,574 [Worker-24] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 14 resources
+2018-03-27 11:10:27,583 [Worker-24] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-03-27 11:10:27,583 [Worker-24] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/indic/Documents/workspace_git27/Currency/src/test/resources
+2018-03-27 11:11:38,006 [Worker-20] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-03-27 11:11:38,008 [Worker-20] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 14 resources
+2018-03-27 11:11:38,011 [Worker-20] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-03-27 11:11:38,012 [Worker-20] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/indic/Documents/workspace_git27/Currency/src/test/resources
+2018-03-27 11:12:16,346 [Worker-20] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-03-27 11:12:16,348 [Worker-20] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 14 resources
+2018-03-27 11:12:16,358 [Worker-20] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-03-27 11:12:16,359 [Worker-20] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/indic/Documents/workspace_git27/Currency/src/test/resources
+2018-03-27 11:12:57,909 [Worker-22] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-03-27 11:12:57,921 [Worker-22] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 14 resources
+2018-03-27 11:12:57,925 [Worker-22] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-03-27 11:12:57,926 [Worker-22] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/indic/Documents/workspace_git27/Currency/src/test/resources
+2018-03-27 11:14:43,804 [Worker-15] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-03-27 11:14:43,828 [Worker-15] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 0 resource
+2018-03-27 11:14:43,833 [Worker-15] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-03-27 11:14:43,834 [Worker-15] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/indic/Documents/workspace_git27/Currency/src/test/resources
+2018-03-27 11:14:56,786 [Worker-13] INFO  j.exodus.env.EnvironmentImpl - Exodus environment created: /home/indic/Documents/workspace_git27/.metadata/com.genuitec.eclipse.webclipse.livepreview/0/store
+2018-03-27 11:14:58,080 [Worker-13] INFO  j.exodus.env.EnvironmentImpl - Exodus environment created: /home/indic/Documents/workspace_git27/.metadata/com.genuitec.eclipse.webclipse.livepreview/1/store
+2018-03-27 11:15:07,806 [Worker-8] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-03-27 11:15:07,808 [Worker-8] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 14 resources
+2018-03-27 11:15:07,813 [Worker-8] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-03-27 11:15:07,814 [Worker-8] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/indic/Documents/workspace_git27/Currency/src/test/resources
+2018-03-27 11:16:50,699 [Worker-2] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-03-27 11:16:50,704 [Worker-2] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 14 resources
+2018-03-27 11:16:50,714 [Worker-2] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-03-27 11:16:50,715 [Worker-2] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/indic/Documents/workspace_git27/Currency/src/test/resources
+2018-03-27 11:17:58,294 [Worker-3] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-03-27 11:17:58,296 [Worker-3] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 14 resources
+2018-03-27 11:17:58,303 [Worker-3] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-03-27 11:17:58,304 [Worker-3] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/indic/Documents/workspace_git27/Currency/src/test/resources
+2018-03-27 11:18:04,007 [Worker-20] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-03-27 11:18:04,012 [Worker-20] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 14 resources
+2018-03-27 11:18:04,078 [Worker-20] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-03-27 11:18:04,079 [Worker-20] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/indic/Documents/workspace_git27/Currency/src/test/resources
+2018-03-27 11:18:05,337 [Worker-20] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-03-27 11:18:05,339 [Worker-20] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 14 resources
+2018-03-27 11:18:05,345 [Worker-20] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-03-27 11:18:05,346 [Worker-20] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/indic/Documents/workspace_git27/Currency/src/test/resources
+2018-03-27 11:18:06,566 [Worker-0] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-03-27 11:18:06,568 [Worker-0] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 14 resources
+2018-03-27 11:18:06,573 [Worker-0] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-03-27 11:18:06,574 [Worker-0] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/indic/Documents/workspace_git27/Currency/src/test/resources
+2018-03-27 11:18:07,716 [Worker-8] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-03-27 11:18:07,718 [Worker-8] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 14 resources
+2018-03-27 11:18:07,724 [Worker-8] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-03-27 11:18:07,725 [Worker-8] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/indic/Documents/workspace_git27/Currency/src/test/resources
+2018-03-27 11:18:08,865 [Worker-13] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-03-27 11:18:08,867 [Worker-13] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 14 resources
+2018-03-27 11:18:08,871 [Worker-13] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-03-27 11:18:08,872 [Worker-13] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/indic/Documents/workspace_git27/Currency/src/test/resources
+2018-03-27 11:18:09,992 [Worker-14] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-03-27 11:18:09,994 [Worker-14] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 14 resources
+2018-03-27 11:18:09,999 [Worker-14] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-03-27 11:18:09,999 [Worker-14] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/indic/Documents/workspace_git27/Currency/src/test/resources
+2018-03-27 11:18:11,150 [Worker-17] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-03-27 11:18:11,151 [Worker-17] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 14 resources
+2018-03-27 11:18:11,155 [Worker-17] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-03-27 11:18:11,156 [Worker-17] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/indic/Documents/workspace_git27/Currency/src/test/resources
+2018-03-27 11:18:12,271 [Worker-5] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-03-27 11:18:12,273 [Worker-5] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 14 resources
+2018-03-27 11:18:12,278 [Worker-5] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-03-27 11:18:12,278 [Worker-5] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/indic/Documents/workspace_git27/Currency/src/test/resources
+2018-03-27 11:18:13,522 [Worker-4] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-03-27 11:18:13,532 [Worker-4] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 14 resources
+2018-03-27 11:18:13,548 [Worker-4] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-03-27 11:18:13,548 [Worker-4] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/indic/Documents/workspace_git27/Currency/src/test/resources
+2018-03-27 11:18:17,616 [Worker-2] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-03-27 11:18:17,618 [Worker-2] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 14 resources
+2018-03-27 11:18:17,674 [Worker-2] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-03-27 11:18:17,675 [Worker-2] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/indic/Documents/workspace_git27/Currency/src/test/resources
+2018-03-27 11:19:52,789 [Worker-4] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-03-27 11:19:52,790 [Worker-4] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 14 resources
+2018-03-27 11:19:52,793 [Worker-4] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-03-27 11:19:52,793 [Worker-4] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/indic/Documents/workspace_git27/Currency/src/test/resources
+2018-03-27 11:20:53,007 [Worker-3] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-03-27 11:20:53,009 [Worker-3] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 14 resources
+2018-03-27 11:20:53,011 [Worker-3] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-03-27 11:20:53,013 [Worker-3] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/indic/Documents/workspace_git27/Currency/src/test/resources
+2018-03-27 11:21:38,290 [Worker-6] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-03-27 11:21:38,293 [Worker-6] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 14 resources
+2018-03-27 11:21:38,295 [Worker-6] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-03-27 11:21:38,296 [Worker-6] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/indic/Documents/workspace_git27/Currency/src/test/resources
+2018-03-27 11:22:16,913 [Worker-6] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-03-27 11:22:16,915 [Worker-6] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 14 resources
+2018-03-27 11:22:16,917 [Worker-6] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-03-27 11:22:16,918 [Worker-6] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/indic/Documents/workspace_git27/Currency/src/test/resources
+2018-03-27 11:23:12,904 [Worker-20] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-03-27 11:23:12,906 [Worker-20] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 14 resources
+2018-03-27 11:23:12,910 [Worker-20] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-03-27 11:23:12,910 [Worker-20] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/indic/Documents/workspace_git27/Currency/src/test/resources
+2018-03-27 11:23:16,200 [Worker-6] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-03-27 11:23:16,204 [Worker-6] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 14 resources
+2018-03-27 11:23:16,206 [Worker-6] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-03-27 11:23:16,207 [Worker-6] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/indic/Documents/workspace_git27/Currency/src/test/resources
+2018-03-27 11:24:03,253 [Worker-24] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-03-27 11:24:03,255 [Worker-24] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 14 resources
+2018-03-27 11:24:03,257 [Worker-24] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-03-27 11:24:03,258 [Worker-24] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/indic/Documents/workspace_git27/Currency/src/test/resources
+2018-03-27 11:24:27,312 [Worker-22] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-03-27 11:24:27,316 [Worker-22] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 14 resources
+2018-03-27 11:24:27,321 [Worker-22] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-03-27 11:24:27,322 [Worker-22] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/indic/Documents/workspace_git27/Currency/src/test/resources
+2018-03-27 11:25:52,271 [Worker-22] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-03-27 11:25:52,272 [Worker-22] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 14 resources
+2018-03-27 11:25:52,281 [Worker-22] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-03-27 11:25:52,282 [Worker-22] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/indic/Documents/workspace_git27/Currency/src/test/resources
+2018-03-27 11:25:53,384 [Worker-4] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-03-27 11:25:53,385 [Worker-4] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 14 resources
+2018-03-27 11:25:53,388 [Worker-4] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-03-27 11:25:53,389 [Worker-4] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/indic/Documents/workspace_git27/Currency/src/test/resources
+2018-03-27 11:27:14,952 [Worker-14] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-03-27 11:27:14,965 [Worker-14] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 14 resources
+2018-03-27 11:27:14,970 [Worker-14] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-03-27 11:27:14,970 [Worker-14] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/indic/Documents/workspace_git27/Currency/src/test/resources
+2018-03-27 11:27:31,859 [Worker-17] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-03-27 11:27:31,860 [Worker-17] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 14 resources
+2018-03-27 11:27:31,864 [Worker-17] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-03-27 11:27:31,864 [Worker-17] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/indic/Documents/workspace_git27/Currency/src/test/resources
+2018-03-27 11:27:59,543 [Worker-4] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-03-27 11:27:59,545 [Worker-4] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 14 resources
+2018-03-27 11:27:59,547 [Worker-4] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-03-27 11:27:59,548 [Worker-4] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/indic/Documents/workspace_git27/Currency/src/test/resources
+2018-03-27 11:28:27,012 [Worker-5] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-03-27 11:28:27,014 [Worker-5] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 14 resources
+2018-03-27 11:28:27,016 [Worker-5] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-03-27 11:28:27,016 [Worker-5] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/indic/Documents/workspace_git27/Currency/src/test/resources
+2018-03-27 11:28:42,986 [Worker-10] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-03-27 11:28:42,987 [Worker-10] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 14 resources
+2018-03-27 11:28:42,989 [Worker-10] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-03-27 11:28:42,990 [Worker-10] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/indic/Documents/workspace_git27/Currency/src/test/resources
+2018-03-27 11:28:47,180 [Worker-14] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-03-27 11:28:47,182 [Worker-14] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 14 resources
+2018-03-27 11:28:47,184 [Worker-14] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-03-27 11:28:47,185 [Worker-14] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/indic/Documents/workspace_git27/Currency/src/test/resources
+2018-03-27 11:31:05,324 [Worker-8] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-03-27 11:31:05,326 [Worker-8] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 14 resources
+2018-03-27 11:31:05,339 [Worker-8] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-03-27 11:31:05,339 [Worker-8] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/indic/Documents/workspace_git27/Currency/src/test/resources
+2018-03-27 11:32:53,489 [Worker-15] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-03-27 11:32:53,490 [Worker-15] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 14 resources
+2018-03-27 11:32:53,492 [Worker-15] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-03-27 11:32:53,493 [Worker-15] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/indic/Documents/workspace_git27/Currency/src/test/resources
+2018-03-27 11:32:54,600 [Worker-5] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-03-27 11:32:54,601 [Worker-5] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 14 resources
+2018-03-27 11:32:54,603 [Worker-5] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-03-27 11:32:54,604 [Worker-5] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/indic/Documents/workspace_git27/Currency/src/test/resources
+2018-03-27 11:33:16,842 [Worker-8] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-03-27 11:33:16,843 [Worker-8] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 14 resources
+2018-03-27 11:33:16,845 [Worker-8] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-03-27 11:33:16,846 [Worker-8] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/indic/Documents/workspace_git27/Currency/src/test/resources
+2018-03-27 11:33:17,954 [Worker-8] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-03-27 11:33:17,955 [Worker-8] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 14 resources
+2018-03-27 11:33:17,959 [Worker-8] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-03-27 11:33:17,970 [Worker-8] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/indic/Documents/workspace_git27/Currency/src/test/resources
+2018-03-27 11:33:20,177 [Worker-28] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-03-27 11:33:20,179 [Worker-28] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 14 resources
+2018-03-27 11:33:20,181 [Worker-28] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-03-27 11:33:20,182 [Worker-28] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/indic/Documents/workspace_git27/Currency/src/test/resources
+2018-03-27 11:36:08,633 [Worker-5] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-03-27 11:36:08,637 [Worker-5] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 14 resources
+2018-03-27 11:36:08,642 [Worker-5] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-03-27 11:36:08,642 [Worker-5] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/indic/Documents/workspace_git27/Currency/src/test/resources
+2018-03-27 11:36:09,694 [Worker-5] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-03-27 11:36:09,702 [Worker-5] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 14 resources
+2018-03-27 11:36:09,704 [Worker-5] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-03-27 11:36:09,704 [Worker-5] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/indic/Documents/workspace_git27/Currency/src/test/resources
+2018-03-27 11:37:43,453 [Worker-8] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-03-27 11:37:43,454 [Worker-8] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 14 resources
+2018-03-27 11:37:43,458 [Worker-8] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-03-27 11:37:43,458 [Worker-8] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/indic/Documents/workspace_git27/Currency/src/test/resources
+2018-03-27 11:37:44,536 [Worker-15] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-03-27 11:37:44,553 [Worker-15] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 14 resources
+2018-03-27 11:37:44,559 [Worker-15] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-03-27 11:37:44,560 [Worker-15] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/indic/Documents/workspace_git27/Currency/src/test/resources
+2018-03-27 11:38:22,559 [Worker-14] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-03-27 11:38:22,562 [Worker-14] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 14 resources
+2018-03-27 11:38:22,564 [Worker-14] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-03-27 11:38:22,564 [Worker-14] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/indic/Documents/workspace_git27/Currency/src/test/resources
+2018-03-27 11:39:56,683 [Worker-8] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-03-27 11:39:56,684 [Worker-8] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 14 resources
+2018-03-27 11:39:56,687 [Worker-8] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-03-27 11:39:56,687 [Worker-8] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/indic/Documents/workspace_git27/Currency/src/test/resources
+2018-03-27 11:39:57,786 [Worker-8] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-03-27 11:39:57,787 [Worker-8] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 14 resources
+2018-03-27 11:39:57,797 [Worker-8] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-03-27 11:39:57,797 [Worker-8] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/indic/Documents/workspace_git27/Currency/src/test/resources
+2018-03-27 11:41:00,457 [Worker-28] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-03-27 11:41:00,458 [Worker-28] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 14 resources
+2018-03-27 11:41:00,462 [Worker-28] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-03-27 11:41:00,462 [Worker-28] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/indic/Documents/workspace_git27/Currency/src/test/resources
+2018-03-27 11:41:01,535 [Worker-28] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-03-27 11:41:01,537 [Worker-28] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 14 resources
+2018-03-27 11:41:01,539 [Worker-28] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-03-27 11:41:01,539 [Worker-28] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/indic/Documents/workspace_git27/Currency/src/test/resources
+2018-03-27 11:47:08,214 [Worker-10] INFO  o.e.m.c.i.p.ProjectConfigurationManager - Update started
+2018-03-27 11:47:10,556 [Worker-10] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.maven.ide.eclipse.wtp.WarLifecycleMapping lifecycle mapping for MavenProject: Currency:Currency:0.0.1-SNAPSHOT @ /home/indic/Documents/workspace_git27/Currency/pom.xml.
+2018-03-27 11:47:14,842 [Worker-10] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding source folder /Currency/src/main/java
+2018-03-27 11:47:14,843 [Worker-10] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding resource folder /Currency/src/main/resources
+2018-03-27 11:47:14,843 [Worker-10] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding source folder /Currency/src/test/java
+2018-03-27 11:47:17,465 [Worker-10] INFO  o.e.m.w.i.f.ResourceFilteringBuildParticipant - Cleaning filtered folder for Currency
+2018-03-27 11:47:17,497 [Worker-10] INFO  o.e.m.c.i.p.ProjectConfigurationManager - Update completed: 9 sec
+2018-03-27 11:47:22,304 [Worker-45] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-03-27 11:47:22,322 [Worker-45] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 14 resources
+2018-03-27 11:47:22,387 [Worker-45] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-03-27 11:47:22,388 [Worker-45] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/indic/Documents/workspace_git27/Currency/src/test/resources
+2018-03-27 11:47:22,388 [Worker-45] INFO  o.e.m.w.i.f.ResourceFilteringBuildParticipant - Changed resources require a complete clean of filtered resources of Currency
+2018-03-27 11:47:22,388 [Worker-45] INFO  o.e.m.w.i.f.ResourceFilteringBuildParticipant - Executing resource filtering for Currency
+2018-03-27 11:47:22,474 [Worker-45] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-03-27 11:48:45,339 [Worker-32] INFO  o.e.m.c.i.p.ProjectConfigurationManager - Update started
+2018-03-27 11:48:45,988 [Worker-32] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.maven.ide.eclipse.wtp.WarLifecycleMapping lifecycle mapping for MavenProject: Currency:Currency:0.0.1-SNAPSHOT @ /home/indic/Documents/workspace_git27/Currency/pom.xml.
+2018-03-27 11:48:47,044 [Worker-32] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding source folder /Currency/src/main/java
+2018-03-27 11:48:47,044 [Worker-32] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding resource folder /Currency/src/main/resources
+2018-03-27 11:48:47,044 [Worker-32] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding source folder /Currency/src/test/java
+2018-03-27 11:48:48,944 [Worker-32] INFO  o.e.m.w.i.f.ResourceFilteringBuildParticipant - Cleaning filtered folder for Currency
+2018-03-27 11:48:48,967 [Worker-32] INFO  o.e.m.c.i.p.ProjectConfigurationManager - Update completed: 3 sec
+2018-03-27 11:48:56,838 [Worker-48] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-03-27 11:48:56,841 [Worker-48] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 14 resources
+2018-03-27 11:48:56,859 [Worker-48] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-03-27 11:48:56,864 [Worker-48] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/indic/Documents/workspace_git27/Currency/src/test/resources
+2018-03-27 11:48:56,865 [Worker-48] INFO  o.e.m.w.i.f.ResourceFilteringBuildParticipant - Changed resources require a complete clean of filtered resources of Currency
+2018-03-27 11:48:56,865 [Worker-48] INFO  o.e.m.w.i.f.ResourceFilteringBuildParticipant - Executing resource filtering for Currency
+2018-03-27 11:48:56,890 [Worker-48] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
