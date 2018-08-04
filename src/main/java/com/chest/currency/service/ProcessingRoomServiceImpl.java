@@ -844,9 +844,27 @@ public class ProcessingRoomServiceImpl implements ProcessingRoomService {
 	@Override
 	public List<BranchReceipt> getBinNumListForIndentFromBranchReceipt(Integer denomination, BigDecimal bundle,
 			BigInteger icmcId, CashSource cashSource, BinCategoryType binCategoryType) {
-		List<BranchReceipt> binFromBranchReceiptList = processingRoomJpaDao
-				.getBinNumListForIndentFromBranchReceipt(denomination, bundle, icmcId, cashSource, binCategoryType);
-		return binFromBranchReceiptList;
+		List<BranchReceipt> periorityBinList=new ArrayList<>(); 
+		
+		List<BranchReceipt> returnBinFromBranchReceiptList = processingRoomJpaDao
+				.getRetunBinListForIndentFromBranchReceipt(denomination, bundle, icmcId, cashSource, binCategoryType);
+		
+		List<BranchReceipt> branchUploadBinFromBranchReceiptList = processingRoomJpaDao
+				.getBranchUploadBinListForIndentFromBranchReceipt(denomination, bundle, icmcId, cashSource, binCategoryType);
+		
+		List<BranchReceipt> insertBinListFromBranchReceiptList = processingRoomJpaDao
+				.getInsertBinListForIndentFromBranchReceipt(denomination, bundle, icmcId, cashSource, binCategoryType);
+		
+		if(returnBinFromBranchReceiptList.size() !=0){
+		periorityBinList.addAll(returnBinFromBranchReceiptList);}
+		
+		if(branchUploadBinFromBranchReceiptList.size() !=0){
+			periorityBinList.addAll(branchUploadBinFromBranchReceiptList);}
+		
+		if(insertBinListFromBranchReceiptList.size() !=0){
+		periorityBinList.addAll(insertBinListFromBranchReceiptList);}
+		
+		return periorityBinList;
 	}
 
 	@Override

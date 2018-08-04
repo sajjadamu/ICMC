@@ -1198,7 +1198,7 @@ public class UtilityJpa {
 				indent.setPendingBundleRequest(br.getBundle());
 				indent.setInsertBy(user.getId());
 				indent.setUpdateBy(user.getId());
-				indent.setIcmcId(br.getIcmcId());
+				indent.setIcmcId(user.getIcmcId());
 				indent.setCashSource(br.getCashSource());
 				indent.setInsertTime(now);
 				indent.setUpdateTime(now);

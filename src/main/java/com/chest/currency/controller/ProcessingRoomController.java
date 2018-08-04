@@ -140,7 +140,7 @@ public class ProcessingRoomController {
 		List<Indent> eligibleIndentRequestList = new ArrayList<>();
 		List<BinTransaction> binTransactionList = new ArrayList<>();
 		List<BranchReceipt> branchReceiptList = new ArrayList<>();
-		List<BranchReceipt> filterBranchReceiptListByBtxn = new ArrayList<>();
+		//List<BranchReceipt> filterBranchReceiptListByBtxn = new ArrayList<>();
 
 		synchronized (icmcService.getSynchronizedIcmc(user)) {
 			indent.setInsertBy(user.getId());
@@ -169,19 +169,19 @@ public class ProcessingRoomController {
 					branchReceiptList = processingRoomService.getBinNumListForIndentFromBranchReceipt(
 							indent.getDenomination(), indent.getRequestBundle(), user.getIcmcId(),
 							indent.getCashSource(), indent.getBinCategoryType());
-					for (BinTransaction bcheckBin : txnList) {
+					
+					/*for (BinTransaction bcheckBin : txnList) {
 						for (BranchReceipt br : branchReceiptList) {
 							if (bcheckBin.getBinNumber().equals(br.getBin())) {
 								filterBranchReceiptListByBtxn.add(br);
 							}
 						}
-					}
+					}*/
 					eligibleIndentRequestList = UtilityJpa.getBinForBranchReceiptIndentRequest(txnList,
 							indent.getDenomination(), indent.getRequestBundle(), user, indent,
-							filterBranchReceiptListByBtxn);
+							branchReceiptList);
 					LOG.info("eligibleIndentRequestList txnList " + txnList);
-					LOG.info(
-							"eligibleIndentRequestList filterBranchReceiptListByBtxn " + filterBranchReceiptListByBtxn);
+					LOG.info("eligibleIndentRequestList filterBranchReceiptListByBtxn " + branchReceiptList);
 				} else if (indent.getCashSource() == CashSource.RBI
 						&& indent.getBinCategoryType() == BinCategoryType.BOX) {
 
@@ -197,15 +197,15 @@ public class ProcessingRoomController {
 						bundleForRequest);
 				if (moreBundleNeeded.compareTo(BigDecimal.ZERO) == 0) {
 					isAllSuccess = processingRoomService.insertIndentRequestAndUpdateBinTxAndBranchReceipt(
-							eligibleIndentRequestList, binTransactionList, filterBranchReceiptListByBtxn);
+							eligibleIndentRequestList, binTransactionList, branchReceiptList);
 					if (!isAllSuccess) {
 						throw new RuntimeException("Error while Indent Request Saving");
 					}
 				} else {
 					String message = "";
 					// String returnBundle = "";
-					if (!filterBranchReceiptListByBtxn.isEmpty()) {
-						for (BranchReceipt br : filterBranchReceiptListByBtxn) {
+					if (!branchReceiptList.isEmpty()) {
+						for (BranchReceipt br : branchReceiptList) {
 							message = message + br.getBundle().toPlainString() + ", ";
 							/*
 							 * if(br.getFilepath() !=null && br.getSasId()

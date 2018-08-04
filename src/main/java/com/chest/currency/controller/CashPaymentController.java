@@ -565,7 +565,7 @@ public class CashPaymentController {
 			diversionORV.setOtherStatus(OtherStatus.REQUESTED);
 			isAllSuccess = cashPaymentService.processDiversionORVAllocation(diversionORV, user);
 			if (!isAllSuccess) {
-				throw new RuntimeException("Error while saving Diversion And Diversion Allocation, Please try again");
+				throw new BaseGuiException("Error while saving Diversion And Diversion Allocation, Please try again");
 			}
 		}
 		return diversionORV;

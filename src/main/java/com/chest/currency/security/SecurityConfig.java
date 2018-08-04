@@ -55,11 +55,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	 * @throws Exception
 	 */
 
-	/*@Autowired
+	@Autowired
 	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
 		auth.authenticationProvider(authenticationProvider);
 		auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
-	}*/
+	}
 	
 	/**
 	 * LDAP Authentication
@@ -73,19 +73,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			.contextSource().ldif("classpath:testldif/test-server.ldif");
 	 */
 	
-	
+	/*
 	@Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
 
 		auth.authenticationProvider(aDLoginAuthenticationProvider);
 		
-         /*auth.ldapAuthentication()
+         auth.ldapAuthentication()
          .contextSource().url(ldapURL+"/dc="+ldapDomain)
           .and()   
             .userSearchBase("ou=people")
             .userSearchFilter("(uid={0})")
-           .ldapAuthoritiesPopulator(userAuthoritiesPopulator);*/
-    }
+           .ldapAuthoritiesPopulator(userAuthoritiesPopulator);
+    }*/
 
 	
 	@Override

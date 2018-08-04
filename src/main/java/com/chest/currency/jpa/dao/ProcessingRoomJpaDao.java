@@ -192,7 +192,16 @@ public interface ProcessingRoomJpaDao {
 
 	public List<BranchReceipt> getBinNumListForIndentFromBranchReceipt(Integer denomination, BigDecimal bundle,
 			BigInteger icmcId, CashSource cashSource, BinCategoryType binCategoryType);
-
+	
+	public List<BranchReceipt> getRetunBinListForIndentFromBranchReceipt(Integer denomination, BigDecimal bundle,
+			BigInteger icmcId, CashSource cashSource, BinCategoryType binCategoryType);
+	
+	public List<BranchReceipt> getBranchUploadBinListForIndentFromBranchReceipt(Integer denomination, BigDecimal bundle,
+			BigInteger icmcId, CashSource cashSource, BinCategoryType binCategoryType);
+	
+	public List<BranchReceipt> getInsertBinListForIndentFromBranchReceipt(Integer denomination, BigDecimal bundle,
+			BigInteger icmcId, CashSource cashSource, BinCategoryType binCategoryType);
+	
 	public boolean updateBranchReceipt(BranchReceipt br);
 	
 	public boolean updateBranchReceiptForSas(BranchReceipt br);

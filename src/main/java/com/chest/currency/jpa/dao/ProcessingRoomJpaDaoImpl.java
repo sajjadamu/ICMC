@@ -845,6 +845,7 @@ public class ProcessingRoomJpaDaoImpl implements ProcessingRoomJpaDao {
 		return jpaQuery;
 	}
 
+	@Override
 	public List<BranchReceipt> getBinNumListForIndentFromBranchReceipt(Integer denomination, BigDecimal bundle,
 			BigInteger icmcId, CashSource cashSource, BinCategoryType binCategoryType) {
 		JPAQuery jpaQuery = getFromQueryForIndentRequestFromBranchReceipt();
@@ -858,6 +859,58 @@ public class ProcessingRoomJpaDaoImpl implements ProcessingRoomJpaDao {
 		List<BranchReceipt> branchReceiptList = jpaQuery.list(QBranchReceipt.branchReceipt);
 		return branchReceiptList;
 	}
+	@Override
+	public List<BranchReceipt> getRetunBinListForIndentFromBranchReceipt(Integer denomination, BigDecimal bundle,
+			BigInteger icmcId, CashSource cashSource, BinCategoryType binCategoryType) {
+		JPAQuery jpaQuery = getFromQueryForIndentRequestFromBranchReceipt();
+		jpaQuery.where(QBranchReceipt.branchReceipt.icmcId.eq(icmcId)
+				.and(QBranchReceipt.branchReceipt.denomination.eq(denomination))
+				.and(QBranchReceipt.branchReceipt.cashSource.eq(cashSource))
+				.and(QBranchReceipt.branchReceipt.bundle.gt(0))
+				.and(QBranchReceipt.branchReceipt.currencyType.eq(CurrencyType.UNPROCESS))
+				.and(QBranchReceipt.branchReceipt.binCategoryType.eq(binCategoryType))
+				.and(QBranchReceipt.branchReceipt.status.eq(OtherStatus.RECEIVED))
+				.and(QBranchReceipt.branchReceipt.filepath.isNotNull())
+				.and(QBranchReceipt.branchReceipt.solId.isNull())
+				.and(QBranchReceipt.branchReceipt.branch.isNull())
+				.and(QBranchReceipt.branchReceipt.srNumber.isNull()));
+		jpaQuery.orderBy(QBranchReceipt.branchReceipt.insertTime.desc());
+		List<BranchReceipt> branchReceiptList = jpaQuery.list(QBranchReceipt.branchReceipt);
+		return branchReceiptList;
+	}
+	@Override
+	public List<BranchReceipt> getBranchUploadBinListForIndentFromBranchReceipt(Integer denomination, BigDecimal bundle,
+			BigInteger icmcId, CashSource cashSource, BinCategoryType binCategoryType) {
+		JPAQuery jpaQuery = getFromQueryForIndentRequestFromBranchReceipt();
+		jpaQuery.where(QBranchReceipt.branchReceipt.icmcId.eq(icmcId)
+				.and(QBranchReceipt.branchReceipt.denomination.eq(denomination))
+				.and(QBranchReceipt.branchReceipt.cashSource.eq(cashSource))
+				.and(QBranchReceipt.branchReceipt.bundle.gt(0))
+				.and(QBranchReceipt.branchReceipt.currencyType.eq(CurrencyType.UNPROCESS))
+				.and(QBranchReceipt.branchReceipt.binCategoryType.eq(binCategoryType))
+				.and(QBranchReceipt.branchReceipt.status.eq(OtherStatus.RECEIVED))
+				.and(QBranchReceipt.branchReceipt.solId.isNull())
+				.and(QBranchReceipt.branchReceipt.filepath.isNull()));
+		List<BranchReceipt> branchReceiptList = jpaQuery.list(QBranchReceipt.branchReceipt);
+		return branchReceiptList;
+	}
+	@Override
+	public List<BranchReceipt> getInsertBinListForIndentFromBranchReceipt(Integer denomination, BigDecimal bundle,
+			BigInteger icmcId, CashSource cashSource, BinCategoryType binCategoryType) {
+		JPAQuery jpaQuery = getFromQueryForIndentRequestFromBranchReceipt();
+		jpaQuery.where(QBranchReceipt.branchReceipt.icmcId.eq(icmcId)
+				.and(QBranchReceipt.branchReceipt.denomination.eq(denomination))
+				.and(QBranchReceipt.branchReceipt.cashSource.eq(cashSource))
+				.and(QBranchReceipt.branchReceipt.bundle.gt(0))
+				.and(QBranchReceipt.branchReceipt.currencyType.eq(CurrencyType.UNPROCESS))
+				.and(QBranchReceipt.branchReceipt.binCategoryType.eq(binCategoryType))
+				.and(QBranchReceipt.branchReceipt.status.eq(OtherStatus.RECEIVED))
+				.and(QBranchReceipt.branchReceipt.solId.isNotNull())
+				.and(QBranchReceipt.branchReceipt.filepath.isNotNull()));
+		List<BranchReceipt> branchReceiptList = jpaQuery.list(QBranchReceipt.branchReceipt);
+		return branchReceiptList;
+	}
+	
 
 	@Override
 	public boolean updateBranchReceipt(BranchReceipt br) {
