@@ -12,7 +12,6 @@ import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
@@ -38,9 +37,9 @@ import lombok.ToString;
 @EqualsAndHashCode(of = { "id" })
 @ToString
 public class Jurisdiction {
-	
+
 	@Id
-	//@GeneratedValue(strategy = GenerationType.AUTO)
+	// @GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "ID")
 	@GeneratedValue(generator = "JURISDICTION_SEQ")
 	@SequenceGenerator(name = "JURISDICTION_SEQ", sequenceName = "JURISDICTION_SEQ", allocationSize = 100)
@@ -71,7 +70,7 @@ public class Jurisdiction {
 	protected Integer pincode;
 
 	@Enumerated(EnumType.STRING)
-	@Column(name = "STATUS" )
+	@Column(name = "STATUS")
 	protected Status status;
 
 	@Basic

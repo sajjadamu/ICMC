@@ -50,36 +50,38 @@ import lombok.ToString;
 public class Process {
 
 	@Id
-	//@GeneratedValue(strategy = GenerationType.AUTO)
+	// @GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "ID")
 	@GeneratedValue(generator = "PROCESS_SEQ")
 	@SequenceGenerator(name = "PROCESS_SEQ", sequenceName = "PROCESS_SEQ", allocationSize = 100)
 	protected Long id;
-	
-	/*@Enumerated(EnumType.STRING)
-	@Column(name = "DENOMINATION")
-	protected DenominationType denomination;
-	
-	@Enumerated(EnumType.STRING)
-	@Column(name = "CURRENCY_TYPE")
-	protected String currencyType;*/
+
+	/*
+	 * @Enumerated(EnumType.STRING)
+	 * 
+	 * @Column(name = "DENOMINATION") protected DenominationType denomination;
+	 * 
+	 * @Enumerated(EnumType.STRING)
+	 * 
+	 * @Column(name = "CURRENCY_TYPE") protected String currencyType;
+	 */
 
 	@Basic
 	@Column(name = "DENOMINATION")
 	protected Integer denomination;
-	
+
 	@Enumerated(EnumType.STRING)
 	@Column(name = "CURRENCY_TYPE")
 	protected CurrencyType currencyType;
-	
+
 	@Enumerated(EnumType.STRING)
 	@Column(name = "CASH_SOURCE")
 	protected CashSource cashSource;
-	
+
 	@Basic
 	@Column(name = "BUNDLE")
 	protected BigDecimal bundle;
-	
+
 	@Basic
 	@Column(name = "TOTAL")
 	protected BigDecimal total;
@@ -87,19 +89,19 @@ public class Process {
 	@Basic
 	@Column(name = "FILEPATH")
 	protected String filepath;
-	
+
 	@Basic
 	@Column(name = "BIN_NUM")
 	protected String binNumber;
-	
+
 	@Basic
 	@Column(name = "STATUS")
 	protected int status;
-	
+
 	@Basic
 	@Column(name = "MACHINE_NO")
 	protected Integer machineNo;
-	
+
 	@Basic
 	@Column(name = "ICMC_ID")
 	protected BigInteger icmcId;
@@ -116,21 +118,21 @@ public class Process {
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "INSERT_TIME")
 	protected Calendar insertTime;
-	
+
 	@DateTimeFormat(pattern = DateTimePattern.yyyy_MM_dd_HH_mm_ss_SSS)
 	@Column(name = "UPDATE_TIME")
 	protected Calendar updateTime;
-	
+
 	@Enumerated(EnumType.STRING)
 	@Column(name = "PROCESSED_BY")
 	protected ProcessAction processAction;
-	
+
 	@Enumerated(EnumType.STRING)
 	@Column(name = "BIN_CATEGORY_TYPE")
 	protected BinCategoryType binCategoryType;
-	
+
 	@Basic
 	@Column(name = "MACHINE_ID")
 	protected long machineId;
-	
+
 }

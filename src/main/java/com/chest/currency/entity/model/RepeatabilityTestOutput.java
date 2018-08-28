@@ -34,43 +34,42 @@ import com.chest.currency.enums.DateTimePattern;
 @EqualsAndHashCode(of = { "id" })
 @ToString
 public class RepeatabilityTestOutput {
-	
+
 	@Id
-	//@GeneratedValue(strategy = GenerationType.AUTO)
+	// @GeneratedValue(strategy = GenerationType.AUTO)
 	@GeneratedValue(generator = "REPEATABILITY_TEST_OUTPUT_SEQ")
 	@SequenceGenerator(name = "REPEATABILITY_TEST_OUTPUT_SEQ", sequenceName = "REPEATABILITY_TEST_OUTPUT_SEQ", allocationSize = 100)
 	@Column(name = "ID")
 	protected Long id;
-	
+
 	@Basic
-	@Column(name="CURRENCY_TYPE")
+	@Column(name = "CURRENCY_TYPE")
 	protected String currencyType;
 
 	@Basic
-	@Column(name="MACHINE_NO")
+	@Column(name = "MACHINE_NO")
 	protected String machineNo;
-	
+
 	@Basic
-	@Column(name="DENOMINATION")
+	@Column(name = "DENOMINATION")
 	protected String denomination;
-	
+
 	@Basic
-	@Column(name="TYPEVALUE")
+	@Column(name = "TYPEVALUE")
 	protected String typeValue;
 
-	
 	@Basic
-	@Column(name="BUNDLE")
+	@Column(name = "BUNDLE")
 	protected String bundle;
-	
+
 	@Basic
-	@Column(name="TOTAL_VALUE")
+	@Column(name = "TOTAL_VALUE")
 	protected String totalValue;
-	
+
 	@Basic
-	@Column(name="BIN_NO")
+	@Column(name = "BIN_NO")
 	protected String binNo;
-	
+
 	@Basic
 	@Column(name = "ICMC_ID")
 	protected BigInteger icmcId;
@@ -87,7 +86,7 @@ public class RepeatabilityTestOutput {
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "INSERT_TIME")
 	protected Calendar insertTime;
-	
+
 	@DateTimeFormat(pattern = DateTimePattern.yyyy_MM_dd_HH_mm_ss_SSS)
 	@Column(name = "UPDATE_TIME")
 	protected Calendar updateTime;

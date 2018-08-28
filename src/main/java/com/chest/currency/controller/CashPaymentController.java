@@ -26,7 +26,6 @@ import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.transaction.Transactional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -45,7 +44,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import com.chest.currency.entity.model.BinMaster;
 import com.chest.currency.entity.model.BinRegister;
 import com.chest.currency.entity.model.BinTransaction;
 import com.chest.currency.entity.model.BranchReceipt;
@@ -54,12 +52,10 @@ import com.chest.currency.entity.model.CRA;
 import com.chest.currency.entity.model.CRAAccountDetail;
 import com.chest.currency.entity.model.CRAAllocation;
 import com.chest.currency.entity.model.CashReleased;
-import com.chest.currency.entity.model.CoinsSequence;
 import com.chest.currency.entity.model.DateRange;
 import com.chest.currency.entity.model.DiversionORV;
 import com.chest.currency.entity.model.DiversionORVAllocation;
 import com.chest.currency.entity.model.ForwardBundleForCRAPayment;
-import com.chest.currency.entity.model.Indent;
 import com.chest.currency.entity.model.ORV;
 import com.chest.currency.entity.model.ORVAllocation;
 import com.chest.currency.entity.model.OtherBank;
@@ -71,13 +67,11 @@ import com.chest.currency.entity.model.SoiledRemittance;
 import com.chest.currency.entity.model.SoiledRemittanceAllocation;
 import com.chest.currency.entity.model.User;
 import com.chest.currency.enums.BinCategoryType;
-import com.chest.currency.enums.BinStatus;
 import com.chest.currency.enums.CashSource;
 import com.chest.currency.enums.CashType;
 import com.chest.currency.enums.CurrencyType;
 import com.chest.currency.enums.DenominationType;
 import com.chest.currency.enums.OtherStatus;
-import com.chest.currency.enums.YesNo;
 import com.chest.currency.exception.BaseGuiException;
 import com.chest.currency.jpa.persistence.converter.ConvertNumberInWords;
 import com.chest.currency.jpa.persistence.converter.CurrencyFormatter;
@@ -366,7 +360,7 @@ public class CashPaymentController {
 				mutilatedList.add(soiledOrMutilated);
 			}
 		}
-		//map.put("records", preparedBoxList);
+		// map.put("records", preparedBoxList);
 		map.put("soiledList", soiledList);
 		map.put("mutilatedList", mutilatedList);
 		map.put("user", obj);
@@ -646,10 +640,14 @@ public class CashPaymentController {
 			@RequestParam BinCategoryType binCategoryType, HttpSession session) {
 		User user = (User) session.getAttribute("login");
 		LOG.info("binCategoryType " + binCategoryType);
-		List<BranchReceipt> shrinkBundle = cashPaymentService.getShrinkWrapBundleByDenomination(denomination,
-				user.getIcmcId(), binCategoryType);
+		/*
+		 * List<BranchReceipt> shrinkBundle =
+		 * cashPaymentService.getShrinkWrapBundleByDenomination(denomination,
+		 * user.getIcmcId(), binCategoryType);
+		 */
+		List<BranchReceipt> shrinkBundle = processingRoomService.getBinNumListForIndentFromBranchReceipt(denomination,
+				new BigDecimal(0), user.getIcmcId(), CashSource.BRANCH, binCategoryType);
 		return shrinkBundle;
-
 	}
 
 	@RequestMapping(value = "/orvBranchAllocation")
@@ -2778,11 +2776,6 @@ public class CashPaymentController {
 		return new ModelAndView("redirect:./SAS");
 	}
 
-	private Sas setId(Long id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 	@RequestMapping("/cancelDiversionORV")
 	public ModelAndView cancelDiversionORV(@RequestParam Long id, HttpSession session) {
 		User user = (User) session.getAttribute("login");
@@ -3423,10 +3416,7 @@ public class CashPaymentController {
 
 	@RequestMapping("/editDiversionORV")
 	public ModelAndView editDiversionReceipt(@RequestParam Long id, DiversionORV diversionORV, HttpSession session) {
-		User user = (User) session.getAttribute("login");
 		diversionORV = cashPaymentService.getDiversionORVById(id);
-		// List<DiversionORVAllocation>
-		// diversionAllocations=diversionORV.getDiversionAllocations();
 		int row = diversionORV.getDiversionAllocations().size();
 		ModelMap map = new ModelMap();
 		map.put("user", diversionORV);

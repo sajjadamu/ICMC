@@ -140,7 +140,8 @@ public class ProcessingRoomController {
 		List<Indent> eligibleIndentRequestList = new ArrayList<>();
 		List<BinTransaction> binTransactionList = new ArrayList<>();
 		List<BranchReceipt> branchReceiptList = new ArrayList<>();
-		//List<BranchReceipt> filterBranchReceiptListByBtxn = new ArrayList<>();
+		// List<BranchReceipt> filterBranchReceiptListByBtxn = new
+		// ArrayList<>();
 
 		synchronized (icmcService.getSynchronizedIcmc(user)) {
 			indent.setInsertBy(user.getId());
@@ -169,17 +170,15 @@ public class ProcessingRoomController {
 					branchReceiptList = processingRoomService.getBinNumListForIndentFromBranchReceipt(
 							indent.getDenomination(), indent.getRequestBundle(), user.getIcmcId(),
 							indent.getCashSource(), indent.getBinCategoryType());
-					
-					/*for (BinTransaction bcheckBin : txnList) {
-						for (BranchReceipt br : branchReceiptList) {
-							if (bcheckBin.getBinNumber().equals(br.getBin())) {
-								filterBranchReceiptListByBtxn.add(br);
-							}
-						}
-					}*/
+
+					/*
+					 * for (BinTransaction bcheckBin : txnList) { for
+					 * (BranchReceipt br : branchReceiptList) { if
+					 * (bcheckBin.getBinNumber().equals(br.getBin())) {
+					 * filterBranchReceiptListByBtxn.add(br); } } }
+					 */
 					eligibleIndentRequestList = UtilityJpa.getBinForBranchReceiptIndentRequest(txnList,
-							indent.getDenomination(), indent.getRequestBundle(), user, indent,
-							branchReceiptList);
+							indent.getDenomination(), indent.getRequestBundle(), user, indent, branchReceiptList);
 					LOG.info("eligibleIndentRequestList txnList " + txnList);
 					LOG.info("eligibleIndentRequestList filterBranchReceiptListByBtxn " + branchReceiptList);
 				} else if (indent.getCashSource() == CashSource.RBI
@@ -1038,10 +1037,7 @@ public class ProcessingRoomController {
 			redirectAttributes.addFlashAttribute("successMsg", "Key Set record has been updated successfully");
 
 		}
-		// return new
-		// ModelAndView("redirect:./viewKeySetDetail?custodianId="id);
 		return new ModelAndView("redirect:./viewDefineKeySet");
-		// return this.viewDefineKeySetDetail(custodian,user.getIcmcId());
 	}
 
 	@RequestMapping("/viewAssignVaultCustodian")
@@ -2104,11 +2100,7 @@ public class ProcessingRoomController {
 
 	@RequestMapping("/updateMutilatedIndentStatus")
 	public ModelAndView updateMutilatedFullValueStatus(@RequestParam(value = "id") Long id, HttpSession session) {
-		User user = (User) session.getAttribute("login");
 		boolean isAllSuccess = false;
-		// isAllSuccess =
-		// processingRoomService.processMutilatedIndentRequest(bin, bundle,
-		// user, id);
 		isAllSuccess = processingRoomService.processMutilatedRequest(id);
 		if (!isAllSuccess) {
 			throw new RuntimeException("Error while process Mutilated Full Value Request");
@@ -2339,7 +2331,7 @@ public class ProcessingRoomController {
 			cancelProcessedDataFromProcessingRoom = processingRoomService.cancelProcessedDataFromProcessingRoom(id,
 					bundleFromUI, denomination, binNumber, type, machineId, user, process);
 		} catch (Exception e) {
-			throw new BaseGuiException("Message "+e.getMessage());
+			throw new BaseGuiException(e.getMessage());
 		}
 		return cancelProcessedDataFromProcessingRoom;
 	}
@@ -2370,23 +2362,12 @@ public class ProcessingRoomController {
 		eDate.set(Calendar.MILLISECOND, 999);
 		List<MachineDowntimeUpdation> machineDowntimeList = machineService.getListmachineDownTime(user.getIcmcId(),
 				sDate, eDate);
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		List<Long> diffList = new ArrayList<Long>();
 		ModelMap map = new ModelMap();
 		for (MachineDowntimeUpdation mUpdation : machineDowntimeList) {
-			// Date machineDownDateTo =
-			// sdf.parse(mUpdation.getMachineDownDateTo().toString().split("
-			// ")[0]);
-			// Date machineDownDateFrom =
-			// sdf.parse(mUpdation.getMachineDownDateFrom().toString().split("
-			// ")[0]);
+
 			long diffDateToFrom = mUpdation.getMachineDownDateTo().getTime()
 					- mUpdation.getMachineDownDateFrom().getTime();
-			// long diffDateToFrom = machineDownDateTo.getTime() -
-			// machineDownDateFrom.getTime();
-
-			// d1 = formatObj.parse(newDeff.getPurchasedate().toString().split("
-			// ")[0]);
 			long diffSeconds = diffDateToFrom / 1000 % 60;
 			long diffMinutes = diffDateToFrom / (60 * 1000) % 60;
 			long diffHours = diffDateToFrom / (60 * 60 * 1000) % 24;

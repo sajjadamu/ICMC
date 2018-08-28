@@ -33,8 +33,7 @@ public class CRAAccountController {
 
 	@Autowired
 	CRAAccountService craAccountService;
-	
-	
+
 	@RequestMapping("/addCRAAccountDetail")
 	public ModelAndView AccountDetailsForm() {
 		ModelMap map = new ModelMap();
@@ -44,24 +43,23 @@ public class CRAAccountController {
 		map.put("record", icmcList);
 		return new ModelAndView("addCRAAccountDetail", map);
 	}
-	
-	
+
 	@RequestMapping("/saveCRAAccountDetail")
 	public ModelAndView saveCRAAccountDetail(@ModelAttribute("user") CRAAccountDetail craAccountDetail,
 			HttpSession session, RedirectAttributes redirectAttributes) {
-		
-		//Special Character Validation
-		
-				boolean vendorName = HtmlUtils.isHtml(craAccountDetail.getCraVendorName());
-				boolean mspName = HtmlUtils.isHtml(craAccountDetail.getMspName());
-				boolean accountNumber = HtmlUtils.isHtml(craAccountDetail.getAccountNumber());
-				if (vendorName == false || mspName == false || accountNumber == false) {
-					redirectAttributes.addFlashAttribute("successMsg", "Error : Special Character not Allowed");
-					return new ModelAndView("redirect:./addCRAAccountDetail");
-				}
-				
-				//End of Special Character Validation
-				
+
+		// Special Character Validation
+
+		boolean vendorName = HtmlUtils.isHtml(craAccountDetail.getCraVendorName());
+		boolean mspName = HtmlUtils.isHtml(craAccountDetail.getMspName());
+		boolean accountNumber = HtmlUtils.isHtml(craAccountDetail.getAccountNumber());
+		if (vendorName == false || mspName == false || accountNumber == false) {
+			redirectAttributes.addFlashAttribute("successMsg", "Error : Special Character not Allowed");
+			return new ModelAndView("redirect:./addCRAAccountDetail");
+		}
+
+		// End of Special Character Validation
+
 		User user = (User) session.getAttribute("login");
 		craAccountDetail.setInsertBy(user.getId());
 		craAccountDetail.setUpdateBy(user.getId());
@@ -72,18 +70,16 @@ public class CRAAccountController {
 		redirectAttributes.addFlashAttribute("successMsg", "CRA Account details inserted Successfully");
 		return new ModelAndView("redirect:./addCRAAccountDetail");
 	}
-	
-	
+
 	@RequestMapping("/viewCRAAccountDetail")
 	public ModelAndView viewCRAAccountDetail(HttpSession session) {
 		LOG.info("Going to fetch CRA Account Details");
 		List<CRAAccountDetail> craAccountDetailList = craAccountService.getCRAccountDetailList();
 		return new ModelAndView("viewCRAAccountDetail", "records", craAccountDetailList);
 	}
-	
-	
+
 	@RequestMapping("/editCRAAccountDetail")
-	 public ModelAndView editDSBAccountDetail(@RequestParam long id, CRAAccountDetail craAccountDetail) {
+	public ModelAndView editDSBAccountDetail(@RequestParam long id, CRAAccountDetail craAccountDetail) {
 		ModelMap model = new ModelMap();
 		craAccountDetail = craAccountService.getCRAAccountDetailById(id);
 		List<ICMC> icmcList = craAccountService.getICMCName();
@@ -91,13 +87,13 @@ public class CRAAccountController {
 		model.put("user", craAccountDetail);
 		return new ModelAndView("editCRAAccountDetail", model);
 	}
-	
+
 	@RequestMapping("/updateCRAAccountDetail")
 	public ModelAndView updateCRAAccountDetail(@ModelAttribute("user") CRAAccountDetail craAccount, HttpSession session,
 			RedirectAttributes redirectAttributes) {
-		
-		//Special Character Validation
-		
+
+		// Special Character Validation
+
 		boolean vendorName = HtmlUtils.isHtml(craAccount.getCraVendorName());
 		boolean mspName = HtmlUtils.isHtml(craAccount.getMspName());
 		boolean accountNumber = HtmlUtils.isHtml(craAccount.getAccountNumber());
@@ -105,8 +101,8 @@ public class CRAAccountController {
 			redirectAttributes.addFlashAttribute("updateMsg", "Error : Special Character not Allowed");
 			return new ModelAndView("redirect:./addCRAAccountDetail");
 		}
-		
-		//End of Special Character Validation
+
+		// End of Special Character Validation
 		User user = (User) session.getAttribute("login");
 		craAccount.setInsertBy(user.getId());
 		craAccount.setUpdateBy(user.getId());
@@ -117,5 +113,5 @@ public class CRAAccountController {
 		redirectAttributes.addFlashAttribute("updateMsg", "CRA Account Detail updated successfully");
 		return new ModelAndView("redirect:./viewCRAAccountDetail");
 	}
-	
+
 }

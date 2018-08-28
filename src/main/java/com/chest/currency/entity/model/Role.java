@@ -35,41 +35,41 @@ import com.chest.currency.enums.Status;
 @Table(name = "UI_ROLE")
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 @Data
-@EqualsAndHashCode(of = {"id"})
+@EqualsAndHashCode(of = { "id" })
 @ToString
 public class Role {
-	
+
 	@Id
 	@Column(name = "ID")
 	protected String id;
-	
+
 	@Enumerated(EnumType.STRING)
-	@Column(name = "ICMC_ACCESS" )
+	@Column(name = "ICMC_ACCESS")
 	protected IcmcAccess icmcAccess;
-	
+
 	@Enumerated(EnumType.STRING)
-	@Column(name = "STATUS" )
+	@Column(name = "STATUS")
 	protected Status status;
 
 	@Basic
-	@Column(name = "CREATED_BY" )
+	@Column(name = "CREATED_BY")
 	protected String createdBy;
-	
+
 	@Basic
-	@Column(name = "UPDATED_BY" )
+	@Column(name = "UPDATED_BY")
 	protected String updatedBy;
-	
-	@Temporal( TemporalType.TIMESTAMP )
-	@Column(name = "CREATED_DATETIME" )
+
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "CREATED_DATETIME")
 	protected Calendar createdDateTime;
-	
-	@Column(name = "UPDATED_DATETIME" )
+
+	@Column(name = "UPDATED_DATETIME")
 	protected Calendar updatedDateTime;
-	
+
 	@ElementCollection(fetch = FetchType.EAGER)
-	@CollectionTable( name = "UI_ROLE_PERMISSION", joinColumns = @JoinColumn (name = "ROLE_NAME"))
-	@Column(name = "FUNCTION_PERMISSION" )
+	@CollectionTable(name = "UI_ROLE_PERMISSION", joinColumns = @JoinColumn(name = "ROLE_NAME"))
+	@Column(name = "FUNCTION_PERMISSION")
 	@Enumerated(EnumType.STRING)
 	protected List<PermissionName> rolePermission;
-	
+
 }

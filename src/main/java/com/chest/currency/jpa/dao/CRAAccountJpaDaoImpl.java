@@ -9,8 +9,6 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
 import com.chest.currency.entity.model.CRAAccountDetail;
@@ -21,27 +19,23 @@ import com.chest.currency.enums.Status;
 import com.mysema.query.jpa.impl.JPAQuery;
 
 @Repository
-public class CRAAccountJpaDaoImpl implements CRAAccountJpaDao
-{
+public class CRAAccountJpaDaoImpl implements CRAAccountJpaDao {
 
-private static final Logger LOG = LoggerFactory.getLogger(CRAAccountJpaDaoImpl.class);
-	
 	@PersistenceContext
 	private EntityManager em;
-	
+
 	@Override
 	public boolean addCRAAccountDetails(CRAAccountDetail craAccountDetail) {
 		em.merge(craAccountDetail);
 		return true;
 	}
 
-	
 	private JPAQuery getFromQueryForCRAccountDetail() {
 		JPAQuery jpaQuery = new JPAQuery(em);
 		jpaQuery.from(QCRAAccountDetail.cRAAccountDetail);
 		return jpaQuery;
 	}
-	
+
 	@Override
 	public List<CRAAccountDetail> getCRAAccountDetailList() {
 		JPAQuery jpaQuery = getFromQueryForCRAccountDetail();
@@ -62,12 +56,11 @@ private static final Logger LOG = LoggerFactory.getLogger(CRAAccountJpaDaoImpl.c
 		List<ICMC> icmcList = jpaQuery.list(QICMC.iCMC);
 		return icmcList;
 	}
-	
-	
+
 	@Override
 	public CRAAccountDetail getCRAAccountDetailById(long id) {
 		return em.find(CRAAccountDetail.class, id);
-		}
+	}
 
 	@Override
 	public boolean updateCRAAccountDetail(CRAAccountDetail craAccountDetail) {

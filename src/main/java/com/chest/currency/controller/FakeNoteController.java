@@ -51,8 +51,8 @@ public class FakeNoteController {
 	}
 
 	@RequestMapping("/addFakeNote")
-	public ModelAndView addFakeNote(@ModelAttribute("user") FakeNote fakeNote, HttpSession session, 
-			@RequestParam MultipartFile file, HttpServletRequest request,RedirectAttributes redirectAttributes) {
+	public ModelAndView addFakeNote(@ModelAttribute("user") FakeNote fakeNote, HttpSession session,
+			@RequestParam MultipartFile file, HttpServletRequest request, RedirectAttributes redirectAttributes) {
 		User user = (User) session.getAttribute("login");
 		fakeNote.setInsertBy(user.getId());
 		fakeNote.setUpdateBy(user.getId());
@@ -127,7 +127,8 @@ public class FakeNoteController {
 	}
 
 	@RequestMapping("/updateFakeNote")
-	public ModelAndView updateFakeNote(@ModelAttribute("obj") FakeNote fakeNote, HttpSession session,RedirectAttributes redirectAttributes) {
+	public ModelAndView updateFakeNote(@ModelAttribute("obj") FakeNote fakeNote, HttpSession session,
+			RedirectAttributes redirectAttributes) {
 		User user = (User) session.getAttribute("login");
 		fakeNote.setUpdateBy(user.getId());
 		fakeNote.setInsertBy(user.getId());

@@ -109,15 +109,17 @@ public class BranchController {
 		branch.setInsertTime(now);
 		branch.setUpdateTime(now);
 
-		/*boolean solId = HtmlUtils.isHtml(branch.getSolId());
-		boolean branchname = HtmlUtils.isHtml(branch.getBranch());
-		boolean address = HtmlUtils.isHtml(branch.getAddress());
-		boolean city = HtmlUtils.isHtml(branch.getCity());
-		//boolean pinCode = HtmlUtils.isHtml(branch.getPincode().toString());
-		if (solId == false || branchname == false || address == false || city == false) {
-			redirectAttributes.addFlashAttribute("successMsg", "Error : Special Character Not Allowed");
-			return new ModelAndView("redirect:./viewBranch");
-		}*/
+		/*
+		 * boolean solId = HtmlUtils.isHtml(branch.getSolId()); boolean
+		 * branchname = HtmlUtils.isHtml(branch.getBranch()); boolean address =
+		 * HtmlUtils.isHtml(branch.getAddress()); boolean city =
+		 * HtmlUtils.isHtml(branch.getCity()); //boolean pinCode =
+		 * HtmlUtils.isHtml(branch.getPincode().toString()); if (solId == false
+		 * || branchname == false || address == false || city == false) {
+		 * redirectAttributes.addFlashAttribute("successMsg",
+		 * "Error : Special Character Not Allowed"); return new
+		 * ModelAndView("redirect:./viewBranch"); }
+		 */
 
 		this.setFields(branch);
 
@@ -178,37 +180,32 @@ public class BranchController {
 				redirectAttributes.addFlashAttribute("errorMsg", "Csv file is not of standard formate ");
 				return new ModelAndView("redirect:./addBranch");
 			}
-			
-			
-			
-List<Branch> listOFBranchName=branchService.getBranch();
-			
-			for(Branch branch2: listOFBranchName){
-				for(Branch bBranch22:branchRecords){
-					
-					if((branch2.getBranch()).equals(bBranch22.getBranch())){
-						
-						System.out.println("hhhhhhhhh  " +branch2.getBranch()+"       "+ bBranch22.getBranch());
-						
-						redirectAttributes.addFlashAttribute("errorMsg", "Csv file contains dublicate value of Branch ");
+
+			List<Branch> listOFBranchName = branchService.getBranch();
+
+			for (Branch branch2 : listOFBranchName) {
+				for (Branch bBranch22 : branchRecords) {
+
+					if ((branch2.getBranch()).equals(bBranch22.getBranch())) {
+
+						System.out.println("hhhhhhhhh  " + branch2.getBranch() + "       " + bBranch22.getBranch());
+
+						redirectAttributes.addFlashAttribute("errorMsg",
+								"Csv file contains dublicate value of Branch ");
 						return new ModelAndView("redirect:./addBranch");
-						
+
 					}
 				}
 			}
-			try
-			{
-			branchService.uploadBranch(branchRecords, branch);
-			}
-			catch(Exception e)
-			{
+			try {
+				branchService.uploadBranch(branchRecords, branch);
+			} catch (Exception e) {
 				e.printStackTrace();
 				redirectAttributes.addFlashAttribute("errorMsg", "Csv file contains dublicate branch name ");
 				return new ModelAndView("redirect:./addBranch");
 			}
-			
-			
-			//branchService.uploadBranch(branchRecords, branch);
+
+			// branchService.uploadBranch(branchRecords, branch);
 			redirectAttributes.addFlashAttribute("successMsg", "List of branches have been uploaded successfully");
 			return new ModelAndView("redirect:./viewBranch");
 		}
@@ -257,12 +254,10 @@ List<Branch> listOFBranchName=branchService.getBranch();
 		boolean pinCode = HtmlUtils.isHtml(branch.getPincode().toString());
 		if (solId == false || address == false || city == false || pinCode == false) {
 			redirectAttributes.addFlashAttribute("successMsg", "Error : Special Character Not Allowed");
-		}
-		else 
-		{
-		setFields(branch);
-		branchService.updateBranch(branch);
-		redirectAttributes.addFlashAttribute("updateMsg", "Branch record has been updated successfully");
+		} else {
+			setFields(branch);
+			branchService.updateBranch(branch);
+			redirectAttributes.addFlashAttribute("updateMsg", "Branch record has been updated successfully");
 		}
 		return new ModelAndView("redirect:./viewBranch");
 	}

@@ -26,26 +26,26 @@ import lombok.ToString;
 @Entity(name = "ZoneMaster")
 @Table(name = "ZONE_MASTER")
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-@EqualsAndHashCode(of = {"id"})
+@EqualsAndHashCode(of = { "id" })
 @Data
 @ToString
 public class ZoneMaster {
-	
+
 	@Id
-	//@GeneratedValue(strategy = GenerationType.AUTO)
+	// @GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "ID")
 	@GeneratedValue(generator = "ZONE_MASTER_SEQ")
 	@SequenceGenerator(name = "ZONE_MASTER_SEQ", sequenceName = "ZONE_MASTER_SEQ", allocationSize = 100)
 	protected Long id;
-	
+
 	@Enumerated(EnumType.STRING)
 	@Column(name = "ZONE")
 	protected Zone zone;
-	
+
 	@Basic
 	@Column(name = "REGION")
 	protected String region;
-	
+
 	@Transient
 	protected String icmcName;
 

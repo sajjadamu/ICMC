@@ -29,14 +29,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.chest.currency.entity.model.BinTransactionBOD;
 import com.chest.currency.entity.model.DateRange;
 import com.chest.currency.entity.model.DelegateRight;
 import com.chest.currency.entity.model.ICMC;
-import com.chest.currency.entity.model.Indent;
 import com.chest.currency.entity.model.PasswordReset;
 import com.chest.currency.entity.model.User;
-import com.chest.currency.enums.CashSource;
 import com.chest.currency.enums.IcmcAccess;
 import com.chest.currency.enums.Status;
 import com.chest.currency.service.ICMCService;
@@ -45,7 +42,6 @@ import com.chest.currency.service.UserAdministrationService;
 import com.chest.currency.service.UserService;
 import com.ibm.icu.text.DateFormat;
 import com.ibm.icu.text.SimpleDateFormat;
-import com.mysema.query.Tuple;
 
 @Controller
 public class UserLoginController {
@@ -115,162 +111,156 @@ public class UserLoginController {
 		String craMsg = "";
 		String processingOutPutPendingMsg = "";
 		String pendingMachineAloMsg = "";
-          LOG.info("user "+user);
-          LOG.info("user.getRole().getIcmcAccess() "+user.getRole().getIcmcAccess());
-          LOG.info("user.getRole().getIcmcAccess().equals(IcmcAccess.ICMC) "+user.getRole().getIcmcAccess().equals(IcmcAccess.ICMC));
+		LOG.info("user " + user);
+		LOG.info("user.getRole().getIcmcAccess() " + user.getRole().getIcmcAccess());
+		LOG.info("user.getRole().getIcmcAccess().equals(IcmcAccess.ICMC) "
+				+ user.getRole().getIcmcAccess().equals(IcmcAccess.ICMC));
 		if (user.getRole().getIcmcAccess().equals(IcmcAccess.ICMC)) {
-				if (user.getRole().getIcmcAccess().equals(IcmcAccess.ICMC)) {
-					//List<BinTransactionBOD> lastEOD= userAdministrationService.getLastEODData(user.getIcmcId());
-					dateBinTxn= userAdministrationService.getNotificationFromBinTransactionForEOD(user.getIcmcId());
-			    	LOG.info("Calendar date from binTransaction "+dateBinTxn);
-                    if(dateBinTxn !=null){
-                    	LOG.info("Calendar date from binTransaction "+dateBinTxn.getTime());
-						map.put("binTransactionDate", dateBinTxn.getTime());
-						
-						Calendar sDate= (Calendar) dateBinTxn.clone();
-						Calendar eDate= (Calendar) dateBinTxn.clone();
-						sDate.set(Calendar.HOUR, 0);
-						sDate.set(Calendar.HOUR_OF_DAY, 0);
-						sDate.set(Calendar.MINUTE, 0);
-						sDate.set(Calendar.SECOND, 0);
-						sDate.set(Calendar.MILLISECOND, 0);
-						
-						eDate.set(Calendar.HOUR, 24);
-						eDate.set(Calendar.HOUR_OF_DAY, 23);
-						eDate.set(Calendar.MINUTE, 59);
-						eDate.set(Calendar.SECOND, 59);
-						eDate.set(Calendar.MILLISECOND, 999);
-						LOG.info("dateBinTxn.getTime() "+dateBinTxn.getTime());
-						
-						LOG.info("sDate from binTransaction "+sDate.getTime());
-						LOG.info("eDate from binTransaction "+eDate.getTime());
-						 dateEOD= userAdministrationService.getNotificationFromBinTransactionBODForEOD(user.getIcmcId(), sDate, eDate);
-                       if(dateEOD !=null){ map.put("binTransactioEODDate", dateEOD.getTime());
-                       }
-                       else {map.put("binTransactioEODDate", dateEOD);
-                       }
-						LOG.info("dateEOD Controller from binTransaction "+dateEOD);
-                         }
-			
-						// Notification pending bundle
-					msgSAS = userAdministrationService.getNotificationFromSASAllocation(user.getIcmcId());
-					msgIndent = userAdministrationService.getNotificationFromIndent(user.getIcmcId());
-					msgOtherBank = userAdministrationService.getNotificationFromOtherBankAllocation(user.getIcmcId());
-					msgSoiled = userAdministrationService.getNotificationFromSoiledAllocation(user.getIcmcId());
-					msgDiversion = userAdministrationService.getNotificationFromDiversion(user.getIcmcId());
-					craMsg = userAdministrationService.getNotificationFromCRA(user.getIcmcId());
-                    
-					
-					// Machine Allocation Pending
-					//String pendingMachineAlo = userAdministrationService.getNotificationForMachineAllocation(user.getIcmcId());
-					
-					//Processing Output Pending
-					//String processingOutPutPending = userAdministrationService.getNotificationForProcessingOutPut(user.getIcmcId());
+			if (user.getRole().getIcmcAccess().equals(IcmcAccess.ICMC)) {
+				// List<BinTransactionBOD> lastEOD=
+				// userAdministrationService.getLastEODData(user.getIcmcId());
+				dateBinTxn = userAdministrationService.getNotificationFromBinTransactionForEOD(user.getIcmcId());
+				LOG.info("Calendar date from binTransaction " + dateBinTxn);
+				if (dateBinTxn != null) {
+					LOG.info("Calendar date from binTransaction " + dateBinTxn.getTime());
+					map.put("binTransactionDate", dateBinTxn.getTime());
 
-			dateBinTxn = userAdministrationService.getNotificationFromBinTransactionForEOD(user.getIcmcId());
-			LOG.info("Calendar date from binTransaction " + dateBinTxn);
-			if (dateBinTxn != null) {
-				map.put("binTransactionDate", dateBinTxn.getTime());
+					Calendar sDate = (Calendar) dateBinTxn.clone();
+					Calendar eDate = (Calendar) dateBinTxn.clone();
+					sDate.set(Calendar.HOUR, 0);
+					sDate.set(Calendar.HOUR_OF_DAY, 0);
+					sDate.set(Calendar.MINUTE, 0);
+					sDate.set(Calendar.SECOND, 0);
+					sDate.set(Calendar.MILLISECOND, 0);
 
-				Calendar sDate = (Calendar) dateBinTxn.clone();
-				Calendar eDate = (Calendar) dateBinTxn.clone();
-				sDate.set(Calendar.HOUR, 0);
-				sDate.set(Calendar.HOUR_OF_DAY, 0);
-				sDate.set(Calendar.MINUTE, 0);
-				sDate.set(Calendar.SECOND, 0);
-				sDate.set(Calendar.MILLISECOND, 0);
+					eDate.set(Calendar.HOUR, 24);
+					eDate.set(Calendar.HOUR_OF_DAY, 23);
+					eDate.set(Calendar.MINUTE, 59);
+					eDate.set(Calendar.SECOND, 59);
+					eDate.set(Calendar.MILLISECOND, 999);
+					LOG.info("dateBinTxn.getTime() " + dateBinTxn.getTime());
 
-				eDate.set(Calendar.HOUR, 24);
-				eDate.set(Calendar.HOUR_OF_DAY, 23);
-				eDate.set(Calendar.MINUTE, 59);
-				eDate.set(Calendar.SECOND, 59);
-				eDate.set(Calendar.MILLISECOND, 999);
-				LOG.info("dateBinTxn.getTime() " + dateBinTxn.getTime());
-
-				LOG.info("sDate from binTransaction " + sDate.getTime());
-				LOG.info("eDate from binTransaction " + eDate.getTime());
-				dateEOD = userAdministrationService.getNotificationFromBinTransactionBODForEOD(user.getIcmcId(), sDate,
-						eDate);
-				if (dateEOD != null) {
-					map.put("binTransactioEODDate", dateEOD.getTime());
-				} else {
-					map.put("binTransactioEODDate", dateEOD);
+					LOG.info("sDate from binTransaction " + sDate.getTime());
+					LOG.info("eDate from binTransaction " + eDate.getTime());
+					dateEOD = userAdministrationService.getNotificationFromBinTransactionBODForEOD(user.getIcmcId(),
+							sDate, eDate);
+					if (dateEOD != null) {
+						map.put("binTransactioEODDate", dateEOD.getTime());
+					} else {
+						map.put("binTransactioEODDate", dateEOD);
+					}
+					LOG.info("dateEOD Controller from binTransaction " + dateEOD);
 				}
-				LOG.info("dateEOD Controller from binTransaction " + dateEOD);
+
+				// Notification pending bundle
+				msgSAS = userAdministrationService.getNotificationFromSASAllocation(user.getIcmcId());
+				msgIndent = userAdministrationService.getNotificationFromIndent(user.getIcmcId());
+				msgOtherBank = userAdministrationService.getNotificationFromOtherBankAllocation(user.getIcmcId());
+				msgSoiled = userAdministrationService.getNotificationFromSoiledAllocation(user.getIcmcId());
+				msgDiversion = userAdministrationService.getNotificationFromDiversion(user.getIcmcId());
+				craMsg = userAdministrationService.getNotificationFromCRA(user.getIcmcId());
+
+				// Machine Allocation Pending
+				// String pendingMachineAlo =
+				// userAdministrationService.getNotificationForMachineAllocation(user.getIcmcId());
+
+				// Processing Output Pending
+				// String processingOutPutPending =
+				// userAdministrationService.getNotificationForProcessingOutPut(user.getIcmcId());
+
+				dateBinTxn = userAdministrationService.getNotificationFromBinTransactionForEOD(user.getIcmcId());
+				LOG.info("Calendar date from binTransaction " + dateBinTxn);
+				if (dateBinTxn != null) {
+					map.put("binTransactionDate", dateBinTxn.getTime());
+
+					Calendar sDate = (Calendar) dateBinTxn.clone();
+					Calendar eDate = (Calendar) dateBinTxn.clone();
+					sDate.set(Calendar.HOUR, 0);
+					sDate.set(Calendar.HOUR_OF_DAY, 0);
+					sDate.set(Calendar.MINUTE, 0);
+					sDate.set(Calendar.SECOND, 0);
+					sDate.set(Calendar.MILLISECOND, 0);
+
+					eDate.set(Calendar.HOUR, 24);
+					eDate.set(Calendar.HOUR_OF_DAY, 23);
+					eDate.set(Calendar.MINUTE, 59);
+					eDate.set(Calendar.SECOND, 59);
+					eDate.set(Calendar.MILLISECOND, 999);
+					LOG.info("dateBinTxn.getTime() " + dateBinTxn.getTime());
+
+					LOG.info("sDate from binTransaction " + sDate.getTime());
+					LOG.info("eDate from binTransaction " + eDate.getTime());
+					dateEOD = userAdministrationService.getNotificationFromBinTransactionBODForEOD(user.getIcmcId(),
+							sDate, eDate);
+					if (dateEOD != null) {
+						map.put("binTransactioEODDate", dateEOD.getTime());
+					} else {
+						map.put("binTransactioEODDate", dateEOD);
+					}
+					LOG.info("dateEOD Controller from binTransaction " + dateEOD);
+				}
+
+				// Notification pending bundle
+				msgSAS = userAdministrationService.getNotificationFromSASAllocation(user.getIcmcId());
+				msgIndent = userAdministrationService.getNotificationFromIndent(user.getIcmcId());
+				msgOtherBank = userAdministrationService.getNotificationFromOtherBankAllocation(user.getIcmcId());
+				msgSoiled = userAdministrationService.getNotificationFromSoiledAllocation(user.getIcmcId());
+				msgDiversion = userAdministrationService.getNotificationFromDiversion(user.getIcmcId());
+				craMsg = userAdministrationService.getNotificationFromCRA(user.getIcmcId());
+
+				// Machine Allocation Pending
+				String pendingMachineAlo = userAdministrationService
+						.getNotificationForMachineAllocation(user.getIcmcId());
+
+				// Processing Output Pending
+				String processingOutPutPending = userAdministrationService
+						.getNotificationForProcessingOutPut(user.getIcmcId());
+
+				if (pendingMachineAlo != null) {
+					pendingMachineAloMsg = "Pending In Machine Allocation";
+				}
+				if (processingOutPutPending != null) {
+					processingOutPutPendingMsg = "Pending in processing Output";
+
+				}
+
+				if (msgSAS != null) {
+					SASmsg = "Branch Indent Request.";
+				}
+
+				if (msgIndent != null) {
+					indentMsg = "Processing Room Indent Request.";
+				}
+
+				if (msgOtherBank != null) {
+					otherBankMsg = "Other Bank Indent Request.";
+				}
+
+				if (msgSoiled != null) {
+					soiledMsg = "Soiled Indent Request.";
+				}
+
+				if (msgDiversion != null) {
+					diversionMsg = "Diversion Indent";
+				}
+
+				if (craMsg != null) {
+					craMsg = "CRA Indent Request";
+				}
 			}
-
-			// Notification pending bundle
-			msgSAS = userAdministrationService.getNotificationFromSASAllocation(user.getIcmcId());
-			msgIndent = userAdministrationService.getNotificationFromIndent(user.getIcmcId());
-			msgOtherBank = userAdministrationService.getNotificationFromOtherBankAllocation(user.getIcmcId());
-			msgSoiled = userAdministrationService.getNotificationFromSoiledAllocation(user.getIcmcId());
-			msgDiversion = userAdministrationService.getNotificationFromDiversion(user.getIcmcId());
-			craMsg = userAdministrationService.getNotificationFromCRA(user.getIcmcId());
-
-			// Machine Allocation Pending
-			String pendingMachineAlo = userAdministrationService.getNotificationForMachineAllocation(user.getIcmcId());
-
-			// Processing Output Pending
-			String processingOutPutPending = userAdministrationService
-					.getNotificationForProcessingOutPut(user.getIcmcId());
-
-			if (pendingMachineAlo != null) {
-				pendingMachineAloMsg = "Pending In Machine Allocation";
-			}
-			if (processingOutPutPending != null) {
-				processingOutPutPendingMsg = "Pending in processing Output";
-
-			}
-
-			if (msgSAS != null) {
-				SASmsg = "Branch Indent Request.";
-			}
-
-			if (msgIndent != null) {
-				indentMsg = "Processing Room Indent Request.";
-			}
-
-			if (msgOtherBank != null) {
-				otherBankMsg = "Other Bank Indent Request.";
-			}
-
-			if (msgSoiled != null) {
-				soiledMsg = "Soiled Indent Request.";
-			}
-
-			if (msgDiversion != null) {
-				diversionMsg = "Diversion Indent";
-			}
-
-			if (craMsg != null) {
-				craMsg = "CRA Indent Request";
-			}
-		}
-		// Close NOTIFICATION CODE
-		// map.put("userName", userName);
-		map.put("SASmsg", SASmsg);
-		map.put("soiledMsg", soiledMsg);
-		map.put("otherBankMsg", otherBankMsg);
-		map.put("indentMsg", indentMsg);
-		map.put("diversionMsg", diversionMsg);
-		map.put("craMsg", craMsg);
-		map.put("craMsg", craMsg);
-		map.put("pendingMachineAloMsg", pendingMachineAloMsg);
-		map.put("processingOutPutPendingMsg", processingOutPutPendingMsg);
-		SimpleDateFormat fmt = new SimpleDateFormat("dd-MM-yyyy");
-		Date currentDate = Calendar.getInstance().getTime();
-		LOG.info("dateEOD  " + dateEOD);
-		LOG.info("dateBinTxn " + dateBinTxn);
-
-		/*
-		 * if(dateEOD ==null && dateBinTxn !=null &&
-		 * fmt.format(dateBinTxn.getTime()).compareTo(fmt.format(Calendar.
-		 * getInstance().getTime())) !=0 ){
-		 * LOG.info("if dateBinTxn compare "+fmt.format(dateBinTxn.getTime()));
-		 * LOG.info("if currentDate compare "+fmt.format(currentDate)); return
-		 * new ModelAndView("welcomeEOD", map); }else { return new
-		 * ModelAndView("welcome", map); }
-		 */
+			// Close NOTIFICATION CODE
+			// map.put("userName", userName);
+			map.put("SASmsg", SASmsg);
+			map.put("soiledMsg", soiledMsg);
+			map.put("otherBankMsg", otherBankMsg);
+			map.put("indentMsg", indentMsg);
+			map.put("diversionMsg", diversionMsg);
+			map.put("craMsg", craMsg);
+			map.put("craMsg", craMsg);
+			map.put("pendingMachineAloMsg", pendingMachineAloMsg);
+			map.put("processingOutPutPendingMsg", processingOutPutPendingMsg);
+			LOG.info("dateEOD  " + dateEOD);
+			LOG.info("dateBinTxn " + dateBinTxn);
 		}
 		return new ModelAndView("welcome", map);
 	}
@@ -306,9 +296,9 @@ public class UserLoginController {
 		try {
 			user = userAdministrationService
 					.getUserById(((org.springframework.security.core.userdetails.User) principal).getUsername());
-			DelegateRight delegateRight=null;
-			if(user.getIcmcId() !=null){
-			 delegateRight = userAdministrationService.getRoleFromDelegatedRights(user.getIcmcId());
+			DelegateRight delegateRight = null;
+			if (user.getIcmcId() != null) {
+				delegateRight = userAdministrationService.getRoleFromDelegatedRights(user.getIcmcId());
 			}
 			if (user != null) {
 				userAdministrationService.resetFailAttempts(user);
@@ -330,16 +320,16 @@ public class UserLoginController {
 					Date currentDate = new Date();
 					Date endDate = new Date();
 					endDate = delegateRight.getPeriodTo();
-					LOG.info("currentDate "+currentDate);
-					LOG.info("startDate "+startDate);
-					LOG.info("endDate "+endDate);
-					if(currentDate.after(startDate) && currentDate.before(endDate)) {
+					LOG.info("currentDate " + currentDate);
+					LOG.info("startDate " + startDate);
+					LOG.info("endDate " + endDate);
+					if (currentDate.after(startDate) && currentDate.before(endDate)) {
 						LOG.info("in between ");
 						if (user.getId().equalsIgnoreCase(delegateRight.getUserId())) {
 							access = delegateRight.getRole().getIcmcAccess();
 							user.setRole(delegateRight.getRole());
 						}
-					}else {
+					} else {
 						LOG.info("out of range ");
 					}
 
@@ -374,16 +364,6 @@ public class UserLoginController {
 				session.setAttribute("login", user);
 				session.setAttribute("loggedInUserName", user.getName());
 
-				/*
-				 * if(user.getIcmcId() != null){ ICMC icmc =
-				 * iCMCService.getICMCById(user.getIcmcId().longValue());
-				 * if(icmc != null){ session.setAttribute("icmcName",
-				 * icmc.getName()); }
-				 */
-
-				// session.setAttribute("icmcList",
-				// userAdministrationService.getIcmcList(user));
-				// model = new ModelAndView("welcome");
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

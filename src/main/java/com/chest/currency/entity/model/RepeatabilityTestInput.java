@@ -40,42 +40,42 @@ import com.chest.currency.enums.DenominationType;
 @ToString
 
 public class RepeatabilityTestInput {
-	
+
 	@Id
-	//@GeneratedValue(strategy = GenerationType.AUTO)
+	// @GeneratedValue(strategy = GenerationType.AUTO)
 	@GeneratedValue(generator = "REPEATABILITY_TEST_INPUT_SEQ")
 	@SequenceGenerator(name = "REPEATABILITY_TEST_INPUT_SEQ", sequenceName = "REPEATABILITY_TEST_INPUT_SEQ", allocationSize = 100)
 	@Column(name = "ID")
 	protected Long id;
-	
+
 	@Enumerated(EnumType.STRING)
-	@Column(name="CURRENCY_TYPE")
+	@Column(name = "CURRENCY_TYPE")
 	protected CurrencyType currencyType;
 
 	@Basic
-	@Column(name="MACHINE_NO")
+	@Column(name = "MACHINE_NO")
 	protected Integer machineNo;
-	
+
 	@Basic
-	@Column(name="MACHINE_SERIAL_NO")
+	@Column(name = "MACHINE_SERIAL_NO")
 	protected String machineSerialNo;
-	
+
 	@Enumerated(EnumType.STRING)
-	@Column(name="DENOMINATION")
+	@Column(name = "DENOMINATION")
 	protected DenominationType denomination;
-	
+
 	@Basic
-	@Column(name="BUNDLE")
+	@Column(name = "BUNDLE")
 	protected BigDecimal bundle;
-	
+
 	@Basic
-	@Column(name="TOTAL_NOTES")
+	@Column(name = "TOTAL_NOTES")
 	protected BigDecimal totalNotes;
-	
+
 	@Basic
-	@Column(name="BIN_NO")
+	@Column(name = "BIN_NO")
 	protected String binNo;
-	
+
 	@Basic
 	@Column(name = "ICMC_ID")
 	protected BigInteger icmcId;
@@ -92,9 +92,9 @@ public class RepeatabilityTestInput {
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "INSERT_TIME")
 	protected Calendar insertTime;
-	
+
 	@DateTimeFormat(pattern = DateTimePattern.yyyy_MM_dd_HH_mm_ss_SSS)
 	@Column(name = "UPDATE_TIME")
 	protected Calendar updateTime;
-	
+
 }

@@ -4,7 +4,6 @@
  *******************************************************************************/
 package com.chest.currency.util;
 
-import java.io.BufferedOutputStream;
 import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -20,7 +19,6 @@ import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -35,8 +33,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
-import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.chest.currency.entity.model.AuditorIndent;
 import com.chest.currency.entity.model.AuditorProcess;
@@ -91,11 +87,10 @@ import com.chest.currency.viewBean.IRVVoucherWrapper;
 import com.chest.currency.viewBean.SASAllocationGrouped;
 import com.mysema.query.Tuple;
 
-
 public class UtilityJpa {
 
 	private static final Logger LOG = LoggerFactory.getLogger(UtilityJpa.class);
-	
+
 	public static final List<Integer> VALID_PWD_CHARS = new ArrayList<>();
 	static {
 		IntStream.rangeClosed('0', '9').forEach(VALID_PWD_CHARS::add); // 0-9
@@ -189,16 +184,13 @@ public class UtilityJpa {
 					getMaxBundleCapacityAccordingToVaultSize(capacityList, capacity, binMaster);
 
 					// get capacity based on binMaster bin vault size
-					//BigDecimal availableSpace = capacity.getMaxBundleCapacity();
-					
-				
-					
+					// BigDecimal availableSpace =
+					// capacity.getMaxBundleCapacity();
+
 					BigDecimal availableSpace = capacity.getMaxBundleCapacity();
-					
-					
-					
+
 					try {
-						
+
 						if (availableSpace.compareTo(bundleRequired) >= 0) {
 
 							BinTransaction binTx = new BinTransaction();
@@ -244,11 +236,12 @@ public class UtilityJpa {
 							alloccateTxs.add(binTx);
 							bundleRequired = bundleRequired.subtract(availableSpace);
 						}
-						
+
 					} catch (Exception e) {
-						
-						throw new BaseGuiException("Vault Size of required bin is not available in Bin Capacity Denomination");
-						
+
+						throw new BaseGuiException(
+								"Vault Size of required bin is not available in Bin Capacity Denomination");
+
 					}
 
 				}
@@ -257,7 +250,7 @@ public class UtilityJpa {
 		// new BinTransactionWrapper
 		return alloccateTxs;
 	}
-	
+
 	public static Indent getIndentIVR(DiversionIRV dirv, User user) {
 		Indent indentData = new Indent();
 		indentData.setIcmcId(user.getIcmcId());
@@ -276,16 +269,15 @@ public class UtilityJpa {
 
 	public static DiversionIRV getIVRForProcessing(DiversionIRV dirv, User user) {
 		DiversionIRV irvData = new DiversionIRV();
-		Date todaysDate = getDateWithTimeZero();
 		irvData.setIcmcId(user.getIcmcId());
 		irvData.setOrderDate(dirv.getOrderDate());
 		irvData.setExpiryDate(dirv.getExpiryDate());
 		irvData.setBankName(dirv.getBankName());
 		irvData.setRbiOrderNo(dirv.getRbiOrderNo());
-		irvData.setLocation(dirv.getLocation());	
+		irvData.setLocation(dirv.getLocation());
 		irvData.setApprovedCC(dirv.getApprovedCC());
 		irvData.setDenomination(dirv.getDenomination());
-		irvData.setProcessedOrUnprocessed(dirv.getProcessedOrUnprocessed()); 
+		irvData.setProcessedOrUnprocessed(dirv.getProcessedOrUnprocessed());
 		irvData.setBundle(dirv.getBundle());
 		irvData.setTotal(dirv.getTotal());
 		irvData.setFilepath(dirv.getFilepath());
@@ -295,11 +287,11 @@ public class UtilityJpa {
 		irvData.setUpdateTime(dirv.getUpdateTime());
 		irvData.setCurrencyType(dirv.getCurrencyType());
 		irvData.setStatus(OtherStatus.RECEIVED);
-		
-/*		irvData.setReceiptDate(todaysDate);
-*/		return irvData;
-	}
 
+		/*
+		 * irvData.setReceiptDate(todaysDate);
+		 */ return irvData;
+	}
 
 	public static List<BinTransaction> getBoxByCurrencyProcessType(List<BinTransaction> binTxs,
 			List<BoxMaster> boxMasters, BigDecimal bundle, boolean isBundle, CurrencyType currencyType,
@@ -434,7 +426,7 @@ public class UtilityJpa {
 		// new BinTransactionWrapper
 		return alloccateTxs;
 	}
-	
+
 	private static void getMaxBundleCapacityAccordingToVaultSize(List<BinCapacityDenomination> capacityList,
 			BinCapacityDenomination capacity, BinMaster binMaster) {
 
@@ -443,8 +435,8 @@ public class UtilityJpa {
 				capacity.setDenomination(binCapacity.getDenomination());
 				capacity.setMaxBundleCapacity(binCapacity.getMaxBundleCapacity());
 				break;
-			}else {
-			binMaster.setVaultSize(binMaster.getVaultSize());	
+			} else {
+				binMaster.setVaultSize(binMaster.getVaultSize());
 			}
 		}
 	}
@@ -485,45 +477,44 @@ public class UtilityJpa {
 			branchReceiptBean.setStatus(OtherStatus.RECEIVED);
 			branchReceiptBean.setCurrencyType(binTx.getBinType());
 			branchReceiptBean.setCashSource(binTx.getCashSource());
-            branchReceiptBean.setProcessedOrUnprocessed(branchReciept.getProcessedOrUnprocessed());
+			branchReceiptBean.setProcessedOrUnprocessed(branchReciept.getProcessedOrUnprocessed());
 			branchReceiptList.add(branchReceiptBean);
 		}
 		return branchReceiptList;
 	}
 
-	/*public static List<BranchReceipt> getBranchReceiptBeanForBOX(BranchReceipt branchReciept,
-			List<BinTransaction> binTxs, User user, List<BoxMaster> boxMasterList) {
-
-		BigDecimal denom = BigDecimal.valueOf(branchReciept.getDenomination());
-		BigDecimal multiplier1000 = BigDecimal.valueOf(1000);
-
-		List<BranchReceipt> branchReceiptList = new ArrayList<BranchReceipt>();
-		for (BinTransaction binTx : binTxs) {
-			BranchReceipt branchReceiptBean = new BranchReceipt();
-			branchReceiptBean.setIcmcId(binTx.getIcmcId());
-			branchReceiptBean.setSolId(branchReciept.getSolId());
-			branchReceiptBean.setBranch(branchReciept.getBranch());
-			branchReceiptBean.setSrNumber(branchReciept.getSrNumber());
-			branchReceiptBean.setDenomination(branchReciept.getDenomination());
-			BigDecimal rcvBundle = binTx.getCurrentBundle();
-			branchReceiptBean.setFilepath(branchReciept.getFilepath());
-			branchReceiptBean.setBundle(rcvBundle);
-			branchReceiptBean.setBin(binTx.getBinNumber());
-			BigDecimal totalVal = rcvBundle.multiply(denom).multiply(multiplier1000);
-			branchReceiptBean.setTotal(totalVal);
-			branchReceiptBean.setInsertBy(user.getId());
-			branchReceiptBean.setUpdateBy(user.getId());
-			branchReceiptBean.setInsertTime(branchReciept.getInsertTime());
-			branchReceiptBean.setUpdateTime(branchReciept.getUpdateTime());
-			branchReceiptBean.setBinCategoryType(BinCategoryType.BOX);
-			branchReceiptBean.setStatus(OtherStatus.RECEIVED);
-			branchReceiptBean.setCurrencyType(binTx.getBinType());
-			branchReceiptBean.setCashSource(binTx.getCashSource());
-
-			branchReceiptList.add(branchReceiptBean);
-		}
-		return branchReceiptList;
-	}*/
+	/*
+	 * public static List<BranchReceipt>
+	 * getBranchReceiptBeanForBOX(BranchReceipt branchReciept,
+	 * List<BinTransaction> binTxs, User user, List<BoxMaster> boxMasterList) {
+	 * 
+	 * BigDecimal denom = BigDecimal.valueOf(branchReciept.getDenomination());
+	 * BigDecimal multiplier1000 = BigDecimal.valueOf(1000);
+	 * 
+	 * List<BranchReceipt> branchReceiptList = new ArrayList<BranchReceipt>();
+	 * for (BinTransaction binTx : binTxs) { BranchReceipt branchReceiptBean =
+	 * new BranchReceipt(); branchReceiptBean.setIcmcId(binTx.getIcmcId());
+	 * branchReceiptBean.setSolId(branchReciept.getSolId());
+	 * branchReceiptBean.setBranch(branchReciept.getBranch());
+	 * branchReceiptBean.setSrNumber(branchReciept.getSrNumber());
+	 * branchReceiptBean.setDenomination(branchReciept.getDenomination());
+	 * BigDecimal rcvBundle = binTx.getCurrentBundle();
+	 * branchReceiptBean.setFilepath(branchReciept.getFilepath());
+	 * branchReceiptBean.setBundle(rcvBundle);
+	 * branchReceiptBean.setBin(binTx.getBinNumber()); BigDecimal totalVal =
+	 * rcvBundle.multiply(denom).multiply(multiplier1000);
+	 * branchReceiptBean.setTotal(totalVal);
+	 * branchReceiptBean.setInsertBy(user.getId());
+	 * branchReceiptBean.setUpdateBy(user.getId());
+	 * branchReceiptBean.setInsertTime(branchReciept.getInsertTime());
+	 * branchReceiptBean.setUpdateTime(branchReciept.getUpdateTime());
+	 * branchReceiptBean.setBinCategoryType(BinCategoryType.BOX);
+	 * branchReceiptBean.setStatus(OtherStatus.RECEIVED);
+	 * branchReceiptBean.setCurrencyType(binTx.getBinType());
+	 * branchReceiptBean.setCashSource(binTx.getCashSource());
+	 * 
+	 * branchReceiptList.add(branchReceiptBean); } return branchReceiptList; }
+	 */
 
 	private static HolidayMaster mapToHolidayMaster(String[] splitData) {
 		HolidayMaster holiday = new HolidayMaster();
@@ -751,12 +742,10 @@ public class UtilityJpa {
 			diversion.setUpdateBy(user.getId());
 			diversion.setInsertTime(dirv.getInsertTime());
 			diversion.setUpdateTime(dirv.getUpdateTime());
-			if(dirv.getProcessedOrUnprocessed().equalsIgnoreCase("UNPROCESS"))
-			{
-			diversion.setCurrencyType(CurrencyType.UNPROCESS);
+			if (dirv.getProcessedOrUnprocessed().equalsIgnoreCase("UNPROCESS")) {
+				diversion.setCurrencyType(CurrencyType.UNPROCESS);
 			}
-			if(dirv.getProcessedOrUnprocessed().equalsIgnoreCase("PROCESSED"))
-			{
+			if (dirv.getProcessedOrUnprocessed().equalsIgnoreCase("PROCESSED")) {
 				diversion.setCurrencyType(dirv.getCurrencyType());
 			}
 			diversion.setBinCategoryType(dirv.getBinCategoryType());
@@ -806,6 +795,7 @@ public class UtilityJpa {
 		}
 		return dsbList;
 	}
+
 	@SuppressWarnings("deprecation")
 	public static Date getDateWithTimeZero() {
 		Date todaysDate = new Date();
@@ -841,9 +831,9 @@ public class UtilityJpa {
 		return processList;
 
 	}
-	
-	
-	public static List<AuditorProcess> getProcessBeanForAuditor(AuditorProcess process, List<BinTransaction> binTxs, User user) {
+
+	public static List<AuditorProcess> getProcessBeanForAuditor(AuditorProcess process, List<BinTransaction> binTxs,
+			User user) {
 		List<AuditorProcess> processList = new ArrayList<>();
 		for (BinTransaction binTx : binTxs) {
 			AuditorProcess processData = new AuditorProcess();
@@ -886,7 +876,7 @@ public class UtilityJpa {
 
 	public static DSB getDSBForProcessing(DSB dsb, User user) {
 		DSB dsbData = new DSB();
-		//Date todaysDate = getDateWithTimeZero();
+		// Date todaysDate = getDateWithTimeZero();
 		Date todaysDate = new Date();
 		dsbData.setIcmcId(user.getIcmcId());
 		dsbData.setName(dsb.getName());
@@ -907,12 +897,10 @@ public class UtilityJpa {
 		dsbData.setReceiptDate(todaysDate);
 		return dsbData;
 	}
-	
-	
-	
+
 	public static BankReceipt getBankReceiptForProcessing(BankReceipt bankReceipt, User user) {
 		BankReceipt bankReceiptData = new BankReceipt();
-		//Date todaysDate = getDateWithTimeZero();
+		// Date todaysDate = getDateWithTimeZero();
 		bankReceiptData.setIcmcId(user.getIcmcId());
 		bankReceiptData.setDenomination(bankReceipt.getDenomination());
 		bankReceiptData.setBundle(bankReceipt.getBundle());
@@ -981,7 +969,6 @@ public class UtilityJpa {
 		indentData.setStatus(OtherStatus.ACCEPTED);
 		return indentData;
 	}
-	
 
 	public static Indent getIndent(DSB dsb, User user) {
 		Indent indentData = new Indent();
@@ -1129,7 +1116,7 @@ public class UtilityJpa {
 			}
 
 			if (availableBundle.compareTo(bundleRequired) >= 0) {
-				//indent.setBin("BOX");
+				// indent.setBin("BOX");
 				indent.setBin(binTx.getBinNumber());
 				indent.setBundle(bundleRequired);
 				calculateAndSetPendingBundleRequest(bundleRequired, binTx);
@@ -1147,7 +1134,7 @@ public class UtilityJpa {
 				eligibleIndentList.add(indent);
 				break;
 			} else {
-				//indent.setBin("BOX");
+				// indent.setBin("BOX");
 				indent.setBin(binTx.getBinNumber());
 				indent.setBundle(availableBundle);
 				calculateAndSetPendingBundleRequest(availableBundle, binTx);
@@ -1174,7 +1161,7 @@ public class UtilityJpa {
 		Calendar now = Calendar.getInstance();
 		BigDecimal bundleRequired = bundle;
 		List<Indent> eligibleIndentList = new ArrayList<>();
-		
+
 		for (BranchReceipt br : branchReceiptList) {
 
 			if (bundleRequired.compareTo(BigDecimal.ZERO) == 0) {
@@ -1194,7 +1181,11 @@ public class UtilityJpa {
 				indent.setBundle(br.getBundle());
 				indent.setStatus(OtherStatus.REQUESTED);
 				indent.setDenomination(br.getDenomination());
-				indent.setBinCategoryType(br.getBinCategoryType());     //Changed on 08thMay17 from indent.setBinCategoryType(BinCategoryType.BIN);
+				indent.setBinCategoryType(br.getBinCategoryType()); // Changed
+																	// on
+																	// 08thMay17
+																	// from
+																	// indent.setBinCategoryType(BinCategoryType.BIN);
 				indent.setPendingBundleRequest(br.getBundle());
 				indent.setInsertBy(user.getId());
 				indent.setUpdateBy(user.getId());
@@ -1214,11 +1205,11 @@ public class UtilityJpa {
 	}
 
 	public static List<SASAllocation> getBinForBranchReceiptSasRequest(List<BinTransaction> txnList, int denomination,
-			BigDecimal bundle, User user,Sas sasAllocationParent, List<BranchReceipt> branchReceiptList) {
+			BigDecimal bundle, User user, Sas sasAllocationParent, List<BranchReceipt> branchReceiptList) {
 		Calendar now = Calendar.getInstance();
 		BigDecimal bundleRequired = bundle;
 		List<SASAllocation> eligibleIndentList = new ArrayList<>();
-		
+
 		for (BranchReceipt br : branchReceiptList) {
 
 			if (bundleRequired.compareTo(BigDecimal.ZERO) == 0) {
@@ -1370,49 +1361,52 @@ public class UtilityJpa {
 	private static Sas mapToSasBean(String[] splitData) {
 		Sas sasBean = new Sas(true);
 		sasBean.setSrNo(getValue(splitData, 0));
-		sasBean.setSolID(getValue(splitData,1));
+		sasBean.setSolID(getValue(splitData, 1));
 		sasBean.setBranch(getValue(splitData, 2));
 		sasBean.setTotalValue(new BigDecimal(getValue(splitData, 3)));
 		// sasBean.setTotalValueOfCoinsRs1(Integer.parseInt(getValue(splitData,
 		// 32)));
-		BigDecimal sumTotalValue=new BigDecimal(0);
-		
+		BigDecimal sumTotalValue = new BigDecimal(0);
+
 		if (getValue(splitData, 4).equals("")) {
 			sasBean.setTotalValueOfCoinsRs10(BigDecimal.ZERO);
 		} else {
 			sumTotalValue = sumTotalValue.add(new BigDecimal(getValue(splitData, 4)));
-			//sasBean.setTotalValueOfCoinsRs10(Integer.parseInt(getValue(splitData, 4)) / 20000);
+			// sasBean.setTotalValueOfCoinsRs10(Integer.parseInt(getValue(splitData,
+			// 4)) / 20000);
 			sasBean.setTotalValueOfCoinsRs10(new BigDecimal(getValue(splitData, 4)).divide(BigDecimal.valueOf(20000)));
-			
+
 		}
-		
+
 		if (getValue(splitData, 5).equals("")) {
 			sasBean.setTotalValueOfCoinsRs5(BigDecimal.ZERO);
 		} else {
-			//sasBean.setTotalValueOfCoinsRs5(Integer.parseInt(getValue(splitData, 5)) / 12500);
+			// sasBean.setTotalValueOfCoinsRs5(Integer.parseInt(getValue(splitData,
+			// 5)) / 12500);
 			sumTotalValue = sumTotalValue.add(new BigDecimal(getValue(splitData, 5)));
 			sasBean.setTotalValueOfCoinsRs5(new BigDecimal(getValue(splitData, 5)).divide(BigDecimal.valueOf(12500)));
-			
+
 		}
-		
+
 		if (getValue(splitData, 6).equals("")) {
 			sasBean.setTotalValueOfCoinsRs2(BigDecimal.ZERO);
 		} else {
-			//sasBean.setTotalValueOfCoinsRs2(Integer.parseInt(getValue(splitData, 6)) / 5000);
+			// sasBean.setTotalValueOfCoinsRs2(Integer.parseInt(getValue(splitData,
+			// 6)) / 5000);
 			sasBean.setTotalValueOfCoinsRs2(new BigDecimal(getValue(splitData, 6)).divide(BigDecimal.valueOf(5000)));
 			sumTotalValue = sumTotalValue.add(new BigDecimal(getValue(splitData, 6)));
 		}
-		
+
 		if (getValue(splitData, 7).equals("")) {
 			sasBean.setTotalValueOfCoinsRs1(BigDecimal.ZERO);
 		} else {
-		//	sasBean.setTotalValueOfCoinsRs1(Integer.parseInt(getValue(splitData, 7)) / 2500);
-			
+			// sasBean.setTotalValueOfCoinsRs1(Integer.parseInt(getValue(splitData,
+			// 7)) / 2500);
+
 			sasBean.setTotalValueOfCoinsRs1(new BigDecimal(getValue(splitData, 7)).divide(BigDecimal.valueOf(2500)));
 			sumTotalValue = sumTotalValue.add(new BigDecimal(getValue(splitData, 7)));
 		}
-		
-		
+
 		if (getValue(splitData, 8).equals("")) {
 			// sasBean.setTotalValueOfNotesRs1000I(0);
 			sasBean.setTotalValueOfNotesRs2000A(BigDecimal.ZERO);
@@ -1422,7 +1416,7 @@ public class UtilityJpa {
 							.divide(BigDecimal.valueOf(1000)));
 			sumTotalValue = sumTotalValue.add(new BigDecimal(getValue(splitData, 8)));
 		}
-		
+
 		if (getValue(splitData, 9).equals("")) {
 			// sasBean.setTotalValueOfNotesRs1000I(0);
 			sasBean.setTotalValueOfNotesRs2000F(BigDecimal.ZERO);
@@ -1432,8 +1426,7 @@ public class UtilityJpa {
 							.divide(BigDecimal.valueOf(1000)));
 			sumTotalValue = sumTotalValue.add(new BigDecimal(getValue(splitData, 9)));
 		}
-		
-		
+
 		if (getValue(splitData, 10).equals("")) {
 			// sasBean.setTotalValueOfNotesRs1000I(0);
 			sasBean.setTotalValueOfNotesRs2000I(BigDecimal.ZERO);
@@ -1443,7 +1436,7 @@ public class UtilityJpa {
 							.divide(BigDecimal.valueOf(1000)));
 			sumTotalValue = sumTotalValue.add(new BigDecimal(getValue(splitData, 10)));
 		}
-		
+
 		if (getValue(splitData, 11).equals("")) {
 			// sasBean.setTotalValueOfNotesRs1000I(0);
 			sasBean.setTotalValueOfNotesRs1000A(BigDecimal.ZERO);
@@ -1453,7 +1446,7 @@ public class UtilityJpa {
 							.divide(BigDecimal.valueOf(1000)));
 			sumTotalValue = sumTotalValue.add(new BigDecimal(getValue(splitData, 11)));
 		}
-		
+
 		if (getValue(splitData, 12).equals("")) {
 			// sasBean.setTotalValueOfNotesRs1000I(0);
 			sasBean.setTotalValueOfNotesRs1000F(BigDecimal.ZERO);
@@ -1463,7 +1456,7 @@ public class UtilityJpa {
 							.divide(BigDecimal.valueOf(1000)));
 			sumTotalValue = sumTotalValue.add(new BigDecimal(getValue(splitData, 12)));
 		}
-		
+
 		if (getValue(splitData, 13).equals("")) {
 			// sasBean.setTotalValueOfNotesRs1000I(0);
 			sasBean.setTotalValueOfNotesRs1000I(BigDecimal.ZERO);
@@ -1473,273 +1466,220 @@ public class UtilityJpa {
 							.divide(BigDecimal.valueOf(1000)));
 			sumTotalValue = sumTotalValue.add(new BigDecimal(getValue(splitData, 13)));
 		}
-		
-		
+
 		if (getValue(splitData, 14).equals("")) {
-			//sasBean.setTotalValueOfNotesRs500I(0);
+			// sasBean.setTotalValueOfNotesRs500I(0);
 			sasBean.setTotalValueOfNotesRs500A(BigDecimal.ZERO);
-		} /*else {
-			sasBean.setTotalValueOfNotesRs500I((Integer.parseInt(getValue(splitData, 44)) / 500) / 1000);
-		}*/
+		} /*
+			 * else {
+			 * sasBean.setTotalValueOfNotesRs500I((Integer.parseInt(getValue(
+			 * splitData, 44)) / 500) / 1000); }
+			 */
 		{
-			sasBean.setTotalValueOfNotesRs500A(
-					(new BigDecimal(getValue(splitData, 14)).divide(BigDecimal.valueOf(500)))
-							.divide(BigDecimal.valueOf(1000)));
+			sasBean.setTotalValueOfNotesRs500A((new BigDecimal(getValue(splitData, 14)).divide(BigDecimal.valueOf(500)))
+					.divide(BigDecimal.valueOf(1000)));
 			sumTotalValue = sumTotalValue.add(new BigDecimal(getValue(splitData, 14)));
 		}
-		
-		
+
 		if (getValue(splitData, 15).equals("")) {
-			//sasBean.setTotalValueOfNotesRs500I(0);
+			// sasBean.setTotalValueOfNotesRs500I(0);
 			sasBean.setTotalValueOfNotesRs500F(BigDecimal.ZERO);
-		} /*else {
-			sasBean.setTotalValueOfNotesRs500I((Integer.parseInt(getValue(splitData, 44)) / 500) / 1000);
-		}*/
+		} /*
+			 * else {
+			 * sasBean.setTotalValueOfNotesRs500I((Integer.parseInt(getValue(
+			 * splitData, 44)) / 500) / 1000); }
+			 */
 		{
-			sasBean.setTotalValueOfNotesRs500F(
-					(new BigDecimal(getValue(splitData, 15)).divide(BigDecimal.valueOf(500)))
-							.divide(BigDecimal.valueOf(1000)));
+			sasBean.setTotalValueOfNotesRs500F((new BigDecimal(getValue(splitData, 15)).divide(BigDecimal.valueOf(500)))
+					.divide(BigDecimal.valueOf(1000)));
 			sumTotalValue = sumTotalValue.add(new BigDecimal(getValue(splitData, 15)));
 		}
-		
-		
-		
+
 		if (getValue(splitData, 16).equals("")) {
-			//sasBean.setTotalValueOfNotesRs500I(0);
+			// sasBean.setTotalValueOfNotesRs500I(0);
 			sasBean.setTotalValueOfNotesRs500I(BigDecimal.ZERO);
-		} /*else {
-			sasBean.setTotalValueOfNotesRs500I((Integer.parseInt(getValue(splitData, 44)) / 500) / 1000);
-		}*/
+		} /*
+			 * else {
+			 * sasBean.setTotalValueOfNotesRs500I((Integer.parseInt(getValue(
+			 * splitData, 44)) / 500) / 1000); }
+			 */
 		{
-			sasBean.setTotalValueOfNotesRs500I(
-					(new BigDecimal(getValue(splitData, 16)).divide(BigDecimal.valueOf(500)))
-							.divide(BigDecimal.valueOf(1000)));
+			sasBean.setTotalValueOfNotesRs500I((new BigDecimal(getValue(splitData, 16)).divide(BigDecimal.valueOf(500)))
+					.divide(BigDecimal.valueOf(1000)));
 			sumTotalValue = sumTotalValue.add(new BigDecimal(getValue(splitData, 16)));
 		}
-		
-		
+
 		if (getValue(splitData, 17).equals("")) {
 			sasBean.setTotalValueOfNotesRs200A(BigDecimal.ZERO);
 		}
 		{
-			sasBean.setTotalValueOfNotesRs200A(
-					(new BigDecimal(getValue(splitData, 17)).divide(BigDecimal.valueOf(200)))
-							.divide(BigDecimal.valueOf(1000)));
+			sasBean.setTotalValueOfNotesRs200A((new BigDecimal(getValue(splitData, 17)).divide(BigDecimal.valueOf(200)))
+					.divide(BigDecimal.valueOf(1000)));
 			sumTotalValue = sumTotalValue.add(new BigDecimal(getValue(splitData, 17)));
 		}
-		
-		
+
 		if (getValue(splitData, 18).equals("")) {
 			sasBean.setTotalValueOfNotesRs200F(BigDecimal.ZERO);
-		} 
+		}
 		{
-			sasBean.setTotalValueOfNotesRs200F(
-					(new BigDecimal(getValue(splitData, 18)).divide(BigDecimal.valueOf(200)))
-							.divide(BigDecimal.valueOf(1000)));
+			sasBean.setTotalValueOfNotesRs200F((new BigDecimal(getValue(splitData, 18)).divide(BigDecimal.valueOf(200)))
+					.divide(BigDecimal.valueOf(1000)));
 			sumTotalValue = sumTotalValue.add(new BigDecimal(getValue(splitData, 18)));
 		}
-		
-		
-		
+
 		if (getValue(splitData, 19).equals("")) {
 			sasBean.setTotalValueOfNotesRs200I(BigDecimal.ZERO);
 		}
 		{
-			sasBean.setTotalValueOfNotesRs200I(
-					(new BigDecimal(getValue(splitData, 19)).divide(BigDecimal.valueOf(200)))
-							.divide(BigDecimal.valueOf(1000)));
+			sasBean.setTotalValueOfNotesRs200I((new BigDecimal(getValue(splitData, 19)).divide(BigDecimal.valueOf(200)))
+					.divide(BigDecimal.valueOf(1000)));
 			sumTotalValue = sumTotalValue.add(new BigDecimal(getValue(splitData, 19)));
 		}
-		
-		
+
 		if (getValue(splitData, 20).equals("")) {
 			sasBean.setTotalValueOfNotesRs100A(BigDecimal.ZERO);
 		}
 		{
-			sasBean.setTotalValueOfNotesRs100A(
-					(new BigDecimal(getValue(splitData, 20)).divide(BigDecimal.valueOf(100)))
-							.divide(BigDecimal.valueOf(1000)));
+			sasBean.setTotalValueOfNotesRs100A((new BigDecimal(getValue(splitData, 20)).divide(BigDecimal.valueOf(100)))
+					.divide(BigDecimal.valueOf(1000)));
 			sumTotalValue = sumTotalValue.add(new BigDecimal(getValue(splitData, 20)));
 		}
-		
-		
+
 		if (getValue(splitData, 21).equals("")) {
 			sasBean.setTotalValueOfNotesRs100F(BigDecimal.ZERO);
-		} 
+		}
 		{
-			sasBean.setTotalValueOfNotesRs100F(
-					(new BigDecimal(getValue(splitData, 21)).divide(BigDecimal.valueOf(100)))
-							.divide(BigDecimal.valueOf(1000)));
+			sasBean.setTotalValueOfNotesRs100F((new BigDecimal(getValue(splitData, 21)).divide(BigDecimal.valueOf(100)))
+					.divide(BigDecimal.valueOf(1000)));
 			sumTotalValue = sumTotalValue.add(new BigDecimal(getValue(splitData, 21)));
 		}
-		
-		
-		
+
 		if (getValue(splitData, 22).equals("")) {
 			sasBean.setTotalValueOfNotesRs100I(BigDecimal.ZERO);
 		}
 		{
-			sasBean.setTotalValueOfNotesRs100I(
-					(new BigDecimal(getValue(splitData, 22)).divide(BigDecimal.valueOf(100)))
-							.divide(BigDecimal.valueOf(1000)));
+			sasBean.setTotalValueOfNotesRs100I((new BigDecimal(getValue(splitData, 22)).divide(BigDecimal.valueOf(100)))
+					.divide(BigDecimal.valueOf(1000)));
 			sumTotalValue = sumTotalValue.add(new BigDecimal(getValue(splitData, 22)));
 		}
-		
-		
-		
-		
-		
-		
+
 		if (getValue(splitData, 23).equals("")) {
 			sasBean.setTotalValueOfNotesRs50F(BigDecimal.ZERO);
-		} 
+		}
 		{
-			sasBean.setTotalValueOfNotesRs50F(
-					(new BigDecimal(getValue(splitData, 23)).divide(BigDecimal.valueOf(50)))
-							.divide(BigDecimal.valueOf(1000)));
+			sasBean.setTotalValueOfNotesRs50F((new BigDecimal(getValue(splitData, 23)).divide(BigDecimal.valueOf(50)))
+					.divide(BigDecimal.valueOf(1000)));
 			sumTotalValue = sumTotalValue.add(new BigDecimal(getValue(splitData, 23)));
 		}
-		
-		
-		
+
 		if (getValue(splitData, 24).equals("")) {
 			sasBean.setTotalValueOfNotesRs50I(BigDecimal.ZERO);
 		}
 		{
-			sasBean.setTotalValueOfNotesRs50I(
-					(new BigDecimal(getValue(splitData, 24)).divide(BigDecimal.valueOf(50)))
-							.divide(BigDecimal.valueOf(1000)));
+			sasBean.setTotalValueOfNotesRs50I((new BigDecimal(getValue(splitData, 24)).divide(BigDecimal.valueOf(50)))
+					.divide(BigDecimal.valueOf(1000)));
 			sumTotalValue = sumTotalValue.add(new BigDecimal(getValue(splitData, 24)));
 		}
-		
-		
+
 		if (getValue(splitData, 25).equals("")) {
 			sasBean.setTotalValueOfNotesRs20F(BigDecimal.ZERO);
-		} 
+		}
 		{
-			sasBean.setTotalValueOfNotesRs20F(
-					(new BigDecimal(getValue(splitData, 25)).divide(BigDecimal.valueOf(20)))
-							.divide(BigDecimal.valueOf(1000)));
+			sasBean.setTotalValueOfNotesRs20F((new BigDecimal(getValue(splitData, 25)).divide(BigDecimal.valueOf(20)))
+					.divide(BigDecimal.valueOf(1000)));
 			sumTotalValue = sumTotalValue.add(new BigDecimal(getValue(splitData, 25)));
 		}
-		
-		
-		
+
 		if (getValue(splitData, 26).equals("")) {
 			sasBean.setTotalValueOfNotesRs20I(BigDecimal.ZERO);
 		}
 		{
-			sasBean.setTotalValueOfNotesRs20I(
-					(new BigDecimal(getValue(splitData, 26)).divide(BigDecimal.valueOf(20)))
-							.divide(BigDecimal.valueOf(1000)));
+			sasBean.setTotalValueOfNotesRs20I((new BigDecimal(getValue(splitData, 26)).divide(BigDecimal.valueOf(20)))
+					.divide(BigDecimal.valueOf(1000)));
 			sumTotalValue = sumTotalValue.add(new BigDecimal(getValue(splitData, 26)));
 		}
-		
-		
+
 		if (getValue(splitData, 27).equals("")) {
 			sasBean.setTotalValueOfNotesRs10F(BigDecimal.ZERO);
-		} 
+		}
 		{
-			sasBean.setTotalValueOfNotesRs10F(
-					(new BigDecimal(getValue(splitData, 27)).divide(BigDecimal.valueOf(10)))
-							.divide(BigDecimal.valueOf(1000)));
+			sasBean.setTotalValueOfNotesRs10F((new BigDecimal(getValue(splitData, 27)).divide(BigDecimal.valueOf(10)))
+					.divide(BigDecimal.valueOf(1000)));
 			sumTotalValue = sumTotalValue.add(new BigDecimal(getValue(splitData, 27)));
 		}
-		
-		
-		
+
 		if (getValue(splitData, 28).equals("")) {
 			sasBean.setTotalValueOfNotesRs10I(BigDecimal.ZERO);
 		}
 		{
-			sasBean.setTotalValueOfNotesRs10I(
-					(new BigDecimal(getValue(splitData, 28)).divide(BigDecimal.valueOf(10)))
-							.divide(BigDecimal.valueOf(1000)));
+			sasBean.setTotalValueOfNotesRs10I((new BigDecimal(getValue(splitData, 28)).divide(BigDecimal.valueOf(10)))
+					.divide(BigDecimal.valueOf(1000)));
 			sumTotalValue = sumTotalValue.add(new BigDecimal(getValue(splitData, 28)));
 		}
-		
-		
-		
+
 		if (getValue(splitData, 29).equals("")) {
 			sasBean.setTotalValueOfNotesRs20F(BigDecimal.ZERO);
-		} 
+		}
 		{
-			sasBean.setTotalValueOfNotesRs5F(
-					(new BigDecimal(getValue(splitData, 29)).divide(BigDecimal.valueOf(5)))
-							.divide(BigDecimal.valueOf(1000)));
+			sasBean.setTotalValueOfNotesRs5F((new BigDecimal(getValue(splitData, 29)).divide(BigDecimal.valueOf(5)))
+					.divide(BigDecimal.valueOf(1000)));
 			sumTotalValue = sumTotalValue.add(new BigDecimal(getValue(splitData, 29)));
 		}
-		
-		
-		
+
 		if (getValue(splitData, 30).equals("")) {
 			sasBean.setTotalValueOfNotesRs5I(BigDecimal.ZERO);
 		}
 		{
-			sasBean.setTotalValueOfNotesRs5I(
-					(new BigDecimal(getValue(splitData, 30)).divide(BigDecimal.valueOf(5)))
-							.divide(BigDecimal.valueOf(1000)));
+			sasBean.setTotalValueOfNotesRs5I((new BigDecimal(getValue(splitData, 30)).divide(BigDecimal.valueOf(5)))
+					.divide(BigDecimal.valueOf(1000)));
 			sumTotalValue = sumTotalValue.add(new BigDecimal(getValue(splitData, 30)));
 		}
-		
-		
-		
+
 		if (getValue(splitData, 31).equals("")) {
 			sasBean.setTotalValueOfNotesRs2F(BigDecimal.ZERO);
-		} 
+		}
 		{
-			sasBean.setTotalValueOfNotesRs2F(
-					(new BigDecimal(getValue(splitData, 31)).divide(BigDecimal.valueOf(2)))
-							.divide(BigDecimal.valueOf(1000)));
+			sasBean.setTotalValueOfNotesRs2F((new BigDecimal(getValue(splitData, 31)).divide(BigDecimal.valueOf(2)))
+					.divide(BigDecimal.valueOf(1000)));
 			sumTotalValue = sumTotalValue.add(new BigDecimal(getValue(splitData, 31)));
 		}
-		
-		
-		
+
 		if (getValue(splitData, 32).equals("")) {
 			sasBean.setTotalValueOfNotesRs2I(BigDecimal.ZERO);
 		}
 		{
-			sasBean.setTotalValueOfNotesRs2I(
-					(new BigDecimal(getValue(splitData, 32)).divide(BigDecimal.valueOf(2)))
-							.divide(BigDecimal.valueOf(1000)));
+			sasBean.setTotalValueOfNotesRs2I((new BigDecimal(getValue(splitData, 32)).divide(BigDecimal.valueOf(2)))
+					.divide(BigDecimal.valueOf(1000)));
 			sumTotalValue = sumTotalValue.add(new BigDecimal(getValue(splitData, 32)));
-			}
-		
-		
-		
+		}
+
 		if (getValue(splitData, 33).equals("")) {
 			sasBean.setTotalValueOfNotesRs1F(BigDecimal.ZERO);
-		} 
+		}
 		{
-			sasBean.setTotalValueOfNotesRs1F(
-					(new BigDecimal(getValue(splitData, 33)).divide(BigDecimal.valueOf(1)))
-							.divide(BigDecimal.valueOf(1000)));
+			sasBean.setTotalValueOfNotesRs1F((new BigDecimal(getValue(splitData, 33)).divide(BigDecimal.valueOf(1)))
+					.divide(BigDecimal.valueOf(1000)));
 			sumTotalValue = sumTotalValue.add(new BigDecimal(getValue(splitData, 33)));
 		}
-		
-		
-		
+
 		if (getValue(splitData, 34).equals("")) {
 			sasBean.setTotalValueOfNotesRs1I(BigDecimal.ZERO);
 		}
 		{
-			sasBean.setTotalValueOfNotesRs1I(
-					(new BigDecimal(getValue(splitData, 34)).divide(BigDecimal.valueOf(1)))
-							.divide(BigDecimal.valueOf(1000)));
+			sasBean.setTotalValueOfNotesRs1I((new BigDecimal(getValue(splitData, 34)).divide(BigDecimal.valueOf(1)))
+					.divide(BigDecimal.valueOf(1000)));
 			sumTotalValue = sumTotalValue.add(new BigDecimal(getValue(splitData, 34)));
 		}
-		
-			if(sumTotalValue.compareTo(sasBean.getTotalValue()) ==0){
-				 sasBean.setStatus(0);
-			}else {
-				 sasBean.setTotalValue(sumTotalValue);
-				sasBean.setStatus(1);
-			}
-		
-			return sasBean;
-		
-		
+
+		if (sumTotalValue.compareTo(sasBean.getTotalValue()) == 0) {
+			sasBean.setStatus(0);
+		} else {
+			sasBean.setTotalValue(sumTotalValue);
+			sasBean.setStatus(1);
+		}
+
+		return sasBean;
+
 	}
 
 	public static List<Sas> CSVtoArrayList(List<String> sasRecords) {
@@ -1857,12 +1797,12 @@ public class UtilityJpa {
 		return driverList;
 	}
 
-	/*public static void setBinColor(List<BinMaster> binList) {
-		for (BinMaster binMaster : binList) {
-			binMaster.setColor(getColor(binMaster.getFirstPriority()));
-		}
-	}*/
-	
+	/*
+	 * public static void setBinColor(List<BinMaster> binList) { for (BinMaster
+	 * binMaster : binList) {
+	 * binMaster.setColor(getColor(binMaster.getFirstPriority())); } }
+	 */
+
 	public static void setBinColor(List<BinTransaction> binList) {
 		for (BinTransaction binTransaction : binList) {
 			binTransaction.setColor(getColor(binTransaction.getBinType()));
@@ -1871,7 +1811,7 @@ public class UtilityJpa {
 
 	public static String getColor(CurrencyType binType) {
 		String color = "";
-		
+
 		if (binType == CurrencyType.UNPROCESS) {
 			color = BinColorType.UNPROCESS.getColor();
 		} else if (binType == CurrencyType.ATM) {
@@ -1887,7 +1827,7 @@ public class UtilityJpa {
 	}
 
 	public static List<SASAllocation> getBinForSASRequest(List<BinTransaction> txnList, BigDecimal bundleRequired,
-			SASAllocation sasData, Sas sasAllocationParent, CurrencyType binType, User user){
+			SASAllocation sasData, Sas sasAllocationParent, CurrencyType binType, User user) {
 		Calendar now = Calendar.getInstance();
 		List<SASAllocation> eligibleSASList = new ArrayList<>();
 		BigDecimal totalAvailableBundle = BigDecimal.ZERO;
@@ -1904,20 +1844,20 @@ public class UtilityJpa {
 			if (availableBundle.compareTo(bundleRequired) >= 0) {
 				sasAllocation.setBundle(bundleRequired);
 				calculateAndSetPendingBundleRequest(bundleRequired, binTx);
-				setSasAllocationDetails(user, now, binTx, sasAllocation, sasAllocationParent, CashType.NOTES,binType);
+				setSasAllocationDetails(user, now, binTx, sasAllocation, sasAllocationParent, CashType.NOTES, binType);
 				eligibleSASList.add(sasAllocation);
 				break;
 			} else {
 				sasAllocation.setBundle(availableBundle);
 				calculateAndSetPendingBundleRequest(availableBundle, binTx);
-				setSasAllocationDetails(user, now, binTx, sasAllocation, sasAllocationParent, CashType.NOTES,binType);
+				setSasAllocationDetails(user, now, binTx, sasAllocation, sasAllocationParent, CashType.NOTES, binType);
 				bundleRequired = bundleRequired.subtract(availableBundle);
 				eligibleSASList.add(sasAllocation);
 			}
 		}
 
 		if (totalAvailableBundle.compareTo(totalBundleRequired) >= 0) {
-			
+
 			return eligibleSASList;
 		} else {
 			throw new BaseGuiException("Required Bundle is not available, TotalAvailableBundle is:"
@@ -1927,8 +1867,7 @@ public class UtilityJpa {
 	}
 
 	public static List<SASAllocation> getCoinsForSASRequest(List<BinTransaction> txnList, BigDecimal bundleRequired,
-			SASAllocation sasData, Sas sasAllocationParent, CurrencyType binType, User user)
-	{
+			SASAllocation sasData, Sas sasAllocationParent, CurrencyType binType, User user) {
 		Calendar now = Calendar.getInstance();
 		List<SASAllocation> eligibleSASList = new ArrayList<>();
 		for (BinTransaction binTx : txnList) {
@@ -1942,13 +1881,15 @@ public class UtilityJpa {
 			if (availableBundle.compareTo(bundleRequired) >= 0) {
 				sasAllocation.setBundle(bundleRequired);
 				calculateAndSetPendingBundleRequest(bundleRequired, binTx);
-				setSasAllocationDetails(user, now, binTx, sasAllocation, sasAllocationParent, CashType.COINS, CurrencyType.FRESH);
+				setSasAllocationDetails(user, now, binTx, sasAllocation, sasAllocationParent, CashType.COINS,
+						CurrencyType.FRESH);
 				eligibleSASList.add(sasAllocation);
 				break;
 			} else {
 				sasAllocation.setBundle(availableBundle);
 				calculateAndSetPendingBundleRequest(availableBundle, binTx);
-				setSasAllocationDetails(user, now, binTx, sasAllocation, sasAllocationParent, CashType.COINS, CurrencyType.FRESH);
+				setSasAllocationDetails(user, now, binTx, sasAllocation, sasAllocationParent, CashType.COINS,
+						CurrencyType.FRESH);
 				bundleRequired = bundleRequired.subtract(availableBundle);
 				eligibleSASList.add(sasAllocation);
 			}
@@ -1999,19 +1940,19 @@ public class UtilityJpa {
 					soiled.setUpdateTime(now);
 					soiled.setStatus(OtherStatus.REQUESTED);
 					soiled.setBinTxnId(binTx.getId());
-					//bundleRequired = bundleRequired.subtract(availableBundle);
+					// bundleRequired =
+					// bundleRequired.subtract(availableBundle);
 					soiled.setPendingBundle(bundleRequired);
 					eligibleSoiledList.add(soiled);
-				} 
-				else
-				{
-					throw new BaseGuiException("Soiled Boxes are not avaiable for "+denom+" denomination");
+				} else {
+					throw new BaseGuiException("Soiled Boxes are not avaiable for " + denom + " denomination");
 				}
 			}
 		}
-     /*  if (bundleRequired != BigDecimal.ZERO) {
-			throw new BaseGuiException("Soiled Boxes are not avaiable for "+denom+" denomination");
-		}*/
+		/*
+		 * if (bundleRequired != BigDecimal.ZERO) { throw new BaseGuiException(
+		 * "Soiled Boxes are not avaiable for "+denom+" denomination"); }
+		 */
 		return eligibleSoiledList;
 	}
 
@@ -2032,7 +1973,6 @@ public class UtilityJpa {
 		}
 	}
 
-
 	public static BigDecimal getPendingBundleRequest(BinTransaction binTx) {
 		return binTx.getPendingBundleRequest() == null ? BigDecimal.ZERO : binTx.getPendingBundleRequest();
 	}
@@ -2051,8 +1991,7 @@ public class UtilityJpa {
 
 	public static List<DiversionORVAllocation> getBinForDiversionORV(List<BinTransaction> txnList,
 			List<DiversionORVAllocation> dorvList, BigDecimal bundleRequired, User user, BigDecimal total,
-			String category, CurrencyType binType)
-	{
+			String category, CurrencyType binType) {
 		Calendar now = Calendar.getInstance();
 		List<DiversionORVAllocation> eligibleDorvList = new ArrayList<>();
 		for (BinTransaction binTx : txnList) {
@@ -2073,7 +2012,8 @@ public class UtilityJpa {
 				dorv.setPendingBundle(bundleRequired);
 				dorv.setDenomination(binTx.getDenomination());
 				dorv.setCurrencyType(binTx.getBinType());
-				dorv.setTotal(dorv.getBundle().multiply(new BigDecimal(1000).multiply(new BigDecimal(binTx.getDenomination()))));
+				dorv.setTotal(dorv.getBundle()
+						.multiply(new BigDecimal(1000).multiply(new BigDecimal(binTx.getDenomination()))));
 				dorv.setCategory(category);
 				dorv.setIcmcId(user.getIcmcId());
 				dorv.setInsertBy(user.getId());
@@ -2089,7 +2029,8 @@ public class UtilityJpa {
 				calculateAndSetPendingBundleRequest(availableBundle, binTx);
 				dorv.setPendingBundle(availableBundle);
 				dorv.setDenomination(binTx.getDenomination());
-				dorv.setTotal(dorv.getBundle().multiply(new BigDecimal(1000).multiply(new BigDecimal(binTx.getDenomination()))));
+				dorv.setTotal(dorv.getBundle()
+						.multiply(new BigDecimal(1000).multiply(new BigDecimal(binTx.getDenomination()))));
 				dorv.setCurrencyType(binTx.getBinType());
 				dorv.setCategory(category);
 				dorv.setIcmcId(user.getIcmcId());
@@ -2309,11 +2250,12 @@ public class UtilityJpa {
 		cra.setPendingRequestedBundle(craAllocation.getBundle());
 		cra.setUpdateTime(now);
 		cra.setStatus(OtherStatus.REQUESTED);
-		
+
 		CRAList.add(cra);
-		
+
 		return CRAList;
 	}
+
 	public static List<CRAAllocationLog> processCRAAllocationLogRequest(CRAAllocation craAllocationData) {
 		List<CRAAllocationLog> CRAAllocationLogList = new ArrayList<>();
 		CRAAllocationLog craAloLog = new CRAAllocationLog();
@@ -2336,7 +2278,8 @@ public class UtilityJpa {
 		CRAAllocationLogList.add(craAloLog);
 		return CRAAllocationLogList;
 	}
-	public static void processCRALogRequest(CRA craList,CRALog craLog){
+
+	public static void processCRALogRequest(CRA craList, CRALog craLog) {
 		List<CRALog> CRALogList = new ArrayList<>();
 		craLog.setIcmcId(craList.getIcmcId());
 		craLog.setInsertBy(craList.getInsertBy());
@@ -2353,7 +2296,7 @@ public class UtilityJpa {
 		craLog.setAccountNumber(craList.getAccountNumber());
 		craLog.setAction(1);
 		CRALogList.add(craLog);
-	
+
 	}
 
 	public static CRAAllocation getForwardProcessBundleForCRAPayment(CRAAllocation craAllocation,
@@ -2446,8 +2389,11 @@ public class UtilityJpa {
 		craRequested.setUpdateTime(now);
 		craRequested.setVault(craRequested.getVault()
 				.add(craRequestedUI.getVault() == null ? BigDecimal.ZERO : craRequestedUI.getVault()));
-		/*craRequested.setForward(craRequested.getForward()
-				.add(craRequestedUI.getForward() == null ? BigDecimal.ZERO : craRequestedUI.getForward()));*/
+		/*
+		 * craRequested.setForward(craRequested.getForward()
+		 * .add(craRequestedUI.getForward() == null ? BigDecimal.ZERO :
+		 * craRequestedUI.getForward()));
+		 */
 		craRequested.setPendingRequestedBundle(pendingBundleCount);
 		if (pendingBundleCount.compareTo(BigDecimal.ZERO) == 0) {
 			craRequested.setStatus(OtherStatus.PROCESSED);
@@ -2492,9 +2438,9 @@ public class UtilityJpa {
 		return State.valueOf("");
 	}
 
-	public static List<OtherBankAllocation> getBinForOtherBankRequest(List<BinTransaction> txnList, OtherBankAllocation otherBankData,
-			BigDecimal bundleRequired, BigDecimal total, CurrencyType binType, User user)
-	{
+	public static List<OtherBankAllocation> getBinForOtherBankRequest(List<BinTransaction> txnList,
+			OtherBankAllocation otherBankData, BigDecimal bundleRequired, BigDecimal total, CurrencyType binType,
+			User user) {
 		Calendar now = Calendar.getInstance();
 		List<OtherBankAllocation> eligibleOtherBankList = new ArrayList<>();
 		for (BinTransaction binTx : txnList) {
@@ -2618,10 +2564,6 @@ public class UtilityJpa {
 		return alloccateTxs;
 	}
 
-	
-	
-	
-	
 	public static List<BinMaster> CSVtoArrayListForBin(List<String> binRecords) {
 		List<BinMaster> binList = new LinkedList<>();
 		for (String str : binRecords) {
@@ -2700,6 +2642,7 @@ public class UtilityJpa {
 		availableBundle = bundleForRequest.subtract(availableBundle);
 		return availableBundle;
 	}
+
 	public static BigDecimal checkMoreRequiredBundleNeededForSas(List<SASAllocation> eligibleIndentRequestList,
 			BigDecimal bundleForRequest) {
 
@@ -2710,8 +2653,7 @@ public class UtilityJpa {
 		availableBundle = bundleForRequest.subtract(availableBundle);
 		return availableBundle;
 	}
-	
-	
+
 	public static BigDecimal checkMoreRequiredBundleNeededForMutilated(List<MutilatedIndent> eligibleIndentRequestList,
 			BigDecimal bundleForRequest) {
 
@@ -2722,7 +2664,6 @@ public class UtilityJpa {
 		availableBundle = bundleForRequest.subtract(availableBundle);
 		return availableBundle;
 	}
-
 
 	public static List<FreshFromRBI> getFreshFromRBIafterCounting(FreshFromRBI fresh, List<BinTransaction> binTxs,
 			User user, List<BinCapacityDenomination> capacityList, List<BinMaster> binMasterList,
@@ -2883,8 +2824,9 @@ public class UtilityJpa {
 			for (Indent indent : indentList) {
 				if (issuedBundle.compareTo(BigDecimal.ZERO) > 0) {
 					if (indent.getPendingBundleRequest().compareTo(issuedBundle) >= 0) {
-						//issuedBundle = indent.getPendingBundleRequest().subtract(issuedBundle);
-						//indent.setPendingBundleRequest(issuedBundle);
+						// issuedBundle =
+						// indent.getPendingBundleRequest().subtract(issuedBundle);
+						// indent.setPendingBundleRequest(issuedBundle);
 						indent.setPendingBundleRequest(indent.getPendingBundleRequest().subtract(issuedBundle));
 						if (indent.getPendingBundleRequest().compareTo(BigDecimal.ZERO) == 0) {
 							indent.setStatus(OtherStatus.PROCESSED);
@@ -2952,11 +2894,7 @@ public class UtilityJpa {
 		}
 
 	}
-	
-	
-	
-	
-	
+
 	public static List<AuditorIndent> getEligibleBundleListForAuditor(List<AuditorIndent> bundleList,
 			BigDecimal issuedBundle, User user) {
 		List<AuditorIndent> eligibleBundleList = new ArrayList<>();
@@ -3002,50 +2940,49 @@ public class UtilityJpa {
 	}
 
 	public static BranchReceipt settingBranchReceiptParametersForUpdation(BranchReceipt branchReceipt,
-            BranchReceipt branchReceiptDb, User user, Calendar now) {
-        branchReceipt.setIcmcId(user.getIcmcId());
-        branchReceipt.setDenomination(branchReceiptDb.getDenomination());
-        branchReceipt.setCurrencyType(branchReceiptDb.getCurrencyType());
-        branchReceipt.setCashSource(branchReceiptDb.getCashSource());
-        branchReceipt.setBinCategoryType(branchReceiptDb.getBinCategoryType());
-        branchReceipt.setInsertBy(branchReceiptDb.getInsertBy());
-        branchReceipt.setProcessedOrUnprocessed(branchReceiptDb.getProcessedOrUnprocessed());
-        branchReceipt.setUpdateBy(user.getId());
-        branchReceipt.setInsertTime(branchReceiptDb.getInsertTime());
-        branchReceipt.setUpdateTime(now);
-        return branchReceipt;
-    }
-	
-	public static BigDecimal addBigDecimal(BigDecimal val1, BigDecimal val2){
-			return val1.add(val2);
-	}
-	
-	/*public static BinTransaction setPendingBundleForDorvCancellation(User user, BinTransaction binTxn,
-			DiversionORVAllocation dorvAllocation) {
-		Calendar now = Calendar.getInstance();
-		if(binTxn.getPendingBundleRequest().compareTo(dorvAllocation.getBundle()) >= 0){
-			binTxn.setPendingBundleRequest(binTxn.getPendingBundleRequest().subtract(dorvAllocation.getBundle()));
-		}
-		binTxn.setUpdateBy(user.getId());
-		binTxn.setUpdateTime(now);
-		return binTxn;
+			BranchReceipt branchReceiptDb, User user, Calendar now) {
+		branchReceipt.setIcmcId(user.getIcmcId());
+		branchReceipt.setDenomination(branchReceiptDb.getDenomination());
+		branchReceipt.setCurrencyType(branchReceiptDb.getCurrencyType());
+		branchReceipt.setCashSource(branchReceiptDb.getCashSource());
+		branchReceipt.setBinCategoryType(branchReceiptDb.getBinCategoryType());
+		branchReceipt.setInsertBy(branchReceiptDb.getInsertBy());
+		branchReceipt.setProcessedOrUnprocessed(branchReceiptDb.getProcessedOrUnprocessed());
+		branchReceipt.setUpdateBy(user.getId());
+		branchReceipt.setInsertTime(branchReceiptDb.getInsertTime());
+		branchReceipt.setUpdateTime(now);
+		return branchReceipt;
 	}
 
-	public static BinTransaction setPendingBundleForOtherBankCancellation(User user, BinTransaction binTxn,
-			OtherBankAllocation otherBankAllocation) {
-		Calendar now = Calendar.getInstance();
-		if(binTxn.getPendingBundleRequest().compareTo(otherBankAllocation.getBundle()) >= 0){
-			binTxn.setPendingBundleRequest(binTxn.getPendingBundleRequest().subtract(otherBankAllocation.getBundle()));
-		}
-		binTxn.setUpdateBy(user.getId());
-		binTxn.setUpdateTime(now);
-		return binTxn;
-	}*/
+	public static BigDecimal addBigDecimal(BigDecimal val1, BigDecimal val2) {
+		return val1.add(val2);
+	}
+
+	/*
+	 * public static BinTransaction setPendingBundleForDorvCancellation(User
+	 * user, BinTransaction binTxn, DiversionORVAllocation dorvAllocation) {
+	 * Calendar now = Calendar.getInstance();
+	 * if(binTxn.getPendingBundleRequest().compareTo(dorvAllocation.getBundle())
+	 * >= 0){
+	 * binTxn.setPendingBundleRequest(binTxn.getPendingBundleRequest().subtract(
+	 * dorvAllocation.getBundle())); } binTxn.setUpdateBy(user.getId());
+	 * binTxn.setUpdateTime(now); return binTxn; }
+	 * 
+	 * public static BinTransaction
+	 * setPendingBundleForOtherBankCancellation(User user, BinTransaction
+	 * binTxn, OtherBankAllocation otherBankAllocation) { Calendar now =
+	 * Calendar.getInstance();
+	 * if(binTxn.getPendingBundleRequest().compareTo(otherBankAllocation.
+	 * getBundle()) >= 0){
+	 * binTxn.setPendingBundleRequest(binTxn.getPendingBundleRequest().subtract(
+	 * otherBankAllocation.getBundle())); } binTxn.setUpdateBy(user.getId());
+	 * binTxn.setUpdateTime(now); return binTxn; }
+	 */
 	@Transactional
 	public static BinTransaction setPendingBundleForORVCancellation(User user, BinTransaction binTxn,
 			BigDecimal cancelledBundles) {
 		Calendar now = Calendar.getInstance();
-		if(binTxn.getPendingBundleRequest().compareTo(cancelledBundles) >= 0){
+		if (binTxn.getPendingBundleRequest().compareTo(cancelledBundles) >= 0) {
 			binTxn.setPendingBundleRequest(binTxn.getPendingBundleRequest().subtract(cancelledBundles));
 		}
 		binTxn.setUpdateBy(user.getId());
@@ -3054,28 +2991,27 @@ public class UtilityJpa {
 	}
 
 	public static void PrintToPrinter(StringBuilder sb, User user) throws UnknownHostException, IOException {
-		Socket clientSocket=null;
-		try{
+		Socket clientSocket = null;
+		try {
 			String ip = user.getIcmcPrinter().getPrinterIP();
-		int port = user.getIcmcPrinter().getPort().intValue();
-		//Socket clientSocket=new Socket("10.64.99.120",9100); //ICICI pushpanjali LAN
-		 clientSocket=new Socket(ip,port); //ICICI pushpanjali LAN
-	    DataOutputStream outToServer = new DataOutputStream(clientSocket.getOutputStream());
-	    LOG.info("PrintToPrinter METHOD ");
-	    LOG.info("PrintToPrinter METHOD ICMC"+user.getIcmcId()+" ip "+ ip +" port "+ port);
-	    LOG.info("PrintToPrinter METHOD clientSocket "+clientSocket);
-	    LOG.info("PrintToPrinter METHOD outToServer "+outToServer);
-	    outToServer.writeBytes(sb.toString());
-	    clientSocket.close();
-	    }catch(IOException ioe){
-	    	 LOG.info("PrintToPrinter METHOD IN CATCH");
-	    	 clientSocket.close();
-	    	throw new BaseGuiException("Printer is not able to open "+ioe) ;
-	    }
+			int port = user.getIcmcPrinter().getPort().intValue();
+			// Socket clientSocket=new Socket("10.64.99.120",9100); //ICICI
+			// pushpanjali LAN
+			clientSocket = new Socket(ip, port); // ICICI pushpanjali LAN
+			DataOutputStream outToServer = new DataOutputStream(clientSocket.getOutputStream());
+			LOG.info("PrintToPrinter METHOD ");
+			LOG.info("PrintToPrinter METHOD ICMC" + user.getIcmcId() + " ip " + ip + " port " + port);
+			LOG.info("PrintToPrinter METHOD clientSocket " + clientSocket);
+			LOG.info("PrintToPrinter METHOD outToServer " + outToServer);
+			outToServer.writeBytes(sb.toString());
+			clientSocket.close();
+		} catch (IOException ioe) {
+			LOG.info("PrintToPrinter METHOD IN CATCH");
+			clientSocket.close();
+			throw new BaseGuiException("Printer is not able to open " + ioe);
+		}
 	}
-	
-	
-	
+
 	public static List<Mutilated> getMutilatedBin(Mutilated mutilated, List<BinTransaction> binTxs, User user) {
 		List<Mutilated> mutilatedList = new ArrayList<>();
 		for (BinTransaction binTx : binTxs) {
@@ -3097,13 +3033,9 @@ public class UtilityJpa {
 		return mutilatedList;
 
 	}
-	
-	
-	
-	
-	
-	public static List<MutilatedIndent> getBoxForMUtilatedIndentRequest(List<BinTransaction> txnList, int denomination, BigDecimal bundle,
-			User user, MutilatedIndent MutilatedIndentData)
+
+	public static List<MutilatedIndent> getBoxForMUtilatedIndentRequest(List<BinTransaction> txnList, int denomination,
+			BigDecimal bundle, User user, MutilatedIndent MutilatedIndentData)
 
 	{
 
@@ -3122,7 +3054,7 @@ public class UtilityJpa {
 			}
 
 			if (availableBundle.compareTo(bundleRequired) >= 0) {
-				//indent.setBin("BOX");
+				// indent.setBin("BOX");
 				mutilatedIndent.setBin(binTx.getBinNumber());
 				mutilatedIndent.setBundle(bundleRequired);
 				calculateAndSetPendingBundleRequest(bundleRequired, binTx);
@@ -3138,7 +3070,7 @@ public class UtilityJpa {
 				eligibleIndentList.add(mutilatedIndent);
 				break;
 			} else {
-				//indent.setBin("BOX");
+				// indent.setBin("BOX");
 				mutilatedIndent.setBin(binTx.getBinNumber());
 				mutilatedIndent.setBundle(availableBundle);
 				calculateAndSetPendingBundleRequest(availableBundle, binTx);
@@ -3157,11 +3089,9 @@ public class UtilityJpa {
 		}
 		return eligibleIndentList;
 	}
-	
-	
-	
-	public static List<MutilatedIndent> getBinForMutilatedIndentRequest(List<BinTransaction> txnList, int denomination, BigDecimal bundle,
-			User user, MutilatedIndent mutilatedIndentData) {
+
+	public static List<MutilatedIndent> getBinForMutilatedIndentRequest(List<BinTransaction> txnList, int denomination,
+			BigDecimal bundle, User user, MutilatedIndent mutilatedIndentData) {
 
 		Calendar now = Calendar.getInstance();
 		BigDecimal bundleRequired = bundle;
@@ -3211,68 +3141,58 @@ public class UtilityJpa {
 		}
 		return eligibleIndentList;
 	}
-	
-	
-	
-	public File discrepancyImagePath()
-	{
-		
-		 String folderPath="/home/inayat/image";
-		 File file = new File(folderPath);
-		 Calendar now = Calendar.getInstance();
-			int year = now.get(Calendar.YEAR);
-			int month = now.get(Calendar.MONTH) + 1;
-			int date1 = now.get(Calendar.DATE);
 
-			file = new File(folderPath + "/" + year + "/" + "/" + month + "/" + date1);
+	public File discrepancyImagePath() {
 
-			if (!file.exists()) {
-				if (file.mkdirs()) {
-					System.out.println("Directory is created!");
-				} else {
-					System.out.println("Failed to create directory!");
-				}
+		String folderPath = "/home/inayat/image";
+		File file = new File(folderPath);
+		Calendar now = Calendar.getInstance();
+		int year = now.get(Calendar.YEAR);
+		int month = now.get(Calendar.MONTH) + 1;
+		int date1 = now.get(Calendar.DATE);
+
+		file = new File(folderPath + "/" + year + "/" + "/" + month + "/" + date1);
+
+		if (!file.exists()) {
+			if (file.mkdirs()) {
+				System.out.println("Directory is created!");
+			} else {
+				System.out.println("Failed to create directory!");
 			}
+		}
 
 		return file;
 	}
-	
-	
-	
+
 	public static String getImages(String src) throws IOException {
 
-		/*String folderPath="/home/inayat/image";
-		 File file = new File(folderPath);
-		
-		int indexname = src.lastIndexOf("/");
+		/*
+		 * String folderPath="/home/inayat/image"; File file = new
+		 * File(folderPath);
+		 * 
+		 * int indexname = src.lastIndexOf("/");
+		 * 
+		 * if (indexname == src.length()) { src = src.substring(1, indexname); }
+		 * 
+		 * indexname = src.lastIndexOf("/"); String name =
+		 * src.substring(indexname, src.length()); // downloadImage=name[0];
+		 * //System.out.println("name===" + name);
+		 * 
+		 * URL url = new URL(src); InputStream in = url.openStream();
+		 * 
+		 * OutputStream out = new BufferedOutputStream(new FileOutputStream(file
+		 * + name));
+		 * 
+		 * for (int b; (b = in.read()) != -1;) { out.write(b); } out.close();
+		 * in.close();
+		 */
 
-		if (indexname == src.length()) {
-			src = src.substring(1, indexname);
-		}
-
-		indexname = src.lastIndexOf("/");
-		String name = src.substring(indexname, src.length());
-      // downloadImage=name[0];
-		//System.out.println("name===" + name);
-
-		URL url = new URL(src);
-		InputStream in = url.openStream();
-
-		OutputStream out = new BufferedOutputStream(new FileOutputStream(file + name));
-
-		for (int b; (b = in.read()) != -1;) {
-			out.write(b);
-		}
-		out.close();
-		in.close();*/
-		
 		String folderPath = "/home/rakesh/image";
 		URL url = new URL(src);
 		InputStream is = url.openStream();
 		OutputStream os = new FileOutputStream(folderPath);
 		byte[] b = new byte[2048];
-		boolean length;
-		while(length = is.read(b) != -1) {
+		while (is.read(b) != -1) {
 			os.write(b);
 		}
 		is.close();
@@ -3280,6 +3200,5 @@ public class UtilityJpa {
 		return src;
 
 	}
-	
-	
+
 }

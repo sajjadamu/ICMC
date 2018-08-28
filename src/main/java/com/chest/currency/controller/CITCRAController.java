@@ -32,27 +32,19 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import org.supercsv.cellprocessor.Optional;
-import org.supercsv.cellprocessor.ParseBigDecimal;
 import org.supercsv.cellprocessor.ParseDate;
-import org.supercsv.cellprocessor.ParseDouble;
-import org.supercsv.cellprocessor.ParseEnum;
-import org.supercsv.cellprocessor.ParseInt;
-import org.supercsv.cellprocessor.Token;
 import org.supercsv.cellprocessor.constraint.NotNull;
 import org.supercsv.cellprocessor.ift.CellProcessor;
 import org.supercsv.io.CsvBeanReader;
 import org.supercsv.io.ICsvBeanReader;
 import org.supercsv.prefs.CsvPreference;
 
-import com.chest.currency.entity.model.BinTransaction;
 import com.chest.currency.entity.model.CITCRADriver;
 import com.chest.currency.entity.model.CITCRAVehicle;
 import com.chest.currency.entity.model.CITCRAVendor;
 import com.chest.currency.entity.model.ICMC;
 import com.chest.currency.entity.model.User;
 import com.chest.currency.entity.model.ZoneMaster;
-import com.chest.currency.enums.CurrencyType;
 import com.chest.currency.enums.Status;
 import com.chest.currency.enums.Zone;
 import com.chest.currency.service.CITCRAService;
@@ -65,7 +57,7 @@ public class CITCRAController {
 
 	@Autowired
 	CITCRAService citCraService;
-	
+
 	@Autowired
 	ICMCService iCMCService;
 
@@ -74,25 +66,25 @@ public class CITCRAController {
 		CITCRAVendor obj = new CITCRAVendor();
 		return new ModelAndView("/CITCRAVendor", "user", obj);
 	}
-	
-	@RequestMapping(value="icmcList.json")
-	   public @ResponseBody List<ICMC> sectionList(@RequestParam(value="region", required=true) String region){
-	   return citCraService.getICMCName(region);
+
+	@RequestMapping(value = "icmcList.json")
+	public @ResponseBody List<ICMC> sectionList(@RequestParam(value = "region", required = true) String region) {
+		return citCraService.getICMCName(region);
 	}
 
 	@RequestMapping(value = "/addCITCRAVendor", method = RequestMethod.POST)
 	public ModelAndView addCitCraVendor(@ModelAttribute("obj") CITCRAVendor citcraVendor, HttpSession session,
 			@RequestParam MultipartFile file, HttpServletRequest request, RedirectAttributes redirectAttributes) {
-		
+
 		User user = (User) session.getAttribute("login");
 		citcraVendor.setInsertBy(user.getId());
 		citcraVendor.setUpdateBy(user.getId());
-		
+
 		Calendar now = Calendar.getInstance();
 		citcraVendor.setInsertTime(now);
 		citcraVendor.setUpdateTime(now);
 		citcraVendor.setStatus(Status.ENABLED);
-		
+
 		if (file.getSize() == 0) {
 			populateIcmcList(citcraVendor);
 			citCraService.addCitCraVendor(citcraVendor);
@@ -126,7 +118,7 @@ public class CITCRAController {
 					icmcRecords.add(csvLine);
 				}
 				List<ICMC> icmcList = iCMCService.getICMCList();
-				List<CITCRAVendor> list = UtilityJpa.CSVtoArrayListForCITCRAVendor(icmcRecords,icmcList);
+				List<CITCRAVendor> list = UtilityJpa.CSVtoArrayListForCITCRAVendor(icmcRecords, icmcList);
 				citCraService.UploadCITCRAVendor(list, citcraVendor);
 
 			} catch (IOException e) {
@@ -142,16 +134,16 @@ public class CITCRAController {
 		}
 		return new ModelAndView("redirect:./viewCITCRAVendor");
 	}
-	
+
 	@RequestMapping("/editCITCRAVendor")
-	public ModelAndView editCITCRAVendor(@RequestParam Long id, CITCRAVendor vendor ) {
+	public ModelAndView editCITCRAVendor(@RequestParam Long id, CITCRAVendor vendor) {
 		ModelMap model = new ModelMap();
 		vendor.setId(id);
 		vendor = citCraService.vendorRecordForModify(id);
 		populateIcmcIds(vendor);
 		List<ZoneMaster> regionList = citCraService.getRegionList(vendor);
 		List<ICMC> icmcList = citCraService.getIcmcList(vendor);
-	
+
 		model.put("user", vendor);
 		model.put("zoneList", Zone.values());
 		model.put("regionList", regionList);
@@ -161,8 +153,8 @@ public class CITCRAController {
 
 	private void populateIcmcIds(CITCRAVendor vendor) {
 		List<Long> icmcIds = new ArrayList<Long>();
-		if(vendor.getIcmcList() != null ){
-			for(ICMC icmc : vendor.getIcmcList()){
+		if (vendor.getIcmcList() != null) {
+			for (ICMC icmc : vendor.getIcmcList()) {
 				icmcIds.add(icmc.getId());
 			}
 		}
@@ -175,7 +167,7 @@ public class CITCRAController {
 		LOG.info("VIEW Vendor RECORD");
 		return new ModelAndView("/viewCITCRAVendor", "records", vendorList);
 	}
-	
+
 	@RequestMapping("/updateCITCRAVendor")
 	public ModelAndView updateCitCRAVendor(@ModelAttribute("user") CITCRAVendor vendor, HttpSession session,
 			RedirectAttributes redirectAttributes) {
@@ -187,7 +179,7 @@ public class CITCRAController {
 		vendor.setUpdateTime(now);
 		vendor.setStatus(Status.ENABLED);
 		populateIcmcList(vendor);
-		
+
 		citCraService.updateCITCRAVendor(vendor);
 		redirectAttributes.addFlashAttribute("updateMsg", "Vendor record updated successfully");
 		return new ModelAndView("redirect:./viewCITCRAVendor");
@@ -195,12 +187,12 @@ public class CITCRAController {
 
 	private void populateIcmcList(CITCRAVendor vendor) {
 		List<ICMC> icmcList = null;
-		if(vendor.getIcmcIds() != null){
+		if (vendor.getIcmcIds() != null) {
 			icmcList = iCMCService.getICMCList(vendor.getIcmcIds());
 		}
 		vendor.setIcmcList(icmcList);
 	}
-	
+
 	@RequestMapping("/removeCITCRAVendor")
 	public ModelAndView removeCITCRAVendor(@RequestParam Long id) {
 		CITCRAVendor vendor = new CITCRAVendor();
@@ -223,7 +215,7 @@ public class CITCRAController {
 		redirectAttributes.addFlashAttribute("removeMsg", "Vendor has been removed successfully");
 		return new ModelAndView("redirect:./viewCITCRAVendor");
 	}
-	
+
 	@RequestMapping("/viewCITCRAVehicle")
 	public ModelAndView getCITCRAVehicleRecord() {
 		List<CITCRAVehicle> vehicleList = citCraService.getVehicleDetails();
@@ -233,7 +225,7 @@ public class CITCRAController {
 
 	@RequestMapping("/CITCRAVehicle")
 	public ModelAndView addVechile(CITCRAVehicle obj, HttpSession session) {
-		User user = (User)session.getAttribute("login");
+		User user = (User) session.getAttribute("login");
 		ModelMap map = new ModelMap();
 		List<CITCRAVendor> vendorList = citCraService.getVendorNameAccordingToICMC(user.getRegionId());
 		map.put("records", vendorList);
@@ -241,22 +233,13 @@ public class CITCRAController {
 		return new ModelAndView("/CITCRAVehicle", map);
 	}
 
-	 private static CellProcessor[] getProcessors() {
-	        final CellProcessor[] processors = new CellProcessor[] {
-	                new NotNull(), 
-	                new NotNull(), 
-	                new ParseDate("yyyy-mm-dd"),
-	                new NotNull(), 
-	                new NotNull(), 
-	                new ParseDate("yyyy-mm-dd"),
-	                new ParseDate("yyyy-mm-dd"),
-	                new ParseDate("yyyy-mm-dd"),
-	       };
-	        return processors;
-	    }
+	private static CellProcessor[] getProcessors() {
+		final CellProcessor[] processors = new CellProcessor[] { new NotNull(), new NotNull(),
+				new ParseDate("yyyy-mm-dd"), new NotNull(), new NotNull(), new ParseDate("yyyy-mm-dd"),
+				new ParseDate("yyyy-mm-dd"), new ParseDate("yyyy-mm-dd"), };
+		return processors;
+	}
 
-	
-	
 	@RequestMapping("/addCITCRAVehicle")
 	public ModelAndView citCRAVehicle(@ModelAttribute("obj") CITCRAVehicle vehicle, HttpSession session,
 			@RequestParam MultipartFile file, HttpServletRequest request, RedirectAttributes redirectAttributes) {
@@ -267,13 +250,12 @@ public class CITCRAController {
 		vehicle.setInsertTime(now);
 		vehicle.setUpdateTime(now);
 		vehicle.setStatus(Status.ENABLED);
-		
+
 		if (file.getSize() == 0) {
 			citCraService.addVehicle(vehicle);
 			redirectAttributes.addFlashAttribute("successMsg", "Vehicle has been added successfully");
 			return new ModelAndView("redirect:./viewCITCRAVehicle");
 		} else {
-			BufferedReader csvBuffer = null;
 			String rootPath = request.getSession().getServletContext().getRealPath("/");
 			File dir = new File(rootPath + File.separator + "uploadedfile");
 			if (!dir.exists()) {
@@ -293,56 +275,50 @@ public class CITCRAController {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-			
-			List<CITCRAVehicle> vehicleRecords = new LinkedList<>();
-			
-			CITCRAVehicle icmcc=null;
-			try{
-					try(ICsvBeanReader beanReader = new CsvBeanReader(new FileReader(serverFile), CsvPreference.STANDARD_PREFERENCE))
-						{ 
-							final String[] headers = beanReader.getHeader(true);
-								final CellProcessor[] processors = getProcessors();
-									while ((icmcc = beanReader.read(CITCRAVehicle.class, headers, processors)) != null) {
-										vehicleRecords.add(icmcc);	
-									}
-        }}catch(Exception r){
-        	redirectAttributes.addFlashAttribute("errorMsg", "Csv file is not of standard formate ");
-        	return new ModelAndView("redirect:./CITCRAVehicle");
-        	}
 
-			//List<CITCRAVehicle> list = UtilityJpa.CSVtoArrayListForCITCRAVehicle(vehicleRecords);
+			List<CITCRAVehicle> vehicleRecords = new LinkedList<>();
+
+			CITCRAVehicle icmcc = null;
+			try {
+				try (ICsvBeanReader beanReader = new CsvBeanReader(new FileReader(serverFile),
+						CsvPreference.STANDARD_PREFERENCE)) {
+					final String[] headers = beanReader.getHeader(true);
+					final CellProcessor[] processors = getProcessors();
+					while ((icmcc = beanReader.read(CITCRAVehicle.class, headers, processors)) != null) {
+						vehicleRecords.add(icmcc);
+					}
+				}
+			} catch (Exception r) {
+				redirectAttributes.addFlashAttribute("errorMsg", "Csv file is not of standard formate ");
+				return new ModelAndView("redirect:./CITCRAVehicle");
+			}
+
+			// List<CITCRAVehicle> list =
+			// UtilityJpa.CSVtoArrayListForCITCRAVehicle(vehicleRecords);
 			citCraService.UploadCITCRAVehicle(vehicleRecords, vehicle);
 			redirectAttributes.addFlashAttribute("uploadMsg", "List of vehicles has been uploaded successfully");
-			
+
 			/*
-			try {
-				String csvLine;
-				csvBuffer = new BufferedReader(new FileReader(serverFile));
-				List<String> vehicleRecords = new LinkedList<>();
-				csvBuffer.readLine(); 
-				while ((csvLine = csvBuffer.readLine()) != null) {
-					vehicleRecords.add(csvLine);
-				}
-				List<CITCRAVehicle> list = UtilityJpa.CSVtoArrayListForCITCRAVehicle(vehicleRecords);
-				citCraService.UploadCITCRAVehicle(list, vehicle);
-				redirectAttributes.addFlashAttribute("uploadMsg", "List of vehicles has been uploaded successfully");
-			} catch (IOException e) {
-				e.printStackTrace();
-			} finally {
-				try {
-					if (csvBuffer != null)
-						csvBuffer.close();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}*/
+			 * try { String csvLine; csvBuffer = new BufferedReader(new
+			 * FileReader(serverFile)); List<String> vehicleRecords = new
+			 * LinkedList<>(); csvBuffer.readLine(); while ((csvLine =
+			 * csvBuffer.readLine()) != null) { vehicleRecords.add(csvLine); }
+			 * List<CITCRAVehicle> list =
+			 * UtilityJpa.CSVtoArrayListForCITCRAVehicle(vehicleRecords);
+			 * citCraService.UploadCITCRAVehicle(list, vehicle);
+			 * redirectAttributes.addFlashAttribute("uploadMsg",
+			 * "List of vehicles has been uploaded successfully"); } catch
+			 * (IOException e) { e.printStackTrace(); } finally { try { if
+			 * (csvBuffer != null) csvBuffer.close(); } catch (IOException e) {
+			 * e.printStackTrace(); } }
+			 */
 			return new ModelAndView("redirect:./viewCITCRAVehicle");
 		}
 	}
 
 	@RequestMapping("/editCITCRAVehicle")
 	public ModelAndView editCITCRAVehicle(@RequestParam Long id, CITCRAVehicle vehicle, HttpSession session) {
-		User user = (User)session.getAttribute("login");
+		User user = (User) session.getAttribute("login");
 		List<CITCRAVendor> vendorList = citCraService.getVendorNameAccordingToICMC(user.getRegionId());
 		ModelMap model = new ModelMap();
 		vehicle.setId(id);
@@ -373,7 +349,7 @@ public class CITCRAController {
 		vehicle = citCraService.vehicleRecordForRemove(id);
 		return new ModelAndView("removeCITCRAVehicle", "user", vehicle);
 	}
-	
+
 	@RequestMapping("/deleteVehicle")
 	public ModelAndView deleteCitCRAVehicle(@ModelAttribute("user") CITCRAVehicle vehicle, HttpSession session,
 			RedirectAttributes redirectAttributes) {
@@ -395,34 +371,28 @@ public class CITCRAController {
 		LOG.info("VIEW DRIVER RECORD");
 		return new ModelAndView("/viewCITCRADriver", "records", driverList);
 	}
-	
-	@RequestMapping(value="vehicleList.json")
-	   public @ResponseBody List<CITCRAVehicle> vehicleNumberList(@RequestParam(value="vendor", required=true) String vendor){
-	    return citCraService.getVehicleNumberAccordingToVendorForDriver(vendor);
-	   }
+
+	@RequestMapping(value = "vehicleList.json")
+	public @ResponseBody List<CITCRAVehicle> vehicleNumberList(
+			@RequestParam(value = "vendor", required = true) String vendor) {
+		return citCraService.getVehicleNumberAccordingToVendorForDriver(vendor);
+	}
 
 	@RequestMapping("/CITCRADriver")
 	public ModelAndView addDriver(CITCRADriver obj, HttpSession session) {
-		User user = (User)session.getAttribute("login");
+		User user = (User) session.getAttribute("login");
 		List<CITCRAVendor> vendorList = citCraService.getVendorNameAccordingToICMC(user.getRegionId());
 		ModelMap map = new ModelMap();
 		map.put("records", vendorList);
 		map.put("user", obj);
 		return new ModelAndView("/CITCRADriver", map);
 	}
-	
+
 	private static CellProcessor[] getProcessorsDriver() {
-        final CellProcessor[] processors = new CellProcessor[] {
-                new NotNull(), 
-                new NotNull(),
-                new NotNull(), 
-                new NotNull(),
-                new NotNull(),
-                new ParseDate("yyyy-mm-dd"),
-                new ParseDate("yyyy-mm-dd"),
-                       };
-        return processors;
-    }
+		final CellProcessor[] processors = new CellProcessor[] { new NotNull(), new NotNull(), new NotNull(),
+				new NotNull(), new NotNull(), new ParseDate("yyyy-mm-dd"), new ParseDate("yyyy-mm-dd"), };
+		return processors;
+	}
 
 	@RequestMapping("/addCITCRADriver")
 	public ModelAndView citCRADriver(@ModelAttribute("obj") CITCRADriver driver, HttpSession session,
@@ -434,7 +404,7 @@ public class CITCRAController {
 		driver.setInsertTime(now);
 		driver.setUpdateTime(now);
 		driver.setStatus(Status.ENABLED);
-		
+
 		if (file.getSize() == 0) {
 			citCraService.addDriver(driver);
 			redirectAttributes.addFlashAttribute("successMsg", "Driver has been added successfully");
@@ -460,21 +430,20 @@ public class CITCRAController {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-			CITCRADriver icmcc=null;
-			try{
-					try(ICsvBeanReader beanReader = new CsvBeanReader(new FileReader(serverFile), CsvPreference.STANDARD_PREFERENCE))
-						{ 
-							final String[] headers = beanReader.getHeader(true);
-								final CellProcessor[] processors = getProcessorsDriver();
-									while ((icmcc = beanReader.read(CITCRADriver.class, headers, processors)) != null) {
-										}
-        }}catch(Exception r){r.printStackTrace();
-        	redirectAttributes.addFlashAttribute("errorMsg", "Csv file is not of standard formate ");
-        	return new ModelAndView("redirect:./CITCRADriver");
-        	}
-			
-			
-			
+			try {
+				try (ICsvBeanReader beanReader = new CsvBeanReader(new FileReader(serverFile),
+						CsvPreference.STANDARD_PREFERENCE)) {
+					final String[] headers = beanReader.getHeader(true);
+					final CellProcessor[] processors = getProcessorsDriver();
+					while ((beanReader.read(CITCRADriver.class, headers, processors)) != null) {
+					}
+				}
+			} catch (Exception r) {
+				r.printStackTrace();
+				redirectAttributes.addFlashAttribute("errorMsg", "Csv file is not of standard formate ");
+				return new ModelAndView("redirect:./CITCRADriver");
+			}
+
 			try {
 				String csvLine;
 				csvBuffer = new BufferedReader(new FileReader(serverFile));
@@ -502,7 +471,7 @@ public class CITCRAController {
 
 	@RequestMapping("/editCITCRADriver")
 	public ModelAndView editCITCRADriver(@RequestParam Long id, CITCRADriver driver, HttpSession session) {
-		User user = (User)session.getAttribute("login");
+		User user = (User) session.getAttribute("login");
 		ModelMap model = new ModelMap();
 		driver.setId(id);
 		driver = citCraService.driverRecordForModify(id);
@@ -551,5 +520,4 @@ public class CITCRAController {
 		return new ModelAndView("redirect:./viewCITCRADriver");
 	}
 
-	
 }

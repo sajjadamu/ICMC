@@ -11,7 +11,7 @@ import com.chest.currency.viewBean.FreshBean;
 
 @org.springframework.stereotype.Controller
 public class Controller {
-	
+
 	@RequestMapping("/TE")
 	public ModelAndView TE2() {
 		FreshBean fresh = new FreshBean();

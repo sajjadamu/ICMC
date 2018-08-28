@@ -27,6 +27,7 @@ import lombok.ToString;
 
 /**
  * JPA annotated class mapped to UI_USER_PASSWORD_RESET
+ * 
  * @author peerhasan
  *
  */
@@ -34,42 +35,41 @@ import lombok.ToString;
 @Table(name = "UI_USER_PASSWORD_RESET")
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 @Data
-@EqualsAndHashCode(of = {"userId"})
+@EqualsAndHashCode(of = { "userId" })
 @ToString
 public class PasswordReset {
-	
+
 	@Id
 	@Column(name = "USER_ID")
 	protected String userId;
-	
+
 	@Basic
-	@Column(name = "TOKEN" )
+	@Column(name = "TOKEN")
 	protected String token;
-	
 
 	@Enumerated(EnumType.STRING)
-	@Column(name = "STATUS" )
+	@Column(name = "STATUS")
 	protected Status status;
-	
+
 	@Basic
-	@Column(name = "CREATED_BY" )
+	@Column(name = "CREATED_BY")
 	protected String createdBy;
-	
+
 	@Basic
-	@Column(name = "UPDATED_BY" )
+	@Column(name = "UPDATED_BY")
 	protected String updatedBy;
-	
-	@Temporal( TemporalType.TIMESTAMP )
-	@Column(name = "CREATED_DATETIME" )
+
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "CREATED_DATETIME")
 	protected Calendar createdDateTime;
-	
-	@Column(name = "UPDATED_DATETIME" )
+
+	@Column(name = "UPDATED_DATETIME")
 	protected Calendar updatedDateTime;
-	
+
 	@Transient
 	protected String password;
-	
+
 	@Transient
 	protected String rePassword;
-	
+
 }

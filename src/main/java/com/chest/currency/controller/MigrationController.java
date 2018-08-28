@@ -10,17 +10,14 @@ import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
-import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.LinkedList;
 import java.util.List;
 
-import javax.mail.Session;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.apache.commons.logging.Log;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +26,6 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -38,8 +34,6 @@ import org.supercsv.cellprocessor.ParseBigDecimal;
 import org.supercsv.cellprocessor.ParseDate;
 import org.supercsv.cellprocessor.ParseEnum;
 import org.supercsv.cellprocessor.ParseInt;
-import org.supercsv.cellprocessor.constraint.NotNull;
-import org.supercsv.cellprocessor.constraint.Unique;
 import org.supercsv.cellprocessor.constraint.UniqueHashCode;
 import org.supercsv.cellprocessor.ift.CellProcessor;
 import org.supercsv.io.CsvBeanReader;
@@ -62,8 +56,6 @@ import com.chest.currency.enums.YesNo;
 import com.chest.currency.service.BinDashboardService;
 import com.chest.currency.service.BinTransactionService;
 import com.chest.currency.service.CashPaymentService;
-import com.chest.currency.service.CashPaymentServiceImpl;
-import com.ibm.icu.math.BigDecimal;
 import com.mysema.query.Tuple;
 
 @Controller
@@ -73,30 +65,30 @@ public class MigrationController {
 
 	@Autowired
 	BinTransactionService binTransactionService;
-	
+
 	@Autowired
 	CashPaymentService cashPaymentService;
-	
+
 	@Autowired
 	BinDashboardService binDashboardService;
 
 	@Autowired
 	String documentFilePath;
-        
+
 	@RequestMapping("/binTransaction")
 	public ModelAndView viewHolidayMaster(HttpSession session) {
 		LOG.info("Going to upload Bin Transaction Data");
-		User user=(User)session.getAttribute("login");
+		User user = (User) session.getAttribute("login");
 		ModelMap map = new ModelMap();
-		if(user.getIcmcId() !=null){
-		List<Tuple> branchReceipts  = cashPaymentService.getAllShrinkWrapBundleFromBranchReceipt(user.getIcmcId());
-		List<Tuple> summaryListForCoins = binDashboardService.getRecordCoinsForSummary(user.getIcmcId());
-		List<Tuple> summaryList = binDashboardService.getRecordForSummary(user.getIcmcId());
-		map.put("branchData", branchReceipts.size());
-		map.put("migratedDataNotes", summaryList.size());
-		map.put("migratedDataCoins", summaryListForCoins.size());
+		if (user.getIcmcId() != null) {
+			List<Tuple> branchReceipts = cashPaymentService.getAllShrinkWrapBundleFromBranchReceipt(user.getIcmcId());
+			List<Tuple> summaryListForCoins = binDashboardService.getRecordCoinsForSummary(user.getIcmcId());
+			List<Tuple> summaryList = binDashboardService.getRecordForSummary(user.getIcmcId());
+			map.put("branchData", branchReceipts.size());
+			map.put("migratedDataNotes", summaryList.size());
+			map.put("migratedDataCoins", summaryListForCoins.size());
 		}
-		
+
 		map.addAttribute("documentFilePath", "./files/" + documentFilePath);
 		return new ModelAndView("binTransaction", map);
 	}
@@ -184,10 +176,10 @@ public class MigrationController {
 
 		}
 		try {
-			
+
 			boolean isSuccess = binTransactionService.UploadBinTransaction(binList, binTransaction, user.getIcmcId());
 			LOG.info("binTransactionService isSuccess " + isSuccess);
-			
+
 			redirectAttributes.addFlashAttribute("successMsg",
 					"Bin Transaction records have been uploaded successfully");
 		} catch (Exception ex) {
@@ -278,7 +270,8 @@ public class MigrationController {
 				redirectAttributes.addFlashAttribute("errorMsg",
 						"Duplicate Box " + boxlst.getBoxName() + ", BOX with this name is already Exist.");
 				return new ModelAndView("redirect:./createBox");
-			}if (dbBinName != null) {
+			}
+			if (dbBinName != null) {
 				redirectAttributes.addFlashAttribute("errorMsg",
 						"Box " + boxlst.getBoxName() + ", is same name  already defined as Bin name.");
 				return new ModelAndView("redirect:./createBox");
@@ -377,10 +370,12 @@ public class MigrationController {
 
 		if (checkBinCapacity) {
 			try {
-				if(binTransactionList.size() != branchReceiptList.size()){
-					redirectAttributes.addFlashAttribute("errorMsgForBR", "Bin in Branch List" + branchReceiptList.size() + "should be same  Bin in BinTransaction List "+ binTransactionList.size());
+				if (binTransactionList.size() != branchReceiptList.size()) {
+					redirectAttributes.addFlashAttribute("errorMsgForBR",
+							"Bin in Branch List" + branchReceiptList.size()
+									+ "should be same  Bin in BinTransaction List " + binTransactionList.size());
 					return new ModelAndView("redirect:./binTransaction");
-				}else {
+				} else {
 					branchReceipt.setIcmcId(user.getIcmcId());
 					binTransactionService.uploadBranchReceipt(branchReceiptList, branchReceipt);
 				}

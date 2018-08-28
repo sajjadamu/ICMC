@@ -37,18 +37,18 @@ import com.chest.currency.enums.OtherStatus;
 @EqualsAndHashCode(of = { "id" })
 @ToString
 public class OtherBankAllocation {
-	
+
 	@Id
-	//@GeneratedValue(strategy = GenerationType.AUTO)
+	// @GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "ID")
 	@GeneratedValue(generator = "OTHER_BANK_ALLOCATION_SEQ")
 	@SequenceGenerator(name = "OTHER_BANK_ALLOCATION_SEQ", sequenceName = "OTHER_BANK_ALLOCATION_SEQ", allocationSize = 100)
 	protected Long id;
-	
+
 	@Basic
 	@Column(name = "OTHER_BANK_ID")
 	protected Long otherBankId;
-	
+
 	@Basic
 	@Column(name = "DENOMINATION")
 	protected Integer denomination;
@@ -64,17 +64,15 @@ public class OtherBankAllocation {
 	@Basic
 	@Column(name = "BIN_NUM")
 	protected String binNumber;
-	
-	
+
 	@Basic
 	@Column(name = "ICMC_ID")
 	protected BigInteger icmcId;
 
-	
 	@Enumerated(EnumType.STRING)
 	@Column(name = "CURRENCY_TYPE")
 	protected CurrencyType currencyType;
-	
+
 	@Basic
 	@Column(name = "INSERT_BY")
 	protected String insertBy;
@@ -89,21 +87,21 @@ public class OtherBankAllocation {
 
 	@Column(name = "UPDATE_TIME")
 	protected Calendar updateTime;
-	
+
 	@Basic
 	@Column(name = "PENDING_BUNDLE")
 	protected BigDecimal pendingBundle;
-	
+
 	@Enumerated(EnumType.STRING)
 	@Column(name = "STATUS")
 	protected OtherStatus status;
-	
+
 	@Transient
 	protected String branchName;
-	
+
 	@Transient
 	protected String bankName;
-	
+
 	@Transient
 	protected BigDecimal denom1Pieces;
 	@Transient
@@ -130,14 +128,13 @@ public class OtherBankAllocation {
 	protected BigDecimal totalInPieces;
 	@Transient
 	protected BigDecimal totalValueOfBankNotes;
-	
-	public OtherBankAllocation()
-	{
-		
+
+	public OtherBankAllocation() {
+
 	}
-	
-	public OtherBankAllocation(boolean initialize){
-		if(initialize){
+
+	public OtherBankAllocation(boolean initialize) {
+		if (initialize) {
 			this.denom1Pieces = BigDecimal.ZERO;
 			this.denom2Pieces = BigDecimal.ZERO;
 			this.denom5Pieces = BigDecimal.ZERO;

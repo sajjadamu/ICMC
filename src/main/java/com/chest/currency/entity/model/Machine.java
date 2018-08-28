@@ -39,22 +39,22 @@ import lombok.ToString;
 @EqualsAndHashCode(of = { "id" })
 @ToString
 public class Machine {
-	
+
 	@Id
-	//@GeneratedValue(strategy = GenerationType.AUTO)
+	// @GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "ID")
 	@GeneratedValue(generator = "MACHINE_SEQ")
 	@SequenceGenerator(name = "MACHINE_SEQ", sequenceName = "MACHINE_SEQ", allocationSize = 100)
 	protected Long id;
-	
+
 	@Basic
 	@Column(name = "ICMC_ID")
 	protected BigInteger icmcId;
-	
+
 	@Basic
 	@Column(name = "COMPANY_NAME")
 	protected String companyname;
-	
+
 	@Basic
 	@Column(name = "MACHINE_NO")
 	protected Integer machineNo;
@@ -62,42 +62,42 @@ public class Machine {
 	@Basic
 	@Column(name = "ASSET_CODE")
 	protected String assetCode;
-	
+
 	@Basic
 	@Column(name = "MACHINE_SI_NO")
 	protected String machineSINo;
-	
+
 	@Transient
 	protected Long ageing;
 
 	@DateTimeFormat(pattern = DateTimePattern.yyyy_MM_dd)
 	@Column(name = "PURCHASE_DATE")
 	protected Date purchasedate;
-	
+
 	@Basic
 	@Column(name = "MODEL_TYPE")
 	protected String modelType;
-	
+
 	@Basic
 	@Column(name = "STANDARD_PRODUCTIVITY")
 	protected String standardProductivity;
-	
+
 	@Basic
 	@Column(name = "SAP")
 	protected Integer sap;
-	
+
 	@Basic
 	@Column(name = "MAP")
 	protected Integer map;
-	
+
 	@Basic
 	@Column(name = "OSAP")
 	protected Integer osap;
-	
+
 	@DateTimeFormat(pattern = DateTimePattern.yyyy_MM_dd_HH_mm_ss_SSS)
 	@Column(name = "PM_DATE")
 	protected Date pmDate;
-	
+
 	@Basic
 	@Column(name = "INSERT_BY")
 	protected String insertBy;
@@ -110,7 +110,7 @@ public class Machine {
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "INSERT_TIME")
 	protected Calendar insertTime;
-	
+
 	@DateTimeFormat(pattern = DateTimePattern.yyyy_MM_dd_HH_mm_ss_SSS)
 	@Column(name = "UPDATE_TIME")
 	protected Calendar updateTime;
@@ -118,5 +118,5 @@ public class Machine {
 	@Enumerated(EnumType.STRING)
 	@Column(name = "STATUS")
 	protected Status status;
-	
+
 }

@@ -54,14 +54,17 @@ public class SASAllocation {
 	@GeneratedValue(generator = "SAS_ALLOCATION_SEQ")
 	@SequenceGenerator(name = "SAS_ALLOCATION_SEQ", sequenceName = "SAS_ALLOCATION_SEQ", allocationSize = 100)
 	protected Long id;
-	
+
 	@Basic
 	@Column(name = "PARENT_ID")
 	protected Long parentId;
-	
-	/*@ManyToOne(cascade=CascadeType.ALL, fetch = FetchType.EAGER)
-	@JoinColumn(name="PARENT_ID", referencedColumnName="ID")
-	protected List<Sas> sas;*/
+
+	/*
+	 * @ManyToOne(cascade=CascadeType.ALL, fetch = FetchType.EAGER)
+	 * 
+	 * @JoinColumn(name="PARENT_ID", referencedColumnName="ID") protected
+	 * List<Sas> sas;
+	 */
 
 	@Basic
 	@Column(name = "BIN_NUM")
@@ -107,5 +110,5 @@ public class SASAllocation {
 	@Enumerated(EnumType.STRING)
 	@Column(name = "STATUS")
 	protected OtherStatus status;
-	
+
 }

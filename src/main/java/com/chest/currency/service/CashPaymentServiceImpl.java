@@ -13,9 +13,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Set;
-
-import javax.mail.search.ReceivedDateTerm;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -129,7 +126,10 @@ public class CashPaymentServiceImpl implements CashPaymentService {
 		List<SASAllocation> eligibleSASRequestList = new ArrayList<>();
 		List<BinTransaction> binTransactionList = new ArrayList<>();
 		List<BranchReceipt> branchReceiptList = new ArrayList<>();
-		List<BranchReceipt> filterBranchReceiptListByBtxn = new ArrayList<>();
+		/*
+		 * List<BranchReceipt> filterBranchReceiptListByBtxn = new
+		 * ArrayList<>();
+		 */
 		List<BinTransaction> txnList = null;
 		for (SASAllocation sasAllocation : sasList) {
 			if (sasAllocation.getCashType() == CashType.COINS) {
@@ -173,16 +173,15 @@ public class CashPaymentServiceImpl implements CashPaymentService {
 						branchReceiptList = processingRoomService.getBinNumListForIndentFromBranchReceipt(
 								sasAllocation.getDenomination(), sasAllocation.getBundle(), user.getIcmcId(),
 								CashSource.BRANCH, sasAllocationParent.getBinCategoryType());
-						for (BinTransaction bcheckBin : txnListUnprocess) {
-							for (BranchReceipt br : branchReceiptList) {
-								if (bcheckBin.getBinNumber().equals(br.getBin())) {
-									filterBranchReceiptListByBtxn.add(br);
-								}
-							}
-						}
+						/*
+						 * for (BinTransaction bcheckBin : txnListUnprocess) {
+						 * for (BranchReceipt br : branchReceiptList) { if
+						 * (bcheckBin.getBinNumber().equals(br.getBin())) {
+						 * filterBranchReceiptListByBtxn.add(br); } } }
+						 */
 						eligibleSASRequestList = UtilityJpa.getBinForBranchReceiptSasRequest(txnListUnprocess,
 								sasAllocation.getDenomination(), sasAllocation.getBundle(), user, sasAllocationParent,
-								filterBranchReceiptListByBtxn);
+								branchReceiptList);
 
 						BigDecimal moreBundleNeeded = UtilityJpa
 								.checkMoreRequiredBundleNeededForSas(eligibleSASRequestList, bundleForRequest);
@@ -190,8 +189,7 @@ public class CashPaymentServiceImpl implements CashPaymentService {
 							throw new BaseGuiException("Payment Should be in Shrink Wrap:");
 						} else if (moreBundleNeeded.compareTo(BigDecimal.ZERO) == 0) {
 							isAllSuccess = processingRoomService.insertSasRequestAndUpdateBinTxAndBranchReceipt(
-									eligibleSASRequestList, binTransactionList, filterBranchReceiptListByBtxn,
-									sasAllocationParent);
+									eligibleSASRequestList, binTransactionList, branchReceiptList, sasAllocationParent);
 							isAllSuccess = true;
 							if (!isAllSuccess) {
 								throw new RuntimeException("Error while Branch Payment Request");
@@ -1124,7 +1122,6 @@ public class CashPaymentServiceImpl implements CashPaymentService {
 		for (CRA cra : craListTemp) {
 			BigDecimal totalValue = BigDecimal.ZERO;
 			BigDecimal acceptTotalValue = BigDecimal.ZERO;
-			BigDecimal pendingTotalValue = BigDecimal.ZERO;
 			BigDecimal multiplyValue = new BigDecimal(1000);
 			/*
 			 * List<ProcessBundleForCRAPayment>

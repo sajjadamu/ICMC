@@ -537,7 +537,7 @@ font-family: 'fontAwesome'; top: 50%; transform: translateY(-50%); line-height: 
 					</sec:authorize>
 				</c:if>
 				
-				<li><a href="././CRAPaymentForProcessing"> Payment Forwarded CRA</a></li>
+				<!-- <li><a href="././CRAPaymentForProcessing"> Payment Forwarded CRA</a></li> -->
 				
 				<%-- <sec:authorize access="hasRole('VIEW_BUNDLE_REQUEST_FOR_MACHINE')">
 					<li><a href="././bundleRequestForMachineProcessing"> Machinewise Allocation</a></li>

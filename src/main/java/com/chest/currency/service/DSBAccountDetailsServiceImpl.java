@@ -7,8 +7,6 @@ package com.chest.currency.service;
 import java.math.BigInteger;
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,7 +18,6 @@ import com.chest.currency.jpa.dao.DSBAccountDetailsJpaDao;
 @Service
 @Transactional
 public class DSBAccountDetailsServiceImpl implements DSBAccountDetailsService {
-	private static final Logger LOG = LoggerFactory.getLogger(FakeNoteServiceImpl.class);
 
 	@Autowired
 	protected DSBAccountDetailsJpaDao dsbAccountJpaDao;
@@ -38,7 +35,7 @@ public class DSBAccountDetailsServiceImpl implements DSBAccountDetailsService {
 
 	@Override
 	public boolean addDSBAccountDetails(DSBAccountDetail dsbAccountDetail) {
-	return dsbAccountJpaDao.addDSBAccountDetails(dsbAccountDetail);
+		return dsbAccountJpaDao.addDSBAccountDetails(dsbAccountDetail);
 	}
 
 	@Override

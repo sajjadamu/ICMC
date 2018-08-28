@@ -4,7 +4,6 @@
  *******************************************************************************/
 package com.chest.currency.dao;
 
-import java.math.BigInteger;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -25,9 +24,6 @@ import com.chest.currency.dao.mapper.BinTransactionMapper;
 import com.chest.currency.dao.mapper.DSBMapper;
 import com.chest.currency.dao.mapper.DirvMapper;
 import com.chest.currency.dao.mapper.FreshMapper;
-import com.chest.currency.entity.model.BranchReceipt;
-import com.chest.currency.entity.model.DiversionIRV;
-import com.chest.currency.entity.model.Indent;
 import com.chest.currency.qrgencode.QRCodeGen;
 import com.chest.currency.viewBean.BinMaster;
 import com.chest.currency.viewBean.BinTransaction;
@@ -58,28 +54,21 @@ public class CashReceiptDaoImpl implements CashReceiptDao {
 		this.dataSource = dataSource;
 	}
 
-	/*@Override
-	public boolean saveShrinkList(List<ShrinkBean> shrinkList) {
-		boolean isSuccessfull = false;
-		int count;
-		String query = "insert into tbl_shrink(sol_id,branch,denominations,bin_num,bundle,total,filepath,status,insert_time,update_time,insert_by,update_by,ICMC_ID) "
-				+ "values(?,?,?,?,?,?,?,'1',now(),now(),?,?,?)";
-		JdbcTemplate jdbcTemplate = jdbcTemplateDao.getJdbcTemplate();
-		for (ShrinkBean shrinkBean : shrinkList) {
-			shrinkBean.setFilepath(getQrCode(shrinkBean));
-			count = jdbcTemplate.update(query, shrinkBean.getSolId(), shrinkBean.getBranch(),
-					shrinkBean.getDenomination(), shrinkBean.getBin(), shrinkBean.getBundle(), shrinkBean.getTotal(),
-					shrinkBean.getFilepath(), shrinkBean.getInsertBy(), shrinkBean.getUpdateBy(),
-					shrinkBean.getICMCId());
-			if (count > 0) {
-				isSuccessfull = true;
-			} else {
-				isSuccessfull = false;
-				break;
-			}
-		}
-		return isSuccessfull;
-	}*/
+	/*
+	 * @Override public boolean saveShrinkList(List<ShrinkBean> shrinkList) {
+	 * boolean isSuccessfull = false; int count; String query =
+	 * "insert into tbl_shrink(sol_id,branch,denominations,bin_num,bundle,total,filepath,status,insert_time,update_time,insert_by,update_by,ICMC_ID) "
+	 * + "values(?,?,?,?,?,?,?,'1',now(),now(),?,?,?)"; JdbcTemplate
+	 * jdbcTemplate = jdbcTemplateDao.getJdbcTemplate(); for (ShrinkBean
+	 * shrinkBean : shrinkList) { shrinkBean.setFilepath(getQrCode(shrinkBean));
+	 * count = jdbcTemplate.update(query, shrinkBean.getSolId(),
+	 * shrinkBean.getBranch(), shrinkBean.getDenomination(),
+	 * shrinkBean.getBin(), shrinkBean.getBundle(), shrinkBean.getTotal(),
+	 * shrinkBean.getFilepath(), shrinkBean.getInsertBy(),
+	 * shrinkBean.getUpdateBy(), shrinkBean.getICMCId()); if (count > 0) {
+	 * isSuccessfull = true; } else { isSuccessfull = false; break; } } return
+	 * isSuccessfull; }
+	 */
 
 	@Override
 	public boolean saveDirvList(List<DirvBean> dirvList) {
@@ -228,44 +217,37 @@ public class CashReceiptDaoImpl implements CashReceiptDao {
 		return path;
 	}
 
-
 	public String getQrCode(ShrinkBean shrinkBean) {
-		String filepath = "";//qrCodeGen.generateQR(shrinkBean);
+		String filepath = "";// qrCodeGen.generateQR(shrinkBean);
 		String path = getPath(filepath);
 		return path;
 	}
 
 	public String getDSBQrCode(DSBBean dsbBean) {
-		String filepath = "";//qrCodeGen.generateDSBQR(dsbBean);
+		String filepath = "";// qrCodeGen.generateDSBQR(dsbBean);
 		String path = getPath(filepath);
 		return path;
 	}
 
 	public String getDirvQrCode(DirvBean dirvBean) {
-		String filepath = "";//qrCodeGen.generateDirvQR(dirvBean);
+		String filepath = "";// qrCodeGen.generateDirvQR(dirvBean);
 		String path = getPath(filepath);
 		return path;
 	}
 
 	public String getRBIQrCode(FreshBean freshBean) {
-		String filepath = "";//qrCodeGen.generateFreshFromRBIQR(freshBean);
+		String filepath = "";// qrCodeGen.generateFreshFromRBIQR(freshBean);
 		String path = getPath(filepath);
 		return path;
 	}
 
-	/*@Override
-	public boolean saveTxListAndShrink(List<BinTransaction> txList, List<ShrinkBean> shrinkBeanList) {
-		boolean isAllSuccess = false;
-		try {
-			isAllSuccess = saveTxList(txList);
-			if (isAllSuccess) {
-				isAllSuccess = saveShrinkList(shrinkBeanList);
-			}
-		} catch (Exception ex) {
-			throw new RuntimeException(ex);
-		}
-		return isAllSuccess;
-	}*/
+	/*
+	 * @Override public boolean saveTxListAndShrink(List<BinTransaction> txList,
+	 * List<ShrinkBean> shrinkBeanList) { boolean isAllSuccess = false; try {
+	 * isAllSuccess = saveTxList(txList); if (isAllSuccess) { isAllSuccess =
+	 * saveShrinkList(shrinkBeanList); } } catch (Exception ex) { throw new
+	 * RuntimeException(ex); } return isAllSuccess; }
+	 */
 
 	@Override
 	public boolean saveTxListAndDSB(List<BinTransaction> txList, List<DSBBean> dSBBeanList) {
@@ -349,9 +331,7 @@ public class CashReceiptDaoImpl implements CashReceiptDao {
 		}
 		return isSuccessfull;
 	}
-	
-	
-	
+
 	@Override
 	public boolean saveTxListAndDSB(DSBBean dsbBean, IndentRequestBean indentBean) {
 		boolean isAllSuccess = false;
@@ -419,6 +399,4 @@ public class CashReceiptDaoImpl implements CashReceiptDao {
 		return dirvList;
 	}
 
-	
-	
 }

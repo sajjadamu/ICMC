@@ -8,9 +8,8 @@ import java.util.List;
 
 import com.chest.currency.entity.model.ServicingBranch;
 
-
 public interface ServicingBranchService {
-	
+
 	public boolean UploadServicingBranch(List<ServicingBranch> servicingList, ServicingBranch sb);
 
 	public List<ServicingBranch> getServicingBranch();

@@ -18,19 +18,19 @@ import com.chest.currency.jpa.dao.ServicingBranchJpaDao;
 @Service
 @Transactional
 public class ServicingBranchServiceImpl implements ServicingBranchService {
-	
+
 	private static final Logger LOG = LoggerFactory.getLogger(ServicingBranchServiceImpl.class);
-	
+
 	@Autowired
 	ServicingBranchJpaDao servicingBranchJpaDao;
-	
+
 	@Override
 	public boolean UploadServicingBranch(List<ServicingBranch> servicingList, ServicingBranch sb) {
 		boolean isAllsuccess = false;
-		try{
+		try {
 			isAllsuccess = servicingBranchJpaDao.UploadServicingBranch(servicingList, sb);
 			LOG.info("Servicing Branch Records uploaded successfully");
-		}catch(Exception ex){
+		} catch (Exception ex) {
 			throw new RuntimeException("Error while CSV File Uploading");
 		}
 		return isAllsuccess;
@@ -39,7 +39,7 @@ public class ServicingBranchServiceImpl implements ServicingBranchService {
 	@Override
 	public List<ServicingBranch> getServicingBranch() {
 		List<ServicingBranch> branchList = servicingBranchJpaDao.getServicingBranch();
-		LOG.info("Fetched Servicing Branch Records : "+branchList);
+		LOG.info("Fetched Servicing Branch Records : " + branchList);
 		return branchList;
 	}
 
@@ -50,7 +50,7 @@ public class ServicingBranchServiceImpl implements ServicingBranchService {
 
 	@Override
 	public boolean updateServicingBranch(ServicingBranch servicingBranch) {
-		boolean isSaved = false; 
+		boolean isSaved = false;
 		isSaved = servicingBranchJpaDao.updateServicingBranch(servicingBranch);
 		LOG.info("Servicing Branch Record updated");
 		return isSaved;

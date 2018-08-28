@@ -33,9 +33,9 @@ import lombok.ToString;
 @EqualsAndHashCode(of = { "id" })
 @ToString
 public class RegionSummary {
-	
+
 	@Id
-	//@GeneratedValue(strategy = GenerationType.AUTO)
+	// @GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "ID")
 	@GeneratedValue(generator = "REGION_WISE_SUMMARY_SEQ")
 	@SequenceGenerator(name = "REGION_WISE_SUMMARY_SEQ", sequenceName = "REGION_WISE_SUMMARY_SEQ", allocationSize = 100)
@@ -48,15 +48,15 @@ public class RegionSummary {
 	@Enumerated(EnumType.STRING)
 	@Column(name = "BIN_TYPE")
 	protected CurrencyType binType;
-	
+
 	@Enumerated(EnumType.STRING)
 	@Column(name = "ZONE")
 	protected Zone zone;
-	
+
 	@Basic
 	@Column(name = "REGION")
 	protected String region;
-	
+
 	@Enumerated(EnumType.STRING)
 	@Column(name = "CASH_TYPE")
 	protected CashType cashType;

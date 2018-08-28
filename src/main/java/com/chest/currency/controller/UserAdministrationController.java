@@ -146,17 +146,17 @@ public class UserAdministrationController {
 			HttpServletRequest request, RedirectAttributes redirectAttributes) {
 		User userTemp = (User) session.getAttribute("login");
 
-		//Special Character Validation
-		
+		// Special Character Validation
+
 		boolean userId = HtmlUtils.isHtml(user.getId());
 		boolean userName = HtmlUtils.isHtml(user.getName());
 		if (userId == false || userName == false) {
 			redirectAttributes.addFlashAttribute("successMsg", "Error : Special Character Not Allowed");
 			return new ModelAndView("redirect:./viewAll");
 		}
-		
-		//End of Special Character Validation
-		
+
+		// End of Special Character Validation
+
 		if (!isValidUserData(user)) {
 			return new ModelAndView("redirect:./addUser");
 		}
@@ -206,9 +206,9 @@ public class UserAdministrationController {
 		List<ZoneMaster> regionList = userAdministrationService.getRegionList(user);
 		List<ICMC> icmcList = userAdministrationService.getICMCList(user);
 		List<Role> roleList = userAdministrationService.getAllRole();
-		if(user.getIcmcId() !=null){
-		List<IcmcPrinter> icmcPrinterList = userAdministrationService.printerList(user.getIcmcId());
-		model.put("icmcPrinterList", icmcPrinterList);
+		if (user.getIcmcId() != null) {
+			List<IcmcPrinter> icmcPrinterList = userAdministrationService.printerList(user.getIcmcId());
+			model.put("icmcPrinterList", icmcPrinterList);
 		}
 		model.put("rolesList", roleList);
 		model.put("zoneList", Zone.values());
@@ -225,19 +225,18 @@ public class UserAdministrationController {
 		user.setUpdatedBy(userInSession.getId());
 		Calendar now = Calendar.getInstance();
 		user.setUpdatedDateTime(now);
-		
-		
-		//Special Character Validation
-		
-				boolean userId = HtmlUtils.isHtml(user.getId());
-				boolean userName = HtmlUtils.isHtml(user.getName());
-				if (userId == false || userName == false) {
-					redirectAttributes.addFlashAttribute("successMsg", "Error : Special Character Not Allowed");
-					return new ModelAndView("redirect:./viewAll");
-				}
-				
-				//End of Special Character Validation
-		
+
+		// Special Character Validation
+
+		boolean userId = HtmlUtils.isHtml(user.getId());
+		boolean userName = HtmlUtils.isHtml(user.getName());
+		if (userId == false || userName == false) {
+			redirectAttributes.addFlashAttribute("successMsg", "Error : Special Character Not Allowed");
+			return new ModelAndView("redirect:./viewAll");
+		}
+
+		// End of Special Character Validation
+
 		setRole(user);
 		setIcmcPrinter(user);
 		// db user
@@ -273,18 +272,16 @@ public class UserAdministrationController {
 	@RequestMapping("/saveBinCapacity")
 	public ModelAndView saveBinCapacity(@ModelAttribute("obj") BinCapacityDenomination binCapacity, HttpSession session,
 			RedirectAttributes redirectAttributes) {
-		
-		//Special Character Code
+
+		// Special Character Code
 		boolean bincapacity = HtmlUtils.isHtml(binCapacity.getMaxBundleCapacity().toString());
-		
-		if(bincapacity==false)
-		{
-			redirectAttributes.addFlashAttribute("duplicateMsg",
-					"Special Character not Allowed");
+
+		if (bincapacity == false) {
+			redirectAttributes.addFlashAttribute("duplicateMsg", "Special Character not Allowed");
 			return new ModelAndView("redirect:./addBinCapacity");
 		}
-		//End special CharacterCode
-		
+		// End special CharacterCode
+
 		User user = (User) session.getAttribute("login");
 		Calendar now = Calendar.getInstance();
 		binCapacity.setInsertBy(user.getId());
@@ -321,18 +318,16 @@ public class UserAdministrationController {
 	@RequestMapping("/updateBinCapacity")
 	public ModelAndView updateBinCapacity(@ModelAttribute("user") BinCapacityDenomination binCapacity,
 			HttpSession session, RedirectAttributes redirectAttributes) {
-		
-		//Special Character Code
-				boolean bincapacity = HtmlUtils.isHtml(binCapacity.getMaxBundleCapacity().toString());
-				
-				if(bincapacity==false)
-				{
-					redirectAttributes.addFlashAttribute("updateMsg",
-							"Error : Special Character not Allowed");
-					return new ModelAndView("redirect:./viewBinCapacity");
-				}
-				//End special CharacterCode
-		
+
+		// Special Character Code
+		boolean bincapacity = HtmlUtils.isHtml(binCapacity.getMaxBundleCapacity().toString());
+
+		if (bincapacity == false) {
+			redirectAttributes.addFlashAttribute("updateMsg", "Error : Special Character not Allowed");
+			return new ModelAndView("redirect:./viewBinCapacity");
+		}
+		// End special CharacterCode
+
 		User user = (User) session.getAttribute("login");
 		Calendar now = Calendar.getInstance();
 		binCapacity.setUpdateBy(user.getId());
@@ -397,19 +392,17 @@ public class UserAdministrationController {
 			return new ModelAndView("redirect:./addDelegateRight");
 		}
 
-		if(delegateRight.getUserId().equalsIgnoreCase(user.getId()))
-		{
+		if (delegateRight.getUserId().equalsIgnoreCase(user.getId())) {
 			redirectAttributes.addFlashAttribute("successMsg1", "Login ID and assign id should not be same");
 			return new ModelAndView("redirect:./addDelegateRight");
 		}
-		
-		User userwithSameICMC = userAdministrationService.isValidUser(delegateRight.getUserId(),user.getIcmcId());
-		if(userwithSameICMC == null)
-		{
+
+		User userwithSameICMC = userAdministrationService.isValidUser(delegateRight.getUserId(), user.getIcmcId());
+		if (userwithSameICMC == null) {
 			redirectAttributes.addFlashAttribute("successMsg2", "User is from other ICMC ");
 			return new ModelAndView("redirect:./addDelegateRight");
 		}
-		
+
 		User dbUser = userAdministrationService.isValidUser(delegateRight.getUserId());
 
 		if (dbUser != null) {
@@ -486,18 +479,16 @@ public class UserAdministrationController {
 			RedirectAttributes redirectAttributes) {
 		User userTemp = (User) session.getAttribute("login");
 
-		//Special Character Code
-				boolean machineModelType = HtmlUtils.isHtml(machineModel.getMachineModelType());
-				boolean statndardProductivity = HtmlUtils.isHtml(machineModel.getStandardProductivity());
-				
-				if(machineModelType==false||statndardProductivity==false)
-				{
-					redirectAttributes.addFlashAttribute("successMsg", "Error : Special Characters not Allowed");
-					return new ModelAndView("redirect:./viewMachineModelDetails");
-				}
-				//End special CharacterCode
-						
-		
+		// Special Character Code
+		boolean machineModelType = HtmlUtils.isHtml(machineModel.getMachineModelType());
+		boolean statndardProductivity = HtmlUtils.isHtml(machineModel.getStandardProductivity());
+
+		if (machineModelType == false || statndardProductivity == false) {
+			redirectAttributes.addFlashAttribute("successMsg", "Error : Special Characters not Allowed");
+			return new ModelAndView("redirect:./viewMachineModelDetails");
+		}
+		// End special CharacterCode
+
 		MachineModel mach = userAdministrationService.isValidMachineModel(machineModel.getMachineModelType());
 
 		if (mach != null) {
@@ -548,32 +539,31 @@ public class UserAdministrationController {
 	@RequestMapping("/saveMachineDetails")
 	public ModelAndView saveMachineDetails(@ModelAttribute("user") Machine machine, HttpSession session,
 			RedirectAttributes redirectAttributes) {
-		
+
 		ModelMap model = new ModelMap();
-		
-		//Special Character Code
+
+		// Special Character Code
 		boolean machineNumber = HtmlUtils.isHtml(machine.getMachineNo().toString());
 		boolean assetCode = HtmlUtils.isHtml(machine.getAssetCode());
 		boolean machineSrNo = HtmlUtils.isHtml(machine.getMachineSINo());
-		
-		
-		if(machineNumber==false||assetCode==false||machineSrNo==false)
-		{
+
+		if (machineNumber == false || assetCode == false || machineSrNo == false) {
 			return new ModelAndView("redirect:./viewMachineDetails");
 		}
-		
-		/*Integer machineNoFromUI =  machine.getMachineNo();
-		List<Machine> machineNoFromDao= userAdministrationService.getMachineList();*/
-		/*for(Machine machineNoDetails: machineNoFromDao)
-		{
-			if(machineNoFromUI==(machineNoDetails.getMachineNo()))
-			{
-				redirectAttributes.addFlashAttribute("errorMsg", "Machine No should be unique");
-				return new ModelAndView("redirect:./addMachineDetails");
-			}
-		}*/
-		//End special CharacterCode
-		
+
+		/*
+		 * Integer machineNoFromUI = machine.getMachineNo(); List<Machine>
+		 * machineNoFromDao= userAdministrationService.getMachineList();
+		 */
+		/*
+		 * for(Machine machineNoDetails: machineNoFromDao) {
+		 * if(machineNoFromUI==(machineNoDetails.getMachineNo())) {
+		 * redirectAttributes.addFlashAttribute("errorMsg",
+		 * "Machine No should be unique"); return new
+		 * ModelAndView("redirect:./addMachineDetails"); } }
+		 */
+		// End special CharacterCode
+
 		User user = (User) session.getAttribute("login");
 		machine.setInsertBy(user.getId());
 		machine.setUpdateBy(user.getId());
@@ -585,19 +575,18 @@ public class UserAdministrationController {
 		Machine obj = new Machine();
 		model.put("duplicateMachine", "Machine Already exist");
 		model.put("user", obj);
-		Machine getMachineFromDB = userAdministrationService.checkMachineIsExistOrNot(user.getIcmcId(),machine.getMachineNo());
-		
-		if(getMachineFromDB !=null && getMachineFromDB.getMachineNo() != null && getMachineFromDB.getMachineNo()==machine.getMachineNo())
-		{
-			//return new ModelAndView("addMachineDetails", model);
+		Machine getMachineFromDB = userAdministrationService.checkMachineIsExistOrNot(user.getIcmcId(),
+				machine.getMachineNo());
+
+		if (getMachineFromDB != null && getMachineFromDB.getMachineNo() != null
+				&& getMachineFromDB.getMachineNo() == machine.getMachineNo()) {
+			// return new ModelAndView("addMachineDetails", model);
 			redirectAttributes.addFlashAttribute("duplicateMachine", "Machine Already exist");
 			return new ModelAndView("redirect:./addMachineDetails");
-			
-		}
-		else
-		{
-		userAdministrationService.addMachineDetails(machine);
-		return new ModelAndView("redirect:./viewMachineDetails");
+
+		} else {
+			userAdministrationService.addMachineDetails(machine);
+			return new ModelAndView("redirect:./viewMachineDetails");
 		}
 	}
 
@@ -650,18 +639,17 @@ public class UserAdministrationController {
 	@RequestMapping("/updateMachineModelDetails")
 	public ModelAndView updateMachineModelDetails(@ModelAttribute("user") MachineModel machine, HttpSession session,
 			RedirectAttributes redirectAttributes) {
-		
-		//Special Character Code
+
+		// Special Character Code
 		boolean machineModelType = HtmlUtils.isHtml(machine.getMachineModelType());
 		boolean statndardProductivity = HtmlUtils.isHtml(machine.getStandardProductivity());
-		
-		if(machineModelType==false||statndardProductivity==false)
-		{
+
+		if (machineModelType == false || statndardProductivity == false) {
 			redirectAttributes.addFlashAttribute("updateMsg", "Error : Special Characters not Allowed");
 			return new ModelAndView("redirect:./viewMachineModelDetails");
 		}
-		//End special CharacterCode
-		
+		// End special CharacterCode
+
 		User user = (User) session.getAttribute("login");
 		machine.setUpdateBy(user.getId());
 		Calendar now = Calendar.getInstance();
@@ -687,20 +675,18 @@ public class UserAdministrationController {
 	@RequestMapping("/updateMachine")
 	public ModelAndView updateMachine(@ModelAttribute("user") Machine machine, HttpSession session,
 			RedirectAttributes redirectAttributes) {
-		
-		//Special Character Code
-				boolean machineNumber = HtmlUtils.isHtml(machine.getMachineNo().toString());
-				boolean assetCode = HtmlUtils.isHtml(machine.getAssetCode());
-				boolean machineSrNo = HtmlUtils.isHtml(machine.getMachineSINo());
-				
-				if(machineNumber==false||assetCode==false||machineSrNo==false)
-				{
-					redirectAttributes.addFlashAttribute("updateMsg", "Error : Special Characters Not allowed");
-					return new ModelAndView("redirect:./viewMachineDetails");
-				}
-				//End special CharacterCode
-				
-		
+
+		// Special Character Code
+		boolean machineNumber = HtmlUtils.isHtml(machine.getMachineNo().toString());
+		boolean assetCode = HtmlUtils.isHtml(machine.getAssetCode());
+		boolean machineSrNo = HtmlUtils.isHtml(machine.getMachineSINo());
+
+		if (machineNumber == false || assetCode == false || machineSrNo == false) {
+			redirectAttributes.addFlashAttribute("updateMsg", "Error : Special Characters Not allowed");
+			return new ModelAndView("redirect:./viewMachineDetails");
+		}
+		// End special CharacterCode
+
 		User user = (User) session.getAttribute("login");
 		machine.setUpdateBy(user.getId());
 		machine.setInsertBy(user.getId());

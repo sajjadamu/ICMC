@@ -1731,7 +1731,7 @@ public class BinDashboardController {
 		BigDecimal denom100Pieces = BigDecimal.ZERO;
 		BigDecimal denom200Pieces = BigDecimal.ZERO;
 		BigDecimal denom500Pieces = BigDecimal.ZERO;
-		BigDecimal denom1000Pieces = BigDecimal.ZERO; //code by shahabuddin
+		BigDecimal denom1000Pieces = BigDecimal.ZERO; // code by shahabuddin
 		BigDecimal denom2000Pieces = BigDecimal.ZERO;
 		BigDecimal totalInPieces = BigDecimal.ZERO;
 		BigDecimal totalValues = BigDecimal.ZERO;
@@ -1757,13 +1757,15 @@ public class BinDashboardController {
 			if (tuple.get(0, Integer.class).equals(2000)) {
 				denom2000Pieces = tuple.get(1, BigDecimal.class);
 				totalInPieces = totalInPieces.add(denom2000Pieces);
-				//totalValues = totalValues.add(denom2000Pieces).multiply(BigDecimal.valueOf(2000));
+				// totalValues =
+				// totalValues.add(denom2000Pieces).multiply(BigDecimal.valueOf(2000));
 				totalValues = totalValues.add(denom2000Pieces.multiply(BigDecimal.valueOf(2000)));
 			}
 			if (tuple.get(0, Integer.class).equals(1000)) {
 				denom1000Pieces = tuple.get(1, BigDecimal.class);
 				totalInPieces = totalInPieces.add(denom1000Pieces);
-				//totalValues = totalValues.add(denom1000Pieces).multiply(BigDecimal.valueOf(1000));
+				// totalValues =
+				// totalValues.add(denom1000Pieces).multiply(BigDecimal.valueOf(1000));
 				totalValues = totalValues.add(denom1000Pieces.multiply(BigDecimal.valueOf(1000)));
 
 			}
@@ -1771,49 +1773,56 @@ public class BinDashboardController {
 			if (tuple.get(0, Integer.class).equals(500)) {
 				denom500Pieces = tuple.get(1, BigDecimal.class);
 				totalInPieces = totalInPieces.add(denom500Pieces);
-				//totalValues = totalValues.add(denom500Pieces).multiply(BigDecimal.valueOf(500));
+				// totalValues =
+				// totalValues.add(denom500Pieces).multiply(BigDecimal.valueOf(500));
 				totalValues = totalValues.add(denom500Pieces.multiply(BigDecimal.valueOf(500)));
 			}
 
 			if (tuple.get(0, Integer.class).equals(200)) {
 				denom200Pieces = tuple.get(1, BigDecimal.class);
 				totalInPieces = totalInPieces.add(denom200Pieces);
-				//totalValues = totalValues.add(denom200Pieces).multiply(BigDecimal.valueOf(200));
+				// totalValues =
+				// totalValues.add(denom200Pieces).multiply(BigDecimal.valueOf(200));
 				totalValues = totalValues.add(denom200Pieces.multiply(BigDecimal.valueOf(200)));
 			}
 
 			if (tuple.get(0, Integer.class).equals(100)) {
 				denom100Pieces = tuple.get(1, BigDecimal.class);
 				totalInPieces = totalInPieces.add(denom100Pieces);
-				//totalValues = totalValues.add(denom100Pieces).multiply(BigDecimal.valueOf(100));
+				// totalValues =
+				// totalValues.add(denom100Pieces).multiply(BigDecimal.valueOf(100));
 				totalValues = totalValues.add(denom100Pieces.multiply(BigDecimal.valueOf(100)));
 			}
 
 			if (tuple.get(0, Integer.class).equals(50)) {
 				denom50Pieces = tuple.get(1, BigDecimal.class);
 				totalInPieces = totalInPieces.add(denom50Pieces);
-				//totalValues = totalValues.add(denom50Pieces).multiply(BigDecimal.valueOf(50));
+				// totalValues =
+				// totalValues.add(denom50Pieces).multiply(BigDecimal.valueOf(50));
 				totalValues = totalValues.add(denom50Pieces.multiply(BigDecimal.valueOf(50)));
 			}
 
 			if (tuple.get(0, Integer.class).equals(20)) {
 				denom20Pieces = tuple.get(1, BigDecimal.class);
 				totalInPieces = totalInPieces.add(denom20Pieces);
-				//totalValues = totalValues.add(denom20Pieces).multiply(BigDecimal.valueOf(20));
+				// totalValues =
+				// totalValues.add(denom20Pieces).multiply(BigDecimal.valueOf(20));
 				totalValues = totalValues.add(denom20Pieces.multiply(BigDecimal.valueOf(20)));
 			}
 
 			if (tuple.get(0, Integer.class).equals(10)) {
 				denom10Pieces = tuple.get(1, BigDecimal.class);
 				totalInPieces = totalInPieces.add(denom10Pieces);
-				//totalValues = totalValues.add(denom10Pieces).multiply(BigDecimal.valueOf(10));
+				// totalValues =
+				// totalValues.add(denom10Pieces).multiply(BigDecimal.valueOf(10));
 				totalValues = totalValues.add(denom10Pieces.multiply(BigDecimal.valueOf(10)));
 			}
 
 			if (tuple.get(0, Integer.class).equals(5)) {
 				denom5Pieces = tuple.get(1, BigDecimal.class);
 				totalInPieces = totalInPieces.add(denom5Pieces);
-				//totalValues = totalValues.add(denom5Pieces).multiply(BigDecimal.valueOf(5));
+				// totalValues =
+				// totalValues.add(denom5Pieces).multiply(BigDecimal.valueOf(5));
 				totalValues = totalValues.add(denom5Pieces.multiply(BigDecimal.valueOf(5)));
 			}
 
@@ -1826,7 +1835,8 @@ public class BinDashboardController {
 			if (tuple.get(0, Integer.class).equals(1)) {
 				denom1Pieces = tuple.get(1, BigDecimal.class);
 				totalInPieces = totalInPieces.add(denom1Pieces);
-				//totalValues = totalValues.add(denom1Pieces).multiply(BigDecimal.valueOf(1));
+				// totalValues =
+				// totalValues.add(denom1Pieces).multiply(BigDecimal.valueOf(1));
 				totalValues = totalValues.add(denom1Pieces.multiply(BigDecimal.valueOf(1)));
 			}
 
@@ -1844,7 +1854,7 @@ public class BinDashboardController {
 		map.put("denom100Pieces", denom100Pieces);
 		map.put("denom200Pieces", denom200Pieces);
 		map.put("denom500Pieces", denom500Pieces);
-		map.put("denom1000Pieces",denom1000Pieces);
+		map.put("denom1000Pieces", denom1000Pieces);
 		map.put("denom2000Pieces", denom2000Pieces);
 		map.put("totalInPieces", totalInPieces);
 		map.put("totalValues", totalValues);
@@ -2898,22 +2908,18 @@ public class BinDashboardController {
 
 	@RequestMapping("/deleteBinTransactionByIcmcId")
 	public ModelAndView deleteBinTransactionByIcmcId(HttpSession session) {
-		User user = (User) session.getAttribute("login");
 		return new ModelAndView("redirect:./viewBin");
 	}
 
 	@RequestMapping("/deleteBranchReceiptByIcmcId")
 	public ModelAndView deleteBranchReceiptByIcmcId(HttpSession session) {
-		User user = (User) session.getAttribute("login");
 		return new ModelAndView("redirect:./viewBin");
 	}
 
 	@RequestMapping(value = "/checkAvailableBundleByDenoCategory")
 	@ResponseBody
 	public String checkAvailableBundleByDenoCategory(@RequestBody BinTransaction binTransaction, HttpSession session) {
-		User user = (User) session.getAttribute("login");
 		// binTransaction.getDenomination();
-		boolean msg = binDashboardService.checkAvlBundleByDenoCategory(user.getIcmcId(), binTransaction);
 		String str = "sajjad";
 		return str;
 	}

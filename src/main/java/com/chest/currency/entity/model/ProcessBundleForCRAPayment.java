@@ -37,37 +37,37 @@ import lombok.ToString;
 @EqualsAndHashCode(of = { "id" })
 @ToString
 public class ProcessBundleForCRAPayment {
-	
+
 	@Id
-	//@GeneratedValue(strategy = GenerationType.AUTO)
+	// @GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "ID")
 	@GeneratedValue(generator = "PROCESS_BUNDLE_CRA_PAYMENT_SEQ")
 	@SequenceGenerator(name = "PROCESS_BUNDLE_CRA_PAYMENT_SEQ", sequenceName = "PROCESS_BUNDLE_CRA_PAYMENT_SEQ", allocationSize = 100)
 	protected Long id;
-	
+
 	@Basic
 	@Column(name = "DENOMINATION")
 	protected Integer denomination;
-	
+
 	@Basic
 	@Column(name = "BUNDLE")
 	protected BigDecimal bundle;
-	
+
 	@Column(name = "ICMC_ID")
 	protected BigInteger icmcId;
-	
+
 	@Enumerated(EnumType.STRING)
 	@Column(name = "CURRENCY_TYPE")
 	protected CurrencyType currencyType;
-	
+
 	@Enumerated(EnumType.STRING)
 	@Column(name = "CASH_SOURCE")
 	protected CashSource cashSource;
-	
+
 	@Basic
 	@Column(name = "FILEPATH")
 	protected String filepath;
-	
+
 	@Basic
 	@Column(name = "INSERT_BY")
 	protected String insertBy;
@@ -82,17 +82,17 @@ public class ProcessBundleForCRAPayment {
 
 	@Column(name = "UPDATE_TIME")
 	protected Calendar updateTime;
-	
+
 	@Enumerated(EnumType.STRING)
 	@Column(name = "STATUS")
 	protected OtherStatus status;
-	
+
 	@Basic
 	@Column(name = "PENDING_REQUESTED_BUNDLE")
 	protected BigDecimal pendingRequestedBundle;
-	
+
 	@Basic
 	@Column(name = "CRA_ID")
 	protected Long craId;
-	
+
 }

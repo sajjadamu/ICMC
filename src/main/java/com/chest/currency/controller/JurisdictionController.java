@@ -37,14 +37,13 @@ import com.chest.currency.enums.Status;
 import com.chest.currency.service.JurisdictionService;
 import com.chest.currency.util.UtilityJpa;
 
-
 @Controller
 public class JurisdictionController {
 	private static final Logger LOG = LoggerFactory.getLogger(JurisdictionController.class);
 
 	@Autowired
 	JurisdictionService jurisdictionService;
-	
+
 	@Autowired
 	String documentFilePath;
 
@@ -53,7 +52,7 @@ public class JurisdictionController {
 		Jurisdiction obj = new Jurisdiction();
 		LOG.info("JURISDICTION PAGE");
 		ModelMap map = new ModelMap();
-		map.addAttribute("documentFilePath", "./files/"+documentFilePath);
+		map.addAttribute("documentFilePath", "./files/" + documentFilePath);
 		map.addAttribute("user", obj);
 		return new ModelAndView("/jurisdiction", map);
 	}
@@ -66,16 +65,17 @@ public class JurisdictionController {
 
 	@RequestMapping("/saveJurisdiction")
 	public ModelAndView createJurisdiction(@ModelAttribute("obj") Jurisdiction jurisdiction, HttpSession session,
-			@RequestParam MultipartFile file, HttpServletRequest request, ModelMap model, RedirectAttributes redirectAttributes){
+			@RequestParam MultipartFile file, HttpServletRequest request, ModelMap model,
+			RedirectAttributes redirectAttributes) {
 		User user = (User) session.getAttribute("login");
 		jurisdiction.setInsertBy(user.getId());
 		jurisdiction.setUpdateBy(user.getId());
-		
+
 		Calendar now = Calendar.getInstance();
 		jurisdiction.setInsertTime(now);
 		jurisdiction.setUpdateTime(now);
 		jurisdiction.setStatus(Status.ENABLED);
-		
+
 		if (file.getSize() == 0) {
 			jurisdictionService.createJurisdiction(jurisdiction);
 			redirectAttributes.addFlashAttribute("successMsg", "New jurisdiction has been created successfully");
@@ -111,7 +111,8 @@ public class JurisdictionController {
 				}
 				List<Jurisdiction> jurisdictionList = UtilityJpa.CSVtoArrayListForJurisdiction(jurisdictionRecords);
 				jurisdictionService.UploadJurisdiction(jurisdictionList, jurisdiction);
-				redirectAttributes.addFlashAttribute("successMsg", "List of jurisdiction's has been uploaded successfully");
+				redirectAttributes.addFlashAttribute("successMsg",
+						"List of jurisdiction's has been uploaded successfully");
 
 			} catch (IOException e) {
 				e.printStackTrace();
@@ -126,17 +127,16 @@ public class JurisdictionController {
 			return new ModelAndView("redirect:./viewJurisdiction");
 		}
 	}
-	
+
 	@RequestMapping("/editJurisdiction")
-	public ModelAndView editJurisdiction(@RequestParam int id,Jurisdiction jurisdiction) {
+	public ModelAndView editJurisdiction(@RequestParam int id, Jurisdiction jurisdiction) {
 		jurisdiction = jurisdictionService.getJurisdictionById(id);
 		return new ModelAndView("editJurisdiction", "user", jurisdiction);
 	}
-	
+
 	@RequestMapping("/updateJurisdiction")
-	public ModelAndView updateJurisdiction(@ModelAttribute("obj") Jurisdiction jurisdiction, HttpSession session, 
-			RedirectAttributes redirectAttributes)
-			throws SQLException {
+	public ModelAndView updateJurisdiction(@ModelAttribute("obj") Jurisdiction jurisdiction, HttpSession session,
+			RedirectAttributes redirectAttributes) throws SQLException {
 		User user = (User) session.getAttribute("login");
 		jurisdiction.setInsertBy(user.getId());
 		jurisdiction.setUpdateBy(user.getId());
@@ -148,5 +148,5 @@ public class JurisdictionController {
 		redirectAttributes.addFlashAttribute("updateMsg", "Jurisdiction updated successfully");
 		return new ModelAndView("redirect:./viewJurisdiction");
 	}
-	
+
 }

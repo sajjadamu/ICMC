@@ -73,8 +73,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			.contextSource().ldif("classpath:testldif/test-server.ldif");
 	 */
 	
-	/*
-	@Autowired
+	
+	/*@Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
 
 		auth.authenticationProvider(aDLoginAuthenticationProvider);

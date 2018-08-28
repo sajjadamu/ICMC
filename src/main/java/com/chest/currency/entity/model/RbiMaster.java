@@ -31,46 +31,46 @@ import com.chest.currency.enums.State;
 import com.chest.currency.enums.Status;
 import com.chest.currency.enums.Zone;
 
-@Entity(name="RbiMaster")
-@Table(name="RBI_MASTER")
-@Inheritance(strategy=InheritanceType.TABLE_PER_CLASS)
+@Entity(name = "RbiMaster")
+@Table(name = "RBI_MASTER")
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 @Data
-@EqualsAndHashCode(of={"id"})
+@EqualsAndHashCode(of = { "id" })
 @ToString
 
 public class RbiMaster {
 
 	@Id
-	//@GeneratedValue(strategy = GenerationType.AUTO)
+	// @GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "ID")
 	@GeneratedValue(generator = "RBI_MASTER_SEQ")
 	@SequenceGenerator(name = "RBI_MASTER_SEQ", sequenceName = "RBI_MASTER_SEQ", allocationSize = 100)
 	protected Long id;
-	
+
 	@Basic
-	@Column(name="RBI_NAME")
+	@Column(name = "RBI_NAME")
 	protected String rbiname;
 
 	@Enumerated(EnumType.STRING)
-	@Column(name="ZONE")
+	@Column(name = "ZONE")
 	protected Zone zone;
-	
+
 	@Basic
-	@Column(name="REGION")
+	@Column(name = "REGION")
 	protected String region;
-	
+
 	@Enumerated(EnumType.STRING)
-	@Column(name="STATE")
+	@Column(name = "STATE")
 	protected State state;
-	
+
 	@Basic
-	@Column(name="CITY")
+	@Column(name = "CITY")
 	protected String city;
-	
+
 	@Enumerated(EnumType.STRING)
-	@Column(name="STATUS")
+	@Column(name = "STATUS")
 	protected Status status;
-	
+
 	@Basic
 	@Column(name = "ADDRESS")
 	protected String address;
@@ -79,7 +79,6 @@ public class RbiMaster {
 	@Column(name = "PIN_NO")
 	protected Integer pinno;
 
-	
 	@Basic
 	@Column(name = "INSERT_BY")
 	protected String insertBy;
@@ -92,7 +91,7 @@ public class RbiMaster {
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "INSERT_TIME")
 	protected Calendar insertTime;
-	
+
 	@DateTimeFormat(pattern = DateTimePattern.yyyy_MM_dd_HH_mm_ss_SSS)
 	@Column(name = "UPDATE_TIME")
 	protected Calendar updateTime;

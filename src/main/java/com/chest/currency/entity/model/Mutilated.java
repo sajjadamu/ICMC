@@ -7,8 +7,6 @@ package com.chest.currency.entity.model;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.Calendar;
-import java.util.List;
-
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -91,7 +89,7 @@ public class Mutilated {
 	@Enumerated(EnumType.STRING)
 	@Column(name = "BIN_CATEGORY_TYPE")
 	protected BinCategoryType binCategoryType;
-	
+
 	@Enumerated(EnumType.STRING)
 	@Column(name = "CURRENCY_TYPE")
 	protected CurrencyType currencyType;
@@ -99,7 +97,7 @@ public class Mutilated {
 	@Enumerated(EnumType.STRING)
 	@Column(name = "CASH_SOURCE")
 	protected CashSource cashSource;
-	
+
 	@Enumerated(EnumType.STRING)
 	@Column(name = "OTHER_STATUS")
 	protected OtherStatus otherStatus;
@@ -155,7 +153,7 @@ public class Mutilated {
 	protected BigDecimal totalDenomination1000;
 	@Transient
 	protected BigDecimal totalDenomination2000;
-	
+
 	@Transient
 	protected BigDecimal totalUsingDenomination;
 
@@ -191,7 +189,7 @@ public class Mutilated {
 			this.totalDenomination500 = BigDecimal.ZERO;
 			this.totalDenomination1000 = BigDecimal.ZERO;
 			this.totalDenomination2000 = BigDecimal.ZERO;
-			
+
 		}
 	}
 }

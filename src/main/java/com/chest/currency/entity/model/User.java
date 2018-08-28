@@ -30,103 +30,97 @@ import lombok.ToString;
 import com.chest.currency.enums.Status;
 import com.chest.currency.enums.Zone;
 
-/**
- * JPA annotated class mapped to UI_USER
- * @author peerhasan
- *
- */
 @Entity(name = "User")
 @Table(name = "UI_USER")
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 @Data
-@EqualsAndHashCode(of = {"id"})
+@EqualsAndHashCode(of = { "id" })
 @ToString
 public class User {
-	
+
 	@Id
 	@Column(name = "ID")
 	protected String id;
-	
+
 	@Basic
 	@Column(name = "NAME")
 	protected String name;
-	
+
 	@Basic
-	@Column(name = "PASSWORD" )
+	@Column(name = "PASSWORD")
 	protected String password;
-	
+
 	@Basic
-	@Column(name = "PASSWORD_HASH" )
+	@Column(name = "PASSWORD_HASH")
 	protected String passwordHash;
-	
+
 	@Basic
-	@Column(name = "PASSWORD_SALT" )
+	@Column(name = "PASSWORD_SALT")
 	protected String passwordSalt;
-	
+
 	@Basic
-	@Column(name = "EMAIL" )
+	@Column(name = "EMAIL")
 	protected String email;
-	
+
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name="ROLE_ID")
+	@JoinColumn(name = "ROLE_ID")
 	protected Role role;
-	
+
 	@Transient
 	protected String roleId;
-	
-	@Enumerated(EnumType.STRING)
-	@Column(name = "ZONE_ID" )
-	protected Zone zoneId;
-	
-	@Basic
-	@Column(name = "REGION_ID" )
-	protected String regionId;
-	
-	@Basic
-	@Column(name = "ICMC_ID" )
-	protected BigInteger icmcId;
-	
 
 	@Enumerated(EnumType.STRING)
-	@Column(name = "STATUS" )
+	@Column(name = "ZONE_ID")
+	protected Zone zoneId;
+
+	@Basic
+	@Column(name = "REGION_ID")
+	protected String regionId;
+
+	@Basic
+	@Column(name = "ICMC_ID")
+	protected BigInteger icmcId;
+
+	@Enumerated(EnumType.STRING)
+	@Column(name = "STATUS")
 	protected Status status;
-	
+
 	@Basic
-	@Column(name = "CREATED_BY" )
+	@Column(name = "CREATED_BY")
 	protected String createdBy;
-	
+
 	@Basic
-	@Column(name = "UPDATED_BY" )
+	@Column(name = "UPDATED_BY")
 	protected String updatedBy;
-	
-	@Temporal( TemporalType.TIMESTAMP )
-	@Column(name = "CREATED_DATETIME" )
+
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "CREATED_DATETIME")
 	protected Calendar createdDateTime;
-	
-	@Column(name = "UPDATED_DATETIME" )
+
+	@Column(name = "UPDATED_DATETIME")
 	protected Calendar updatedDateTime;
-	
+
 	@Basic
-	@Column(name = "LAST_AUTH_OK" )
+	@Column(name = "LAST_AUTH_OK")
 	protected String lastAuthOk;
-	
-	@Temporal( TemporalType.TIMESTAMP )
-	@Column(name = "LAST_AUTH_FAIL" )
+
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "LAST_AUTH_FAIL")
 	protected Calendar lastAuthFail;
-	
+
 	@Basic
-	@Column(name = "FAILED_LOGONS" )
+	@Column(name = "FAILED_LOGONS")
 	protected Integer faildeLogons;
-	
+
 	@Basic
-	@Column(name = "IS_ACCOUNT_LOCKED" )
+	@Column(name = "IS_ACCOUNT_LOCKED")
 	protected Character isAccountLocked;
-	
+
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name="ICMC_PRINTER_ID")
+	@JoinColumn(name = "ICMC_PRINTER_ID")
 	protected IcmcPrinter icmcPrinter;
-	
+
 	@Transient
 	protected Long icmcPrinterId;
-	
+
 }

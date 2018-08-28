@@ -186,11 +186,11 @@ function doAjaxPostForBinRecon(str) {
 										<tbody >
 											<c:forEach var="row" items="${dailyBinRecon}" varStatus="loop">
 											<tr class="trValue">
-											<td id="id${row.id}" style="display:none;">${row.id}</td>
+											<%-- <td id="id${row.id}" style="display:none;">${row.id}</td> --%>
 													<td>${row.binNumber}</td>
 													<td>${row.denomination}</td>
 													<td>${row.binType}</td>
-													<td style="display:none;" id="bundleFromDB${row.id}">${row.receiveBundle}</td>
+												<%-- 	<td style="display:none;" id="bundleFromDB${row.id}">${row.receiveBundle}</td> --%>
 													<td><input type="text" id="receiveBundle${row.id}" onChange="doAjaxPostForBinRecon(${row.id})" id=""></td>
 													<td id="message${loop.index}"><input readonly="readonly" name="message" type="text" id="message${row.id}"></td>
 												</tr>

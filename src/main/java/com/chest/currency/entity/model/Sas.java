@@ -189,7 +189,7 @@ public class Sas {
 
 	@Transient
 	protected Integer denomination;
-	
+
 	@Transient
 	@Enumerated(EnumType.STRING)
 	protected BinCategoryType binCategoryType;
@@ -445,55 +445,55 @@ public class Sas {
 	@Basic
 	@Column(name = "STATUS")
 	protected int status;
-	
+
 	@Basic
-	@Column(name="PROCESSED_OR_UNPROCESSED")
+	@Column(name = "PROCESSED_OR_UNPROCESSED")
 	protected String processedOrUnprocessed;
-	
+
 	@Basic
-	@Column(name="TOTAL_VALUE_OF_NOTES_RS_1_S")
+	@Column(name = "TOTAL_VALUE_OF_NOTES_RS_1_S")
 	protected BigDecimal totalValueOfNotesRs1S;
-	
+
 	@Basic
-	@Column(name="TOTAL_VALUE_OF_NOTES_RS_2_S")
+	@Column(name = "TOTAL_VALUE_OF_NOTES_RS_2_S")
 	protected BigDecimal totalValueOfNotesRs2S;
-	
+
 	@Basic
-	@Column(name="TOTAL_VALUE_OF_NOTES_RS_5_S")
+	@Column(name = "TOTAL_VALUE_OF_NOTES_RS_5_S")
 	protected BigDecimal totalValueOfNotesRs5S;
-	
+
 	@Basic
-	@Column(name="TOTAL_VALUE_OF_NOTES_RS_10_S")
+	@Column(name = "TOTAL_VALUE_OF_NOTES_RS_10_S")
 	protected BigDecimal totalValueOfNotesRs10S;
-	
+
 	@Basic
-	@Column(name="TOTAL_VALUE_OF_NOTES_RS_20_S")
+	@Column(name = "TOTAL_VALUE_OF_NOTES_RS_20_S")
 	protected BigDecimal totalValueOfNotesRs20S;
-	
+
 	@Basic
-	@Column(name="TOTAL_VALUE_OF_NOTES_RS_50_S")
+	@Column(name = "TOTAL_VALUE_OF_NOTES_RS_50_S")
 	protected BigDecimal totalValueOfNotesRs50S;
-	
+
 	@Basic
-	@Column(name="TOTAL_VALUE_OF_NOTES_RS_100_S")
+	@Column(name = "TOTAL_VALUE_OF_NOTES_RS_100_S")
 	protected BigDecimal totalValueOfNotesRs100S;
-	
+
 	@Basic
-	@Column(name="TOTAL_VALUE_OF_NOTES_RS_200_S")
+	@Column(name = "TOTAL_VALUE_OF_NOTES_RS_200_S")
 	protected BigDecimal totalValueOfNotesRs200S;
-	
+
 	@Basic
-	@Column(name="TOTAL_VALUE_OF_NOTES_RS_500_S")
+	@Column(name = "TOTAL_VALUE_OF_NOTES_RS_500_S")
 	protected BigDecimal totalValueOfNotesRs500S;
-	
+
 	@Basic
-	@Column(name="TOTAL_VALUE_OF_NOTES_RS_1000_S")
+	@Column(name = "TOTAL_VALUE_OF_NOTES_RS_1000_S")
 	protected BigDecimal totalValueOfNotesRs1000S;
-	
+
 	@Basic
-	@Column(name="TOTAL_VALUE_OF_NOTES_RS_2000_S")
+	@Column(name = "TOTAL_VALUE_OF_NOTES_RS_2000_S")
 	protected BigDecimal totalValueOfNotesRs2000S;
-	
+
 	/**
 	 * Default Constructor
 	 */
@@ -559,7 +559,7 @@ public class Sas {
 			this.totalValueOfNotesRs200U = BigDecimal.ZERO;
 			this.totalValueOfNotesRs500U = BigDecimal.ZERO;
 			this.totalValueOfNotesRs2000U = BigDecimal.ZERO;
-			
+
 			this.totalValueOfNotesRs1S = BigDecimal.ZERO;
 			this.totalValueOfNotesRs2S = BigDecimal.ZERO;
 			this.totalValueOfNotesRs5S = BigDecimal.ZERO;

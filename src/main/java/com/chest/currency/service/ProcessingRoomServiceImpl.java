@@ -141,6 +141,8 @@ public class ProcessingRoomServiceImpl implements ProcessingRoomService {
 			CashSource cashSource, BinCategoryType binCategoryType) {
 		List<BinTransaction> binFromTxnList = processingRoomJpaDao.getBinNumListForIndent(denomination, bundle, icmcId,
 				cashSource, binCategoryType);
+		
+		
 		return binFromTxnList;
 	}
 
@@ -646,7 +648,6 @@ public class ProcessingRoomServiceImpl implements ProcessingRoomService {
 
 	@Override
 	public List<CustodianKeySet> getDefineKeySet(BigInteger icmcId) {
-
 		return processingRoomJpaDao.getDefineKeySet(icmcId);
 	}
 
@@ -1588,6 +1589,8 @@ public class ProcessingRoomServiceImpl implements ProcessingRoomService {
 			this.updateBinTxn(binTxn);
 			processingRoomJpaDao.updateProcessingRoomStatus(process);
 			processingRoomJpaDao.updatePendingForCancel(machineId, bundleFromUI);
+		}else {
+			throw new BaseGuiException("withdrawal bin can't cancel available bundle is "+ bundleFromBinTxn);
 		}
 		return "SUCCESS";
 	}

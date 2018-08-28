@@ -18,9 +18,9 @@ import com.chest.currency.jpa.dao.VendorJpaDao;
 @Service
 @Transactional
 public class VendorServiceImpl implements VendorService {
-	
+
 	private static final Logger LOG = LoggerFactory.getLogger(VendorServiceImpl.class);
-	
+
 	@Autowired
 	VendorJpaDao vendorJpaDao;
 

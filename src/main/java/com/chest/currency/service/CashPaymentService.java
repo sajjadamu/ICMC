@@ -35,7 +35,6 @@ import com.chest.currency.entity.model.SoiledRemittance;
 import com.chest.currency.entity.model.SoiledRemittanceAllocation;
 import com.chest.currency.entity.model.User;
 import com.chest.currency.enums.BinCategoryType;
-import com.chest.currency.enums.CashSource;
 import com.chest.currency.enums.CurrencyType;
 import com.chest.currency.viewBean.SASAllocationWrapper;
 import com.mysema.query.Tuple;

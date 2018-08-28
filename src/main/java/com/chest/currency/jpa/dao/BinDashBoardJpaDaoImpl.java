@@ -15,7 +15,6 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
@@ -33,13 +32,13 @@ import com.chest.currency.entity.model.CashTransfer;
 import com.chest.currency.entity.model.ChestMaster;
 import com.chest.currency.entity.model.DSB;
 import com.chest.currency.entity.model.Discrepancy;
-import com.chest.currency.entity.model.DiscrepancyAllocation;
 import com.chest.currency.entity.model.DiversionIRV;
 import com.chest.currency.entity.model.History;
 import com.chest.currency.entity.model.ICMC;
 import com.chest.currency.entity.model.Indent;
 import com.chest.currency.entity.model.MachineAllocation;
 import com.chest.currency.entity.model.Process;
+import com.chest.currency.entity.model.QAssignVaultCustodian;
 import com.chest.currency.entity.model.QAuditorIndent;
 import com.chest.currency.entity.model.QBankReceipt;
 import com.chest.currency.entity.model.QBinMaster;
@@ -56,7 +55,9 @@ import com.chest.currency.entity.model.QCRALog;
 import com.chest.currency.entity.model.QCashTransfer;
 import com.chest.currency.entity.model.QChestMaster;
 import com.chest.currency.entity.model.QCoinsSequence;
+import com.chest.currency.entity.model.QCustodianKeySet;
 import com.chest.currency.entity.model.QDSB;
+import com.chest.currency.entity.model.QDefineKeySet;
 import com.chest.currency.entity.model.QDiscrepancy;
 import com.chest.currency.entity.model.QDiscrepancyAllocation;
 import com.chest.currency.entity.model.QDiversionIRV;
@@ -98,9 +99,6 @@ import com.mysema.query.Tuple;
 import com.mysema.query.jpa.impl.JPADeleteClause;
 import com.mysema.query.jpa.impl.JPAQuery;
 import com.mysema.query.jpa.impl.JPAUpdateClause;
-import com.mysema.query.types.Predicate;
-
-import ch.qos.logback.core.status.Status;
 
 /**
  * @author root
@@ -1083,8 +1081,7 @@ public class BinDashBoardJpaDaoImpl implements BinDashBoardJpaDao {
 	@Override
 	public List<Tuple> getMutilatedDataForDN2(BigInteger icmcId, Calendar sDate, Calendar eDate) {
 		JPAQuery jpaQuery = getFromQueryForMutilated();
-		jpaQuery.where(
-				QMutilated.mutilated.icmcId.eq(icmcId).and(QMutilated.mutilated.insertTime.between(sDate, eDate))
+		jpaQuery.where(QMutilated.mutilated.icmcId.eq(icmcId).and(QMutilated.mutilated.insertTime.between(sDate, eDate))
 				.and(QMutilated.mutilated.otherStatus.eq(OtherStatus.ACCEPTED)));
 		jpaQuery.groupBy(QMutilated.mutilated.denomination);
 		jpaQuery.orderBy(QMutilated.mutilated.denomination.desc());
@@ -1525,7 +1522,6 @@ public class BinDashBoardJpaDaoImpl implements BinDashBoardJpaDao {
 
 	@Override
 	public List<Tuple> getBankAllocationData(BigInteger icmId, Calendar sDate, Calendar eDate) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -1886,7 +1882,8 @@ public class BinDashBoardJpaDaoImpl implements BinDashBoardJpaDao {
 		jpaQuery.where(QBinTransaction.binTransaction.denomination.eq(binTransaction.getDenomination())
 				.and(QBinTransaction.binTransaction.icmcId.eq(icmcId))
 				.and(QBinTransaction.binTransaction.status.ne(BinStatus.EMPTY)));
-		List<BinTransaction> list = jpaQuery.list(QBinTransaction.binTransaction);
+		// List<BinTransaction> list =
+		// jpaQuery.list(QBinTransaction.binTransaction);
 
 		return false;
 	}
@@ -2001,6 +1998,15 @@ public class BinDashBoardJpaDaoImpl implements BinDashBoardJpaDao {
 		new JPADeleteClause(em, QSuspenseOpeningBalance.suspenseOpeningBalance)
 				.where(QSuspenseOpeningBalance.suspenseOpeningBalance.icmcId.eq(icmcId)).execute();
 
+		new JPADeleteClause(em, QAssignVaultCustodian.assignVaultCustodian)
+				.where(QAssignVaultCustodian.assignVaultCustodian.icmcId.eq(icmcId)).execute();
+
+		new JPADeleteClause(em, QDefineKeySet.defineKeySet).where(QDefineKeySet.defineKeySet.icmcId.eq(icmcId))
+				.execute();
+
+		new JPADeleteClause(em, QCustodianKeySet.custodianKeySet)
+				.where(QCustodianKeySet.custodianKeySet.icmcId.eq(icmcId)).execute();
+
 	}
 
 	@Override
@@ -2053,7 +2059,7 @@ public class BinDashBoardJpaDaoImpl implements BinDashBoardJpaDao {
 		jpaQuery.where(QBinTransaction.binTransaction.icmcId.eq(icmcId)
 				.and(QBinTransaction.binTransaction.cashType.eq(cashType))
 				.and(QBinTransaction.binTransaction.binType.eq(CurrencyType.SOILED)
-				.or(QBinTransaction.binTransaction.binType.eq(CurrencyType.MUTILATED))));
+						.or(QBinTransaction.binTransaction.binType.eq(CurrencyType.MUTILATED))));
 		jpaQuery.groupBy(QBinTransaction.binTransaction.denomination, QBinTransaction.binTransaction.cashType);
 		jpaQuery.orderBy(QBinTransaction.binTransaction.denomination.asc());
 		List<Tuple> summaryList = jpaQuery.list(QBinTransaction.binTransaction.denomination,
@@ -2138,6 +2144,5 @@ public class BinDashBoardJpaDaoImpl implements BinDashBoardJpaDao {
 		List<DiversionIRV> diversionIRVList = jpaQuery.list(QDiversionIRV.diversionIRV);
 		return diversionIRVList;
 	}
-
 
 }

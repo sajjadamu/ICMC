@@ -4,7 +4,6 @@
  *******************************************************************************/
 package com.chest.currency.entity.model;
 
-import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.Calendar;
 
@@ -38,7 +37,7 @@ import com.chest.currency.enums.DateTimePattern;
 public class CoinsSequence {
 
 	@Id
-	//@GeneratedValue(strategy = GenerationType.AUTO)
+	// @GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "ID")
 	@GeneratedValue(generator = "COINS_SEQUENCE_SEQ")
 	@SequenceGenerator(name = "COINS_SEQUENCE_SEQ", sequenceName = "COINS_SEQUENCE_SEQ", allocationSize = 100)
@@ -68,7 +67,7 @@ public class CoinsSequence {
 	@DateTimeFormat(pattern = DateTimePattern.yyyy_MM_dd_HH_mm_ss_SSS)
 	@Column(name = "UPDATE_TIME")
 	protected Calendar updateTime;
-	
+
 	@Basic
 	@Column(name = "DENOMINATION")
 	protected Integer denomination;

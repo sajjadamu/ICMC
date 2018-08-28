@@ -69,10 +69,10 @@ public class UserAdministrationServiceImpl implements UserAdministrationService 
 		User userBean = userAdministrationJpaDao.isValidUser(userId);
 		return userBean;
 	}
-	
+
 	@Override
 	public User isValidUser(String userId, BigInteger icmcId) {
-		User userBean = userAdministrationJpaDao.isValidUser(userId,icmcId);
+		User userBean = userAdministrationJpaDao.isValidUser(userId, icmcId);
 		return userBean;
 	}
 
@@ -446,8 +446,8 @@ public class UserAdministrationServiceImpl implements UserAdministrationService 
 	}
 
 	@Override
-	public Machine checkMachineIsExistOrNot(BigInteger icmcId,int machineNo) {
-		Machine machine = userAdministrationJpaDao.checkMachineIsExistOrNot(icmcId,machineNo);
+	public Machine checkMachineIsExistOrNot(BigInteger icmcId, int machineNo) {
+		Machine machine = userAdministrationJpaDao.checkMachineIsExistOrNot(icmcId, machineNo);
 		return machine;
 	}
 
@@ -489,31 +489,31 @@ public class UserAdministrationServiceImpl implements UserAdministrationService 
 
 	@Override
 	public List<Machine> getMachineList() {
-		List<Machine> machineList= userAdministrationJpaDao.getMachineList();
+		List<Machine> machineList = userAdministrationJpaDao.getMachineList();
 		return machineList;
 	}
 
 	@Override
 	public Calendar getNotificationFromBinTransactionForEOD(BigInteger icmcId) {
-	Calendar calendar=userAdministrationJpaDao.getNotificationFromBinTransactionForEOD(icmcId);
-	return calendar;
+		Calendar calendar = userAdministrationJpaDao.getNotificationFromBinTransactionForEOD(icmcId);
+		return calendar;
 	}
 
 	@Override
 	public Calendar getNotificationFromBinTransactionBODForEOD(BigInteger icmcId, Calendar sDate, Calendar eDate) {
-		Calendar calendar=userAdministrationJpaDao.getNotificationFromBinTransactionBODForEOD(icmcId, sDate, eDate);
+		Calendar calendar = userAdministrationJpaDao.getNotificationFromBinTransactionBODForEOD(icmcId, sDate, eDate);
 		return calendar;
 	}
 
 	@Override
 	public String getNotificationForMachineAllocation(BigInteger icmcId) {
-	String message=	userAdministrationJpaDao.getNotificationForMachineAllocation(icmcId);
+		String message = userAdministrationJpaDao.getNotificationForMachineAllocation(icmcId);
 		return message;
 	}
 
 	@Override
 	public String getNotificationForProcessingOutPut(BigInteger icmcId) {
-		String message=userAdministrationJpaDao.getNotificationForProcessingOutPut(icmcId);
+		String message = userAdministrationJpaDao.getNotificationForProcessingOutPut(icmcId);
 		return message;
 	}
 
@@ -522,6 +522,5 @@ public class UserAdministrationServiceImpl implements UserAdministrationService 
 		DelegateRight delegateRight = userAdministrationJpaDao.getRoleFromDelegatedRights(icmcId);
 		return delegateRight;
 	}
-
 
 }

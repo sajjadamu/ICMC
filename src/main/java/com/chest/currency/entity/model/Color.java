@@ -13,7 +13,6 @@ import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
@@ -37,9 +36,9 @@ import lombok.ToString;
 @EqualsAndHashCode(of = { "id" })
 @ToString
 public class Color {
-	
+
 	@Id
-	//@GeneratedValue(strategy = GenerationType.AUTO)
+	// @GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "ID")
 	@GeneratedValue(generator = "BIN_TYPE_COLOR_SEQ")
 	@SequenceGenerator(name = "BIN_TYPE_COLOR_SEQ", sequenceName = "BIN_TYPE_COLOR_SEQ", allocationSize = 100)

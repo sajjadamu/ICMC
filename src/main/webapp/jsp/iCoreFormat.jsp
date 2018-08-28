@@ -152,7 +152,7 @@
 															<%-- <td><fmt:formatNumber pattern="0000" value="${row.solId}" />${row.accountNumber}</td> --%>
 															
 															
-															<td><fmt:formatNumber pattern="0000" value="" />${row.accountNumber}</td>
+															<td><fmt:formatNumber pattern="0000" value="" />'${row.accountNumber}</td>
 															<td>INR<fmt:formatNumber pattern="0000" value="${row.accountNumber.substring(0,4)}" /></td>
 															
 															<c:if test="${innerRow.discrepancyType == 'EXCESS'}">

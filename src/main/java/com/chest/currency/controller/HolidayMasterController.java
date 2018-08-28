@@ -5,7 +5,6 @@
 package com.chest.currency.controller;
 
 import java.io.BufferedOutputStream;
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FileReader;
@@ -30,8 +29,6 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.supercsv.cellprocessor.Optional;
-import org.supercsv.cellprocessor.ParseDate;
-import org.supercsv.cellprocessor.ParseEnum;
 import org.supercsv.cellprocessor.constraint.NotNull;
 import org.supercsv.cellprocessor.ift.CellProcessor;
 import org.supercsv.io.CsvBeanReader;
@@ -39,24 +36,21 @@ import org.supercsv.io.ICsvBeanReader;
 import org.supercsv.prefs.CsvPreference;
 
 import com.chest.currency.entity.model.HolidayMaster;
-import com.chest.currency.entity.model.ICMC;
 import com.chest.currency.entity.model.User;
 import com.chest.currency.enums.State;
-import com.chest.currency.enums.Zone;
 import com.chest.currency.service.HolidayMasterService;
-import com.chest.currency.util.UtilityJpa;
 
 @Controller
 public class HolidayMasterController {
-	
+
 	private static final Logger LOG = LoggerFactory.getLogger(HolidayMasterController.class);
-	
+
 	@Autowired
 	protected HolidayMasterService holidayMasterService;
-	
+
 	@Autowired
 	String documentFilePath;
-	
+
 	@RequestMapping("/viewHoliday")
 	public ModelAndView viewHoliday() {
 		ModelMap model = new ModelMap();
@@ -66,82 +60,47 @@ public class HolidayMasterController {
 		model.put("user", obj);
 		return new ModelAndView("viewHoliday", model);
 	}
-	
+
 	@RequestMapping("/getHolidayList")
-	public ModelAndView getHolidayList(@RequestParam String state, RedirectAttributes redirectAttributes){
-		if(state.equalsIgnoreCase("")){
+	public ModelAndView getHolidayList(@RequestParam String state, RedirectAttributes redirectAttributes) {
+		if (state.equalsIgnoreCase("")) {
 			redirectAttributes.addFlashAttribute("errorMsg", "Please Select an State");
 			return new ModelAndView("redirect:./viewHoliday");
-		}else{
+		} else {
 			List<HolidayMaster> holidayList = holidayMasterService.getHolidayList(state);
 			return new ModelAndView("getHolidayList", "records", holidayList);
 		}
 	}
-	
+
 	@RequestMapping("/uploadHoliday")
 	public ModelAndView viewHolidayMaster() {
 		ModelMap map = new ModelMap();
 		map.addAttribute("documentFilePath", "./files/" + documentFilePath);
 		return new ModelAndView("viewHolidayMaster", map);
 	}
-	
-	
+
 	private static CellProcessor[] getProcessorsHolidayMaster() {
-        final CellProcessor[] processors = new CellProcessor[] {
-                new NotNull(),
-                new Optional(),
-                new Optional(),
-                new Optional(),
-                new Optional(),
-                new Optional(),
-                new Optional(),
-                new Optional(),
-                new Optional(),
-                new Optional(),
-                new Optional(),
-                new Optional(),
-                new Optional(),
-                new Optional(),
-                new Optional(),
-                new Optional(),
-                new Optional(),
-                new Optional(),
-                new Optional(),
-                new Optional(),
-                new Optional(),
-                new Optional(),
-                new Optional(),
-                new Optional(),
-                new Optional(),
-                new Optional(),
-                new Optional(),
-                new Optional(),
-                new Optional(),
-                new Optional(),
-                new Optional(),
-                new Optional(),
-                new Optional(),
-                new Optional(),
-                new Optional(),
-                new Optional(),
-                new Optional(),
-                new Optional(),
-                new Optional(),
-               // new Optional(),
-               
-                       };
-        return processors;
-    }
-	
-	
+		final CellProcessor[] processors = new CellProcessor[] { new NotNull(), new Optional(), new Optional(),
+				new Optional(), new Optional(), new Optional(), new Optional(), new Optional(), new Optional(),
+				new Optional(), new Optional(), new Optional(), new Optional(), new Optional(), new Optional(),
+				new Optional(), new Optional(), new Optional(), new Optional(), new Optional(), new Optional(),
+				new Optional(), new Optional(), new Optional(), new Optional(), new Optional(), new Optional(),
+				new Optional(), new Optional(), new Optional(), new Optional(), new Optional(), new Optional(),
+				new Optional(), new Optional(), new Optional(), new Optional(), new Optional(), new Optional(),
+				// new Optional(),
+
+		};
+		return processors;
+	}
+
 	@RequestMapping(value = "/uploadHolidayMaster", method = RequestMethod.POST)
 	public ModelAndView holidayMasterUpload(@RequestParam MultipartFile file, HttpServletRequest request,
-		HolidayMaster holiday, HttpSession session, RedirectAttributes redirectAttributes) {
-		
+			HolidayMaster holiday, HttpSession session, RedirectAttributes redirectAttributes) {
+
 		User user = (User) session.getAttribute("login");
 		holiday.setInsertBy(user.getId());
 		holiday.setUpdateBy(user.getId());
-		
+
 		Calendar now = Calendar.getInstance();
 		holiday.setInsertTime(now);
 		holiday.setUpdateTime(now);
@@ -165,26 +124,25 @@ public class HolidayMasterController {
 			e.printStackTrace();
 		}
 		List<HolidayMaster> bulkHolidayList = new LinkedList<>();
-		HolidayMaster holidayMaster=null;
-		try{
-				try(ICsvBeanReader beanReader = new CsvBeanReader(new FileReader(serverFile), CsvPreference.STANDARD_PREFERENCE))
-					{ 
-						final String[] headers = beanReader.getHeader(true);
-							final CellProcessor[] processors = getProcessorsHolidayMaster();
-								while ((holidayMaster = beanReader.read(HolidayMaster.class, headers, processors)) != null) {
-									bulkHolidayList.add(holidayMaster);	
-								}
-					}}catch(Exception r){r.printStackTrace();
-    	redirectAttributes.addFlashAttribute("errorMsg", "Csv file is not of standard format ");
-    	return new ModelAndView("redirect:./uploadHoliday");
-    	}
+		HolidayMaster holidayMaster = null;
+		try {
+			try (ICsvBeanReader beanReader = new CsvBeanReader(new FileReader(serverFile),
+					CsvPreference.STANDARD_PREFERENCE)) {
+				final String[] headers = beanReader.getHeader(true);
+				final CellProcessor[] processors = getProcessorsHolidayMaster();
+				while ((holidayMaster = beanReader.read(HolidayMaster.class, headers, processors)) != null) {
+					bulkHolidayList.add(holidayMaster);
+				}
+			}
+		} catch (Exception r) {
+			r.printStackTrace();
+			redirectAttributes.addFlashAttribute("errorMsg", "Csv file is not of standard format ");
+			return new ModelAndView("redirect:./uploadHoliday");
+		}
 		holidayMasterService.bulkHolidayRequest(bulkHolidayList, holiday);
 		redirectAttributes.addFlashAttribute("successMsg", "Holiday file has been uploaded successfully");
 		return new ModelAndView("redirect:./uploadHoliday");
-		
-		
-		
-		
+
 	}
 
 }

@@ -38,34 +38,34 @@ import com.chest.currency.util.UtilityJpa;
 
 @Controller
 public class ServicingBranchController {
-	
+
 	private static final Logger LOG = LoggerFactory.getLogger(ServicingBranchController.class);
-	
+
 	@Autowired
 	ServicingBranchService servicingBranchService;
-	
+
 	@Autowired
 	String documentFilePath;
-	
+
 	@RequestMapping("/servicingBranch")
 	public ModelAndView servicingBranch() {
 		ServicingBranch obj = new ServicingBranch();
 		LOG.info("Servicing Branch Page");
 		ModelMap map = new ModelMap();
-		map.addAttribute("documentFilePath", "./files/"+documentFilePath);
+		map.addAttribute("documentFilePath", "./files/" + documentFilePath);
 		map.addAttribute("user", obj);
 		return new ModelAndView("/servicingBranch", map);
 	}
 
 	@RequestMapping("/UploadServicingBranch")
 	public ModelAndView branchEntry(HttpSession session, @RequestParam MultipartFile file, HttpServletRequest request,
-		ServicingBranch sb, RedirectAttributes redirectAttributes) {
-		
+			ServicingBranch sb, RedirectAttributes redirectAttributes) {
+
 		User user = (User) session.getAttribute("login");
 		sb.setInsertBy(user.getId());
 		sb.setUpdateBy(user.getId());
 		sb.setStatus(Status.ENABLED);
-		
+
 		Calendar now = Calendar.getInstance();
 		sb.setInsertTime(now);
 		sb.setUpdateTime(now);
@@ -133,7 +133,7 @@ public class ServicingBranchController {
 		User user = (User) session.getAttribute("login");
 		servicingBranch.setInsertBy(user.getId());
 		servicingBranch.setUpdateBy(user.getId());
-		
+
 		Calendar now = Calendar.getInstance();
 		servicingBranch.setInsertTime(now);
 		servicingBranch.setUpdateTime(now);

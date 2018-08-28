@@ -47,6 +47,27 @@
     <![endif]-->
 </head>
 
+<script type="text/javascript">
+
+
+function doAjaxForCoustodianName() {
+	addHeader();
+	var name = $('#name').val();
+	$.ajax({
+		type : "POST",
+		url : "././getCoustodianName",
+		data : "name=" + name,
+		success : function(response) {
+			var newStr = response.substring(1, response .length-1); // Remove Array Brackets
+	        var data=newStr.split(",");
+			$('#accountNumber').val(data)
+		},
+		error : function(e) {
+			alert('accountNumber  Error: ' + e);
+		}
+	});
+}</script>
+
 <body oncontextmenu="return false;">
 	<div id="wrapper">
 		<!-- Navigation -->
@@ -81,6 +102,14 @@
 										modelAttribute="user" autocomplete="off">
 										<div align="center" style="color: red"><b>${takingOverCharge}</b></div>
 										<div align="center" style="color: red"><b>${HandingOverCharge}</b></div>
+									<div class="form-group">
+											<label>Custodian</label>
+											<form:select path="custodian" id="custodian" name="custodian" cssClass="form-control">
+												<option value="" label="Select Custdian"></option>
+    											<form:options items="${custodianList}" itemValue="custodian" itemLabel="custodian"/>
+											</form:select>
+										</div> 
+									
 										<div class="form-group">
 											<label>User ID Of Taking Over Charge</label>
 											<form:input path="userId" maxlength="45" id="userId" name="userId" cssClass="form-control" />
@@ -90,24 +119,6 @@
 											<label>User ID Of Handing Over Charge</label>
 											<form:input path="handingOverCharge" maxlength="45" id="handingOverCharge" name="handingOverCharge" cssClass="form-control" />
 										</div>
-										
-										<%-- <div class="form-group">
-											<label> Custodian</label>
-											<form:select path="custodian" cssClass="form-control">
-												<form:option value="">Select Custodian</form:option>
-												<form:option value="CUSTODIAN 1">CUSTODIAN 1</form:option>
-												<form:option value="CUSTODIAN 2">CUSTODIAN 2</form:option>
-											</form:select>
-											<form:input path="keySet" id="keySet" maxlength="45" name="keySet" cssClass="form-control" />
-										</div> --%>
-										
-										<div class="form-group">
-											<label>Custodian</label>
-											<form:select path="custodian" id="custodian" name="custodian" cssClass="form-control">
-												<option value="" label="Select Custdian"></option>
-    											<form:options items="${custodianList}" itemValue="custodian" itemLabel="custodian"/>
-											</form:select>
-										</div> 
 										
 										<div class="form-group">
 											<label>Reason</label>

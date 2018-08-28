@@ -25,12 +25,12 @@ import com.chest.currency.service.VendorService;
 
 @Controller
 public class VendorController {
-	
+
 	private static final Logger LOG = LoggerFactory.getLogger(VendorController.class);
-	
+
 	@Autowired
 	VendorService vendorService;
-	
+
 	@RequestMapping("/addVendor")
 	public ModelAndView addVendor() {
 		Vendor obj = new Vendor();
@@ -39,7 +39,7 @@ public class VendorController {
 	}
 
 	@RequestMapping("/saveVendor")
-	public ModelAndView vendorEntry(@ModelAttribute("user") Vendor vendor, HttpSession session, 
+	public ModelAndView vendorEntry(@ModelAttribute("user") Vendor vendor, HttpSession session,
 			RedirectAttributes redirectAttributes) {
 		User user = (User) session.getAttribute("login");
 		vendor.setInsertBy(user.getId());

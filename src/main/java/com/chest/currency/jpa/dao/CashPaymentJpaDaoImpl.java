@@ -55,7 +55,6 @@ import com.chest.currency.entity.model.QCRAAllocation;
 import com.chest.currency.entity.model.QCoinsSequence;
 import com.chest.currency.entity.model.QDiversionORV;
 import com.chest.currency.entity.model.QDiversionORVAllocation;
-import com.chest.currency.entity.model.QForwardBundleForCRAPayment;
 import com.chest.currency.entity.model.QICMC;
 import com.chest.currency.entity.model.QIndent;
 import com.chest.currency.entity.model.QMachineAllocation;
@@ -81,15 +80,11 @@ import com.chest.currency.enums.CurrencyType;
 import com.chest.currency.enums.OtherStatus;
 import com.chest.currency.enums.YesNo;
 import com.mysema.query.Tuple;
-import com.mysema.query.jpa.JPQLQuery;
 import com.mysema.query.jpa.impl.JPADeleteClause;
 import com.mysema.query.jpa.impl.JPAQuery;
 import com.mysema.query.jpa.impl.JPAUpdateClause;
 
-/**
- * @author root
- *
- */
+
 @Repository
 public class CashPaymentJpaDaoImpl implements CashPaymentJpaDao {
 	private static final Logger LOG = LoggerFactory.getLogger(CashPaymentJpaDaoImpl.class);
@@ -1476,7 +1471,6 @@ public class CashPaymentJpaDaoImpl implements CashPaymentJpaDao {
 
 	@Override
 	public List<DiversionORV> diversionListForRbiOrderNo(BigInteger icmcId) {
-		// TODO Auto-generated method stub
 		JPAQuery jpaQuery = getFromQueryForDiversionORV();
 		jpaQuery.where(QDiversionORV.diversionORV.icmcId.eq(icmcId)
 				.and(QDiversionORV.diversionORV.otherStatus.eq(OtherStatus.ACCEPTED)));
@@ -2291,7 +2285,6 @@ public class CashPaymentJpaDaoImpl implements CashPaymentJpaDao {
 
 	@Override
 	public List<Tuple> getSASAllocationRecordFromTuple(BigInteger icmcId, Calendar sDate, Calendar eDate) {
-		// TODO Auto-generated method stub
 		JPAQuery jpaQuery = getFromQueryForSASAllocation();
 		jpaQuery.where(QSASAllocation.sASAllocation.icmcId.eq(icmcId)
 				.and(QSASAllocation.sASAllocation.status.eq(OtherStatus.REQUESTED))
@@ -2379,12 +2372,6 @@ public class CashPaymentJpaDaoImpl implements CashPaymentJpaDao {
 	@Override
 	public DiversionORV getDiversionORVById(Long id) {
 		return em.find(DiversionORV.class, id);
-	}
-
-	private JPAQuery getCRAIDFromForwardBundleForCRA() {
-		JPAQuery jpaQuery = new JPAQuery(em);
-		jpaQuery.from(QForwardBundleForCRAPayment.forwardBundleForCRAPayment);
-		return jpaQuery;
 	}
 
 	@Override

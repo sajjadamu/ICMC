@@ -18,9 +18,9 @@ import com.chest.currency.jpa.dao.RolePermissionJpaDao;
 @Service
 @Transactional
 public class RolePermissionServiceImpl implements RolePermissionService {
-	
+
 	private static final Logger LOG = LoggerFactory.getLogger(RolePermissionServiceImpl.class);
-	
+
 	@Autowired
 	protected RolePermissionJpaDao rolePermissionJpaDao;
 
@@ -30,7 +30,7 @@ public class RolePermissionServiceImpl implements RolePermissionService {
 		List<Role> roleList = rolePermissionJpaDao.getRoleList();
 		return roleList;
 	}
-	
+
 	@Override
 	@Transactional
 	public boolean saveRole(Role role) {

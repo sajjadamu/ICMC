@@ -54,28 +54,28 @@ public class DSBAccountDetailsController {
 	@RequestMapping("/saveDSBAccountDetail")
 	public ModelAndView saveDSBAccountDetail(@ModelAttribute("user") DSBAccountDetail accountDetail,
 			HttpSession session, RedirectAttributes redirectAttributes) {
-		
-		//Special Character Validation
-		
-				boolean vendorName = HtmlUtils.isHtml(accountDetail.getDsbVendorName());
-				boolean accountNumber = HtmlUtils.isHtml(accountDetail.getAccountNumber());
-				if (vendorName == false || accountNumber == false) {
-					redirectAttributes.addFlashAttribute("successMsg", "Error : Special Character Not Allowed");
-					return new ModelAndView("redirect:./addDSBAccountDetail");
-				}
-				
-				//End of Special Character Validation
-		
+
+		// Special Character Validation
+
+		boolean vendorName = HtmlUtils.isHtml(accountDetail.getDsbVendorName());
+		boolean accountNumber = HtmlUtils.isHtml(accountDetail.getAccountNumber());
+		if (vendorName == false || accountNumber == false) {
+			redirectAttributes.addFlashAttribute("successMsg", "Error : Special Character Not Allowed");
+			return new ModelAndView("redirect:./addDSBAccountDetail");
+		}
+
+		// End of Special Character Validation
+
 		User user = (User) session.getAttribute("login");
 		accountDetail.setInsertBy(user.getId());
 		accountDetail.setUpdateBy(user.getId());
 		Calendar now = Calendar.getInstance();
 		accountDetail.setInsertTime(now);
 		accountDetail.setUpdateTime(now);
-		
-		DSBAccountDetail vendorNameFromDB = dsbAccountService.isVendorNameValid(accountDetail.getDsbVendorName(), user.getIcmcId());
-		if(vendorNameFromDB!=null)
-		{
+
+		DSBAccountDetail vendorNameFromDB = dsbAccountService.isVendorNameValid(accountDetail.getDsbVendorName(),
+				user.getIcmcId());
+		if (vendorNameFromDB != null) {
 			redirectAttributes.addFlashAttribute("successMsg", "Vendor name Already Exist");
 			return new ModelAndView("redirect:./addDSBAccountDetail");
 		}
@@ -83,9 +83,9 @@ public class DSBAccountDetailsController {
 		redirectAttributes.addFlashAttribute("successMsg", "DSB Account details inserted Successfully");
 		return new ModelAndView("redirect:./addDSBAccountDetail");
 	}
-	
+
 	@RequestMapping("/editDSBAccountDetail")
-	 public ModelAndView editDSBAccountDetail(@RequestParam long id, DSBAccountDetail dsbAccountDetail) {
+	public ModelAndView editDSBAccountDetail(@RequestParam long id, DSBAccountDetail dsbAccountDetail) {
 		ModelMap model = new ModelMap();
 		dsbAccountDetail = dsbAccountService.getDSBAccountDetailById(id);
 		List<ICMC> icmcList = dsbAccountService.getICMCName();
@@ -93,22 +93,22 @@ public class DSBAccountDetailsController {
 		model.put("user", dsbAccountDetail);
 		return new ModelAndView("editDSBAccountDetail", model);
 	}
-	
+
 	@RequestMapping("/updateDSBAccountDetail")
 	public ModelAndView updateCitCRAVehicle(@ModelAttribute("user") DSBAccountDetail dsbAccount, HttpSession session,
 			RedirectAttributes redirectAttributes) {
-		
-		//Special Character Validation
-		
+
+		// Special Character Validation
+
 		boolean vendorName = HtmlUtils.isHtml(dsbAccount.getDsbVendorName());
 		boolean accountNumber = HtmlUtils.isHtml(dsbAccount.getAccountNumber());
 		if (vendorName == false || accountNumber == false) {
 			redirectAttributes.addFlashAttribute("updateMsg", "Error : Special Character Not Allowed");
 			return new ModelAndView("redirect:./viewDSBAccountDetail");
 		}
-		
-		//End of Special Character Validation
-		
+
+		// End of Special Character Validation
+
 		User user = (User) session.getAttribute("login");
 		dsbAccount.setInsertBy(user.getId());
 		dsbAccount.setUpdateBy(user.getId());

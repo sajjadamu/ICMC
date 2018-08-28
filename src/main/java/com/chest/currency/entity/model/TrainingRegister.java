@@ -1,9 +1,7 @@
 package com.chest.currency.entity.model;
 
 import java.math.BigInteger;
-import java.sql.Date;
 import java.util.Calendar;
-
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -58,41 +56,42 @@ public class TrainingRegister {
 
 	@Column(name = "UPDATE_TIME")
 	protected Calendar updateTime;
-	
+
 	@Basic
 	@Column(name = "TRAINING_DATE")
 	protected String trainingDate;
-	
+
 	@Basic
 	@Column(name = "SUBJECT")
 	protected String subject;
-	
-	
+
 	@Basic
 	@Column(name = "NAME_OF_TRAINER")
 	protected String nameOfTrainer;
-	
-	//code for the alter table
+
+	// code for the alter table
 	@Basic
 	@Column(name = "LOCATION")
 	protected String location;
-	
+
 	@Basic
 	@Column(name = "EMPLOYEE_NAME")
 	protected String employeeName;
-	
+
 	@Basic
 	@Column(name = "EMPLOYEE_ID")
 	protected String employeeId;
-	
+
 	@Basic
 	@Column(name = "DURATION")
 	protected String duration;
-	
-	/*@Basic
-    @Column(name = "TRAINING_tIME")
-	protected String trainingTime;*/
-	//end for the code of alter table
+
+	/*
+	 * @Basic
+	 * 
+	 * @Column(name = "TRAINING_tIME") protected String trainingTime;
+	 */
+	// end for the code of alter table
 	@Basic
 	@Column(name = "REMARKS")
 	protected String remarks;

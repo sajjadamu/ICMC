@@ -28,21 +28,21 @@ import com.chest.currency.service.IcmcReportService;
 
 @Controller
 public class ICMCReportController {
-	
+
 	private static final Logger LOG = LoggerFactory.getLogger(ICMCReportController.class);
-	
+
 	@Autowired
 	protected IcmcReportService icmcReportService;
-	
+
 	@RequestMapping("/viewICMCReport")
 	public ModelAndView viewICMCReport() {
 		LOG.info("viewICMCReport");
 		List<ICMCReport> icmcReportList = icmcReportService.getICMCReport();
 		return new ModelAndView("viewICMCReport", "records", icmcReportList);
 	}
-	
+
 	@RequestMapping("/addICMCReport")
-	public ModelAndView addICMCReport(){
+	public ModelAndView addICMCReport() {
 		ModelMap model = new ModelMap();
 		ICMCReport obj = new ICMCReport();
 		LOG.info("ICMC Report Page");
@@ -50,29 +50,30 @@ public class ICMCReportController {
 		model.put("user", obj);
 		return new ModelAndView("addICMCReport", model);
 	}
-	
-	public boolean isValidICMCReportData(ICMCReport icmcReport){
-		if(icmcReport.getNewReportType() == null || icmcReport.getReportType() == null){
+
+	public boolean isValidICMCReportData(ICMCReport icmcReport) {
+		if (icmcReport.getNewReportType() == null || icmcReport.getReportType() == null) {
 			return false;
 		}
 		return true;
 	}
-	
+
 	@RequestMapping("/saveICMCReport")
-	public ModelAndView saveICMCReport(@ModelAttribute("user") ICMCReport icmcReport, HttpSession session, 
-			ModelMap model, RedirectAttributes redirectAttributes){
+	public ModelAndView saveICMCReport(@ModelAttribute("user") ICMCReport icmcReport, HttpSession session,
+			ModelMap model, RedirectAttributes redirectAttributes) {
 		User userTemp = (User) session.getAttribute("login");
-		
-		if(!isValidICMCReportData(icmcReport)){
+
+		if (!isValidICMCReportData(icmcReport)) {
 			return new ModelAndView("redirect:./addICMCReport");
 		}
-		
+
 		ICMCReport dbICMCReport = icmcReportService.isCustomReportTypeNameValid(icmcReport.getNewReportType());
 		if (dbICMCReport != null) {
 			LOG.info("ICMC Report Name Already Exists...");
 			model.put("reportList", ReportType.values());
 			model.put("user", icmcReport);
-			model.put("duplicateReport", "New custom report with this name already exists.... Please choose any other name");
+			model.put("duplicateReport",
+					"New custom report with this name already exists.... Please choose any other name");
 			return new ModelAndView("addICMCReport", model);
 		} else {
 			icmcReport.setInsertBy(userTemp.getId());
@@ -86,7 +87,7 @@ public class ICMCReportController {
 			return new ModelAndView("redirect:./viewICMCReport");
 		}
 	}
-	
+
 	@RequestMapping("/removeReport")
 	public ModelAndView removeReport(@RequestParam int id, ICMCReport icmcReport) {
 		icmcReport.setId(id);
@@ -95,7 +96,8 @@ public class ICMCReportController {
 	}
 
 	@RequestMapping("/deleteReport")
-	public ModelAndView deleteReport(ICMCReport icmcReport, HttpSession session, RedirectAttributes redirectAttributes) {
+	public ModelAndView deleteReport(ICMCReport icmcReport, HttpSession session,
+			RedirectAttributes redirectAttributes) {
 		User userTemp = (User) session.getAttribute("login");
 		Calendar now = Calendar.getInstance();
 		icmcReport.setInsertBy(userTemp.getId());
@@ -104,7 +106,8 @@ public class ICMCReportController {
 		icmcReport.setUpdateTime(now);
 		icmcReport.setStatus(Status.DELETED);
 		icmcReportService.deleteReport(icmcReport);
-		redirectAttributes.addFlashAttribute("icmcReportRemovalSuccessMsg", "Custom ICMC report has been removed successfully");
+		redirectAttributes.addFlashAttribute("icmcReportRemovalSuccessMsg",
+				"Custom ICMC report has been removed successfully");
 		return new ModelAndView("redirect:./viewICMCReport");
 	}
 }

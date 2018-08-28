@@ -11,7 +11,6 @@ import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
@@ -35,18 +34,18 @@ import com.chest.currency.enums.DateTimePattern;
 @EqualsAndHashCode(of = { "id" })
 @ToString
 public class MachineSoftwareUpdation {
-	
+
 	@Id
-	//@GeneratedValue(strategy = GenerationType.AUTO)
+	// @GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "ID")
 	@GeneratedValue(generator = "MACHINE_SOFTWARE_UPDATION_SEQ")
 	@SequenceGenerator(name = "MACHINE_SOFTWARE_UPDATION_SEQ", sequenceName = "MACHINE_SOFTWARE_UPDATION_SEQ", allocationSize = 100)
 	protected Long id;
-	
+
 	@Basic
 	@Column(name = "ICMC_ID")
 	protected BigInteger icmcId;
-	
+
 	@Basic
 	@Column(name = "MACHINE_NO")
 	protected Integer machineNo;
@@ -54,32 +53,31 @@ public class MachineSoftwareUpdation {
 	@Basic
 	@Column(name = "ASSET_CODE")
 	protected String assetCode;
-	
+
 	@Basic
 	@Column(name = "SAP")
 	protected Integer sap;
-	
+
 	@Basic
 	@Column(name = "MAP")
 	protected Integer map;
-	
+
 	@Basic
 	@Column(name = "OSAP")
 	protected Integer osap;
-	
+
 	@Basic
 	@Column(name = "MACHINE_SI_NO")
 	protected String machineSINo;
-	
-	
+
 	@Basic
 	@Column(name = "MODEL_TYPE")
 	protected String modelType;
-	
+
 	@Basic
 	@Column(name = "STANDARD_PRODUCTIVITY")
 	protected String standardProductivity;
-	
+
 	@Basic
 	@Column(name = "INSERT_BY")
 	protected String insertBy;
@@ -92,7 +90,7 @@ public class MachineSoftwareUpdation {
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "INSERT_TIME")
 	protected Calendar insertTime;
-	
+
 	@DateTimeFormat(pattern = DateTimePattern.yyyy_MM_dd_HH_mm_ss_SSS)
 	@Column(name = "UPDATE_TIME")
 	protected Calendar updateTime;

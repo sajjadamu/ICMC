@@ -8,8 +8,6 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -59,17 +57,12 @@ import com.chest.currency.entity.model.TrainingRegister;
 import com.chest.currency.enums.BinCategoryType;
 import com.chest.currency.enums.CashType;
 import com.chest.currency.enums.CurrencyType;
-import com.chest.currency.enums.DenominationType;
 import com.chest.currency.enums.OtherStatus;
 import com.chest.currency.jpa.dao.BinDashBoardJpaDaoImpl;
 import com.chest.currency.jpa.dao.UserAdministrationJpaDao;
-import com.chest.currency.jpa.dao.UserAdministrationJpaDaoImpl;
 import com.chest.currency.util.UtilityMapper;
 import com.ibm.icu.text.SimpleDateFormat;
 import com.mysema.query.Tuple;
-
-import lombok.extern.java.Log;
-import lombok.extern.log4j.Log4j;
 
 @Service
 @Transactional
@@ -597,12 +590,12 @@ public class BinDashboardServiceImpl implements BinDashboardService {
 		return totalICMCBalance;
 	}
 
-	private BigDecimal getCoinsTotal(BigDecimal coinsTotal, Tuple tuple) {
+	/*private BigDecimal getCoinsTotal(BigDecimal coinsTotal, Tuple tuple) {
 		int denom = tuple.get(1, Integer.class);
 		BigDecimal bundle = tuple.get(2, BigDecimal.class);
 		coinsTotal = coinsTotal.add(bundle.multiply(BigDecimal.valueOf(denom)).multiply(BigDecimal.valueOf(2500)));
 		return coinsTotal;
-	}
+	}*/
 
 	private BigDecimal getNotesTotal(BigDecimal notesTotal, Tuple tuple) {
 		int denom = tuple.get(1, Integer.class);

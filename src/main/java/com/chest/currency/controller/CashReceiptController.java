@@ -58,7 +58,6 @@ import com.chest.currency.enums.YesNo;
 import com.chest.currency.exception.BaseGuiException;
 import com.chest.currency.jpa.persistence.converter.CurrencyFormatter;
 import com.chest.currency.service.BinDashboardService;
-import com.chest.currency.service.CashPaymentService;
 import com.chest.currency.service.CashReceiptService;
 import com.chest.currency.service.ICMCService;
 import com.chest.currency.service.ProcessingRoomService;
@@ -608,68 +607,23 @@ public class CashReceiptController {
 			RedirectAttributes redirectAttributes) throws Exception {
 
 		User user = (User) session.getAttribute("login");
-		List<BankReceipt> bankReceiptList = new ArrayList<>();
-		StringBuilder sb = null;
-		List<String> prnList = new ArrayList<>();
-		StringBuilder sbBinName = new StringBuilder();
-
-		boolean isAllSuccess = false;
 		synchronized (icmcService.getSynchronizedIcmc(user)) {
 			BankReceipt otherBankReceiptDb = cashReceiptService.getBankReceiptRecordById(otherBankReceipt.getId(),
 					user.getIcmcId());
 			if (otherBankReceiptDb.getBinCategoryType() == BinCategoryType.PROCESSING) {
 				Indent indent = processingRoomService.getUpdateIndentOtherBankRequest(otherBankReceiptDb,
 						user.getIcmcId());
-				bankReceiptList = cashReceiptService.processForUpdatingIndentOtherBankReceipt(otherBankReceipt,
-						otherBankReceiptDb, indent, user);
-
-			}
-
-			else {
+				cashReceiptService.processForUpdatingIndentOtherBankReceipt(otherBankReceipt, otherBankReceiptDb,
+						indent, user);
+			} else {
 
 				BinTransaction binTxn = cashReceiptService.getBinTxnRecordForBankReceiptedit(otherBankReceipt,
 						user.getIcmcId());
-				bankReceiptList = cashReceiptService.processForUpdatingBankReceipt(binTxn, otherBankReceipt,
-						otherBankReceiptDb, user);
-
+				cashReceiptService.processForUpdatingBankReceipt(binTxn, otherBankReceipt, otherBankReceiptDb, user);
 			}
-			/*
-			 * isAllSuccess = bankReceiptList != null && bankReceiptList.size()
-			 * > 0; if (isAllSuccess) { for (BankReceipt otherBankReceipt1 :
-			 * bankReceiptList) {
-			 * sbBinName.append(otherBankReceipt1.getBinNumber()).append(",");
-			 * try { String oldtext = readPRNFileData(); String replacedtext =
-			 * oldtext.replaceAll("bin", "" + otherBankReceipt1.getBinNumber());
-			 * replacedtext = replacedtext.replaceAll("Branch: ", "" + "Bank: "
-			 * ); replacedtext = replacedtext.replaceAll("Sol ID :", "" +
-			 * "UTR No: "); replacedtext = replacedtext.replaceAll("branch", ""
-			 * + otherBankReceipt1.getBankName()); replacedtext =
-			 * replacedtext.replaceAll("solId", "" +
-			 * otherBankReceipt1.getRtgsUTRNo()); replacedtext =
-			 * replacedtext.replaceAll("denom", "" +
-			 * otherBankReceipt1.getDenomination()); replacedtext =
-			 * replacedtext.replaceAll("bundle", "" +
-			 * otherBankReceipt1.getBundle()); // replacedtext =
-			 * replacedtext.replaceAll("total", "" + //
-			 * otherBankReceipt.getTotal());
-			 * 
-			 * String formattedTotal =
-			 * CurrencyFormatter.inrFormatter(otherBankReceipt1.getTotal()).
-			 * toString(); replacedtext = replacedtext.replaceAll("total", "" +
-			 * formattedTotal);
-			 * 
-			 * sb = new StringBuilder(replacedtext); prnList.add(sb.toString());
-			 * 
-			 * UtilityJpa.PrintToPrinter(sb, user); LOG.info(
-			 * "Other Bank Receipt PRN: " + sb); } catch (IOException ioe) {
-			 * ioe.printStackTrace(); } } } else { throw new RuntimeException(
-			 * "Error while saving Other Bank Receipt, Please try again"); }
-			 * prnList.set(0, sbBinName.toString()); LOG.info(
-			 * "Other Bank Receipt ");
-			 */
+
 		}
 
-		// return prnList;
 		return new ModelAndView("redirect:./viewBankReceipt");
 
 	}
@@ -677,20 +631,15 @@ public class CashReceiptController {
 	@RequestMapping("/updateFreshRBI")
 	public ModelAndView updateFreshRBIData(FreshFromRBI freshRBIReceipt, HttpSession session,
 			RedirectAttributes redirectAttributes) {
-
 		User user = (User) session.getAttribute("login");
-		List<FreshFromRBI> freshRBIReceiptList = new ArrayList<>();
-		boolean isAllSuccess = false;
 		synchronized (icmcService.getSynchronizedIcmc(user)) {
-
 			FreshFromRBI freshRBIReceiptDb = cashReceiptService.getFreshFromRBIRecordById(freshRBIReceipt.getId(),
 					user.getIcmcId());
 
 			BinTransaction binTxn = cashReceiptService.getBinTxnRecordForRBIFreshedit(freshRBIReceiptDb,
 					user.getIcmcId());
 
-			freshRBIReceiptList = cashReceiptService.processForUpdatingFreshRBI(binTxn, freshRBIReceipt,
-					freshRBIReceiptDb, user);
+			cashReceiptService.processForUpdatingFreshRBI(binTxn, freshRBIReceipt, freshRBIReceiptDb, user);
 
 		}
 		return new ModelAndView("redirect:./viewFresh");
@@ -803,7 +752,7 @@ public class CashReceiptController {
 		List<BankReceipt> otherBankReceiptList = null;
 
 		synchronized (icmcService.getSynchronizedIcmc(user)) {
-			LOG.info("Other Bank Receipt bankReceipt "+bankReceipt);
+			LOG.info("Other Bank Receipt bankReceipt " + bankReceipt);
 			bankReceipt.setInsertBy(user.getId());
 			bankReceipt.setUpdateBy(user.getId());
 			bankReceipt.setInsertTime(now);
@@ -846,11 +795,11 @@ public class CashReceiptController {
 			}
 			LOG.info("Other Bank Receipt sbBinName.toString() " + sbBinName.toString());
 			prnList.set(0, sbBinName.toString());
-			/*LOG.info("DSB end");
-			if (sbBinName.toString() != "") {
-				prnList.set(0, sbBinName.toString());
-			}*/
-			LOG.info("Other Bank Receipt return "+prnList);
+			/*
+			 * LOG.info("DSB end"); if (sbBinName.toString() != "") {
+			 * prnList.set(0, sbBinName.toString()); }
+			 */
+			LOG.info("Other Bank Receipt return " + prnList);
 		}
 		return prnList;
 	}
@@ -1132,20 +1081,21 @@ public class CashReceiptController {
 		User user = (User) session.getAttribute("login");
 		synchronized (icmcService.getSynchronizedIcmc(user)) {
 			boxMaster.setBoxName(boxMaster.getBoxName().replaceAll("\\s+", ""));
-			 Pattern pattern = Pattern.compile("[^A-Za-z0-9]");
-		     Matcher matcher = pattern.matcher(boxMaster.getBoxName());
-		     boolean checkSpecialChar = matcher.find();
+			Pattern pattern = Pattern.compile("[^A-Za-z0-9]");
+			Matcher matcher = pattern.matcher(boxMaster.getBoxName());
+			boolean checkSpecialChar = matcher.find();
 			if (checkSpecialChar == false && boxMaster.getBoxName() != null) {
 				BoxMaster dbBoxName = cashReceiptService.isValidBox(user.getIcmcId(), boxMaster.getBoxName());
 				BinMaster dbBinName = binDashboardService.isValidBin(user.getIcmcId(), boxMaster.getBoxName());
 				if (dbBoxName != null) {
 					redirectAttributes.addFlashAttribute("duplicateBox", "Box with this name already Exists..");
 					return new ModelAndView("redirect:./createBox");
-				} 
+				}
 				if (dbBinName != null) {
-					redirectAttributes.addFlashAttribute("duplicateBox", "Box with this name already Exists in Bin list..");
+					redirectAttributes.addFlashAttribute("duplicateBox",
+							"Box with this name already Exists in Bin list..");
 					return new ModelAndView("redirect:./createBox");
-				}else {
+				} else {
 					boxMaster.setInsertBy(user.getId());
 					boxMaster.setUpdateBy(user.getId());
 					boxMaster.setIcmcId(user.getIcmcId());
@@ -1310,7 +1260,6 @@ public class CashReceiptController {
 	}
 
 	@RequestMapping("/editDSB")
-
 	@ResponseBody
 	public ModelAndView editDSB(@RequestParam Long id, DSB dsb, HttpSession session,
 			RedirectAttributes redirectAttributes) {
@@ -1319,11 +1268,11 @@ public class CashReceiptController {
 		dsb = cashReceiptService.getDSBReceiptRecordById(id, user.getIcmcId());
 		List<DSBAccountDetail> dsbAcountDetialList = cashReceiptService.getDSBAccountDetail(user.getIcmcId());
 		Indent indent = processingRoomService.getUpdateIndentRequest(dsb, user.getIcmcId());
-		if (dsb !=null && dsb.getProcessingOrVault().equalsIgnoreCase("processing") &&
-				indent !=null && indent.getStatus().equals(OtherStatus.ACCEPTED)) {
+		if (dsb != null && dsb.getProcessingOrVault().equalsIgnoreCase("processing") && indent != null
+				&& indent.getStatus().equals(OtherStatus.ACCEPTED)) {
 			model.put("dsbAccount", dsbAcountDetialList);
 			model.put("user", dsb);
-		} else if (dsb !=null && dsb.getProcessingOrVault().equalsIgnoreCase("vault")
+		} else if (dsb != null && dsb.getProcessingOrVault().equalsIgnoreCase("vault")
 				&& dsb.getStatus().equals(OtherStatus.RECEIVED)) {
 			model.put("dsbAccount", dsbAcountDetialList);
 			model.put("user", dsb);
@@ -1338,20 +1287,16 @@ public class CashReceiptController {
 	@ResponseBody
 	public ModelAndView updateDSB(DSB dsb, HttpSession session, RedirectAttributes redirectAttributes) {
 		User user = (User) session.getAttribute("login");
-		boolean isAllSuccess = false;
-
-		List<DSB> dsbList1 = new ArrayList<>();
-
 		synchronized (icmcService.getSynchronizedIcmc(user)) {
 			DSB dsbdb = cashReceiptService.getDSBReceiptRecordById(dsb.getId(), user.getIcmcId());
 			BinTransaction binTxn = new BinTransaction();
 			if (dsbdb.getProcessingOrVault().equalsIgnoreCase("Vault")) {
 				binTxn = cashReceiptService.getBinTxnRecordForUpdatingDSB(dsbdb, user.getIcmcId());
-				dsbList1 = cashReceiptService.processForUpdatingDSBReceipt(binTxn, dsb, dsbdb, user);
+				cashReceiptService.processForUpdatingDSBReceipt(binTxn, dsb, dsbdb, user);
 			}
 			if (dsbdb.getProcessingOrVault().equalsIgnoreCase("processing")) {
 				Indent indent = processingRoomService.getUpdateIndentRequest(dsbdb, user.getIcmcId());
-				dsbList1 = cashReceiptService.processForUpdatingIndentDSBReceipt(binTxn, dsb, dsbdb, indent, user);
+				cashReceiptService.processForUpdatingIndentDSBReceipt(binTxn, dsb, dsbdb, indent, user);
 			}
 
 		}
@@ -1387,12 +1332,10 @@ public class CashReceiptController {
 			RedirectAttributes redirectAttributes) {
 		User user = (User) session.getAttribute("login");
 		boolean isAllSuccess = false;
-		List<DiversionIRV> diversionList = null;
 		Calendar now = Calendar.getInstance();
 		synchronized (icmcService.getSynchronizedIcmc(user)) {
 			DiversionIRV diversionIRVDB = cashReceiptService.getDiversionIRVRecordById(diversionIRV.getId(),
 					user.getIcmcId());
-
 			if ((diversionIRVDB.getBinCategoryType() == BinCategoryType.BIN)
 					|| (diversionIRVDB.getBinCategoryType() == BinCategoryType.BOX)) {
 				BinTransaction binTxn = cashReceiptService.getBinTxnRecordForUpdatingDiversionReceipt(diversionIRVDB,
@@ -1410,12 +1353,10 @@ public class CashReceiptController {
 				diversionIRV.setBinCategoryType(diversionIRVDB.getBinCategoryType());
 				diversionIRV.setCurrencyType(diversionIRVDB.getCurrencyType());
 				diversionIRV.setProcessedOrUnprocessed(diversionIRVDB.getProcessedOrUnprocessed());
-
-				diversionList = cashReceiptService.processDiversionIRV(diversionIRV, user);
+				cashReceiptService.processDiversionIRV(diversionIRV, user);
 			} else {
 				Indent indent = processingRoomService.getUpdateIndentIVRRequest(diversionIRVDB, user.getIcmcId());
-				diversionList = cashReceiptService.processForUpdatingIndentIVRReceipt(diversionIRV, diversionIRVDB,
-						indent, user);
+				cashReceiptService.processForUpdatingIndentIVRReceipt(diversionIRV, diversionIRVDB, indent, user);
 
 			}
 

@@ -14,7 +14,6 @@ import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.springframework.transaction.annotation.Transactional;
-import org.apache.commons.logging.Log;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -71,7 +70,7 @@ public class CashReceiptServiceImpl implements CashReceiptService {
 
 	@Autowired
 	ICMCService icmcService;
-	
+
 	@Autowired
 	CashPaymentService cashPaymentService;
 
@@ -187,7 +186,7 @@ public class CashReceiptServiceImpl implements CashReceiptService {
 				}
 				branchRecieptList = UtilityJpa.getBranchReceiptBean(branchReceipt, binTxs, user, capacityList,
 						binMasterList, boxMasterList);
-				
+
 				for (BranchReceipt brTemp : branchRecieptList) {
 					bundleToBeKeptInICMC = bundleToBeKeptInICMC.add(brTemp.getBundle());
 				}
@@ -228,17 +227,17 @@ public class CashReceiptServiceImpl implements CashReceiptService {
 						branchReceipt.getCurrencyType());
 				binMasterList = getPriorityBinListByType(user, branchReceipt.getCurrencyType());
 				binList = getBinTxnListByDenom(branchReceipt, user);
-				
-					binTxs = UtilityJpa.getBinByCurrencyProcessType(binList, binMasterList, branchReceipt.getBundle(), true,
-							capacityList, branchReceipt.getCurrencyType(), CashSource.BRANCH);	
-				
-					branchRecieptList = UtilityJpa.getBranchReceiptBean(branchReceipt, binTxs, user, capacityList,
-							binMasterList, boxMasterList);	
+
+				binTxs = UtilityJpa.getBinByCurrencyProcessType(binList, binMasterList, branchReceipt.getBundle(), true,
+						capacityList, branchReceipt.getCurrencyType(), CashSource.BRANCH);
+
+				branchRecieptList = UtilityJpa.getBranchReceiptBean(branchReceipt, binTxs, user, capacityList,
+						binMasterList, boxMasterList);
 
 				for (BranchReceipt brTemp : branchRecieptList) {
 					bundleToBeKeptInICMC = bundleToBeKeptInICMC.add(brTemp.getBundle());
 				}
-				if (bundleToBeKeptInICMC.compareTo(branchReceipt.getBundle()) == 0){
+				if (bundleToBeKeptInICMC.compareTo(branchReceipt.getBundle()) == 0) {
 					addTransactionsForProcessed(user, binTxs, branchReceipt.getCurrencyType());
 				} else {
 					throw new BaseGuiException("Space is not available for " + branchReceipt.getBundle()
@@ -261,8 +260,7 @@ public class CashReceiptServiceImpl implements CashReceiptService {
 				for (BranchReceipt brTemp : branchRecieptList) {
 					bundleToBeKeptInICMC = bundleToBeKeptInICMC.add(brTemp.getBundle());
 				}
-				if (bundleToBeKeptInICMC.compareTo(branchReceipt.getBundle()) == 0)
-				 {
+				if (bundleToBeKeptInICMC.compareTo(branchReceipt.getBundle()) == 0) {
 					addInTransactionsForBox(user, binTxs);
 				} else {
 					throw new BaseGuiException("Space is not available for " + branchReceipt.getBundle()
@@ -323,12 +321,12 @@ public class CashReceiptServiceImpl implements CashReceiptService {
 		boolean isUpdate = cashReceiptJpaDao.updatePendingBundleInMachineAllocation(machineAllocation);
 		return isUpdate;
 	}
-	
+
 	@Override
 	public BinTransaction getBinTxnRecordForRBIFreshedit(FreshFromRBI freshRBIReceiptDb, BigInteger icmcId) {
 		return cashReceiptJpaDao.getBinTxnRecordFoRBIFreshediitRBI(freshRBIReceiptDb, icmcId);
 	}
-	
+
 	@Override
 	public List<FreshFromRBI> processForUpdatingFreshRBI(BinTransaction binTxn, FreshFromRBI freshRBIReceipt,
 			FreshFromRBI freshRBIReceiptDb, User user) {
@@ -336,15 +334,14 @@ public class CashReceiptServiceImpl implements CashReceiptService {
 		List<FreshFromRBI> freshRBIReceiptList = new ArrayList<>();
 		Calendar now = Calendar.getInstance();
 
-		BigDecimal updatedReceiveBundleForTxn=BigDecimal.ZERO;
-		int receivenofbag=freshRBIReceiptDb.getNoOfBags();
-		if(freshRBIReceiptDb.getCashType() == CashType.COINS){
-			 updatedReceiveBundleForTxn  = binTxn.getReceiveBundle().subtract(BigDecimal.valueOf(receivenofbag));
-		}	
-		else if(freshRBIReceiptDb.getCashType() == CashType.NOTES){
-			 updatedReceiveBundleForTxn = binTxn.getReceiveBundle().subtract(freshRBIReceiptDb.getBundle());
-			}
-		
+		BigDecimal updatedReceiveBundleForTxn = BigDecimal.ZERO;
+		int receivenofbag = freshRBIReceiptDb.getNoOfBags();
+		if (freshRBIReceiptDb.getCashType() == CashType.COINS) {
+			updatedReceiveBundleForTxn = binTxn.getReceiveBundle().subtract(BigDecimal.valueOf(receivenofbag));
+		} else if (freshRBIReceiptDb.getCashType() == CashType.NOTES) {
+			updatedReceiveBundleForTxn = binTxn.getReceiveBundle().subtract(freshRBIReceiptDb.getBundle());
+		}
+
 		BigDecimal receiveBundleFromUI = freshRBIReceipt.getBundle();
 		int denomFromUI = freshRBIReceipt.getDenomination();
 		int nofbegfromUI = freshRBIReceipt.getNoOfBags();
@@ -362,41 +359,38 @@ public class CashReceiptServiceImpl implements CashReceiptService {
 		freshRBIReceipt.setBundle(receiveBundleFromUI);
 
 		freshRBIReceipt.setOrderDate(freshRBIReceiptDb.getOrderDate());
-		if(freshRBIReceiptDb.getCashType() == CashType.COINS){
+		if (freshRBIReceiptDb.getCashType() == CashType.COINS) {
 			freshRBIReceipt.setCashType(CashType.COINS);
 		}
-		if(freshRBIReceiptDb.getCashType() == CashType.NOTES){
+		if (freshRBIReceiptDb.getCashType() == CashType.NOTES) {
 			freshRBIReceipt.setCashType(CashType.NOTES);
 		}
-		
-		
+
 		freshRBIReceipt.setBinCategoryType(BinCategoryType.BOX);
 		freshRBIReceipt.setRbiOrderNo(freshRBIReceiptDb.getRbiOrderNo());
 		freshRBIReceipt.setNoOfBags(nofbegfromUI);
-		/*freshRBIReceipt.setPotdarName(freshRBIReceiptDb.getPotdarName());*/
-	/*	freshRBIReceipt.setEscortOfficerName(freshRBIReceiptDb.getEscortOfficerName());*/
+		/* freshRBIReceipt.setPotdarName(freshRBIReceiptDb.getPotdarName()); */
+		/*
+		 * freshRBIReceipt.setEscortOfficerName(freshRBIReceiptDb.
+		 * getEscortOfficerName());
+		 */
 		freshRBIReceipt.setCurrencyType(CurrencyType.FRESH);
 		freshRBIReceipt.setCashSource(CashSource.RBI);
 		freshRBIReceipt.setInsertTime(now);
 		freshRBIReceipt.setUpdateTime(now);
-		
-	
-	
-		
+
 		freshRBIReceiptList = this.processFreshFromRBIUpdate(freshRBIReceipt, user);
-		
-		
 
 		return freshRBIReceiptList;
 	}
 
-
-public List<FreshFromRBI> processFreshFromRBIUpdate(FreshFromRBI fresh, User user) {
+	public List<FreshFromRBI> processFreshFromRBIUpdate(FreshFromRBI fresh, User user) {
 		List<FreshFromRBI> freshFromRBIList = new ArrayList<>();
-		
-		/*YesNo yesNo =null;
-		BinCategoryType binCategoryType=null;
-		CashType cashType=null;*/
+
+		/*
+		 * YesNo yesNo =null; BinCategoryType binCategoryType=null; CashType
+		 * cashType=null;
+		 */
 
 		if (fresh.getCashType() == CashType.NOTES)
 		/* if (fresh.getNotesOrCoins().equalsIgnoreCase("Notes")) */
@@ -408,8 +402,8 @@ public List<FreshFromRBI> processFreshFromRBIUpdate(FreshFromRBI fresh, User use
 						fresh.getCurrencyType());
 
 				List<BinTransaction> binTxs = UtilityJpa.getBinForFreshFromRBI(binMasterList, fresh.getBundle(), true,
-						capacityList, CurrencyType.FRESH, CashSource.RBI, YesNo.Yes, BinCategoryType.BIN, CashType.NOTES,
-						fresh.getRbiOrderNo());
+						capacityList, CurrencyType.FRESH, CashSource.RBI, YesNo.Yes, BinCategoryType.BIN,
+						CashType.NOTES, fresh.getRbiOrderNo());
 
 				freshFromRBIList = UtilityJpa.getFreshFromRBI(fresh, binTxs, user, capacityList, binMasterList);
 
@@ -445,7 +439,6 @@ public List<FreshFromRBI> processFreshFromRBIUpdate(FreshFromRBI fresh, User use
 			}
 		}
 
-
 		if (fresh.getCashType() == CashType.COINS)
 		/* (fresh.getNotesOrCoins().equalsIgnoreCase("Coins")) */
 
@@ -463,16 +456,16 @@ public List<FreshFromRBI> processFreshFromRBIUpdate(FreshFromRBI fresh, User use
 				int sequenceFromUI = fresh.getNoOfBags();
 				int sequenceFromDB = coinsSequence.getSequence();
 				int finalSequence = sequenceFromUI + sequenceFromDB;
-				//fresh.setBin(freshFromRBIList.get(0).get(5));
+				// fresh.setBin(freshFromRBIList.get(0).get(5));
 				addFreshFromRBI(freshFromRBIList);
-				for(FreshFromRBI ff: freshFromRBIList){
+				for (FreshFromRBI ff : freshFromRBIList) {
 					fresh.setBin(ff.getBin());
 				}
-				
+
 				prepareAndInsertSequence(fresh, user, coinsSequence, finalSequence);
 
 			}
-			//addFreshFromRBI(freshFromRBIList);
+			// addFreshFromRBI(freshFromRBIList);
 
 			// History
 			List<History> historyList = new ArrayList<History>();
@@ -499,8 +492,8 @@ public List<FreshFromRBI> processFreshFromRBIUpdate(FreshFromRBI fresh, User use
 		return freshFromRBIList;
 	}
 
-    @Override
-    @Transactional
+	@Override
+	@Transactional
 	public List<FreshFromRBI> processFreshFromRBI(FreshFromRBI fresh, User user, YesNo yesNo,
 			BinCategoryType binCategoryType, CashType cashType) {
 		List<FreshFromRBI> freshFromRBIList = new ArrayList<>();
@@ -552,7 +545,6 @@ public List<FreshFromRBI> processFreshFromRBIUpdate(FreshFromRBI fresh, User use
 			}
 		}
 
-
 		if (fresh.getCashType() == CashType.COINS)
 		/* (fresh.getNotesOrCoins().equalsIgnoreCase("Coins")) */
 
@@ -570,16 +562,16 @@ public List<FreshFromRBI> processFreshFromRBIUpdate(FreshFromRBI fresh, User use
 				int sequenceFromUI = fresh.getNoOfBags();
 				int sequenceFromDB = coinsSequence.getSequence();
 				int finalSequence = sequenceFromUI + sequenceFromDB;
-				//fresh.setBin(freshFromRBIList.get(0).get(5));
+				// fresh.setBin(freshFromRBIList.get(0).get(5));
 				addFreshFromRBI(freshFromRBIList);
-				for(FreshFromRBI ff: freshFromRBIList){
+				for (FreshFromRBI ff : freshFromRBIList) {
 					fresh.setBin(ff.getBin());
 				}
-				
+
 				prepareAndInsertSequence(fresh, user, coinsSequence, finalSequence);
 
 			}
-			//addFreshFromRBI(freshFromRBIList);
+			// addFreshFromRBI(freshFromRBIList);
 
 			// History
 			List<History> historyList = new ArrayList<History>();
@@ -605,35 +597,34 @@ public List<FreshFromRBI> processFreshFromRBIUpdate(FreshFromRBI fresh, User use
 
 		return freshFromRBIList;
 	}
-	
+
 	@Override
-	public List<BankReceipt> processForUpdatingIndentOtherBankReceipt(BankReceipt otherBankReceipt,BankReceipt otherBankReceiptdb, Indent indentdb, User user)
- {
-		boolean isAllSuccess = false;
+	public List<BankReceipt> processForUpdatingIndentOtherBankReceipt(BankReceipt otherBankReceipt,
+			BankReceipt otherBankReceiptdb, Indent indentdb, User user) {
 		List<BankReceipt> otherReceiptList = new ArrayList<>();
 		Calendar now = Calendar.getInstance();
-		
+
 		BigDecimal receiveBundleFromUI = otherBankReceipt.getBundle();
 		int denomFromUI = otherBankReceipt.getDenomination();
-		//BigDecimal updatedReceiveBundleForTxn = binTxn.getReceiveBundle().subtract(dsbdb.getBundle());
+		// BigDecimal updatedReceiveBundleForTxn =
+		// binTxn.getReceiveBundle().subtract(dsbdb.getBundle());
 		indentdb.setStatus(OtherStatus.CANCELLED);
 		cashReceiptJpaDao.updateIndent(indentdb);
 		otherBankReceiptdb.setStatus(4);
 		cashReceiptJpaDao.updateOtherBank(otherBankReceiptdb);
-		
+
 		otherBankReceipt.setDenomination(denomFromUI);
 		otherBankReceipt.setBundle(receiveBundleFromUI);
-		
+
 		otherBankReceipt.setInsertBy(user.getId());
 		otherBankReceipt.setUpdateBy(user.getId());
 		otherBankReceipt.setInsertTime(now);
 		otherBankReceipt.setUpdateTime(now);
 		otherBankReceipt.setBinCategoryType(BinCategoryType.PROCESSING);
 		otherBankReceipt.setCurrencyType(otherBankReceiptdb.getCurrencyType());
-		otherReceiptList= this.processBankReceipt(otherBankReceipt, user);
-			return otherReceiptList;
+		otherReceiptList = this.processBankReceipt(otherBankReceipt, user);
+		return otherReceiptList;
 	}
-
 
 	private void prepareAndInsertSequence(FreshFromRBI fresh, User user, CoinsSequence coinsSequence,
 			int finalSequence) {
@@ -705,16 +696,15 @@ public List<FreshFromRBI> processFreshFromRBIUpdate(FreshFromRBI fresh, User use
 							+ dirv.getDenomination() + " denomination");
 				}
 			}
-			
-			if (dirv.getBinCategoryType()== BinCategoryType.PROCESSING) {
-				dirv = UtilityJpa.getIVRForProcessing(dirv, user);
-			     diversionIRVList.add(dirv);
-			     addDiversionIRV(diversionIRVList);
-			     Indent indent1 = UtilityJpa.getIndentIVR(dirv, user);
-				  this.insertInIndent(indent1);
-				     				
-			}
 
+			if (dirv.getBinCategoryType() == BinCategoryType.PROCESSING) {
+				dirv = UtilityJpa.getIVRForProcessing(dirv, user);
+				diversionIRVList.add(dirv);
+				addDiversionIRV(diversionIRVList);
+				Indent indent1 = UtilityJpa.getIndentIVR(dirv, user);
+				this.insertInIndent(indent1);
+
+			}
 
 			if (dirv.getBinCategoryType() == BinCategoryType.BOX) {
 				BoxMaster boxMaster = new BoxMaster();
@@ -765,18 +755,17 @@ public List<FreshFromRBI> processFreshFromRBIUpdate(FreshFromRBI fresh, User use
 							+ dirv.getDenomination() + " denomination");
 				}
 
-			} 
-			
-			else if (dirv.getBinCategoryType()== BinCategoryType.PROCESSING) {
-				dirv = UtilityJpa.getIVRForProcessing(dirv, user);
-				 diversionIRVList.add(dirv);
-				 addDiversionIRV(diversionIRVList);
-					Indent indent1 = UtilityJpa.getIndentIVR(dirv, user);
-				     this.insertInIndent(indent1);
-				     
-				
 			}
-			
+
+			else if (dirv.getBinCategoryType() == BinCategoryType.PROCESSING) {
+				dirv = UtilityJpa.getIVRForProcessing(dirv, user);
+				diversionIRVList.add(dirv);
+				addDiversionIRV(diversionIRVList);
+				Indent indent1 = UtilityJpa.getIndentIVR(dirv, user);
+				this.insertInIndent(indent1);
+
+			}
+
 			else if (dirv.getBinCategoryType() == BinCategoryType.BOX) {
 				BoxMaster boxMaster = new BoxMaster();
 				boxMaster.setIcmcId(user.getIcmcId());
@@ -801,12 +790,8 @@ public List<FreshFromRBI> processFreshFromRBIUpdate(FreshFromRBI fresh, User use
 							+ dirv.getDenomination() + " denomination");
 				}
 			}
-						
-			
 
 		}
-
-		
 
 		// History Code
 		List<History> historyList = new ArrayList<History>();
@@ -875,8 +860,8 @@ public List<FreshFromRBI> processFreshFromRBIUpdate(FreshFromRBI fresh, User use
 			for (DSB dsbTemp : dsbList) {
 				bundleToBeKeptInICMC = bundleToBeKeptInICMC.add(dsbTemp.getBundle());
 			}
-			LOG.info("bundleToBeKeptInICMC FOR  BIN OR VAULT "+bundleToBeKeptInICMC);
-			LOG.info("dsb.getBundle() FOR  BIN OR VAULT "+dsb.getBundle());
+			LOG.info("bundleToBeKeptInICMC FOR  BIN OR VAULT " + bundleToBeKeptInICMC);
+			LOG.info("dsb.getBundle() FOR  BIN OR VAULT " + dsb.getBundle());
 			if (bundleToBeKeptInICMC.compareTo(dsb.getBundle()) == 0) {
 				addTransactions(user, binTxs);
 			} else {
@@ -885,7 +870,7 @@ public List<FreshFromRBI> processFreshFromRBIUpdate(FreshFromRBI fresh, User use
 			}
 		}
 
-		else if (dsb.getBinCategoryType()==BinCategoryType.BOX) {
+		else if (dsb.getBinCategoryType() == BinCategoryType.BOX) {
 			BoxMaster boxMaster = new BoxMaster();
 			boxMaster.setIcmcId(user.getIcmcId());
 			boxMaster.setDenomination(dsb.getDenomination());
@@ -896,12 +881,12 @@ public List<FreshFromRBI> processFreshFromRBIUpdate(FreshFromRBI fresh, User use
 			binTxs = UtilityJpa.getBoxByCurrencyProcessType(binList, boxMasterList, dsb.getBundle(), true,
 					CurrencyType.UNPROCESS, CashSource.DSB);
 			dsbList = UtilityJpa.getDSB(dsb, binTxs, user, capacityList, binMasterList, boxMasterList);
-			LOG.info("dsbLi FOR BOX "+dsbList);
+			LOG.info("dsbLi FOR BOX " + dsbList);
 			for (DSB dsbTemp : dsbList) {
 				bundleToBeKeptInICMC = bundleToBeKeptInICMC.add(dsbTemp.getBundle());
 			}
-			LOG.info("bundleToBeKeptInICMC FOR BOX "+bundleToBeKeptInICMC);
-			LOG.info("dsb.getBundle() FOR BOX "+dsb.getBundle());
+			LOG.info("bundleToBeKeptInICMC FOR BOX " + bundleToBeKeptInICMC);
+			LOG.info("dsb.getBundle() FOR BOX " + dsb.getBundle());
 			if (bundleToBeKeptInICMC.compareTo(dsb.getBundle()) == 0) {
 				addInTransactionsForBox(user, binTxs);
 			} else {
@@ -910,8 +895,8 @@ public List<FreshFromRBI> processFreshFromRBIUpdate(FreshFromRBI fresh, User use
 			}
 		}
 
-		else if (dsb.getBinCategoryType()==BinCategoryType.PROCESSING) {
-			LOG.info("dsb.getBinCategoryType() FOR PROCESSING "+dsb.getBinCategoryType());
+		else if (dsb.getBinCategoryType() == BinCategoryType.PROCESSING) {
+			LOG.info("dsb.getBinCategoryType() FOR PROCESSING " + dsb.getBinCategoryType());
 			dsb = UtilityJpa.getDSBForProcessing(dsb, user);
 			dsbList.add(dsb);
 			Indent indent = UtilityJpa.getIndent(dsb, user);
@@ -958,7 +943,7 @@ public List<FreshFromRBI> processFreshFromRBIUpdate(FreshFromRBI fresh, User use
 				this.updatePendingBundleInMachineAllocationForReturnBackToVault(machineAllocation);
 			}
 		}
-		LOG.info("return dsbList "+dsbList);
+		LOG.info("return dsbList " + dsbList);
 		return dsbList;
 	}
 
@@ -1257,19 +1242,17 @@ public List<FreshFromRBI> processFreshFromRBIUpdate(FreshFromRBI fresh, User use
 						+ " bundles in " + bankReceipt.getDenomination() + " denomination");
 			}
 		}
-		
-		
+
 		else if (bankReceipt.getBinCategoryType() == BinCategoryType.PROCESSING) {
 			bankReceipt = UtilityJpa.getBankReceiptForProcessing(bankReceipt, user);
 			otherBankReceiptList.add(bankReceipt);
 			addICMCReceipt(otherBankReceiptList);
 			Indent indent = UtilityJpa.getIndent(bankReceipt, user);
 			this.insertInIndent(indent);
-			
+
 		}
-		
-		
-		//addICMCReceipt(otherBankReceiptList);
+
+		// addICMCReceipt(otherBankReceiptList);
 
 		// History Code
 		List<History> historyList = new ArrayList<History>();
@@ -1316,7 +1299,6 @@ public List<FreshFromRBI> processFreshFromRBIUpdate(FreshFromRBI fresh, User use
 
 		return otherBankReceiptList;
 	}
-
 
 	@Override
 	public List<ICMC> getICMCName() {
@@ -1583,18 +1565,16 @@ public List<FreshFromRBI> processFreshFromRBIUpdate(FreshFromRBI fresh, User use
 	public BinTransaction getBinTxnRecordForUpdatingDSB(DSB dsbReceiptDb, BigInteger icmcId) {
 		return cashReceiptJpaDao.getBinTxnRecordForUpdatingDSB(dsbReceiptDb, icmcId);
 	}
-	
+
 	@Override
 	public boolean processForUpdatingDSBReceipt1(DSB dsbdb, User user) {
 		boolean isAllSuccess = true;
-	
-			
-			cashReceiptJpaDao.updateDSB(dsbdb);
-		
+
+		cashReceiptJpaDao.updateDSB(dsbdb);
+
 		return isAllSuccess;
 	}
 
-	
 	@Override
 	public List<DSB> processDSBforEdit(DSB dsb, User user) {
 
@@ -1627,7 +1607,7 @@ public List<FreshFromRBI> processFreshFromRBIUpdate(FreshFromRBI fresh, User use
 						+ dsb.getDenomination() + " denomination");
 			}
 		}
-																																																																																																																													
+
 		if (dsb.getProcessingOrVault().equalsIgnoreCase("BOX")) {
 			BoxMaster boxMaster = new BoxMaster();
 			boxMaster.setIcmcId(user.getIcmcId());
@@ -1704,13 +1684,12 @@ public List<FreshFromRBI> processFreshFromRBIUpdate(FreshFromRBI fresh, User use
 		return dsbList;
 	}
 
-
 	@Override
-	public List<DSB>  processForUpdatingDSBReceipt(BinTransaction binTxn, DSB dsb,DSB dsbdb, User user) {
+	public List<DSB> processForUpdatingDSBReceipt(BinTransaction binTxn, DSB dsb, DSB dsbdb, User user) {
 		boolean isAllSuccess = false;
 		List<DSB> dsbReceiptList = new ArrayList<>();
 		Calendar now = Calendar.getInstance();
-		
+
 		BigDecimal receiveBundleFromUI = dsb.getBundle();
 		int denomFromUI = dsb.getDenomination();
 		BigDecimal updatedReceiveBundleForTxn = binTxn.getReceiveBundle().subtract(dsbdb.getBundle());
@@ -1734,66 +1713,56 @@ public List<FreshFromRBI> processFreshFromRBIUpdate(FreshFromRBI fresh, User use
 		dsb.setCurrencyType(dsbdb.getCurrencyType());
 		dsb.setBinCategoryType(dsbdb.getBinCategoryType());
 		dsb.setCashSource(CashSource.DSB);
-		
+
 		dsb.setInsertTime(now);
 		dsb.setUpdateTime(now);
-			dsbReceiptList =this.processDSB(dsb, user);
-		
-		
+		dsbReceiptList = this.processDSB(dsb, user);
 
-		/*binTxn.setReceiveBundle(binTxn.getReceiveBundle().subtract(dsb.getBundle()));
-		if (binTxn.getReceiveBundle().equals(BigDecimal.ZERO)) {
-			binTxn.setStatus(BinStatus.EMPTY);
-		}
-		isAllSuccess = this.updateInBinTxn(binTxn);
-		if (isAllSuccess) {
-			dsb.setStatus(OtherStatus.CANCELLED);
-			cashReceiptJpaDao.updateDSB(dsb);
-		}
-		return isAllSuccess;*/
-			return dsbReceiptList;
+		/*
+		 * binTxn.setReceiveBundle(binTxn.getReceiveBundle().subtract(dsb.
+		 * getBundle())); if (binTxn.getReceiveBundle().equals(BigDecimal.ZERO))
+		 * { binTxn.setStatus(BinStatus.EMPTY); } isAllSuccess =
+		 * this.updateInBinTxn(binTxn); if (isAllSuccess) {
+		 * dsb.setStatus(OtherStatus.CANCELLED);
+		 * cashReceiptJpaDao.updateDSB(dsb); } return isAllSuccess;
+		 */
+		return dsbReceiptList;
 	}
+
 	@Override
-    public List<DSB>  processForUpdatingIndentDSBReceipt(BinTransaction binTxn, DSB dsb,DSB dsbdb,Indent indent, User user) {
-        boolean isAllSuccess = false;
-        List<DSB> dsbReceiptList = new ArrayList<>();
-        Calendar now = Calendar.getInstance();
-        
-        BigDecimal receiveBundleFromUI = dsb.getBundle();
-        int denomFromUI = dsb.getDenomination();
-        //BigDecimal updatedReceiveBundleForTxn = binTxn.getReceiveBundle().subtract(dsbdb.getBundle());
-        indent.setStatus(OtherStatus.CANCELLED);
-        cashReceiptJpaDao.updateIndent(indent);
-        dsbdb.setStatus(OtherStatus.CANCELLED);
-        cashReceiptJpaDao.updateDSB(dsbdb);
-        
-        
-        dsb.setDenomination(denomFromUI);
-        dsb.setBundle(receiveBundleFromUI);
-        dsb.setProcessingOrVault(dsbdb.getProcessingOrVault());
-        dsb.setReceiptSequence(dsbdb.getReceiptSequence());
-        dsb.setCurrencyType(dsbdb.getCurrencyType());
-        dsb.setBinCategoryType(dsbdb.getBinCategoryType());
-        dsb.setCashSource(CashSource.DSB);
-        
-        dsb.setInsertTime(now);
-        dsb.setUpdateTime(now);
-        dsbReceiptList =this.processDSB(dsb, user);
-        
-        
+	public List<DSB> processForUpdatingIndentDSBReceipt(BinTransaction binTxn, DSB dsb, DSB dsbdb, Indent indent,
+			User user) {
+		List<DSB> dsbReceiptList = new ArrayList<>();
+		Calendar now = Calendar.getInstance();
 
-            return dsbReceiptList;
-    }
+		BigDecimal receiveBundleFromUI = dsb.getBundle();
+		int denomFromUI = dsb.getDenomination();
+		// BigDecimal updatedReceiveBundleForTxn =
+		// binTxn.getReceiveBundle().subtract(dsbdb.getBundle());
+		indent.setStatus(OtherStatus.CANCELLED);
+		cashReceiptJpaDao.updateIndent(indent);
+		dsbdb.setStatus(OtherStatus.CANCELLED);
+		cashReceiptJpaDao.updateDSB(dsbdb);
 
+		dsb.setDenomination(denomFromUI);
+		dsb.setBundle(receiveBundleFromUI);
+		dsb.setProcessingOrVault(dsbdb.getProcessingOrVault());
+		dsb.setReceiptSequence(dsbdb.getReceiptSequence());
+		dsb.setCurrencyType(dsbdb.getCurrencyType());
+		dsb.setBinCategoryType(dsbdb.getBinCategoryType());
+		dsb.setCashSource(CashSource.DSB);
 
-	
+		dsb.setInsertTime(now);
+		dsb.setUpdateTime(now);
+		dsbReceiptList = this.processDSB(dsb, user);
+
+		return dsbReceiptList;
+	}
 
 	@Override
 	public DiversionIRV getDiversionIRVRecordById(Long id, BigInteger icmcId) {
 		return cashReceiptJpaDao.getDiversionIRVRecordById(id, icmcId);
 	}
-	
-
 
 	@Override
 	public BinTransaction getBinTxnRecordForUpdatingDiversionReceipt(DiversionIRV diversionIRV, BigInteger icmcId) {
@@ -1858,14 +1827,13 @@ public List<FreshFromRBI> processFreshFromRBIUpdate(FreshFromRBI fresh, User use
 		boolean isSaved = cashReceiptJpaDao.branchHistory(history);
 		return isSaved;
 	}
-	
+
 	@Override
 	public BinTransaction getBinTxnRecordForBankReceiptedit(BankReceipt bankReceiptDb, BigInteger icmcId) {
 		return cashReceiptJpaDao.getBinTxnRecordForBankReceipteditBankReceipt(bankReceiptDb, icmcId);
 	}
 
-
-@Override
+	@Override
 	public List<BankReceipt> processForUpdatingBankReceipt(BinTransaction binTxn, BankReceipt otherBankReceipt,
 			BankReceipt otherBankReceiptDb, User user) {
 		boolean isAllSuccess = false;
@@ -1883,7 +1851,8 @@ public List<FreshFromRBI> processFreshFromRBIUpdate(FreshFromRBI fresh, User use
 		isAllSuccess = this.updateInBinTxn(binTxn);
 		if (isAllSuccess) {
 			otherBankReceiptDb.setStatus(4);
-			//UtilityJpa.settingBankReceiptParametersForUpdation(otherBankReceipt, otherBankReceiptDb, user, now);
+			// UtilityJpa.settingBankReceiptParametersForUpdation(otherBankReceipt,
+			// otherBankReceiptDb, user, now);
 			cashReceiptJpaDao.updateBankReceipt(otherBankReceiptDb);
 		}
 		otherBankReceipt.setIcmcId(user.getIcmcId());
@@ -1892,16 +1861,14 @@ public List<FreshFromRBI> processFreshFromRBIUpdate(FreshFromRBI fresh, User use
 		otherBankReceipt.setRtgsUTRNo(otherBankReceiptDb.getRtgsUTRNo());
 		otherBankReceipt.setBinCategoryType(BinCategoryType.BIN);
 		otherBankReceipt.setCurrencyType(CurrencyType.UNPROCESS);
-		
+
 		otherBankReceipt.setInsertTime(now);
 		otherBankReceipt.setUpdateTime(now);
-		
-		
+
 		bankReceiptList = this.processBankReceipt(otherBankReceipt, user);
 
 		return bankReceiptList;
 	}
-
 
 	@Override
 	public List<Tuple> getIBITForIRV(BigInteger icmcId, Calendar sDate, Calendar eDate) {
@@ -1920,46 +1887,45 @@ public List<FreshFromRBI> processFreshFromRBIUpdate(FreshFromRBI fresh, User use
 		String servicingICMC = cashReceiptJpaDao.getServicingICMC(solId);
 		return servicingICMC;
 	}
+
 	@Override
 	public BinTransaction getBinTxnRecordForUpdateedit(BranchReceipt branchReceiptDb, BigInteger icmcId) {
 		return cashReceiptJpaDao.getBinTxnRecordForUpdateedit(branchReceiptDb, icmcId);
 	}
+
 	@Override
 	public BinTransaction getBinTxnRecordForUpdateBox(BoxMaster boxmasterDb, BigInteger icmcId) {
 		return cashReceiptJpaDao.getBinTxnRecordForUpdateBox(boxmasterDb, icmcId);
 	}
-	
+
 	@Override
-	public List<DiversionIRV> processForUpdatingIndentIVRReceipt(DiversionIRV diversionIRV,DiversionIRV diversionIRVDB, Indent indentdb, User user)
- {
-		boolean isAllSuccess = false;
+	public List<DiversionIRV> processForUpdatingIndentIVRReceipt(DiversionIRV diversionIRV, DiversionIRV diversionIRVDB,
+			Indent indentdb, User user) {
 		List<DiversionIRV> irvReceiptList = new ArrayList<>();
 		Calendar now = Calendar.getInstance();
-		
+
 		BigDecimal receiveBundleFromUI = diversionIRV.getBundle();
 		int denomFromUI = diversionIRV.getDenomination();
-		//BigDecimal updatedReceiveBundleForTxn = binTxn.getReceiveBundle().subtract(dsbdb.getBundle());
+		// BigDecimal updatedReceiveBundleForTxn =
+		// binTxn.getReceiveBundle().subtract(dsbdb.getBundle());
 		indentdb.setStatus(OtherStatus.CANCELLED);
 		cashReceiptJpaDao.updateIndent(indentdb);
 		diversionIRVDB.setStatus(OtherStatus.CANCELLED);
 		cashReceiptJpaDao.updateIRV(diversionIRVDB);
-		
+
 		diversionIRV.setDenomination(denomFromUI);
 		diversionIRV.setBundle(receiveBundleFromUI);
-		
+
 		diversionIRV.setInsertBy(user.getId());
-		 diversionIRV.setUpdateBy(user.getId());
-		 diversionIRV.setInsertTime(now);
-		 diversionIRV.setUpdateTime(now);
-		 diversionIRV.setOrderDate(diversionIRVDB.getOrderDate());
-		 diversionIRV.setBinCategoryType(BinCategoryType.PROCESSING);
-		 diversionIRV.setCurrencyType(diversionIRVDB.getCurrencyType());
-		 diversionIRV.setProcessedOrUnprocessed(diversionIRVDB.getProcessedOrUnprocessed());
-		 irvReceiptList =this.processDiversionIRV(diversionIRV, user);
-			return irvReceiptList;
+		diversionIRV.setUpdateBy(user.getId());
+		diversionIRV.setInsertTime(now);
+		diversionIRV.setUpdateTime(now);
+		diversionIRV.setOrderDate(diversionIRVDB.getOrderDate());
+		diversionIRV.setBinCategoryType(BinCategoryType.PROCESSING);
+		diversionIRV.setCurrencyType(diversionIRVDB.getCurrencyType());
+		diversionIRV.setProcessedOrUnprocessed(diversionIRVDB.getProcessedOrUnprocessed());
+		irvReceiptList = this.processDiversionIRV(diversionIRV, user);
+		return irvReceiptList;
 	}
-
-
-
 
 }

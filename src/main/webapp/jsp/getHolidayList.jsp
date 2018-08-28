@@ -2,8 +2,9 @@
 <html lang="en">
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
-<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jstl/core_rt"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -113,7 +114,8 @@
 											<th><%=i %></th>
 												<td>${row.holidayName}</td>
 												<td>${row.holidayType}</td>
-					 							<td>${row.holidayDate}</td>
+					 							<td><fmt:formatDate pattern="dd-MMM-yy" value="${${row.holidayDate.time}" /></td>
+					 							
 											</tr>
 										</c:forEach><%i=0; %>
                                     </tbody>

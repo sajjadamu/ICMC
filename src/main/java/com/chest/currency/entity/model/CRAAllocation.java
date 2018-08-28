@@ -7,21 +7,15 @@ package com.chest.currency.entity.model;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.Calendar;
-import java.util.List;
-
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -45,18 +39,18 @@ import lombok.ToString;
 @EqualsAndHashCode(of = { "id" })
 @ToString
 public class CRAAllocation {
-	
+
 	@Id
-	//@GeneratedValue(strategy = GenerationType.AUTO)
+	// @GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "ID")
 	@GeneratedValue(generator = "CRA_ALLOCATION_SEQ")
 	@SequenceGenerator(name = "CRA_ALLOCATION_SEQ", sequenceName = "CRA_ALLOCATION_SEQ", allocationSize = 100)
 	protected Long id;
-	
+
 	@Basic
 	@Column(name = "CRA_ID")
 	protected Long craId;
-	
+
 	@Basic
 	@Column(name = "DENOMINATION")
 	protected Integer denomination;
@@ -72,16 +66,15 @@ public class CRAAllocation {
 	@Basic
 	@Column(name = "BIN_NUM")
 	protected String binNumber;
-	
+
 	@Basic
 	@Column(name = "ICMC_ID")
 	protected BigInteger icmcId;
 
-	
 	@Enumerated(EnumType.STRING)
 	@Column(name = "CURRENCY_TYPE")
 	protected CurrencyType currencyType;
-	
+
 	@Basic
 	@Column(name = "INSERT_BY")
 	protected String insertBy;
@@ -98,27 +91,30 @@ public class CRAAllocation {
 	@DateTimeFormat(pattern = DateTimePattern.yyyy_MM_dd_HH_mm_ss_SSS)
 	@Column(name = "UPDATE_TIME")
 	protected Calendar updateTime;
-	
+
 	@Enumerated(EnumType.STRING)
 	@Column(name = "STATUS")
 	protected OtherStatus status;
-	
+
 	@Basic
 	@Column(name = "VAULT")
 	protected BigDecimal vault;
-	
+
 	@Basic
 	@Column(name = "FORWARD")
 	protected BigDecimal forward;
-	
+
 	@Basic
 	@Column(name = "PENDING_REQUESTED_BUNDLE")
 	protected BigDecimal pendingRequestedBundle;
-	
-	/*@OneToMany (cascade=CascadeType.ALL, fetch = FetchType.EAGER)
-	@JoinColumn(name="CRA_ALLOCATION_ID", referencedColumnName="ID")
-	protected List<CRALog> craLog;*/
-	
+
+	/*
+	 * @OneToMany (cascade=CascadeType.ALL, fetch = FetchType.EAGER)
+	 * 
+	 * @JoinColumn(name="CRA_ALLOCATION_ID", referencedColumnName="ID")
+	 * protected List<CRALog> craLog;
+	 */
+
 	@Transient
 	protected BigDecimal denom1Pieces;
 	@Transient
@@ -145,7 +141,7 @@ public class CRAAllocation {
 	protected BigDecimal totalInPieces;
 	@Transient
 	protected BigDecimal totalValueOfBankNotes;
-	
+
 	@Transient
 	protected BigDecimal coin1Pieces;
 	@Transient
@@ -154,21 +150,20 @@ public class CRAAllocation {
 	protected BigDecimal coin5Pieces;
 	@Transient
 	protected BigDecimal coin10Pieces;
-	
+
 	@Transient
 	protected String branchName;
 	@Transient
 	protected String vendor;
 	@Transient
 	protected String msp;
-	
-	public CRAAllocation()
-	{
-		
+
+	public CRAAllocation() {
+
 	}
-	
-	public CRAAllocation(boolean initialize){
-		if(initialize){
+
+	public CRAAllocation(boolean initialize) {
+		if (initialize) {
 			this.denom1Pieces = BigDecimal.ZERO;
 			this.denom2Pieces = BigDecimal.ZERO;
 			this.denom5Pieces = BigDecimal.ZERO;

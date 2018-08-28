@@ -51,7 +51,6 @@ import com.chest.currency.entity.model.QAssignVaultCustodian;
 import com.chest.currency.entity.model.QAuditorIndent;
 import com.chest.currency.entity.model.QBinMaster;
 import com.chest.currency.entity.model.QBinTransaction;
-import com.chest.currency.entity.model.QBinTransactionBOD;
 import com.chest.currency.entity.model.QBranchReceipt;
 import com.chest.currency.entity.model.QCRAAllocation;
 import com.chest.currency.entity.model.QCustodianKeySet;
@@ -92,10 +91,7 @@ import com.mysema.query.jpa.impl.JPADeleteClause;
 import com.mysema.query.jpa.impl.JPAQuery;
 import com.mysema.query.jpa.impl.JPAUpdateClause;
 
-/**
- * @author root
- *
- */
+
 @Repository
 public class ProcessingRoomJpaDaoImpl implements ProcessingRoomJpaDao {
 	private static final Logger LOG = LoggerFactory.getLogger(BinDashBoardJpaDaoImpl.class);
@@ -551,6 +547,7 @@ public class ProcessingRoomJpaDaoImpl implements ProcessingRoomJpaDao {
 	public List<CustodianKeySet> getDefineKeySet(BigInteger icmcId) {
 		JPAQuery jpaQuery = getFromQueryForCustodiannameForKeySet();
 		jpaQuery.where(QCustodianKeySet.custodianKeySet.icmcId.eq(icmcId));
+		jpaQuery.groupBy(QCustodianKeySet.custodianKeySet.custodian);
 		List<CustodianKeySet> custodianList = jpaQuery.list(QCustodianKeySet.custodianKeySet);
 		return custodianList;
 	}
@@ -1736,6 +1733,7 @@ public class ProcessingRoomJpaDaoImpl implements ProcessingRoomJpaDao {
 	public List<CustodianKeySet> getAssignVaultCustodian(BigInteger icmcId) {
 		JPAQuery jpaQuery = getFromQueryForCustodiannameForKeySet();
 		jpaQuery.where(QCustodianKeySet.custodianKeySet.icmcId.eq(icmcId));
+		jpaQuery.groupBy(QCustodianKeySet.custodianKeySet.custodian);
 		List<CustodianKeySet> assignVaultCustodianList = jpaQuery.list(QCustodianKeySet.custodianKeySet);
 		return assignVaultCustodianList;
 	}

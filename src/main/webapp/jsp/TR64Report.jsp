@@ -111,7 +111,7 @@
 									<table class="table table-striped table-bordered table-hover" id="tableValue">
                                     <thead>
                                        <tr>
-                                       <th>Sr. No</th>
+                                       <th>Box. No</th>
                 <th style="display:none;">Box Number</th>
                 <th style="display:none;">Soiled Remittance ID</th>
 				<th>Denomination</th>

@@ -40,22 +40,22 @@ import lombok.ToString;
 @EqualsAndHashCode(of = { "id" })
 @ToString
 public class ORV {
-	
+
 	@Id
-	//@GeneratedValue(strategy = GenerationType.AUTO)
+	// @GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "ID")
 	@GeneratedValue(generator = "ORV_SEQ")
 	@SequenceGenerator(name = "ORV_SEQ", sequenceName = "ORV_SEQ", allocationSize = 100)
 	protected Long id;
-	
+
 	@Basic
 	@Column(name = "SR")
 	protected String sr;
-	
+
 	@Basic
 	@Column(name = "SACK_LOCK_NUMBER")
 	protected String sackLockNumber;
-	
+
 	@Basic
 	@Column(name = "SOL_ID")
 	protected String solId;
@@ -63,24 +63,23 @@ public class ORV {
 	@Basic
 	@Column(name = "BRANCH")
 	protected String branch;
-	
+
 	@Basic
 	@Column(name = "VENDOR")
 	protected String vendor;
-	
+
 	@Basic
 	@Column(name = "CUSTODIAN")
 	protected String custodian;
-	
-	
+
 	@Basic
 	@Column(name = "VEHICLE")
 	protected String vehicle;
-	
+
 	@Basic
 	@Column(name = "STATUS")
 	protected int status;
-	
+
 	@Basic
 	@Column(name = "ICMC_ID")
 	protected BigInteger icmcId;
@@ -88,7 +87,7 @@ public class ORV {
 	@Basic
 	@Column(name = "INSERT_BY")
 	protected String insertBy;
-	
+
 	@Basic
 	@Column(name = "ACCOUNT_NUMBER")
 	protected String accountNumber;
@@ -103,16 +102,16 @@ public class ORV {
 
 	@Column(name = "UPDATE_TIME")
 	protected Calendar updateTime;
-	
+
 	@Basic
-	@Column(name="PROCESSED_OR_UNPROCESSED")
+	@Column(name = "PROCESSED_OR_UNPROCESSED")
 	protected String processedOrUnprocessed;
-	
+
 	@Transient
 	@Enumerated(EnumType.STRING)
 	protected BinCategoryType binCategoryType;
-	
-	@OneToMany (cascade=CascadeType.ALL, fetch = FetchType.EAGER)
-	@JoinColumn(name="ORV_ID", referencedColumnName="ID")
+
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@JoinColumn(name = "ORV_ID", referencedColumnName = "ID")
 	protected List<ORVAllocation> orvAllocations;
 }
