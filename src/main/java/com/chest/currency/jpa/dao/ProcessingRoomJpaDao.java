@@ -160,7 +160,7 @@ public interface ProcessingRoomJpaDao {
 
 	public boolean modifyDefineKeySet(DefineKeySet defineKeySet);
 
-	public List<CustodianKeySet> getDefineKeySet(BigInteger icmcId);
+	public List<String> getDefineKeySet(BigInteger icmcId);
 
 	public boolean insertFreshCurrency(FreshCurrency freshCurrency);
 
@@ -188,7 +188,7 @@ public interface ProcessingRoomJpaDao {
 
 	public List<Machine> getMachineNumber(BigInteger icmcId);
 
-	public List<DefineKeySet> getKeySetDetail(String custodian,BigInteger icmcId);
+	public List<Tuple> getKeySetDetail(String custodian,BigInteger icmcId);
 
 	public List<BranchReceipt> getBinNumListForIndentFromBranchReceipt(Integer denomination, BigDecimal bundle,
 			BigInteger icmcId, CashSource cashSource, BinCategoryType binCategoryType);

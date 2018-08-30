@@ -544,11 +544,11 @@ public class ProcessingRoomJpaDaoImpl implements ProcessingRoomJpaDao {
 		return jpaQuery;
 	}
 
-	public List<CustodianKeySet> getDefineKeySet(BigInteger icmcId) {
+	public List<String> getDefineKeySet(BigInteger icmcId) {
 		JPAQuery jpaQuery = getFromQueryForCustodiannameForKeySet();
 		jpaQuery.where(QCustodianKeySet.custodianKeySet.icmcId.eq(icmcId));
 		jpaQuery.groupBy(QCustodianKeySet.custodianKeySet.custodian);
-		List<CustodianKeySet> custodianList = jpaQuery.list(QCustodianKeySet.custodianKeySet);
+		List<String> custodianList = jpaQuery.list(QCustodianKeySet.custodianKeySet.custodian);
 		return custodianList;
 	}
 
@@ -828,11 +828,12 @@ public class ProcessingRoomJpaDaoImpl implements ProcessingRoomJpaDao {
 	}
 
 	@Override
-	public List<DefineKeySet> getKeySetDetail(String custodian, BigInteger icmcId) {
+	public List<Tuple> getKeySetDetail(String custodian, BigInteger icmcId) {
 		JPAQuery jpaQuery = getFromQueryForDefineKeySet();
 		jpaQuery.where(
 				QDefineKeySet.defineKeySet.custodian.eq(custodian).and(QDefineKeySet.defineKeySet.icmcId.eq(icmcId)));
-		List<DefineKeySet> keySetList = jpaQuery.list(QDefineKeySet.defineKeySet);
+		List<Tuple> keySetList = jpaQuery.list(QDefineKeySet.defineKeySet.custodian,QDefineKeySet.defineKeySet.keyNumber,
+				QDefineKeySet.defineKeySet.locationOfLock,QDefineKeySet.defineKeySet.id);
 		return keySetList;
 	}
 

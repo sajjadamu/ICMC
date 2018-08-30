@@ -32,6 +32,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -871,7 +872,8 @@ public class ProcessingRoomController {
 	@RequestMapping("/viewDefineKeySet")
 	public ModelAndView viewDefineKeySet(@ModelAttribute("user") CustodianKeySet defineKeySet, HttpSession session) {
 		User user = (User) session.getAttribute("login");
-		List<CustodianKeySet> keySetList = processingRoomService.getDefineKeySet(user.getIcmcId());
+		//List<CustodianKeySet> keySetList = processingRoomService.getDefineKeySet(user.getIcmcId());
+		List<String> keySetList = processingRoomService.getDefineKeySet(user.getIcmcId());
 		LOG.info("VIEW DefineKeySet RECORD");
 		return new ModelAndView("/viewDefineKeySet", "records", keySetList);
 	}
@@ -879,7 +881,8 @@ public class ProcessingRoomController {
 	@RequestMapping("/viewKeySetDetail")
 	public ModelAndView viewDefineKeySetDetail(@RequestParam String custodian, HttpSession session) {
 		User user = (User) session.getAttribute("login");
-		List<DefineKeySet> keySetList = processingRoomService.getKeySetDetail(custodian, user.getIcmcId());
+		//List<DefineKeySet> keySetList = processingRoomService.getKeySetDetail(custodian, user.getIcmcId());
+		List<Tuple> keySetList = processingRoomService.getKeySetDetail(custodian, user.getIcmcId());
 		return new ModelAndView("/viewKeySetDetail", "records", keySetList);
 	}
 
@@ -1074,7 +1077,8 @@ public class ProcessingRoomController {
 		User user = (User) session.getAttribute("login");
 		AssignVaultCustodian obj = new AssignVaultCustodian();
 		ModelMap map = new ModelMap();
-		List<CustodianKeySet> custodianList = processingRoomService.getAssignVaultCustodian(user.getIcmcId());
+		//List<CustodianKeySet> custodianList = processingRoomService.getAssignVaultCustodian(user.getIcmcId());
+		List<String> custodianList = processingRoomService.getDefineKeySet(user.getIcmcId());
 		map.put("user", obj);
 		map.put("custodianList", custodianList);
 		return new ModelAndView("/AssignVaultCustodian", map);
@@ -1084,25 +1088,17 @@ public class ProcessingRoomController {
 	public ModelAndView saveVaultCustodian(@ModelAttribute("user") AssignVaultCustodian assignVaultCustodian,
 			HttpSession session, RedirectAttributes redirectAttributes, @RequestParam String custodian) {
 		User user = (User) session.getAttribute("login");
-		ModelMap map = new ModelMap();
-		List<CustodianKeySet> custodianList = processingRoomService.getAssignVaultCustodian(user.getIcmcId());
-
 		User userFromDBForUserID = processingRoomService.isValidUser(assignVaultCustodian.getUserId(),
 				user.getIcmcId());
-
 		if (userFromDBForUserID == null) {
-			map.put("takingOverCharge", "User Id of taking Over Charge not exist in ICMC");
-			map.put("custodianList", custodianList);
-			return new ModelAndView("/AssignVaultCustodian", map);
+			redirectAttributes.addFlashAttribute("takingOverCharge", "User Id of taking Over Charge not exist in ICMC");
+			return new ModelAndView("redirect:./AssignVaultCustodian");
 		}
-
 		User userFromDBForUserHandingOver = processingRoomService
 				.isValidUser(assignVaultCustodian.getHandingOverCharge(), user.getIcmcId());
-
 		if (userFromDBForUserHandingOver == null) {
-			map.put("HandingOverCharge", "User Id of Handing Over Charge not exist in ICMC");
-			map.put("custodianList", custodianList);
-			return new ModelAndView("/AssignVaultCustodian", map);
+			redirectAttributes.addFlashAttribute("HandingOverCharge", "User Id of Handing Over Charge not exist in ICMC");
+			return new ModelAndView("redirect:./AssignVaultCustodian");
 		}
 
 		Calendar now = Calendar.getInstance();

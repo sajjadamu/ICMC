@@ -647,7 +647,7 @@ public class ProcessingRoomServiceImpl implements ProcessingRoomService {
 	}
 
 	@Override
-	public List<CustodianKeySet> getDefineKeySet(BigInteger icmcId) {
+	public List<String> getDefineKeySet(BigInteger icmcId) {
 		return processingRoomJpaDao.getDefineKeySet(icmcId);
 	}
 
@@ -1703,8 +1703,8 @@ public class ProcessingRoomServiceImpl implements ProcessingRoomService {
 	}
 
 	@Override
-	public List<DefineKeySet> getKeySetDetail(String custodian, BigInteger icmcId) {
-		List<DefineKeySet> list = processingRoomJpaDao.getKeySetDetail(custodian, icmcId);
+	public List<Tuple> getKeySetDetail(String custodian, BigInteger icmcId) {
+		List<Tuple> list = processingRoomJpaDao.getKeySetDetail(custodian, icmcId);
 		return list;
 	}
 

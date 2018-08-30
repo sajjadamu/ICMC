@@ -146,7 +146,7 @@ public interface ProcessingRoomService {
 
 	public boolean UploadChestSlip(List<ChestMaster> list, ChestMaster chestSlip);
 
-	public List<CustodianKeySet> getDefineKeySet(BigInteger icmcId);
+	public List<String> getDefineKeySet(BigInteger icmcId);
 
 	public DefineKeySet defineKeySetRecordForModify(Long id);
 
@@ -207,7 +207,7 @@ public interface ProcessingRoomService {
 
 	public List<DefineKeySet> getLocationOfLock(DefineKeySet defineKeySet);
 
-	public List<DefineKeySet> getKeySetDetail(String custodian, BigInteger icmcId);
+	public List<Tuple> getKeySetDetail(String custodian, BigInteger icmcId);
 
 	public List<BranchReceipt> getBinNumListForIndentFromBranchReceipt(Integer denomination, BigDecimal requestBundle,
 			BigInteger icmcId, CashSource cashSource, BinCategoryType binCategoryType);
