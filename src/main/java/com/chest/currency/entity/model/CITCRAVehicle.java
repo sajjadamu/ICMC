@@ -21,6 +21,8 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import com.chest.currency.enums.DateTimePattern;
@@ -35,7 +37,6 @@ import com.chest.currency.enums.Status;
 public class CITCRAVehicle {
 
 	@Id
-	// @GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "ID")
 	@GeneratedValue(generator = "CIT_CRA_VEHICLE_SEQ")
 	@SequenceGenerator(name = "CIT_CRA_VEHICLE_SEQ", sequenceName = "CIT_CRA_VEHICLE_SEQ", allocationSize = 100)
@@ -78,11 +79,13 @@ public class CITCRAVehicle {
 	protected Status status;
 
 	@DateTimeFormat(pattern = DateTimePattern.yyyy_MM_dd_HH_mm_ss_SSS)
-	@Column(name = "INSERT_TIME")
+	@Column(name = "INSERT_TIME", nullable = false, updatable = false)
+	@CreationTimestamp
 	protected Calendar insertTime;
 
 	@DateTimeFormat(pattern = DateTimePattern.yyyy_MM_dd_HH_mm_ss_SSS)
-	@Column(name = "UPDATE_TIME")
+	@Column(name = "UPDATE_TIME", nullable = false)
+	@UpdateTimestamp
 	protected Calendar updateTime;
 
 	@Basic

@@ -691,35 +691,34 @@ function refresh() {
 											of 11 digits</label>
 									</div>
 
-									<div class="col-lg-12 form-group" >
+									<div class="col-lg-12 form-group">
 										<label>Category</label><br>
 										<form:radiobutton path="processedOrUnprocessed"
-											id="processedOrUnprocessed" name="processedOrUnprocessed" readonly="readonly"
-											value="PROCESSED"  onclick="shrinkWrapBundle()"/>
+											id="processedOrUnprocessed" name="processedOrUnprocessed"
+											readonly="readonly" value="PROCESSED"
+											onclick="shrinkWrapBundle()" />
 
 										<span class="deno-value"><b>PROCESSED</b></span>
-									
-										<form:radiobutton path="processedOrUnprocessed"
-											id="processedOrUnprocessed" name="processedOrUnprocessed" readonly="readonly"
-											value="UNPROCESS"  onclick="shrinkWrapBundle()" />
 
-										<span class="deno-value"><b>UNPROCESS</b></span> 
-										<img
+										<form:radiobutton path="processedOrUnprocessed"
+											id="processedOrUnprocessed" name="processedOrUnprocessed"
+											readonly="readonly" value="UNPROCESS"
+											onclick="shrinkWrapBundle()" />
+
+										<span class="deno-value"><b>UNPROCESS</b></span> <img
 											id="waitingImg" style="width: 150px; height: 60px;"
 											src="./resources/logo/response-waiting.gif">
-											</div>
-									 <div class="col-lg-12 form-group" id="binORbox" >
+									</div>
+									<div class="col-lg-12 form-group" id="binORbox">
 										<label>Bin Category</label><br>
-										<form:radiobutton path="binCategoryType"
-											id="binCategoryType" name="binCategoryType"
-											value="BIN" />
+										<form:radiobutton path="binCategoryType" id="binCategoryType"
+											name="binCategoryType" value="BIN" />
 										<span class="deno-value"><b>BIN</b></span>
-										<form:radiobutton path="binCategoryType"
-											id="binCategoryType" name="binCategoryType"
-											value="BOX" />
+										<form:radiobutton path="binCategoryType" id="binCategoryType"
+											name="binCategoryType" value="BOX" />
 										<span class="deno-value"><b>BOX</b></span>
-										
-										
+
+
 									</div>
 									<div class="form-group hidden">
 										<table id="hiddenTable">
@@ -730,15 +729,12 @@ function refresh() {
 											</tr>
 											<c:forEach var="entry" items="${sasPayment}">
 												<tr class="trValue">
-													<td class="tdValue">
-													<c:if test="${entry.cashType == 'NOTES' }">
-													<c:out value="${entry.binType}" />
-													</c:if>
-													<c:if test="${entry.cashType == 'COINS' }">
-													<c:out value="${entry.cashType}" />
-													</c:if>
-													
-													</td>
+													<td class="tdValue"><c:if
+															test="${entry.cashType == 'NOTES' }">
+															<c:out value="${entry.binType}" />
+														</c:if> <c:if test="${entry.cashType == 'COINS' }">
+															<c:out value="${entry.cashType}" />
+														</c:if></td>
 													<td class="tdValue"><c:out
 															value="${entry.denomination}" /></td>
 													<td class="tdValue"><c:out value="${entry.bundle}" /></td>
@@ -765,24 +761,26 @@ function refresh() {
 										Enter Valid Denomination</label>
 									<label id="err8" style="display: none; color: red">Please
 										Enter Bundle</label>
-										<c:choose>
-									<c:when test="${status!='ACCEPTED'}">
-										<div class="frmsub">
-											<button type="submit" id="refresh" class="btn btn-default"
-												value="Details" style="width: 99px;" onclick="refresh()">Refresh</button>
-											<button type="button" value="Update" id="btnsubmit"
-												onclick="doAjaxPostInsert('+i+')" class="btn btn-primary">
-												Update</button>
+									<c:choose>
+										<c:when test="${status==0}">
+											<div class="frmsub">
+												<button type="submit" id="refresh" class="btn btn-default"
+													value="Details" style="width: 99px;" onclick="refresh()">Refresh</button>
+												<button type="button" value="Update" id="btnsubmit"
+													onclick="doAjaxPostInsert('+i+')" class="btn btn-primary">
+													Update</button>
 
 
-											<!-- <input class="text-success" style=" padding: 10px 16px;" type="button" value="Update" id="btnsubmit"
+												<!-- <input class="text-success" style=" padding: 10px 16px;" type="button" value="Update" id="btnsubmit"
 											onclick="doAjaxPostInsert('+i+')"> -->
-										</div>
-									</c:when><c:otherwise>
-									<div class="text-center">
-							<label  class="bg-primary  text-white">Accepted by vault Management Can not be edited </label>
-						                 </div>
-									</c:otherwise>
+											</div>
+										</c:when>
+										<c:otherwise>
+											<div class="text-center">
+												<label class="bg-primary  text-white">Accepted by
+													vault Management Can not be edited </label>
+											</div>
+										</c:otherwise>
 									</c:choose>
 								</form:form>
 

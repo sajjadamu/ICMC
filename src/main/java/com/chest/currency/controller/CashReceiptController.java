@@ -1,7 +1,3 @@
-/*******************************************************************************
- * /* Copyright (C) Indicsoft Technologies Pvt Ltd
- * * All Rights Reserved.
- *******************************************************************************/
 package com.chest.currency.controller;
 
 import java.io.BufferedReader;
@@ -13,10 +9,11 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import com.chest.currency.entity.model.Indent;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -46,6 +43,7 @@ import com.chest.currency.entity.model.DateRange;
 import com.chest.currency.entity.model.DiversionIRV;
 import com.chest.currency.entity.model.FreshFromRBI;
 import com.chest.currency.entity.model.ICMC;
+import com.chest.currency.entity.model.Indent;
 import com.chest.currency.entity.model.User;
 import com.chest.currency.enums.BinCategoryType;
 import com.chest.currency.enums.CashSource;
@@ -64,8 +62,6 @@ import com.chest.currency.service.ProcessingRoomService;
 import com.chest.currency.util.UtilityJpa;
 import com.chest.currency.util.UtilityMapper;
 import com.chest.currency.viewBean.IRVVoucherWrapper;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import com.mysema.query.Tuple;
 
 @org.springframework.stereotype.Controller
@@ -104,6 +100,8 @@ public class CashReceiptController {
 		List<BranchReceipt> shrinkBeanList = null;
 
 		synchronized (icmcService.getSynchronizedIcmc(user)) {
+			LOG.info("branchReceipt " + branchReceipt);
+			LOG.info("branchReceipt.isFromProcessingRoom() " + branchReceipt.isFromProcessingRoom());
 			if (branchReceipt.isFromProcessingRoom()) {
 				branchReceipt.setBundle(branchReceipt.getBundle().multiply(BigDecimal.valueOf(10)));
 			}
@@ -429,57 +427,6 @@ public class CashReceiptController {
 		}
 		return prnList;
 	}
-	/*
-	 * @RequestMapping(value = "/DSBQRPath")
-	 * 
-	 * @ResponseBody public List<String> processDSB(@RequestBody DSB dsb,
-	 * HttpSession session) throws Exception {
-	 * 
-	 * User user = (User) session.getAttribute("login"); Calendar now =
-	 * Calendar.getInstance(); StringBuilder sb = null; StringBuilder sbBinName
-	 * = new StringBuilder(); List<String> prnList = new ArrayList<>();
-	 * List<DSB> dsbList = null;
-	 * 
-	 * synchronized (icmcService.getSynchronizedIcmc(user)) {
-	 * prnList.add(sbBinName.toString()); dsb.setInsertBy(user.getId());
-	 * dsb.setUpdateBy(user.getId()); dsb.setCashSource(CashSource.DSB);
-	 * dsb.setInsertTime(now); dsb.setUpdateTime(now); if
-	 * (dsb.getProcessingOrVault().equalsIgnoreCase("Vault") ||
-	 * dsb.getProcessingOrVault().equalsIgnoreCase("BIN")) {
-	 * dsb.setBinCategoryType(BinCategoryType.BIN); }
-	 * 
-	 * if (dsb.getProcessingOrVault().equalsIgnoreCase("BIN")) {
-	 * dsb.setBinCategoryType(BinCategoryType.BIN); }
-	 * 
-	 * if (dsb.getProcessingOrVault().equalsIgnoreCase("BOX")) {
-	 * dsb.setBinCategoryType(BinCategoryType.BOX); }
-	 * dsb.setCurrencyType(CurrencyType.UNPROCESS); try { dsbList =
-	 * cashReceiptService.processDSB(dsb, user); } catch (Exception ex) {
-	 * LOG.info("Error has occred", ex); throw ex; } boolean isAllSuccess =
-	 * dsbList != null && dsbList.size() > 0; if (isAllSuccess) { for (DSB dsbQR
-	 * : dsbList) { sbBinName.append(dsbQR.getBin()).append(","); try { String
-	 * oldtext = readPRNFileData(); String replacedtext =
-	 * oldtext.replaceAll("bin", "" + dsbQR.getBin()); replacedtext =
-	 * replacedtext.replaceAll("Branch: ", "" + "Name: "); replacedtext =
-	 * replacedtext.replaceAll("Sol ID :", "" + "A/C No.: "); replacedtext =
-	 * replacedtext.replaceAll("branch", "" + dsbQR.getName()); replacedtext =
-	 * replacedtext.replaceAll("solId", "" + dsbQR.getAccountNumber());
-	 * replacedtext = replacedtext.replaceAll("denom", "" +
-	 * dsbQR.getDenomination()); replacedtext =
-	 * replacedtext.replaceAll("bundle", "" + dsbQR.getBundle());
-	 * 
-	 * String formattedTotal =
-	 * CurrencyFormatter.inrFormatter(dsbQR.getTotal()).toString(); replacedtext
-	 * = replacedtext.replaceAll("total", "" + formattedTotal);
-	 * 
-	 * sb = new StringBuilder(replacedtext); prnList.add(sb.toString());
-	 * 
-	 * UtilityJpa.PrintToPrinter(sb, user); LOG.info("DSB prn: " + sb); } catch
-	 * (IOException ioe) { ioe.printStackTrace(); } } } else { throw new
-	 * BaseGuiException("Error while saving saveTxListAndDSB, Please try again"
-	 * ); } prnList.set(0, sbBinName.toString()); LOG.info("DSB "); } return
-	 * prnList; }
-	 */
 
 	@RequestMapping("/Addshrink")
 	public ModelAndView branchReceipt() {
@@ -587,17 +534,17 @@ public class CashReceiptController {
 
 		Indent indent = processingRoomService.getUpdateIndentOtherBankRequest(bankReceipt, user.getIcmcId());
 
-		if (bankReceipt.getBinNumber() == null && indent.getStatus().equals(OtherStatus.ACCEPTED)) {
-			model.put("user", bankReceipt);
-		}
-
-		else if (bankReceipt.getBinNumber() != null && bankReceipt.getStatus() == 0) {
-
-			model.put("user", bankReceipt);
-		} else {
-			redirectAttributes.addFlashAttribute("errorMsg", "Selected record Processing can't be edited");
+		if ((bankReceipt.getBinCategoryType() != null
+				&& bankReceipt.getBinCategoryType().equals(BinCategoryType.PROCESSING) && indent != null
+				&& indent.getPendingBundleRequest().compareTo(bankReceipt.getBundle()) != 0)
+				|| (bankReceipt != null && bankReceipt.getBinNumber() != null && bankReceipt.getIsIndent())) {
+			redirectAttributes.addFlashAttribute("errorMsg",
+					"Machine Allocated or Indent Requested record can't be edited");
 			return new ModelAndView("redirect:./viewBankReceipt");
+		} else {
+			model.put("user", bankReceipt);
 		}
+
 		return new ModelAndView("editOtherBank", model);
 	}
 
@@ -610,11 +557,24 @@ public class CashReceiptController {
 		synchronized (icmcService.getSynchronizedIcmc(user)) {
 			BankReceipt otherBankReceiptDb = cashReceiptService.getBankReceiptRecordById(otherBankReceipt.getId(),
 					user.getIcmcId());
-			if (otherBankReceiptDb.getBinCategoryType() == BinCategoryType.PROCESSING) {
-				Indent indent = processingRoomService.getUpdateIndentOtherBankRequest(otherBankReceiptDb,
+
+			Indent indent = processingRoomService.getUpdateIndentOtherBankRequest(otherBankReceiptDb, user.getIcmcId());
+
+			if ((otherBankReceiptDb.getBinCategoryType() != null
+					&& otherBankReceiptDb.getBinCategoryType().equals(BinCategoryType.PROCESSING) && indent != null
+					&& indent.getPendingBundleRequest().compareTo(otherBankReceiptDb.getBundle()) != 0)
+					|| (otherBankReceiptDb != null && otherBankReceiptDb.getBinNumber() != null
+							&& otherBankReceiptDb.getIsIndent())) {
+				redirectAttributes.addFlashAttribute("errorMsg",
+						"Machine Allocated or Indent Requested record can't be edited");
+				return new ModelAndView("redirect:./viewBankReceipt");
+			}
+
+			else if (otherBankReceiptDb.getBinCategoryType() == BinCategoryType.PROCESSING) {
+				Indent indent2 = processingRoomService.getUpdateIndentOtherBankRequest(otherBankReceiptDb,
 						user.getIcmcId());
 				cashReceiptService.processForUpdatingIndentOtherBankReceipt(otherBankReceipt, otherBankReceiptDb,
-						indent, user);
+						indent2, user);
 			} else {
 
 				BinTransaction binTxn = cashReceiptService.getBinTxnRecordForBankReceiptedit(otherBankReceipt,
@@ -1168,6 +1128,7 @@ public class CashReceiptController {
 		ModelMap model = new ModelMap();
 		User user = (User) session.getAttribute("login");
 		branchReceipt = cashReceiptService.getBranchReceiptRecordById(id, user.getIcmcId());
+
 		if (branchReceipt.getStatus().equals(OtherStatus.RECEIVED)) {
 			BigDecimal bundle = branchReceipt.getBundle();
 			String processUnprocess = branchReceipt.getProcessedOrUnprocessed();
@@ -1178,8 +1139,6 @@ public class CashReceiptController {
 			redirectAttributes.addFlashAttribute("errorMsg",
 					"Selected record can't be edited since it has been already indented..");
 			return new ModelAndView("redirect:./viewShrink");
-			// throw new BaseGuiException("Selected record can't be edited since
-			// it has been already indented..");
 		}
 		return new ModelAndView("editShrinkEntry", model);
 	}
@@ -1191,6 +1150,7 @@ public class CashReceiptController {
 		ModelMap model = new ModelMap();
 		User user = (User) session.getAttribute("login");
 		branchReceipt = cashReceiptService.getBranchReceiptRecordById(id, user.getIcmcId());
+
 		if (branchReceipt.getStatus().equals(OtherStatus.RECEIVED)) {
 			BigDecimal packets = branchReceipt.getBundle().multiply(BigDecimal.TEN);
 			String processUnprocess = branchReceipt.getProcessedOrUnprocessed();
@@ -1201,8 +1161,6 @@ public class CashReceiptController {
 			redirectAttributes.addFlashAttribute("errorMsg",
 					"Selected record can't be edited since it has been already indented..");
 			return new ModelAndView("redirect:./viewShrink");
-			// throw new BaseGuiException("Selected record can't be edited since
-			// it has been already indented..");
 		}
 		return new ModelAndView("editShrinkPrEntry", model);
 	}
@@ -1221,42 +1179,51 @@ public class CashReceiptController {
 		synchronized (icmcService.getSynchronizedIcmc(user)) {
 			BranchReceipt branchReceiptDb = cashReceiptService.getBranchReceiptRecordById(branchReceipt.getId(),
 					user.getIcmcId());
-			BinTransaction binTxn = cashReceiptService.getBinTxnRecordForUpdateedit(branchReceiptDb, user.getIcmcId());
-			branchReceiptList = cashReceiptService.processForUpdatingShrinkEntry(binTxn, branchReceipt, branchReceiptDb,
-					user);
-			prnList.add(sbBinName.toString());
-
-			boolean isAllSuccess = branchReceiptList != null && branchReceiptList.size() > 0;
-			if (isAllSuccess) {
-				for (BranchReceipt brTemp : branchReceiptList) {
-					sbBinName.append(brTemp.getBin()).append(",");
-					try {
-						String oldtext = readPRNFileData();
-						String replacedtext = oldtext.replaceAll("bin", "" + brTemp.getBin());
-						replacedtext = replacedtext.replaceAll("branch", "" + brTemp.getBranch());
-						replacedtext = replacedtext.replaceAll("solId", "" + brTemp.getSolId());
-						replacedtext = replacedtext.replaceAll("denom", "" + brTemp.getDenomination());
-						replacedtext = replacedtext.replaceAll("bundle", "" + brTemp.getBundle());
-
-						String formattedTotal = CurrencyFormatter.inrFormatter(brTemp.getTotal()).toString();
-						replacedtext = replacedtext.replaceAll("total", "" + formattedTotal);
-
-						sb = new StringBuilder(replacedtext);
-						prnList.add(sb.toString());
-						LOG.info("Branch Receipt PRN: " + sb);
-
-						UtilityJpa.PrintToPrinter(sb, user);
-
-					} catch (IOException ioe) {
-						ioe.printStackTrace();
-					}
-				}
+			if (!branchReceiptDb.getStatus().equals(OtherStatus.RECEIVED)) {
+				redirectAttributes.addFlashAttribute("errorMsg",
+						"Selected record can't be edited since it has been already indented..");
+				prnList.add("Selected record can't be edited since it has been already indented");
+				return prnList;
 			} else {
-				throw new BaseGuiException("Error while updating shrink entry, Please try again");
+
+				BinTransaction binTxn = cashReceiptService.getBinTxnRecordForUpdateedit(branchReceiptDb,
+						user.getIcmcId());
+				branchReceiptList = cashReceiptService.processForUpdatingShrinkEntry(binTxn, branchReceipt,
+						branchReceiptDb, user);
+				prnList.add(sbBinName.toString());
+
+				boolean isAllSuccess = branchReceiptList != null && branchReceiptList.size() > 0;
+				if (isAllSuccess) {
+					for (BranchReceipt brTemp : branchReceiptList) {
+						sbBinName.append(brTemp.getBin()).append(",");
+						try {
+							String oldtext = readPRNFileData();
+							String replacedtext = oldtext.replaceAll("bin", "" + brTemp.getBin());
+							replacedtext = replacedtext.replaceAll("branch", "" + brTemp.getBranch());
+							replacedtext = replacedtext.replaceAll("solId", "" + brTemp.getSolId());
+							replacedtext = replacedtext.replaceAll("denom", "" + brTemp.getDenomination());
+							replacedtext = replacedtext.replaceAll("bundle", "" + brTemp.getBundle());
+
+							String formattedTotal = CurrencyFormatter.inrFormatter(brTemp.getTotal()).toString();
+							replacedtext = replacedtext.replaceAll("total", "" + formattedTotal);
+
+							sb = new StringBuilder(replacedtext);
+							prnList.add(sb.toString());
+							LOG.info("Branch Receipt PRN: " + sb);
+
+							UtilityJpa.PrintToPrinter(sb, user);
+
+						} catch (IOException ioe) {
+							ioe.printStackTrace();
+						}
+					}
+				} else {
+					throw new BaseGuiException("Error while updating shrink entry, Please try again");
+				}
+				prnList.set(0, sbBinName.toString());
 			}
-			prnList.set(0, sbBinName.toString());
+			return prnList;
 		}
-		return prnList;
 	}
 
 	@RequestMapping("/editDSB")
@@ -1266,20 +1233,21 @@ public class CashReceiptController {
 		ModelMap model = new ModelMap();
 		User user = (User) session.getAttribute("login");
 		dsb = cashReceiptService.getDSBReceiptRecordById(id, user.getIcmcId());
-		List<DSBAccountDetail> dsbAcountDetialList = cashReceiptService.getDSBAccountDetail(user.getIcmcId());
+
 		Indent indent = processingRoomService.getUpdateIndentRequest(dsb, user.getIcmcId());
-		if (dsb != null && dsb.getProcessingOrVault().equalsIgnoreCase("processing") && indent != null
-				&& indent.getStatus().equals(OtherStatus.ACCEPTED)) {
-			model.put("dsbAccount", dsbAcountDetialList);
-			model.put("user", dsb);
-		} else if (dsb != null && dsb.getProcessingOrVault().equalsIgnoreCase("vault")
-				&& dsb.getStatus().equals(OtherStatus.RECEIVED)) {
-			model.put("dsbAccount", dsbAcountDetialList);
-			model.put("user", dsb);
-		} else {
-			redirectAttributes.addFlashAttribute("errorMsg", "Machine Allocated record can't be edited");
+
+		if ((dsb != null && dsb.getProcessingOrVault().equalsIgnoreCase("processing") && indent != null
+				&& indent.getPendingBundleRequest().compareTo(dsb.getBundle()) != 0)
+				|| (dsb != null && dsb.getProcessingOrVault().equalsIgnoreCase("vault") && dsb.getIsIndent())) {
+			redirectAttributes.addFlashAttribute("errorMsg",
+					"Machine Allocated or Indent Requested record can't be edited");
 			return new ModelAndView("redirect:./viewDSB");
+		} else {
+			List<DSBAccountDetail> dsbAcountDetialList = cashReceiptService.getDSBAccountDetail(user.getIcmcId());
+			model.put("dsbAccount", dsbAcountDetialList);
+			model.put("user", dsb);
 		}
+
 		return new ModelAndView("editDSB", model);
 	}
 
@@ -1287,18 +1255,27 @@ public class CashReceiptController {
 	@ResponseBody
 	public ModelAndView updateDSB(DSB dsb, HttpSession session, RedirectAttributes redirectAttributes) {
 		User user = (User) session.getAttribute("login");
+
 		synchronized (icmcService.getSynchronizedIcmc(user)) {
 			DSB dsbdb = cashReceiptService.getDSBReceiptRecordById(dsb.getId(), user.getIcmcId());
 			BinTransaction binTxn = new BinTransaction();
-			if (dsbdb.getProcessingOrVault().equalsIgnoreCase("Vault")) {
+			Indent indent = processingRoomService.getUpdateIndentRequest(dsbdb, user.getIcmcId());
+			if ((dsbdb != null && dsbdb.getProcessingOrVault().equalsIgnoreCase("processing") && indent != null
+					&& indent.getPendingBundleRequest().compareTo(dsbdb.getBundle()) != 0)
+					|| (dsbdb != null && dsbdb.getProcessingOrVault().equalsIgnoreCase("vault")
+							&& dsbdb.getIsIndent())) {
+				redirectAttributes.addFlashAttribute("errorMsg",
+						"Machine Allocated or Indent Requested record can't be edited");
+				return new ModelAndView("redirect:./viewDSB");
+			} else if (dsbdb.getProcessingOrVault().equalsIgnoreCase("Vault")) {
 				binTxn = cashReceiptService.getBinTxnRecordForUpdatingDSB(dsbdb, user.getIcmcId());
 				cashReceiptService.processForUpdatingDSBReceipt(binTxn, dsb, dsbdb, user);
 			}
-			if (dsbdb.getProcessingOrVault().equalsIgnoreCase("processing")) {
-				Indent indent = processingRoomService.getUpdateIndentRequest(dsbdb, user.getIcmcId());
-				cashReceiptService.processForUpdatingIndentDSBReceipt(binTxn, dsb, dsbdb, indent, user);
-			}
 
+			else if (dsbdb.getProcessingOrVault().equalsIgnoreCase("processing")) {
+				Indent indent2 = processingRoomService.getUpdateIndentRequest(dsbdb, user.getIcmcId());
+				cashReceiptService.processForUpdatingIndentDSBReceipt(binTxn, dsb, dsbdb, indent2, user);
+			}
 		}
 
 		return new ModelAndView("redirect:./viewDSB");
@@ -1313,15 +1290,14 @@ public class CashReceiptController {
 
 		Indent indent = processingRoomService.getUpdateIndentIVRRequest(diversionIRV, user.getIcmcId());
 
-		if (diversionIRV.getBinCategoryType() == null && indent.getStatus().equals(OtherStatus.ACCEPTED)) {
-			model.put("user", diversionIRV);
-		} else if ((diversionIRV.getBinCategoryType() == BinCategoryType.BIN)
-				|| (diversionIRV.getBinCategoryType() == BinCategoryType.BOX)
-						&& diversionIRV.getStatus().equals(OtherStatus.RECEIVED)) {
-			model.put("user", diversionIRV);
-		} else {
-			redirectAttributes.addFlashAttribute("errorMsg", "Processing record can't be edited");
+		if ((diversionIRV != null && diversionIRV.getBinNumber() == null && indent != null
+				&& indent.getPendingBundleRequest().compareTo(diversionIRV.getBundle()) != 0)
+				|| (diversionIRV != null && diversionIRV.getBinNumber() != null && diversionIRV.getIsIndent())) {
+			redirectAttributes.addFlashAttribute("errorMsg",
+					"Machine Allocated or Indent Requested record can't be edited");
 			return new ModelAndView("redirect:./viewDirv");
+		} else {
+			model.put("user", diversionIRV);
 		}
 		return new ModelAndView("editDirv", model);
 	}
@@ -1333,10 +1309,20 @@ public class CashReceiptController {
 		User user = (User) session.getAttribute("login");
 		boolean isAllSuccess = false;
 		Calendar now = Calendar.getInstance();
+
 		synchronized (icmcService.getSynchronizedIcmc(user)) {
 			DiversionIRV diversionIRVDB = cashReceiptService.getDiversionIRVRecordById(diversionIRV.getId(),
 					user.getIcmcId());
-			if ((diversionIRVDB.getBinCategoryType() == BinCategoryType.BIN)
+			Indent indent = processingRoomService.getUpdateIndentIVRRequest(diversionIRV, user.getIcmcId());
+
+			if ((diversionIRVDB != null && diversionIRVDB.getBinNumber() == null && indent != null
+					&& indent.getPendingBundleRequest().compareTo(diversionIRV.getBundle()) != 0)
+					|| (diversionIRVDB != null && diversionIRVDB.getBinNumber() != null
+							&& diversionIRVDB.getIsIndent())) {
+				redirectAttributes.addFlashAttribute("errorMsg",
+						"Machine Allocated or Indent Requested record can't be edited");
+				return new ModelAndView("redirect:./viewDirv");
+			} else if ((diversionIRVDB.getBinCategoryType() == BinCategoryType.BIN)
 					|| (diversionIRVDB.getBinCategoryType() == BinCategoryType.BOX)) {
 				BinTransaction binTxn = cashReceiptService.getBinTxnRecordForUpdatingDiversionReceipt(diversionIRVDB,
 						user.getIcmcId());
@@ -1355,9 +1341,8 @@ public class CashReceiptController {
 				diversionIRV.setProcessedOrUnprocessed(diversionIRVDB.getProcessedOrUnprocessed());
 				cashReceiptService.processDiversionIRV(diversionIRV, user);
 			} else {
-				Indent indent = processingRoomService.getUpdateIndentIVRRequest(diversionIRVDB, user.getIcmcId());
-				cashReceiptService.processForUpdatingIndentIVRReceipt(diversionIRV, diversionIRVDB, indent, user);
-
+				Indent indent2 = processingRoomService.getUpdateIndentIVRRequest(diversionIRVDB, user.getIcmcId());
+				cashReceiptService.processForUpdatingIndentIVRReceipt(diversionIRV, diversionIRVDB, indent2, user);
 			}
 
 		}

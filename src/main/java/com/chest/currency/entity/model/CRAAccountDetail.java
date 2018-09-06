@@ -19,6 +19,9 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -32,7 +35,6 @@ import lombok.ToString;
 public class CRAAccountDetail {
 
 	@Id
-	// @GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "ID")
 	@GeneratedValue(generator = "CRA_ACCOUNT_DETAIL_SEQ")
 	@SequenceGenerator(name = "CRA_ACCOUNT_DETAIL_SEQ", sequenceName = "CRA_ACCOUNT_DETAIL_SEQ", allocationSize = 100)
@@ -63,10 +65,12 @@ public class CRAAccountDetail {
 	protected String updateBy;
 
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "INSERT_TIME")
+	@Column(name = "INSERT_TIME", nullable = false, updatable = false)
+	@CreationTimestamp
 	protected Calendar insertTime;
 
-	@Column(name = "UPDATE_TIME")
+	@Column(name = "UPDATE_TIME", nullable = false)
+	@UpdateTimestamp
 	protected Calendar updateTime;
 
 }

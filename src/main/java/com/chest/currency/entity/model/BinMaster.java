@@ -1,10 +1,4 @@
-/*******************************************************************************
- * /* Copyright (C) Indicsoft Technologies Pvt Ltd
- * * All Rights Reserved.
- *******************************************************************************/
-/**
- * 
- */
+
 package com.chest.currency.entity.model;
 
 import java.math.BigInteger;
@@ -24,6 +18,9 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
+
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import com.chest.currency.enums.CurrencyType;
 import com.chest.currency.enums.VaultSize;
@@ -46,12 +43,11 @@ import lombok.ToString;
 public class BinMaster {
 
 	@Id
-	//@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "ID")
 	@GeneratedValue(generator = "BIN_MASTER_SEQ")
 	@SequenceGenerator(name = "BIN_MASTER_SEQ", sequenceName = "BIN_MASTER_SEQ", allocationSize = 100)
 	protected Long id;
-	
+
 	@Enumerated(EnumType.STRING)
 	@Column(name = "FIRST_PRIORITY")
 	protected CurrencyType firstPriority;
@@ -63,11 +59,11 @@ public class BinMaster {
 	@Enumerated(EnumType.STRING)
 	@Column(name = "THIRD_PRIORITY")
 	protected CurrencyType thirdPriority;
-	
+
 	@Enumerated(EnumType.STRING)
 	@Column(name = "FOURTH_PRIORITY")
 	protected CurrencyType fourthPriority;
-	
+
 	@Enumerated(EnumType.STRING)
 	@Column(name = "FIFTH_PRIORITY")
 	protected CurrencyType fifthPriority;
@@ -91,10 +87,10 @@ public class BinMaster {
 	@Basic
 	@Column(name = "INSERT_BY")
 	protected String insertBy;
-	
+
 	@Transient
-	protected String color; 
-	
+	protected String color;
+
 	@Transient
 	protected String oldNewIcmc;
 
@@ -103,14 +99,16 @@ public class BinMaster {
 	protected String updateBy;
 
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "INSERT_TIME")
+	@Column(name = "INSERT_TIME", nullable = false, updatable = false)
+	@CreationTimestamp
 	protected Calendar insertTime;
 
 	@Column(name = "UPDATE_TIME")
+	@UpdateTimestamp
 	protected Calendar updateTime;
-	
+
 	@Enumerated(EnumType.STRING)
 	@Column(name = "VAULT_SIZE")
 	protected VaultSize vaultSize;
-	
+
 }

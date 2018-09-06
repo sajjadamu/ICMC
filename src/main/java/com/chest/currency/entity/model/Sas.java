@@ -26,6 +26,8 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import com.chest.currency.enums.BinCategoryType;
@@ -48,7 +50,6 @@ import lombok.ToString;
 public class Sas {
 
 	@Id
-	// @GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "ID")
 	@GeneratedValue(generator = "SAS_SEQ")
 	@SequenceGenerator(name = "SAS_SEQ", sequenceName = "SAS_SEQ", allocationSize = 100)
@@ -176,11 +177,13 @@ public class Sas {
 
 	@DateTimeFormat(pattern = DateTimePattern.yyyy_MM_dd_HH_mm_ss_SSS)
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "INSERT_TIME")
+	@Column(name = "INSERT_TIME", updatable = false, nullable = false)
+	@CreationTimestamp
 	protected Calendar insertTime;
 
 	@DateTimeFormat(pattern = DateTimePattern.yyyy_MM_dd_HH_mm_ss_SSS)
-	@Column(name = "UPDATE_TIME")
+	@Column(name = "UPDATE_TIME", nullable = false)
+	@UpdateTimestamp
 	protected Calendar updateTime;
 
 	@Basic

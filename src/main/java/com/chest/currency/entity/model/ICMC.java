@@ -28,7 +28,6 @@ import lombok.ToString;
 import com.chest.currency.enums.Status;
 import com.chest.currency.enums.Zone;
 
-
 @Entity(name = "ICMC")
 @Table(name = "ICMC")
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
@@ -38,7 +37,6 @@ import com.chest.currency.enums.Zone;
 public class ICMC {
 
 	@Id
-	//@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "ID")
 	@GeneratedValue(generator = "ICMC_SEQ")
 	@SequenceGenerator(name = "ICMC_SEQ", sequenceName = "ICMC_SEQ", allocationSize = 100)
@@ -47,20 +45,19 @@ public class ICMC {
 	@Basic
 	@Column(name = "NAME")
 	protected String name;
-	
+
 	@Basic
-	@Column(name="CHEST_CODE")
+	@Column(name = "CHEST_CODE")
 	protected String chestCode;
 
-	
 	@Basic
 	@Column(name = "LINK_BRANCH_SOLID")
 	protected String linkBranchSolId;
-	
+
 	@Basic
 	@Column(name = "RBI_NAME")
 	protected String rbiName;
-	
+
 	@Basic
 	@Column(name = "ADDRESS")
 	protected String address;
@@ -82,7 +79,7 @@ public class ICMC {
 	protected Integer pincode;
 
 	@Enumerated(EnumType.STRING)
-	@Column(name = "STATUS" )
+	@Column(name = "STATUS")
 	protected Status status;
 
 	@Basic
@@ -99,13 +96,13 @@ public class ICMC {
 
 	@Column(name = "UPDATE_TIME")
 	protected Calendar updateTime;
-	
-	@Column(name="REASON_FOR_DELETION")
+
+	@Column(name = "REASON_FOR_DELETION")
 	protected String reasonForDeletion;
-	
-	@Column(name="APPROVAL_FOR_DELETION")
+
+	@Column(name = "APPROVAL_FOR_DELETION")
 	protected String approvalForDeletion;
-	
+
 	@Transient
 	protected String rbiNameHidden;
 	@Transient

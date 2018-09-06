@@ -20,6 +20,9 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
 import com.chest.currency.enums.DebitOrCredit;
 
 import lombok.Data;
@@ -35,7 +38,6 @@ import lombok.ToString;
 public class AccountDetail {
 
 	@Id
-	//@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "ID")
 	@GeneratedValue(generator = "ACCOUNT_DETAIL_SEQ")
 	@SequenceGenerator(name = "ACCOUNT_DETAIL_SEQ", sequenceName = "ACCOUNT_DETAIL_SEQ", allocationSize = 100)
@@ -70,10 +72,13 @@ public class AccountDetail {
 	protected String updateBy;
 
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "INSERT_TIME")
+	@Column(name = "INSERT_TIME", updatable = false, nullable = false)
+	@CreationTimestamp
 	protected Calendar insertTime;
 
-	@Column(name = "UPDATE_TIME")
+	@Column(name = "UPDATE_TIME", nullable = false)
+	@UpdateTimestamp
 	protected Calendar updateTime;
+	
 
 }

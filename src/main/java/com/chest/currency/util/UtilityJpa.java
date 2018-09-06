@@ -2999,10 +2999,6 @@ public class UtilityJpa {
 			// pushpanjali LAN
 			clientSocket = new Socket(ip, port); // ICICI pushpanjali LAN
 			DataOutputStream outToServer = new DataOutputStream(clientSocket.getOutputStream());
-			LOG.info("PrintToPrinter METHOD ");
-			LOG.info("PrintToPrinter METHOD ICMC" + user.getIcmcId() + " ip " + ip + " port " + port);
-			LOG.info("PrintToPrinter METHOD clientSocket " + clientSocket);
-			LOG.info("PrintToPrinter METHOD outToServer " + outToServer);
 			outToServer.writeBytes(sb.toString());
 			clientSocket.close();
 		} catch (IOException ioe) {

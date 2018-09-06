@@ -70,9 +70,6 @@ public interface ProcessingRoomService {
 
 	public Indent getUpdateIndentRequest(DSB dsbdb, BigInteger icmcId);
 
-	// public boolean insertIndentRequest(List<Indent>
-	// eligibleIndentRequestList);
-
 	public Indent getIndentById(long id);
 
 	public boolean updateIndentRequest(Indent indent);
@@ -397,5 +394,9 @@ public interface ProcessingRoomService {
 	public List<Mutilated> getMutilatedValueDetails(BigInteger icmcId, Calendar sDate, Calendar eDate);
 
 	public boolean processMutilatedRequest(Long id);
+
+	//public boolean getUpdateCashReceiveForIndentRequest(CashSource cashSource, String binNum, BigInteger icmcId);
+	
+	public boolean updateCashReceiveForIndentRequest(List<Indent> indenrRequest);
 
 }

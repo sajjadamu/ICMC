@@ -313,7 +313,17 @@ public class CashReceiptJpaDaoImpl implements CashReceiptJpaDao {
 	}
 
 	@Override
-	public boolean createDSB(List<DSB> dsb) {
+	public Long createDSB(List<DSB> dsb) {
+		for (DSB dSB : dsb) {
+			em.persist(dSB);
+			return dSB.getId();
+		}
+		//return dSB.get;
+		return 0l;
+	}
+	
+	@Override
+	public boolean saveDSB(List<DSB> dsb) {
 		for (DSB dSB : dsb) {
 			em.persist(dSB);
 		}

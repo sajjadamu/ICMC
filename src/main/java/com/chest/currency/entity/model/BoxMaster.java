@@ -22,6 +22,9 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
 import com.chest.currency.enums.CashSource;
 import com.chest.currency.enums.CurrencyType;
 import com.chest.currency.enums.Status;
@@ -40,7 +43,6 @@ import lombok.ToString;
 public class BoxMaster {
 
 	@Id
-	//@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "ID")
 	@GeneratedValue(generator = "BOX_MASTER_SEQ")
 	@SequenceGenerator(name = "BOX_MASTER_SEQ", sequenceName = "BOX_MASTER_SEQ", allocationSize = 100)
@@ -83,10 +85,12 @@ public class BoxMaster {
 	protected String updateBy;
 
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "INSERT_TIME")
+	@Column(name = "INSERT_TIME", nullable = false, updatable = false)
+	@CreationTimestamp
 	protected Calendar insertTime;
 
-	@Column(name = "UPDATE_TIME")
+	@Column(name = "UPDATE_TIME", nullable = false)
+	@UpdateTimestamp
 	protected Calendar updateTime;
 	
 	@Enumerated(EnumType.STRING)

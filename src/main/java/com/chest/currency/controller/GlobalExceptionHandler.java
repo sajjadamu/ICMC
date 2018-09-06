@@ -21,7 +21,7 @@ public class GlobalExceptionHandler {
 
 	@ExceptionHandler(value = NullPointerException.class)
 	public ModelAndView handleNullPointerException(NullPointerException e) {
-		logger.error("NullPointerException handler executed");
+		logger.error("NullPointerException handler executed"+e.getMessage());
 		ModelMap map=new ModelMap();
 		map.put("status", "");
 		map.put("message", e.getMessage());
@@ -31,7 +31,7 @@ public class GlobalExceptionHandler {
 
 	@ExceptionHandler(value = IOException.class)
 	public ModelAndView handleIOException(IOException e) {
-		logger.error("IOException handler executed");
+		logger.error("IOException handler executed"+e.getMessage());
 		ModelMap map=new ModelMap();
 		map.put("status", HttpStatus.FORBIDDEN);
 		map.put("message", e.getMessage());
@@ -42,6 +42,7 @@ public class GlobalExceptionHandler {
 	@ExceptionHandler(value = SQLException.class)
 	public ModelAndView handle(HttpServletRequest request, SQLException e) {
 		logger.info("SQLException Occured:: URL=" + request.getRequestURL());
+		logger.info("SQLException Occured:: msg=" + e.getMessage());
 		ModelMap map=new ModelMap();
 		map.put("status", HttpStatus.BAD_REQUEST);
 		map.put("message", e.getMessage());
@@ -52,6 +53,7 @@ public class GlobalExceptionHandler {
 	@ExceptionHandler(value = ClassNotFoundException.class)
 	public ModelAndView handleClassNotFoundException(HttpServletRequest request, ClassNotFoundException e) {
 		logger.info("ClassNotFoundException Occured:: URL=" + request.getRequestURL());
+		logger.info("ClassNotFoundException Occured:: msg=" + e.getMessage());
 		ModelMap map=new ModelMap();
 		map.put("status", HttpStatus.NOT_FOUND);
 		map.put("message", e.getMessage());
@@ -61,12 +63,14 @@ public class GlobalExceptionHandler {
 
 	@ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
 	@ExceptionHandler(value = Exception.class)
-	public ModelAndView handleException(Exception e) {
+	public ModelAndView handleException(Exception e,HttpServletRequest request) {
+		logger.error("INTERNAL_SERVER_ERROR msg"+e.getMessage());
+		logger.info("INTERNAL_SERVER_ERROR Occured:: URL=" + request.getRequestURL());
 		ModelMap map=new ModelMap();
 		map.put("status", HttpStatus.INTERNAL_SERVER_ERROR);
 		map.put("message", e.getMessage());
-		map.put("GlobalExceptionMessage", "Exception handler executed");
-		logger.error("Exception handler executed");
+		map.put("GlobalExceptionMessage", "INTERNAL SERVER ERROR");
+		logger.error("INTERNAL_SERVER_ERROR");
 		return new ModelAndView("GlobalExceptionHandler",map);
 	}
 }

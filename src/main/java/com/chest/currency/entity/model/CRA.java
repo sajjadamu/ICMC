@@ -28,6 +28,9 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
 import com.chest.currency.enums.OtherStatus;
 
 import lombok.Data;
@@ -43,7 +46,6 @@ import lombok.ToString;
 public class CRA {
 	
 	@Id
-	//@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "ID")
 	@GeneratedValue(generator = "CRA_SEQ")
 	@SequenceGenerator(name = "CRA_SEQ", sequenceName = "CRA_SEQ", allocationSize = 100)
@@ -88,10 +90,12 @@ public class CRA {
 	protected String updateBy;
 
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "INSERT_TIME")
+	@Column(name = "INSERT_TIME", nullable = false, updatable = false)
+	@CreationTimestamp
 	protected Calendar insertTime;
 
-	@Column(name = "UPDATE_TIME")
+	@Column(name = "UPDATE_TIME", nullable = false)
+	@UpdateTimestamp
 	protected Calendar updateTime;
 	
 	@OneToMany (cascade=CascadeType.ALL, fetch = FetchType.EAGER)

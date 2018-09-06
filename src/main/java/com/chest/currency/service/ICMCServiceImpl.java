@@ -105,9 +105,9 @@ public class ICMCServiceImpl implements ICMCService {
 			icmc = this.getICMCById(user.getIcmcId().longValue());
 			icmcConcurrentHashMap.putIfAbsent(icmc.getId(), icmc);
 			icmc = icmcConcurrentHashMap.get(user.getIcmcId().longValue());
-			LOG.info("icmc is put in map...{}",icmc.getId());
+			LOG.info("icmc is put in map...in if",icmc.getId());
 		}else{
-			LOG.info("icmc is already in map...{}",icmc.getId());
+			LOG.info("icmc is already in map...in else ICMCServiceImpl.getSynchronizedIcmc",icmc.getId());
 		}
 		return icmc;
 	}

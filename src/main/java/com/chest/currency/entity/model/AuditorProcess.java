@@ -25,6 +25,8 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import com.chest.currency.enums.BinCategoryType;
@@ -49,7 +51,6 @@ import lombok.ToString;
 public class AuditorProcess {
 
 	@Id
-	//@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "ID")
 	@GeneratedValue(generator = "AUDITOR_PROCESS_SEQ")
 	@SequenceGenerator(name = "AUDITOR_PROCESS_SEQ", sequenceName = "AUDITOR_PROCESS_SEQ", allocationSize = 100)
@@ -58,19 +59,19 @@ public class AuditorProcess {
 	@Basic
 	@Column(name = "DENOMINATION")
 	protected Integer denomination;
-	
+
 	@Enumerated(EnumType.STRING)
 	@Column(name = "CURRENCY_TYPE")
 	protected CurrencyType currencyType;
-	
+
 	@Basic
 	@Column(name = "BUNDLE")
 	protected BigDecimal bundle;
-	
+
 	@Enumerated(EnumType.STRING)
 	@Column(name = "CASH_SOURCE")
 	protected CashSource cashSource;
-	
+
 	@Basic
 	@Column(name = "TOTAL")
 	protected BigDecimal total;
@@ -78,11 +79,11 @@ public class AuditorProcess {
 	@Basic
 	@Column(name = "FILEPATH")
 	protected String filepath;
-	
+
 	@Basic
 	@Column(name = "BIN_NUM")
 	protected String binNumber;
-	
+
 	@Basic
 	@Column(name = "ICMC_ID")
 	protected BigInteger icmcId;
@@ -97,15 +98,17 @@ public class AuditorProcess {
 
 	@DateTimeFormat(pattern = DateTimePattern.yyyy_MM_dd_HH_mm_ss_SSS)
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "INSERT_TIME")
+	@Column(name = "INSERT_TIME", nullable = false, updatable = false)
+	@CreationTimestamp
 	protected Calendar insertTime;
-	
+
 	@DateTimeFormat(pattern = DateTimePattern.yyyy_MM_dd_HH_mm_ss_SSS)
-	@Column(name = "UPDATE_TIME")
+	@Column(name = "UPDATE_TIME", nullable = false)
+	@UpdateTimestamp
 	protected Calendar updateTime;
-	
+
 	@Enumerated(EnumType.STRING)
 	@Column(name = "BIN_CATEGORY_TYPE")
 	protected BinCategoryType binCategoryType;
-	
+
 }

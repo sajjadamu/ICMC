@@ -67,7 +67,7 @@ public interface CashReceiptJpaDao {
 
 	public List<DiversionIRV> getDiversionIRVRecord(User user,Calendar sDate,Calendar eDate);
 
-	public boolean createDSB(List<DSB> dsb);
+	public Long createDSB(List<DSB> dsb);
 
 	public List<DSB> getDSBRecord(User user,Calendar sDate,Calendar eDate);
 
@@ -175,4 +175,6 @@ public interface CashReceiptJpaDao {
 	boolean updateIRV(DiversionIRV diversionIRV);
 
 	boolean updateOtherBank(BankReceipt otherBankReceit);
+
+	boolean saveDSB(List<DSB> dsb);
 }

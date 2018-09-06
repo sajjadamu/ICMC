@@ -84,7 +84,6 @@ import com.mysema.query.jpa.impl.JPADeleteClause;
 import com.mysema.query.jpa.impl.JPAQuery;
 import com.mysema.query.jpa.impl.JPAUpdateClause;
 
-
 @Repository
 public class CashPaymentJpaDaoImpl implements CashPaymentJpaDao {
 	private static final Logger LOG = LoggerFactory.getLogger(CashPaymentJpaDaoImpl.class);
@@ -148,6 +147,17 @@ public class CashPaymentJpaDaoImpl implements CashPaymentJpaDao {
 			em.persist(sas);
 		}
 		return true;
+	}
+
+	@Override
+	public Boolean updateBranchReceiptForPayment(BigInteger icmcId, String binNum) {
+		QBranchReceipt qBranchReceipt = QBranchReceipt.branchReceipt;
+
+		Long success = new JPAUpdateClause(em, qBranchReceipt).where(QBranchReceipt.branchReceipt.icmcId.eq(icmcId))
+				.where(QBranchReceipt.branchReceipt.bin.eq(binNum))
+				.set(QBranchReceipt.branchReceipt.status, OtherStatus.PROCESSED).execute();
+
+		return success > 0 ? true : false;
 	}
 
 	@Override
@@ -430,7 +440,8 @@ public class CashPaymentJpaDaoImpl implements CashPaymentJpaDao {
 	}
 
 	@Override
-	public List<BinTransaction> getBinNumListForSasForUnprocess(SASAllocation sas, CurrencyType type,BinCategoryType binCategoryType) {
+	public List<BinTransaction> getBinNumListForSasForUnprocess(SASAllocation sas, CurrencyType type,
+			BinCategoryType binCategoryType) {
 		JPAQuery jpaQuery = getFromQueryForSASRequestFromBinTxn();
 		jpaQuery.where(QBinTransaction.binTransaction.icmcId.eq(sas.getIcmcId())
 				.and(QBinTransaction.binTransaction.denomination.eq(sas.getDenomination()))
@@ -553,7 +564,7 @@ public class CashPaymentJpaDaoImpl implements CashPaymentJpaDao {
 	public long updateSASstatus(SASAllocation sas) {
 		QSASAllocation qsasAllocation = QSASAllocation.sASAllocation;
 		long count = new JPAUpdateClause(em, qsasAllocation).where(QSASAllocation.sASAllocation.id.eq(sas.getId()))
-				.set(qsasAllocation.status, OtherStatus.ACCEPTED).set(qsasAllocation.updateTime, sas.getUpdateTime())
+				.set(qsasAllocation.status, OtherStatus.ACCEPTED).set(qsasAllocation.updateTime, Calendar.getInstance())
 				.execute();
 		return count;
 	}
@@ -1250,7 +1261,8 @@ public class CashPaymentJpaDaoImpl implements CashPaymentJpaDao {
 	}
 
 	@Override
-	public List<BinTransaction> getBundleFromBinTxnToCompare(BigInteger icmcId, Integer denomination,CurrencyType currencyType) {
+	public List<BinTransaction> getBundleFromBinTxnToCompare(BigInteger icmcId, Integer denomination,
+			CurrencyType currencyType) {
 		JPAQuery jpaQuery = getFromQueryForBundleFromBinTxn();
 		jpaQuery.where(QBinTransaction.binTransaction.icmcId.eq(icmcId)
 				.and(QBinTransaction.binTransaction.denomination.eq(denomination))
@@ -2017,7 +2029,7 @@ public class CashPaymentJpaDaoImpl implements CashPaymentJpaDao {
 				.and(QBinTransaction.binTransaction.binNumber.like("BOX:%"))
 				.and(QBinTransaction.binTransaction.binCategoryType.eq(BinCategoryType.BOX))
 				.and(QBinTransaction.binTransaction.binType.eq(CurrencyType.SOILED)
-				.or(QBinTransaction.binTransaction.binType.eq(CurrencyType.MUTILATED)))
+						.or(QBinTransaction.binTransaction.binType.eq(CurrencyType.MUTILATED)))
 				.and(QBinTransaction.binTransaction.cashType.eq(CashType.NOTES))
 				.and(QBinTransaction.binTransaction.active.eq(0))
 				.and(QBinTransaction.binTransaction.receiveBundle.gt(0)));
@@ -2403,10 +2415,9 @@ public class CashPaymentJpaDaoImpl implements CashPaymentJpaDao {
 
 	@Override
 	public void deleteEmptyBinFromBinTransaction(BigInteger icmcId, String binNumber) {
-		new JPADeleteClause(em, QBinTransaction.binTransaction)
-				.where(QBinTransaction.binTransaction.icmcId.eq(icmcId)
-						.and(QBinTransaction.binTransaction.binNumber.eq(binNumber))
-						.and(QBinTransaction.binTransaction.status.eq(BinStatus.EMPTY))).execute();
+		new JPADeleteClause(em, QBinTransaction.binTransaction).where(QBinTransaction.binTransaction.icmcId.eq(icmcId)
+				.and(QBinTransaction.binTransaction.binNumber.eq(binNumber))
+				.and(QBinTransaction.binTransaction.status.eq(BinStatus.EMPTY))).execute();
 
 	}
 
@@ -2436,12 +2447,14 @@ public class CashPaymentJpaDaoImpl implements CashPaymentJpaDao {
 				.and(QBranchReceipt.branchReceipt.status.eq(OtherStatus.RECEIVED)));
 		jpaQuery.orderBy(QBranchReceipt.branchReceipt.denomination.asc());
 		jpaQuery.groupBy(QBranchReceipt.branchReceipt.denomination);
-		 List<Tuple> branchReceipts = jpaQuery.list(QBranchReceipt.branchReceipt.denomination,QBranchReceipt.branchReceipt.bundle.sum());
+		List<Tuple> branchReceipts = jpaQuery.list(QBranchReceipt.branchReceipt.denomination,
+				QBranchReceipt.branchReceipt.bundle.sum());
 		return branchReceipts;
 	}
 
 	@Override
-	public List<BranchReceipt> getShrinkWrapBundleByDenomination(int denomination, BigInteger icmcId,BinCategoryType binCategoryType) {
+	public List<BranchReceipt> getShrinkWrapBundleByDenomination(int denomination, BigInteger icmcId,
+			BinCategoryType binCategoryType) {
 		JPAQuery jpaQuery = new JPAQuery(em);
 		jpaQuery.from(QBranchReceipt.branchReceipt);
 		jpaQuery.where(QBranchReceipt.branchReceipt.icmcId.eq(icmcId)
@@ -2450,7 +2463,7 @@ public class CashPaymentJpaDaoImpl implements CashPaymentJpaDao {
 				.and(QBranchReceipt.branchReceipt.currencyType.eq(CurrencyType.UNPROCESS))
 				.and(QBranchReceipt.branchReceipt.status.eq(OtherStatus.RECEIVED))
 				.and(QBranchReceipt.branchReceipt.binCategoryType.eq(binCategoryType)));
-		 List<BranchReceipt> branchReceipts = jpaQuery.list(QBranchReceipt.branchReceipt);
+		List<BranchReceipt> branchReceipts = jpaQuery.list(QBranchReceipt.branchReceipt);
 		return branchReceipts;
 	}
 
@@ -2477,13 +2490,13 @@ public class CashPaymentJpaDaoImpl implements CashPaymentJpaDao {
 				.and(QBranchReceipt.branchReceipt.currencyType.eq(CurrencyType.UNPROCESS))
 				.and(QBranchReceipt.branchReceipt.status.eq(OtherStatus.PROCESSED))
 				.and(QBranchReceipt.branchReceipt.bin.eq(binNumber))
-				.and(QBranchReceipt.branchReceipt.bundle.eq(bundle))
-				);
+				.and(QBranchReceipt.branchReceipt.bundle.eq(bundle)));
 		BranchReceipt branchReceipts = jpaQuery.singleResult(QBranchReceipt.branchReceipt);
 		return branchReceipts;
 	}
+
 	@Override
-	public List<Tuple> getSoiledSummary(BigInteger icmcId,CurrencyType currencyType) {
+	public List<Tuple> getSoiledSummary(BigInteger icmcId, CurrencyType currencyType) {
 		JPAQuery jpaQuery = getFromQueryForBinTxn();
 		jpaQuery.where(QBinTransaction.binTransaction.icmcId.eq(icmcId)
 				.and(QBinTransaction.binTransaction.binType.eq(currencyType))
@@ -2498,8 +2511,9 @@ public class CashPaymentJpaDaoImpl implements CashPaymentJpaDao {
 				QBinTransaction.binTransaction.insertTime.min().as("insertTime"));
 		return list;
 	}
+
 	@Override
-	public List<SoiledRemittanceAllocation> getSoiledForAccept(BigInteger icmcId,Calendar sDate, Calendar eDate) {
+	public List<SoiledRemittanceAllocation> getSoiledForAccept(BigInteger icmcId, Calendar sDate, Calendar eDate) {
 		JPAQuery jpaQuery = getFromQueryForSoiledAccept();
 		jpaQuery.where(QSoiledRemittanceAllocation.soiledRemittanceAllocation.icmcId.eq(icmcId)
 				.and(QSoiledRemittanceAllocation.soiledRemittanceAllocation.insertTime.between(sDate, eDate))

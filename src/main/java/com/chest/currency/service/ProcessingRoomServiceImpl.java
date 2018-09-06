@@ -1,7 +1,4 @@
-/*******************************************************************************
- * /* Copyright (C) Indicsoft Technologies Pvt Ltd
- * * All Rights Reserved.
- *******************************************************************************/
+
 package com.chest.currency.service;
 
 import java.math.BigDecimal;
@@ -141,8 +138,7 @@ public class ProcessingRoomServiceImpl implements ProcessingRoomService {
 			CashSource cashSource, BinCategoryType binCategoryType) {
 		List<BinTransaction> binFromTxnList = processingRoomJpaDao.getBinNumListForIndent(denomination, bundle, icmcId,
 				cashSource, binCategoryType);
-		
-		
+
 		return binFromTxnList;
 	}
 
@@ -845,26 +841,30 @@ public class ProcessingRoomServiceImpl implements ProcessingRoomService {
 	@Override
 	public List<BranchReceipt> getBinNumListForIndentFromBranchReceipt(Integer denomination, BigDecimal bundle,
 			BigInteger icmcId, CashSource cashSource, BinCategoryType binCategoryType) {
-		List<BranchReceipt> periorityBinList=new ArrayList<>(); 
-		
+		List<BranchReceipt> periorityBinList = new ArrayList<>();
+
 		List<BranchReceipt> returnBinFromBranchReceiptList = processingRoomJpaDao
 				.getRetunBinListForIndentFromBranchReceipt(denomination, bundle, icmcId, cashSource, binCategoryType);
-		
+
 		List<BranchReceipt> branchUploadBinFromBranchReceiptList = processingRoomJpaDao
-				.getBranchUploadBinListForIndentFromBranchReceipt(denomination, bundle, icmcId, cashSource, binCategoryType);
-		
+				.getBranchUploadBinListForIndentFromBranchReceipt(denomination, bundle, icmcId, cashSource,
+						binCategoryType);
+
 		List<BranchReceipt> insertBinListFromBranchReceiptList = processingRoomJpaDao
 				.getInsertBinListForIndentFromBranchReceipt(denomination, bundle, icmcId, cashSource, binCategoryType);
-		
-		if(returnBinFromBranchReceiptList.size() !=0){
-		periorityBinList.addAll(returnBinFromBranchReceiptList);}
-		
-		if(branchUploadBinFromBranchReceiptList.size() !=0){
-			periorityBinList.addAll(branchUploadBinFromBranchReceiptList);}
-		
-		if(insertBinListFromBranchReceiptList.size() !=0){
-		periorityBinList.addAll(insertBinListFromBranchReceiptList);}
-		
+
+		if (returnBinFromBranchReceiptList.size() != 0) {
+			periorityBinList.addAll(returnBinFromBranchReceiptList);
+		}
+
+		if (branchUploadBinFromBranchReceiptList.size() != 0) {
+			periorityBinList.addAll(branchUploadBinFromBranchReceiptList);
+		}
+
+		if (insertBinListFromBranchReceiptList.size() != 0) {
+			periorityBinList.addAll(insertBinListFromBranchReceiptList);
+		}
+
 		return periorityBinList;
 	}
 
@@ -941,6 +941,7 @@ public class ProcessingRoomServiceImpl implements ProcessingRoomService {
 	public boolean insertIndentRequestAndUpdateBinTxAndBranchReceipt(List<Indent> eligibleIndentRequestList,
 			List<BinTransaction> binTransactionList, List<BranchReceipt> branchReceiptList) {
 		boolean isSaved = processingRoomJpaDao.insertIndentRequest(eligibleIndentRequestList);
+
 		LOG.info("insertIndentRequestAndUpdateBinTxAndBranchReceipt " + binTransactionList);
 		for (BinTransaction btx : binTransactionList) {
 			if (btx.isDirty()) {
@@ -997,7 +998,6 @@ public class ProcessingRoomServiceImpl implements ProcessingRoomService {
 	@Override
 	public boolean insertIndentRequestAndUpdateBinTxAndFreshFromRBI(List<Indent> eligibleIndentRequestList,
 			List<BinTransaction> binTransactionList, List<FreshFromRBI> freshList) {
-		// TODO Auto-generated method stub
 		boolean isSaved = processingRoomJpaDao.insertIndentRequest(eligibleIndentRequestList);
 		for (BinTransaction btx : binTransactionList) {
 			if (btx.isDirty()) {
@@ -1033,7 +1033,6 @@ public class ProcessingRoomServiceImpl implements ProcessingRoomService {
 
 	@Override
 	public List<CRAAllocation> getDataFromCRAAllocationForProcessing(BigInteger icmcId) {
-		// TODO Auto-generated method stub
 		List<CRAAllocation> craAllocationList = processingRoomJpaDao.getDataFromCRAAllocationForProcessing(icmcId);
 		return craAllocationList;
 	}
@@ -1074,7 +1073,6 @@ public class ProcessingRoomServiceImpl implements ProcessingRoomService {
 
 	@Override
 	public boolean processMachineAllocationForBranch(MachineAllocation machineAllocation, Indent indent) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
@@ -1589,8 +1587,8 @@ public class ProcessingRoomServiceImpl implements ProcessingRoomService {
 			this.updateBinTxn(binTxn);
 			processingRoomJpaDao.updateProcessingRoomStatus(process);
 			processingRoomJpaDao.updatePendingForCancel(machineId, bundleFromUI);
-		}else {
-			throw new BaseGuiException("withdrawal bin can't cancel available bundle is "+ bundleFromBinTxn);
+		} else {
+			throw new BaseGuiException("withdrawal bin can't cancel available bundle is " + bundleFromBinTxn);
 		}
 		return "SUCCESS";
 	}
@@ -1779,11 +1777,91 @@ public class ProcessingRoomServiceImpl implements ProcessingRoomService {
 		List<Mutilated> mutilatedList = processingRoomJpaDao.getMutilatedValueDetails(icmcId, sDate, eDate);
 		return mutilatedList;
 	}
-	
+
 	@Override
-	public boolean processMutilatedRequest(Long id)
-	{
+	public boolean processMutilatedRequest(Long id) {
 		boolean isUpdate = processingRoomJpaDao.processMutilatedRequest(id);
 		return isUpdate;
 	}
+
+	private boolean getUpdateCashReceiveForIndentRequest(Indent indent) {
+		Calendar sDate = this.getStartDate();
+		Calendar eDate = this.getEndDate();
+		if (CashSource.DSB.equals(indent.getCashSource())) {
+			List<DSB> dsbs = processingRoomJpaDao.getDSB(indent, sDate, eDate);
+			BigDecimal totalbundle = indent.getBundle();
+			for (DSB dsb : dsbs) {
+				totalbundle = totalbundle.subtract(dsb.getBundle());
+				do {
+					dsb.setIsIndent(true);
+					processingRoomJpaDao.updateDSB(dsb);
+				} while (totalbundle.compareTo(BigDecimal.ZERO) > 0);
+				if (totalbundle.compareTo(BigDecimal.ZERO) < 0) {
+					break;
+				}
+
+			}
+		} else if (CashSource.OTHERBANK.equals(indent.getCashSource())) {
+			List<BankReceipt> bankReceipts = processingRoomJpaDao.getBankReceipt(indent, sDate, eDate);
+			BigDecimal totalbundle = indent.getBundle();
+			for (BankReceipt receipt : bankReceipts) {
+				totalbundle = totalbundle.subtract(receipt.getBundle());
+				do {
+					receipt.setIsIndent(true);
+					processingRoomJpaDao.updateBankReceipt(receipt);
+				} while (totalbundle.compareTo(BigDecimal.ZERO) > 0);
+				if (totalbundle.compareTo(BigDecimal.ZERO) < 0) {
+					break;
+				}
+			}
+		}else if (CashSource.DIVERSION.equals(indent.getCashSource())) {
+			List<DiversionIRV> diversionIRVs = processingRoomJpaDao.getDiversionIRV(indent, sDate, eDate);
+			BigDecimal totalbundle = indent.getBundle();
+			for (DiversionIRV diversionIRV : diversionIRVs) {
+				totalbundle = totalbundle.subtract(diversionIRV.getBundle());
+				do {
+					diversionIRV.setIsIndent(true);
+					processingRoomJpaDao.updateDiversionIRV(diversionIRV);
+				} while (totalbundle.compareTo(BigDecimal.ZERO) > 0);
+				if (totalbundle.compareTo(BigDecimal.ZERO) < 0) {
+					break;
+				}
+			}
+		}
+		return true;
+	}
+
+	@Override
+	public boolean updateCashReceiveForIndentRequest(List<Indent> eligibleIndentRequestList) {
+		boolean isUpdate = false;
+		for (Indent indent : eligibleIndentRequestList) {
+				isUpdate = getUpdateCashReceiveForIndentRequest(indent);
+		}
+		return isUpdate;
+	}
+
+	private Calendar getStartDate() {
+		Calendar sDate = Calendar.getInstance();
+
+		sDate.set(Calendar.HOUR, 0);
+		sDate.set(Calendar.HOUR_OF_DAY, 0);
+		sDate.set(Calendar.MINUTE, 0);
+		sDate.set(Calendar.SECOND, 0);
+		sDate.set(Calendar.MILLISECOND, 0);
+
+		return sDate;
+	}
+
+	private Calendar getEndDate() {
+		Calendar eDate = Calendar.getInstance();
+
+		eDate.set(Calendar.HOUR, 24);
+		eDate.set(Calendar.HOUR_OF_DAY, 23);
+		eDate.set(Calendar.MINUTE, 59);
+		eDate.set(Calendar.SECOND, 59);
+		eDate.set(Calendar.MILLISECOND, 999);
+
+		return eDate;
+	}
+
 }

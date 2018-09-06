@@ -18,6 +18,8 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import com.chest.currency.enums.CurrencyType;
@@ -35,18 +37,17 @@ import lombok.ToString;
 @EqualsAndHashCode(of = { "id" })
 @ToString
 public class AuditorIndent {
-	
+
 	@Id
-	//@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "ID")
 	@GeneratedValue(generator = "AUDITOR_INDENT_SEQ")
 	@SequenceGenerator(name = "AUDITOR_INDENT_SEQ", sequenceName = "AUDITOR_INDENT_SEQ", allocationSize = 100)
 	protected Long id;
-	
+
 	@Basic
 	@Column(name = "BIN_NUM")
 	protected String binNumber;
-	
+
 	@Basic
 	@Column(name = "DENOMINATION")
 	protected int denomination;
@@ -54,23 +55,23 @@ public class AuditorIndent {
 	@Basic
 	@Column(name = "BUNDLE")
 	protected BigDecimal bundle;
-	
+
 	@Basic
 	@Column(name = "PENDING_BUNDLE_REQUEST")
 	protected BigDecimal pendingBundleRequest;
-	
+
 	@Enumerated(EnumType.STRING)
 	@Column(name = "BIN_TYPE")
 	protected CurrencyType binType;
-	
+
 	@Enumerated(EnumType.STRING)
 	@Column(name = "STATUS")
 	protected OtherStatus status;
-	
+
 	@Basic
 	@Column(name = "ICMC_ID")
 	protected BigInteger icmcId;
-	
+
 	@Basic
 	@Column(name = "INSERT_BY")
 	protected String insertBy;
@@ -78,12 +79,15 @@ public class AuditorIndent {
 	@Basic
 	@Column(name = "UPDATE_BY")
 	protected String updateBy;
-	
+
 	@DateTimeFormat(pattern = DateTimePattern.yyyy_MM_dd_HH_mm_ss_SSS)
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "INSERT_TIME")
+	@Column(name = "INSERT_TIME", nullable = false, updatable = false)
+	@CreationTimestamp
 	protected Calendar insertTime;
 
-	@Column(name = "UPDATE_TIME")
+	@Column(name = "UPDATE_TIME", nullable = false)
+	@UpdateTimestamp
 	protected Calendar updateTime;
+
 }

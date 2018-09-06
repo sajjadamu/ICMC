@@ -608,7 +608,8 @@ public class CashPaymentController {
 		model.put("sasPayment", sasAlList);
 		model.put("row", row);
 		if (row != 0) {
-			model.put("status", sasAlList.get(0).getStatus());
+			//model.put("status", sasAlList.get(0).getStatus());
+			model.put("status", sasDetails.getStatus());
 		} else {
 			redirectAttributes.addFlashAttribute("sasDataMsg", "this can't be edit, Payment comes from SAS file");
 			return new ModelAndView("redirect:./viewORV");
@@ -657,12 +658,6 @@ public class CashPaymentController {
 		orv.setIcmcId(user.getIcmcId());
 		orv.setInsertBy(user.getId());
 		orv.setUpdateBy(user.getId());
-		Calendar now = Calendar.getInstance();
-		orv.setInsertTime(now);
-		orv.setUpdateTime(now);
-		Sas sas = new Sas();
-		sas.setInsertTime(now);
-		sas.setUpdateTime(now);
 		boolean isAllSuccess = cashPaymentService.processORVAllocation(orv, user);
 		if (!isAllSuccess) {
 			throw new RuntimeException("Error while saving ORV And ORV Allocation, Please try again");

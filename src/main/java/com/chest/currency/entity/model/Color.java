@@ -38,7 +38,6 @@ import lombok.ToString;
 public class Color {
 
 	@Id
-	// @GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "ID")
 	@GeneratedValue(generator = "BIN_TYPE_COLOR_SEQ")
 	@SequenceGenerator(name = "BIN_TYPE_COLOR_SEQ", sequenceName = "BIN_TYPE_COLOR_SEQ", allocationSize = 100)

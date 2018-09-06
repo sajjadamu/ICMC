@@ -126,34 +126,17 @@ public class CashPaymentServiceImpl implements CashPaymentService {
 		List<SASAllocation> eligibleSASRequestList = new ArrayList<>();
 		List<BinTransaction> binTransactionList = new ArrayList<>();
 		List<BranchReceipt> branchReceiptList = new ArrayList<>();
-		/*
-		 * List<BranchReceipt> filterBranchReceiptListByBtxn = new
-		 * ArrayList<>();
-		 */
 		List<BinTransaction> txnList = null;
+
 		for (SASAllocation sasAllocation : sasList) {
 			if (sasAllocation.getCashType() == CashType.COINS) {
 				txnList = this.getCoinsListForSas(sasAllocation);
 				eligibleSASRequestList = UtilityJpa.getCoinsForSASRequest(txnList, sasAllocation.getBundle(),
 						sasAllocation, sasAllocationParent, sasAllocation.getBinType(), user);
-				// CoinsSequence coinsSequence =
-				// this.getCoinsSequenceForDeduction(user.getIcmcId(),
-				// sas.getDenomination());
 			} else {
 				boolean isAllSuccess = false;
 				if (sasAllocationParent.getProcessedOrUnprocessed().equalsIgnoreCase("UNPROCESS")) {
-					/*
-					 * txnList =
-					 * cashPaymentJpaDao.getBinNumListForSasForUnprocess(
-					 * sasAllocation, sasAllocation.getBinType(),
-					 * sasAllocationParent.getBinCategoryType()); LOG.info(
-					 * "sasAllocationParent.getBinCategoryType() " +
-					 * sasAllocationParent.getBinCategoryType()); LOG.info(
-					 * "txnList " + txnList); List<BranchReceipt> brReceipt =
-					 * getShrinkWrapBundleByDenomination(sasAllocation.
-					 * getDenomination(), sasAllocation.getIcmcId(),
-					 * sasAllocationParent.getBinCategoryType());
-					 */
+
 					List<BinTransaction> txnListUnprocess = processingRoomService.getBinNumListForIndent(
 							sasAllocation.getDenomination(), sasAllocation.getBundle(), user.getIcmcId(),
 							CashSource.BRANCH, sasAllocationParent.getBinCategoryType());
@@ -173,12 +156,7 @@ public class CashPaymentServiceImpl implements CashPaymentService {
 						branchReceiptList = processingRoomService.getBinNumListForIndentFromBranchReceipt(
 								sasAllocation.getDenomination(), sasAllocation.getBundle(), user.getIcmcId(),
 								CashSource.BRANCH, sasAllocationParent.getBinCategoryType());
-						/*
-						 * for (BinTransaction bcheckBin : txnListUnprocess) {
-						 * for (BranchReceipt br : branchReceiptList) { if
-						 * (bcheckBin.getBinNumber().equals(br.getBin())) {
-						 * filterBranchReceiptListByBtxn.add(br); } } }
-						 */
+
 						eligibleSASRequestList = UtilityJpa.getBinForBranchReceiptSasRequest(txnListUnprocess,
 								sasAllocation.getDenomination(), sasAllocation.getBundle(), user, sasAllocationParent,
 								branchReceiptList);
@@ -211,6 +189,9 @@ public class CashPaymentServiceImpl implements CashPaymentService {
 						+ sasAllocation.getDenomination() + " and Category : " + sasAllocation.getBinType());
 			}
 			cashPaymentJpaDao.insertInSASAllocation(eligibleSASRequestList);
+			for(SASAllocation allocation: eligibleSASRequestList){
+				cashPaymentJpaDao.updateBranchReceiptForPayment(user.getIcmcId(), allocation.getBinNumber());
+			}
 			if (!sasAllocationParent.getProcessedOrUnprocessed().equalsIgnoreCase("UNPROCESS")) {
 				for (BinTransaction btx : txnList) {
 					LOG.info("binTransaction updation except Unprocess  " + btx);
@@ -541,17 +522,12 @@ public class CashPaymentServiceImpl implements CashPaymentService {
 		orv.setUpdateBy(user.getId());
 		orv.setId(null);
 		Calendar now = Calendar.getInstance();
-		orv.setInsertTime(now);
-		orv.setUpdateTime(now);
-		sas.setInsertTime(now);
-		sas.setUpdateTime(now);
 		sas.setId(null);
 		List<SASAllocation> sasAllocationList = new ArrayList<>();
 
 		for (ORVAllocation orvAllocationForSAS : orv.getOrvAllocations()) {
 			setCommonSasFields(orv, sas, now, orvAllocationForSAS);
 
-			// New code For Unprocess and PRocess
 			if (orv.getProcessedOrUnprocessed().equalsIgnoreCase("UNPROCESS")) {
 				orvAllocationForSAS.setProcessedOrUnprocessed("UNPROCESS");
 				sas.setProcessedOrUnprocessed("UNPROCESS");
@@ -560,7 +536,6 @@ public class CashPaymentServiceImpl implements CashPaymentService {
 				orvAllocationForSAS.setProcessedOrUnprocessed("PROCESSED");
 				sas.setProcessedOrUnprocessed("PROCESSED");
 			}
-			// End of code for Unprocess and Process
 			setDenomSpecificFields(sas, orvAllocationForSAS);
 			prepareAddSasAllocation(orv, sas, sasAllocationList, orvAllocationForSAS);
 		}
@@ -2164,7 +2139,7 @@ public class CashPaymentServiceImpl implements CashPaymentService {
 	@Transactional
 	public SASAllocation updateSasIndent(SASAllocation sasAccept, User user) {
 		List<SASAllocation> sasList = this.getSasAllocationByBinNumber(sasAccept.getBinNumber());
-		sasAccept.setUpdateTime(Calendar.getInstance());
+		// sasAccept.setUpdateTime(Calendar.getInstance());
 		LOG.info("sasAccept  " + sasAccept);
 		boolean count = false;
 		int countDelete = 0;

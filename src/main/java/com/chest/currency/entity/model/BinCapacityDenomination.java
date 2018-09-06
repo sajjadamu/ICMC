@@ -24,6 +24,9 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
 import com.chest.currency.enums.CurrencyType;
 import com.chest.currency.enums.VaultSize;
 
@@ -31,10 +34,6 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
-/**
- * @author root
- *
- */
 @Entity(name = "BinCapacityDenomination")
 @Table(name = "BIN_CAPACITY_DENOMINATION")
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
@@ -42,9 +41,8 @@ import lombok.ToString;
 @EqualsAndHashCode(of = { "id" })
 @ToString
 public class BinCapacityDenomination {
-	
+
 	@Id
-	//@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "ID")
 	@GeneratedValue(generator = "BIN_CAP_DENOM_SEQ")
 	@SequenceGenerator(name = "BIN_CAP_DENOM_SEQ", sequenceName = "BIN_CAP_DENOM_SEQ", allocationSize = 100)
@@ -53,19 +51,19 @@ public class BinCapacityDenomination {
 	@Enumerated(EnumType.STRING)
 	@Column(name = "VAULT_SIZE")
 	protected VaultSize vaultSize;
-	
+
 	@Basic
 	@Column(name = "DENOMINATION")
 	protected int denomination;
-	
+
 	@Enumerated(EnumType.STRING)
 	@Column(name = "CURRENCY_TYPE")
 	protected CurrencyType currencyType;
-	
+
 	@Basic
 	@Column(name = "MAX_BUNDLE_CAPACITY")
 	protected BigDecimal maxBundleCapacity;
-	
+
 	@Basic
 	@Column(name = "INSERT_BY")
 	protected String insertBy;
@@ -75,14 +73,18 @@ public class BinCapacityDenomination {
 	protected String updateBy;
 
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "INSERT_TIME")
+	@Column(name = "INSERT_TIME", nullable = false, updatable = false)
+	@CreationTimestamp
 	protected Calendar insertTime;
 
-	@Column(name = "UPDATE_TIME")
+	@Column(name = "UPDATE_TIME", nullable = false)
+	@UpdateTimestamp
 	protected Calendar updateTime;
-	
-	/*@Basic
-	@Column(name = "ICMC_ID" )
-	protected BigInteger icmcId;*/
-	
+
+	/*
+	 * @Basic
+	 * 
+	 * @Column(name = "ICMC_ID" ) protected BigInteger icmcId;
+	 */
+
 }

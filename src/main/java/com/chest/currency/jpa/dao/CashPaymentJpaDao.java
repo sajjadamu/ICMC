@@ -97,6 +97,8 @@ public interface CashPaymentJpaDao {
 
 	public boolean insertInSASAllocation(List<SASAllocation> eligibleSASRequestList);
 
+	public Boolean updateBranchReceiptForPayment(BigInteger icmcId,String binNum);
+
 	public void updateSasAllocationForCancelEditBranchPayment(BigInteger icmcId, long id);
 
 	public List<SoiledRemittance> soiledRecord(BigInteger icmcId, Calendar sDate, Calendar eDate);

@@ -1,10 +1,3 @@
-/*******************************************************************************
- * /* Copyright (C) Indicsoft Technologies Pvt Ltd
- * * All Rights Reserved.
- *******************************************************************************/
-/**
- * 
- */
 package com.chest.currency.jpa.dao;
 
 import java.math.BigDecimal;
@@ -49,10 +42,6 @@ import com.chest.currency.enums.CashSource;
 import com.chest.currency.enums.CurrencyType;
 import com.mysema.query.Tuple;
 
-/**
- * @author root
- *
- */
 public interface ProcessingRoomJpaDao {
 
 	public List<Indent> viewIndentRequest(BigInteger icmcId);
@@ -70,9 +59,8 @@ public interface ProcessingRoomJpaDao {
 	public boolean insertIndentRequest(List<Indent> eligibleIndentRequestList);
 
 	public Indent getIndentById(long id);
-	
-	//code for the searching data on the basis of date
-	
+
+	// code for the searching data on the basis of date
 
 	List<DiscrepancyAllocation> getDiscrepancyByDate(BigInteger icmcId, java.util.Date sDate, java.util.Date tDate,
 			String normalOrSuspense);
@@ -86,7 +74,8 @@ public interface ProcessingRoomJpaDao {
 	// public List<Indent> getIndentRequestForMachineAllocation(BigInteger
 	// icmcId, CashSource cashSource);
 
-	public List<Indent> getAggregatedIndentRequestForMachineAllocation(BigInteger icmcId, CashSource cashSource,Calendar sDate, Calendar eDate);
+	public List<Indent> getAggregatedIndentRequestForMachineAllocation(BigInteger icmcId, CashSource cashSource,
+			Calendar sDate, Calendar eDate);
 
 	public Indent getIndentDataById(long id, BigInteger icmcId);
 
@@ -174,8 +163,6 @@ public interface ProcessingRoomJpaDao {
 
 	public boolean updateIndent(Indent indent);
 
-	public boolean updateDSB(DSB dsb);
-
 	public Indent viewUpdateIndentRequest(DSB dsbdb, BigInteger icmcId);
 
 	public List<DiscrepancyAllocation> getDiscrepancy(BigInteger icmcId, String normalOrSuspense);
@@ -188,22 +175,22 @@ public interface ProcessingRoomJpaDao {
 
 	public List<Machine> getMachineNumber(BigInteger icmcId);
 
-	public List<Tuple> getKeySetDetail(String custodian,BigInteger icmcId);
+	public List<Tuple> getKeySetDetail(String custodian, BigInteger icmcId);
 
 	public List<BranchReceipt> getBinNumListForIndentFromBranchReceipt(Integer denomination, BigDecimal bundle,
 			BigInteger icmcId, CashSource cashSource, BinCategoryType binCategoryType);
-	
+
 	public List<BranchReceipt> getRetunBinListForIndentFromBranchReceipt(Integer denomination, BigDecimal bundle,
 			BigInteger icmcId, CashSource cashSource, BinCategoryType binCategoryType);
-	
+
 	public List<BranchReceipt> getBranchUploadBinListForIndentFromBranchReceipt(Integer denomination, BigDecimal bundle,
 			BigInteger icmcId, CashSource cashSource, BinCategoryType binCategoryType);
-	
+
 	public List<BranchReceipt> getInsertBinListForIndentFromBranchReceipt(Integer denomination, BigDecimal bundle,
 			BigInteger icmcId, CashSource cashSource, BinCategoryType binCategoryType);
-	
+
 	public boolean updateBranchReceipt(BranchReceipt br);
-	
+
 	public boolean updateBranchReceiptForSas(BranchReceipt br);
 
 	public boolean saveCRAPaymentProcessRecord(ProcessBundleForCRAPayment processBundleForCRAPayment);
@@ -260,7 +247,8 @@ public interface ProcessingRoomJpaDao {
 
 	public List<BinTransaction> getBinTxnList(Process process, User user);
 
-	public List<MachineAllocation> getAggregatedBundleToBeReturnedToVault(BigInteger icmcId, CashSource cashSource,Calendar sDate,Calendar eDate);
+	public List<MachineAllocation> getAggregatedBundleToBeReturnedToVault(BigInteger icmcId, CashSource cashSource,
+			Calendar sDate, Calendar eDate);
 
 	public String getUserName(String userId);
 
@@ -348,37 +336,49 @@ public interface ProcessingRoomJpaDao {
 	Indent viewUpdateIndentOtherBankRequest(BankReceipt otherBankReceiptdb, BigInteger icmcId);
 
 	public List<MachineAllocation> getBundleByCashSource(BigInteger icmcId, String isMachineOrManual,
-			Integer denomination, CashSource cashSource,Calendar sDate,Calendar eDate);
+			Integer denomination, CashSource cashSource, Calendar sDate, Calendar eDate);
 
 	boolean deleteDiscrepancywithooutallocation(long id, BigInteger icmcId);
-	
+
 	public boolean insertCosutodianName(CustodianKeySet custodianKeySet);
-	
+
 	public List<CustodianKeySet> getAssignVaultCustodian(BigInteger icmcId);
-	
-	public User isValidUser(String username,BigInteger icmcId);
-	
-	public Boolean InsertByDAteSuspeseOpeningBalance(long id, BigInteger icmcId, BigDecimal openingBalanceOfDenomination_10,
-			BigDecimal openingBalanceOfDenomination_20, BigDecimal openingBalanceOfDenomination_50,
-			BigDecimal openingBalanceOfDenomination_100, BigDecimal openingBalanceOfDenomination_200,
-			BigDecimal openingBalanceOfDenomination_500, BigDecimal openingBalanceOfDenomination_2000);
 
-	public boolean updateSuspenseBalanceFromLink(long id,BigDecimal replenishment_2000,BigDecimal replenishment_500,BigDecimal replenishment_200,
-				BigDecimal replenishment_100,BigDecimal replenishment_50,BigDecimal replenishment_20,BigDecimal replenishment_10,BigDecimal depletion_2000,BigDecimal depletion_500,
-				BigDecimal depletion_200,BigDecimal depletion_100,BigDecimal depletion_50,BigDecimal depletion_20,BigDecimal depletion_10,String srNumber);
+	public User isValidUser(String username, BigInteger icmcId);
 
+	public Boolean InsertByDAteSuspeseOpeningBalance(long id, BigInteger icmcId,
+			BigDecimal openingBalanceOfDenomination_10, BigDecimal openingBalanceOfDenomination_20,
+			BigDecimal openingBalanceOfDenomination_50, BigDecimal openingBalanceOfDenomination_100,
+			BigDecimal openingBalanceOfDenomination_200, BigDecimal openingBalanceOfDenomination_500,
+			BigDecimal openingBalanceOfDenomination_2000);
 
+	public boolean updateSuspenseBalanceFromLink(long id, BigDecimal replenishment_2000, BigDecimal replenishment_500,
+			BigDecimal replenishment_200, BigDecimal replenishment_100, BigDecimal replenishment_50,
+			BigDecimal replenishment_20, BigDecimal replenishment_10, BigDecimal depletion_2000,
+			BigDecimal depletion_500, BigDecimal depletion_200, BigDecimal depletion_100, BigDecimal depletion_50,
+			BigDecimal depletion_20, BigDecimal depletion_10, String srNumber);
 
-
-	public boolean updateSuspenseBalance(long id,BigDecimal deposit_2000,BigDecimal deposit_500,BigDecimal deposit_200,BigDecimal deposit_100
-				,BigDecimal deposit_50,BigDecimal deposit_20,BigDecimal deposit_10,BigDecimal withdrawal_2000,BigDecimal withdrawal_500,
-				BigDecimal withdrawal_200,BigDecimal withdrawal_100,BigDecimal withdrawal_50,BigDecimal withdrawal_20,BigDecimal withdrawal_10);//code by shahabuddin
-
-
-
+	public boolean updateSuspenseBalance(long id, BigDecimal deposit_2000, BigDecimal deposit_500,
+			BigDecimal deposit_200, BigDecimal deposit_100, BigDecimal deposit_50, BigDecimal deposit_20,
+			BigDecimal deposit_10, BigDecimal withdrawal_2000, BigDecimal withdrawal_500, BigDecimal withdrawal_200,
+			BigDecimal withdrawal_100, BigDecimal withdrawal_50, BigDecimal withdrawal_20, BigDecimal withdrawal_10);// code
+																														// by
+																														// shahabuddin
 
 	public List<SuspenseOpeningBalance> openingBalanceForSuspenseRegisterPreviousDateByDesc(BigInteger icmcId);
+
+	public List<Mutilated> getMutilatedValueDetails(BigInteger icmcId, Calendar sDate, Calendar eDate);
+
+	List<DSB> getDSB(Indent indent, Calendar sDate, Calendar eDate);
+
+	List<BankReceipt> getBankReceipt(Indent indent, Calendar sDate, Calendar eDate);
 	
-	public List<Mutilated> getMutilatedValueDetails(BigInteger icmcId,Calendar sDate,Calendar eDate);
+	List<DiversionIRV> getDiversionIRV(Indent indent, Calendar sDate, Calendar eDate);
+
+	boolean updateDSB(DSB dsb);
+
+	boolean updateBankReceipt(BankReceipt bankReceipt);
+	
+	Boolean updateDiversionIRV(DiversionIRV diversionIRV);
 
 }

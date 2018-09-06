@@ -27,6 +27,9 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
 import com.chest.currency.enums.BinCategoryType;
 import com.chest.currency.enums.CurrencyType;
 import com.chest.currency.enums.OtherStatus;
@@ -46,9 +49,8 @@ import lombok.ToString;
 @EqualsAndHashCode(of = { "id" })
 @ToString
 public class DiversionIRV {
-	
+
 	@Id
-	//@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "ID")
 	@GeneratedValue(generator = "DIVERSION_IRV_SEQ")
 	@SequenceGenerator(name = "DIVERSION_IRV_SEQ", sequenceName = "DIVERSION_IRV_SEQ", allocationSize = 100)
@@ -73,7 +75,7 @@ public class DiversionIRV {
 	@Basic
 	@Column(name = "FILEPATH")
 	protected String filepath;
-	
+
 	@Basic
 	@Column(name = "BANK_NAME")
 	protected String bankName;
@@ -89,11 +91,11 @@ public class DiversionIRV {
 	@Basic
 	@Column(name = "LOCATION")
 	protected String location;
-	
+
 	@Basic
 	@Column(name = "ORDER_DATE")
 	protected Date orderDate;
-	
+
 	@Basic
 	@Column(name = "EXPIRY_DATE")
 	protected Date expiryDate;
@@ -111,35 +113,41 @@ public class DiversionIRV {
 	protected String updateBy;
 
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "INSERT_TIME")
+	@Column(name = "INSERT_TIME", nullable = false, updatable = false)
+	@CreationTimestamp
 	protected Calendar insertTime;
 
-	@Column(name = "UPDATE_TIME")
+	@Column(name = "UPDATE_TIME", nullable = false)
+	@UpdateTimestamp
 	protected Calendar updateTime;
-	
+
 	@Basic
 	@Column(name = "CATEGORY")
 	protected String category;
-	
+
 	@Enumerated(EnumType.STRING)
 	@Column(name = "CURRENCY_TYPE")
 	protected CurrencyType currencyType;
-	
+
 	@Enumerated(EnumType.STRING)
 	@Column(name = "BIN_CATEGORY_TYPE")
 	protected BinCategoryType binCategoryType;
-	
+
 	@Enumerated(EnumType.STRING)
 	@Column(name = "STATUS")
 	protected OtherStatus status;
-	
+
 	@Basic
-	@Column(name="PROCESSED_OR_UNPROCESSED")
+	@Column(name = "PROCESSED_OR_UNPROCESSED")
 	protected String processedOrUnprocessed;
-	
+
+	@Basic
+	@Column(name = "IS_INDENT", nullable = false, columnDefinition = "TINYINT(1)")
+	protected Boolean isIndent = false;
+
 	@Transient
 	private boolean isFromProcessingRoom;
-	
+
 	@Transient
 	protected BigDecimal denom1Pieces;
 	@Transient
@@ -166,15 +174,16 @@ public class DiversionIRV {
 	protected BigDecimal totalInPieces;
 	@Transient
 	protected BigDecimal totalValueOfBankNotes;
-	
+
 	/**
 	 * Default Constructor
 	 */
-	public DiversionIRV(){
-		
+	public DiversionIRV() {
+
 	}
-	public DiversionIRV(boolean initialize){
-		if(initialize){
+
+	public DiversionIRV(boolean initialize) {
+		if (initialize) {
 			this.denom1Pieces = BigDecimal.ZERO;
 			this.denom2Pieces = BigDecimal.ZERO;
 			this.denom5Pieces = BigDecimal.ZERO;
@@ -190,5 +199,5 @@ public class DiversionIRV {
 			this.totalValueOfBankNotes = BigDecimal.ZERO;
 		}
 	}
-	
+
 }

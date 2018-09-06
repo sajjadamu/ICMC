@@ -18,6 +18,8 @@ import javax.persistence.InheritanceType;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import com.chest.currency.enums.DateTimePattern;
@@ -35,7 +37,6 @@ import lombok.ToString;
 public class ChestMaster {
 
 	@Id
-	//@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "ID")
 	@GeneratedValue(generator = "CHEST_MASTER_SEQ")
 	@SequenceGenerator(name = "CHEST_MASTER_SEQ", sequenceName = "CHEST_MASTER_SEQ", allocationSize = 100)
@@ -50,11 +51,13 @@ public class ChestMaster {
 	protected BigInteger icmcId;
 
 	@DateTimeFormat(pattern = DateTimePattern.yyyy_MM_dd_HH_mm_ss_SSS)
-	@Column(name = "INSERT_TIME")
+	@Column(name = "INSERT_TIME", nullable = false, updatable = false)
+	@CreationTimestamp
 	protected Calendar insertTime;
 	
 	@DateTimeFormat(pattern = DateTimePattern.yyyy_MM_dd_HH_mm_ss_SSS)
-	@Column(name = "UPDATE_TIME")
+	@Column(name = "UPDATE_TIME", nullable = false)
+	@UpdateTimestamp
 	protected Calendar updateTime;
 	
 	@Basic

@@ -862,6 +862,7 @@ public class CashReceiptServiceImpl implements CashReceiptService {
 			}
 			LOG.info("bundleToBeKeptInICMC FOR  BIN OR VAULT " + bundleToBeKeptInICMC);
 			LOG.info("dsb.getBundle() FOR  BIN OR VAULT " + dsb.getBundle());
+			addDSBForSave(dsbList);
 			if (bundleToBeKeptInICMC.compareTo(dsb.getBundle()) == 0) {
 				addTransactions(user, binTxs);
 			} else {
@@ -881,12 +882,14 @@ public class CashReceiptServiceImpl implements CashReceiptService {
 			binTxs = UtilityJpa.getBoxByCurrencyProcessType(binList, boxMasterList, dsb.getBundle(), true,
 					CurrencyType.UNPROCESS, CashSource.DSB);
 			dsbList = UtilityJpa.getDSB(dsb, binTxs, user, capacityList, binMasterList, boxMasterList);
+
 			LOG.info("dsbLi FOR BOX " + dsbList);
 			for (DSB dsbTemp : dsbList) {
 				bundleToBeKeptInICMC = bundleToBeKeptInICMC.add(dsbTemp.getBundle());
 			}
 			LOG.info("bundleToBeKeptInICMC FOR BOX " + bundleToBeKeptInICMC);
 			LOG.info("dsb.getBundle() FOR BOX " + dsb.getBundle());
+			addDSBForSave(dsbList);
 			if (bundleToBeKeptInICMC.compareTo(dsb.getBundle()) == 0) {
 				addInTransactionsForBox(user, binTxs);
 			} else {
@@ -899,10 +902,12 @@ public class CashReceiptServiceImpl implements CashReceiptService {
 			LOG.info("dsb.getBinCategoryType() FOR PROCESSING " + dsb.getBinCategoryType());
 			dsb = UtilityJpa.getDSBForProcessing(dsb, user);
 			dsbList.add(dsb);
+			Long id = addDSB(dsbList);
+			dsb.setId(id);
 			Indent indent = UtilityJpa.getIndent(dsb, user);
 			this.insertInIndent(indent);
 		}
-		addDSB(dsbList);
+		/* addDSB(dsbList); */
 		// History Code
 		List<History> historyList = new ArrayList<History>();
 		History history = null;
@@ -1112,11 +1117,12 @@ public class CashReceiptServiceImpl implements CashReceiptService {
 		this.createDiversionIRV(dirvList);
 	}
 
-	private void addDSB(List<DSB> dsbList) {
+	private Long addDSB(List<DSB> dsbList) {
 		for (DSB br : dsbList) {
 			br.setFilepath(getDSBQRCode(br));
 		}
-		this.createDSB(dsbList);
+		Long id = this.createDSB(dsbList);
+		return id;
 	}
 
 	private void addICMCReceipt(List<BankReceipt> icmcReceiptList) {
@@ -1151,8 +1157,14 @@ public class CashReceiptServiceImpl implements CashReceiptService {
 	}
 
 	@Override
-	public boolean createDSB(List<DSB> dsb) {
-		boolean isSaved = cashReceiptJpaDao.createDSB(dsb);
+	public Long createDSB(List<DSB> dsb) {
+		Long isSaved = cashReceiptJpaDao.createDSB(dsb);
+		return isSaved;
+	}
+
+	@Override
+	public boolean saveDSB(List<DSB> dsb) {
+		boolean isSaved = cashReceiptJpaDao.saveDSB(dsb);
 		return isSaved;
 	}
 
@@ -1700,12 +1712,12 @@ public class CashReceiptServiceImpl implements CashReceiptService {
 		}
 		isAllSuccess = this.updateInBinTxn(binTxn);
 		if (isAllSuccess) {
-			dsb.setBundle(dsbdb.getBundle());
-			dsb.setStatus(OtherStatus.CANCELLED);
-			dsb.setFilepath(dsbdb.getFilepath());
-			cashReceiptJpaDao.updateDSB(dsb);
+			dsbdb.setStatus(OtherStatus.CANCELLED);
+			dsbdb.setUpdateTime(now);
+			dsbdb.setUpdateBy(user.getId());
+			cashReceiptJpaDao.updateDSB(dsbdb);
 		}
-
+		dsb.setFilepath(dsbdb.getFilepath());
 		dsb.setDenomination(denomFromUI);
 		dsb.setBundle(receiveBundleFromUI);
 		dsb.setProcessingOrVault(dsbdb.getProcessingOrVault());
@@ -1716,6 +1728,7 @@ public class CashReceiptServiceImpl implements CashReceiptService {
 
 		dsb.setInsertTime(now);
 		dsb.setUpdateTime(now);
+
 		dsbReceiptList = this.processDSB(dsb, user);
 
 		/*
@@ -1749,7 +1762,7 @@ public class CashReceiptServiceImpl implements CashReceiptService {
 		dsb.setProcessingOrVault(dsbdb.getProcessingOrVault());
 		dsb.setReceiptSequence(dsbdb.getReceiptSequence());
 		dsb.setCurrencyType(dsbdb.getCurrencyType());
-		dsb.setBinCategoryType(dsbdb.getBinCategoryType());
+		dsb.setBinCategoryType(BinCategoryType.PROCESSING);
 		dsb.setCashSource(CashSource.DSB);
 
 		dsb.setInsertTime(now);
@@ -1928,4 +1941,10 @@ public class CashReceiptServiceImpl implements CashReceiptService {
 		return irvReceiptList;
 	}
 
+	private void addDSBForSave(List<DSB> dsbList) {
+		for (DSB br : dsbList) {
+			br.setFilepath(getDSBQRCode(br));
+		}
+		this.saveDSB(dsbList);
+	}
 }

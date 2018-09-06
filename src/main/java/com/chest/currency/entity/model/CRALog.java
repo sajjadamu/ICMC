@@ -43,7 +43,6 @@ import lombok.ToString;
 public class CRALog {
 	
 	@Id
-	//@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "ID")
 	@GeneratedValue(generator = "CRA_SEQ")
 	@SequenceGenerator(name = "CRA_SEQ", sequenceName = "CRA_SEQ", allocationSize = 100)

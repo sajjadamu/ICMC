@@ -6,7 +6,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
-<%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c"%>
 <html lang="en">
 
 <head>
@@ -653,7 +653,7 @@ $.ajax({
 </head>
 
 <body oncontextmenu="return false;">
-<div class="modal fade" id="myModal" role="dialog">
+	<div class="modal fade" id="myModal" role="dialog">
 		<div class="modal-dialog modal-sm">
 			<div class="modal-content">
 				<div class="modal-header">
@@ -721,23 +721,21 @@ $.ajax({
 										<label>Category</label><br>
 										<form:radiobutton path="processedOrUnprocessed"
 											id="processedOrUnprocessed" name="processedOrUnprocessed"
-											checked="true" value="PROCESSED" onclick="shrinkWrapBundle()"/>
+											checked="true" value="PROCESSED" onclick="shrinkWrapBundle()" />
 										<span class="deno-value"><b>PROCESSED</b></span>
 										<form:radiobutton path="processedOrUnprocessed"
 											id="processedOrUnprocessed" name="processedOrUnprocessed"
-											value="UNPROCESS" onclick="shrinkWrapBundle()"/>
+											value="UNPROCESS" onclick="shrinkWrapBundle()" />
 										<span class="deno-value"><b>UNPROCESS</b></span>
 
 									</div>
-									 <div class="col-lg-12 form-group" id="binORbox" hidden="true">
+									<div class="col-lg-12 form-group" id="binORbox" hidden="true">
 										<label>Bin Category</label><br>
-										<form:radiobutton path="binCategoryType"
-											id="binCategoryType" name="binCategoryType"
-											checked="true" value="BIN" />
+										<form:radiobutton path="binCategoryType" id="binCategoryType"
+											name="binCategoryType" checked="true" value="BIN" />
 										<span class="deno-value"><b>BIN</b></span>
-										<form:radiobutton path="binCategoryType"
-											id="binCategoryType" name="binCategoryType"
-											value="BOX" />
+										<form:radiobutton path="binCategoryType" id="binCategoryType"
+											name="binCategoryType" value="BOX" />
 										<span class="deno-value"><b>BOX</b></span>
 
 									</div>
@@ -747,7 +745,8 @@ $.ajax({
 											id="member" name="member" value="" class="form-control"><br />
 										<label id="err6" style="display: none; color: red">Please
 											Enter Valid Denomination</label> <label id="err7"
-											style="display: none; color: red">Please Enter Valid Bundle</label>
+											style="display: none; color: red">Please Enter Valid
+											Bundle</label>
 										<div id="container">
 											<table id="table1">
 												<tr>
@@ -771,41 +770,47 @@ $.ajax({
 								<div class="frmsubdel">
 									<button type="submit" class="btn btn-default" value="Details"
 										style="width: 99px;" onclick="refresh()">Refresh</button>
-									
+
 									<!-- /.row (nested) -->
 								</div>
-                         <div class="row" id="shrinkWrapTable" hidden="true">
-								<div class="col-lg-12 form-group">
-								<table class="table"><thead>
-								<th class="col-lg-2">Denomination </th>
-								<th class="col-lg-2">Category</th>
-								<th class="col-lg-2">Total Bundle</th>
-								<th class="col-lg-2">Pending Bundle</th>
-								<th class="col-lg-2">View Shrink bundle</th>
-								</thead>
-								<% List<Tuple> shrinkWrapBundle = (List<Tuple>) request.getAttribute("branchReceipts");
-					        	for(Tuple tuple:shrinkWrapBundle){ %>
-					        		<tr>
-									<td><%=tuple.get(0, Integer.class)%></td>
-									<td><%=tuple.get(4, BinCategoryType.class)%></td>
-									<td><%=tuple.get(2, BigDecimal.class)%></td>
-									<td><%=tuple.get(3, BigDecimal.class)%></td>
-									 <td><sec:authorize access="hasRole('VIEW_INDENT')">
-											 		<a href="#" onclick="ajaxViewShrinkBundle(<%=tuple.get(0, Integer.class)%>,'<%=tuple.get(4, BinCategoryType.class)%>')">click</a>
-											 	 </sec:authorize></td>
-									</tr>
-					        	<% } %>
-								<%-- /* <c:forEach var="row" items="${branchReceipts}">
+								<div class="row" id="shrinkWrapTable" hidden="true">
+									<div class="col-lg-12 form-group">
+										<table class="table">
+											<thead>
+												<th class="col-lg-2">Denomination</th>
+												<th class="col-lg-2">Category</th>
+												<th class="col-lg-2">Total Bundle</th>
+												<th class="col-lg-2">Pending Bundle</th>
+												<th class="col-lg-2">View Shrink bundle</th>
+											</thead>
+											<%
+												List<Tuple> shrinkWrapBundle = (List<Tuple>) request.getAttribute("branchReceipts");
+												for (Tuple tuple : shrinkWrapBundle) {
+											%>
+											<tr>
+												<td><%=tuple.get(0, Integer.class)%></td>
+												<td><%=tuple.get(4, BinCategoryType.class)%></td>
+												<td><%=tuple.get(2, BigDecimal.class)%></td>
+												<td><%=tuple.get(3, BigDecimal.class)%></td>
+												<td><sec:authorize access="hasRole('VIEW_INDENT')">
+														<a href="#"
+															onclick="ajaxViewShrinkBundle(<%=tuple.get(0, Integer.class)%>,'<%=tuple.get(4, BinCategoryType.class)%>')">click</a>
+													</sec:authorize></td>
+											</tr>
+											<%
+												}
+											%>
+											<%-- /* <c:forEach var="row" items="${branchReceipts}">
 								<tr>
                                    <td>${row.denomination}</td>
                                     <td>${row.bundle}</td>
 									</tr>
 								</c:forEach> */
 									%> --%>
-								</table>
-</div>
-							</div>
-								
+										</table>
+									</div>
+								</div>
+
 								<!-- /.panel-body -->
 							</div>
 							<!-- /.panel -->

@@ -1,10 +1,4 @@
-/*******************************************************************************
- * /* Copyright (C) Indicsoft Technologies Pvt Ltd
- * * All Rights Reserved.
- *******************************************************************************/
-/**
- * 
- */
+
 package com.chest.currency.jpa.dao;
 
 import java.math.BigDecimal;
@@ -49,14 +43,17 @@ import com.chest.currency.entity.model.Process;
 import com.chest.currency.entity.model.ProcessBundleForCRAPayment;
 import com.chest.currency.entity.model.QAssignVaultCustodian;
 import com.chest.currency.entity.model.QAuditorIndent;
+import com.chest.currency.entity.model.QBankReceipt;
 import com.chest.currency.entity.model.QBinMaster;
 import com.chest.currency.entity.model.QBinTransaction;
 import com.chest.currency.entity.model.QBranchReceipt;
 import com.chest.currency.entity.model.QCRAAllocation;
 import com.chest.currency.entity.model.QCustodianKeySet;
+import com.chest.currency.entity.model.QDSB;
 import com.chest.currency.entity.model.QDefineKeySet;
 import com.chest.currency.entity.model.QDiscrepancy;
 import com.chest.currency.entity.model.QDiscrepancyAllocation;
+import com.chest.currency.entity.model.QDiversionIRV;
 import com.chest.currency.entity.model.QForwardBundleForCRAPayment;
 import com.chest.currency.entity.model.QFreshCurrency;
 import com.chest.currency.entity.model.QFreshFromRBI;
@@ -90,7 +87,6 @@ import com.mysema.query.Tuple;
 import com.mysema.query.jpa.impl.JPADeleteClause;
 import com.mysema.query.jpa.impl.JPAQuery;
 import com.mysema.query.jpa.impl.JPAUpdateClause;
-
 
 @Repository
 public class ProcessingRoomJpaDaoImpl implements ProcessingRoomJpaDao {
@@ -232,24 +228,20 @@ public class ProcessingRoomJpaDaoImpl implements ProcessingRoomJpaDao {
 
 	@Override
 	public boolean updateIndentRequest(Indent indent) {
-		// em.merge(indent);
 		QIndent qIndent = QIndent.indent;
-		Long count = new JPAUpdateClause(em, qIndent).where(QIndent.indent.icmcId.eq(indent.getIcmcId())
-				.and(QIndent.indent.bin.eq(indent.getBin().trim())).and(QIndent.indent.description.isNull())
-		/* .and(QIndent.indent.status.eq(OtherStatus.REQUESTED)) */
-		).set(qIndent.status, OtherStatus.ACCEPTED).set(qIndent.updateTime, indent.getUpdateTime()).execute();
+		Long count = new JPAUpdateClause(em, qIndent)
+				.where(QIndent.indent.icmcId.eq(indent.getIcmcId()).and(QIndent.indent.bin.eq(indent.getBin().trim()))
+						.and(QIndent.indent.description.isNull()))
+				.set(qIndent.status, OtherStatus.ACCEPTED).set(qIndent.updateTime, indent.getUpdateTime()).execute();
 		return count > 0 ? true : false;
 	}
 
 	@Override
 	public List<Indent> getAggregatedIndentRequestForMachineAllocation(BigInteger icmcId, CashSource cashSource,
 			Calendar sDate, Calendar eDate) {
-		// Calendar now = Calendar.getInstance();
 		JPAQuery jpaQuery = getFromQueryForIndent();
 		jpaQuery.where(QIndent.indent.icmcId.eq(icmcId).and(QIndent.indent.status.eq(OtherStatus.ACCEPTED))
-				.and(QIndent.indent.bundle.gt(0).and(QIndent.indent.cashSource.eq(cashSource)))
-		// .and(QIndent.indent.insertTime.between(sDate, eDate))
-		);
+				.and(QIndent.indent.bundle.gt(0).and(QIndent.indent.cashSource.eq(cashSource))));
 		jpaQuery.groupBy(QIndent.indent.denomination, QIndent.indent.cashSource);
 		jpaQuery.orderBy(QIndent.indent.denomination.desc());
 		List<Tuple> tupleList = jpaQuery.list(QIndent.indent.denomination, QIndent.indent.cashSource,
@@ -725,12 +717,6 @@ public class ProcessingRoomJpaDaoImpl implements ProcessingRoomJpaDao {
 	}
 
 	@Override
-	public boolean updateDSB(DSB dsb) {
-		em.merge(dsb);
-		return true;
-	}
-
-	@Override
 	public boolean updateIndentStatusForCancel(Indent indent) {
 		QIndent qIndent = QIndent.indent;
 		Long count = new JPAUpdateClause(em, qIndent).where((QIndent.indent.id.eq(indent.getId())))
@@ -832,8 +818,9 @@ public class ProcessingRoomJpaDaoImpl implements ProcessingRoomJpaDao {
 		JPAQuery jpaQuery = getFromQueryForDefineKeySet();
 		jpaQuery.where(
 				QDefineKeySet.defineKeySet.custodian.eq(custodian).and(QDefineKeySet.defineKeySet.icmcId.eq(icmcId)));
-		List<Tuple> keySetList = jpaQuery.list(QDefineKeySet.defineKeySet.custodian,QDefineKeySet.defineKeySet.keyNumber,
-				QDefineKeySet.defineKeySet.locationOfLock,QDefineKeySet.defineKeySet.id);
+		List<Tuple> keySetList = jpaQuery.list(QDefineKeySet.defineKeySet.custodian,
+				QDefineKeySet.defineKeySet.keyNumber, QDefineKeySet.defineKeySet.locationOfLock,
+				QDefineKeySet.defineKeySet.id);
 		return keySetList;
 	}
 
@@ -857,6 +844,7 @@ public class ProcessingRoomJpaDaoImpl implements ProcessingRoomJpaDao {
 		List<BranchReceipt> branchReceiptList = jpaQuery.list(QBranchReceipt.branchReceipt);
 		return branchReceiptList;
 	}
+
 	@Override
 	public List<BranchReceipt> getRetunBinListForIndentFromBranchReceipt(Integer denomination, BigDecimal bundle,
 			BigInteger icmcId, CashSource cashSource, BinCategoryType binCategoryType) {
@@ -868,14 +856,13 @@ public class ProcessingRoomJpaDaoImpl implements ProcessingRoomJpaDao {
 				.and(QBranchReceipt.branchReceipt.currencyType.eq(CurrencyType.UNPROCESS))
 				.and(QBranchReceipt.branchReceipt.binCategoryType.eq(binCategoryType))
 				.and(QBranchReceipt.branchReceipt.status.eq(OtherStatus.RECEIVED))
-				.and(QBranchReceipt.branchReceipt.filepath.isNotNull())
-				.and(QBranchReceipt.branchReceipt.solId.isNull())
-				.and(QBranchReceipt.branchReceipt.branch.isNull())
-				.and(QBranchReceipt.branchReceipt.srNumber.isNull()));
+				.and(QBranchReceipt.branchReceipt.filepath.isNotNull()).and(QBranchReceipt.branchReceipt.solId.isNull())
+				.and(QBranchReceipt.branchReceipt.branch.isNull()).and(QBranchReceipt.branchReceipt.srNumber.isNull()));
 		jpaQuery.orderBy(QBranchReceipt.branchReceipt.insertTime.desc());
 		List<BranchReceipt> branchReceiptList = jpaQuery.list(QBranchReceipt.branchReceipt);
 		return branchReceiptList;
 	}
+
 	@Override
 	public List<BranchReceipt> getBranchUploadBinListForIndentFromBranchReceipt(Integer denomination, BigDecimal bundle,
 			BigInteger icmcId, CashSource cashSource, BinCategoryType binCategoryType) {
@@ -887,11 +874,11 @@ public class ProcessingRoomJpaDaoImpl implements ProcessingRoomJpaDao {
 				.and(QBranchReceipt.branchReceipt.currencyType.eq(CurrencyType.UNPROCESS))
 				.and(QBranchReceipt.branchReceipt.binCategoryType.eq(binCategoryType))
 				.and(QBranchReceipt.branchReceipt.status.eq(OtherStatus.RECEIVED))
-				.and(QBranchReceipt.branchReceipt.solId.isNull())
-				.and(QBranchReceipt.branchReceipt.filepath.isNull()));
+				.and(QBranchReceipt.branchReceipt.solId.isNull()).and(QBranchReceipt.branchReceipt.filepath.isNull()));
 		List<BranchReceipt> branchReceiptList = jpaQuery.list(QBranchReceipt.branchReceipt);
 		return branchReceiptList;
 	}
+
 	@Override
 	public List<BranchReceipt> getInsertBinListForIndentFromBranchReceipt(Integer denomination, BigDecimal bundle,
 			BigInteger icmcId, CashSource cashSource, BinCategoryType binCategoryType) {
@@ -908,7 +895,6 @@ public class ProcessingRoomJpaDaoImpl implements ProcessingRoomJpaDao {
 		List<BranchReceipt> branchReceiptList = jpaQuery.list(QBranchReceipt.branchReceipt);
 		return branchReceiptList;
 	}
-	
 
 	@Override
 	public boolean updateBranchReceipt(BranchReceipt br) {
@@ -1865,4 +1851,59 @@ public class ProcessingRoomJpaDaoImpl implements ProcessingRoomJpaDao {
 
 	}
 
+	@Override
+	public List<DSB> getDSB(Indent indent, Calendar sDate, Calendar eDate) {
+		JPAQuery jpaQuery = new JPAQuery(em);
+		jpaQuery.from(QDSB.dSB);
+		jpaQuery.where(QDSB.dSB.icmcId.eq(indent.getIcmcId()).and(QDSB.dSB.bin.eq(indent.getBin()))
+				.and(QDSB.dSB.insertTime.between(sDate, eDate)).and(QDSB.dSB.isIndent.eq(false))
+				.and(QDSB.dSB.status.eq(OtherStatus.RECEIVED)).and(QDSB.dSB.denomination.eq(indent.getDenomination())));
+
+		return jpaQuery.list(QDSB.dSB);
+	}
+
+	@Override
+	public List<BankReceipt> getBankReceipt(Indent indent, Calendar sDate, Calendar eDate) {
+		JPAQuery jpaQuery = new JPAQuery(em);
+		jpaQuery.from(QBankReceipt.bankReceipt);
+		jpaQuery.where(QBankReceipt.bankReceipt.icmcId.eq(indent.getIcmcId())
+				.and(QBankReceipt.bankReceipt.binNumber.eq(indent.getBin()))
+				.and(QBankReceipt.bankReceipt.insertTime.between(sDate, eDate))
+				.and(QBankReceipt.bankReceipt.isIndent.eq(false)).and(QBankReceipt.bankReceipt.status.eq(0))
+				.and(QBankReceipt.bankReceipt.denomination.eq(indent.getDenomination())));
+
+		return jpaQuery.list(QBankReceipt.bankReceipt);
+	}
+
+	@Override
+	public List<DiversionIRV> getDiversionIRV(Indent indent, Calendar sDate, Calendar eDate) {
+		JPAQuery jpaQuery = new JPAQuery(em);
+		jpaQuery.from(QDiversionIRV.diversionIRV);
+		jpaQuery.where(QDiversionIRV.diversionIRV.icmcId.eq(indent.getIcmcId())
+				.and(QDiversionIRV.diversionIRV.binNumber.eq(indent.getBin()))
+				.and(QDiversionIRV.diversionIRV.insertTime.between(sDate, eDate))
+				.and(QDiversionIRV.diversionIRV.isIndent.eq(false))
+				.and(QDiversionIRV.diversionIRV.status.eq(OtherStatus.RECEIVED))
+				.and(QDiversionIRV.diversionIRV.denomination.eq(indent.getDenomination())));
+
+		return jpaQuery.list(QDiversionIRV.diversionIRV);
+	}
+
+	@Override
+	public boolean updateDSB(DSB dsb) {
+		em.merge(dsb);
+		return true;
+	}
+
+	@Override
+	public boolean updateBankReceipt(BankReceipt bankReceipt) {
+		em.merge(bankReceipt);
+		return true;
+	}
+
+	@Override
+	public Boolean updateDiversionIRV(DiversionIRV diversionIRV) {
+		em.merge(diversionIRV);
+		return true;
+	}
 }

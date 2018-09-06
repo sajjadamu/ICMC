@@ -40,9 +40,8 @@ import lombok.ToString;
 @EqualsAndHashCode(of = { "id" })
 @ToString
 public class DSB {
-	
+
 	@Id
-	//@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "ID")
 	@GeneratedValue(generator = "DSB_SEQ")
 	@SequenceGenerator(name = "DSB_SEQ", sequenceName = "DSB_SEQ", allocationSize = 100)
@@ -59,7 +58,7 @@ public class DSB {
 	@Basic
 	@Column(name = "ACCOUNT_NUMBER")
 	protected String accountNumber;
-	
+
 	@Basic
 	@Column(name = "TOTAL")
 	protected BigDecimal total;
@@ -93,43 +92,48 @@ public class DSB {
 	protected String updateBy;
 
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "INSERT_TIME")
+	@Column(name = "INSERT_TIME", updatable = false, nullable = false)
+	@org.hibernate.annotations.UpdateTimestamp
 	protected Calendar insertTime;
 
-	@Column(name = "UPDATE_TIME")
+	@Column(name = "UPDATE_TIME", updatable = false)
+	@org.hibernate.annotations.UpdateTimestamp
 	protected Calendar updateTime;
-	
+
 	@Enumerated(EnumType.STRING)
 	@Column(name = "CURRENCY_TYPE")
 	protected CurrencyType currencyType;
-	
+
 	@Enumerated(EnumType.STRING)
 	@Column(name = "BIN_CATEGORY_TYPE")
 	protected BinCategoryType binCategoryType;
-	
+
 	@Enumerated(EnumType.STRING)
 	@Column(name = "STATUS")
 	protected OtherStatus status;
-	
+
 	@Enumerated(EnumType.STRING)
 	@Column(name = "CASH_SOURCE")
 	protected CashSource cashSource;
-	
-	
+
 	@Basic
 	@Column(name = "RECEIPT_SEQUENCE")
 	protected Integer receiptSequence;
-	
+
 	@Temporal(TemporalType.DATE)
 	@Column(name = "RECEIPT_DATE")
 	protected Date receiptDate;
-	
+
+	@Basic
+	@Column(name = "IS_INDENT", nullable = false, columnDefinition = "TINYINT(1)")
+	protected Boolean isIndent = false;
+
 	@Transient
 	private boolean isFromProcessingRoom;
-	
+
 	@Transient
 	protected String linkBranchSolId;
-	
+
 	@Transient
 	protected BigDecimal denom1Pieces;
 	@Transient
@@ -158,15 +162,16 @@ public class DSB {
 	protected BigDecimal totalValueOfBankNotes;
 	@Transient
 	protected String receiptTime;
-	
+
 	/**
 	 * Default Constructor
 	 */
-	public DSB(){
-		
+	public DSB() {
+
 	}
-	public DSB(boolean initialize){
-		if(initialize){
+
+	public DSB(boolean initialize) {
+		if (initialize) {
 			this.denom1Pieces = BigDecimal.ZERO;
 			this.denom2Pieces = BigDecimal.ZERO;
 			this.denom5Pieces = BigDecimal.ZERO;
@@ -182,5 +187,5 @@ public class DSB {
 			this.totalValueOfBankNotes = BigDecimal.ZERO;
 		}
 	}
-	
+
 }

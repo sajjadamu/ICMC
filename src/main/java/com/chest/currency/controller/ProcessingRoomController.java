@@ -32,7 +32,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -141,9 +140,8 @@ public class ProcessingRoomController {
 		List<Indent> eligibleIndentRequestList = new ArrayList<>();
 		List<BinTransaction> binTransactionList = new ArrayList<>();
 		List<BranchReceipt> branchReceiptList = new ArrayList<>();
-		// List<BranchReceipt> filterBranchReceiptListByBtxn = new
-		// ArrayList<>();
-
+		LOG.info("indentRequest controller user " + user);
+		LOG.info("indentRequest controller indent " + indent);
 		synchronized (icmcService.getSynchronizedIcmc(user)) {
 			indent.setInsertBy(user.getId());
 			indent.setUpdateBy(user.getId());
@@ -154,8 +152,6 @@ public class ProcessingRoomController {
 			}
 			List<BinTransaction> txnList = processingRoomService.getBinNumListForIndent(indent.getDenomination(),
 					indent.getRequestBundle(), user.getIcmcId(), indent.getCashSource(), indent.getBinCategoryType());
-			LOG.info("indentRequest controller txnList");
-
 			BigDecimal bundleFromTxn = BigDecimal.ZERO;
 			for (BinTransaction binTx : txnList) {
 				bundleFromTxn = bundleFromTxn
@@ -163,6 +159,8 @@ public class ProcessingRoomController {
 			}
 
 			BigDecimal bundleForRequest = indent.getRequestBundle();
+			LOG.info("indentRequest controller bundleFromTxn " + bundleFromTxn);
+			LOG.info("indentRequest controller bundleForRequest " + bundleForRequest);
 			if (bundleFromTxn.compareTo(bundleForRequest) >= 0) {
 
 				binTransactionList.addAll(txnList);
@@ -172,16 +170,10 @@ public class ProcessingRoomController {
 							indent.getDenomination(), indent.getRequestBundle(), user.getIcmcId(),
 							indent.getCashSource(), indent.getBinCategoryType());
 
-					/*
-					 * for (BinTransaction bcheckBin : txnList) { for
-					 * (BranchReceipt br : branchReceiptList) { if
-					 * (bcheckBin.getBinNumber().equals(br.getBin())) {
-					 * filterBranchReceiptListByBtxn.add(br); } } }
-					 */
 					eligibleIndentRequestList = UtilityJpa.getBinForBranchReceiptIndentRequest(txnList,
 							indent.getDenomination(), indent.getRequestBundle(), user, indent, branchReceiptList);
 					LOG.info("eligibleIndentRequestList txnList " + txnList);
-					LOG.info("eligibleIndentRequestList filterBranchReceiptListByBtxn " + branchReceiptList);
+					LOG.info("eligibleIndentRequestList branchReceiptList " + branchReceiptList);
 				} else if (indent.getCashSource() == CashSource.RBI
 						&& indent.getBinCategoryType() == BinCategoryType.BOX) {
 
@@ -195,9 +187,15 @@ public class ProcessingRoomController {
 
 				BigDecimal moreBundleNeeded = UtilityJpa.checkMoreRequiredBundleNeeded(eligibleIndentRequestList,
 						bundleForRequest);
+				LOG.info("indent Request moreBundleNeeded " + moreBundleNeeded);
 				if (moreBundleNeeded.compareTo(BigDecimal.ZERO) == 0) {
 					isAllSuccess = processingRoomService.insertIndentRequestAndUpdateBinTxAndBranchReceipt(
 							eligibleIndentRequestList, binTransactionList, branchReceiptList);
+					if (indent.getCashSource().equals(CashSource.DSB)
+							|| indent.getCashSource().equals(CashSource.OTHERBANK)
+							|| indent.getCashSource().equals(CashSource.DIVERSION)) {
+						processingRoomService.updateCashReceiveForIndentRequest(eligibleIndentRequestList);
+					}
 					if (!isAllSuccess) {
 						throw new RuntimeException("Error while Indent Request Saving");
 					}
@@ -245,7 +243,6 @@ public class ProcessingRoomController {
 			sDate = sdf.parse(fromDate);
 			tDate = sdf.parse(toDate);
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -517,7 +514,6 @@ public class ProcessingRoomController {
 
 							sb = new StringBuilder(replacedtext);
 							prnList.add(sb.toString());
-							LOG.info("Processing Room O/P PRN  =" + sb);
 
 							UtilityJpa.PrintToPrinter(sb, user);
 						}
@@ -708,7 +704,6 @@ public class ProcessingRoomController {
 			try {
 				date = formatter.parse(dateInString);
 			} catch (ParseException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			machine.setMachineDownDateFrom(date);
@@ -717,7 +712,6 @@ public class ProcessingRoomController {
 			try {
 				date1 = formatter.parse(dateInString1);
 			} catch (ParseException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			machine.setMachineDownDateTo(date1);
@@ -727,7 +721,6 @@ public class ProcessingRoomController {
 			try {
 				date2 = formatter.parse(dateInString2);
 			} catch (ParseException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			machine.setEngineerAttendedCall(date2);
@@ -872,7 +865,8 @@ public class ProcessingRoomController {
 	@RequestMapping("/viewDefineKeySet")
 	public ModelAndView viewDefineKeySet(@ModelAttribute("user") CustodianKeySet defineKeySet, HttpSession session) {
 		User user = (User) session.getAttribute("login");
-		//List<CustodianKeySet> keySetList = processingRoomService.getDefineKeySet(user.getIcmcId());
+		// List<CustodianKeySet> keySetList =
+		// processingRoomService.getDefineKeySet(user.getIcmcId());
 		List<String> keySetList = processingRoomService.getDefineKeySet(user.getIcmcId());
 		LOG.info("VIEW DefineKeySet RECORD");
 		return new ModelAndView("/viewDefineKeySet", "records", keySetList);
@@ -881,7 +875,8 @@ public class ProcessingRoomController {
 	@RequestMapping("/viewKeySetDetail")
 	public ModelAndView viewDefineKeySetDetail(@RequestParam String custodian, HttpSession session) {
 		User user = (User) session.getAttribute("login");
-		//List<DefineKeySet> keySetList = processingRoomService.getKeySetDetail(custodian, user.getIcmcId());
+		// List<DefineKeySet> keySetList =
+		// processingRoomService.getKeySetDetail(custodian, user.getIcmcId());
 		List<Tuple> keySetList = processingRoomService.getKeySetDetail(custodian, user.getIcmcId());
 		return new ModelAndView("/viewKeySetDetail", "records", keySetList);
 	}
@@ -1077,7 +1072,8 @@ public class ProcessingRoomController {
 		User user = (User) session.getAttribute("login");
 		AssignVaultCustodian obj = new AssignVaultCustodian();
 		ModelMap map = new ModelMap();
-		//List<CustodianKeySet> custodianList = processingRoomService.getAssignVaultCustodian(user.getIcmcId());
+		// List<CustodianKeySet> custodianList =
+		// processingRoomService.getAssignVaultCustodian(user.getIcmcId());
 		List<String> custodianList = processingRoomService.getDefineKeySet(user.getIcmcId());
 		map.put("user", obj);
 		map.put("custodianList", custodianList);
@@ -1097,7 +1093,8 @@ public class ProcessingRoomController {
 		User userFromDBForUserHandingOver = processingRoomService
 				.isValidUser(assignVaultCustodian.getHandingOverCharge(), user.getIcmcId());
 		if (userFromDBForUserHandingOver == null) {
-			redirectAttributes.addFlashAttribute("HandingOverCharge", "User Id of Handing Over Charge not exist in ICMC");
+			redirectAttributes.addFlashAttribute("HandingOverCharge",
+					"User Id of Handing Over Charge not exist in ICMC");
 			return new ModelAndView("redirect:./AssignVaultCustodian");
 		}
 
