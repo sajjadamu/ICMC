@@ -1,10 +1,12 @@
 <!DOCTYPE html>
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+	pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <html lang="en">
 
 <head>
-<link rel="shortcut icon" href="./resources/logo/favicon.ico" type="image/x-icon">
+<link rel="shortcut icon" href="./resources/logo/favicon.ico"
+	type="image/x-icon">
 <script src="./js/jquery-1.12.0.min.js"></script>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -13,30 +15,31 @@
 <meta name="author" content="">
 <!-- /#wrapper -->
 
-	<!-- jQuery -->
-	<script src="./resources/bower_components/jquery/dist/jquery.min.js"></script>
+<!-- jQuery -->
+<script src="./resources/bower_components/jquery/dist/jquery.min.js"></script>
 
-	<!-- Bootstrap Core JavaScript -->
-	<script
-		src="./resources/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+<!-- Bootstrap Core JavaScript -->
+<script
+	src="./resources/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 
-	<!-- Metis Menu Plugin JavaScript -->
-	<script
-		src="./resources/bower_components/metisMenu/dist/metisMenu.min.js"></script>
+<!-- Metis Menu Plugin JavaScript -->
+<script
+	src="./resources/bower_components/metisMenu/dist/metisMenu.min.js"></script>
 
-	<!-- Custom Theme JavaScript -->
-	<script src="./resources/dist/js/sb-admin-2.js"></script>
-	
-	<script>
-	function doAjaxPost() {  
-	  // get the form values  
-	  var Denomination = $('#denomination').val();
-	  var Bundle = $('#bundle').val();
-	  var total = Denomination*1000*Bundle;
-	  $('#total').val(total);
-}</script>
+<!-- Custom Theme JavaScript -->
+<script src="./resources/dist/js/sb-admin-2.js"></script>
 
-	<script src="./resources/js/jQuery.print.js"></script>
+<script>
+	function doAjaxPost() {
+		// get the form values  
+		var Denomination = $('#denomination').val();
+		var Bundle = $('#bundle').val();
+		var total = Denomination * 1000 * Bundle;
+		$('#total').val(total);
+	}
+</script>
+
+<script src="./resources/js/jQuery.print.js"></script>
 <title>ICICI : Edit Diversion IRV Receipt</title>
 
 <script src="./resources/Currency/js/jquery.js"></script>
@@ -58,7 +61,8 @@
 	href="./resources/bower_components/font-awesome/css/font-awesome.min.css"
 	rel="stylesheet" type="text/css">
 
-<link rel="stylesheet" type="text/css" href="./resources/dist/css/style.css">
+<link rel="stylesheet" type="text/css"
+	href="./resources/dist/css/style.css">
 
 </head>
 
@@ -71,19 +75,22 @@
 			<div class="row">
 				<div class="col-lg-12">
 					<div class="panel panel-default">
-					<div class="panel-heading">
+						<div class="panel-heading">
 							<ul>
-								<li><a href="././viewDirv"><i class="fa fa-table fa-fw"></i>View Diversion IRV Receipt</a></li>
-							</ul>Edit Diversion IRV Receipt
+								<li><a href="././viewDirv"><i class="fa fa-table fa-fw"></i>View
+										Diversion IRV Receipt</a></li>
+							</ul>
+							Edit Diversion IRV Receipt
 						</div>
 						<div class="panel-body">
 							<div class="row">
 								<div class="col-lg-8">
 									<!--<form role="form">-->
-									<form:form id="" action="updateDirv" method="post" modelAttribute="user" autocomplete="off">
+									<form:form id="" action="updateDirv" method="post"
+										modelAttribute="user" autocomplete="off">
 
-										<form:hidden path="id"/>
-										
+										<form:hidden path="id" />
+
 										<%-- <div class="col-lg-6 form-group">
 											<label>Order Date</label>
 											<form:input type="text" path="orderDate" id="orderDate" name="orderDate" 
@@ -92,65 +99,70 @@
 
 										<div class="col-lg-6 form-group">
 											<label>RBI Order Number</label>
-											<form:input path="rbiOrderNo" id="rbiOrderNo" name="rbiOrderNo" maxlength="45" 
-												 readonly="true" cssClass="form-control" />
+											<form:input path="rbiOrderNo" id="rbiOrderNo"
+												name="rbiOrderNo" maxlength="45" readonly="true"
+												cssClass="form-control" />
 										</div>
-									
+
 										<%-- <div class="col-lg-6 form-group">
 											<label>Expiry Date</label>
 											<form:input type="text"  path="expiryDate" id="expiryDate" name="expiryDate" 
 												readonly="true" cssClass="form-control" />
 										</div> --%>
-									
+
 										<div class="col-lg-6 form-group">
 											<label>Bank Name</label>
-											<form:input path="bankName" id="bankName" name="bankName" maxlength="45" 
-												 cssClass="form-control" />
+											<form:input path="bankName" id="bankName" name="bankName"
+												maxlength="45" cssClass="form-control" />
 										</div>
 
 										<div class="form-group">
 											<label>Approved CC</label>
-											<form:input path="approvedCC" id="approvedCC" name="approvedCC" maxlength="45" 
-												 cssClass="form-control" />
+											<form:input path="approvedCC" id="approvedCC"
+												name="approvedCC" maxlength="45" cssClass="form-control" />
 										</div>
-									
+
 										<div class="form-group">
 											<label>Location</label>
-											<form:input path="location" id="location" name="location" maxlength="45" 
-												 cssClass="form-control" />
+											<form:input path="location" id="location" name="location"
+												maxlength="45" cssClass="form-control" />
 										</div>
-										
+
 										<div class="form-group">
 											<label>Denomination</label>
-											<form:input path="denomination" id="denomination" name="denomination" 
-												 cssClass="form-control"/>
+											<form:input path="denomination" id="denomination"
+												name="denomination" cssClass="form-control" />
 										</div>
-										
+
 										<div class="form-group">
 											<label>Bundle</label>
-											<form:input path="bundle" id="bundle" onkeyup="doAjaxPost()"  name="bundle" cssClass="form-control"/>
+											<form:input path="bundle" id="bundle" onkeyup="doAjaxPost()"
+												name="bundle" cssClass="form-control" />
 										</div>
-										
+
 										<div class="form-group">
 											<label>Total</label>
-											<form:input path="total" id="total" name="total" cssClass="form-control" readonly="true"/>
+											<form:input path="total" id="total" name="total"
+												cssClass="form-control" readonly="true" />
 										</div>
-										
+
 										<div class="form-group">
 											<label>Bin</label>
-											<form:input path="binNumber" id="binNumber" name="binNumber" cssClass="form-control" readonly="true"/>
+											<form:input path="binNumber" id="binNumber" name="binNumber"
+												cssClass="form-control" readonly="true" />
 										</div>
-										
-									<%-- 	<div class="form-group">
+
+										<%-- 	<div class="form-group">
 											<label>Status</label>
 											<form:select path="status" id="status" name="status" readonly="true" cssClass="form-control">
 												<option value="RECEIVED">RECEIVED</option>
 												<option value="CANCELLED">CANCELLED</option>
 											</form:select>
 										</div> --%>
-										
-										<button type="submit" value="Details" class="btn btn-lg btn-success btn-block">Update</button>
-											
+
+										<button type="submit" value="Details"
+											class="btn btn-lg btn-success btn-block">Update</button>
+
 									</form:form>
 								</div>
 								<div id="printSection" style="display: none;"></div>
@@ -172,7 +184,7 @@
 
 	</div>
 	<script src="./resources/js/jQuery.print.js"></script>
-<script type="text/javascript" src="./js/htmlInjection.js"></script> 
+	<script type="text/javascript" src="./js/htmlInjection.js"></script>
 </body>
 
 </html>

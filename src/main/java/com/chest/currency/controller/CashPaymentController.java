@@ -44,6 +44,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
 import com.chest.currency.entity.model.BinRegister;
 import com.chest.currency.entity.model.BinTransaction;
 import com.chest.currency.entity.model.BranchReceipt;
@@ -479,18 +480,8 @@ public class CashPaymentController {
 	@RequestMapping("/AcceptSASIndent")
 	public ModelAndView getSASAllocation(HttpSession session) {
 		User user = (User) session.getAttribute("login");
-		Calendar sDate = Calendar.getInstance();
-		Calendar eDate = Calendar.getInstance();
-		sDate.set(Calendar.HOUR, 0);
-		sDate.set(Calendar.HOUR_OF_DAY, 0);
-		sDate.set(Calendar.MINUTE, 0);
-		sDate.set(Calendar.SECOND, 0);
-		sDate.set(Calendar.MILLISECOND, 0);
-		eDate.set(Calendar.HOUR, 24);
-		eDate.set(Calendar.HOUR_OF_DAY, 23);
-		eDate.set(Calendar.MINUTE, 59);
-		eDate.set(Calendar.SECOND, 59);
-		eDate.set(Calendar.MILLISECOND, 999);
+		Calendar sDate = UtilityJpa.getStartDate();
+		Calendar eDate = UtilityJpa.getEndDate();
 		List<Tuple> sasList = cashPaymentService.getSASAllocationRecordFromTuple(user.getIcmcId(), sDate, eDate);
 		return new ModelAndView("/AcceptSASIndent", "records", sasList);
 	}
@@ -608,7 +599,7 @@ public class CashPaymentController {
 		model.put("sasPayment", sasAlList);
 		model.put("row", row);
 		if (row != 0) {
-			//model.put("status", sasAlList.get(0).getStatus());
+			// model.put("status", sasAlList.get(0).getStatus());
 			model.put("status", sasDetails.getStatus());
 		} else {
 			redirectAttributes.addFlashAttribute("sasDataMsg", "this can't be edit, Payment comes from SAS file");
@@ -898,20 +889,9 @@ public class CashPaymentController {
 	public ModelAndView cashReleased(HttpSession session) {
 		User user = (User) session.getAttribute("login");
 		CashReleased obj = new CashReleased();
-		Calendar sDate = Calendar.getInstance();
-		Calendar eDate = Calendar.getInstance();
+		Calendar sDate = UtilityJpa.getStartDate();
+		Calendar eDate = UtilityJpa.getEndDate();
 
-		sDate.set(Calendar.HOUR, 0);
-		sDate.set(Calendar.HOUR_OF_DAY, 0);
-		sDate.set(Calendar.MINUTE, 0);
-		sDate.set(Calendar.SECOND, 0);
-		sDate.set(Calendar.MILLISECOND, 0);
-
-		eDate.set(Calendar.HOUR, 24);
-		eDate.set(Calendar.HOUR_OF_DAY, 23);
-		eDate.set(Calendar.MINUTE, 59);
-		eDate.set(Calendar.SECOND, 59);
-		eDate.set(Calendar.MILLISECOND, 999);
 		ModelMap map = new ModelMap();
 		// List<Sas> solIdList =
 		// cashPaymentService.solIdForSASPayment(user.getIcmcId(), sDate,
@@ -921,6 +901,9 @@ public class CashPaymentController {
 
 		List<SASAllocation> acceptedListFromSASAllocation = cashPaymentService
 				.getAllTodayAcceptedFromSASAllocation(user.getIcmcId(), sDate, eDate);
+		List<SASAllocation> requestedListFromSASAllocation = cashPaymentService
+				.getRequestedFromSASAllocation(user.getIcmcId(), sDate, eDate);
+		
 		Set<Long> pList = new HashSet<Long>();
 		for (SASAllocation parentId : acceptedListFromSASAllocation) {
 			if (parentId.getParentId() != null) {
@@ -934,7 +917,11 @@ public class CashPaymentController {
 				pList.add(sasId.getId());
 			}
 		}
-
+		for (SASAllocation parentId : requestedListFromSASAllocation) {
+			if (parentId.getParentId() != null) {
+				pList.remove(parentId.getParentId());
+			}
+		}
 		if (acceptedListFromSASAllocation.size() != 0 || sasFileUploadList.size() != 0) {
 			solIdList = cashPaymentService.solIdForSASPaymentAccepted(user.getIcmcId(), sDate, eDate, pList);
 		}
@@ -950,20 +937,9 @@ public class CashPaymentController {
 		User user = (User) session.getAttribute("login");
 		CashReleased obj = new CashReleased();
 		ModelMap map = new ModelMap();
-		Calendar sDate = Calendar.getInstance();
-		Calendar eDate = Calendar.getInstance();
+		Calendar sDate = UtilityJpa.getStartDate();
+		Calendar eDate = UtilityJpa.getEndDate();
 
-		sDate.set(Calendar.HOUR, 0);
-		sDate.set(Calendar.HOUR_OF_DAY, 0);
-		sDate.set(Calendar.MINUTE, 0);
-		sDate.set(Calendar.SECOND, 0);
-		sDate.set(Calendar.MILLISECOND, 0);
-
-		eDate.set(Calendar.HOUR, 24);
-		eDate.set(Calendar.HOUR_OF_DAY, 23);
-		eDate.set(Calendar.MINUTE, 59);
-		eDate.set(Calendar.SECOND, 59);
-		eDate.set(Calendar.MILLISECOND, 999);
 		List<Sas> solIdList = new ArrayList<>();
 		List<SoiledRemittance> remittanceOrder = new ArrayList<>();
 
@@ -975,6 +951,8 @@ public class CashPaymentController {
 
 		List<SASAllocation> acceptedListFromSASAllocation = cashPaymentService
 				.getAllTodayAcceptedFromSASAllocation(user.getIcmcId(), sDate, eDate);
+		List<SASAllocation> requestedListFromSASAllocation = cashPaymentService
+				.getRequestedFromSASAllocation(user.getIcmcId(), sDate, eDate);
 		Set<Long> pList = new HashSet<Long>();
 		for (SASAllocation parentId : acceptedListFromSASAllocation) {
 			if (parentId.getParentId() != null) {
@@ -986,6 +964,11 @@ public class CashPaymentController {
 
 			if (sasId.getId() != null) {
 				pList.add(sasId.getId());
+			}
+		}
+		for (SASAllocation parentId : requestedListFromSASAllocation) {
+			if (parentId.getParentId() != null) {
+				pList.remove(parentId.getParentId());
 			}
 		}
 
@@ -2212,20 +2195,8 @@ public class CashPaymentController {
 	@RequestMapping("/viewCRA")
 	public ModelAndView getCRA(HttpSession session) {
 		User user = (User) session.getAttribute("login");
-		Calendar sDate = Calendar.getInstance();
-		Calendar eDate = Calendar.getInstance();
-
-		sDate.set(Calendar.HOUR, 0);
-		sDate.set(Calendar.HOUR_OF_DAY, 0);
-		sDate.set(Calendar.MINUTE, 0);
-		sDate.set(Calendar.SECOND, 0);
-		sDate.set(Calendar.MILLISECOND, 0);
-
-		eDate.set(Calendar.HOUR, 24);
-		eDate.set(Calendar.HOUR_OF_DAY, 23);
-		eDate.set(Calendar.MINUTE, 59);
-		eDate.set(Calendar.SECOND, 59);
-		eDate.set(Calendar.MILLISECOND, 999);
+		Calendar sDate = UtilityJpa.getStartDate();
+		Calendar eDate = UtilityJpa.getEndDate();
 
 		// List<CRA> craList = cashPaymentService.getCRARecord(user.getIcmcId(),
 		// sDate, eDate);
@@ -2238,20 +2209,8 @@ public class CashPaymentController {
 	@RequestMapping("/viewOtherBankPayment")
 	public ModelAndView getOtherBankPayment(HttpSession session) {
 		User user = (User) session.getAttribute("login");
-		Calendar sDate = Calendar.getInstance();
-		Calendar eDate = Calendar.getInstance();
-
-		sDate.set(Calendar.HOUR, 0);
-		sDate.set(Calendar.HOUR_OF_DAY, 0);
-		sDate.set(Calendar.MINUTE, 0);
-		sDate.set(Calendar.SECOND, 0);
-		sDate.set(Calendar.MILLISECOND, 0);
-
-		eDate.set(Calendar.HOUR, 24);
-		eDate.set(Calendar.HOUR_OF_DAY, 23);
-		eDate.set(Calendar.MINUTE, 59);
-		eDate.set(Calendar.SECOND, 59);
-		eDate.set(Calendar.MILLISECOND, 999);
+		Calendar sDate = UtilityJpa.getStartDate();
+		Calendar eDate = UtilityJpa.getEndDate();
 
 		// public List<OtherBank>
 		// getOtherBankPaymentRequestAcceptRecord(BigInteger icmcId, Calendar
@@ -2273,20 +2232,8 @@ public class CashPaymentController {
 		User user = (User) session.getAttribute("login");
 		ModelMap map = new ModelMap();
 		Sas obj = new Sas();
-		Calendar sDate = Calendar.getInstance();
-		Calendar eDate = Calendar.getInstance();
-
-		sDate.set(Calendar.HOUR, 0);
-		sDate.set(Calendar.HOUR_OF_DAY, 0);
-		sDate.set(Calendar.MINUTE, 0);
-		sDate.set(Calendar.SECOND, 0);
-		sDate.set(Calendar.MILLISECOND, 0);
-
-		eDate.set(Calendar.HOUR, 24);
-		eDate.set(Calendar.HOUR_OF_DAY, 23);
-		eDate.set(Calendar.MINUTE, 59);
-		eDate.set(Calendar.SECOND, 59);
-		eDate.set(Calendar.MILLISECOND, 999);
+		Calendar sDate = UtilityJpa.getStartDate();
+		Calendar eDate = UtilityJpa.getEndDate();
 
 		List<Sas> sasList = cashPaymentService.getAcceptSolId(user.getIcmcId(), sDate, eDate);
 		// List<Sas> sasList = cashPaymentService.getSolId(user.getIcmcId(),
@@ -2311,26 +2258,10 @@ public class CashPaymentController {
 		String idSplit = spltId[1];
 		long solAutoId = Long.parseLong(idSplit);
 
-		/*
-		 * if (!isValidSolId(id)) { return new
-		 * ModelAndView("redirect:./ORVVoucher"); }
-		 */
 		User user = (User) session.getAttribute("login");
 
-		Calendar sDate = Calendar.getInstance();
-		Calendar eDate = Calendar.getInstance();
-
-		sDate.set(Calendar.HOUR, 0);
-		sDate.set(Calendar.HOUR_OF_DAY, 0);
-		sDate.set(Calendar.MINUTE, 0);
-		sDate.set(Calendar.SECOND, 0);
-		sDate.set(Calendar.MILLISECOND, 0);
-
-		eDate.set(Calendar.HOUR, 24);
-		eDate.set(Calendar.HOUR_OF_DAY, 23);
-		eDate.set(Calendar.MINUTE, 59);
-		eDate.set(Calendar.SECOND, 59);
-		eDate.set(Calendar.MILLISECOND, 999);
+		Calendar sDate = UtilityJpa.getStartDate();
+		Calendar eDate = UtilityJpa.getEndDate();
 		// List<Tuple> summaryList =
 		// cashPaymentService.getRecordORVVoucher(solId, sDate, eDate);
 		List<Tuple> summaryList = cashPaymentService.getRecordORVVoucherById(solAutoId, sDate, eDate);
@@ -2348,6 +2279,79 @@ public class CashPaymentController {
 		map.put("icmcName", icmcName);
 		map.put("numberInwords", numberInwords);
 		return new ModelAndView("viewORVVoucher", map);
+
+	}
+
+	@RequestMapping("/printAllVoucher")
+	public ModelAndView printAllVoucher(HttpSession session) {
+		ModelMap map = new ModelMap();
+
+		User user = (User) session.getAttribute("login");
+		Calendar sDate = UtilityJpa.getStartDate();
+		Calendar eDate = UtilityJpa.getEndDate();
+
+		List<Tuple> summaryList = new ArrayList<>();
+		List<String> recordTotalInWordList = new ArrayList<>();
+		List<Tuple> allSummaryList = new ArrayList<>();
+		List<Sas> solIdList = cashPaymentService.getSolId(user.getIcmcId(), sDate, eDate);
+		LOG.info("solIdList for all printe vaucher " + solIdList);
+		String userName = user.getName();
+		String userId = user.getId();
+		if (solIdList != null) {
+			for (Sas sas : solIdList) {
+				// summaryList =
+				// cashPaymentService.getRecordORVVoucher(sas.getSolID(), sDate,
+				// eDate, user.getIcmcId());
+				summaryList = cashPaymentService.getRecordORVVoucherById(sas.getId(), sDate, eDate);
+
+				allSummaryList.addAll(summaryList);
+
+				// Code for converting a number into words.. 21st April
+				BigDecimal totalValue = sas.getTotalValue();
+				String numberInwords = ConvertNumberInWords.getNumberInWords(totalValue.intValue());
+				recordTotalInWordList.add(numberInwords);
+				LOG.info("Number in Words: " + numberInwords);
+			}
+		}
+		map.put("record", allSummaryList);
+		map.put("recordTotalInWordList", recordTotalInWordList);
+		map.put("userName", userName);
+		map.put("userId", userId);
+		return new ModelAndView("viewORVVoucher1", map);
+	}
+
+	@RequestMapping("/viewSelectedORVVoucher")
+	public ModelAndView selectedORVVocuher(@RequestParam(value = "id") Long sasAutoId[], HttpSession session) {
+		ModelMap map = new ModelMap();
+
+		User user = (User) session.getAttribute("login");
+		List<Tuple> summaryList = new ArrayList<>();
+		List<String> recordTotalInWordList = new ArrayList<>();
+		List<Tuple> allSummaryList = new ArrayList<>();
+		List<Sas> solIdList = cashPaymentService.getSasRecordById(user.getIcmcId(), sasAutoId);
+		LOG.info("solIdList for all printe vaucher " + solIdList);
+		String userName = user.getName();
+		String userId = user.getId();
+		Calendar sDate = UtilityJpa.getStartDate();
+		Calendar eDate = UtilityJpa.getEndDate();
+		if (solIdList != null) {
+			for (Sas sas : solIdList) {
+				
+				summaryList = cashPaymentService.getRecordORVVoucherById(sas.getId(), sDate, eDate);
+				allSummaryList.addAll(summaryList);
+			
+				BigDecimal totalValue = sas.getTotalValue();
+				String numberInwords = ConvertNumberInWords.getNumberInWords(totalValue.intValue());
+				recordTotalInWordList.add(numberInwords);
+				LOG.info("Number in Words: " + numberInwords);
+			}
+		}
+		map.put("record", allSummaryList);
+		map.put("recordTotalInWordList", recordTotalInWordList);
+		map.put("userName", userName);
+		map.put("userId", userId);
+
+		return new ModelAndView("viewORVVoucher1", map);
 	}
 
 	@RequestMapping("/acceptCRAPayment")
@@ -2693,53 +2697,6 @@ public class CashPaymentController {
 		eDate.set(Calendar.MILLISECOND, 999);
 		List<Tuple> cashOutList = cashPaymentService.getBranchOutRecordFromSAS(user.getIcmcId(), sDate, eDate);
 		return new ModelAndView("CashOutReport", "records", cashOutList);
-	}
-
-	@RequestMapping("/printAllVoucher")
-	public ModelAndView printAllVoucher(HttpSession session) {
-		ModelMap map = new ModelMap();
-
-		User user = (User) session.getAttribute("login");
-
-		Calendar sDate = Calendar.getInstance();
-		Calendar eDate = Calendar.getInstance();
-
-		sDate.set(Calendar.HOUR, 0);
-		sDate.set(Calendar.HOUR_OF_DAY, 0);
-		sDate.set(Calendar.MINUTE, 0);
-		sDate.set(Calendar.SECOND, 0);
-		sDate.set(Calendar.MILLISECOND, 0);
-
-		eDate.set(Calendar.HOUR, 24);
-		eDate.set(Calendar.HOUR_OF_DAY, 23);
-		eDate.set(Calendar.MINUTE, 59);
-		eDate.set(Calendar.SECOND, 59);
-		eDate.set(Calendar.MILLISECOND, 999);
-
-		List<Tuple> summaryList = new ArrayList<>();
-		List<String> recordTotalInWordList = new ArrayList<>();
-		List<Tuple> allSummaryList = new ArrayList<>();
-		List<Sas> solIdList = cashPaymentService.getSolId(user.getIcmcId(), sDate, eDate);
-		LOG.info("solIdList for all printe vaucher " + solIdList);
-		String userName = user.getName();
-		String userId = user.getId();
-		if (solIdList != null) {
-			for (Sas sas : solIdList) {
-				summaryList = cashPaymentService.getRecordORVVoucher(sas.getSolID(), sDate, eDate, user.getIcmcId());
-				allSummaryList.addAll(summaryList);
-
-				// Code for converting a number into words.. 21st April
-				BigDecimal totalValue = sas.getTotalValue();
-				String numberInwords = ConvertNumberInWords.getNumberInWords(totalValue.intValue());
-				recordTotalInWordList.add(numberInwords);
-				LOG.info("Number in Words: " + numberInwords);
-			}
-		}
-		map.put("record", allSummaryList);
-		map.put("recordTotalInWordList", recordTotalInWordList);
-		map.put("userName", userName);
-		map.put("userId", userId);
-		return new ModelAndView("viewORVVoucher1", map);
 	}
 
 	@RequestMapping(value = "/cancelSAS")

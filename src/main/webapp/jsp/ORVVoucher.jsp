@@ -74,7 +74,7 @@
 <script type="text/javascript">
 	function srNumber() {
 		//var solId = $('#idSolId').text();
-		var Id = $("#idSolId option:selected" ).val();
+		var Id = $("#idSolId option:selected").val();
 		//var ids= $("#idSolId option:selected" ).text();
 		$.ajax({
 			type : "POST",
@@ -117,8 +117,8 @@
 								<%-- <form id="showAll"> --%>
 								<form:form id="userPage" action="viewORVVoucher" method="post"
 									modelAttribute="user">
-									<form:hidden path="id"/>
-									<form:hidden path="solID"/>
+									<form:hidden path="id" />
+									<form:hidden path="solID" />
 									<div class="row">
 										<div class="col-sm-12">
 											<div class="col-sm-2 no-margin">
@@ -132,7 +132,7 @@
 													</form:select>
 													<form:select path="srNo" id="srNo" name="srNo"
 														style="width: 140px;"
-														class="form-control deno-figure-select" >
+														class="form-control deno-figure-select">
 														<form:option value="">Select SR Number</form:option>
 													</form:select>
 												</div>
@@ -157,6 +157,29 @@
 										<div class="button">
 											<button type="submit" class="btn btn-default">Show
 												All</button>
+										</div>
+									</div>
+								</form:form>
+
+
+								<form:form id="userPage" action="viewSelectedORVVoucher" method="post"
+									modelAttribute="user">
+									<div class="row">
+										<div class="col-lg-12">
+											<div class="col-sm-10 no-margin">
+												<div class="form-group">
+													<div class="form-group rolewrap">
+														<form:checkboxes name="sasId" items="${records}" itemValue="id"
+															itemLabel="solID" path="id" />
+													</div>
+												</div>
+											</div>
+
+											<div class="col-sm-2 no-margin">
+												<div class="button">
+													<button type="submit" class="btn btn-default">Search</button>
+												</div>
+											</div>
 										</div>
 									</div>
 								</form:form>

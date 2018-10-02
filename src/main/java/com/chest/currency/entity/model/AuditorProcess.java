@@ -1,10 +1,3 @@
-/*******************************************************************************
- * /* Copyright (C) Indicsoft Technologies Pvt Ltd
- * * All Rights Reserved.
- *******************************************************************************/
-/**
- * 
- */
 package com.chest.currency.entity.model;
 
 import java.math.BigDecimal;
@@ -38,10 +31,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
-/**
- * @author root
- *
- */
+
 @Entity(name = "AuditorProcess")
 @Table(name = "AUDITOR_PROCESS")
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)

@@ -82,7 +82,7 @@
 				html += "Capacity :" + capacity + "</br>";
 				html += "Receive Bundle :" + receiveBundle + "</br>";
 				var data = capacity - receiveBundle;
-				html += "Available :" + data + "</br>";
+				html += "Available Space :" + data + "</br>";
 				$('#modal-body').html(html);
 				$('#myModal').modal('show');
 			},
@@ -158,7 +158,7 @@
 														<th>Bin Type</th>
 														<Th>Capacity</Th>
 														<th>Bundle</th>
-														<th>Available</th>
+														<th>Available Space</th>
 													</tr>
 													<c:forEach var="row" items="${records}">
 														<tr>

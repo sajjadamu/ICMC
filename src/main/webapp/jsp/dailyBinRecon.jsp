@@ -176,6 +176,7 @@ function doAjaxPostForBinRecon(str) {
 									<table class="table table-striped table-bordered table-hover"  id="tableValue">
 										<thead>
 											<tr>
+											<th style="display:none;">Bin</th>
 												<th>Bin</th>
 												<th>Denomination</th>
 												<th>Category</th>
@@ -186,7 +187,7 @@ function doAjaxPostForBinRecon(str) {
 										<tbody >
 											<c:forEach var="row" items="${dailyBinRecon}" varStatus="loop">
 											<tr class="trValue">
-											<%-- <td id="id${row.id}" style="display:none;">${row.id}</td> --%>
+											<td id="id${row.id}" style="display:none;">${row.id}</td>
 													<td>${row.binNumber}</td>
 													<td>${row.denomination}</td>
 													<td>${row.binType}</td>

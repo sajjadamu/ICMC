@@ -93,7 +93,7 @@ $(document).ready(function() {
 
 	    var a = document.createElement('a');
 	    a.href = data_type + ', ' + table_html;
-	    a.download = 'exported_table_' + Math.floor((Math.random() * 9999999) + 1000000) + '.xls';
+	    a.download = 'Discripency-Formate_' + Math.floor((Math.random() * 9999999) + 1000000) + '.xls';
 	    a.click();
 	  });
 	});
@@ -131,6 +131,7 @@ $(document).ready(function() {
               
 				                  <tr>
 						             <th class="fakeCls">Sr. No.</th>  
+						              <th class="fakeCls">Time</th> 
 						             <th class="fakeCls">Branch/EC</th>  
 						             <th class="fakeCls"></th>  
 						             <th class="fakeCls">Deno</th>  
@@ -166,7 +167,8 @@ $(document).ready(function() {
 					              </tr>
 					              
 					              <tr>
-					              	<th>SR NO.</th>  
+					              	<th>SR NO.</th> 
+					              	<th>Time</th>   
 					                <th>Name of Branch</th>  
 					                <th>Sol&nbsp;Id</th>  
 					                <th>Deno</th>  
@@ -198,6 +200,7 @@ $(document).ready(function() {
 								  <c:set var="count" value="${count + 1}" scope="page" />
 					               <tr>
 					                  <td>${count}</td>
+					                  <td>${innerRow.timeOfDetection}</td>
 					                  <td>${row.branch}</td>
 					                  <td><fmt:formatNumber pattern="0000" value="${row.solId}" /></td>
 					                  <td>${innerRow.denomination}</td>

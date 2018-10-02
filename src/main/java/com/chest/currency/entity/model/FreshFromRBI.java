@@ -1,10 +1,3 @@
-/*******************************************************************************
- * /* Copyright (C) Indicsoft Technologies Pvt Ltd
- * * All Rights Reserved.
- *******************************************************************************/
-/**
- * 
- */
 package com.chest.currency.entity.model;
 
 import java.math.BigDecimal;
@@ -27,6 +20,9 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
 import com.chest.currency.enums.BinCategoryType;
 import com.chest.currency.enums.CashSource;
 import com.chest.currency.enums.CashType;
@@ -36,10 +32,6 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
-/**
- * @author root
- *
- */
 @Entity(name = "FreshFromRBI")
 @Table(name = "FRESH_FROM_RBI")
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
@@ -47,67 +39,65 @@ import lombok.ToString;
 @EqualsAndHashCode(of = { "id" })
 @ToString
 public class FreshFromRBI {
-	
+
 	@Id
-	//@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "ID")
 	@GeneratedValue(generator = "FRESH_FROM_RBI_SEQ")
 	@SequenceGenerator(name = "FRESH_FROM_RBI_SEQ", sequenceName = "FRESH_FROM_RBI_SEQ", allocationSize = 100)
 	protected Long id;
-	
+
 	@Basic
 	@Column(name = "DENOMINATION")
 	protected Integer denomination;
-	
+
 	@Basic
 	@Column(name = "BUNDLE")
 	protected BigDecimal bundle;
-	
+
 	@Basic
 	@Column(name = "PENDING_BUNDLE_REQUEST")
 	protected BigDecimal pendingBundleRequest;
 
-
 	@Basic
 	@Column(name = "TOTAL")
 	protected BigDecimal total;
-	
+
 	@Basic
 	@Column(name = "BIN_NUM")
 	protected String bin;
-	
+
 	@Basic
 	@Column(name = "FILEPATH")
 	protected String filepath;
-	
+
 	@Enumerated(EnumType.STRING)
 	@Column(name = "CASH_TYPE")
 	protected CashType cashType;
-	
+
 	@Basic
 	@Column(name = "ORDER_DATE")
 	protected Date orderDate;
-	
+
 	@Basic
 	@Column(name = "RBI_ORDER_NO")
 	protected String rbiOrderNo;
-	
+
 	@Basic
 	@Column(name = "VEHICLE_NUMBER")
 	protected String vehicleNumber;
-	
+
 	@Basic
 	@Column(name = "POTDAR_NAME")
 	protected String potdarName;
-	
+
 	@Basic
 	@Column(name = "ESCORT_OFFICER_NAME")
 	protected String escortOfficerName;
-	
+
 	@Basic
 	@Column(name = "ICMC_ID")
 	protected BigInteger icmcId;
-	
+
 	@Basic
 	@Column(name = "INSERT_BY")
 	protected String insertBy;
@@ -117,25 +107,26 @@ public class FreshFromRBI {
 	protected String updateBy;
 
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "INSERT_TIME")
+	@Column(name = "INSERT_TIME", nullable = false, updatable = false)
+	@CreationTimestamp
 	protected Calendar insertTime;
 
-	@Column(name = "UPDATE_TIME")
+	@Column(name = "UPDATE_TIME", nullable = false)
+	@UpdateTimestamp
 	protected Calendar updateTime;
-	
+
 	@Enumerated(EnumType.STRING)
 	@Column(name = "BIN_CATEGORY_TYPE")
 	protected BinCategoryType binCategoryType;
-	
+
 	@Enumerated(EnumType.STRING)
 	@Column(name = "CASH_SOURCE")
 	protected CashSource cashSource;
-	
-	
+
 	@Basic
 	@Column(name = "POTDAR_STATUS")
 	protected String potdarStatus;
-	
+
 	@Enumerated(EnumType.STRING)
 	@Column(name = "CURRENCY_TYPE")
 	protected CurrencyType currencyType;
@@ -146,13 +137,13 @@ public class FreshFromRBI {
 	
 	@Transient
 	protected int bagSequenceFromDB;
-	
+
 	@Transient
 	protected String notesOrCoins;
-	
+
 	@Transient
 	protected String binOrBox;
-	
+
 	@Transient
 	protected int denom1CoinsPieces;
 	@Transient
@@ -191,16 +182,16 @@ public class FreshFromRBI {
 	protected int totalCoinsPieces;
 	@Transient
 	protected int totalValueOfCoins;
-	
+
 	/**
 	 * Default Constructor
 	 */
-	public FreshFromRBI(){
-		
+	public FreshFromRBI() {
+
 	}
-	
-	public FreshFromRBI(boolean initialize){
-		if(initialize){
+
+	public FreshFromRBI(boolean initialize) {
+		if (initialize) {
 			this.denom1CoinsPieces = 0;
 			this.denom2CoinsPieces = 0;
 			this.denom5CoinsPieces = 0;
@@ -222,5 +213,5 @@ public class FreshFromRBI {
 			this.totalValueOfCoins = 0;
 		}
 	}
-	
+
 }

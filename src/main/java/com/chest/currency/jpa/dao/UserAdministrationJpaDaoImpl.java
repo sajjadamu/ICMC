@@ -1,7 +1,3 @@
-/*******************************************************************************
- * /* Copyright (C) Indicsoft Technologies Pvt Ltd
- * * All Rights Reserved.
- *******************************************************************************/
 package com.chest.currency.jpa.dao;
 
 import java.math.BigInteger;
@@ -89,10 +85,11 @@ public class UserAdministrationJpaDaoImpl implements UserAdministrationJpaDao {
 	@Override
 	public User isValidUser(String username, BigInteger icmcId) {
 		JPAQuery jpaQuery = getFromQueryForUser();
-		jpaQuery.where(QUser.user.id.equalsIgnoreCase(username).and(QUser.user.status.eq(Status.ENABLED).and(QUser.user.icmcId.eq(icmcId))));
+		jpaQuery.where(QUser.user.id.equalsIgnoreCase(username)
+				.and(QUser.user.status.eq(Status.ENABLED).and(QUser.user.icmcId.eq(icmcId))));
 		return jpaQuery.singleResult(QUser.user);
 	}
-	
+
 	@Override
 	public List<User> getUserList() {
 		LOG.info("Going to fetch Users:");
@@ -101,7 +98,6 @@ public class UserAdministrationJpaDaoImpl implements UserAdministrationJpaDao {
 		if (user1 != null) {
 			LOG.info("user with Id {} already exist:", user1.getId());
 		}
-
 		JPAQuery jpaQuery = getFromQueryForUser();
 		jpaQuery.where(QUser.user.status.eq(Status.ENABLED));
 		List<User> users = jpaQuery.list(QUser.user);
@@ -123,7 +119,11 @@ public class UserAdministrationJpaDaoImpl implements UserAdministrationJpaDao {
 
 	@Override
 	public User getUserById(String id) {
-		return em.find(User.class, id);
+		LOG.info("Featchin User by ldap id");
+		JPAQuery jpaQuery = getFromQueryForUser();
+		jpaQuery.where(QUser.user.id.equalsIgnoreCase(id));
+		return jpaQuery.singleResult(QUser.user);
+		// return em.find(User.class, id);
 	}
 
 	@Override

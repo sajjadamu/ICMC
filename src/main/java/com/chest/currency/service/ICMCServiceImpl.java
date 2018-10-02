@@ -18,7 +18,6 @@ import com.chest.currency.entity.model.ICMC;
 import com.chest.currency.entity.model.User;
 import com.chest.currency.jpa.dao.ICMCJpaDao;
 
-
 @Service
 @Transactional
 public class ICMCServiceImpl implements ICMCService {
@@ -30,22 +29,22 @@ public class ICMCServiceImpl implements ICMCService {
 
 	@Autowired
 	ConcurrentHashMap<Long, ICMC> icmcConcurrentHashMap;
-	
+
 	@Override
 	public boolean createICMC(ICMC icmc) {
 		boolean isSaved = icmcJpaDao.createICMC(icmc);
 		return isSaved;
 	}
-	
+
 	@Override
 	public ICMC isIcmcNameValid(String name) {
 		ICMC dbIcmc = icmcJpaDao.isIcmcNameValid(name);
 		return dbIcmc;
 	}
-	
+
 	@Override
 	public List<ICMC> getICMCList() {
-		List<ICMC> icmcList=icmcJpaDao.getICMCList();
+		List<ICMC> icmcList = icmcJpaDao.getICMCList();
 		return icmcList;
 	}
 
@@ -63,10 +62,10 @@ public class ICMCServiceImpl implements ICMCService {
 	@Override
 	public boolean uploadICMC(List<ICMC> icmcList, ICMC icmc) {
 		boolean isAllsuccess = false;
-		try{
+		try {
 			LOG.info("Uploading ICMC Records From CSV..");
 			isAllsuccess = icmcJpaDao.uploadICMC(icmcList, icmc);
-		}catch(Exception ex){
+		} catch (Exception ex) {
 			throw new RuntimeException(ex);
 		}
 		return isAllsuccess;
@@ -99,19 +98,18 @@ public class ICMCServiceImpl implements ICMCService {
 
 	@Override
 	public ICMC getSynchronizedIcmc(User user) {
+		LOG.info("user SynchronizedIcmc..ID." + user.getId());
 		ICMC icmc = icmcConcurrentHashMap.get(user.getIcmcId().longValue());
-		if(icmc == null){
+		if (icmc == null) {
 			LOG.info("icmc is not in map...");
 			icmc = this.getICMCById(user.getIcmcId().longValue());
 			icmcConcurrentHashMap.putIfAbsent(icmc.getId(), icmc);
 			icmc = icmcConcurrentHashMap.get(user.getIcmcId().longValue());
-			LOG.info("icmc is put in map...in if",icmc.getId());
-		}else{
-			LOG.info("icmc is already in map...in else ICMCServiceImpl.getSynchronizedIcmc",icmc.getId());
+			LOG.info("icmc is put in map...in if", icmc.getId());
+		} else {
+			LOG.info("icmc is already in map...in else ICMCServiceImpl.getSynchronizedIcmc");
 		}
 		return icmc;
 	}
-	
-	
 
 }

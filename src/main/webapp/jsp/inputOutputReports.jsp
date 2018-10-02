@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+F<!DOCTYPE html>
 <%@page import="com.chest.currency.enums.CurrencyType"%>
 <%@page import="com.fasterxml.jackson.annotation.JsonInclude.Include"%>
 <%@page import="java.math.BigDecimal"%>
@@ -101,7 +101,7 @@ $(document).ready(function() {
 
 	    var a = document.createElement('a');
 	    a.href = data_type + ', ' + table_html;
-	    a.download = 'exported_table_' + Math.floor((Math.random() * 9999999) + 1000000) + '.xls';
+	    a.download = 'Input-Output-Report_' + Math.floor((Math.random() * 9999999) + 1000000) + '.xls';
 	    a.click();
 	  });
 	});

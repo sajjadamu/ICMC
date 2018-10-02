@@ -81,20 +81,46 @@ function notesCalcuation(str) {
 }
 
 function doAjaxForTotal() { 
-	var myTotalValue = null;
+	var totalValue = null;
 	
 	var denom2000 = parseFloat($('#result'+2000).val());
 	var denom1000 = parseFloat($('#result'+1000).val());
 	var denom500 = parseFloat($('#result'+500).val());
-	var denom500 = parseFloat($('#result'+100).val());
 	var denom200 = parseFloat($('#result'+200).val());
 	var denom100 = parseFloat($('#result'+100).val());
 	var denom50 = parseFloat($('#result'+50).val());
-	var denom20= parseFloat($('#result'+20).val());
-	var denom10 = parseFloat($('#result'+10).val())
-	var denom5 = parseFloat($('#result'+5).val())
-	var denom2 = parseFloat($('#result'+2).val())
+	var denom20 = parseFloat($('#result'+20).val());
+	var denom10 = parseFloat($('#result'+10).val());
+	var denom5 = parseFloat($('#result'+5).val());
+	var denom2 = parseFloat($('#result'+2).val());
 	var denom1 = parseFloat($('#result'+1).val());
+	var noOfRows=11;
+  
+    	if(!isNaN(denom2000) && denom2000 != "" && denom2000 != null && denom2000 != 'undefined'){
+    		totalValue=denom2000;
+    	}if(!isNaN(denom1000) && denom1000 != "" && denom1000 != null && denom1000 != 'undefined'){
+    		totalValue=totalValue+denom1000;
+    	}if(!isNaN(denom500) && denom500 != "" && denom500 != null && denom500 != 'undefined'){
+    		totalValue=totalValue+denom500;
+    	}if(!isNaN(denom200) && denom200 != "" && denom200 != null && denom200 != 'undefined'){
+    		totalValue=totalValue+denom200;
+    	}if(!isNaN(denom100) && denom100 != "" && denom100 != null && denom100 != 'undefined'){
+    		totalValue=totalValue+denom100;
+    	}if(!isNaN(denom50) && denom50 != "" && denom50 != null && denom50 != 'undefined'){
+    		totalValue=totalValue+denom50;
+    	}if(!isNaN(denom20) && denom20 != "" && denom20 != null && denom20 != 'undefined'){
+    		totalValue=totalValue+denom20;
+    	}if(!isNaN(denom10) && denom10 != "" && denom10 != null && denom10 != 'undefined'){
+    		totalValue=totalValue+denom10;
+    	}if(!isNaN(denom5) && denom5 != "" && denom5 != null && denom5 != 'undefined'){
+    		totalValue=totalValue+denom5;
+    	}if(!isNaN(denom2) && denom2 != "" && denom2 != null && denom2 != 'undefined'){
+    		totalValue=totalValue+denom5;
+    	}if(!isNaN(denom1) && denom1 != "" && denom1 != null && denom1 != 'undefined'){
+    		totalValue=totalValue+denom1;
+    	}
+	
+	$('#totalAmount').val(totalValue.toLocaleString('en-IN'));
 }
 </script>
 
@@ -230,6 +256,12 @@ function doAjaxForTotal() {
 												onChange="notesCalcuation(${1});doAjaxForTotal()" /></td>
 										<td><input class="form-control input-margin" type="text"
 											id="result${1}" value="" readonly></td>
+									</tr>
+									<tr>
+										<td></td>
+										<td>Total Amount</td>
+										<td><input class="form-control input-margin" type="text"
+											id="totalAmount" value="" readonly></td>
 									</tr>
 									<tr></tr>
 									<Tr>

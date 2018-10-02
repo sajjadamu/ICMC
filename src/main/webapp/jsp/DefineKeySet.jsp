@@ -2,7 +2,8 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
-<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="sec"
+	uri="http://www.springframework.org/security/tags"%>
 <html lang="en">
 <head>
 <meta charset="utf-8">
@@ -13,7 +14,8 @@
 <link rel="shortcut icon" href="./resources/logo/favicon.ico"
 	type="image/x-icon">
 
-<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script type="text/javascript"
+	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script type="text/javascript" src="./js/jquery.validate.min.js"></script>
 
 <title>ICICI : Define Key Set</title>
@@ -63,30 +65,35 @@
 				<div class="col-lg-12">
 					<div class="panel panel-default">
 						<div class="panel-heading">
-                        	<ul>
-                        		<li>
-                        			<sec:authorize access="hasRole('VIEW_DEFINE_KEYSET')">
-                        				<a href="././viewDefineKeySet"><i class="fa fa-table fa-fw"></i> View Key Set Details</a>
-                        			</sec:authorize>
-                        		</li>
-							</ul>Upload Key Set Details
-                        </div>
+							<ul>
+								<li><sec:authorize access="hasRole('VIEW_DEFINE_KEYSET')">
+										<a href="././viewDefineKeySet"><i
+											class="fa fa-table fa-fw"></i> View Key Set Details</a>
+									</sec:authorize></li>
+							</ul>
+							Upload Key Set Details
+						</div>
 						<div class="panel-body">
 							<div class="row">
 								<div class="col-lg-6">
 									<!--<form role="form">-->
-									<form:form id="userPage" action="AddDefineKeySet" method="post" name="userPage" enctype="multipart/form-data"
-										modelAttribute="user" >
-										
-										<div align="center" style="color: red"><b>${errorMsg}</b></div>
-										
-										<div class="col-lg-6 form-group">
-											<label>Upload CSV</label>
-											<input type="file" name="file" Class="form-control" />
+									<form:form id="userPage" action="AddDefineKeySet" method="post"
+										name="userPage" enctype="multipart/form-data"
+										modelAttribute="user">
+
+										<div align="center" style="color: red">
+											<b>${errorMsg}</b>
 										</div>
-								
-										<button type="submit" onclick="pageSubmit()" class="btn btn-lg btn-success btn-block"
-											value="Details">Submit</button>
+
+										<div class="col-lg-6 form-group">
+											<label>Upload CSV</label> <input type="file" id="file"
+												name="file" Class="form-control" /> <a
+												href="${documentFilePath}/keySet.csv" download>Download
+												CSV Format</a>
+										</div>
+
+										<button type="submit" onclick="pageSubmit()"
+											class="btn btn-lg btn-success btn-block" value="Details">Submit</button>
 									</form:form>
 								</div>
 								<!-- /.col-lg-6 (nested) -->
@@ -121,26 +128,26 @@
 
 	<!-- Custom Theme JavaScript -->
 	<script src="./resources/dist/js/sb-admin-2.js"></script>
-<script type="text/javascript">
-	$(function() {
-	  $("form[name='userPage']").validate({
-	    rules: {
-	    	file: "required",
-	    	
-         	    },
-	    // Specify validation error messages
-	    messages: {
-	    	file: "Please Select File",
-             
-            	    },
-	    
-	    submitHandler: function(form) {
-	      form.submit();
-	    }
-	  });
-	});
+	<script type="text/javascript">
+		$(function() {
+			$("form[name='userPage']").validate({
+				rules : {
+					file : "required",
+
+				},
+				// Specify validation error messages
+				messages : {
+					file : "Please Select File",
+
+				},
+
+				submitHandler : function(form) {
+					form.submit();
+				}
+			});
+		});
 	</script>
-<script type="text/javascript" src="./js/htmlInjection.js"></script>
+	<script type="text/javascript" src="./js/htmlInjection.js"></script>
 </body>
 
 </html>

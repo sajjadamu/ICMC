@@ -1,7 +1,3 @@
-/*******************************************************************************
- * /* Copyright (C) Indicsoft Technologies Pvt Ltd
- * * All Rights Reserved.
- *******************************************************************************/
 package com.chest.currency.security;
 
 import java.util.Collection;
@@ -29,13 +25,6 @@ import org.springframework.security.ldap.userdetails.UserDetailsContextMapper;
 import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
 
-/**
- * Base class for the standard {@code LdapAuthenticationProvider} and the
- * {@code ActiveDirectoryLdapAuthenticationProvider}.
- *
- * @author Luke Taylor
- * @since 3.1
- */
 public abstract class AbstractLdapAuthenticationProvider
 		implements AuthenticationProvider, MessageSourceAware {
 	private static final Logger logger = LoggerFactory.getLogger(AbstractLdapAuthenticationProvider.class);
@@ -61,7 +50,8 @@ public abstract class AbstractLdapAuthenticationProvider
 
 		String username = userToken.getName();
 		String password = (String) authentication.getCredentials();
-
+		logger.info("Authentication userToken ......"+userToken);
+		logger.info("Authentication userToken.getName() ......"+userToken.getName());
 		if (logger.isDebugEnabled()) {
 			logger.debug("Processing authentication request for user: " + username);
 		}

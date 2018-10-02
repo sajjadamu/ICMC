@@ -136,6 +136,7 @@ public class CashReceiptController {
 							replacedtext = replacedtext.replaceAll("total", "" + formattedTotal);
 
 							sb = new StringBuilder(replacedtext);
+							UtilityJpa.PrintToPrinter(sb, user);
 						} else if (branchReceipt.getProcessedOrUnprocessed().equalsIgnoreCase("PROCESSED")) {
 							for (int i = 0; i < branchReceipt.getBundle().intValue(); i++) {
 								String replacedtext = oldtext.replaceAll("bin", "" + br.getCurrencyType());
@@ -152,15 +153,13 @@ public class CashReceiptController {
 								replacedtext = replacedtext.replaceAll("total", "" + formattedTotal);
 
 								sb = new StringBuilder(replacedtext);
-
+								UtilityJpa.PrintToPrinter(sb, user);
 							}
 						}
 						prnList.add(sb.toString());
 						LOG.info("Branch Receipt PRN: " + sb);
 
-						// Call Printer Method From UTILITY Class
-
-						UtilityJpa.PrintToPrinter(sb, user);
+						// UtilityJpa.PrintToPrinter(sb, user);
 
 					} catch (IOException ioe) {
 						ioe.printStackTrace();
@@ -170,7 +169,7 @@ public class CashReceiptController {
 				throw new RuntimeException("Error while saving saveTxListAndShrink, Please try again");
 			}
 			prnList.set(0, sbBinName.toString());
-			LOG.info("BRANCH RECEIPT ");
+			LOG.info("BRANCH RECEIPT end");
 		}
 		return prnList;
 	}
@@ -188,7 +187,23 @@ public class CashReceiptController {
 		List<FreshFromRBI> freshList = null;
 
 		synchronized (icmcService.getSynchronizedIcmc(user)) {
-			if (fresh.getNotesOrCoins().equalsIgnoreCase("COINS")) {
+
+			fresh.setInsertBy(user.getId());
+			fresh.setUpdateBy(user.getId());
+			fresh.setInsertTime(now);
+			fresh.setUpdateTime(now);
+			fresh.setCurrencyType(CurrencyType.FRESH);
+			fresh.setCashSource(CashSource.RBI);
+			
+			if (fresh.getNotesOrCoins().equalsIgnoreCase("NOTES")) {
+				if (fresh.getBinOrBox().equalsIgnoreCase("BOX")) {
+					fresh.setBinCategoryType(BinCategoryType.BOX);
+					fresh.setCashType(CashType.NOTES);
+				} else if (fresh.getBinOrBox().equalsIgnoreCase("BIN")) {
+					fresh.setBinCategoryType(BinCategoryType.BIN);
+					fresh.setCashType(CashType.NOTES);
+				}
+			} else if (fresh.getNotesOrCoins().equalsIgnoreCase("COINS")) {
 				fresh.setCashType(CashType.COINS);
 				CoinsSequence coinSequenceFromDB = cashReceiptService.getSequence(user.getIcmcId(),
 						fresh.getDenomination());
@@ -198,31 +213,7 @@ public class CashReceiptController {
 					fresh.setBagSequenceFromDB(coinSequenceFromDB.getSequence());
 				}
 			}
-			fresh.setInsertBy(user.getId());
-			fresh.setUpdateBy(user.getId());
-			fresh.setInsertTime(now);
-			fresh.setUpdateTime(now);
-			fresh.setCurrencyType(CurrencyType.FRESH);
-			fresh.setCashSource(CashSource.RBI);
 
-			if (fresh.getNotesOrCoins().equalsIgnoreCase("NOTES")) {
-
-				if (fresh.getBinOrBox().equalsIgnoreCase("BIN")) {
-					fresh.setBinCategoryType(BinCategoryType.BIN);
-					fresh.setCashType(CashType.NOTES);
-				}
-				if (fresh.getBinOrBox().equalsIgnoreCase("BOX")) {
-					fresh.setBinCategoryType(BinCategoryType.BOX);
-					fresh.setCashType(CashType.NOTES);
-				}
-			}
-			/*
-			 * if (fresh.getNotesOrCoins().equalsIgnoreCase("COINS")) { if
-			 * (fresh.getNotesOrCoins().equalsIgnoreCase("COINS")) {
-			 * fresh.setCashType(CashType.COINS);
-			 * 
-			 * } }
-			 */
 			freshList = cashReceiptService.processFreshFromRBI(fresh, user, YesNo.No, binCategoryType, cashType);
 			boolean isAllSuccess = freshList != null && freshList.size() > 0;
 			if (isAllSuccess) {
@@ -236,14 +227,13 @@ public class CashReceiptController {
 							sb = new StringBuilder(replacedtext);
 							prnList.add(sb.toString());
 
-							LOG.info("Fresh From RBI PRN: " + sb);
+							LOG.info("Fresh From Notes RBI PRN: " + sb);
 							UtilityJpa.PrintToPrinter(sb, user);
 
 						} catch (IOException ioe) {
 							ioe.printStackTrace();
 						}
-					}
-					if (freshFromRBI.getCashType().equals(CashType.COINS)) {
+					} else if (freshFromRBI.getCashType().equals(CashType.COINS)) {
 						for (int i = 1; i <= freshFromRBI.getNoOfBags(); i++) {
 							try {
 								String oldtext = readPRNFileData();
@@ -265,9 +255,11 @@ public class CashReceiptController {
 			} else {
 				throw new RuntimeException("Problem while saving saveTxListAndFreshFromRBI, Please try again");
 			}
-			LOG.info("Fresh Coins From RBI PRN: " + sbBinName.toString());
-			prnList.set(0, sbBinName.toString());
+			LOG.info("Fresh From RBI PRN: " + sbBinName.toString());
+			// prnList.set(0, sbBinName.toString());
 		}
+		LOG.info("before Return RBI PRN: " + sbBinName.toString());
+		prnList.add(sbBinName.toString());
 		return prnList;
 	}
 
@@ -310,13 +302,13 @@ public class CashReceiptController {
 							replacedtext = replacedtext.replaceAll("solId", "" + diversionIRV.getRbiOrderNo());
 							replacedtext = replacedtext.replaceAll("denom", "" + diversionIRV.getDenomination());
 							replacedtext = replacedtext.replaceAll("bundle", "" + diversionIRV.getBundle());
-							// replacedtext = replacedtext.replaceAll("total",
-							// "" + diversionIRV.getTotal());
 
 							String formattedTotal = CurrencyFormatter.inrFormatter(diversionIRV.getTotal()).toString();
 							replacedtext = replacedtext.replaceAll("total", "" + formattedTotal);
 
 							sb = new StringBuilder(replacedtext);
+							UtilityJpa.PrintToPrinter(sb, user);
+
 						} else if (dirv.getProcessedOrUnprocessed().equalsIgnoreCase("PROCESSED")) {
 							for (int i = 0; i < dirv.getBundle().intValue(); i++) {
 								String replacedtext = oldtext.replaceAll("bin", "" + diversionIRV.getCurrencyType());
@@ -334,14 +326,12 @@ public class CashReceiptController {
 								replacedtext = replacedtext.replaceAll("total", "" + formattedTotal);
 
 								sb = new StringBuilder(replacedtext);
-
+								UtilityJpa.PrintToPrinter(sb, user);
 							}
 						}
 						prnList.add(sb.toString());
 
 						LOG.info("Diversion IRV PRN: " + sb);
-						UtilityJpa.PrintToPrinter(sb, user);
-
 					} catch (IOException ioe) {
 						ioe.printStackTrace();
 					}
@@ -382,18 +372,16 @@ public class CashReceiptController {
 				dsb.setBinCategoryType(BinCategoryType.PROCESSING);
 			}
 			dsb.setCurrencyType(CurrencyType.UNPROCESS);
-			LOG.info("dsb from Form Data getProcessingOrVault", dsb.getProcessingOrVault());
+			LOG.info("dsb  Form Data getProcessingOrVault" + dsb.getProcessingOrVault());
 			try {
-				LOG.info("dsb from Form Data after Validation: ", dsb.toString());
+				LOG.info("dsb from Form Data after Validation: " + dsb);
 				dsbList = cashReceiptService.processDSB(dsb, user);
-				LOG.info("try dsbList ", dsbList.get(0));
 			} catch (Exception ex) {
-				LOG.info("Error has occred", ex);
+				LOG.info("Error has occred " + ex);
 				throw ex;
 			}
 			boolean isAllSuccess = dsbList != null && dsbList.size() > 0;
-			LOG.info("isAllSuccess = dsbList != null", dsbList.toArray());
-			LOG.info("isAllSuccess DSB", isAllSuccess);
+			LOG.info("isAllSuccess DSB " + isAllSuccess);
 			if (isAllSuccess) {
 				for (DSB dsbQR : dsbList) {
 					sbBinName.append(dsbQR.getBin()).append(",");
@@ -494,14 +482,6 @@ public class CashReceiptController {
 		freshFromRBI = cashReceiptService.getFreshFromRBIRecordById(id, user.getIcmcId());
 
 		model.put("user", freshFromRBI);
-		/*
-		 * if (freshFromRBI.getStatus() != null &&
-		 * freshFromRBI.getStatus().equals(OtherStatus.RECEIVED)) {
-		 * model.put("user", freshFromRBI); } else {
-		 * redirectAttributes.addFlashAttribute("errorMsg",
-		 * "Selected record can't be edited"); return new
-		 * ModelAndView("redirect:./viewDirv"); }
-		 */
 		return new ModelAndView("editFreshRBI", model);
 	}
 
@@ -514,15 +494,27 @@ public class CashReceiptController {
 		freshFromRBI = cashReceiptService.getFreshFromRBIRecordById(id, user.getIcmcId());
 
 		model.put("user", freshFromRBI);
-		/*
-		 * if (freshFromRBI.getStatus() != null &&
-		 * freshFromRBI.getStatus().equals(OtherStatus.RECEIVED)) {
-		 * model.put("user", freshFromRBI); } else {
-		 * redirectAttributes.addFlashAttribute("errorMsg",
-		 * "Selected record can't be edited"); return new
-		 * ModelAndView("redirect:./viewDirv"); }
-		 */
 		return new ModelAndView("editcoFreshRBI", model);
+	}
+
+	@RequestMapping("/updateFreshRBI")
+	public ModelAndView updateFreshRBIData(FreshFromRBI freshRBIReceipt, HttpSession session,
+			RedirectAttributes redirectAttributes) throws Exception {
+		User user = (User) session.getAttribute("login");
+		synchronized (icmcService.getSynchronizedIcmc(user)) {
+			FreshFromRBI freshRBIReceiptDb = cashReceiptService.getFreshFromRBIRecordById(freshRBIReceipt.getId(),
+					user.getIcmcId());
+
+			BinTransaction binTxn = cashReceiptService.getBinTxnRecordForRBIFreshedit(freshRBIReceiptDb,
+					user.getIcmcId());
+			if (binTxn == null || (binTxn.getPendingBundleRequest().compareTo(BigDecimal.ZERO) != 0)) {
+				redirectAttributes.addFlashAttribute("errorMsg",
+						"Selected record can't be edit,It has been alredy indent");
+			} else {
+				cashReceiptService.processForUpdatingFreshRBI(binTxn, freshRBIReceipt, freshRBIReceiptDb, user);
+			}
+		}
+		return new ModelAndView("redirect:./viewFresh");
 	}
 
 	@RequestMapping("/editOtherBank")
@@ -586,23 +578,6 @@ public class CashReceiptController {
 
 		return new ModelAndView("redirect:./viewBankReceipt");
 
-	}
-
-	@RequestMapping("/updateFreshRBI")
-	public ModelAndView updateFreshRBIData(FreshFromRBI freshRBIReceipt, HttpSession session,
-			RedirectAttributes redirectAttributes) {
-		User user = (User) session.getAttribute("login");
-		synchronized (icmcService.getSynchronizedIcmc(user)) {
-			FreshFromRBI freshRBIReceiptDb = cashReceiptService.getFreshFromRBIRecordById(freshRBIReceipt.getId(),
-					user.getIcmcId());
-
-			BinTransaction binTxn = cashReceiptService.getBinTxnRecordForRBIFreshedit(freshRBIReceiptDb,
-					user.getIcmcId());
-
-			cashReceiptService.processForUpdatingFreshRBI(binTxn, freshRBIReceipt, freshRBIReceiptDb, user);
-
-		}
-		return new ModelAndView("redirect:./viewFresh");
 	}
 
 	@RequestMapping("/Dirv")
@@ -754,13 +729,11 @@ public class CashReceiptController {
 				throw new RuntimeException("Error while saving Other Bank Receipt, Please try again");
 			}
 			LOG.info("Other Bank Receipt sbBinName.toString() " + sbBinName.toString());
-			prnList.set(0, sbBinName.toString());
-			/*
-			 * LOG.info("DSB end"); if (sbBinName.toString() != "") {
-			 * prnList.set(0, sbBinName.toString()); }
-			 */
+
 			LOG.info("Other Bank Receipt return " + prnList);
 		}
+		prnList.add(sbBinName.toString());
+		// prnList.set(0, sbBinName.toString());
 		return prnList;
 	}
 
@@ -824,10 +797,6 @@ public class CashReceiptController {
 		}
 		map.put("dsbs", dsbs);
 
-		// List<DSB> dsbList = cashReceiptService.getDSBRecord(user, sDate,
-		// eDate);
-		// map.put("dsbs", dsbList);
-
 		List<Tuple> IRVListforBankReceipts = cashReceiptService.getIRVReportRecordForOtherBanks(user.getIcmcId(), sDate,
 				eDate);
 		List<BankReceipt> bankReceipts = new ArrayList<>();
@@ -841,10 +810,6 @@ public class CashReceiptController {
 			bankReceipts.add(bankReceipt);
 		}
 		map.put("bankReceipts", bankReceipts);
-
-		// List<BankReceipt> bankReceiptlist =
-		// cashReceiptService.getBankReceiptRecord(user, sDate, eDate);
-		// map.put("bankReceipts", bankReceiptlist);
 
 		BigDecimal deno1 = BigDecimal.ZERO;
 		BigDecimal deno2 = BigDecimal.ZERO;
@@ -1313,10 +1278,10 @@ public class CashReceiptController {
 		synchronized (icmcService.getSynchronizedIcmc(user)) {
 			DiversionIRV diversionIRVDB = cashReceiptService.getDiversionIRVRecordById(diversionIRV.getId(),
 					user.getIcmcId());
-			Indent indent = processingRoomService.getUpdateIndentIVRRequest(diversionIRV, user.getIcmcId());
+			Indent indent = processingRoomService.getUpdateIndentIVRRequest(diversionIRVDB, user.getIcmcId());
 
 			if ((diversionIRVDB != null && diversionIRVDB.getBinNumber() == null && indent != null
-					&& indent.getPendingBundleRequest().compareTo(diversionIRV.getBundle()) != 0)
+					&& indent.getPendingBundleRequest().compareTo(diversionIRVDB.getBundle()) != 0)
 					|| (diversionIRVDB != null && diversionIRVDB.getBinNumber() != null
 							&& diversionIRVDB.getIsIndent())) {
 				redirectAttributes.addFlashAttribute("errorMsg",

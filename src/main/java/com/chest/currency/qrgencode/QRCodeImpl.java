@@ -1,7 +1,3 @@
-/*******************************************************************************
- * /* Copyright (C) Indicsoft Technologies Pvt Ltd
- * * All Rights Reserved.
- *******************************************************************************/
 package com.chest.currency.qrgencode;
 
 import java.io.File;
@@ -109,6 +105,37 @@ public class QRCodeImpl implements QRCodeGen {
 		return filePath;
 	}
 
+	public String generateDSBQR(DSB dsb) {
+		LOG.debug("QR Code Dsb data" + dsb);
+		String filePath = getPath(dsb.getInsertBy());
+		String qrCodeData = "";
+		qrCodeData = "Denomination  " + dsb.getDenomination() + "\n" + "Bundle : " + dsb.getBundle() + "\n" + "Total : "
+				+ dsb.getTotal() + "\n" + "Bin :" + dsb.getBin();
+		String charset = "UTF-8"; // or "ISO-8859-1"
+		Map<EncodeHintType, ErrorCorrectionLevel> hintMap = new HashMap<EncodeHintType, ErrorCorrectionLevel>();
+		hintMap.put(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.L);
+
+		try {
+			createQRCode(qrCodeData, filePath, charset, hintMap, 200, 200);
+		} catch (WriterException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		LOG.debug("QR Code image created successfully!");
+
+		try {
+			LOG.debug("Data read from QR Code: " + readQRCode(filePath, charset, hintMap));
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (NotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return filePath;
+	}
+
 	public String generateDirvQR(DiversionIRV dirv) {
 
 		String filePath = getPath(dirv.getInsertBy());
@@ -178,37 +205,6 @@ public class QRCodeImpl implements QRCodeGen {
 		return filePath;
 	}
 
-	public String generateDSBQR(DSB dsb) {
-
-		String filePath = getPath(dsb.getInsertBy());
-		String qrCodeData = "";
-		qrCodeData = "Denomination  " + dsb.getDenomination() + "\n" + "Bundle : " + dsb.getBundle() + "\n" + "Total : "
-				+ dsb.getTotal() + "\n" + "Bin :" + dsb.getBin();
-		String charset = "UTF-8"; // or "ISO-8859-1"
-		Map<EncodeHintType, ErrorCorrectionLevel> hintMap = new HashMap<EncodeHintType, ErrorCorrectionLevel>();
-		hintMap.put(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.L);
-
-		try {
-			createQRCode(qrCodeData, filePath, charset, hintMap, 200, 200);
-		} catch (WriterException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		LOG.debug("QR Code image created successfully!");
-
-		try {
-			LOG.debug("Data read from QR Code: " + readQRCode(filePath, charset, hintMap));
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (NotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		return filePath;
-	}
-
 	public String generateProcessingRoomQR(Process process) {
 		String filePath = getPath(process.getInsertBy());
 		String qrCodeData = "";
@@ -243,9 +239,24 @@ public class QRCodeImpl implements QRCodeGen {
 	public static void createQRCode(String qrCodeData, String filePath, String charset,
 			@SuppressWarnings("rawtypes") Map hintMap, int qrCodeheight, int qrCodewidth)
 			throws WriterException, IOException {
-		BitMatrix matrix = new MultiFormatWriter().encode(new String(qrCodeData.getBytes(charset), charset),
-				BarcodeFormat.QR_CODE, qrCodewidth, qrCodeheight, hintMap);
-		MatrixToImageWriter.writeToFile(matrix, filePath.substring(filePath.lastIndexOf('.') + 1), new File(filePath));
+		try {
+			LOG.info("createQRCode try");
+			LOG.info("filePath " + filePath);
+			LOG.info("hintMap " + hintMap);
+
+			BitMatrix matrix = new MultiFormatWriter().encode(new String(qrCodeData.getBytes(charset), charset),
+					BarcodeFormat.QR_CODE, qrCodewidth, qrCodeheight, hintMap);
+
+			LOG.info("filePath.substring(filePath.lastIndexOf('.') "
+					+ filePath.substring(filePath.lastIndexOf('.') + 1));
+			
+			MatrixToImageWriter.writeToFile(matrix, filePath.substring(filePath.lastIndexOf('.') + 1),
+					new File(filePath));
+
+		} catch (Exception e) {
+			LOG.info("createQRCode catch " + e);
+			e.printStackTrace();
+		}
 	}
 
 	@SuppressWarnings("unchecked")

@@ -150,14 +150,28 @@ public class CashPaymentJpaDaoImpl implements CashPaymentJpaDao {
 	}
 
 	@Override
-	public Boolean updateBranchReceiptForPayment(BigInteger icmcId, String binNum) {
+	public Boolean updateBranchReceiptForPayment(User user, SASAllocation allocation) {
 		QBranchReceipt qBranchReceipt = QBranchReceipt.branchReceipt;
+		JPAQuery jpaQuery = new JPAQuery(em);
+		jpaQuery.from(qBranchReceipt)
+				.where(qBranchReceipt.icmcId.eq(user.getIcmcId()).and(qBranchReceipt.bin.eq(allocation.getBinNumber()))
+						.and(qBranchReceipt.bundle.eq(allocation.getBundle()))
+						.and(qBranchReceipt.status.eq(OtherStatus.RECEIVED)));
 
-		Long success = new JPAUpdateClause(em, qBranchReceipt).where(QBranchReceipt.branchReceipt.icmcId.eq(icmcId))
-				.where(QBranchReceipt.branchReceipt.bin.eq(binNum))
-				.set(QBranchReceipt.branchReceipt.status, OtherStatus.PROCESSED).execute();
+		BranchReceipt branchReceipt = jpaQuery.singleResult(qBranchReceipt);
+		branchReceipt.setStatus(OtherStatus.PROCESSED);
+		branchReceipt.setUpdateBy(user.getId());
+		branchReceipt.setUpdateTime(Calendar.getInstance());
+		em.merge(branchReceipt);
+		/*
+		 * Long success = new JPAUpdateClause(em,
+		 * qBranchReceipt).where(QBranchReceipt.branchReceipt.icmcId.eq(icmcId))
+		 * .where(QBranchReceipt.branchReceipt.bin.eq(allocation.getBinNumber())
+		 * ) .set(QBranchReceipt.branchReceipt.status,
+		 * OtherStatus.PROCESSED).execute();
+		 */
 
-		return success > 0 ? true : false;
+		return true;
 	}
 
 	@Override
@@ -470,6 +484,7 @@ public class CashPaymentJpaDaoImpl implements CashPaymentJpaDao {
 		JPAQuery jpaQuery = getFromQueryForSASRequestFromBinTxn();
 		jpaQuery.where(QBinTransaction.binTransaction.icmcId.eq(soiled.getIcmcId())
 				.and(QBinTransaction.binTransaction.denomination.eq(soiled.getDenomination()))
+				.and(QBinTransaction.binTransaction.verified.ne(YesNo.No))
 				.and(QBinTransaction.binTransaction.receiveBundle.gt(0))
 				.and(QBinTransaction.binTransaction.binType.eq(type)));
 		List<BinTransaction> txnList = jpaQuery.list(QBinTransaction.binTransaction);
@@ -1043,6 +1058,15 @@ public class CashPaymentJpaDaoImpl implements CashPaymentJpaDao {
 	public List<Sas> getSolId(BigInteger icmcId, Calendar sDate, Calendar eDate) {
 		JPAQuery jpaQuery = getFromSASForVoucher();
 		jpaQuery.where(QSas.sas.icmcId.eq(icmcId).and(QSas.sas.insertTime.between(sDate, eDate))
+				.and(QSas.sas.status.eq(1).or(QSas.sas.status.eq(2))));
+		List<Sas> solIdList = jpaQuery.list(QSas.sas);
+		return solIdList;
+	}
+	
+	@Override
+	public List<Sas> getSasRecordById(BigInteger icmcId, Long[] sasId) {
+		JPAQuery jpaQuery = getFromSASForVoucher();
+		jpaQuery.where(QSas.sas.icmcId.eq(icmcId).and(QSas.sas.id.in(sasId))
 				.and(QSas.sas.status.eq(1).or(QSas.sas.status.eq(2))));
 		List<Sas> solIdList = jpaQuery.list(QSas.sas);
 		return solIdList;
@@ -1842,6 +1866,17 @@ public class CashPaymentJpaDaoImpl implements CashPaymentJpaDao {
 		List<SASAllocation> solIdForPaymenta = jpaQuery.list(QSASAllocation.sASAllocation);
 		return solIdForPaymenta;
 	}
+	
+	@Override
+	public List<SASAllocation> getRequestedFromSASAllocation(BigInteger icmcId, Calendar sDate, Calendar eDate) {
+		JPAQuery jpaQuery = new JPAQuery(em);
+		jpaQuery.distinct().from(QSASAllocation.sASAllocation)
+				.where(QSASAllocation.sASAllocation.status.eq(OtherStatus.REQUESTED)
+						.and(QSASAllocation.sASAllocation.insertTime.between(sDate, eDate)))
+				.orderBy(QSASAllocation.sASAllocation.parentId.asc());
+		List<SASAllocation> solIdForPaymenta = jpaQuery.list(QSASAllocation.sASAllocation);
+		return solIdForPaymenta;
+	}
 
 	private JPAQuery getFromQueryForICMCName() {
 		JPAQuery jpaQuery = new JPAQuery(em);
@@ -2414,11 +2449,11 @@ public class CashPaymentJpaDaoImpl implements CashPaymentJpaDao {
 	}
 
 	@Override
-	public void deleteEmptyBinFromBinTransaction(BigInteger icmcId, String binNumber) {
-		new JPADeleteClause(em, QBinTransaction.binTransaction).where(QBinTransaction.binTransaction.icmcId.eq(icmcId)
-				.and(QBinTransaction.binTransaction.binNumber.eq(binNumber))
+	public Boolean deleteEmptyBinFromBinTransaction(BigInteger icmcId, String binNumber) {
+		Long count = new JPADeleteClause(em, QBinTransaction.binTransaction).where(QBinTransaction.binTransaction.icmcId
+				.eq(icmcId).and(QBinTransaction.binTransaction.binNumber.eq(binNumber))
 				.and(QBinTransaction.binTransaction.status.eq(BinStatus.EMPTY))).execute();
-
+		return count > 0 ? true : false;
 	}
 
 	@Override

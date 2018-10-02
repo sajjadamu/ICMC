@@ -177,6 +177,8 @@ public interface CashPaymentService {
 	public List<Tuple> getRecordORVVoucher(String solId, Calendar sDate, Calendar eDate,BigInteger icmcId);
 
 	public List<Sas> getSolId(BigInteger icmcId, Calendar sDate, Calendar eDate);
+	
+	public List<Sas> getSasRecordById(BigInteger icmcId, Long[] sasId);
 
 	public Sas getFileName(BigInteger icmcId);
 	
@@ -344,6 +346,8 @@ public interface CashPaymentService {
 	
 	public List<SASAllocation> getAllTodayAcceptedFromSASAllocation(BigInteger icmcId,Calendar sDate,Calendar eDate);
     
+	public List<SASAllocation> getRequestedFromSASAllocation(BigInteger icmcId,Calendar sDate,Calendar eDate);
+    
 	
 	public CRA getCRADetailById(long id);
 	
@@ -380,7 +384,7 @@ public interface CashPaymentService {
 	
 	public void processForAcceptanceSoiledIndent(SoiledRemittanceAllocation diversionORV,User user);
 	
-	public void deleteEmptyBinFromBinTransaction(BigInteger icmcId, String binNumber);
+	public Boolean deleteEmptyBinFromBinTransaction(BigInteger icmcId, String binNumber);
 	
 	public List<Tuple> getAllShrinkWrapBundleFromBranchReceipt(BigInteger icmcId);
 	

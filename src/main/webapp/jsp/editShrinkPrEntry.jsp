@@ -112,10 +112,10 @@
 			$('#err5').show();
 			isValid = false;
 		}
-		if (($('#srNumber').val().length) != 11) {
+	/* 	if (($('#srNumber').val().length) != 11) {
 			$('#err6').show();
 			isValid = false;
-		}
+		} */
 		if ($('#denomination').val() != 2000
 				&& $('#denomination').val() != 1000
 				&& $('#denomination').val() != 500
@@ -143,7 +143,6 @@
 				url : "././updateShrinkEntry",
 				data : JSON.stringify(branchReceipt),
 				success : function(response) {
-					alert(response[0]);
 					window.location = '././viewShrink';
 				},
 				error : function(e) {
@@ -200,7 +199,7 @@
 										<div class="form-group">
 											<label>SR Number</label>
 											<form:input path="srNumber" id="srNumber" minlenght="11"
-												maxlength="11" cssClass="form-control" />
+												maxlength="11" cssClass="form-control"  />
 											<label id="err5" style="display: none; color: red">Please
 												Enter SR Number</label> <label id="err6"
 												style="display: none; color: red">SR Number should
@@ -247,8 +246,8 @@
 
 										<button type="button" name="print"
 											class="btn btn-lg btn-success btn-block"
-											onclick="SavePrint(); this.disabled=true">Update
-											AND Print QR</button>
+											onclick="SavePrint(); this.disabled=true">Update AND
+											Print QR</button>
 
 									</form:form>
 								</div>

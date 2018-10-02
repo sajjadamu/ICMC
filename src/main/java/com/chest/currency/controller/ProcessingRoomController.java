@@ -1,7 +1,3 @@
-/*******************************************************************************
- * /* Copyright (C) Indicsoft Technologies Pvt Ltd
- * * All Rights Reserved.
- *******************************************************************************/
 package com.chest.currency.controller;
 
 import java.io.BufferedOutputStream;
@@ -107,6 +103,9 @@ public class ProcessingRoomController {
 
 	@Autowired
 	String prnFilePath;
+
+	@Autowired
+	String documentFilePath;
 
 	@RequestMapping("/viewIndentRequest")
 	public ModelAndView viewIndentRequest(HttpSession session) {
@@ -432,7 +431,9 @@ public class ProcessingRoomController {
 		User user = (User) session.getAttribute("login");
 		boolean isAllSuccess = false;
 		synchronized (icmcService.getSynchronizedIcmc(user)) {
+
 			isAllSuccess = processingRoomService.processIndentRequest(bin, bundle, user);
+
 			if (!isAllSuccess) {
 				throw new BaseGuiException("Error while process Indent Request");
 			}
@@ -532,20 +533,9 @@ public class ProcessingRoomController {
 		Process obj = new Process();
 		ModelMap map = new ModelMap();
 		User user = (User) session.getAttribute("login");
-		Calendar sDate = Calendar.getInstance();
-		Calendar eDate = Calendar.getInstance();
+		Calendar sDate = UtilityJpa.getStartDate();
+		Calendar eDate = UtilityJpa.getEndDate();
 
-		sDate.set(Calendar.HOUR, 0);
-		sDate.set(Calendar.HOUR_OF_DAY, 0);
-		sDate.set(Calendar.MINUTE, 0);
-		sDate.set(Calendar.SECOND, 0);
-		sDate.set(Calendar.MILLISECOND, 0);
-
-		eDate.set(Calendar.HOUR, 24);
-		eDate.set(Calendar.HOUR_OF_DAY, 23);
-		eDate.set(Calendar.MINUTE, 59);
-		eDate.set(Calendar.SECOND, 59);
-		eDate.set(Calendar.MILLISECOND, 999);
 		List<Tuple> pendingBundleList = processingRoomService.getPendingBundle(user.getIcmcId(), sDate, eDate);
 		List<Tuple> pendingBundleListForMachine = processingRoomService.getPendingBundleByMachine(user.getIcmcId(),
 				sDate, eDate);
@@ -561,20 +551,9 @@ public class ProcessingRoomController {
 	@RequestMapping("/viewProcess")
 	public ModelAndView viewProcess(HttpSession session) {
 		User user = (User) session.getAttribute("login");
-		Calendar sDate = Calendar.getInstance();
-		Calendar eDate = Calendar.getInstance();
+		Calendar sDate = UtilityJpa.getStartDate();
+		Calendar eDate = UtilityJpa.getEndDate();
 
-		sDate.set(Calendar.HOUR, 0);
-		sDate.set(Calendar.HOUR_OF_DAY, 0);
-		sDate.set(Calendar.MINUTE, 0);
-		sDate.set(Calendar.SECOND, 0);
-		sDate.set(Calendar.MILLISECOND, 0);
-
-		eDate.set(Calendar.HOUR, 24);
-		eDate.set(Calendar.HOUR_OF_DAY, 23);
-		eDate.set(Calendar.MINUTE, 59);
-		eDate.set(Calendar.SECOND, 59);
-		eDate.set(Calendar.MILLISECOND, 999);
 		List<Process> list = processingRoomService.getProcessedDataList(user.getIcmcId(), sDate, eDate);
 		return new ModelAndView("viewProcess", "records", list);
 	}
@@ -582,20 +561,9 @@ public class ProcessingRoomController {
 	@RequestMapping("/acceptProcessingRoomOutput")
 	public ModelAndView acceptProcessingRoomOutput(HttpSession session) {
 		User user = (User) session.getAttribute("login");
-		Calendar sDate = Calendar.getInstance();
-		Calendar eDate = Calendar.getInstance();
+		Calendar sDate = UtilityJpa.getStartDate();
+		Calendar eDate = UtilityJpa.getEndDate();
 
-		sDate.set(Calendar.HOUR, 0);
-		sDate.set(Calendar.HOUR_OF_DAY, 0);
-		sDate.set(Calendar.MINUTE, 0);
-		sDate.set(Calendar.SECOND, 0);
-		sDate.set(Calendar.MILLISECOND, 0);
-
-		eDate.set(Calendar.HOUR, 24);
-		eDate.set(Calendar.HOUR_OF_DAY, 23);
-		eDate.set(Calendar.MINUTE, 59);
-		eDate.set(Calendar.SECOND, 59);
-		eDate.set(Calendar.MILLISECOND, 999);
 		List<Process> list = processingRoomService.getProcessedDataList(user.getIcmcId(), sDate, eDate);
 		return new ModelAndView("acceptProcessingRoomOutput", "records", list);
 	}
@@ -612,19 +580,9 @@ public class ProcessingRoomController {
 	public ModelAndView dataForMachineAllocation(HttpSession session) {
 		User user = (User) session.getAttribute("login");
 		ModelMap map = new ModelMap();
-		Calendar sDate = Calendar.getInstance();
-		Calendar eDate = Calendar.getInstance();
-		sDate.set(Calendar.HOUR, 0);
-		sDate.set(Calendar.HOUR_OF_DAY, 0);
-		sDate.set(Calendar.MINUTE, 0);
-		sDate.set(Calendar.SECOND, 0);
-		sDate.set(Calendar.MILLISECOND, 0);
+		Calendar sDate = UtilityJpa.getStartDate();
+		Calendar eDate = UtilityJpa.getEndDate();
 
-		eDate.set(Calendar.HOUR, 24);
-		eDate.set(Calendar.HOUR_OF_DAY, 23);
-		eDate.set(Calendar.MINUTE, 59);
-		eDate.set(Calendar.SECOND, 59);
-		eDate.set(Calendar.MILLISECOND, 999);
 		List<Indent> indentListForBranch = processingRoomService
 				.getAggregatedIndentRequestForMachineAllocation(user.getIcmcId(), CashSource.BRANCH, sDate, eDate);
 		List<Indent> indentListForDSB = processingRoomService
@@ -884,7 +842,10 @@ public class ProcessingRoomController {
 	@RequestMapping("/DefineKeySet")
 	public ModelAndView defineKeySet() {
 		DefineKeySet obj = new DefineKeySet();
-		return new ModelAndView("/DefineKeySet", "user", obj);
+		ModelMap map = new ModelMap();
+		map.put("user", obj);
+		map.addAttribute("documentFilePath", "./files/" + documentFilePath);
+		return new ModelAndView("/DefineKeySet", map);
 	}
 
 	private static CellProcessor[] getKeySet() {
@@ -1042,19 +1003,9 @@ public class ProcessingRoomController {
 	public ModelAndView viewAssignVaultCustodian(HttpSession session) {
 		User user = (User) session.getAttribute("login");
 		ModelMap map = new ModelMap();
-		Calendar sDate = Calendar.getInstance();
-		Calendar eDate = Calendar.getInstance();
-		sDate.set(Calendar.HOUR, 0);
-		sDate.set(Calendar.HOUR_OF_DAY, 0);
-		sDate.set(Calendar.MINUTE, 0);
-		sDate.set(Calendar.SECOND, 0);
-		sDate.set(Calendar.MILLISECOND, 0);
+		Calendar sDate = UtilityJpa.getStartDate();
+		Calendar eDate = UtilityJpa.getEndDate();
 
-		eDate.set(Calendar.HOUR, 24);
-		eDate.set(Calendar.HOUR_OF_DAY, 23);
-		eDate.set(Calendar.MINUTE, 59);
-		eDate.set(Calendar.SECOND, 59);
-		eDate.set(Calendar.MILLISECOND, 999);
 		List<AssignVaultCustodian> assginVaultCustodianList = processingRoomService
 				.getAssignVaultCustodian(user.getIcmcId(), sDate, eDate);
 		for (AssignVaultCustodian assignVaultCustodian : assginVaultCustodianList) {
@@ -1164,19 +1115,9 @@ public class ProcessingRoomController {
 	public ModelAndView kmrReport(HttpSession session) {
 		User user = (User) session.getAttribute("login");
 		ModelMap map = new ModelMap();
-		Calendar sDate = Calendar.getInstance();
-		Calendar eDate = Calendar.getInstance();
-		sDate.set(Calendar.HOUR, 0);
-		sDate.set(Calendar.HOUR_OF_DAY, 0);
-		sDate.set(Calendar.MINUTE, 0);
-		sDate.set(Calendar.SECOND, 0);
-		sDate.set(Calendar.MILLISECOND, 0);
+		Calendar sDate = UtilityJpa.getStartDate();
+		Calendar eDate = UtilityJpa.getEndDate();
 
-		eDate.set(Calendar.HOUR, 24);
-		eDate.set(Calendar.HOUR_OF_DAY, 23);
-		eDate.set(Calendar.MINUTE, 59);
-		eDate.set(Calendar.SECOND, 59);
-		eDate.set(Calendar.MILLISECOND, 999);
 		List<AssignVaultCustodian> assginVaultCustodianList = processingRoomService
 				.getAssignVaultCustodian(user.getIcmcId(), sDate, eDate);
 		for (AssignVaultCustodian assignVaultCustodian : assginVaultCustodianList) {
@@ -1192,22 +1133,9 @@ public class ProcessingRoomController {
 	@RequestMapping("/bundleRequestForMachineProcessing")
 	public ModelAndView bundleRequestedForMachineProcessing(HttpSession session) {
 		User user = (User) session.getAttribute("login");
-		Calendar sDate = Calendar.getInstance();
-		;
-		Calendar eDate = Calendar.getInstance();
-		;
 
-		sDate.set(Calendar.HOUR, 0);
-		sDate.set(Calendar.HOUR_OF_DAY, 0);
-		sDate.set(Calendar.MINUTE, 0);
-		sDate.set(Calendar.SECOND, 0);
-		sDate.set(Calendar.MILLISECOND, 0);
-
-		eDate.set(Calendar.HOUR, 24);
-		eDate.set(Calendar.HOUR_OF_DAY, 23);
-		eDate.set(Calendar.MINUTE, 59);
-		eDate.set(Calendar.SECOND, 59);
-		eDate.set(Calendar.MILLISECOND, 999);
+		Calendar sDate = UtilityJpa.getStartDate();
+		Calendar eDate = UtilityJpa.getEndDate();
 
 		List<MachineAllocation> machineAllocationList = processingRoomService
 				.getMachineAllocationRecordForProcessing(user.getIcmcId(), sDate, eDate);
@@ -1630,17 +1558,8 @@ public class ProcessingRoomController {
 			sDate = dateRange.getFromDate();
 			eDate = dateRange.getToDate();
 		}
-		sDate.set(Calendar.HOUR, 0);
-		sDate.set(Calendar.HOUR_OF_DAY, 0);
-		sDate.set(Calendar.MINUTE, 0);
-		sDate.set(Calendar.SECOND, 0);
-		sDate.set(Calendar.MILLISECOND, 0);
-
-		eDate.set(Calendar.HOUR, 24);
-		eDate.set(Calendar.HOUR_OF_DAY, 23);
-		eDate.set(Calendar.MINUTE, 59);
-		eDate.set(Calendar.SECOND, 59);
-		eDate.set(Calendar.MILLISECOND, 999);
+		sDate = UtilityJpa.getStartDate();
+		eDate = UtilityJpa.getEndDate();
 
 		List<Discrepancy> discrepancyList = null;
 
@@ -1671,17 +1590,8 @@ public class ProcessingRoomController {
 			sDate = dateRange.getFromDate();
 			eDate = (Calendar) dateRange.getFromDate().clone();
 		}
-		sDate.set(Calendar.HOUR, 0);
-		sDate.set(Calendar.HOUR_OF_DAY, 0);
-		sDate.set(Calendar.MINUTE, 0);
-		sDate.set(Calendar.SECOND, 0);
-		sDate.set(Calendar.MILLISECOND, 0);
-
-		eDate.set(Calendar.HOUR, 24);
-		eDate.set(Calendar.HOUR_OF_DAY, 23);
-		eDate.set(Calendar.MINUTE, 59);
-		eDate.set(Calendar.SECOND, 59);
-		eDate.set(Calendar.MILLISECOND, 999);
+		sDate = UtilityJpa.getStartDate();
+		eDate = UtilityJpa.getEndDate();
 
 		List<Tuple> machineAllocationList = processingRoomService.getMachineAllocationRecord(user.getIcmcId(), sDate,
 				eDate);
@@ -1707,20 +1617,8 @@ public class ProcessingRoomController {
 	public ModelAndView returnBackToVault(HttpSession session) {
 		User user = (User) session.getAttribute("login");
 		ModelMap map = new ModelMap();
-		Calendar sDate = Calendar.getInstance();
-		Calendar eDate = Calendar.getInstance();
-
-		sDate.set(Calendar.HOUR, 0);
-		sDate.set(Calendar.HOUR_OF_DAY, 0);
-		sDate.set(Calendar.MINUTE, 0);
-		sDate.set(Calendar.SECOND, 0);
-		sDate.set(Calendar.MILLISECOND, 0);
-
-		eDate.set(Calendar.HOUR, 24);
-		eDate.set(Calendar.HOUR_OF_DAY, 23);
-		eDate.set(Calendar.MINUTE, 59);
-		eDate.set(Calendar.SECOND, 59);
-		eDate.set(Calendar.MILLISECOND, 999);
+		Calendar sDate = UtilityJpa.getStartDate();
+		Calendar eDate = UtilityJpa.getEndDate();
 
 		List<MachineAllocation> branchBundleReturned = processingRoomService
 				.getAggregatedBundleToBeReturnedToVault(user.getIcmcId(), CashSource.BRANCH, sDate, eDate);
@@ -2069,20 +1967,8 @@ public class ProcessingRoomController {
 	public ModelAndView acceptMutilated(HttpSession session) {
 		User user = (User) session.getAttribute("login");
 
-		Calendar sDate = Calendar.getInstance();
-		Calendar eDate = Calendar.getInstance();
-
-		sDate.set(Calendar.HOUR, 0);
-		sDate.set(Calendar.HOUR_OF_DAY, 0);
-		sDate.set(Calendar.MINUTE, 0);
-		sDate.set(Calendar.SECOND, 0);
-		sDate.set(Calendar.MILLISECOND, 0);
-
-		eDate.set(Calendar.HOUR, 23);
-		eDate.set(Calendar.HOUR_OF_DAY, 23);
-		eDate.set(Calendar.MINUTE, 59);
-		eDate.set(Calendar.SECOND, 59);
-		eDate.set(Calendar.MILLISECOND, 999);
+		Calendar sDate = UtilityJpa.getStartDate();
+		Calendar eDate = UtilityJpa.getEndDate();
 
 		ModelMap map = new ModelMap();
 
@@ -2112,17 +1998,9 @@ public class ProcessingRoomController {
 			eDate = dateRange.getToDate();
 		}
 
-		sDate.set(Calendar.HOUR, 0);
-		sDate.set(Calendar.HOUR_OF_DAY, 0);
-		sDate.set(Calendar.MINUTE, 0);
-		sDate.set(Calendar.SECOND, 0);
-		sDate.set(Calendar.MILLISECOND, 0);
+		sDate = UtilityJpa.getStartDate();
+		eDate = UtilityJpa.getEndDate();
 
-		eDate.set(Calendar.HOUR, 24);
-		eDate.set(Calendar.HOUR_OF_DAY, 23);
-		eDate.set(Calendar.MINUTE, 59);
-		eDate.set(Calendar.SECOND, 59);
-		eDate.set(Calendar.MILLISECOND, 999);
 		ModelMap map = new ModelMap();
 		List<AssignVaultCustodian> assginVaultCustodianList = processingRoomService
 				.getAssignVaultCustodian(user.getIcmcId(), sDate, eDate);
@@ -2191,28 +2069,13 @@ public class ProcessingRoomController {
 		Calendar sDate = Calendar.getInstance();
 		Calendar eDate = Calendar.getInstance();
 
-		/*
-		 * if (dateRange.getFromDate() != null) { sDate =
-		 * dateRange.getFromDate(); eDate = (Calendar)
-		 * dateRange.getFromDate().clone(); }
-		 */
-
 		if (dateRange.getFromDate() != null && dateRange.getToDate() != null) {
 			sDate = dateRange.getFromDate();
 			eDate = dateRange.getToDate();
 		}
 
-		sDate.set(Calendar.HOUR, 0);
-		sDate.set(Calendar.HOUR_OF_DAY, 0);
-		sDate.set(Calendar.MINUTE, 0);
-		sDate.set(Calendar.SECOND, 0);
-		sDate.set(Calendar.MILLISECOND, 0);
-
-		eDate.set(Calendar.HOUR, 24);
-		eDate.set(Calendar.HOUR_OF_DAY, 23);
-		eDate.set(Calendar.MINUTE, 59);
-		eDate.set(Calendar.SECOND, 59);
-		eDate.set(Calendar.MILLISECOND, 999);
+		sDate = UtilityJpa.getStartDate();
+		eDate = UtilityJpa.getEndDate();
 
 		List<Tuple> mutilatedNotesSummary = null;
 
@@ -2342,17 +2205,9 @@ public class ProcessingRoomController {
 			eDate = dateRange.getToDate();
 		}
 
-		sDate.set(Calendar.HOUR, 0);
-		sDate.set(Calendar.HOUR_OF_DAY, 0);
-		sDate.set(Calendar.MINUTE, 0);
-		sDate.set(Calendar.SECOND, 0);
-		sDate.set(Calendar.MILLISECOND, 0);
+		sDate = UtilityJpa.getStartDate();
+		eDate = UtilityJpa.getEndDate();
 
-		eDate.set(Calendar.HOUR, 24);
-		eDate.set(Calendar.HOUR_OF_DAY, 23);
-		eDate.set(Calendar.MINUTE, 59);
-		eDate.set(Calendar.SECOND, 59);
-		eDate.set(Calendar.MILLISECOND, 999);
 		List<MachineDowntimeUpdation> machineDowntimeList = machineService.getListmachineDownTime(user.getIcmcId(),
 				sDate, eDate);
 		List<Long> diffList = new ArrayList<Long>();
@@ -2395,19 +2250,9 @@ public class ProcessingRoomController {
 		suspenseOpeningBalance.setInsertBy(user.getId());
 		suspenseOpeningBalance.setUpdateBy(user.getId());
 		suspenseOpeningBalance.setCurrentVersion("TRUE");
-		Calendar sDate = Calendar.getInstance();
-		Calendar eDate = Calendar.getInstance();
-		sDate.set(Calendar.HOUR, 0);
-		sDate.set(Calendar.HOUR_OF_DAY, 0);
-		sDate.set(Calendar.MINUTE, 0);
-		sDate.set(Calendar.SECOND, 0);
-		sDate.set(Calendar.MILLISECOND, 0);
 
-		eDate.set(Calendar.HOUR, 24);
-		eDate.set(Calendar.HOUR_OF_DAY, 23);
-		eDate.set(Calendar.MINUTE, 59);
-		eDate.set(Calendar.SECOND, 59);
-		eDate.set(Calendar.MILLISECOND, 999);
+		Calendar sDate = UtilityJpa.getStartDate();
+		Calendar eDate = UtilityJpa.getEndDate();
 
 		suspenseOpeningBalance.setInsertTime(sDate);
 		suspenseOpeningBalance.setUpdateTime(eDate);
@@ -2437,16 +2282,8 @@ public class ProcessingRoomController {
 			eDate = dateRange.getToDate();
 		}
 
-		sDate.set(Calendar.HOUR, 0);
-		sDate.set(Calendar.HOUR_OF_DAY, 0);
-		sDate.set(Calendar.MINUTE, 0);
-		sDate.set(Calendar.SECOND, 0);
-		sDate.set(Calendar.MILLISECOND, 0);
-
-		eDate.set(Calendar.HOUR_OF_DAY, 23);
-		eDate.set(Calendar.MINUTE, 59);
-		eDate.set(Calendar.SECOND, 59);
-		eDate.set(Calendar.MILLISECOND, 999);
+		sDate = UtilityJpa.getStartDate();
+		eDate = UtilityJpa.getEndDate();
 
 		Calendar pSDate = Calendar.getInstance();
 
@@ -2463,16 +2300,8 @@ public class ProcessingRoomController {
 			pSDate.add(Calendar.DATE, -1);
 			pEDate.add(Calendar.DATE, -1);
 		}
-		pSDate.set(Calendar.HOUR, 0);
-		pSDate.set(Calendar.HOUR_OF_DAY, 0);
-		pSDate.set(Calendar.MINUTE, 0);
-		pSDate.set(Calendar.SECOND, 0);
-		pSDate.set(Calendar.MILLISECOND, 0);
-
-		pEDate.set(Calendar.HOUR_OF_DAY, 23);
-		pEDate.set(Calendar.MINUTE, 59);
-		pEDate.set(Calendar.SECOND, 59);
-		pEDate.set(Calendar.MILLISECOND, 999);
+		pSDate = UtilityJpa.getStartDate();
+		pEDate = UtilityJpa.getEndDate();
 
 		Integer closingBalDeno5 = 0;
 		Integer closingBalDeno10 = 0;
@@ -2753,19 +2582,8 @@ public class ProcessingRoomController {
 		suspenseOpeningBalance.setInsertBy(user.getId());
 		suspenseOpeningBalance.setUpdateBy(user.getId());
 		suspenseOpeningBalance.setCurrentVersion("TRUE");
-		Calendar sDate = Calendar.getInstance();
-		Calendar eDate = Calendar.getInstance();
-		sDate.set(Calendar.HOUR, 0);
-		sDate.set(Calendar.HOUR_OF_DAY, 0);
-		sDate.set(Calendar.MINUTE, 0);
-		sDate.set(Calendar.SECOND, 0);
-		sDate.set(Calendar.MILLISECOND, 0);
-
-		eDate.set(Calendar.HOUR, 24);
-		eDate.set(Calendar.HOUR_OF_DAY, 23);
-		eDate.set(Calendar.MINUTE, 59);
-		eDate.set(Calendar.SECOND, 59);
-		eDate.set(Calendar.MILLISECOND, 999);
+		Calendar sDate = UtilityJpa.getStartDate();
+		Calendar eDate = UtilityJpa.getEndDate();
 
 		suspenseOpeningBalance.setInsertTime(sDate);
 		suspenseOpeningBalance.setUpdateTime(eDate);
@@ -2806,19 +2624,9 @@ public class ProcessingRoomController {
 		Calendar nDate = Calendar.getInstance();
 		Calendar nsDate = Calendar.getInstance();
 		Calendar neDate = Calendar.getInstance();
-		Calendar sDate = Calendar.getInstance();
-		Calendar eDate = Calendar.getInstance();
 
-		sDate.set(Calendar.HOUR, 0);
-		sDate.set(Calendar.HOUR_OF_DAY, 0);
-		sDate.set(Calendar.MINUTE, 0);
-		sDate.set(Calendar.SECOND, 0);
-		sDate.set(Calendar.MILLISECOND, 0);
-
-		eDate.set(Calendar.HOUR_OF_DAY, 23);
-		eDate.set(Calendar.MINUTE, 59);
-		eDate.set(Calendar.SECOND, 59);
-		eDate.set(Calendar.MILLISECOND, 999);
+		Calendar sDate = UtilityJpa.getStartDate();
+		Calendar eDate = UtilityJpa.getEndDate();
 
 		nsDate.add(Calendar.DATE, 1);
 		nsDate.set(Calendar.HOUR, 0);
@@ -3116,20 +2924,6 @@ public class ProcessingRoomController {
 			@RequestParam(value = "deposit_20") BigDecimal deposit_20,
 			@RequestParam(value = "deposit_10") BigDecimal deposit_10, HttpSession session) {
 		User user = (User) session.getAttribute("login");
-		Calendar pSDate = Calendar.getInstance();
-		Calendar eDate = Calendar.getInstance();
-
-		pSDate.set(Calendar.HOUR, 0);
-		pSDate.set(Calendar.HOUR_OF_DAY, 0);
-		pSDate.set(Calendar.MINUTE, 0);
-		pSDate.set(Calendar.SECOND, 0);
-		pSDate.set(Calendar.MILLISECOND, 0);
-
-		eDate.set(Calendar.HOUR, 24);
-		eDate.set(Calendar.HOUR_OF_DAY, 23);
-		eDate.set(Calendar.MINUTE, 59);
-		eDate.set(Calendar.SECOND, 59);
-		eDate.set(Calendar.MILLISECOND, 999);
 
 		synchronized (icmcService.getSynchronizedIcmc(user)) {
 			processingRoomService.updateSuspenseBalance(id, deposit_2000, deposit_500, deposit_200, deposit_100,
@@ -3144,19 +2938,8 @@ public class ProcessingRoomController {
 	public ModelAndView suspenseCashDetails(HttpSession session) {
 		User user = (User) session.getAttribute("login");
 
-		Calendar sDate = Calendar.getInstance();
-		Calendar eDate = Calendar.getInstance();
-
-		sDate.set(Calendar.HOUR, 0);
-		sDate.set(Calendar.HOUR_OF_DAY, 0);
-		sDate.set(Calendar.MINUTE, 0);
-		sDate.set(Calendar.SECOND, 0);
-		sDate.set(Calendar.MILLISECOND, 0);
-
-		eDate.set(Calendar.HOUR_OF_DAY, 23);
-		eDate.set(Calendar.MINUTE, 59);
-		eDate.set(Calendar.SECOND, 59);
-		eDate.set(Calendar.MILLISECOND, 999);
+		Calendar sDate = UtilityJpa.getStartDate();
+		Calendar eDate = UtilityJpa.getEndDate();
 
 		Integer closingBalDeno10 = 0;
 		Integer closingBalDeno20 = 0;

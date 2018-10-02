@@ -246,6 +246,23 @@
 																<td><fmt:formatDate pattern="yyyy-MM-dd"
 																		value="${currenctDate}" /></td>
 															</tr>
+															<tr>
+																<td><fmt:formatDate pattern="yyyy-MM-dd"
+																		value="${currenctDate}" /></td>
+															</tr>
+															<tr>
+																<td><fmt:formatDate pattern="yyyy-MM-dd"
+																		value="${currenctDate}" /></td>
+															</tr>
+															<tr>
+																<td><fmt:formatDate pattern="yyyy-MM-dd"
+																		value="${currenctDate}" /></td>
+															</tr>
+															<tr>
+																<td><fmt:formatDate pattern="yyyy-MM-dd"
+																		value="${currenctDate}" /></td>
+															</tr>
+
 
 
 														</table>
@@ -282,6 +299,18 @@
 															</tr>
 															<tr>
 																<td>5</td>
+															</tr>
+															<tr>
+																<td>10</td>
+															</tr>
+															<tr>
+																<td>5</td>
+															</tr>
+															<tr>
+																<td>2</td>
+															</tr>
+															<tr>
+																<td>1</td>
 															</tr>
 														</table>
 													</td>
@@ -359,6 +388,31 @@
 																<td>${atmAndIssuableBundleSum.denomination5*1000*5}
 																</td>
 															</tr>
+															<tr>
+																<td>${summaryListForCoins.denomination10}</td>
+																<td>${0}</td>
+																<td>${summaryListForCoins.denomination10}</td>
+																<td>${summaryListForCoins.denomination10*2000}</td>
+															</tr>
+															<tr>
+																<td>${summaryListForCoins.denomination5}</td>
+																<td>${0}</td>
+																<td>${summaryListForCoins.denomination5}</td>
+																<td>${summaryListForCoins.denomination5*2500}</td>
+															</tr>
+															<tr>
+																<td>${summaryListForCoins.denomination2}</td>
+																<td>${0}</td>
+																<td>${summaryListForCoins.denomination2}</td>
+																<td>${summaryListForCoins.denomination2*2500}</td>
+															</tr>
+															<tr>
+																<td>${summaryListForCoins.denomination1}</td>
+																<td>${0}</td>
+																<td>${summaryListForCoins.denomination1}</td>
+																<td>${summaryListForCoins.denomination1*2500}</td>
+															</tr>
+
 
 														</table>
 													</td>
@@ -659,7 +713,7 @@
 														.createElement('a');
 												a.href = data_type + ', '
 														+ table_html;
-												a.download = 'exported_table_'
+												a.download = 'Cash-Movement-Register-'
 														+ Math
 																.floor((Math
 																		.random() * 9999999) + 1000000)

@@ -142,7 +142,7 @@
 											%>
 											
 											<tr>
-												<td>${userName}</td>
+												<td><%= entry.getValue().getAccountNumber() %></td>
 												<td>Kindly find the discrepancy details.</td>
 												<td>ICMC-${icmcName}</td>
 												<td><%= entry.getValue().getBranch() %>-<%=entry.getValue().getSolId() %></td>
@@ -217,7 +217,7 @@ $(document).ready(function() {
 
 	    var a = document.createElement('a');
 	    a.href = data_type + ', ' + table_html;
-	    a.download = 'ICore-Formate-List' + Math.floor((Math.random() * 9999999) + 1000000) + '.xls';
+	    a.download = 'FCRM-Formate-' + Math.floor((Math.random() * 9999999) + 1000000) + '.xls';
 	    a.click();
 	  });
 	});

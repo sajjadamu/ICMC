@@ -113,7 +113,7 @@ public class BankReceipt {
 	protected BinCategoryType binCategoryType;
 	
 	@Basic
-	@Column(name = "IS_INDENT", nullable = false, columnDefinition = "TINYINT(1)")
+	@Column(name = "IS_INDENT", nullable = false)
 	protected Boolean isIndent = false;
 
 	@Transient

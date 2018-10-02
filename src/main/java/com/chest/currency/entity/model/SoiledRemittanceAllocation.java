@@ -1,10 +1,3 @@
-/*******************************************************************************
- * /* Copyright (C) Indicsoft Technologies Pvt Ltd
- * * All Rights Reserved.
- *******************************************************************************/
-/**
- * 
- */
 package com.chest.currency.entity.model;
 
 import java.math.BigDecimal;
@@ -36,10 +29,7 @@ import com.chest.currency.enums.CurrencyType;
 import com.chest.currency.enums.DateTimePattern;
 import com.chest.currency.enums.OtherStatus;
 
-/**
- * @author root
- *
- */
+
 @Entity(name = "SoiledRemittanceAllocation")
 @Table(name = "SOILED_REMITTANCE_ALLOCATION")
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
@@ -49,7 +39,6 @@ import com.chest.currency.enums.OtherStatus;
 public class SoiledRemittanceAllocation {
 	
 	@Id
-	//@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "ID")
 	@GeneratedValue(generator = "SOILED_REMIT_ALLOC_SEQ")
 	@SequenceGenerator(name = "SOILED_REMIT_ALLOC_SEQ", sequenceName = "SOILED_REMIT_ALLOC_SEQ", allocationSize = 100)

@@ -97,7 +97,7 @@ public interface CashPaymentJpaDao {
 
 	public boolean insertInSASAllocation(List<SASAllocation> eligibleSASRequestList);
 
-	public Boolean updateBranchReceiptForPayment(BigInteger icmcId,String binNum);
+	public Boolean updateBranchReceiptForPayment(User user, SASAllocation binNum);
 
 	public void updateSasAllocationForCancelEditBranchPayment(BigInteger icmcId, long id);
 
@@ -223,6 +223,8 @@ public interface CashPaymentJpaDao {
 	public List<Tuple> getRecordORVVoucher(String solId, Calendar sDate, Calendar eDate, BigInteger icmcId);
 
 	public List<Sas> getSolId(BigInteger icmcId, Calendar sDate, Calendar eDate);
+	
+	public List<Sas> getSasRecordById(BigInteger icmcId, Long[] sasId);
 
 	public Sas getFileName(BigInteger icmcId);
 
@@ -347,6 +349,8 @@ public interface CashPaymentJpaDao {
 
 	public List<SASAllocation> getAllTodayAcceptedFromSASAllocation(BigInteger icmcId, Calendar sDate, Calendar eDate);
 
+	public List<SASAllocation> getRequestedFromSASAllocation(BigInteger icmcId, Calendar sDate, Calendar eDate);
+
 	public String getICMCName(BigInteger icmcId);
 
 	public Long cancelSAS(User user, Sas sas);
@@ -441,7 +445,7 @@ public interface CashPaymentJpaDao {
 
 	public List<CRA> valueFromCRA(BigInteger icmcId, long craId);
 
-	public void deleteEmptyBinFromBinTransaction(BigInteger icmcId, String binNumber);
+	public Boolean deleteEmptyBinFromBinTransaction(BigInteger icmcId, String binNumber);
 
 	public boolean getShrinkBundleFromBrancheReceipt(SASAllocation sasAllocation, CashSource cashSource);
 

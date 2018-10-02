@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+	pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <html lang="en">
 <head>
@@ -8,37 +9,38 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="">
 <meta name="author" content="">
-<link rel="shortcut icon" href="./resources/logo/favicon.ico" type="image/x-icon">
+<link rel="shortcut icon" href="./resources/logo/favicon.ico"
+	type="image/x-icon">
 
-<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script type="text/javascript"
+	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script type="text/javascript" src="./js/jquery.validate.min.js"></script>
 
 <title>ICICI : Repeatability Testing</title>
 
 <script type="text/javascript">
-function doAjaxForMachineSerialNo() {
-	addHeader();
-	var machineNo = $('#machineNo').val();
-	$.ajax({
-		type : "POST",
-		url : "././getMachineSerialNo",
-		data : "machineNo=" + machineNo,
-		success : function(response) {
-			$('#machineSerialNo').val(response);
-		},
-		error : function(e) {
-			alert('Error: ' + e);
-		}
-	});
-}
+	function doAjaxForMachineSerialNo() {
+		addHeader();
+		var machineNo = $('#machineNo').val();
+		$.ajax({
+			type : "POST",
+			url : "././getMachineSerialNo",
+			data : "machineNo=" + machineNo,
+			success : function(response) {
+				$('#machineSerialNo').val(response);
+			},
+			error : function(e) {
+				alert('Error: ' + e);
+			}
+		});
+	}
 
-function doAjaxPost() {
-	  // get the form values  
-	  var Bundle = $('#bundle').val();
-	  var total = Bundle*1000;
-	   $('#totalNotes').val(total);
-	} 
-
+	function doAjaxPost() {
+		// get the form values  
+		var Bundle = $('#bundle').val();
+		var total = Bundle * 1000;
+		$('#totalNotes').val(total);
+	}
 </script>
 
 <!-- Bootstrap Core CSS -->
@@ -86,24 +88,25 @@ function doAjaxPost() {
 				<div class="col-lg-12">
 					<div class="panel panel-default">
 						<div class="panel-heading">
-                        	<ul>
-                        		<li>
-	                        		<a href="././viewRepeatabilityTestInput"><i
+							<ul>
+								<li><a href="././viewRepeatabilityTestInput"><i
 										class="fa fa-table fa-fw"></i> View Repeatability Test Details</a>
 								</li>
-							</ul>Repeatability Testing
-                        </div>
+							</ul>
+							Repeatability Testing
+						</div>
 						<div class="panel-body">
-							<div class="row">
-								<div class="col-lg-6">
-									<!--<form role="form">-->
-									<form:form id="userPage" action="AddRepeatabilityTestInput" method="post" name="userPage"
-										modelAttribute="user" autocomplete="off" >
-										
-										 <table class="table table-striped table-bordered table-hover" id="tableValue">
-                                 
-		                                    <thead>
-		                                    	<tr>
+							<div class="dataTable_wrapper">
+								<div id="table_wrapper">
+									<form:form id="userPage" action="AddRepeatabilityTestInput"
+										method="post" name="userPage" modelAttribute="user"
+										autocomplete="off">
+
+										<table class="table table-striped table-bordered table-hover"
+											id="tableValue">
+
+											<thead>
+												<tr>
 													<th>ICMC Name</th>
 													<th>Date</th>
 													<th>Machine No</th>
@@ -118,95 +121,85 @@ function doAjaxPost() {
 													<th>Reject</th>
 													<th>Average Compatibility Variance (in %)</th>
 												</tr>
-		                       				</thead>
-		                                   
-		                                    <tbody>
-													<tr>
-														<td></td>
-														<td></td>
-														<td></td>
-														<td></td>
-														<td></td>
-														<td>1st Run</td>
-														<td>
-															<form:input path="bundle" id="bundle" name="bundle" 
-																maxlength="10" cssClass="form-control" onkeyup="doAjaxPost()" />
-														</td>
-														<td>
-															<form:input path="totalNotes" id="totalNotes" name="totalNotes" maxlength="10" cssClass="form-control" />
-														</td>
-														<td>
-															<form:input path="currencyType" id="currencyType" name="currencyType" cssClass="form-control" />
-														</td>
-														<td>
-															<form:input path="currencyType" id="currencyType" name="currencyType" cssClass="form-control" />
-														</td>
-														<td>
-															<form:input path="currencyType" id="currencyType" name="currencyType" cssClass="form-control" />
-														</td>
-														<td></td>
-														<td></td>
-													</tr>
-													<tr>
-														<%-- <td>${repeatabilityTestInput.icmcId}</td> --%>
-														<td>${icmcName}</td>
-														<td></td>
-														<td>
-															<form:select path="machineNo" id="machineNo" name="machineNo" 
-																cssClass="form-control" onchange="doAjaxForMachineSerialNo()">
-																<form:option value="">Select Machine No</form:option>
-																<form:options items="${machineList}" />
-															</form:select>
-														</td>
-														<td>
-															<form:input path="machineSerialNo" id="machineSerialNo" name="machineSerialNo" 
-																maxlength="10" readonly="true" cssClass="form-control" />
-														</td>
-														<td>
-															<form:select path="denomination" cssClass="form-control">
-																<form:option value="">Select Denomination</form:option>
-																<form:options items="${denominationList}" 
-																	itemLabel="denomination" itemValue="denomination" />
-															</form:select>
-														</td>
-														<td>2nd Run</td>
-														<td>
-															<form:input path="bundle" id="bundle" name="bundle" 
-																maxlength="10" cssClass="form-control" onkeyup="doAjaxPost()" />
-														</td>
-														<td>
-															<form:input path="totalNotes" id="totalNotes" name="totalNotes" maxlength="10" cssClass="form-control" />
-														</td>
-														<td>
-															<form:input path="currencyType" id="currencyType" name="currencyType" cssClass="form-control" />
-														</td>
-														<td>
-															<form:input path="currencyType" id="currencyType" name="currencyType" cssClass="form-control" />
-														</td>
-														<td>
-															<form:input path="currencyType" id="currencyType" name="currencyType" cssClass="form-control" />
-														</td>
-														<td></td>
-														<td></td>
-													</tr>
-													<tr>
-														<td></td>
-														<td></td>
-														<td></td>
-														<td></td>
-														<td></td>
-														<td>% of Variation</td>
-														<td></td>
-														<td></td>
-														<td></td>
-														<td></td>
-														<td></td>
-														<td></td>
-														<td></td>
-													</tr>
-		                                    </tbody>
-		                                </table>
-										
+											</thead>
+
+											<tbody>
+												<tr>
+													<td></td>
+													<td></td>
+													<td></td>
+													<td></td>
+													<td></td>
+													<td>1st Run</td>
+													<td><form:input path="bundle" id="bundle"
+															name="bundle" maxlength="10" cssClass="form-control"
+															onkeyup="doAjaxPost()" /></td>
+													<td><form:input path="totalNotes" id="totalNotes"
+															name="totalNotes" maxlength="10" cssClass="form-control" />
+													</td>
+													<td><form:input path="currencyType" id="currencyType"
+															name="currencyType" cssClass="form-control" /></td>
+													<td><form:input path="currencyType" id="currencyType"
+															name="currencyType" cssClass="form-control" /></td>
+													<td><form:input path="currencyType" id="currencyType"
+															name="currencyType" cssClass="form-control" /></td>
+													<td></td>
+													<td></td>
+												</tr>
+												<tr>
+													<%-- <td>${repeatabilityTestInput.icmcId}</td> --%>
+													<td>${icmcName}</td>
+													<td><%=new java.util.Date()%></td>
+													<td><form:select path="machineNo" id="machineNo"
+															name="machineNo" cssClass="form-control"
+															onchange="doAjaxForMachineSerialNo()">
+															<form:option value="">Select Machine No</form:option>
+															<form:options items="${machineList}" />
+														</form:select></td>
+													<td><form:input path="machineSerialNo"
+															id="machineSerialNo" name="machineSerialNo"
+															maxlength="10" readonly="true" cssClass="form-control" />
+													</td>
+													<td><form:select path="denomination"
+															cssClass="form-control">
+															<form:option value="">Select Denomination</form:option>
+															<form:options items="${denominationList}"
+																itemLabel="denomination" itemValue="denomination" />
+														</form:select></td>
+													<td>2nd Run</td>
+													<td><form:input path="bundle" id="bundle"
+															name="bundle" maxlength="10" cssClass="form-control"
+															onkeyup="doAjaxPost()" /></td>
+													<td><form:input path="totalNotes" id="totalNotes"
+															name="totalNotes" maxlength="10" cssClass="form-control" />
+													</td>
+													<td><form:input path="currencyType" id="currencyType"
+															name="currencyType" cssClass="form-control" /></td>
+													<td><form:input path="currencyType" id="currencyType"
+															name="currencyType" cssClass="form-control" /></td>
+													<td><form:input path="currencyType" id="currencyType"
+															name="currencyType" cssClass="form-control" /></td>
+													<td></td>
+													<td></td>
+												</tr>
+												<tr>
+													<td></td>
+													<td></td>
+													<td></td>
+													<td></td>
+													<td></td>
+													<td>% of Variation</td>
+													<td></td>
+													<td></td>
+													<td></td>
+													<td></td>
+													<td></td>
+													<td></td>
+													<td></td>
+												</tr>
+											</tbody>
+										</table>
+
 										<%-- <div class="form-group">
 											<label>Machine No.</label>
 											<form:input path="machineNo" id="machineNo" maxlength="45" name="machineNo" cssClass="form-control" />
@@ -252,29 +245,31 @@ function doAjaxPost() {
 						<!-- /.panel-body -->
 					</div>
 					<!-- /.panel -->
-					
-					
-					
+
+
+
 					<div class="panel panel-default">
 						<div class="panel-heading">
-                        	<ul>
-                        		<li>
-	                        		<a href="././viewRepeatabilityTestInput"><i
+							<ul>
+								<li><a href="././viewRepeatabilityTestInput"><i
 										class="fa fa-table fa-fw"></i> View Compatability Test Details</a>
 								</li>
-							</ul>Compatability Testing
-                        </div>
+							</ul>
+							Compatability Testing
+						</div>
 						<div class="panel-body">
-							<div class="row">
-								<div class="col-lg-6">
+							<div class="dataTable_wrapper">
+								<div id="table_wrapper">
 									<!--<form role="form">-->
-									<form:form id="userPage" action="AddRepeatabilityTestInput" method="post" name="userPage"
-										modelAttribute="user" autocomplete="off" >
-										
-										 <table class="table table-striped table-bordered table-hover" id="tableValue">
-                                 
-		                                    <thead>
-		                                    	<tr>
+									<form:form id="userPage" action="AddRepeatabilityTestInput"
+										method="post" name="userPage" modelAttribute="user"
+										autocomplete="off">
+
+										<table class="table table-striped table-bordered table-hover"
+											id="tableValue">
+
+											<thead>
+												<tr>
 													<th>ICMC Name</th>
 													<th>Date</th>
 													<th>Machine No</th>
@@ -289,95 +284,85 @@ function doAjaxPost() {
 													<th>Reject</th>
 													<th>Average Compatibility Variance (in %)</th>
 												</tr>
-		                       				</thead>
-		                                   
-		                                    <tbody>
-													<tr>
-														<td></td>
-														<td></td>
-														<td></td>
-														<td></td>
-														<td></td>
-														<td>1st Run</td>
-														<td>
-															<form:input path="bundle" id="bundle" name="bundle" 
-																maxlength="10" cssClass="form-control" onkeyup="doAjaxPost()" />
-														</td>
-														<td>
-															<form:input path="totalNotes" id="totalNotes" name="totalNotes" maxlength="10" cssClass="form-control" />
-														</td>
-														<td>
-															<form:input path="currencyType" id="currencyType" name="currencyType" cssClass="form-control" />
-														</td>
-														<td>
-															<form:input path="currencyType" id="currencyType" name="currencyType" cssClass="form-control" />
-														</td>
-														<td>
-															<form:input path="currencyType" id="currencyType" name="currencyType" cssClass="form-control" />
-														</td>
-														<td></td>
-														<td></td>
-													</tr>
-													<tr>
-														<%-- <td>${repeatabilityTestInput.icmcId}</td> --%>
-														<td>${icmcName}</td>
-														<td></td>
-														<td>
-															<form:select path="machineNo" id="machineNo" name="machineNo" 
-																cssClass="form-control" onchange="doAjaxForMachineSerialNo()">
-																<form:option value="">Select Machine No</form:option>
-																<form:options items="${machineList}" />
-															</form:select>
-														</td>
-														<td>
-															<form:input path="machineSerialNo" id="machineSerialNo" name="machineSerialNo" 
-																maxlength="10" readonly="true" cssClass="form-control" />
-														</td>
-														<td>
-															<form:select path="denomination" cssClass="form-control">
-																<form:option value="">Select Denomination</form:option>
-																<form:options items="${denominationList}" 
-																	itemLabel="denomination" itemValue="denomination" />
-															</form:select>
-														</td>
-														<td>2nd Run</td>
-														<td>
-															<form:input path="bundle" id="bundle" name="bundle" 
-																maxlength="10" cssClass="form-control" onkeyup="doAjaxPost()" />
-														</td>
-														<td>
-															<form:input path="totalNotes" id="totalNotes" name="totalNotes" maxlength="10" cssClass="form-control" />
-														</td>
-														<td>
-															<form:input path="currencyType" id="currencyType" name="currencyType" cssClass="form-control" />
-														</td>
-														<td>
-															<form:input path="currencyType" id="currencyType" name="currencyType" cssClass="form-control" />
-														</td>
-														<td>
-															<form:input path="currencyType" id="currencyType" name="currencyType" cssClass="form-control" />
-														</td>
-														<td></td>
-														<td></td>
-													</tr>
-													<tr>
-														<td></td>
-														<td></td>
-														<td></td>
-														<td></td>
-														<td></td>
-														<td>% of Variation</td>
-														<td></td>
-														<td></td>
-														<td></td>
-														<td></td>
-														<td></td>
-														<td></td>
-														<td></td>
-													</tr>
-		                                    </tbody>
-		                                </table>
-										
+											</thead>
+
+											<tbody>
+												<tr>
+													<td></td>
+													<td></td>
+													<td></td>
+													<td></td>
+													<td></td>
+													<td>1st Run</td>
+													<td><form:input path="bundle" id="bundle"
+															name="bundle" maxlength="10" cssClass="form-control"
+															onkeyup="doAjaxPost()" /></td>
+													<td><form:input path="totalNotes" id="totalNotes"
+															name="totalNotes" maxlength="10" cssClass="form-control" />
+													</td>
+													<td><form:input path="currencyType" id="currencyType"
+															name="currencyType" cssClass="form-control" /></td>
+													<td><form:input path="currencyType" id="currencyType"
+															name="currencyType" cssClass="form-control" /></td>
+													<td><form:input path="currencyType" id="currencyType"
+															name="currencyType" cssClass="form-control" /></td>
+													<td></td>
+													<td></td>
+												</tr>
+												<tr>
+													<%-- <td>${repeatabilityTestInput.icmcId}</td> --%>
+													<td>${icmcName}</td>
+													<td></td>
+													<td><form:select path="machineNo" id="machineNo"
+															name="machineNo" cssClass="form-control"
+															onchange="doAjaxForMachineSerialNo()">
+															<form:option value="">Select Machine No</form:option>
+															<form:options items="${machineList}" />
+														</form:select></td>
+													<td><form:input path="machineSerialNo"
+															id="machineSerialNo" name="machineSerialNo"
+															maxlength="10" readonly="true" cssClass="form-control" />
+													</td>
+													<td><form:select path="denomination"
+															cssClass="form-control">
+															<form:option value="">Select Denomination</form:option>
+															<form:options items="${denominationList}"
+																itemLabel="denomination" itemValue="denomination" />
+														</form:select></td>
+													<td>2nd Run</td>
+													<td><form:input path="bundle" id="bundle"
+															name="bundle" maxlength="10" cssClass="form-control"
+															onkeyup="doAjaxPost()" /></td>
+													<td><form:input path="totalNotes" id="totalNotes"
+															name="totalNotes" maxlength="10" cssClass="form-control" />
+													</td>
+													<td><form:input path="currencyType" id="currencyType"
+															name="currencyType" cssClass="form-control" /></td>
+													<td><form:input path="currencyType" id="currencyType"
+															name="currencyType" cssClass="form-control" /></td>
+													<td><form:input path="currencyType" id="currencyType"
+															name="currencyType" cssClass="form-control" /></td>
+													<td></td>
+													<td></td>
+												</tr>
+												<tr>
+													<td></td>
+													<td></td>
+													<td></td>
+													<td></td>
+													<td></td>
+													<td>% of Variation</td>
+													<td></td>
+													<td></td>
+													<td></td>
+													<td></td>
+													<td></td>
+													<td></td>
+													<td></td>
+												</tr>
+											</tbody>
+										</table>
+
 									</form:form>
 								</div>
 								<!-- /.col-lg-6 (nested) -->
@@ -389,19 +374,6 @@ function doAjaxPost() {
 						<!-- /.panel-body -->
 					</div>
 					<!-- /.panel -->
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
 				</div>
 				<!-- /.col-lg-12 -->
 			</div>
@@ -425,64 +397,65 @@ function doAjaxPost() {
 
 	<!-- Custom Theme JavaScript -->
 	<script src="./resources/dist/js/sb-admin-2.js"></script>
-<script type="text/javascript">
-	$(function() {
-	  $("form[name='userPage']").validate({
-	    rules: {
-	    	machineNo: {
-	    		required:true,
-	    		rangelength: [0, 44]
-	    	},
-	    	denomination: "required",
-	    	currencyType: "required",
-	    	binNo:{
-	    		required:true,
-	    		rangelength: [0, 44]
-	    	} ,
-	    	bundle: {
-	    	required:true,
-	    	number:true,
-	    	rangelength: [0, 44]
-	    	},
-	    	totalValue:{
-	    		required:true,
-	    		rangelength: [0, 44]
-	    	} ,
-         	    },
-	    // Specify validation error messages
-	    messages: {
-	    	machineNo:{
-	    		required: "Please Enter Machine No.",
-	    		rangelength: "Machine No. can't have more than  45 character "
-	    		
-	    	},
-	    	denomination: "Please Select Redio Button",
-	    	bundle:{
-	    		required:"Please Enter the bundle number",
-	             number:"only Numeric value ",
-	                rangelength: "Bundle can't have more than  45 character "
-	    	} ,
-	    	totalValue: {
-	    		required:"Please Enter Total value",
-	    		rangelength: "Total Value  can't have more than  45 character "
-	    	},
-	    	currencyType: "Please Enter the CurrencyType",
-	    	binNo: {
-	    		required:"Please Enter Bin No",
-	    		 rangelength: "BinNo.  can't have more than  45 character "
-	    	},
-             
-            	    },
-	    // Make sure the form is submitted to the destination defined
-	    // in the "action" attribute of the form when valid
-	    submitHandler: function(form) {
-	      form.submit();
-	    }
-	  });
-	});
-	
+	<script type="text/javascript">
+		$(function() {
+			$("form[name='userPage']")
+					.validate(
+							{
+								rules : {
+									machineNo : {
+										required : true,
+										rangelength : [ 0, 44 ]
+									},
+									denomination : "required",
+									currencyType : "required",
+									binNo : {
+										required : true,
+										rangelength : [ 0, 44 ]
+									},
+									bundle : {
+										required : true,
+										number : true,
+										rangelength : [ 0, 44 ]
+									},
+									totalValue : {
+										required : true,
+										rangelength : [ 0, 44 ]
+									},
+								},
+								// Specify validation error messages
+								messages : {
+									machineNo : {
+										required : "Please Enter Machine No.",
+										rangelength : "Machine No. can't have more than  45 character "
+
+									},
+									denomination : "Please Select Redio Button",
+									bundle : {
+										required : "Please Enter the bundle number",
+										number : "only Numeric value ",
+										rangelength : "Bundle can't have more than  45 character "
+									},
+									totalValue : {
+										required : "Please Enter Total value",
+										rangelength : "Total Value  can't have more than  45 character "
+									},
+									currencyType : "Please Enter the CurrencyType",
+									binNo : {
+										required : "Please Enter Bin No",
+										rangelength : "BinNo.  can't have more than  45 character "
+									},
+
+								},
+								// Make sure the form is submitted to the destination defined
+								// in the "action" attribute of the form when valid
+								submitHandler : function(form) {
+									form.submit();
+								}
+							});
+		});
 	</script>
-<script type="text/javascript" src="./js/htmlInjection.js"></script>
+	<script type="text/javascript" src="./js/htmlInjection.js"></script>
 </body>
 
 </html>

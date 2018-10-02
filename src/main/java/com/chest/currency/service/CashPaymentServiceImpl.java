@@ -189,9 +189,9 @@ public class CashPaymentServiceImpl implements CashPaymentService {
 						+ sasAllocation.getDenomination() + " and Category : " + sasAllocation.getBinType());
 			}
 			cashPaymentJpaDao.insertInSASAllocation(eligibleSASRequestList);
-			for(SASAllocation allocation: eligibleSASRequestList){
-				cashPaymentJpaDao.updateBranchReceiptForPayment(user.getIcmcId(), allocation.getBinNumber());
-			}
+			/*for (SASAllocation allocation : eligibleSASRequestList) {
+				cashPaymentJpaDao.updateBranchReceiptForPayment(user, allocation);
+			}*/
 			if (!sasAllocationParent.getProcessedOrUnprocessed().equalsIgnoreCase("UNPROCESS")) {
 				for (BinTransaction btx : txnList) {
 					LOG.info("binTransaction updation except Unprocess  " + btx);
@@ -1221,6 +1221,12 @@ public class CashPaymentServiceImpl implements CashPaymentService {
 		List<Sas> solIdList = cashPaymentJpaDao.getSolId(icmcId, sDate, eDate);
 		return solIdList;
 	}
+	
+	@Override
+	public List<Sas> getSasRecordById(BigInteger icmcId, Long[] sasId) {
+		List<Sas> solIdList = cashPaymentJpaDao.getSasRecordById(icmcId, sasId);
+		return solIdList;
+	}
 
 	@Override
 	public List<Sas> getAcceptSolId(BigInteger icmcId, Calendar sDate, Calendar eDate) {
@@ -1793,6 +1799,13 @@ public class CashPaymentServiceImpl implements CashPaymentService {
 		List<SASAllocation> statusListForAccepted = cashPaymentJpaDao.getAllTodayAcceptedFromSASAllocation(icmcId,
 				sDate, eDate);
 		return statusListForAccepted;
+	}
+	
+	@Override
+	public List<SASAllocation> getRequestedFromSASAllocation(BigInteger icmcId, Calendar sDate, Calendar eDate) {
+		List<SASAllocation> requestedSasAllocation = cashPaymentJpaDao.getRequestedFromSASAllocation(icmcId,
+				sDate, eDate);
+		return requestedSasAllocation;
 	}
 
 	@Override
@@ -2420,9 +2433,11 @@ public class CashPaymentServiceImpl implements CashPaymentService {
 	}
 
 	@Override
-	public void deleteEmptyBinFromBinTransaction(BigInteger icmcId, String binNumber) {
-		cashPaymentJpaDao.deleteEmptyBinFromBinTransaction(icmcId, binNumber);
-
+	public Boolean deleteEmptyBinFromBinTransaction(BigInteger icmcId, String binNumber) {
+		LOG.info("CashPaymentServiceImp deleteEmptyBinFromBinTransaction icmcId " + icmcId + " binNumber " + binNumber);
+		Boolean isDeleted = cashPaymentJpaDao.deleteEmptyBinFromBinTransaction(icmcId, binNumber);
+		LOG.info("CashPaymentServiceImp  isDeleted " + isDeleted);
+		return isDeleted;
 	}
 
 	@Override

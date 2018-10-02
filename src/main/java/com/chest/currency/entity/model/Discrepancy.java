@@ -37,11 +37,6 @@ import lombok.ToString;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import com.chest.currency.enums.DateTimePattern;
-
-/**
- * @author root
- *
- */
 @Entity(name = "Discrepancy")
 @Table(name = "DISCREPANCY")
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
@@ -51,7 +46,6 @@ import com.chest.currency.enums.DateTimePattern;
 public class Discrepancy {
 	
 	@Id
-	//@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "ID")
 	@GeneratedValue(generator = "DISCREPANCY_SEQ")
 	@SequenceGenerator(name = "DISCREPANCY_SEQ", sequenceName ="DISCREPANCY_SEQ", allocationSize = 100)
@@ -118,6 +112,10 @@ public class Discrepancy {
 	@Column(name = "NORMAL_OR_SUSPENSE")
 	protected String normalOrSuspense;
 
+	@Basic
+	@Column(name = "SR_NO")
+	protected String srNo;
+	
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinColumn(name = "DISCREPANCY_ID", referencedColumnName = "ID")
 	protected List<DiscrepancyAllocation> discrepancyAllocations;

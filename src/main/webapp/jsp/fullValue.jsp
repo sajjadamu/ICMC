@@ -72,30 +72,29 @@
 <!-- DataTable -->
 
 <script type="text/javascript">
+	function notesCalcuation(str) {
+		var denomination = $('#denom' + str).text();
+		var notes = $('#denomination' + str).val();
+		var result = denomination * notes;
+		$('#result' + str).val(result);
+	}
 
-function notesCalcuation(str) {
-	var denomination = $('#denom'+str).text();
-	var notes = $('#denomination'+str).val();
-	var result = denomination*notes;
-	$('#result'+str).val(result);
-}
+	function doAjaxForTotal() {
+		var myTotalValue = null;
 
-function doAjaxForTotal() { 
-	var myTotalValue = null;
-	
-	var denom2000 = parseFloat($('#result'+2000).val());
-	var denom1000 = parseFloat($('#result'+1000).val());
-	var denom500 = parseFloat($('#result'+500).val());
-	var denom500 = parseFloat($('#result'+100).val());
-	var denom200 = parseFloat($('#result'+200).val());
-	var denom100 = parseFloat($('#result'+100).val());
-	var denom50 = parseFloat($('#result'+50).val());
-	var denom20= parseFloat($('#result'+20).val());
-	var denom10 = parseFloat($('#result'+10).val())
-	var denom5 = parseFloat($('#result'+5).val())
-	var denom2 = parseFloat($('#result'+2).val())
-	var denom1 = parseFloat($('#result'+1).val());
-}
+		var denom2000 = parseFloat($('#result' + 2000).val());
+		var denom1000 = parseFloat($('#result' + 1000).val());
+		var denom500 = parseFloat($('#result' + 500).val());
+		var denom500 = parseFloat($('#result' + 100).val());
+		var denom200 = parseFloat($('#result' + 200).val());
+		var denom100 = parseFloat($('#result' + 100).val());
+		var denom50 = parseFloat($('#result' + 50).val());
+		var denom20 = parseFloat($('#result' + 20).val());
+		var denom10 = parseFloat($('#result' + 10).val())
+		var denom5 = parseFloat($('#result' + 5).val())
+		var denom2 = parseFloat($('#result' + 2).val())
+		var denom1 = parseFloat($('#result' + 1).val());
+	}
 </script>
 
 </head>
@@ -121,73 +120,84 @@ function doAjaxForTotal() {
 						<!-- /.panel-heading -->
 						<div class="panel-body">
 							<form:form id="supenseOpeningBalancePage"
-								name="supenseOpeningBalancePage"
-								action="saveMutilatedFullValue" method="post"
-								modelAttribute="user" autocomplete="off">
+								name="supenseOpeningBalancePage" action="saveMutilatedFullValue"
+								method="post" modelAttribute="user" autocomplete="off">
 								<table style="width: 0%" id="table1">
 									<tr>
-										  <th>Denomination&nbsp;&nbsp;&nbsp;</th>
-											  <th>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Pieces</th>
-											
+										<th>Denomination&nbsp;&nbsp;&nbsp;</th>
+										<th>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Pieces</th>
+
 									</tr>
 									<tr>
-												
-												<td>2000</td>
-												<td><input type="number" name="deno2000" class="form-control input-margin" ></td>
-													</tr>
-													<tr>
-												
-												<td>1000</td>
-												<td><input type="number" name="deno1000" class="form-control input-margin"></td>
-													</tr>
-											<tr>
-												
-												<td>500</td>
-												<td><input type="number" name="deno500" class="form-control input-margin"></td>
-											</tr>
-											<tr>
-												
-												<td>200</td>
-												<td><input type="number" name="deno200" class="form-control input-margin"></td>
-											</tr>
-											<tr>
-												
-												<td>100</td>
-												<td><input type="number" name="deno100" class="form-control input-margin"></td>
-											</tr>
-											<tr>
-												<td>50</td>
-												<td><input type="number" name="deno50" class="form-control input-margin"></td>
-											</tr>
-											<tr>
-												
-												<td>20</td>
-												<td><input type="number" name="deno20" class="form-control input-margin"></td>
-											</tr>
-											<tr>
-												
-												<td>10</td>
-												<td><input type="number" name="deno10" class="form-control input-margin"></td>
-											</tr>
-											<tr>
-												
-												<td>5</td>
-												<td><input type="number" name="deno5" class="form-control input-margin"></td>
-											</tr>
-											<tr>
-												
-												<td>2</td>
-												<td><input type="number" name="deno2" class="form-control input-margin"></td>
-											</tr>
-											<tr>
-												
-												<td>1</td>
-												<td><input type="number" name="deno1" class="form-control input-margin"></td>
-											</tr>									<tr></tr>
+
+										<td>2000</td>
+										<td><input type="number" name="deno2000" min="1"
+											class="form-control input-margin"></td>
+									</tr>
+									<tr>
+
+										<td>1000</td>
+										<td><input type="number" name="deno1000" min="1"
+											class="form-control input-margin"></td>
+									</tr>
+									<tr>
+
+										<td>500</td>
+										<td><input type="number" name="deno500" min="1"
+											class="form-control input-margin"></td>
+									</tr>
+									<tr>
+
+										<td>200</td>
+										<td><input type="number" name="deno200" min="1"
+											class="form-control input-margin"></td>
+									</tr>
+									<tr>
+
+										<td>100</td>
+										<td><input type="number" name="deno100" min="1"
+											class="form-control input-margin"></td>
+									</tr>
+									<tr>
+										<td>50</td>
+										<td><input type="number" name="deno50" min="1"
+											class="form-control input-margin"></td>
+									</tr>
+									<tr>
+
+										<td>20</td>
+										<td><input type="number" name="deno20" min="1"
+											class="form-control input-margin"></td>
+									</tr>
+									<tr>
+
+										<td>10</td>
+										<td><input type="number" name="deno10" min="1"
+											class="form-control input-margin"></td>
+									</tr>
+									<tr>
+
+										<td>5</td>
+										<td><input type="number" name="deno5" min="1"
+											class="form-control input-margin"></td>
+									</tr>
+									<tr>
+
+										<td>2</td>
+										<td><input type="number" name="deno2" min="1"
+											class="form-control input-margin"></td>
+									</tr>
+									<tr>
+
+										<td>1</td>
+										<td><input type="number" name="deno1" min="1"
+											class="form-control input-margin"></td>
+									</tr>
+									<tr></tr>
 									<Tr>
 										<td></td>
-										<td><button type="submit" value="Details"  class="btn btn-default">Save
-												Mutilated Details</button></td>
+										<td><button type="submit" value="Details"
+												class="btn btn-default">Save Mutilated Details</button></td>
 									</Tr>
 								</table>
 							</form:form>

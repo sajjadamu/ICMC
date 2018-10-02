@@ -1,10 +1,3 @@
-/*******************************************************************************
- * /* Copyright (C) Indicsoft Technologies Pvt Ltd
- * * All Rights Reserved.
- *******************************************************************************/
-/**
- * 
- */
 package com.chest.currency.jpa.dao;
 
 import java.math.BigDecimal;
@@ -1082,7 +1075,7 @@ public class BinDashBoardJpaDaoImpl implements BinDashBoardJpaDao {
 	public List<Tuple> getMutilatedDataForDN2(BigInteger icmcId, Calendar sDate, Calendar eDate) {
 		JPAQuery jpaQuery = getFromQueryForMutilated();
 		jpaQuery.where(QMutilated.mutilated.icmcId.eq(icmcId).and(QMutilated.mutilated.insertTime.between(sDate, eDate))
-				.and(QMutilated.mutilated.otherStatus.eq(OtherStatus.ACCEPTED)));
+				.and(QMutilated.mutilated.otherStatus.ne(OtherStatus.CANCELLED)));
 		jpaQuery.groupBy(QMutilated.mutilated.denomination);
 		jpaQuery.orderBy(QMutilated.mutilated.denomination.desc());
 		List<Tuple> mutilatedList = jpaQuery.list(QMutilated.mutilated.denomination, QMutilated.mutilated.bundle.sum());

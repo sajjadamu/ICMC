@@ -138,7 +138,6 @@ function doAjaxPost(str) {
 	}  
 
 $(document).ready(function(){
-	//$("#member").keyup(function(){
 	$("#member").change(function() { 
 		 var rowCount = ($('#table1 tr').length);
 		 if(rowCount>0){
@@ -260,8 +259,6 @@ function addRow1(i){
 
 
 function addRow2(i){
-	/* countrow++;
-	 var rowCount = ($('#table1 tr').length)-2; */
 	 var rowCount = ($('#table1 tr').length)-2;
 	 countrow=rowCount;
 	jQuery('#addmoreButton'+i).remove();
@@ -331,9 +328,6 @@ function replicateValue(i){
 
 function replicateValue1(i){
     
-    // alert(countrow)
-    //dataId = countrow-1;
-    // alert("value from ID="+dataId)
     var rowCount = ($('#table1 tr').length)-2;
     countrow=rowCount;
     dataId = countrow-1;
@@ -498,47 +492,9 @@ function SavePrint(str) {
 					for(var i=1; i < response.length; i++){
 						html += "<textarea id=prntextarea"+i+">'"+response[i]+"'</textarea>"
 						$('#prncode').append(html);
-						//alert($('#prntextarea'+i).text())
-						
-						/*$(document).ready(function() {
-							printZpl(document.getElementById("prntextarea" +i).value);
-						});*/ 
-						//printZpl(document.getElementById("prntextarea" +i).value);
 					}
-					//For bin in text Field
 					var binNum=response[0];
-					/*$.each(response[0],function(index,element){
-						binNum+=element.bin;
-						 binNum=binNum+",";
-					});*/
 					$('#binNumber'+str).val(binNum);
-					//For Print Text
-					
-					/*var str2 = '';
-			    	$.each(response,function(index,element){
-			    		str2+= '<div><div style="width:25%;float:left;" ><img src="./files'+element.filepath+'" alt="QRPrint"></div>'
-			    		str2 += "<div>Bin : "
-							+ "<font size=50>"+element.bin+"</font>"
-							+ "</br>"
-							+ element.branch
-							+ "</br>"
-							+ "Sol ID :"
-							+ element.solId
-							+ "</br>"
-							+ element.denomination
-							+ "|"
-							+ element.bundle
-							+ "|"
-							+ element.total
-							+ "</div></div><BR><HR>";
-			    	});
-			    	//alert(str);
-			    	$('#printSection').html(str2);
-					$('#printSection').show();
-					$.print("#printSection");
-					$('#printSection').hide();
-					$('#print'+str).prop('disabled', true);
-					$("#member").prop('disabled', true);*/
 				},
 				error : function(e) {
 					//alert('Error In Print, Please Try Again: ' + e);
@@ -548,16 +504,6 @@ function SavePrint(str) {
 			});
 }
 }
-
-/*function printZpl(zpl) {
-  var printWindow = window.open();
-  printWindow.document.open('text/plain')
-  printWindow.document.write(zpl);
-  printWindow.document.close();
-  printWindow.focus();
-  printWindow.print();
-  printWindow.close();
-}*/
 
 function refresh() {
 	window.location = '././Addshrink';

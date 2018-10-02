@@ -4524,8 +4524,6 @@ public class BinDashboardServiceImpl implements BinDashboardService {
 
 		List<BinTransactionBOD> binTxBodList = new ArrayList<>();
 
-		// ATM
-
 		BigDecimal denomination1ATMW = new BigDecimal(0);
 		BigDecimal denomination2ATMW = new BigDecimal(0);
 		BigDecimal denomination5ATMW = new BigDecimal(0);

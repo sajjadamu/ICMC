@@ -40,7 +40,7 @@
 	rel="stylesheet" type="text/css">
 <link rel="stylesheet" type="text/css"
 	href="./resources/dist/css/style.css">
-	<script>
+<script>
  $(function()
 {
   $('#btnsubmit').on('click',function()
@@ -427,8 +427,8 @@ function refresh() {
 										<div class="col-lg-12">
 											<!-- <input type="button" id="btnsubmit" value="Submit"
 												onclick="doAjaxPostInsert('+i+');return false"> -->
-												<button type="button"
-											class="btn btn-primary" id="btnsubmit" onclick="doAjaxPostInsert('+i+');">Save</button>
+											<button type="button" class="btn btn-primary" id="btnsubmit"
+												onclick="doAjaxPostInsert('+i+');">Save</button>
 										</div>
 
 										<div align="right">

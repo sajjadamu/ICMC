@@ -1,7 +1,3 @@
-/*******************************************************************************
- * /* Copyright (C) Indicsoft Technologies Pvt Ltd
- * * All Rights Reserved.
- *******************************************************************************/
 package com.chest.currency.entity.model;
 
 import java.math.BigDecimal;
@@ -39,7 +35,6 @@ import lombok.ToString;
 public class ProcessBundleForCRAPayment {
 
 	@Id
-	// @GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "ID")
 	@GeneratedValue(generator = "PROCESS_BUNDLE_CRA_PAYMENT_SEQ")
 	@SequenceGenerator(name = "PROCESS_BUNDLE_CRA_PAYMENT_SEQ", sequenceName = "PROCESS_BUNDLE_CRA_PAYMENT_SEQ", allocationSize = 100)

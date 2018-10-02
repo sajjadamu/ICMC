@@ -84,14 +84,14 @@ public class CashReceiptServiceImpl implements CashReceiptService {
 		return path;
 	}
 
-	public String getRBIQrCode(FreshFromRBI freshFromRBI) {
-		String filepath = qrCodeGen.generateFreshFromRBIQR(freshFromRBI);
+	public String getDSBQRCode(DSB dsb) {
+		String filepath = qrCodeGen.generateDSBQR(dsb);
 		String path = getPath(filepath);
 		return path;
 	}
 
-	public String getDSBQRCode(DSB dsb) {
-		String filepath = qrCodeGen.generateDSBQR(dsb);
+	public String getRBIQrCode(FreshFromRBI freshFromRBI) {
+		String filepath = qrCodeGen.generateFreshFromRBIQR(freshFromRBI);
 		String path = getPath(filepath);
 		return path;
 	}
@@ -130,7 +130,12 @@ public class CashReceiptServiceImpl implements CashReceiptService {
 	}
 
 	public boolean insertInBinTxn(BinTransaction binTransaction) {
+		Boolean isDeleted = cashPaymentService.deleteEmptyBinFromBinTransaction(binTransaction.getIcmcId(),
+				binTransaction.getBinNumber());
+		LOG.info("deleteEmptyBinFromBinTransaction" + isDeleted);
+		LOG.info("binTransaction" + binTransaction);
 		boolean isSaved = cashReceiptJpaDao.insertInBinTxn(binTransaction);
+
 		return isSaved;
 	}
 
@@ -180,10 +185,7 @@ public class CashReceiptServiceImpl implements CashReceiptService {
 
 				binTxs = UtilityJpa.getBinByCurrencyProcessType(binList, binMasterList, branchReceipt.getBundle(),
 						false, capacityList, CurrencyType.UNPROCESS, CashSource.BRANCH);
-				if (branchReceipt.isFromProcessingRoom()) {
-					// add util and find BinTx oldest date and set it in case of
-					// isFromProcessingRoom
-				}
+
 				branchRecieptList = UtilityJpa.getBranchReceiptBean(branchReceipt, binTxs, user, capacityList,
 						binMasterList, boxMasterList);
 
@@ -196,8 +198,7 @@ public class CashReceiptServiceImpl implements CashReceiptService {
 					throw new BaseGuiException("Space is not available for " + branchReceipt.getBundle()
 							+ " packets in " + branchReceipt.getDenomination() + " denomination");
 				}
-			}
-			if (branchReceipt.getBinCategoryType() == BinCategoryType.BOX) {
+			} else if (branchReceipt.getBinCategoryType() == BinCategoryType.BOX) {
 				BoxMaster boxMaster = new BoxMaster();
 				boxMaster.setIcmcId(user.getIcmcId());
 				boxMaster.setDenomination(branchReceipt.getDenomination());
@@ -361,19 +362,13 @@ public class CashReceiptServiceImpl implements CashReceiptService {
 		freshRBIReceipt.setOrderDate(freshRBIReceiptDb.getOrderDate());
 		if (freshRBIReceiptDb.getCashType() == CashType.COINS) {
 			freshRBIReceipt.setCashType(CashType.COINS);
-		}
-		if (freshRBIReceiptDb.getCashType() == CashType.NOTES) {
+		} else if (freshRBIReceiptDb.getCashType() == CashType.NOTES) {
 			freshRBIReceipt.setCashType(CashType.NOTES);
 		}
 
 		freshRBIReceipt.setBinCategoryType(BinCategoryType.BOX);
 		freshRBIReceipt.setRbiOrderNo(freshRBIReceiptDb.getRbiOrderNo());
 		freshRBIReceipt.setNoOfBags(nofbegfromUI);
-		/* freshRBIReceipt.setPotdarName(freshRBIReceiptDb.getPotdarName()); */
-		/*
-		 * freshRBIReceipt.setEscortOfficerName(freshRBIReceiptDb.
-		 * getEscortOfficerName());
-		 */
 		freshRBIReceipt.setCurrencyType(CurrencyType.FRESH);
 		freshRBIReceipt.setCashSource(CashSource.RBI);
 		freshRBIReceipt.setInsertTime(now);
@@ -387,40 +382,14 @@ public class CashReceiptServiceImpl implements CashReceiptService {
 	public List<FreshFromRBI> processFreshFromRBIUpdate(FreshFromRBI fresh, User user) {
 		List<FreshFromRBI> freshFromRBIList = new ArrayList<>();
 
-		/*
-		 * YesNo yesNo =null; BinCategoryType binCategoryType=null; CashType
-		 * cashType=null;
-		 */
-
-		if (fresh.getCashType() == CashType.NOTES)
-		/* if (fresh.getNotesOrCoins().equalsIgnoreCase("Notes")) */
-		{
-			/* if (fresh.getBinOrBox().equalsIgnoreCase("BIN")) */
-			if (fresh.getBinCategoryType() == BinCategoryType.BIN) {
-				List<BinMaster> binMasterList = getPriorityBinListByTypeForFresh(user);
-				List<BinCapacityDenomination> capacityList = this.getMaxBundleCapacity(fresh.getDenomination(),
-						fresh.getCurrencyType());
-
-				List<BinTransaction> binTxs = UtilityJpa.getBinForFreshFromRBI(binMasterList, fresh.getBundle(), true,
-						capacityList, CurrencyType.FRESH, CashSource.RBI, YesNo.Yes, BinCategoryType.BIN,
-						CashType.NOTES, fresh.getRbiOrderNo());
-
-				freshFromRBIList = UtilityJpa.getFreshFromRBI(fresh, binTxs, user, capacityList, binMasterList);
-
-				addTransactions(user, binTxs);
-
-				addFreshFromRBI(freshFromRBIList);
-
-			}
-
-			if (fresh.getBinCategoryType() == BinCategoryType.BOX)
-			/* (fresh.getBinOrBox().equalsIgnoreCase("BOX")) */
-			{
+		if (fresh.getCashType() == CashType.NOTES) {
+			if (fresh.getBinCategoryType() == BinCategoryType.BOX) {
+				fresh.setBin("BOX" + user.getIcmcId() + Instant.now().toEpochMilli());
 				freshFromRBIList = UtilityJpa.getFreshFromRBIForBox(fresh, user);
 				BinTransaction binTxsForBox = new BinTransaction();
 				binTxsForBox.setDenomination(fresh.getDenomination());
 				binTxsForBox.setReceiveBundle(fresh.getBundle());
-				binTxsForBox.setBinNumber("BOX" + user.getIcmcId() + Instant.now().toEpochMilli());
+				binTxsForBox.setBinNumber(fresh.getBin());
 				binTxsForBox.setIcmcId(user.getIcmcId());
 				binTxsForBox.setInsertBy(user.getId());
 				binTxsForBox.setStatus(BinStatus.NOT_FULL);
@@ -436,13 +405,23 @@ public class CashReceiptServiceImpl implements CashReceiptService {
 				binTxsForBox.setUpdateTime(now);
 				addInTransactionsForBox(user, binTxsForBox);
 				addFreshFromRBI(freshFromRBIList);
+			} else if (fresh.getBinCategoryType() == BinCategoryType.BIN) {
+				List<BinMaster> binMasterList = getPriorityBinListByTypeForFresh(user);
+				List<BinCapacityDenomination> capacityList = this.getMaxBundleCapacity(fresh.getDenomination(),
+						fresh.getCurrencyType());
+
+				List<BinTransaction> binTxs = UtilityJpa.getBinForFreshFromRBI(binMasterList, fresh.getBundle(), true,
+						capacityList, CurrencyType.FRESH, CashSource.RBI, YesNo.Yes, BinCategoryType.BIN,
+						CashType.NOTES, fresh.getRbiOrderNo());
+
+				freshFromRBIList = UtilityJpa.getFreshFromRBI(fresh, binTxs, user, capacityList, binMasterList);
+				addTransactions(user, binTxs);
+				addFreshFromRBI(freshFromRBIList);
+
 			}
 		}
 
-		if (fresh.getCashType() == CashType.COINS)
-		/* (fresh.getNotesOrCoins().equalsIgnoreCase("Coins")) */
-
-		{
+		if (fresh.getCashType() == CashType.COINS) {
 			freshFromRBIList = UtilityJpa.getFreshFromRBIForCoins(fresh, user);
 			CoinsSequence coinsSequence = new CoinsSequence();
 			coinsSequence = this.getSequence(user.getIcmcId(), fresh.getDenomination());
@@ -498,35 +477,14 @@ public class CashReceiptServiceImpl implements CashReceiptService {
 			BinCategoryType binCategoryType, CashType cashType) {
 		List<FreshFromRBI> freshFromRBIList = new ArrayList<>();
 
-		if (fresh.getCashType() == CashType.NOTES)
-		/* if (fresh.getNotesOrCoins().equalsIgnoreCase("Notes")) */
-		{
-			/* if (fresh.getBinOrBox().equalsIgnoreCase("BIN")) */
-			if (fresh.getBinCategoryType() == BinCategoryType.BIN) {
-				List<BinMaster> binMasterList = getPriorityBinListByTypeForFresh(user);
-				List<BinCapacityDenomination> capacityList = this.getMaxBundleCapacity(fresh.getDenomination(),
-						fresh.getCurrencyType());
-
-				List<BinTransaction> binTxs = UtilityJpa.getBinForFreshFromRBI(binMasterList, fresh.getBundle(), true,
-						capacityList, CurrencyType.FRESH, CashSource.RBI, yesNo, BinCategoryType.BIN, CashType.NOTES,
-						fresh.getRbiOrderNo());
-
-				freshFromRBIList = UtilityJpa.getFreshFromRBI(fresh, binTxs, user, capacityList, binMasterList);
-
-				addTransactions(user, binTxs);
-
-				addFreshFromRBI(freshFromRBIList);
-
-			}
-
-			if (fresh.getBinCategoryType() == BinCategoryType.BOX)
-			/* (fresh.getBinOrBox().equalsIgnoreCase("BOX")) */
-			{
+		if (fresh.getCashType() == CashType.NOTES) {
+			if (fresh.getBinCategoryType() == BinCategoryType.BOX) {
+				fresh.setBin("BOX" + user.getIcmcId() + Instant.now().toEpochMilli());
 				freshFromRBIList = UtilityJpa.getFreshFromRBIForBox(fresh, user);
 				BinTransaction binTxsForBox = new BinTransaction();
 				binTxsForBox.setDenomination(fresh.getDenomination());
 				binTxsForBox.setReceiveBundle(fresh.getBundle());
-				binTxsForBox.setBinNumber("BOX" + user.getIcmcId() + Instant.now().toEpochMilli());
+				binTxsForBox.setBinNumber(fresh.getBin());
 				binTxsForBox.setIcmcId(user.getIcmcId());
 				binTxsForBox.setInsertBy(user.getId());
 				binTxsForBox.setStatus(BinStatus.NOT_FULL);
@@ -542,22 +500,28 @@ public class CashReceiptServiceImpl implements CashReceiptService {
 				binTxsForBox.setUpdateTime(now);
 				addInTransactionsForBox(user, binTxsForBox);
 				addFreshFromRBI(freshFromRBIList);
+			} else if (fresh.getBinCategoryType() == BinCategoryType.BIN) {
+				List<BinMaster> binMasterList = getPriorityBinListByTypeForFresh(user);
+				List<BinCapacityDenomination> capacityList = this.getMaxBundleCapacity(fresh.getDenomination(),
+						fresh.getCurrencyType());
+				List<BinTransaction> binTxs = UtilityJpa.getBinForFreshFromRBI(binMasterList, fresh.getBundle(), true,
+						capacityList, CurrencyType.FRESH, CashSource.RBI, yesNo, BinCategoryType.BIN, CashType.NOTES,
+						fresh.getRbiOrderNo());
+				freshFromRBIList = UtilityJpa.getFreshFromRBI(fresh, binTxs, user, capacityList, binMasterList);
+				addTransactions(user, binTxs);
+				addFreshFromRBI(freshFromRBIList);
 			}
-		}
-
-		if (fresh.getCashType() == CashType.COINS)
-		/* (fresh.getNotesOrCoins().equalsIgnoreCase("Coins")) */
-
-		{
+		} else if (fresh.getCashType() == CashType.COINS) {
 			freshFromRBIList = UtilityJpa.getFreshFromRBIForCoins(fresh, user);
 			CoinsSequence coinsSequence = new CoinsSequence();
 			coinsSequence = this.getSequence(user.getIcmcId(), fresh.getDenomination());
+			LOG.info("coinsSequence "+ coinsSequence);
+			LOG.info("INSERT fresh  "+ fresh);
 			if (coinsSequence == null) {
 				coinsSequence = new CoinsSequence();
 				int finalSequence = fresh.getNoOfBags();
 				addFreshFromRBI(freshFromRBIList);
 				prepareAndInsertSequence(fresh, user, coinsSequence, finalSequence);
-
 			} else {
 				int sequenceFromUI = fresh.getNoOfBags();
 				int sequenceFromDB = coinsSequence.getSequence();
@@ -567,12 +531,8 @@ public class CashReceiptServiceImpl implements CashReceiptService {
 				for (FreshFromRBI ff : freshFromRBIList) {
 					fresh.setBin(ff.getBin());
 				}
-
 				prepareAndInsertSequence(fresh, user, coinsSequence, finalSequence);
-
 			}
-			// addFreshFromRBI(freshFromRBIList);
-
 			// History
 			List<History> historyList = new ArrayList<History>();
 			History history = null;
@@ -591,10 +551,8 @@ public class CashReceiptServiceImpl implements CashReceiptService {
 				history.setType("F");
 				historyList.add(history);
 			}
-
 			branchHistory(historyList);
 		}
-
 		return freshFromRBIList;
 	}
 
@@ -676,7 +634,6 @@ public class CashReceiptServiceImpl implements CashReceiptService {
 				capacityList = this.getMaxBundleCapacity(dirv.getDenomination(), dirv.getCurrencyType());
 
 				binMasterList = getPriorityBinListByType(user);
-
 				binList = getBinTxnListByDenom(dirv, user);
 
 				binTxs = UtilityJpa.getBinByCurrencyProcessType(binList, binMasterList, dirv.getBundle(), true,
@@ -684,7 +641,6 @@ public class CashReceiptServiceImpl implements CashReceiptService {
 
 				diversionIRVList = UtilityJpa.getDiversionIRV(dirv, binTxs, user, capacityList, binMasterList,
 						boxMasterList);
-
 				for (DiversionIRV dirvTemp : diversionIRVList) {
 					bundleToBeKeptInICMC = bundleToBeKeptInICMC.add(dirvTemp.getBundle());
 				}
@@ -695,18 +651,14 @@ public class CashReceiptServiceImpl implements CashReceiptService {
 					throw new BaseGuiException("Space is not available in BIN for " + dirv.getBundle() + " bundles in "
 							+ dirv.getDenomination() + " denomination");
 				}
-			}
-
-			if (dirv.getBinCategoryType() == BinCategoryType.PROCESSING) {
+			} else if (dirv.getBinCategoryType() == BinCategoryType.PROCESSING) {
 				dirv = UtilityJpa.getIVRForProcessing(dirv, user);
 				diversionIRVList.add(dirv);
 				addDiversionIRV(diversionIRVList);
 				Indent indent1 = UtilityJpa.getIndentIVR(dirv, user);
 				this.insertInIndent(indent1);
 
-			}
-
-			if (dirv.getBinCategoryType() == BinCategoryType.BOX) {
+			} else if (dirv.getBinCategoryType() == BinCategoryType.BOX) {
 				BoxMaster boxMaster = new BoxMaster();
 				boxMaster.setIcmcId(user.getIcmcId());
 				boxMaster.setDenomination(dirv.getDenomination());
@@ -754,19 +706,13 @@ public class CashReceiptServiceImpl implements CashReceiptService {
 					throw new BaseGuiException("Space is not available for " + dirv.getBundle() + " packets in "
 							+ dirv.getDenomination() + " denomination");
 				}
-
-			}
-
-			else if (dirv.getBinCategoryType() == BinCategoryType.PROCESSING) {
+			} else if (dirv.getBinCategoryType() == BinCategoryType.PROCESSING) {
 				dirv = UtilityJpa.getIVRForProcessing(dirv, user);
 				diversionIRVList.add(dirv);
 				addDiversionIRV(diversionIRVList);
 				Indent indent1 = UtilityJpa.getIndentIVR(dirv, user);
 				this.insertInIndent(indent1);
-
-			}
-
-			else if (dirv.getBinCategoryType() == BinCategoryType.BOX) {
+			} else if (dirv.getBinCategoryType() == BinCategoryType.BOX) {
 				BoxMaster boxMaster = new BoxMaster();
 				boxMaster.setIcmcId(user.getIcmcId());
 				boxMaster.setDenomination(dirv.getDenomination());
@@ -790,9 +736,7 @@ public class CashReceiptServiceImpl implements CashReceiptService {
 							+ dirv.getDenomination() + " denomination");
 				}
 			}
-
 		}
-
 		// History Code
 		List<History> historyList = new ArrayList<History>();
 		History history = null;
@@ -862,6 +806,7 @@ public class CashReceiptServiceImpl implements CashReceiptService {
 			}
 			LOG.info("bundleToBeKeptInICMC FOR  BIN OR VAULT " + bundleToBeKeptInICMC);
 			LOG.info("dsb.getBundle() FOR  BIN OR VAULT " + dsb.getBundle());
+			LOG.info("dsbList for saving bin " + dsbList);
 			addDSBForSave(dsbList);
 			if (bundleToBeKeptInICMC.compareTo(dsb.getBundle()) == 0) {
 				addTransactions(user, binTxs);
@@ -869,9 +814,7 @@ public class CashReceiptServiceImpl implements CashReceiptService {
 				throw new BaseGuiException("Space is not available for " + dsb.getBundle() + " bundles in "
 						+ dsb.getDenomination() + " denomination in Requested Source");
 			}
-		}
-
-		else if (dsb.getBinCategoryType() == BinCategoryType.BOX) {
+		} else if (dsb.getBinCategoryType() == BinCategoryType.BOX) {
 			BoxMaster boxMaster = new BoxMaster();
 			boxMaster.setIcmcId(user.getIcmcId());
 			boxMaster.setDenomination(dsb.getDenomination());
@@ -889,6 +832,7 @@ public class CashReceiptServiceImpl implements CashReceiptService {
 			}
 			LOG.info("bundleToBeKeptInICMC FOR BOX " + bundleToBeKeptInICMC);
 			LOG.info("dsb.getBundle() FOR BOX " + dsb.getBundle());
+			LOG.info("dsbList for saving box" + dsbList);
 			addDSBForSave(dsbList);
 			if (bundleToBeKeptInICMC.compareTo(dsb.getBundle()) == 0) {
 				addInTransactionsForBox(user, binTxs);
@@ -964,7 +908,10 @@ public class CashReceiptServiceImpl implements CashReceiptService {
 				masterTemp.setBinNumber(binTx.getBinNumber());
 				masterTemp.setIcmcId(binTx.getIcmcId());
 				this.updateBinMaster(masterTemp);
-				cashPaymentService.deleteEmptyBinFromBinTransaction(binTx.getIcmcId(), binTx.getBinNumber());
+				Boolean isDeleted = cashPaymentService.deleteEmptyBinFromBinTransaction(binTx.getIcmcId(),
+						binTx.getBinNumber());
+				LOG.info("deleteEmptyBinFromBinTransaction isDeleted  " + isDeleted);
+				LOG.info("addTransactions binTx  " + binTx);
 				this.insertInBinTxn(binTx);
 			}
 		}
@@ -1103,6 +1050,13 @@ public class CashReceiptServiceImpl implements CashReceiptService {
 		this.createBranchReceipt(branchRecieptList);
 	}
 
+	private void addDSBForSave(List<DSB> dsbList) {
+		for (DSB br : dsbList) {
+			br.setFilepath(getDSBQRCode(br));
+		}
+		this.saveDSB(dsbList);
+	}
+
 	private void addFreshFromRBI(List<FreshFromRBI> freshList) {
 		for (FreshFromRBI br : freshList) {
 			br.setFilepath(getRBIQrCode(br));
@@ -1229,8 +1183,7 @@ public class CashReceiptServiceImpl implements CashReceiptService {
 				throw new BaseGuiException("Space is not available in BIN for " + bankReceipt.getBundle()
 						+ " bundles in " + bankReceipt.getDenomination() + " denomination");
 			}
-		}
-		if (bankReceipt.getBinCategoryType() == BinCategoryType.BOX) {
+		} else if (bankReceipt.getBinCategoryType() == BinCategoryType.BOX) {
 			BoxMaster boxMaster = new BoxMaster();
 			boxMaster.setIcmcId(user.getIcmcId());
 			boxMaster.setDenomination(bankReceipt.getDenomination());
@@ -1620,7 +1573,7 @@ public class CashReceiptServiceImpl implements CashReceiptService {
 			}
 		}
 
-		if (dsb.getProcessingOrVault().equalsIgnoreCase("BOX")) {
+		else if (dsb.getProcessingOrVault().equalsIgnoreCase("BOX")) {
 			BoxMaster boxMaster = new BoxMaster();
 			boxMaster.setIcmcId(user.getIcmcId());
 			boxMaster.setDenomination(dsb.getDenomination());
@@ -1941,10 +1894,4 @@ public class CashReceiptServiceImpl implements CashReceiptService {
 		return irvReceiptList;
 	}
 
-	private void addDSBForSave(List<DSB> dsbList) {
-		for (DSB br : dsbList) {
-			br.setFilepath(getDSBQRCode(br));
-		}
-		this.saveDSB(dsbList);
-	}
 }

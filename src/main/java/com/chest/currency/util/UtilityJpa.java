@@ -102,6 +102,7 @@ public class UtilityJpa {
 	public static List<BinTransaction> getBinByCurrencyProcessType(List<BinTransaction> binTxs,
 			List<BinMaster> binMasters, BigDecimal bundle, boolean isBundle, List<BinCapacityDenomination> capacityList,
 			CurrencyType currencyType, CashSource cashSource) {
+
 		BinCapacityDenomination capacity = new BinCapacityDenomination();
 
 		BigDecimal bundleRequired = bundle;
@@ -117,67 +118,45 @@ public class UtilityJpa {
 
 				BigDecimal availableSpace = binTx.getMaxCapacity().subtract(binTx.getReceiveBundle());
 
-				if (binTx.getCashSource() == CashSource.BRANCH) {
-					if (availableSpace.compareTo(bundleRequired) >= 0) {
-
-						if (availableSpace.compareTo(bundleRequired) >= 0) {
-							binTx.setReceiveBundle(binTx.getReceiveBundle().add(bundleRequired));
-							binTx.setCurrentBundle(bundleRequired);
-							binTx.setStatus(BinStatus.NOT_FULL);
-							binTx.setUpdateTime(now);
-							binTx.setCashSource(cashSource);
-							binTx.setVerified(YesNo.Yes);
-							binTx.setBinCategoryType(BinCategoryType.BIN);
-							alloccateTxs.add(binTx);
-							isFound = true;
-							break;
-						} else {
-							binTx.setReceiveBundle(binTx.getReceiveBundle().add(availableSpace));
-							binTx.setCurrentBundle(availableSpace);
-							binTx.setStatus(BinStatus.FULL);
-							binTx.setCashSource(cashSource);
-							binTx.setBinCategoryType(BinCategoryType.BIN);
-							binTx.setUpdateTime(now);
-							binTx.setVerified(YesNo.Yes);
-							alloccateTxs.add(binTx);
-							bundleRequired = bundleRequired.subtract(availableSpace);
-						}
-
-					}
+				if (availableSpace.compareTo(bundleRequired) > 0) {
+					binTx.setReceiveBundle(binTx.getReceiveBundle().add(bundleRequired));
+					binTx.setCurrentBundle(bundleRequired);
+					binTx.setCashSource(cashSource);
+					binTx.setUpdateTime(now);
+					binTx.setStatus(BinStatus.NOT_FULL);
+					binTx.setVerified(YesNo.Yes);
+					binTx.setBinCategoryType(BinCategoryType.BIN);
+					alloccateTxs.add(binTx);
+					isFound = true;
+					break;
+				} else if (availableSpace.compareTo(bundleRequired) == 0) {
+					binTx.setReceiveBundle(binTx.getReceiveBundle().add(bundleRequired));
+					binTx.setCurrentBundle(bundleRequired);
+					binTx.setCashSource(cashSource);
+					binTx.setUpdateTime(now);
+					binTx.setStatus(BinStatus.FULL);
+					binTx.setVerified(YesNo.Yes);
+					binTx.setBinCategoryType(BinCategoryType.BIN);
+					alloccateTxs.add(binTx);
+					isFound = true;
+					break;
 				} else {
-
-					if (availableSpace.compareTo(bundleRequired) >= 0) {
-						binTx.setReceiveBundle(binTx.getReceiveBundle().add(bundleRequired));
-						binTx.setCurrentBundle(bundleRequired);
-						binTx.setStatus(BinStatus.NOT_FULL);
-						binTx.setUpdateTime(now);
-						binTx.setCashSource(cashSource);
-						binTx.setBinCategoryType(BinCategoryType.BIN);
-						binTx.setVerified(YesNo.Yes);
-						alloccateTxs.add(binTx);
-						isFound = true;
-						break;
-					} else {
-						binTx.setReceiveBundle(binTx.getReceiveBundle().add(availableSpace));
-						binTx.setCurrentBundle(availableSpace);
-						binTx.setStatus(BinStatus.FULL);
-						binTx.setCashSource(cashSource);
-						binTx.setVerified(YesNo.Yes);
-						binTx.setBinCategoryType(BinCategoryType.BIN);
-						binTx.setUpdateTime(now);
-						alloccateTxs.add(binTx);
-						bundleRequired = bundleRequired.subtract(availableSpace);
-					}
-
+					binTx.setReceiveBundle(binTx.getReceiveBundle().add(availableSpace));
+					binTx.setCurrentBundle(availableSpace);
+					binTx.setCashSource(cashSource);
+					binTx.setUpdateTime(now);
+					binTx.setStatus(BinStatus.FULL);
+					binTx.setVerified(YesNo.Yes);
+					binTx.setBinCategoryType(BinCategoryType.BIN);
+					alloccateTxs.add(binTx);
+					bundleRequired = bundleRequired.subtract(availableSpace);
 				}
 			}
 		}
 
 		if (!isFound) {
-			// Type if Condition
-			if (binMasters != null && binMasters.size() >= 0) {
 
-				// Calendar now = Calendar.getInstance();
+			if (binMasters != null && binMasters.size() >= 0) {
 
 				for (BinMaster binMaster : binMasters) {
 
@@ -186,11 +165,9 @@ public class UtilityJpa {
 					// get capacity based on binMaster bin vault size
 					// BigDecimal availableSpace =
 					// capacity.getMaxBundleCapacity();
-
 					BigDecimal availableSpace = capacity.getMaxBundleCapacity();
 
 					try {
-
 						if (availableSpace.compareTo(bundleRequired) >= 0) {
 
 							BinTransaction binTx = new BinTransaction();
@@ -205,7 +182,6 @@ public class UtilityJpa {
 							binTx.setInsertBy(binMaster.getInsertBy());
 							binTx.setUpdateBy(binMaster.getUpdateBy());
 							binTx.setIcmcId(binMaster.getIcmcId());
-
 							binTx.setBinCategoryType(BinCategoryType.BIN);
 							binTx.setInsertTime(now);
 							binTx.setUpdateTime(now);
@@ -238,12 +214,9 @@ public class UtilityJpa {
 						}
 
 					} catch (Exception e) {
-
 						throw new BaseGuiException(
 								"Vault Size of required bin is not available in Bin Capacity Denomination");
-
 					}
-
 				}
 			}
 		}
@@ -310,59 +283,40 @@ public class UtilityJpa {
 
 				BigDecimal availableSpace = binTx.getMaxCapacity().subtract(binTx.getReceiveBundle());
 
-				if (binTx.getCashSource() == CashSource.BRANCH) {
-					if (availableSpace.compareTo(bundleRequired) >= 0) {
-
-						if (availableSpace.compareTo(bundleRequired) >= 0) {
-							binTx.setReceiveBundle(binTx.getReceiveBundle().add(bundleRequired));
-							binTx.setCurrentBundle(bundleRequired);
-							binTx.setStatus(BinStatus.NOT_FULL);
-							binTx.setUpdateTime(now);
-							binTx.setCashSource(cashSource);
-							binTx.setVerified(YesNo.Yes);
-							binTx.setBinCategoryType(BinCategoryType.BOX);
-							alloccateTxs.add(binTx);
-							isFound = true;
-							break;
-						} else {
-							binTx.setReceiveBundle(binTx.getReceiveBundle().add(availableSpace));
-							binTx.setCurrentBundle(availableSpace);
-							binTx.setStatus(BinStatus.FULL);
-							binTx.setCashSource(cashSource);
-							binTx.setBinCategoryType(BinCategoryType.BOX);
-							binTx.setUpdateTime(now);
-							binTx.setVerified(YesNo.Yes);
-							alloccateTxs.add(binTx);
-							bundleRequired = bundleRequired.subtract(availableSpace);
-						}
-
-					}
+				if (availableSpace.compareTo(bundleRequired) > 0) {
+					binTx.setReceiveBundle(binTx.getReceiveBundle().add(bundleRequired));
+					binTx.setCurrentBundle(bundleRequired);
+					binTx.setStatus(BinStatus.NOT_FULL);
+					binTx.setUpdateTime(now);
+					binTx.setCashSource(cashSource);
+					binTx.setBinCategoryType(BinCategoryType.BOX);
+					binTx.setVerified(YesNo.Yes);
+					alloccateTxs.add(binTx);
+					isFound = true;
+					break;
+				} else if (availableSpace.compareTo(bundleRequired) == 0) {
+					binTx.setReceiveBundle(binTx.getReceiveBundle().add(bundleRequired));
+					binTx.setCurrentBundle(bundleRequired);
+					binTx.setStatus(BinStatus.FULL);
+					binTx.setUpdateTime(now);
+					binTx.setCashSource(cashSource);
+					binTx.setBinCategoryType(BinCategoryType.BOX);
+					binTx.setVerified(YesNo.Yes);
+					alloccateTxs.add(binTx);
+					isFound = true;
+					break;
 				} else {
-
-					if (availableSpace.compareTo(bundleRequired) >= 0) {
-						binTx.setReceiveBundle(binTx.getReceiveBundle().add(bundleRequired));
-						binTx.setCurrentBundle(bundleRequired);
-						binTx.setStatus(BinStatus.NOT_FULL);
-						binTx.setUpdateTime(now);
-						binTx.setCashSource(cashSource);
-						binTx.setBinCategoryType(BinCategoryType.BOX);
-						binTx.setVerified(YesNo.Yes);
-						alloccateTxs.add(binTx);
-						isFound = true;
-						break;
-					} else {
-						binTx.setReceiveBundle(binTx.getReceiveBundle().add(availableSpace));
-						binTx.setCurrentBundle(availableSpace);
-						binTx.setStatus(BinStatus.FULL);
-						binTx.setCashSource(cashSource);
-						binTx.setVerified(YesNo.Yes);
-						binTx.setBinCategoryType(BinCategoryType.BOX);
-						binTx.setUpdateTime(now);
-						alloccateTxs.add(binTx);
-						bundleRequired = bundleRequired.subtract(availableSpace);
-					}
-
+					binTx.setReceiveBundle(binTx.getReceiveBundle().add(availableSpace));
+					binTx.setCurrentBundle(availableSpace);
+					binTx.setStatus(BinStatus.FULL);
+					binTx.setCashSource(cashSource);
+					binTx.setVerified(YesNo.Yes);
+					binTx.setBinCategoryType(BinCategoryType.BOX);
+					binTx.setUpdateTime(now);
+					alloccateTxs.add(binTx);
+					bundleRequired = bundleRequired.subtract(availableSpace);
 				}
+
 			}
 		}
 
@@ -375,7 +329,7 @@ public class UtilityJpa {
 
 					// get capacity based on binMaster bin vault size
 					BigDecimal availableSpace = boxMaster.getMaxCapacity();
-					if (availableSpace.compareTo(bundleRequired) >= 0) {
+					if (availableSpace.compareTo(bundleRequired) > 0) {
 
 						BinTransaction binTx = new BinTransaction();
 						binTx.setBinNumber(boxMaster.getBoxName());
@@ -386,6 +340,29 @@ public class UtilityJpa {
 						binTx.setReceiveBundle(bundleRequired);
 						binTx.setCurrentBundle(bundleRequired);
 						binTx.setStatus(BinStatus.NOT_FULL);
+						binTx.setInsertBy(boxMaster.getInsertBy());
+						binTx.setUpdateBy(boxMaster.getUpdateBy());
+						binTx.setIcmcId(boxMaster.getIcmcId());
+
+						binTx.setBinCategoryType(BinCategoryType.BOX);
+						binTx.setInsertTime(now);
+						binTx.setUpdateTime(now);
+						binTx.setVerified(YesNo.Yes);
+						binTx.setCashType(CashType.NOTES);
+						alloccateTxs.add(binTx);
+						isFound = true;
+						break;
+					} else if (availableSpace.compareTo(bundleRequired) == 0) {
+
+						BinTransaction binTx = new BinTransaction();
+						binTx.setBinNumber(boxMaster.getBoxName());
+						binTx.setDenomination(boxMaster.getDenomination());
+						binTx.setMaxCapacity(boxMaster.getMaxCapacity());
+						binTx.setBinType(currencyType);
+						binTx.setCashSource(cashSource);
+						binTx.setReceiveBundle(bundleRequired);
+						binTx.setCurrentBundle(bundleRequired);
+						binTx.setStatus(BinStatus.FULL);
 						binTx.setInsertBy(boxMaster.getInsertBy());
 						binTx.setUpdateBy(boxMaster.getUpdateBy());
 						binTx.setIcmcId(boxMaster.getIcmcId());
@@ -448,10 +425,8 @@ public class UtilityJpa {
 		BinCapacityDenomination capacity = new BinCapacityDenomination();
 
 		for (BinMaster binMaster : binMasterList) {
-
 			getMaxBundleCapacityAccordingToVaultSize(capacityList, capacity, binMaster);
 		}
-
 		BigDecimal denom = BigDecimal.valueOf(branchReciept.getDenomination());
 		BigDecimal multiplier1000 = BigDecimal.valueOf(1000);
 
@@ -482,39 +457,6 @@ public class UtilityJpa {
 		}
 		return branchReceiptList;
 	}
-
-	/*
-	 * public static List<BranchReceipt>
-	 * getBranchReceiptBeanForBOX(BranchReceipt branchReciept,
-	 * List<BinTransaction> binTxs, User user, List<BoxMaster> boxMasterList) {
-	 * 
-	 * BigDecimal denom = BigDecimal.valueOf(branchReciept.getDenomination());
-	 * BigDecimal multiplier1000 = BigDecimal.valueOf(1000);
-	 * 
-	 * List<BranchReceipt> branchReceiptList = new ArrayList<BranchReceipt>();
-	 * for (BinTransaction binTx : binTxs) { BranchReceipt branchReceiptBean =
-	 * new BranchReceipt(); branchReceiptBean.setIcmcId(binTx.getIcmcId());
-	 * branchReceiptBean.setSolId(branchReciept.getSolId());
-	 * branchReceiptBean.setBranch(branchReciept.getBranch());
-	 * branchReceiptBean.setSrNumber(branchReciept.getSrNumber());
-	 * branchReceiptBean.setDenomination(branchReciept.getDenomination());
-	 * BigDecimal rcvBundle = binTx.getCurrentBundle();
-	 * branchReceiptBean.setFilepath(branchReciept.getFilepath());
-	 * branchReceiptBean.setBundle(rcvBundle);
-	 * branchReceiptBean.setBin(binTx.getBinNumber()); BigDecimal totalVal =
-	 * rcvBundle.multiply(denom).multiply(multiplier1000);
-	 * branchReceiptBean.setTotal(totalVal);
-	 * branchReceiptBean.setInsertBy(user.getId());
-	 * branchReceiptBean.setUpdateBy(user.getId());
-	 * branchReceiptBean.setInsertTime(branchReciept.getInsertTime());
-	 * branchReceiptBean.setUpdateTime(branchReciept.getUpdateTime());
-	 * branchReceiptBean.setBinCategoryType(BinCategoryType.BOX);
-	 * branchReceiptBean.setStatus(OtherStatus.RECEIVED);
-	 * branchReceiptBean.setCurrencyType(binTx.getBinType());
-	 * branchReceiptBean.setCashSource(binTx.getCashSource());
-	 * 
-	 * branchReceiptList.add(branchReceiptBean); } return branchReceiptList; }
-	 */
 
 	private static HolidayMaster mapToHolidayMaster(String[] splitData) {
 		HolidayMaster holiday = new HolidayMaster();
@@ -668,7 +610,7 @@ public class UtilityJpa {
 		freshData.setEscortOfficerName(fresh.getEscortOfficerName());
 		freshData.setBinCategoryType(fresh.getBinCategoryType());
 		freshData.setCashType(fresh.getCashType());
-		freshData.setBin("BOX" + user.getIcmcId() + Instant.now().toEpochMilli());
+		freshData.setBin(fresh.getBin());
 		freshData.setCashSource(fresh.getCashSource());
 		freshData.setDenomination(fresh.getDenomination());
 		freshData.setBundle(fresh.getBundle());
@@ -2614,6 +2556,50 @@ public class UtilityJpa {
 		return calendar.getTime();
 	}
 
+	public static Calendar getStartDate() {
+		Calendar sDate = Calendar.getInstance();
+
+		sDate.set(Calendar.HOUR, 0);
+		sDate.set(Calendar.HOUR_OF_DAY, 0);
+		sDate.set(Calendar.MINUTE, 0);
+		sDate.set(Calendar.SECOND, 0);
+		sDate.set(Calendar.MILLISECOND, 0);
+
+		return sDate;
+	}
+
+	public static Calendar getEndDate() {
+		Calendar eDate = Calendar.getInstance();
+
+		eDate.set(Calendar.HOUR, 24);
+		eDate.set(Calendar.HOUR_OF_DAY, 23);
+		eDate.set(Calendar.MINUTE, 59);
+		eDate.set(Calendar.SECOND, 59);
+		eDate.set(Calendar.MILLISECOND, 999);
+
+		return eDate;
+	}
+
+	public static void setStartDate(Calendar sDate) {
+
+		sDate.set(Calendar.HOUR, 0);
+		sDate.set(Calendar.HOUR_OF_DAY, 0);
+		sDate.set(Calendar.MINUTE, 0);
+		sDate.set(Calendar.SECOND, 0);
+		sDate.set(Calendar.MILLISECOND, 0);
+		
+	}
+
+	public static void setEndDate(Calendar eDate) {
+
+		eDate.set(Calendar.HOUR, 24);
+		eDate.set(Calendar.HOUR_OF_DAY, 23);
+		eDate.set(Calendar.MINUTE, 59);
+		eDate.set(Calendar.SECOND, 59);
+		eDate.set(Calendar.MILLISECOND, 999);
+
+	}
+
 	private static BigDecimal getSubstarctedBundleForBranchReceipt(BranchReceipt br, List<BinTransaction> txnList,
 			BigDecimal bundleRequired) {
 		for (BinTransaction binTx : txnList) {
@@ -2994,17 +2980,25 @@ public class UtilityJpa {
 		Socket clientSocket = null;
 		try {
 			String ip = user.getIcmcPrinter().getPrinterIP();
+			LOG.info("PrintToPrinter ip " + ip);
+			LOG.info("PrintToPrinter user id " + user.getId());
 			int port = user.getIcmcPrinter().getPort().intValue();
-			// Socket clientSocket=new Socket("10.64.99.120",9100); //ICICI
-			// pushpanjali LAN
+			LOG.info("PrintToPrinter port " + port);
+			// clientSocket = new Socket("10.64.50.173", 9100); // ICICI
 			clientSocket = new Socket(ip, port); // ICICI pushpanjali LAN
+			// clientSocket.setSoTimeout(10000);
+			LOG.info("PrintToPrinter clientSocket " + clientSocket);
 			DataOutputStream outToServer = new DataOutputStream(clientSocket.getOutputStream());
 			outToServer.writeBytes(sb.toString());
 			clientSocket.close();
 		} catch (IOException ioe) {
-			LOG.info("PrintToPrinter METHOD IN CATCH");
+			LOG.info("PrintToPrinter METHOD IN CATCH IOException Printer is not able to connect " + ioe);
 			clientSocket.close();
-			throw new BaseGuiException("Printer is not able to open " + ioe);
+			ioe.printStackTrace();
+			throw new BaseGuiException("Printer is not able to connect " + ioe);
+		} finally {
+			LOG.info("PrintToPrinter METHOD IN finally clientSocket " + clientSocket);
+			clientSocket.close();
 		}
 	}
 

@@ -217,7 +217,7 @@ $(document).ready(function() {
 
 	    var a = document.createElement('a');
 	    a.href = data_type + ', ' + table_html;
-	    a.download = 'exported_table_' + Math.floor((Math.random() * 9999999) + 1000000) + '.xls';
+	    a.download = 'TR64-Report-' + Math.floor((Math.random() * 9999999) + 1000000) + '.xls';
 	    a.click();
 	  });
 	});

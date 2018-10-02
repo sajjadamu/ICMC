@@ -29,8 +29,17 @@
 <!-- Custom Fonts -->
 <link href="./resources/bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
+<!-- time picker -->
+<link rel="stylesheet" href="./resources/css/timepicker.min.css" />
+<link rel="stylesheet" href="./resources/css/jquery-ui-timepicker-addon.css" />
+<!-- end time picker -->
+
 <link rel="stylesheet" type="text/css" href="./resources/dist/css/style.css">
 
+ 
+ <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.css" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.css" rel="stylesheet"/>
+ 
 <style type="text/css">
 .form-control.input-margin {margin-bottom: 10px; width: 107px; margin: 2px;}
 </style>
@@ -77,7 +86,7 @@ $(document).ready(function(){
 		var val = $("#member").val();
     if(val>0)
 	{
-    	var html='<tr><th width="22%">Denomination</th><th width="22%">Discrepancy Type</th><th width="22%">Mutilated Type</th><th width="22%">Note Serial Number</th><th>No. of Notes</th><th>Value</th><th>Print Year</th><th>Date on Shrink Wrap</th><th>Remarks</th></tr>' ;
+    	var html='<tr><th width="22%">Denomination</th><th width="22%">Discrepancy Type</th><th width="22%">Mutilated Type</th><th width="22%">Note Serial Number</th><th>No. of Notes</th><th>Value</th><th>Print Year</th><th>Date on Shrink Wrap</th><th>Time of Shrink Wrap</th><th>Remarks</th></tr>' ;
 	for (i = 0; i < val; i++) {
 html += '<tr id="main'+i+'">'+
 '<td width="22%"><input type="text" id="Denomination'+i+'" class="form-control input-margin" name="Denomination" onkeyup="doAjaxPost('+i+')" value="" autofocus></td>'+
@@ -88,6 +97,7 @@ html += '<tr id="main'+i+'">'+
 '<td width="22%"><input type="text" id="Value'+i+'"  class="form-control input-margin" name="Value" value="" readonly="true" ></td>'+
 '<td width="22%"><input type="text" id="printYear'+i+'" disabled="disabled" class="form-control input-margin" name="printYear" value="" ></td>'+
 '<td width="22%"><input type="text" id="dateOnShrinkWrap'+i+'"  class="form-control input-margin" name="dateOnShrinkWrap" value="" onfocus="doAjaxForDate('+i+')" ></td>'+
+'<td width="22%"><input type="text" id="timeOfShrinkWrap'+i+'"  class="form-control input-margin" name="timeOfShrinkWrap" value="" onfocus="doAjaxForDate('+i+')" ></td>'+
 '<td width="22%"><input type="text" id="remarks'+i+'"  class="form-control input-margin" name="remarks" value="" ></td>'+
 '<td width="22%"><input type="hidden" id="recordID'+i+'" class="form-control input-margin" name="Bin" value="" ></td>'+
 '<td><button type="button" class="delete" onclick="deleteRow('+i+')">-</button></td>'+
@@ -107,9 +117,9 @@ countrow++;
 
 function replicateValue(i){
 	
-    // alert(countrow)
-	//dataId = countrow-1;
-    // alert("value from ID="+dataId)
+  /*   alert(i)
+	dataId = countrow-1;
+    alert("value from ID="+dataId) */
     var rowCount = ($('#table1 tr').length)-2;
 	countrow=rowCount;
 	dataId = countrow-1;
@@ -122,6 +132,7 @@ function replicateValue(i){
 	var printYear = jQuery('#printYear'+dataId).val();
 	var dateOnShrinkWrap = jQuery('#dateOnShrinkWrap'+dataId).val();
 	var remarks = jQuery('#remarks'+dataId).val();
+	var timeOfShrinkWrap= jQuery('#timeOfShrinkWrap'+dataId).val();
 	
 	if(typeof denomData === 'undefined'){
 		denomData = "";
@@ -152,6 +163,10 @@ function replicateValue(i){
 	{
 		dateOnShrinkWrap="";
 	}
+	if(typeof timeOfShrinkWrap == 'undefined')
+	{
+		timeOfShrinkWrap="";
+	}
 	if(typeof remarks == 'undefined')
 	{
 		remarks="";
@@ -169,6 +184,7 @@ function replicateValue(i){
 	'<td width="22%"><input type="text" id="Value'+countrow+'"  class="form-control input-margin" name="Value" value="'+value+'" readonly="true" ></td>'+
 	'<td width="22%"><input type="text" id="printYear'+countrow+'" disabled="disabled" class="form-control input-margin" name="printYear" value="'+printYear+'" ></td>'+
 	'<td width="22%"><input type="text" id="dateOnShrinkWrap'+countrow+'"  class="form-control input-margin" name="dateOnShrinkWrap" value="'+dateOnShrinkWrap+'" onfocus="doAjaxForDate('+countrow+')" ></td>'+
+	'<td width="22%"><input type="text" id="timeOfShrinkWrap'+countrow+'"  class="form-control input-margin" name="timeOfShrinkWrap" value="'+timeOfShrinkWrap+'" onfocus="doAjaxForDate('+countrow+')" ></td>'+
 	'<td width="22%"><input type="text" id="remarks'+countrow+'"  class="form-control input-margin" name="remarks" value="'+remarks+'" ></td>'+
 	'<td width="22%"><input type="hidden" id="recordID'+countrow+'" class="form-control input-margin" name="Bin" value="" ></td>'+
 	'<td><button type="button" class="delete" onclick="deleteRow('+countrow+')">-</button></td>'+
@@ -197,6 +213,7 @@ function addRow(i){
 	'<td width="22%"><input type="text" id="Value'+countrow+'"  class="form-control input-margin" name="Value" value="" readonly="true" ></td>'+
 	'<td width="22%"><input type="text" id="printYear'+countrow+'" disabled="disabled" class="form-control input-margin" name="printYear" value="" ></td>'+
 	'<td width="22%"><input type="text" id="dateOnShrinkWrap'+countrow+'"  class="form-control input-margin" name="dateOnShrinkWrap" value="" onfocus="doAjaxForDate('+countrow+')" ></td>'+
+	'<td width="22%"><input type="text" id="timeOfShrinkWrap'+countrow+'"  class="form-control input-margin" name="timeOfShrinkWrap" value="" onfocus="doAjaxForDate('+countrow+')" ></td>'+
 	'<td width="22%"><input type="text" id="remarks'+countrow+'"  class="form-control input-margin" name="remarks" value="" ></td>'+
 	'<td width="22%"><input type="hidden" id="recordID'+countrow+'" class="form-control input-margin" name="Bin" value="" ></td>'+
 	'<td><button type="button" class="delete" onclick="deleteRow('+countrow+')">-</button></td>'+
@@ -296,7 +313,8 @@ function doAjaxPostInsert(str) {
 			"discrepancyType":$('#discrepancyType'+i).val(),"mutilType":$('#mutilType'+i).val(),
 			"noteSerialNumber":$('#NoteSerialNumber'+i).val(),"numberOfNotes":$('#NumberOfNotes'+i).val(),
 			"value":$('#Value'+i).val(),"printYear":$('#printYear'+i).val(),
-			"dateOnShrinkWrap":$('#dateOnShrinkWrap'+i).val(),"remarks":$('#remarks'+i).val()});
+			"dateOnShrinkWrap":$('#dateOnShrinkWrap'+i).val(),
+			"timeOfDetection":$('#timeOfShrinkWrap'+i).val(),"remarks":$('#remarks'+i).val()});
 		}
 			
 	}
@@ -306,12 +324,11 @@ function doAjaxPostInsert(str) {
 	var accountNoOFCustomer=$("#accountNumber").val();
 	if(accountType=='ACCOUNT')
 		{
-		    
 		   CustomerAccountLength=accountNoOFCustomer.length;
 		   if(CustomerAccountLength != 12)
 			   {
 			   $('#err17').show();
-			      isValid = false; 
+		//	      isValid = false; 
 			   }
 		}
 	var DiscrepancyWrapper = {
@@ -319,6 +336,7 @@ function doAjaxPostInsert(str) {
 			"discrepancyDate":$('#discrepancyDate').val(),
 			"solId":$('#solId').val(),
 			"branch":$('#branch').val(),
+			"srNo":$('#srNo').val(),
 			"filepath":$('#filepath').val(),
 			//"filepath":tmppath,
 			"accountTellerCam":$('#accountTellerCam').val(),
@@ -551,11 +569,16 @@ function doAjaxForTotal() {
 											<form:input path="branch" id="branch" name="branch" cssClass="form-control" readonly="true"/>
 										</div>
 										
-										<div class="col-lg-6 form-group">
+										<%-- <div class="col-lg-6 form-group">
 											<label>Upload Photo</label>
 											<!-- <input class="form-control" type="file" name="file"> -->
 											<form:input path="filepath" id="filepath" name="filepath" type="file"/>
 											<label id="err4" style="display: none;color: red">Upload Photo</label>
+										</div> --%>
+										<div class="col-lg-6 form-group">
+											<label>Sr No</label>
+											<form:input path="srNo" id="srNo" name="srNo" cssClass="form-control" />
+											<label id="errSrNo" style="display: none;color: red">Please Enter Sr Number</label>
 										</div>
 										
 										<div class="col-lg-6 form-group">
@@ -565,6 +588,7 @@ function doAjaxForTotal() {
 												<form:option value="ACCOUNT">ACCOUNT</form:option>
 												<form:option value="TELLER">TELLER</form:option>
 												<form:option value="CAM">CAM</form:option>
+												<form:option value="DSB">DSB</form:option>
 											</form:select>
 											<label id="err5" style="display: none;color: red">Please Select Account/Teller/Cam</label>
 										</div>
@@ -643,19 +667,35 @@ function doAjaxForTotal() {
 
 	<script src="./resources/js/jQuery.print.js"></script>
  <script src="./resources/js/jquery.datetimepicker.js"></script>
+ 	<!-- time picker -->
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js" ></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.js" type="text/javascript" ></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
+
+<!-- end time picker -->
 	<script>
 		$('#discrepancyDate').datetimepicker({
-			format : 'Y-m-d',
+			//format : 'Y-m-d',
+			format : 'YYYY-MM-DD'
 		});
 	</script>
 	
 	<script type="text/javascript">
 		function doAjaxForDate(i) {
 			$('#dateOnShrinkWrap'+i+'').datetimepicker({
-				format : 'Y-m-d',
+				//format : 'Y-m-d',
+				format : 'YYYY-MM-DD'
+			});
+			$('#timeOfShrinkWrap'+i+'').datetimepicker({
+				format: 'HH:mm'
+				
 			});
 		}
 	</script>
+	
+
 
 <script type="text/javascript" src="./js/htmlInjection.js"></script>
 <script type="text/javascript" src="./js/print.js"></script>

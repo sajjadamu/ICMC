@@ -328,8 +328,7 @@ public class ProcessingRoomJpaDaoImpl implements ProcessingRoomJpaDao {
 	public List<Process> getProcessedDataList(BigInteger icmcId, Calendar sDate, Calendar eDate) {
 		JPAQuery jpaQuery = getFromQueryForProcess();
 		jpaQuery.where(QProcess.process.icmcId.eq(icmcId).and(QProcess.process.status.eq(1))
-		// .and(QProcess.process.insertTime.between(sDate, eDate))
-		);
+				.and(QProcess.process.insertTime.between(sDate, eDate)));
 		LOG.info("PROCESSED DATA");
 		List<Process> processList = jpaQuery.list(QProcess.process);
 		return processList;
@@ -1826,9 +1825,11 @@ public class ProcessingRoomJpaDaoImpl implements ProcessingRoomJpaDao {
 
 	@Override
 	public List<Mutilated> getMitulatedFullValue(BigInteger icmcId) {
+		Calendar sDate = UtilityJpa.getStartDate();
+		Calendar eDate = UtilityJpa.getEndDate();
 		JPAQuery jpaQuery = getFromQueryForMitulatedFullValue();
-		jpaQuery.where(
-				QMutilated.mutilated.icmcId.eq(icmcId).and(QMutilated.mutilated.otherStatus.eq(OtherStatus.REQUESTED)));
+		jpaQuery.where(QMutilated.mutilated.icmcId.eq(icmcId).and(QMutilated.mutilated.insertTime.between(sDate, eDate))
+				.and(QMutilated.mutilated.otherStatus.ne(OtherStatus.CANCELLED)));
 		List<Mutilated> mutilatedList = jpaQuery.list(QMutilated.mutilated);
 		return mutilatedList;
 	}

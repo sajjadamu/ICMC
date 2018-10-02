@@ -30,7 +30,6 @@ import lombok.ToString;
 public class SuspenseOpeningBalance {
 
 	@Id
-	// @GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "ID")
 	@GeneratedValue(generator = "SUSPENSE_OPENING_BALANCE_SEQ")
 	@SequenceGenerator(name = "SUSPENSE_OPENING_BALANCE_SEQ", sequenceName = "SUSPENSE_OPENING_BALANCE_SEQ", allocationSize = 100)

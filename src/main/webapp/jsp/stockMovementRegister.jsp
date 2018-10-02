@@ -687,7 +687,7 @@
 														.createElement('a');
 												a.href = data_type + ', '
 														+ table_html;
-												a.download = 'exported_table_'
+												a.download = 'Stock-Movement-Register-'
 														+ Math
 																.floor((Math
 																		.random() * 9999999) + 1000000)

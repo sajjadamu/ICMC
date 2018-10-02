@@ -258,7 +258,7 @@ tr.ttlDiscBtm td:nth-child(2), tr.ttlDiscBtm td:nth-child(3) {
 											var a = document.createElement('a');
 											a.href = data_type + ', '
 													+ table_html;
-											a.download = 'exported_table_'
+											a.download = 'Suspence-Cash-Register-'
 													+ Math
 															.floor((Math
 																	.random() * 9999999) + 1000000)

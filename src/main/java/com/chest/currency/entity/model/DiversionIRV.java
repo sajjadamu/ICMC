@@ -38,10 +38,6 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
-/**
- * @author root
- *
- */
 @Entity(name = "DiversionIRV")
 @Table(name = "DIVERSION_IRV")
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
@@ -142,7 +138,7 @@ public class DiversionIRV {
 	protected String processedOrUnprocessed;
 
 	@Basic
-	@Column(name = "IS_INDENT", nullable = false, columnDefinition = "TINYINT(1)")
+	@Column(name = "IS_INDENT", nullable = false)
 	protected Boolean isIndent = false;
 
 	@Transient

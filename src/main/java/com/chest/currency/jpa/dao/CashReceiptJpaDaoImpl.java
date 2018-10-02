@@ -50,14 +50,12 @@ import com.chest.currency.entity.model.QICMC;
 import com.chest.currency.entity.model.QIndent;
 import com.chest.currency.entity.model.QMachineAllocation;
 import com.chest.currency.entity.model.User;
-import com.chest.currency.enums.BinStatus;
 import com.chest.currency.enums.CashSource;
 import com.chest.currency.enums.CurrencyType;
 import com.chest.currency.enums.OtherStatus;
 import com.chest.currency.enums.VaultSize;
 import com.chest.currency.enums.YesNo;
 import com.mysema.query.Tuple;
-import com.mysema.query.jpa.impl.JPADeleteClause;
 import com.mysema.query.jpa.impl.JPAQuery;
 
 /**
@@ -79,7 +77,7 @@ public class CashReceiptJpaDaoImpl implements CashReceiptJpaDao {
 		jpaQuery.where(QBinCapacityDenomination.binCapacityDenomination.denomination.eq(denomination)
 				.and(QBinCapacityDenomination.binCapacityDenomination.currencyType.eq(currencyType))
 				.and(QBinCapacityDenomination.binCapacityDenomination.vaultSize.in(VaultSize.values())));
-		// .and in vaultSize list
+
 		return jpaQuery.list(QBinCapacityDenomination.binCapacityDenomination);
 	}
 
@@ -95,7 +93,7 @@ public class CashReceiptJpaDaoImpl implements CashReceiptJpaDao {
 
 		return binList;
 	}
-	
+
 	@Override
 	public boolean updateOtherBank(BankReceipt otherBankReceit) {
 		em.merge(otherBankReceit);
@@ -228,6 +226,7 @@ public class CashReceiptJpaDaoImpl implements CashReceiptJpaDao {
 
 		if (dbBinMaster != null) {
 			dbBinMaster.setIsAllocated(1);
+			dbBinMaster.setUpdateTime(Calendar.getInstance());
 			em.merge(dbBinMaster);
 		} else {
 			return false;
@@ -238,10 +237,7 @@ public class CashReceiptJpaDaoImpl implements CashReceiptJpaDao {
 
 	@Override
 	public boolean insertInBinTxn(BinTransaction binTransaction) {
-		new JPADeleteClause(em, QBinTransaction.binTransaction)
-		.where(QBinTransaction.binTransaction.icmcId.eq(binTransaction.getIcmcId()).and(QBinTransaction.binTransaction.binNumber
-				.eq(binTransaction.getBinNumber()).and(QBinTransaction.binTransaction.status.eq(BinStatus.EMPTY))))
-		.execute();
+		LOG.info("insertInBinTxn Dao binTransaction" + binTransaction);
 		em.persist(binTransaction);
 		return true;
 	}
@@ -255,6 +251,7 @@ public class CashReceiptJpaDaoImpl implements CashReceiptJpaDao {
 	@Override
 	public boolean createBranchReceipt(List<BranchReceipt> branchReceiptList) {
 		for (BranchReceipt branchReceipt : branchReceiptList) {
+			LOG.info("createBranchReceipt jpaDaoImpl" + branchReceipt);
 			em.persist(branchReceipt);
 		}
 		return true;
@@ -284,8 +281,6 @@ public class CashReceiptJpaDaoImpl implements CashReceiptJpaDao {
 		jpaQuery.from(QFreshFromRBI.freshFromRBI);
 		return jpaQuery;
 	}
-
-	
 
 	@Override
 	public boolean createDiversionIRV(List<DiversionIRV> diversionIRV) {
@@ -318,10 +313,10 @@ public class CashReceiptJpaDaoImpl implements CashReceiptJpaDao {
 			em.persist(dSB);
 			return dSB.getId();
 		}
-		//return dSB.get;
+		// return dSB.get;
 		return 0l;
 	}
-	
+
 	@Override
 	public boolean saveDSB(List<DSB> dsb) {
 		for (DSB dSB : dsb) {
@@ -340,8 +335,7 @@ public class CashReceiptJpaDaoImpl implements CashReceiptJpaDao {
 	public List<DSB> getDSBRecord(User user, Calendar sDate, Calendar eDate) {
 		JPAQuery jpaQuery = getFromQueryForDSB();
 		jpaQuery.where(QDSB.dSB.icmcId.eq(user.getIcmcId()).and(QDSB.dSB.accountNumber.isNotNull())
-				.and(QDSB.dSB.status.ne(OtherStatus.CANCELLED))
-				.and(QDSB.dSB.insertTime.between(sDate, eDate)));
+				.and(QDSB.dSB.status.ne(OtherStatus.CANCELLED)).and(QDSB.dSB.insertTime.between(sDate, eDate)));
 		List<DSB> dsbList = jpaQuery.list(QDSB.dSB);
 		return dsbList;
 	}
@@ -361,10 +355,9 @@ public class CashReceiptJpaDaoImpl implements CashReceiptJpaDao {
 	@Override
 	public List<BankReceipt> getBankReceiptRecord(User user, Calendar sDate, Calendar eDate) {
 		JPAQuery jpaQuery = getFromQueryForBankReceipt();
-		jpaQuery.where(
-				QBankReceipt.bankReceipt.icmcId.eq(user.getIcmcId()).and(QBankReceipt.bankReceipt.bankName.isNotNull())
-					.and(QBankReceipt.bankReceipt.status.ne(4))
-						.and(QBankReceipt.bankReceipt.insertTime.between(sDate, eDate)));
+		jpaQuery.where(QBankReceipt.bankReceipt.icmcId.eq(user.getIcmcId())
+				.and(QBankReceipt.bankReceipt.bankName.isNotNull()).and(QBankReceipt.bankReceipt.status.ne(4))
+				.and(QBankReceipt.bankReceipt.insertTime.between(sDate, eDate)));
 		List<BankReceipt> icmcReceiptList = jpaQuery.list(QBankReceipt.bankReceipt);
 		return icmcReceiptList;
 	}
@@ -447,7 +440,7 @@ public class CashReceiptJpaDaoImpl implements CashReceiptJpaDao {
 		JPAQuery jpaQuery = getFromQueryForIRVReportFromBranchReceipt();
 		jpaQuery.where(
 				QBranchReceipt.branchReceipt.icmcId.eq(icmcId).and(QBranchReceipt.branchReceipt.solId.isNotNull())
-				        .and(QBranchReceipt.branchReceipt.status.ne(OtherStatus.CANCELLED))
+						.and(QBranchReceipt.branchReceipt.status.ne(OtherStatus.CANCELLED))
 						.and(QBranchReceipt.branchReceipt.insertTime.between(sDate, eDate)));
 		jpaQuery.groupBy(QBranchReceipt.branchReceipt.solId, QBranchReceipt.branchReceipt.branch,
 				QBranchReceipt.branchReceipt.srNumber);
@@ -580,13 +573,14 @@ public class CashReceiptJpaDaoImpl implements CashReceiptJpaDao {
 		List<BoxMaster> boxMasterList = jpaQuery.list(QBoxMaster.boxMaster);
 		return boxMasterList;
 	}
-	
+
 	@Override
 	public boolean updateIRV(DiversionIRV diversionIRV) {
 		em.merge(diversionIRV);
 		return true;
 	}
-@Override
+
+	@Override
 	public boolean updateIndent(Indent indent) {
 		em.merge(indent);
 		return true;
@@ -601,6 +595,7 @@ public class CashReceiptJpaDaoImpl implements CashReceiptJpaDao {
 
 		if (dbBoxMaster != null) {
 			dbBoxMaster.setIsAllocated(1);
+			dbBoxMaster.setUpdateTime(Calendar.getInstance());
 			em.merge(dbBoxMaster);
 		} else {
 			return false;
@@ -668,7 +663,7 @@ public class CashReceiptJpaDaoImpl implements CashReceiptJpaDao {
 
 	@Override
 	public BinTransaction getBinTxnRecordForUpdatingDSB(DSB dsbReceiptDb, BigInteger icmcId) {
-		
+
 		JPAQuery jpaQuery = getFromQueryForCashReceiptFromBinTxn();
 		jpaQuery.where(QBinTransaction.binTransaction.icmcId.eq(icmcId)
 				.and(QBinTransaction.binTransaction.binCategoryType.eq(dsbReceiptDb.getBinCategoryType()))
@@ -677,7 +672,6 @@ public class CashReceiptJpaDaoImpl implements CashReceiptJpaDao {
 		BinTransaction binTxn = jpaQuery.singleResult(QBinTransaction.binTransaction);
 		return binTxn;
 	}
-
 
 	@Override
 	public boolean updateDSB(DSB dsb) {
@@ -730,7 +724,7 @@ public class CashReceiptJpaDaoImpl implements CashReceiptJpaDao {
 				QBranchReceipt.branchReceipt.total.sum());
 		return branchReceiptList;
 	}
-	
+
 	@Override
 	public List<FreshFromRBI> getFreshFromRBIRecord(User user, Calendar sDate, Calendar eDate) {
 		JPAQuery jpaQuery = getFromQueryForFreshFromRBI();
@@ -741,7 +735,7 @@ public class CashReceiptJpaDaoImpl implements CashReceiptJpaDao {
 		return freshList;
 	}
 
-@Override
+	@Override
 	public BinTransaction getBinTxnRecordFoRBIFreshediitRBI(FreshFromRBI freshRBIReceipt, BigInteger icmcId) {
 		JPAQuery jpaQuery = getFromQueryForCashReceiptFromBinTxn();
 		jpaQuery.where(QBinTransaction.binTransaction.icmcId.eq(icmcId)
@@ -751,21 +745,21 @@ public class CashReceiptJpaDaoImpl implements CashReceiptJpaDao {
 		return binTxn;
 	}
 
-@Override
-public BinTransaction getBinTxnRecordForBankReceipteditBankReceipt(BankReceipt bankReceiptDb, BigInteger icmcId) {
-	JPAQuery jpaQuery = getFromQueryForCashReceiptFromBinTxn();
-	jpaQuery.where(QBinTransaction.binTransaction.icmcId.eq(icmcId)
-			.and(QBinTransaction.binTransaction.cashSource.eq(CashSource.OTHERBANK))
-			.and(QBinTransaction.binTransaction.binNumber.eq(bankReceiptDb.getBinNumber())));
-	BinTransaction binTxn = jpaQuery.singleResult(QBinTransaction.binTransaction);
-	return binTxn;
-}
+	@Override
+	public BinTransaction getBinTxnRecordForBankReceipteditBankReceipt(BankReceipt bankReceiptDb, BigInteger icmcId) {
+		JPAQuery jpaQuery = getFromQueryForCashReceiptFromBinTxn();
+		jpaQuery.where(QBinTransaction.binTransaction.icmcId.eq(icmcId)
+				.and(QBinTransaction.binTransaction.cashSource.eq(CashSource.OTHERBANK))
+				.and(QBinTransaction.binTransaction.binNumber.eq(bankReceiptDb.getBinNumber())));
+		BinTransaction binTxn = jpaQuery.singleResult(QBinTransaction.binTransaction);
+		return binTxn;
+	}
 
-@Override
-public boolean updateBankReceipt(BankReceipt otherBankReceiptdb) {
-	em.merge(otherBankReceiptdb);
-	return true;
-}
+	@Override
+	public boolean updateBankReceipt(BankReceipt otherBankReceiptdb) {
+		em.merge(otherBankReceiptdb);
+		return true;
+	}
 
 	@Override
 	public boolean updateFreshRBIReceipt(FreshFromRBI freshRBIReceiptDb) {
@@ -800,8 +794,7 @@ public boolean updateBankReceipt(BankReceipt otherBankReceiptdb) {
 	@Override
 	public Integer getDSBReceiptSequence(BigInteger icmcId, DSB dsb) {
 		JPAQuery jpaQuery = getFromQueryForDSB();
-		jpaQuery.where(QDSB.dSB.icmcId.eq(icmcId)
-				.and(QDSB.dSB.receiptDate.eq(dsb.getReceiptDate())));
+		jpaQuery.where(QDSB.dSB.icmcId.eq(icmcId).and(QDSB.dSB.receiptDate.eq(dsb.getReceiptDate())));
 		Integer sequence = jpaQuery.singleResult(QDSB.dSB.receiptSequence.max());
 		return sequence;
 	}
@@ -814,8 +807,6 @@ public boolean updateBankReceipt(BankReceipt otherBankReceiptdb) {
 		return bankReceipt;
 	}
 
-	
-
 	@Override
 	public boolean branchHistory(List<History> historyList) {
 		for (History history : historyList) {
@@ -827,13 +818,13 @@ public boolean updateBankReceipt(BankReceipt otherBankReceiptdb) {
 	@Override
 	public List<Tuple> getIBITForIRV(BigInteger icmcId, Calendar sDate, Calendar eDate) {
 		JPAQuery jpaQuery = new JPAQuery(em);
-		    jpaQuery.from(QIndent.indent);
-		    jpaQuery.where(QIndent.indent.icmcId.eq(icmcId)
-				.and(QIndent.indent.status.eq(OtherStatus.ACCEPTED)
-						.or(QIndent.indent.status.eq(OtherStatus.PROCESSED)))
-				.and(QIndent.indent.cashSource.ne(CashSource.RBI))
-				.and(QIndent.indent.bin.ne("NULL"))
-				.and(QIndent.indent.insertTime.between(sDate, eDate)));
+		jpaQuery.from(QIndent.indent);
+		jpaQuery.where(
+				QIndent.indent.icmcId.eq(icmcId)
+						.and(QIndent.indent.status.eq(OtherStatus.ACCEPTED)
+								.or(QIndent.indent.status.eq(OtherStatus.PROCESSED)))
+						.and(QIndent.indent.cashSource.ne(CashSource.RBI)).and(QIndent.indent.bin.ne("NULL"))
+						.and(QIndent.indent.insertTime.between(sDate, eDate)));
 		jpaQuery.groupBy(QIndent.indent.denomination);
 		List<Tuple> ibitList = jpaQuery.list(QIndent.indent.denomination, QIndent.indent.bundle.sum().multiply(1000));
 		return ibitList;
@@ -856,6 +847,7 @@ public boolean updateBankReceipt(BankReceipt otherBankReceiptdb) {
 		String linkSolBranchId = jpaQuery.singleResult(QICMC.iCMC.linkBranchSolId);
 		return linkSolBranchId;
 	}
+
 	@Override
 	public BinTransaction getBinTxnRecordForUpdateedit(BranchReceipt branchReceiptDb, BigInteger icmcId) {
 		JPAQuery jpaQuery = getFromQueryForCashReceiptFromBinTxn();
@@ -865,6 +857,7 @@ public boolean updateBankReceipt(BankReceipt otherBankReceiptdb) {
 		BinTransaction binTxn = jpaQuery.singleResult(QBinTransaction.binTransaction);
 		return binTxn;
 	}
+
 	@Override
 	public BinTransaction getBinTxnRecordForUpdateBox(BoxMaster boxmasterDb, BigInteger icmcId) {
 		JPAQuery jpaQuery = getFromQueryForCashReceiptFromBinTxn();
@@ -875,15 +868,11 @@ public boolean updateBankReceipt(BankReceipt otherBankReceiptdb) {
 	}
 
 	@Override
-    public FreshFromRBI getFreshFromRBIRecordById(Long id, BigInteger icmcId) {
-        JPAQuery jpaQuery = getFromQueryForFreshFromRBI();
-        jpaQuery.where(QFreshFromRBI.freshFromRBI.icmcId.eq(icmcId).and(QFreshFromRBI.freshFromRBI.id.eq(id)));
-        FreshFromRBI freshFromRBI = jpaQuery.singleResult(QFreshFromRBI.freshFromRBI);
-        return freshFromRBI;
-    }
-
-	
-
-
+	public FreshFromRBI getFreshFromRBIRecordById(Long id, BigInteger icmcId) {
+		JPAQuery jpaQuery = getFromQueryForFreshFromRBI();
+		jpaQuery.where(QFreshFromRBI.freshFromRBI.icmcId.eq(icmcId).and(QFreshFromRBI.freshFromRBI.id.eq(id)));
+		FreshFromRBI freshFromRBI = jpaQuery.singleResult(QFreshFromRBI.freshFromRBI);
+		return freshFromRBI;
+	}
 
 }

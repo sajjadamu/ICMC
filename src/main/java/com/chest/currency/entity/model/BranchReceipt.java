@@ -1,10 +1,3 @@
-/*******************************************************************************
- * /* Copyright (C) Indicsoft Technologies Pvt Ltd
- * * All Rights Reserved.
- *******************************************************************************/
-/**
- * 
- */
 package com.chest.currency.entity.model;
 
 import java.math.BigDecimal;
@@ -26,12 +19,6 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
-
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import com.chest.currency.enums.BinCategoryType;
@@ -40,10 +27,10 @@ import com.chest.currency.enums.CurrencyType;
 import com.chest.currency.enums.DateTimePattern;
 import com.chest.currency.enums.OtherStatus;
 
-/**
- * @author root
- *
- */
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
+
 @Entity(name = "BranchReceipt")
 @Table(name = "BRANCH_RECEIPT")
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
@@ -112,12 +99,10 @@ public class BranchReceipt {
 	@DateTimeFormat(pattern = DateTimePattern.yyyy_MM_dd_HH_mm_ss_SSS)
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "INSERT_TIME", nullable = false, updatable = false)
-	@CreationTimestamp
 	protected Calendar insertTime;
 	
 	@DateTimeFormat(pattern = DateTimePattern.yyyy_MM_dd_HH_mm_ss_SSS)
 	@Column(name = "UPDATE_TIME", nullable = false)
-	@UpdateTimestamp
 	protected Calendar updateTime;
 	
 	@Enumerated(EnumType.STRING)

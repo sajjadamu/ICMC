@@ -52,7 +52,6 @@ import lombok.ToString;
 public class SoiledRemittance {
 	
 	@Id
-	//@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "ID")
 	@GeneratedValue(generator = "SOILED_REMITTANCE_SEQ")
 	@SequenceGenerator(name = "SOILED_REMITTANCE_SEQ", sequenceName = "SOILED_REMITTANCE_SEQ", allocationSize = 100)

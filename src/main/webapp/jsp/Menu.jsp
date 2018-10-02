@@ -417,7 +417,8 @@ font-family: 'fontAwesome'; top: 50%; transform: translateY(-50%); line-height: 
 					<li><a href="././acceptIndent"> Accept Processing Indent</a></li>
 				</sec:authorize>
 				
-				<li><a href="././acceptMutilatedIndent"> Accept Mutilated Indent</a></li>
+				<!-- <li><a href="././acceptMutilatedIndent"> Accept Mutilated Indent</a></li> -->
+				
 				<%-- <sec:authorize access="hasRole('VIEW_INDENT')">
 					<li><a href="././AcceptORVIndent"> Accept Payment Indent</a></li>
 				</sec:authorize> --%>

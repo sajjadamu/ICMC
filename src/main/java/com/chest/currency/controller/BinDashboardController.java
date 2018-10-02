@@ -1709,18 +1709,8 @@ public class BinDashboardController {
 			sDate = dateRange.getFromDate();
 			eDate = (Calendar) dateRange.getFromDate().clone();
 		}
-
-		sDate.set(Calendar.HOUR, 0);
-		sDate.set(Calendar.HOUR_OF_DAY, 0);
-		sDate.set(Calendar.MINUTE, 0);
-		sDate.set(Calendar.SECOND, 0);
-		sDate.set(Calendar.MILLISECOND, 0);
-
-		eDate.set(Calendar.HOUR, 24);
-		eDate.set(Calendar.HOUR_OF_DAY, 23);
-		eDate.set(Calendar.MINUTE, 59);
-		eDate.set(Calendar.SECOND, 59);
-		eDate.set(Calendar.MILLISECOND, 999);
+		UtilityJpa.setStartDate(sDate);
+		UtilityJpa.setEndDate(eDate);
 
 		BigDecimal denom1Pieces = BigDecimal.ZERO;
 		BigDecimal denom2Pieces = BigDecimal.ZERO;
@@ -1736,112 +1726,64 @@ public class BinDashboardController {
 		BigDecimal totalInPieces = BigDecimal.ZERO;
 		BigDecimal totalValues = BigDecimal.ZERO;
 
-		/*
-		 * BigDecimal denom1PiecesSum = BigDecimal.ZERO; BigDecimal
-		 * denom2PiecesSum = BigDecimal.ZERO; BigDecimal denom5PiecesSum =
-		 * BigDecimal.ZERO; BigDecimal denom10PiecesSum = BigDecimal.ZERO;
-		 * BigDecimal denom20PiecesSum = BigDecimal.ZERO; BigDecimal
-		 * denom50PiecesSum = BigDecimal.ZERO; BigDecimal denom100PiecesSum =
-		 * BigDecimal.ZERO; BigDecimal denom200PiecesSum = BigDecimal.ZERO;
-		 * BigDecimal denom500PiecesSum = BigDecimal.ZERO; BigDecimal
-		 * denom2000PiecesSum = BigDecimal.ZERO;
-		 */
-
-		/*
-		 * Map<String, Mutilated> mutilatedList =
-		 * binDashboardService.getMutilatedDataForDN2(user.getIcmcId(), sDate,
-		 * eDate);
-		 */
 		List<Tuple> mutilatedList = binDashboardService.DN2Report(user.getIcmcId(), sDate, eDate);
 		for (Tuple tuple : mutilatedList) {
 			if (tuple.get(0, Integer.class).equals(2000)) {
 				denom2000Pieces = tuple.get(1, BigDecimal.class);
 				totalInPieces = totalInPieces.add(denom2000Pieces);
-				// totalValues =
-				// totalValues.add(denom2000Pieces).multiply(BigDecimal.valueOf(2000));
 				totalValues = totalValues.add(denom2000Pieces.multiply(BigDecimal.valueOf(2000)));
 			}
 			if (tuple.get(0, Integer.class).equals(1000)) {
 				denom1000Pieces = tuple.get(1, BigDecimal.class);
 				totalInPieces = totalInPieces.add(denom1000Pieces);
-				// totalValues =
-				// totalValues.add(denom1000Pieces).multiply(BigDecimal.valueOf(1000));
 				totalValues = totalValues.add(denom1000Pieces.multiply(BigDecimal.valueOf(1000)));
-
 			}
-
 			if (tuple.get(0, Integer.class).equals(500)) {
 				denom500Pieces = tuple.get(1, BigDecimal.class);
 				totalInPieces = totalInPieces.add(denom500Pieces);
-				// totalValues =
-				// totalValues.add(denom500Pieces).multiply(BigDecimal.valueOf(500));
 				totalValues = totalValues.add(denom500Pieces.multiply(BigDecimal.valueOf(500)));
 			}
-
 			if (tuple.get(0, Integer.class).equals(200)) {
 				denom200Pieces = tuple.get(1, BigDecimal.class);
 				totalInPieces = totalInPieces.add(denom200Pieces);
-				// totalValues =
-				// totalValues.add(denom200Pieces).multiply(BigDecimal.valueOf(200));
 				totalValues = totalValues.add(denom200Pieces.multiply(BigDecimal.valueOf(200)));
 			}
-
 			if (tuple.get(0, Integer.class).equals(100)) {
 				denom100Pieces = tuple.get(1, BigDecimal.class);
 				totalInPieces = totalInPieces.add(denom100Pieces);
-				// totalValues =
-				// totalValues.add(denom100Pieces).multiply(BigDecimal.valueOf(100));
 				totalValues = totalValues.add(denom100Pieces.multiply(BigDecimal.valueOf(100)));
 			}
-
 			if (tuple.get(0, Integer.class).equals(50)) {
 				denom50Pieces = tuple.get(1, BigDecimal.class);
 				totalInPieces = totalInPieces.add(denom50Pieces);
-				// totalValues =
-				// totalValues.add(denom50Pieces).multiply(BigDecimal.valueOf(50));
 				totalValues = totalValues.add(denom50Pieces.multiply(BigDecimal.valueOf(50)));
 			}
-
 			if (tuple.get(0, Integer.class).equals(20)) {
 				denom20Pieces = tuple.get(1, BigDecimal.class);
 				totalInPieces = totalInPieces.add(denom20Pieces);
-				// totalValues =
-				// totalValues.add(denom20Pieces).multiply(BigDecimal.valueOf(20));
 				totalValues = totalValues.add(denom20Pieces.multiply(BigDecimal.valueOf(20)));
 			}
-
 			if (tuple.get(0, Integer.class).equals(10)) {
 				denom10Pieces = tuple.get(1, BigDecimal.class);
 				totalInPieces = totalInPieces.add(denom10Pieces);
-				// totalValues =
-				// totalValues.add(denom10Pieces).multiply(BigDecimal.valueOf(10));
 				totalValues = totalValues.add(denom10Pieces.multiply(BigDecimal.valueOf(10)));
 			}
-
 			if (tuple.get(0, Integer.class).equals(5)) {
 				denom5Pieces = tuple.get(1, BigDecimal.class);
 				totalInPieces = totalInPieces.add(denom5Pieces);
-				// totalValues =
-				// totalValues.add(denom5Pieces).multiply(BigDecimal.valueOf(5));
 				totalValues = totalValues.add(denom5Pieces.multiply(BigDecimal.valueOf(5)));
 			}
-
 			if (tuple.get(0, Integer.class).equals(2)) {
 				denom2Pieces = tuple.get(1, BigDecimal.class);
 				totalInPieces = totalInPieces.add(denom2Pieces);
 				totalValues = totalValues.add(denom2Pieces.multiply(BigDecimal.valueOf(2)));
 			}
-
 			if (tuple.get(0, Integer.class).equals(1)) {
 				denom1Pieces = tuple.get(1, BigDecimal.class);
 				totalInPieces = totalInPieces.add(denom1Pieces);
-				// totalValues =
-				// totalValues.add(denom1Pieces).multiply(BigDecimal.valueOf(1));
 				totalValues = totalValues.add(denom1Pieces.multiply(BigDecimal.valueOf(1)));
 			}
-
 		}
-		// map.put("mutilatedRecords", mutilatedList);
 		SimpleDateFormat fmt = new SimpleDateFormat("yyyy-MM-dd");
 		Date date = sDate.getTime();
 		map.put("currentDate", fmt.format(date));
@@ -2795,7 +2737,24 @@ public class BinDashboardController {
 
 		List<BinTransactionBOD> binTxBodList = binDashboardService.cashMovementRegister(user.getIcmcId(), sDate, eDate,
 				dateRange);
+		List<Sas> sasList = cashPaymentJpaDao.getORVRecords(user.getIcmcId(), sDate, eDate);
+		BigDecimal denomination1COINSW = new BigDecimal(0);
+		BigDecimal denomination2COINSW = new BigDecimal(0);
+		BigDecimal denomination5COINSW = new BigDecimal(0);
+		BigDecimal denomination10COINSW = new BigDecimal(0);
+		BinTransactionBOD binTransactionBODCoins = new BinTransactionBOD();
+		for (Sas sas : sasList) {
+			denomination1COINSW = denomination1COINSW.add(sas.getTotalValueOfCoinsRs1());
+			denomination2COINSW = denomination2COINSW.add(sas.getTotalValueOfCoinsRs2());
+			denomination5COINSW = denomination5COINSW.add(sas.getTotalValueOfCoinsRs5());
+			denomination10COINSW = denomination10COINSW.add(sas.getTotalValueOfCoinsRs10());
+		}
+		binTransactionBODCoins.setDenomination1(denomination1COINSW);
+		binTransactionBODCoins.setDenomination2(denomination2COINSW);
+		binTransactionBODCoins.setDenomination5(denomination5COINSW);
+		binTransactionBODCoins.setDenomination10(denomination10COINSW);
 
+		map.put("summaryListForCoins", binTransactionBODCoins);
 		map.put("summaryListForATM", binTxBodList.get(0));
 		map.put("summaryListForISSUABLE", binTxBodList.get(1));
 		map.put("branchDeposit", binTxBodList.get(2));

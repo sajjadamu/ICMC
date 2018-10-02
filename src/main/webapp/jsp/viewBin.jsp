@@ -77,7 +77,7 @@
 				html += "Capacity :" + capacity + "</br>";
 				html += "Bundle :" + receiveBundle + "</br>";
 				var data = capacity - receiveBundle;
-				html += "Available :" + data + "</br>";
+				html += "Available Space :" + data + "</br>";
 				$('#modal-body').html(html);
 				$('#myModal').modal('show');
 			},
