@@ -13,7 +13,10 @@
     <meta name="author" content="">
 <link rel="shortcut icon" href="./resources/logo/favicon.ico" type="image/x-icon">
     <title>ICICI : Accept Indent</title>
+<script type="text/javascript"
+		src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
 
+	<script src="./resources/bower_components/jquery/dist/jquery.min.js"></script>
     <!-- Bootstrap Core CSS -->
     <link href="./resources/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
 

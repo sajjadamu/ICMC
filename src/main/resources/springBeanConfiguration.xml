@@ -1,63 +1,73 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-    xmlns:context="http://www.springframework.org/schema/context"
-    xmlns:tx="http://www.springframework.org/schema/tx"
-     
-    
-    xsi:schemaLocation="
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+
+
+	xsi:schemaLocation="
        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
        http://cxf.apache.org/core http://cxf.apache.org/schemas/core.xsd
        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
-	
 
-	
-	<bean id="dataSource"
+	<!-- <bean id="dataSource"
 		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 		<property name="driverClassName" value="${driverClassName}" />
 		<property name="url" value="${url}" />
 		<property name="username" value="${dbusername}" />
 		<property name="password" value="${password}" />
+	</bean> -->
+
+	<bean id="dataSource"
+		class="com.chest.currency.security.datasource.config.CustomDriverManagerDataSource">
+		<property name="driverClassName" value="${driverClassName}" />
+		<property name="url" value="${url}" />
+		<property name="username" value="${dbusername}" />
+		<property name="password" value="${password}" />
 	</bean>
-	
+
 	<bean id="documentFilePath" class="java.lang.String">
-		<constructor-arg value="${documentFilePath}"/>
+		<constructor-arg value="${documentFilePath}" />
 	</bean>
-	
+
 	<bean id="prnFilePath" class="java.lang.String">
-		<constructor-arg value="${prnFilePath}"/>
+		<constructor-arg value="${prnFilePath}" />
 	</bean>
-	
-	<bean id="activeDirectoryLdapAuthenticationProvider" class="com.chest.currency.security.ADLoginAuthenticationProvider">
-			<constructor-arg value="${ldapDomain}"/>
-			<constructor-arg value="${ldapURL}"/>
+
+	<bean id="activeDirectoryLdapAuthenticationProvider"
+		class="com.chest.currency.security.ADLoginAuthenticationProvider">
+		<constructor-arg value="${ldapDomain}" />
+		<constructor-arg value="${ldapURL}" />
 	</bean>
-	
+
 	<bean id="ldapURL" class="java.lang.String">
-		<constructor-arg value="${ldapURL}"/>
+		<constructor-arg value="${ldapURL}" />
 	</bean>
-	
+
 	<bean id="ldapDomain" class="java.lang.String">
-		<constructor-arg value="${ldapDomain}"/>
+		<constructor-arg value="${ldapDomain}" />
 	</bean>
-	
+
 	<bean id="maxFailedLoginAttemp" class="java.lang.Integer">
-		<constructor-arg value="${maxFailedLoginAttemp}"/>
+		<constructor-arg value="${maxFailedLoginAttemp}" />
 	</bean>
-	
-	<bean id="qrCodeGen" class="com.chest.currency.qrgencode.QRCodeImpl">
-			 <property name="filePath" value="${filePath}" /> 
+
+	<bean id="qrCodeGen"
+		class="com.chest.currency.qrgencode.QRCodeImpl">
+		<property name="filePath" value="${filePath}" />
 	</bean>
-	
-	<bean id="icmcConcurrentHashMap" class="java.util.concurrent.ConcurrentHashMap"/>
-	
-	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+
+	<bean id="icmcConcurrentHashMap"
+		class="java.util.concurrent.ConcurrentHashMap" />
+
+	<bean id="mailSender"
+		class="org.springframework.mail.javamail.JavaMailSenderImpl">
 		<property name="host" value="${java.mail.host}" />
 		<property name="port" value="${java.mail.port}" />
 		<property name="username" value="${java.mail.username}" />
 		<property name="password" value="${java.mail.password}" />
- 
+
 		<!-- The name of the property, following JavaBean naming conventions -->
 		<property name="javaMailProperties">
 			<props>
@@ -68,42 +78,48 @@
 			</props>
 		</property>
 	</bean>
-	
-	<!-- This produces a container-managed EntityManagerFactory; 
-         rather than application-managed EntityManagerFactory as in case of LocalEntityManagerFactoryBean-->
-    <bean id="entityManagerFactoryBean" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
-      <property name="dataSource" ref="dataSource" />
-      <!-- This makes /META-INF/persistence.xml is no longer necessary -->
-      <property name="packagesToScan" value="com.chest.currency.entity.model" />
-      <!-- JpaVendorAdapter implementation for Hibernate EntityManager.
-           Exposes Hibernate's persistence provider and EntityManager extension interface -->
-      <property name="jpaVendorAdapter">
-         <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter" />
-      </property>
-      <property name="jpaProperties">
-         <props>
-            <prop key="hibernate.hbm2ddl.auto">validate</prop>
-            <prop key="hibernate.dialect">${hibernateDialect}</prop>
-         </props>
-      </property>
-   </bean>
-   
-   <!-- This transaction manager is appropriate for applications that use a single JPA EntityManagerFactory for transactional data access. 
-        JTA (usually through JtaTransactionManager) is necessary for accessing multiple transactional resources within the same transaction. -->
-    <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
-      <property name="entityManagerFactory" ref="entityManagerFactoryBean" />
-   </bean>
-    
-   <!-- responsible for registering the necessary Spring components that power annotation-driven transaction management; 
-        such as when @Transactional methods are invoked -->
-   <tx:annotation-driven />
-	
-	<!-- <bean id="excelView" class="com.chest.currency.excel.ExcelBuilder"></bean>
-       <bean id="multipartResolver"
-		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
-		<property name="maxUploadSize" value="1000000" />
-	</bean> -->
 
-<bean id="multipartResolver"
-        class="org.springframework.web.multipart.commons.CommonsMultipartResolver" />
+	<!-- This produces a container-managed EntityManagerFactory; rather than 
+		application-managed EntityManagerFactory as in case of LocalEntityManagerFactoryBean -->
+	<bean id="entityManagerFactoryBean"
+		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<!-- This makes /META-INF/persistence.xml is no longer necessary -->
+		<property name="packagesToScan"
+			value="com.chest.currency.entity.model" />
+		<!-- JpaVendorAdapter implementation for Hibernate EntityManager. Exposes 
+			Hibernate's persistence provider and EntityManager extension interface -->
+		<property name="jpaVendorAdapter">
+			<bean
+				class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter" />
+		</property>
+		<property name="jpaProperties">
+			<props>
+				<prop key="hibernate.hbm2ddl.auto">validate</prop>
+				<prop key="hibernate.dialect">${hibernateDialect}</prop>
+			</props>
+		</property>
+	</bean>
+
+	<!-- This transaction manager is appropriate for applications that use a 
+		single JPA EntityManagerFactory for transactional data access. JTA (usually 
+		through JtaTransactionManager) is necessary for accessing multiple transactional 
+		resources within the same transaction. -->
+	<bean id="transactionManager"
+		class="org.springframework.orm.jpa.JpaTransactionManager">
+		<property name="entityManagerFactory"
+			ref="entityManagerFactoryBean" />
+	</bean>
+
+	<!-- responsible for registering the necessary Spring components that power 
+		annotation-driven transaction management; such as when @Transactional methods 
+		are invoked -->
+	<tx:annotation-driven />
+
+	<!-- <bean id="excelView" class="com.chest.currency.excel.ExcelBuilder"></bean> 
+		<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver"> 
+		<property name="maxUploadSize" value="1000000" /> </bean> -->
+
+	<bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver" />
 </beans>

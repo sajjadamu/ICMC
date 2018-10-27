@@ -1,7 +1,3 @@
-/*******************************************************************************
- * /* Copyright (C) Indicsoft Technologies Pvt Ltd
- * * All Rights Reserved.
- *******************************************************************************/
 package com.chest.currency.controller;
 
 import java.util.Arrays;
@@ -98,6 +94,10 @@ public class RolePermissionController {
 				.filter(permissionName -> permissionName.module == PermissionModule.REPORTS)
 				.collect(Collectors.toList());
 
+		List<PermissionName> permissionMigrations = permissionList.stream()
+				.filter(permissionName -> permissionName.module == PermissionModule.MIGRATION)
+				.collect(Collectors.toList());
+
 		map.put(PermissionModule.ADMIN.name(), permissionAdmin);
 		map.put(PermissionModule.BIN_DASHBOARD.name(), permissionBinDashboard);
 		map.put(PermissionModule.VAULT_MANAGEMENT.name(), permissionVaultManagement);
@@ -107,6 +107,7 @@ public class RolePermissionController {
 		map.put(PermissionModule.PROCESSING_ROOM.name(), permissionProcessingRoom);
 		map.put(PermissionModule.FAKE_NOTE_MANAGEMENT.name(), permissionFakeNoteManagement);
 		map.put(PermissionModule.REPORTS.name(), permissionReports);
+		map.put(PermissionModule.MIGRATION.name(), permissionMigrations);
 	}
 
 	@RequestMapping(value = "/saveRole")

@@ -40,6 +40,7 @@ import com.chest.currency.service.ICMCService;
 import com.chest.currency.service.ProcessingRoomService;
 import com.chest.currency.service.UserAdministrationService;
 import com.chest.currency.service.UserService;
+import com.chest.currency.util.UtilityJpa;
 import com.ibm.icu.text.DateFormat;
 import com.ibm.icu.text.SimpleDateFormat;
 
@@ -75,29 +76,9 @@ public class UserLoginController {
 		}
 		Calendar dateEOD = null;
 		Calendar dateBinTxn = null;
+		String parsedEodDate = null;
+		String parsedBinTxnDate = null;
 		User user = (User) session.getAttribute("login");
-		/*
-		 * List<MachineMaintenance> maintenanceDateList =
-		 * userAdministrationService.getMaintanenceData(user.getIcmcId());
-		 * 
-		 * Date date = new Date(); long difference = 0; List<MachineMaintenance>
-		 * machineList = new ArrayList<>(); MachineMaintenance
-		 * machineMaintenanceForMessage; for (MachineMaintenance
-		 * machineMaintenance : maintenanceDateList) {
-		 * machineMaintenanceForMessage = new MachineMaintenance(); long diff =
-		 * machineMaintenance.getNextMaintainanceDate().getTime() -
-		 * date.getTime(); difference = TimeUnit.DAYS.convert(diff,
-		 * TimeUnit.MILLISECONDS); if(difference<=3) {
-		 * machineMaintenanceForMessage.setMachineNumber(machineMaintenance.
-		 * getMachineNumber());
-		 * machineMaintenanceForMessage.setNextMaintainanceDate(
-		 * machineMaintenance.getNextMaintainanceDate());
-		 * machineList.add(machineMaintenanceForMessage); }
-		 * 
-		 * }
-		 * 
-		 * LOG.info("homeAction"); map.put("machineMessage", machineList);
-		 */
 
 		// EOD NOTIFICATION
 
@@ -123,29 +104,23 @@ public class UserLoginController {
 				LOG.info("Calendar date from binTransaction " + dateBinTxn);
 				if (dateBinTxn != null) {
 					LOG.info("Calendar date from binTransaction " + dateBinTxn.getTime());
-					map.put("binTransactionDate", dateBinTxn.getTime());
+					parsedBinTxnDate = parsingDateFormate(dateBinTxn.getTime());
+					map.put("binTransactionDate", parsingDateFormate(dateBinTxn.getTime()));
 
 					Calendar sDate = (Calendar) dateBinTxn.clone();
 					Calendar eDate = (Calendar) dateBinTxn.clone();
-					sDate.set(Calendar.HOUR, 0);
-					sDate.set(Calendar.HOUR_OF_DAY, 0);
-					sDate.set(Calendar.MINUTE, 0);
-					sDate.set(Calendar.SECOND, 0);
-					sDate.set(Calendar.MILLISECOND, 0);
 
-					eDate.set(Calendar.HOUR, 24);
-					eDate.set(Calendar.HOUR_OF_DAY, 23);
-					eDate.set(Calendar.MINUTE, 59);
-					eDate.set(Calendar.SECOND, 59);
-					eDate.set(Calendar.MILLISECOND, 999);
-					LOG.info("dateBinTxn.getTime() " + dateBinTxn.getTime());
+					UtilityJpa.setStartDate(sDate);
+					UtilityJpa.setEndDate(eDate);
 
 					LOG.info("sDate from binTransaction " + sDate.getTime());
 					LOG.info("eDate from binTransaction " + eDate.getTime());
 					dateEOD = userAdministrationService.getNotificationFromBinTransactionBODForEOD(user.getIcmcId(),
 							sDate, eDate);
 					if (dateEOD != null) {
-						map.put("binTransactioEODDate", dateEOD.getTime());
+						/* map.put("binTransactioEODDate", dateEOD.getTime()); */
+						map.put("binTransactioEODDate", parsingDateFormate(dateEOD.getTime()));
+						parsedEodDate = parsingDateFormate(dateEOD.getTime());
 					} else {
 						map.put("binTransactioEODDate", dateEOD);
 					}
@@ -171,21 +146,15 @@ public class UserLoginController {
 				dateBinTxn = userAdministrationService.getNotificationFromBinTransactionForEOD(user.getIcmcId());
 				LOG.info("Calendar date from binTransaction " + dateBinTxn);
 				if (dateBinTxn != null) {
-					map.put("binTransactionDate", dateBinTxn.getTime());
-
+					/* map.put("binTransactionDate", dateBinTxn.getTime()); */
+					map.put("binTransactionDate", parsingDateFormate(dateBinTxn.getTime()));
+					parsedBinTxnDate = parsingDateFormate(dateBinTxn.getTime());
 					Calendar sDate = (Calendar) dateBinTxn.clone();
 					Calendar eDate = (Calendar) dateBinTxn.clone();
-					sDate.set(Calendar.HOUR, 0);
-					sDate.set(Calendar.HOUR_OF_DAY, 0);
-					sDate.set(Calendar.MINUTE, 0);
-					sDate.set(Calendar.SECOND, 0);
-					sDate.set(Calendar.MILLISECOND, 0);
 
-					eDate.set(Calendar.HOUR, 24);
-					eDate.set(Calendar.HOUR_OF_DAY, 23);
-					eDate.set(Calendar.MINUTE, 59);
-					eDate.set(Calendar.SECOND, 59);
-					eDate.set(Calendar.MILLISECOND, 999);
+					UtilityJpa.setStartDate(sDate);
+					UtilityJpa.setEndDate(eDate);
+
 					LOG.info("dateBinTxn.getTime() " + dateBinTxn.getTime());
 
 					LOG.info("sDate from binTransaction " + sDate.getTime());
@@ -193,7 +162,9 @@ public class UserLoginController {
 					dateEOD = userAdministrationService.getNotificationFromBinTransactionBODForEOD(user.getIcmcId(),
 							sDate, eDate);
 					if (dateEOD != null) {
-						map.put("binTransactioEODDate", dateEOD.getTime());
+						/* map.put("binTransactioEODDate", dateEOD.getTime()); */
+						map.put("binTransactioEODDate", parsingDateFormate(dateEOD.getTime()));
+						parsedEodDate = parsingDateFormate(dateBinTxn.getTime());
 					} else {
 						map.put("binTransactioEODDate", dateEOD);
 					}
@@ -261,6 +232,11 @@ public class UserLoginController {
 			map.put("processingOutPutPendingMsg", processingOutPutPendingMsg);
 			LOG.info("dateEOD  " + dateEOD);
 			LOG.info("dateBinTxn " + dateBinTxn);
+		}
+
+		if (parsedEodDate == null && parsedBinTxnDate != null
+				&& (!parsingDateFormate(new Date()).equals(parsedBinTxnDate))) {
+			return new ModelAndView("welcomeEOD", map);
 		}
 		return new ModelAndView("welcome", map);
 	}
@@ -483,4 +459,12 @@ public class UserLoginController {
 		return new ModelAndView("redirect:./viewLockedUser");
 	}
 
+	private String parsingDateFormate(Date date) {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		String parsedDate = null;
+		if (date != null) {
+			parsedDate = sdf.format(date);
+		}
+		return parsedDate;
+	}
 }

@@ -163,6 +163,7 @@ function addRow(i){
 	
 	
 	$('#table1').append(data);
+	countrow++;
 	$('#table1').append('<tr id=addmoreButton'+rowCount+'><td><button type="button" class="addmoreButton" onclick="replicateValue('+rowCount+');doAjaxForTotal()">Replicate Value</button></td><td><button type="button" class="addmoreButton" onclick="addRow('+rowCount+');doAjaxForTotal()">Add Blank Row</button></td><td>Total</td><td><input class="form-control input-margin" type="text" id="totalValue"  value="" readonly></td></tr>');
 
 }
@@ -256,7 +257,7 @@ function doAjaxPostInsert(str) {
 		isValid = false;
 	}
 	
-	for (i = 0; i < countrow; i++) {
+	for (i = 0; i <= countrow; i++) {
 		 if(($('#Denomination'+i).val()!=undefined) && $('#Denomination'+i).val()!=2000 
 				 && $('#Denomination'+i).val()!=1000 && $('#Denomination'+i).val()!=500 && $('#Denomination'+i).val()!=200 
 				 && $('#Denomination'+i).val()!=100 && $('#Denomination'+i).val()!=50 

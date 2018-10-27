@@ -6,7 +6,9 @@ import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -69,7 +71,7 @@ import com.mysema.query.Tuple;
 @Transactional
 public class ProcessingRoomServiceImpl implements ProcessingRoomService {
 
-	private static final Logger LOG = LoggerFactory.getLogger(CashReceiptServiceImpl.class);
+	private static final Logger LOG = LoggerFactory.getLogger(ProcessingRoomServiceImpl.class);
 
 	@Autowired
 	ProcessingRoomDaoImpl processingRoomDao;
@@ -167,10 +169,9 @@ public class ProcessingRoomServiceImpl implements ProcessingRoomService {
 	}
 
 	/*
-	 * @Override public List<Indent>
-	 * getIndentRequestForMachineAllocation(BigInteger icmcId, CashSource
-	 * cashSource) { List<Indent> indentListForMachineAllocation =
-	 * processingRoomJpaDao.getIndentRequestForMachineAllocation(icmcId,
+	 * @Override public List<Indent> getIndentRequestForMachineAllocation(BigInteger
+	 * icmcId, CashSource cashSource) { List<Indent> indentListForMachineAllocation
+	 * = processingRoomJpaDao.getIndentRequestForMachineAllocation(icmcId,
 	 * cashSource); return indentListForMachineAllocation; }
 	 */
 	@Override
@@ -209,14 +210,14 @@ public class ProcessingRoomServiceImpl implements ProcessingRoomService {
 		indent.setBin(bin);
 		indent.setBundle(bundle);
 		indent.setIcmcId(user.getIcmcId());
-		indent.setUpdateTime(Calendar.getInstance());
 		boolean isIndentUpdate = false;
 		BinTransaction txnBean = this.getBinFromTransaction(bin.trim(), user.getIcmcId());
-
+		LOG.info("processIndentRequest txnBean " + txnBean);
+		LOG.info("processIndentRequest indent " + indent);
 		if (indent != null && txnBean != null && txnBean.getReceiveBundle() != null
 				&& txnBean.getReceiveBundle().compareTo(BigDecimal.ZERO) > 0 && indent.getBundle() != null
 				&& indent.getBundle().compareTo(BigDecimal.ZERO) > 0) {
-
+			LOG.info("subtracting balance ");
 			BigDecimal balanceBundle = txnBean.getReceiveBundle().subtract(indent.getBundle());
 
 			LOG.info("processing available balanceBundle " + balanceBundle);
@@ -387,8 +388,7 @@ public class ProcessingRoomServiceImpl implements ProcessingRoomService {
 
 		/*
 		 * List<MachineAllocation> pendingBundleListFromMachineAllocation =
-		 * processingRoomJpaDao
-		 * .getPendingBundleFromMachineAllocation(user.getIcmcId(),
+		 * processingRoomJpaDao .getPendingBundleFromMachineAllocation(user.getIcmcId(),
 		 * process.getDenomination(), machineOrManual);
 		 * 
 		 */
@@ -473,25 +473,24 @@ public class ProcessingRoomServiceImpl implements ProcessingRoomService {
 		/*
 		 * String machineOrManual = ""; if (process.getProcessAction() ==
 		 * ProcessAction.MACHINE) { machineOrManual = "NO"; } if
-		 * (process.getProcessAction() == ProcessAction.MANUAL) {
-		 * machineOrManual = "YES"; }
+		 * (process.getProcessAction() == ProcessAction.MANUAL) { machineOrManual =
+		 * "YES"; }
 		 * 
 		 * List<MachineAllocation> pendingBundleListFromMachineAllocation =
-		 * processingRoomJpaDao
-		 * .getPendingBundleFromMachineAllocation(user.getIcmcId(),
+		 * processingRoomJpaDao .getPendingBundleFromMachineAllocation(user.getIcmcId(),
 		 * process.getDenomination(), machineOrManual);
 		 * 
 		 * List<MachineAllocation> eligiblePendingBundleList =
 		 * UtilityJpa.getEligibleBundleListForMachineAllocation(
 		 * pendingBundleListFromMachineAllocation, process.getBundle(), user);
 		 * 
-		 * if (eligiblePendingBundleList == null ||
-		 * eligiblePendingBundleList.isEmpty()) { throw new BaseGuiException(
+		 * if (eligiblePendingBundleList == null || eligiblePendingBundleList.isEmpty())
+		 * { throw new BaseGuiException(
 		 * "Required Bundle is Not available for Denomination:" +
 		 * process.getDenomination()); }
 		 * 
-		 * for (MachineAllocation machineAllocation : eligiblePendingBundleList)
-		 * { updatePendingBundleInMachineAllocation(machineAllocation);
+		 * for (MachineAllocation machineAllocation : eligiblePendingBundleList) {
+		 * updatePendingBundleInMachineAllocation(machineAllocation);
 		 * process.setMachineId(machineAllocation.getId()); }
 		 */ addProcess(processList);
 
@@ -623,18 +622,24 @@ public class ProcessingRoomServiceImpl implements ProcessingRoomService {
 	@Override
 	public boolean UploadDefineKeySet(List<DefineKeySet> list, DefineKeySet defineKeySet) {
 		boolean isAllSuccess = false;
-		CustodianKeySet custodianKeySet = new CustodianKeySet();
+
 		try {
 			isAllSuccess = processingRoomJpaDao.UploadDefineKeySet(list, defineKeySet);
-			for (DefineKeySet list1 : list) {
-				custodianKeySet.setCustodian(list1.getCustodian());
+			Set<String> custodians = new LinkedHashSet<String>();
+			for (DefineKeySet custodian : list) {
+				custodians.add(custodian.getCustodian());
+			}
+			for (String custodian : custodians) {
+				CustodianKeySet custodianKeySet = new CustodianKeySet();
+				custodianKeySet.setCustodian(custodian);
 				custodianKeySet.setIcmcId(defineKeySet.getIcmcId());
 				custodianKeySet.setInsertBy(defineKeySet.getInsertBy());
 				custodianKeySet.setUpdateBy(defineKeySet.getUpdateBy());
 				custodianKeySet.setInsertTime(defineKeySet.getInsertTime());
 				custodianKeySet.setUpdateTime(defineKeySet.getUpdateTime());
+				processingRoomJpaDao.insertCosutodianName(custodianKeySet);
 			}
-			processingRoomJpaDao.insertCosutodianName(custodianKeySet);
+
 		} catch (Exception ex) {
 			throw new RuntimeException(ex);
 		}
@@ -677,9 +682,10 @@ public class ProcessingRoomServiceImpl implements ProcessingRoomService {
 	}
 
 	@Override
-	public boolean saveAssignVaultCustodian(AssignVaultCustodian assignVaultCustodian) {
+	public boolean saveAssignVaultCustodian(AssignVaultCustodian assignVaultCustodian,
+			AssignVaultCustodian vaultCustodian) {
 
-		return processingRoomJpaDao.saveAssignVaultCustodian(assignVaultCustodian);
+		return processingRoomJpaDao.saveAssignVaultCustodian(assignVaultCustodian, vaultCustodian);
 	}
 
 	@Override
@@ -1713,6 +1719,16 @@ public class ProcessingRoomServiceImpl implements ProcessingRoomService {
 	}
 
 	@Override
+	public AssignVaultCustodian getHandoveredChargUserId(BigInteger icmcId, String custodian) {
+		return processingRoomJpaDao.getHandoveredChargUserId(icmcId, custodian);
+	}
+
+	@Override
+	public AssignVaultCustodian getHandoveredChargByHandOverId(BigInteger icmcId, String userId) {
+		return processingRoomJpaDao.getHandoveredChargByHandOverId(icmcId, userId);
+	}
+
+	@Override
 	public User isValidUser(String username, BigInteger icmcId) {
 		User userBean = processingRoomJpaDao.isValidUser(username, icmcId);
 		return userBean;
@@ -1814,7 +1830,7 @@ public class ProcessingRoomServiceImpl implements ProcessingRoomService {
 					break;
 				}
 			}
-		}else if (CashSource.DIVERSION.equals(indent.getCashSource())) {
+		} else if (CashSource.DIVERSION.equals(indent.getCashSource())) {
 			List<DiversionIRV> diversionIRVs = processingRoomJpaDao.getDiversionIRV(indent, sDate, eDate);
 			BigDecimal totalbundle = indent.getBundle();
 			for (DiversionIRV diversionIRV : diversionIRVs) {
@@ -1832,10 +1848,11 @@ public class ProcessingRoomServiceImpl implements ProcessingRoomService {
 	}
 
 	@Override
+	@Transactional
 	public boolean updateCashReceiveForIndentRequest(List<Indent> eligibleIndentRequestList) {
 		boolean isUpdate = false;
 		for (Indent indent : eligibleIndentRequestList) {
-				isUpdate = getUpdateCashReceiveForIndentRequest(indent);
+			isUpdate = getUpdateCashReceiveForIndentRequest(indent);
 		}
 		return isUpdate;
 	}

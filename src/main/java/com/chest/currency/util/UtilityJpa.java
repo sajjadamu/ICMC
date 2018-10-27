@@ -1,7 +1,3 @@
-/*******************************************************************************
- * /* Copyright (C) Indicsoft Technologies Pvt Ltd
- * * All Rights Reserved.
- *******************************************************************************/
 package com.chest.currency.util;
 
 import java.io.DataOutputStream;
@@ -11,6 +7,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.net.Socket;
 import java.net.URL;
 import java.net.UnknownHostException;
@@ -50,6 +47,7 @@ import com.chest.currency.entity.model.CRA;
 import com.chest.currency.entity.model.CRAAllocation;
 import com.chest.currency.entity.model.CRAAllocationLog;
 import com.chest.currency.entity.model.CRALog;
+import com.chest.currency.entity.model.CustodianKeySet;
 import com.chest.currency.entity.model.DSB;
 import com.chest.currency.entity.model.DiversionIRV;
 import com.chest.currency.entity.model.DiversionORVAllocation;
@@ -141,15 +139,17 @@ public class UtilityJpa {
 					isFound = true;
 					break;
 				} else {
-					binTx.setReceiveBundle(binTx.getReceiveBundle().add(availableSpace));
-					binTx.setCurrentBundle(availableSpace);
-					binTx.setCashSource(cashSource);
-					binTx.setUpdateTime(now);
-					binTx.setStatus(BinStatus.FULL);
-					binTx.setVerified(YesNo.Yes);
-					binTx.setBinCategoryType(BinCategoryType.BIN);
-					alloccateTxs.add(binTx);
-					bundleRequired = bundleRequired.subtract(availableSpace);
+					if (!CurrencyType.UNPROCESS.equals(currencyType) || !CashSource.BRANCH.equals(cashSource)) {
+						binTx.setReceiveBundle(binTx.getReceiveBundle().add(availableSpace));
+						binTx.setCurrentBundle(availableSpace);
+						binTx.setCashSource(cashSource);
+						binTx.setUpdateTime(now);
+						binTx.setStatus(BinStatus.FULL);
+						binTx.setVerified(YesNo.Yes);
+						binTx.setBinCategoryType(BinCategoryType.BIN);
+						alloccateTxs.add(binTx);
+						bundleRequired = bundleRequired.subtract(availableSpace);
+					}
 				}
 			}
 		}
@@ -168,8 +168,7 @@ public class UtilityJpa {
 					BigDecimal availableSpace = capacity.getMaxBundleCapacity();
 
 					try {
-						if (availableSpace.compareTo(bundleRequired) >= 0) {
-
+						if (availableSpace.compareTo(bundleRequired) > 0) {
 							BinTransaction binTx = new BinTransaction();
 							binTx.setBinNumber(binMaster.getBinNumber());
 							binTx.setDenomination(capacity.getDenomination());
@@ -190,27 +189,51 @@ public class UtilityJpa {
 							alloccateTxs.add(binTx);
 							isFound = true;
 							break;
-						} else {
+						} else if (availableSpace.compareTo(bundleRequired) == 0) {
+
 							BinTransaction binTx = new BinTransaction();
 							binTx.setBinNumber(binMaster.getBinNumber());
 							binTx.setDenomination(capacity.getDenomination());
 							binTx.setMaxCapacity(capacity.getMaxBundleCapacity());
 							binTx.setBinType(currencyType);
 							binTx.setCashSource(cashSource);
-							binTx.setReceiveBundle(availableSpace);
-							binTx.setCurrentBundle(availableSpace);
+							binTx.setReceiveBundle(bundleRequired);
+							binTx.setCurrentBundle(bundleRequired);
 							binTx.setStatus(BinStatus.FULL);
-							binTx.setPendingBundleRequest(BigDecimal.ZERO);
-							binTx.setBinCategoryType(BinCategoryType.BIN);
 							binTx.setInsertBy(binMaster.getInsertBy());
 							binTx.setUpdateBy(binMaster.getUpdateBy());
 							binTx.setIcmcId(binMaster.getIcmcId());
+							binTx.setBinCategoryType(BinCategoryType.BIN);
 							binTx.setInsertTime(now);
 							binTx.setUpdateTime(now);
 							binTx.setVerified(YesNo.Yes);
 							binTx.setCashType(CashType.NOTES);
 							alloccateTxs.add(binTx);
-							bundleRequired = bundleRequired.subtract(availableSpace);
+							isFound = true;
+							break;
+						} else {
+							if (!CurrencyType.UNPROCESS.equals(currencyType) || !CashSource.BRANCH.equals(cashSource)) {
+								BinTransaction binTx = new BinTransaction();
+								binTx.setBinNumber(binMaster.getBinNumber());
+								binTx.setDenomination(capacity.getDenomination());
+								binTx.setMaxCapacity(capacity.getMaxBundleCapacity());
+								binTx.setBinType(currencyType);
+								binTx.setCashSource(cashSource);
+								binTx.setReceiveBundle(availableSpace);
+								binTx.setCurrentBundle(availableSpace);
+								binTx.setStatus(BinStatus.FULL);
+								binTx.setPendingBundleRequest(BigDecimal.ZERO);
+								binTx.setBinCategoryType(BinCategoryType.BIN);
+								binTx.setInsertBy(binMaster.getInsertBy());
+								binTx.setUpdateBy(binMaster.getUpdateBy());
+								binTx.setIcmcId(binMaster.getIcmcId());
+								binTx.setInsertTime(now);
+								binTx.setUpdateTime(now);
+								binTx.setVerified(YesNo.Yes);
+								binTx.setCashType(CashType.NOTES);
+								alloccateTxs.add(binTx);
+								bundleRequired = bundleRequired.subtract(availableSpace);
+							}
 						}
 
 					} catch (Exception e) {
@@ -1413,8 +1436,7 @@ public class UtilityJpa {
 			// sasBean.setTotalValueOfNotesRs500I(0);
 			sasBean.setTotalValueOfNotesRs500A(BigDecimal.ZERO);
 		} /*
-			 * else {
-			 * sasBean.setTotalValueOfNotesRs500I((Integer.parseInt(getValue(
+			 * else { sasBean.setTotalValueOfNotesRs500I((Integer.parseInt(getValue(
 			 * splitData, 44)) / 500) / 1000); }
 			 */
 		{
@@ -1427,8 +1449,7 @@ public class UtilityJpa {
 			// sasBean.setTotalValueOfNotesRs500I(0);
 			sasBean.setTotalValueOfNotesRs500F(BigDecimal.ZERO);
 		} /*
-			 * else {
-			 * sasBean.setTotalValueOfNotesRs500I((Integer.parseInt(getValue(
+			 * else { sasBean.setTotalValueOfNotesRs500I((Integer.parseInt(getValue(
 			 * splitData, 44)) / 500) / 1000); }
 			 */
 		{
@@ -1441,8 +1462,7 @@ public class UtilityJpa {
 			// sasBean.setTotalValueOfNotesRs500I(0);
 			sasBean.setTotalValueOfNotesRs500I(BigDecimal.ZERO);
 		} /*
-			 * else {
-			 * sasBean.setTotalValueOfNotesRs500I((Integer.parseInt(getValue(
+			 * else { sasBean.setTotalValueOfNotesRs500I((Integer.parseInt(getValue(
 			 * splitData, 44)) / 500) / 1000); }
 			 */
 		{
@@ -2342,8 +2362,8 @@ public class UtilityJpa {
 		}
 
 		/*
-		 * if(pendingBundleCount.compareTo(bundleRequired)>=0) { return
-		 * eligibleCRAList; } else { throw new BaseGuiException(
+		 * if(pendingBundleCount.compareTo(bundleRequired)>=0) { return eligibleCRAList;
+		 * } else { throw new BaseGuiException(
 		 * "Required Bundle is not available, TotalAvailableBundle is:" +
 		 * pendingBundleCount.toPlainString()); }
 		 */
@@ -2587,7 +2607,7 @@ public class UtilityJpa {
 		sDate.set(Calendar.MINUTE, 0);
 		sDate.set(Calendar.SECOND, 0);
 		sDate.set(Calendar.MILLISECOND, 0);
-		
+
 	}
 
 	public static void setEndDate(Calendar eDate) {
@@ -2769,31 +2789,27 @@ public class UtilityJpa {
 
 	/*
 	 * public static List<Indent>
-	 * getRecordsFromIndentFormachineAllocation(List<Indent> indentList,
-	 * BigDecimal issuedBundle, User user) { List<Indent> eligibleIndentList =
-	 * new ArrayList<>(); Calendar now = Calendar.getInstance();
+	 * getRecordsFromIndentFormachineAllocation(List<Indent> indentList, BigDecimal
+	 * issuedBundle, User user) { List<Indent> eligibleIndentList = new
+	 * ArrayList<>(); Calendar now = Calendar.getInstance();
 	 * 
 	 * BigDecimal availableBundle = BigDecimal.ZERO; for (Indent indent :
-	 * indentList) { availableBundle = availableBundle.add(indent.getBundle());
-	 * } if (availableBundle.compareTo(issuedBundle) >= 0) { for (Indent indent
-	 * : indentList) {
+	 * indentList) { availableBundle = availableBundle.add(indent.getBundle()); } if
+	 * (availableBundle.compareTo(issuedBundle) >= 0) { for (Indent indent :
+	 * indentList) {
 	 * 
 	 * if (indent.getBundle().compareTo(issuedBundle) > 0) { issuedBundle =
-	 * indent.getBundle().subtract(issuedBundle);
-	 * indent.setBundle(issuedBundle); if
+	 * indent.getBundle().subtract(issuedBundle); indent.setBundle(issuedBundle); if
 	 * (issuedBundle.compareTo(BigDecimal.ZERO) == 0) {
 	 * indent.setStatus(OtherStatus.ACCEPTED); } else {
-	 * indent.setStatus(OtherStatus.PROCESSED); }
-	 * indent.setUpdateBy(user.getId()); indent.setUpdateTime(now); if
-	 * (indent.getBundle().compareTo(BigDecimal.ZERO) <= 0) {
-	 * indent.setDirty(true); } eligibleIndentList.add(indent); break; } else if
-	 * (issuedBundle.compareTo(indent.getBundle()) >= 0) { issuedBundle =
-	 * issuedBundle.subtract(indent.getBundle());
-	 * indent.setBundle(BigDecimal.ZERO);
+	 * indent.setStatus(OtherStatus.PROCESSED); } indent.setUpdateBy(user.getId());
+	 * indent.setUpdateTime(now); if (indent.getBundle().compareTo(BigDecimal.ZERO)
+	 * <= 0) { indent.setDirty(true); } eligibleIndentList.add(indent); break; }
+	 * else if (issuedBundle.compareTo(indent.getBundle()) >= 0) { issuedBundle =
+	 * issuedBundle.subtract(indent.getBundle()); indent.setBundle(BigDecimal.ZERO);
 	 * indent.setStatus(OtherStatus.ACCEPTED); indent.setUpdateBy(user.getId());
-	 * indent.setUpdateTime(now); if
-	 * (indent.getBundle().compareTo(BigDecimal.ZERO) <= 0) {
-	 * indent.setDirty(true); } eligibleIndentList.add(indent); } } } return
+	 * indent.setUpdateTime(now); if (indent.getBundle().compareTo(BigDecimal.ZERO)
+	 * <= 0) { indent.setDirty(true); } eligibleIndentList.add(indent); } } } return
 	 * eligibleIndentList; }
 	 */
 
@@ -2945,19 +2961,17 @@ public class UtilityJpa {
 	}
 
 	/*
-	 * public static BinTransaction setPendingBundleForDorvCancellation(User
-	 * user, BinTransaction binTxn, DiversionORVAllocation dorvAllocation) {
-	 * Calendar now = Calendar.getInstance();
-	 * if(binTxn.getPendingBundleRequest().compareTo(dorvAllocation.getBundle())
-	 * >= 0){
-	 * binTxn.setPendingBundleRequest(binTxn.getPendingBundleRequest().subtract(
+	 * public static BinTransaction setPendingBundleForDorvCancellation(User user,
+	 * BinTransaction binTxn, DiversionORVAllocation dorvAllocation) { Calendar now
+	 * = Calendar.getInstance();
+	 * if(binTxn.getPendingBundleRequest().compareTo(dorvAllocation.getBundle()) >=
+	 * 0){ binTxn.setPendingBundleRequest(binTxn.getPendingBundleRequest().subtract(
 	 * dorvAllocation.getBundle())); } binTxn.setUpdateBy(user.getId());
 	 * binTxn.setUpdateTime(now); return binTxn; }
 	 * 
-	 * public static BinTransaction
-	 * setPendingBundleForOtherBankCancellation(User user, BinTransaction
-	 * binTxn, OtherBankAllocation otherBankAllocation) { Calendar now =
-	 * Calendar.getInstance();
+	 * public static BinTransaction setPendingBundleForOtherBankCancellation(User
+	 * user, BinTransaction binTxn, OtherBankAllocation otherBankAllocation) {
+	 * Calendar now = Calendar.getInstance();
 	 * if(binTxn.getPendingBundleRequest().compareTo(otherBankAllocation.
 	 * getBundle()) >= 0){
 	 * binTxn.setPendingBundleRequest(binTxn.getPendingBundleRequest().subtract(
@@ -2992,10 +3006,14 @@ public class UtilityJpa {
 			outToServer.writeBytes(sb.toString());
 			clientSocket.close();
 		} catch (IOException ioe) {
+
 			LOG.info("PrintToPrinter METHOD IN CATCH IOException Printer is not able to connect " + ioe);
-			clientSocket.close();
+			// clientSocket.close();
 			ioe.printStackTrace();
-			throw new BaseGuiException("Printer is not able to connect " + ioe);
+			// throw new BaseGuiException("Printer is not able to connect " + ioe);
+		} catch (Exception e) {
+			LOG.info("PrintToPrinter METHOD IN CATCH Exception Printer is not able to connect " + e);
+			e.printStackTrace();
 		} finally {
 			LOG.info("PrintToPrinter METHOD IN finally clientSocket " + clientSocket);
 			clientSocket.close();
@@ -3157,21 +3175,20 @@ public class UtilityJpa {
 	public static String getImages(String src) throws IOException {
 
 		/*
-		 * String folderPath="/home/inayat/image"; File file = new
-		 * File(folderPath);
+		 * String folderPath="/home/inayat/image"; File file = new File(folderPath);
 		 * 
 		 * int indexname = src.lastIndexOf("/");
 		 * 
 		 * if (indexname == src.length()) { src = src.substring(1, indexname); }
 		 * 
-		 * indexname = src.lastIndexOf("/"); String name =
-		 * src.substring(indexname, src.length()); // downloadImage=name[0];
-		 * //System.out.println("name===" + name);
+		 * indexname = src.lastIndexOf("/"); String name = src.substring(indexname,
+		 * src.length()); // downloadImage=name[0]; //System.out.println("name===" +
+		 * name);
 		 * 
 		 * URL url = new URL(src); InputStream in = url.openStream();
 		 * 
-		 * OutputStream out = new BufferedOutputStream(new FileOutputStream(file
-		 * + name));
+		 * OutputStream out = new BufferedOutputStream(new FileOutputStream(file +
+		 * name));
 		 * 
 		 * for (int b; (b = in.read()) != -1;) { out.write(b); } out.close();
 		 * in.close();
@@ -3189,6 +3206,19 @@ public class UtilityJpa {
 		os.close();
 		return src;
 
+	}
+
+	public static List<CustodianKeySet> mapTuppleToCustodian(List<Tuple> indentTupleList) {
+
+		List<CustodianKeySet> custodianList = new ArrayList<>();
+		for (Tuple tuple : indentTupleList) {
+			CustodianKeySet custodianKeySet = new CustodianKeySet();
+			custodianKeySet.setCustodian(tuple.get(0, String.class));
+			custodianKeySet.setIcmcId(tuple.get(1, BigInteger.class));
+
+			custodianList.add(custodianKeySet);
+		}
+		return custodianList;
 	}
 
 }

@@ -32,6 +32,8 @@ public interface UserAdministrationService {
 	
 	public List<User> getUserList();
 	
+	public List<User> getUserListByICMC(BigInteger icmcId);
+	
 	public User getUserById(String id);
 	
 	public void updateUser(User bean);

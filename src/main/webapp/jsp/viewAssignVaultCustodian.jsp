@@ -69,16 +69,18 @@
                             <div class="dataTable_wrapper">
                             <form id="showAll">
                              <div align="center" style="color:white ; background: green;"><b>${successMsg}</b></div>
+                             <div align="center" style="color:white ; background: red;"><b>${errorMsg}</b></div>
                              <div align="center" style="color:white ; background: red;"><b>${takingOverCharge}</b></div>
                              <div align="center" style="color:white ; background: red;"><b>${HandingOverCharge}</b></div><br>
                                 <!-- <table class="table table-striped table-bordered table-hover" id="dataTables-example"> -->
                                 <table class="table table-striped table-bordered table-hover" id="tableValue">
                                     <thead>
                                       <tr>
-			 							<th>UserId</th>
-			 							<th>User Name</th>
+			 							<th>User ID Handing Over By</th>
+			 							<th>User Name Handing Over By</th>
 										<th>Custodian</th>
-										<th>Handing Over Charge</th>
+										<th>User ID Handing Over Charge</th>
+										<th>User Name Handing Over Charge</th>
 										<th>Remarks</th>
 										<th>Assigned Date</th>
 										<th>Edit</th>
@@ -91,6 +93,7 @@
 											<td>${row.userName}</td>
 											<td>${row.custodian}</td>
 											<td>${row.handingOverCharge}</td>
+											<td>${row.handOveredUserName}</td>
 											<td>${row.remarks}</td>
 											<td><fmt:formatDate pattern="dd-MMM-yy" value="${row.insertTime.time}" /></td>
 											<td><sec:authorize access="hasRole('UPDATE_ASSIGN_VAULT_CUSTODIAN')">

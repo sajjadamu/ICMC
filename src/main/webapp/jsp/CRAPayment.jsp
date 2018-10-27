@@ -15,7 +15,7 @@
 
 <title>ICICI : CRA Payment</title>
 
-<script src="./resources/Currency/js/jquery.js"></script>
+<script src="./resources/js/jquery-1.9.1.min.js"></script>
 <!-- Bootstrap Core CSS -->
 <link href="./resources/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
 
@@ -273,6 +273,7 @@ for (i = 0; i < countrow; i++) {
 	if(isValid){
 		$('#waitingImg').show();
 		 $('#btnsubmit').prop("disabled",true);
+		
 		$.ajax({  
 		  type: "POST",
 	      contentType : 'application/json; charset=utf-8',
@@ -280,12 +281,16 @@ for (i = 0; i < countrow; i++) {
 	    url: "././CRAAllocation",
 	    data: JSON.stringify(craWrapper),
 	    success: function(response){ 
+
+	    	 $('#waitingImg').hide();
 	    	
-	    	$('#waitingImg').hide();
-	    	
-	    	alert('record saved.');
 	    	//window.location='././viewCRA';
 	    }, 
+	    complete: function() {
+            $("#waitingImg").hide();
+
+             alert('record saved.');
+        },
 	    error: function(e){  
 	    	$('#waitingImg').hide();
 	    	alert('Error: ' + e);  
@@ -478,7 +483,7 @@ function refresh() {
 										<div class="col-lg-6 form-group">
 											<label>Account Number</label>
 											<form:input path="accountNumber"  readonly="true" id="accountNumber" name="accountNumber" cssClass="form-control"/>
-											<label id="err6" style="display: none;color: red">Enter Location</label>
+											<label id="err6" style="display: none;color: red">Enter Account Number</label>
 										</div>
 										 <img  id="waitingImg"  style="width:150px;height:60px;" src="./resources/logo/response-waiting.gif">
 										<div class="form-group">

@@ -94,7 +94,7 @@
 							<div class="dataTable_wrapper">
 								<form id="showAll">
 
-									<table width="100%" border="1" align="center" cellpadding="0"
+									<table width="100%" border="1"  cellpadding="0"
 										cellspacing="0"
 										class="table table-striped table-bordered table-hover">
 										<tbody>

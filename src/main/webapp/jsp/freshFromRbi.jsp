@@ -290,7 +290,7 @@ function doAjaxForTotal() {
 	var noOfRows = ($('#table1 tr').length-2);
 	
 	var notesOrCoins=$('input[name=notesOrCoins]:checked').val();
-	if(notesOrCoins=="NOTES"){
+	if(notesOrCoins=="Notes"){
     for(var p=0; p<noOfRows; p++){
     	var Denomination = $('#Denomination'+p).val();
 		var Bundle = $('#Bundle'+p).val();
@@ -423,8 +423,6 @@ function SavePrint(str) {
 				data: JSON.stringify(fresh),
 				success : function(response) {
 					console.log("response Notes"+response);
-					console.log("response length"+response.length);
-					console.log("response[1]"+response[1]);
 					 var binNum=response[0];
 					 $('#binNumber'+str).val(binNum);
 				},
@@ -481,8 +479,6 @@ function SavePrint(str) {
 			data: JSON.stringify(fresh),
 			success : function(response) {
 				console.log("response Coins"+response)
-				console.log("response length"+response.length)
-				console.log("response[1]"+response[1])
 				 var binNum=response[0];
 				 $('#binNumber'+str).val(binNum);
 			},

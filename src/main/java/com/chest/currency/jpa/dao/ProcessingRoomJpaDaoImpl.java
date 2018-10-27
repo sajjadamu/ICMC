@@ -1,4 +1,3 @@
-
 package com.chest.currency.jpa.dao;
 
 import java.math.BigDecimal;
@@ -520,7 +519,7 @@ public class ProcessingRoomJpaDaoImpl implements ProcessingRoomJpaDao {
 			definekeyset.setUpdateTime(now);
 			em.persist(definekeyset);
 		}
-		return false;
+		return true;
 	}
 
 	private JPAQuery getFromQueryForDefineKeySet() {
@@ -576,7 +575,11 @@ public class ProcessingRoomJpaDaoImpl implements ProcessingRoomJpaDao {
 		return indentList;
 	}
 
-	public boolean saveAssignVaultCustodian(AssignVaultCustodian assignVaultCustodian) {
+	public boolean saveAssignVaultCustodian(AssignVaultCustodian assignVaultCustodian,
+			AssignVaultCustodian vaultCustodian) {
+		if (vaultCustodian != null) {
+			em.merge(vaultCustodian);
+		}
 		em.persist(assignVaultCustodian);
 		return true;
 	}
@@ -1719,9 +1722,31 @@ public class ProcessingRoomJpaDaoImpl implements ProcessingRoomJpaDao {
 	public List<CustodianKeySet> getAssignVaultCustodian(BigInteger icmcId) {
 		JPAQuery jpaQuery = getFromQueryForCustodiannameForKeySet();
 		jpaQuery.where(QCustodianKeySet.custodianKeySet.icmcId.eq(icmcId));
-		jpaQuery.groupBy(QCustodianKeySet.custodianKeySet.custodian);
-		List<CustodianKeySet> assignVaultCustodianList = jpaQuery.list(QCustodianKeySet.custodianKeySet);
+		jpaQuery.groupBy(QCustodianKeySet.custodianKeySet.custodian, QCustodianKeySet.custodianKeySet.icmcId);
+		List<Tuple> assignVaultCustodianTuple = jpaQuery.list(QCustodianKeySet.custodianKeySet.custodian,
+				QCustodianKeySet.custodianKeySet.icmcId);
+
+		List<CustodianKeySet> assignVaultCustodianList = UtilityJpa.mapTuppleToCustodian(assignVaultCustodianTuple);
+
 		return assignVaultCustodianList;
+	}
+
+	@Override
+	public AssignVaultCustodian getHandoveredChargUserId(BigInteger icmcId, String cudtodian) {
+		JPAQuery jpaQuery = getFromQueryForAssignVaultCustodian();
+		jpaQuery.where(QAssignVaultCustodian.assignVaultCustodian.icmcId.eq(icmcId)
+				.and(QAssignVaultCustodian.assignVaultCustodian.custodian.eq(cudtodian))
+				.and(QAssignVaultCustodian.assignVaultCustodian.isAssign.eq(true)));
+		return jpaQuery.singleResult(QAssignVaultCustodian.assignVaultCustodian);
+	}
+
+	@Override
+	public AssignVaultCustodian getHandoveredChargByHandOverId(BigInteger icmcId, String userId) {
+		JPAQuery jpaQuery = getFromQueryForAssignVaultCustodian();
+		jpaQuery.where(QAssignVaultCustodian.assignVaultCustodian.icmcId.eq(icmcId)
+				.and(QAssignVaultCustodian.assignVaultCustodian.handingOverCharge.eq(userId))
+				.and(QAssignVaultCustodian.assignVaultCustodian.isAssign.eq(true)));
+		return jpaQuery.singleResult(QAssignVaultCustodian.assignVaultCustodian);
 	}
 
 	private JPAQuery getFromQueryForUser() {

@@ -16,7 +16,11 @@
 <link rel="shortcut icon" href="./resources/logo/favicon.ico"
 	type="image/x-icon">
 <title>ICICI : User Data</title>
+	<script type="text/javascript"
+		src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
 
+	<script src="./resources/bower_components/jquery/dist/jquery.min.js"></script>
+	<script src="../resources/js/jquery-1.9.1.min.js"></script>
 <!-- DataTable -->
 <script type="text/javascript" charset="utf8"
 	src="./resources/js/jquery.dataTables.min.js"></script>
@@ -220,6 +224,11 @@
 		});
 	</script>
 	<script type="text/javascript" src="./js/htmlInjection.js"></script>
+	<script>
+	$(".dropdown-toggle").click(function(){
+			$(".dropdown-menu").slideToggle();
+		})
+	</script>
 </body>
 
 </html>

@@ -83,6 +83,7 @@ import com.chest.currency.jpa.persistence.converter.CurrencyFormatter;
 import com.chest.currency.service.ICMCService;
 import com.chest.currency.service.MachineService;
 import com.chest.currency.service.ProcessingRoomService;
+import com.chest.currency.service.UserAdministrationService;
 import com.chest.currency.util.UtilityJpa;
 import com.mysema.query.Tuple;
 
@@ -94,6 +95,9 @@ public class ProcessingRoomController {
 
 	@Autowired
 	ProcessingRoomService processingRoomService;
+
+	@Autowired
+	UserAdministrationService userAdministrationService;
 
 	@Autowired
 	ICMCService icmcService;
@@ -163,12 +167,12 @@ public class ProcessingRoomController {
 			if (bundleFromTxn.compareTo(bundleForRequest) >= 0) {
 
 				binTransactionList.addAll(txnList);
-
+				LOG.info("binTransactionList.addAll ");
 				if (indent.getCashSource() == CashSource.BRANCH) {
 					branchReceiptList = processingRoomService.getBinNumListForIndentFromBranchReceipt(
 							indent.getDenomination(), indent.getRequestBundle(), user.getIcmcId(),
 							indent.getCashSource(), indent.getBinCategoryType());
-
+					LOG.info("branchReceiptList ");
 					eligibleIndentRequestList = UtilityJpa.getBinForBranchReceiptIndentRequest(txnList,
 							indent.getDenomination(), indent.getRequestBundle(), user, indent, branchReceiptList);
 					LOG.info("eligibleIndentRequestList txnList " + txnList);
@@ -205,11 +209,9 @@ public class ProcessingRoomController {
 						for (BranchReceipt br : branchReceiptList) {
 							message = message + br.getBundle().toPlainString() + ", ";
 							/*
-							 * if(br.getFilepath() !=null && br.getSasId()
-							 * ==null){ returnBundle=returnBundle
-							 * +br.getBundle().toString() + ","; }else { message
-							 * = message + br.getBundle().toPlainString() + ", "
-							 * ; }
+							 * if(br.getFilepath() !=null && br.getSasId() ==null){
+							 * returnBundle=returnBundle +br.getBundle().toString() + ","; }else { message =
+							 * message + br.getBundle().toPlainString() + ", " ; }
 							 */
 						}
 					}
@@ -340,13 +342,13 @@ public class ProcessingRoomController {
 		// then return and show total bundle also .
 
 		/*
-		 * ModelMap model = new ModelMap(); List<IndentWrapper>
-		 * indentWrapperList = new ArrayList<>(); BigDecimal totalBundle =
+		 * ModelMap model = new ModelMap(); List<IndentWrapper> indentWrapperList = new
+		 * ArrayList<>(); BigDecimal totalBundle =
 		 * processingRoomService.getTotalBundleInBin(denomination, bin,
 		 * user.getIcmcId()); indentWrapperList.add((IndentWrapper) indentList);
 		 * indentWrapperList.add(totalBundle); model.put("indentWrapperList",
-		 * indentWrapperList); return new ModelAndView("acceptIndent",
-		 * "records", model);
+		 * indentWrapperList); return new ModelAndView("acceptIndent", "records",
+		 * model);
 		 */
 
 		return indentList;
@@ -635,8 +637,7 @@ public class ProcessingRoomController {
 	public ModelAndView viewMachineDownTime(/*
 											 * /
 											 * 
-											 * @ModelAttribute("user")
-											 * MachineDowntimeUpdation machine
+											 * @ModelAttribute("user") MachineDowntimeUpdation machine
 											 */
 			@RequestParam(name = "machineDownDateFrom", required = false) String machineDownDateFrom,
 			@RequestParam(name = "machineDownDateTo", required = false) String machineDownDateTo,
@@ -694,17 +695,16 @@ public class ProcessingRoomController {
 
 	/*
 	 * @RequestMapping("/AddMachineDowntimeUpdation") public ModelAndView
-	 * viewMachineDownTime(@ModelAttribute("user") MachineDowntimeUpdation
-	 * machine, HttpSession session, RedirectAttributes redirectAttributes) {
-	 * User user = (User) session.getAttribute("login"); Calendar now =
-	 * Calendar.getInstance(); synchronized
-	 * (icmcService.getSynchronizedIcmc(user)) {
+	 * viewMachineDownTime(@ModelAttribute("user") MachineDowntimeUpdation machine,
+	 * HttpSession session, RedirectAttributes redirectAttributes) { User user =
+	 * (User) session.getAttribute("login"); Calendar now = Calendar.getInstance();
+	 * synchronized (icmcService.getSynchronizedIcmc(user)) {
 	 * machine.setInsertBy(user.getId()); machine.setUpdateBy(user.getId());
 	 * machine.setInsertTime(now); machine.setUpdateTime(now);
 	 * machine.setIcmcId(user.getIcmcId());
 	 * 
-	 * //SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss"
-	 * ); machine.setMachineDownDateFrom(machine.getMachineDownDateFrom());
+	 * //SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss" );
+	 * machine.setMachineDownDateFrom(machine.getMachineDownDateFrom());
 	 * machine.setMachineDownDateTo(machine.getMachineDownDateTo());
 	 * machine.setEngineerAttendedCall(machine.getEngineerAttendedCall());
 	 * machine.setMachineType(machine.getMachineType());
@@ -753,8 +753,8 @@ public class ProcessingRoomController {
 			machine.setIcmcId(user.getIcmcId());
 			/*
 			 * machine.setDowntimeReason(machine.getDowntimeReason());
-			 * machine.setEngineerAttendedCall(machine.getEngineerAttendedCall()
-			 * ); machine.setMachineType(machine.getMachineType());
+			 * machine.setEngineerAttendedCall(machine.getEngineerAttendedCall() );
+			 * machine.setMachineType(machine.getMachineType());
 			 * machine.setMachineNo(machine.getMachineNo());
 			 */
 			machineService.updateMachineDownTime(machine);
@@ -823,8 +823,6 @@ public class ProcessingRoomController {
 	@RequestMapping("/viewDefineKeySet")
 	public ModelAndView viewDefineKeySet(@ModelAttribute("user") CustodianKeySet defineKeySet, HttpSession session) {
 		User user = (User) session.getAttribute("login");
-		// List<CustodianKeySet> keySetList =
-		// processingRoomService.getDefineKeySet(user.getIcmcId());
 		List<String> keySetList = processingRoomService.getDefineKeySet(user.getIcmcId());
 		LOG.info("VIEW DefineKeySet RECORD");
 		return new ModelAndView("/viewDefineKeySet", "records", keySetList);
@@ -907,7 +905,15 @@ public class ProcessingRoomController {
 			redirectAttributes.addFlashAttribute("errorMsg", "CSV file is not of standard format");
 			return new ModelAndView("redirect:./DefineKeySet");
 		}
-		processingRoomService.UploadDefineKeySet(keySetRecords, defineKeySet);
+		try {
+			processingRoomService.UploadDefineKeySet(keySetRecords, defineKeySet);
+		}
+
+		catch (Exception e) {
+			e.printStackTrace();
+			redirectAttributes.addFlashAttribute("errorMsg", "uploaded key with same Custodian can not upload");
+			return new ModelAndView("redirect:./DefineKeySet");
+		}
 		redirectAttributes.addFlashAttribute("uploadMsg", "Key Set records have been uploaded successfully");
 		return new ModelAndView("redirect:./viewDefineKeySet");
 	}
@@ -1010,8 +1016,12 @@ public class ProcessingRoomController {
 				.getAssignVaultCustodian(user.getIcmcId(), sDate, eDate);
 		for (AssignVaultCustodian assignVaultCustodian : assginVaultCustodianList) {
 			String userName = processingRoomService.getUserName(assignVaultCustodian.getUserId());
+			String handoveredUserName = processingRoomService.getUserName(assignVaultCustodian.getHandingOverCharge());
 			if (userName != null) {
 				assignVaultCustodian.setUserName(userName);
+			}
+			if (handoveredUserName != null) {
+				assignVaultCustodian.setHandOveredUserName(handoveredUserName);
 			}
 		}
 		map.put("records", assginVaultCustodianList);
@@ -1023,29 +1033,31 @@ public class ProcessingRoomController {
 		User user = (User) session.getAttribute("login");
 		AssignVaultCustodian obj = new AssignVaultCustodian();
 		ModelMap map = new ModelMap();
-		// List<CustodianKeySet> custodianList =
-		// processingRoomService.getAssignVaultCustodian(user.getIcmcId());
-		List<String> custodianList = processingRoomService.getDefineKeySet(user.getIcmcId());
+		List<CustodianKeySet> custodianList = processingRoomService.getAssignVaultCustodian(user.getIcmcId());
+		List<User> users = userAdministrationService.getUserListByICMC(user.getIcmcId());
 		map.put("user", obj);
 		map.put("custodianList", custodianList);
+		map.put("users", users);
+
 		return new ModelAndView("/AssignVaultCustodian", map);
+	}
+
+	@RequestMapping("/getHandoverdCharge")
+	@ResponseBody
+	public AssignVaultCustodian getHandoverdCharge(@RequestParam(value = "custodian") String custodian,
+			HttpSession session) {
+		User user = (User) session.getAttribute("login");
+		AssignVaultCustodian assignVaultCustodian = processingRoomService.getHandoveredChargUserId(user.getIcmcId(),
+				custodian);
+		return assignVaultCustodian;
 	}
 
 	@RequestMapping("/AddAssignVaultCustodian")
 	public ModelAndView saveVaultCustodian(@ModelAttribute("user") AssignVaultCustodian assignVaultCustodian,
 			HttpSession session, RedirectAttributes redirectAttributes, @RequestParam String custodian) {
 		User user = (User) session.getAttribute("login");
-		User userFromDBForUserID = processingRoomService.isValidUser(assignVaultCustodian.getUserId(),
-				user.getIcmcId());
-		if (userFromDBForUserID == null) {
-			redirectAttributes.addFlashAttribute("takingOverCharge", "User Id of taking Over Charge not exist in ICMC");
-			return new ModelAndView("redirect:./AssignVaultCustodian");
-		}
-		User userFromDBForUserHandingOver = processingRoomService
-				.isValidUser(assignVaultCustodian.getHandingOverCharge(), user.getIcmcId());
-		if (userFromDBForUserHandingOver == null) {
-			redirectAttributes.addFlashAttribute("HandingOverCharge",
-					"User Id of Handing Over Charge not exist in ICMC");
+		if (user.getId().equals(assignVaultCustodian.getHandingOverCharge())) {
+			redirectAttributes.addFlashAttribute("takingOverCharge", "Can Not Handover it self");
 			return new ModelAndView("redirect:./AssignVaultCustodian");
 		}
 
@@ -1056,9 +1068,23 @@ public class ProcessingRoomController {
 			assignVaultCustodian.setInsertTime(now);
 			assignVaultCustodian.setUpdateTime(now);
 			assignVaultCustodian.setIcmcId(user.getIcmcId());
-			assignVaultCustodian.setCustodian(custodian);
-			processingRoomService.saveAssignVaultCustodian(assignVaultCustodian);
-			redirectAttributes.addFlashAttribute("successMsg", "Record submitted successfully");
+			
+			AssignVaultCustodian vaultCustodian = processingRoomService.getHandoveredChargByHandOverId(user.getIcmcId(),
+					assignVaultCustodian.getHandingOverCharge());
+			if (vaultCustodian != null) {
+				redirectAttributes.addFlashAttribute("errorMsg",
+						"Already assigned cutodian for this id plz select another id");
+			} else {
+				AssignVaultCustodian assignedVaultCustodian = processingRoomService
+						.getHandoveredChargUserId(user.getIcmcId(), assignVaultCustodian.getCustodian());
+				if (assignedVaultCustodian != null) {
+					assignedVaultCustodian.setIsAssign(false);
+					assignedVaultCustodian.setUpdateBy(user.getId());
+					assignedVaultCustodian.setUpdateTime(now);
+				}
+				processingRoomService.saveAssignVaultCustodian(assignVaultCustodian, assignedVaultCustodian);
+				redirectAttributes.addFlashAttribute("successMsg", "Record submitted successfully");
+			}
 		}
 		return new ModelAndView("redirect:./viewAssignVaultCustodian");
 	}
@@ -1639,14 +1665,14 @@ public class ProcessingRoomController {
 	/*
 	 * @RequestMapping("/discrepancyRPCFormat") public ModelAndView
 	 * discrepancyRPCFormat(@ModelAttribute("reportDate") DateRange dateRange,
-	 * HttpSession session) { //User user = (User)
-	 * session.getAttribute("login"); ModelMap map = new ModelMap();
+	 * HttpSession session) { //User user = (User) session.getAttribute("login");
+	 * ModelMap map = new ModelMap();
 	 * 
 	 * Calendar sDate = Calendar.getInstance(); Calendar eDate =
 	 * Calendar.getInstance();
 	 * 
-	 * if(dateRange.getFromDate() != null && dateRange.getToDate() != null){
-	 * sDate = dateRange.getFromDate(); eDate = dateRange.getToDate(); }
+	 * if(dateRange.getFromDate() != null && dateRange.getToDate() != null){ sDate =
+	 * dateRange.getFromDate(); eDate = dateRange.getToDate(); }
 	 * sDate.set(Calendar.HOUR, 0); sDate.set(Calendar.HOUR_OF_DAY, 0);
 	 * sDate.set(Calendar.MINUTE, 0); sDate.set(Calendar.SECOND, 0);
 	 * sDate.set(Calendar.MILLISECOND, 0);
@@ -1741,9 +1767,9 @@ public class ProcessingRoomController {
 	 * @RequestMapping("/saveMutilatedFullValue") public ModelAndView
 	 * saveMutilatedFullValue(@ModelAttribute("user") Mutilated mutilated,
 	 * HttpSession session) { User user = (User) session.getAttribute("login");
-	 * Calendar now = Calendar.getInstance();
-	 * mutilated.setInsertBy(user.getId()); mutilated.setUpdateBy(user.getId());
-	 * mutilated.setInsertTime(now); mutilated.setUpdateTime(now);
+	 * Calendar now = Calendar.getInstance(); mutilated.setInsertBy(user.getId());
+	 * mutilated.setUpdateBy(user.getId()); mutilated.setInsertTime(now);
+	 * mutilated.setUpdateTime(now);
 	 * mutilated.setCurrencyType(CurrencyType.MUTILATED);
 	 * mutilated.setIcmcId(user.getIcmcId());
 	 * processingRoomService.insertFullValueMutilated(mutilated); return new
@@ -1998,8 +2024,8 @@ public class ProcessingRoomController {
 			eDate = dateRange.getToDate();
 		}
 
-		sDate = UtilityJpa.getStartDate();
-		eDate = UtilityJpa.getEndDate();
+		UtilityJpa.setStartDate(sDate);
+		UtilityJpa.setEndDate(eDate);
 
 		ModelMap map = new ModelMap();
 		List<AssignVaultCustodian> assginVaultCustodianList = processingRoomService
@@ -2074,8 +2100,8 @@ public class ProcessingRoomController {
 			eDate = dateRange.getToDate();
 		}
 
-		sDate = UtilityJpa.getStartDate();
-		eDate = UtilityJpa.getEndDate();
+		UtilityJpa.setStartDate(sDate);
+		UtilityJpa.setEndDate(eDate);
 
 		List<Tuple> mutilatedNotesSummary = null;
 
@@ -2205,8 +2231,8 @@ public class ProcessingRoomController {
 			eDate = dateRange.getToDate();
 		}
 
-		sDate = UtilityJpa.getStartDate();
-		eDate = UtilityJpa.getEndDate();
+		UtilityJpa.setStartDate(sDate);
+		UtilityJpa.setEndDate(eDate);
 
 		List<MachineDowntimeUpdation> machineDowntimeList = machineService.getListmachineDownTime(user.getIcmcId(),
 				sDate, eDate);
@@ -2282,8 +2308,8 @@ public class ProcessingRoomController {
 			eDate = dateRange.getToDate();
 		}
 
-		sDate = UtilityJpa.getStartDate();
-		eDate = UtilityJpa.getEndDate();
+		UtilityJpa.setStartDate(sDate);
+		UtilityJpa.setEndDate(eDate);
 
 		Calendar pSDate = Calendar.getInstance();
 
@@ -2582,14 +2608,10 @@ public class ProcessingRoomController {
 		suspenseOpeningBalance.setInsertBy(user.getId());
 		suspenseOpeningBalance.setUpdateBy(user.getId());
 		suspenseOpeningBalance.setCurrentVersion("TRUE");
-		Calendar sDate = UtilityJpa.getStartDate();
-		Calendar eDate = UtilityJpa.getEndDate();
-
-		suspenseOpeningBalance.setInsertTime(sDate);
-		suspenseOpeningBalance.setUpdateTime(eDate);
+		suspenseOpeningBalance.setInsertTime(Calendar.getInstance());
+		suspenseOpeningBalance.setUpdateTime(Calendar.getInstance());
 
 		processingRoomService.updateCurrentVersionStatus(suspenseOpeningBalance);
-
 		processingRoomService.insertSuspenseOpeningBalance(suspenseOpeningBalance);
 
 	}

@@ -40,37 +40,39 @@ import com.chest.currency.viewBean.SASAllocationWrapper;
 import com.mysema.query.Tuple;
 
 public interface CashPaymentService {
-	
+
 	public List<BinTransaction> getPreparedInActiveSoiledBoxes(BigInteger icmcId);
-	
+
 	public List<ProcessBundleForCRAPayment> getListCRAId(BigInteger icmcId);
-	
+
 	public List<Tuple> getRecordORVVoucherById(long id, Calendar sDate, Calendar eDate);
-	
-	public List<CRA> getCRARequestAcceptRecord(BigInteger icmcId, Calendar sDate, Calendar eDate); 
-	
-	public List<SoiledRemittance> getSoiledRequestAcceptRecord(BigInteger icmcId, Calendar sDate, Calendar eDate); 
+
+	public List<CRA> getCRARequestAcceptRecord(BigInteger icmcId, Calendar sDate, Calendar eDate);
+
+	public List<SoiledRemittance> getSoiledRequestAcceptRecord(BigInteger icmcId, Calendar sDate, Calendar eDate);
+
 	public List<OtherBank> getOtherBankPaymentRequestAcceptRecord(BigInteger icmcId, Calendar sDate, Calendar eDate);
-	
+
 	public long updateSASForceHandoverStatus(BigInteger icmcId, long id);
-	
+
 	public List<Sas> getAcceptSolId(BigInteger icmcId, Calendar sDate, Calendar eDate);
+
 	public List<Sas> getRequestAcceptORVRecords(BigInteger icmcId, Calendar sDate, Calendar eDate);
-	
-	public List<Tuple> getSASAllocationRecordFromTuple(BigInteger icmcId,Calendar sDate,Calendar eDate);
+
+	public List<Tuple> getSASAllocationRecordFromTuple(BigInteger icmcId, Calendar sDate, Calendar eDate);
 
 	public boolean sasUpload(List<Sas> sasList, Sas sas);
 
-	public List<Sas> getSASRecord(User user,Calendar sDate, Calendar eDate);
-	
-	public List<Sas> getSASRecordForceHandover(User user,Calendar sDate, Calendar eDate);
-	
+	public List<Sas> getSASRecord(User user, Calendar sDate, Calendar eDate);
+
+	public List<Sas> getSASRecordForceHandover(User user, Calendar sDate, Calendar eDate);
+
 	public List<Sas> getSASRecordFromSasfile(User user);
-	
-	Sas getSASRecordById(BigInteger icmcId,Long id);
+
+	Sas getSASRecordById(BigInteger icmcId, Long id);
 
 	public long updateSAS(Sas sas);
-	
+
 	public boolean updateCRAAndCRAAllocation(CRA cra);
 
 	public boolean processSASAllocation(SASAllocationWrapper sasAllocation, User user, Sas sas);
@@ -78,32 +80,31 @@ public interface CashPaymentService {
 	public List<SoiledRemittance> soiledRecord(BigInteger icmcId, Calendar sDate, Calendar eDate);
 
 	public long updateSASStatus(Sas sas);
-	
+
 	public boolean updateSASStatusAccept(Sas sas);
-	
+
 	public void updateEditOtherBankAndOtherBankAllocation(BigInteger icmcId, long id);
-	
+
 	public void updateInsertSoiledAndSoiledAllocation(BigInteger icmcId, long id);
-	
+
 	public List<SASAllocation> getSASAllocationRecord(BigInteger icmcId);
-	
+
 	public List<SASAllocation> getSasAllocationBySasId(long icmcId);
-	
+
 	public List<SASAllocation> getSasAllocationByBinNumber(String icmcId);
-	
+
 	public SASAllocation updateSasIndent(SASAllocation sasAccept, User user);
-	
 
 	public boolean saveSoiledRemittance(SoiledRemittance soiledRemittance);
 
-	public SoiledRemittance getSoiledRemittanceById(BigInteger icmcId, Calendar sDate, Calendar eDate,long id);
+	public SoiledRemittance getSoiledRemittanceById(BigInteger icmcId, Calendar sDate, Calendar eDate, long id);
 
 	public List<DiversionORV> getDiversionORV(BigInteger icmcId, Calendar sDate, Calendar eDate);
 
 	public boolean saveDiversionORV(DiversionORV diversionORV);
-	
+
 	public List<Sas> getORVRecords(BigInteger icmcId, Calendar sDate, Calendar eDate);
-	
+
 	public List<Sas> getRequestORVRecords(BigInteger icmcId, Calendar sDate, Calendar eDate);
 
 	public boolean saveORV(ORV orv);
@@ -140,8 +141,6 @@ public interface CashPaymentService {
 
 	public List<Sas> getORVReport(BigInteger icmcId, Calendar sDate, Calendar eDate);
 
-	
-	
 	public List<CITCRAVendor> getVendor();
 
 	public List<String> getCustodianName(String vendor);
@@ -151,7 +150,7 @@ public interface CashPaymentService {
 	public List<Tuple> getRecordForSummary(BigInteger icmcId);
 
 	public List<Sas> solIdForSASPayment(BigInteger icmcId, Calendar sDate, Calendar eDate);
-	
+
 	public List<Sas> solIdForSASPaymentAccepted(BigInteger icmcId, Calendar sDate, Calendar eDate, Set<Long> pList);
 
 	public Sas sasPaymentDetails(long id);
@@ -174,15 +173,15 @@ public interface CashPaymentService {
 
 	public List<OtherBank> getOtherBankPaymentRecord(BigInteger icmcId, Calendar sDate, Calendar eDate);
 
-	public List<Tuple> getRecordORVVoucher(String solId, Calendar sDate, Calendar eDate,BigInteger icmcId);
+	public List<Tuple> getRecordORVVoucher(String solId, Calendar sDate, Calendar eDate, BigInteger icmcId);
 
 	public List<Sas> getSolId(BigInteger icmcId, Calendar sDate, Calendar eDate);
-	
+
 	public List<Sas> getSasRecordById(BigInteger icmcId, Long[] sasId);
 
 	public Sas getFileName(BigInteger icmcId);
-	
-	public Sas getSameDayFileName(BigInteger icmcId,Calendar sDate, Calendar eDate);
+
+	public Sas getSameDayFileName(BigInteger icmcId, Calendar sDate, Calendar eDate);
 
 	public boolean updateBinTransactionForEmpty(BinTransaction binTransaction);
 
@@ -193,8 +192,8 @@ public interface CashPaymentService {
 	public long updateOtherBankStatus(OtherBankAllocation otherBank);
 
 	public List<OtherBankAllocation> getOtherBankForAccept(BigInteger icmcId);
-	
-	public OtherBank getOtherBankRecordById(BigInteger icmcId,long id);
+
+	public OtherBank getOtherBankRecordById(BigInteger icmcId, long id);
 
 	public boolean updateBinTransactionAndCRAAllocation(CRAAllocation craAllocation);
 
@@ -210,7 +209,8 @@ public interface CashPaymentService {
 
 	public List<Tuple> getSoiledSummary(BigInteger icmcId);
 
-	public List<BinTransaction> getBundleFromBinTxnToCompareForSoiled(BigInteger icmcId, Integer denomination,CurrencyType currencyType);
+	public List<BinTransaction> getBundleFromBinTxnToCompareForSoiled(BigInteger icmcId, Integer denomination,
+			CurrencyType currencyType);
 
 	public List<BinTransaction> getBinNumListForSoiled(SoiledRemittanceAllocation soiled, CurrencyType type);
 
@@ -279,11 +279,10 @@ public interface CashPaymentService {
 	public List<Tuple> getBranchOutRecordFromSAS(BigInteger icmcId, Calendar sDate, Calendar eDate);
 
 	public List<Sas> getRecordFromSAS(long id);
-	
-	public long updateSASStatus(BigInteger icmcId, long id);
-	
-	public void updateSASStatusForSASFile(BigInteger icmcId, int status);
 
+	public long updateSASStatus(BigInteger icmcId, long id);
+
+	public void updateSASStatusForSASFile(BigInteger icmcId, int status);
 
 	public List<SASAllocation> getAllAcceptedFromSASAllocation(BigInteger icmcId);
 
@@ -311,7 +310,7 @@ public interface CashPaymentService {
 	public long updateProcessbundleForCRAPayment(BigInteger icmcId, long id);
 
 	public long updateSasAllocationForCancelBranchPayment(BigInteger icmcId, long id);
-	
+
 	public void updateSasAllocationForCancelEditBranchPayment(BigInteger icmcId, long id);
 
 	public long updateSasForCancelBranchPayment(BigInteger icmcId, long id);
@@ -337,67 +336,65 @@ public interface CashPaymentService {
 	public boolean saveDataInBinRegister(BinRegister binRegister);
 
 	public String getSRNumberBySolId(String solId);
-	
+
 	public String getSRNumberById(long solId);
-	
+
 	public long removeBranchFromSAS(Sas sas);
-	
-	public List<SoiledRemittanceAllocation> TRReports(BigInteger icmcId,Calendar sDate,Calendar eDate);
-	
-	public List<SASAllocation> getAllTodayAcceptedFromSASAllocation(BigInteger icmcId,Calendar sDate,Calendar eDate);
-    
-	public List<SASAllocation> getRequestedFromSASAllocation(BigInteger icmcId,Calendar sDate,Calendar eDate);
-    
-	
+
+	public List<SoiledRemittanceAllocation> TRReports(BigInteger icmcId, Calendar sDate, Calendar eDate);
+
+	public List<SASAllocation> getAllTodayAcceptedFromSASAllocation(BigInteger icmcId, Calendar sDate, Calendar eDate);
+
+	public SASAllocation getRequestedFromSASAllocation(BigInteger icmcId, Calendar sDate, Calendar eDate,Long parentId);
+
 	public CRA getCRADetailById(long id);
-	
-	
 
-	public List<Sas> getORVReport1(BigInteger icmcId, Calendar sDate, Calendar eDate,Long sasId);
-	
+	public List<Sas> getORVReport1(BigInteger icmcId, Calendar sDate, Calendar eDate, Long sasId);
+
 	public List<SASAllocation> getAllAcceptedFromSASAllocation1(BigInteger icmcId);
-	
-	public List<SASAllocation> getDataToUpdateBinTransaction(BigInteger icmcId, Long parentId);
-	
 
-	
+	public List<SASAllocation> getDataToUpdateBinTransaction(BigInteger icmcId, Long parentId);
+
 	public BinTransaction getDataFromBinTransactionForSasAllocationCancel(BigInteger icmcId, String binNumber,
 			Integer denomination);
-	
+
 	public BinTransaction getDataFromBinTransactionForSoiledAllocationCancel(BigInteger icmcId, String box,
 			Integer denomination);
-	
-	public boolean updateBinTransactionPendingBundleForCashPaymentCancel(BinTransaction binTransaction);
-	
-	public long updateOrvStatus1(long id);
-	
-	public long updateOrvAllocationStatus1(long id);
-	public DiversionORV getDiversionORVById(Long id);  
-	
-	public ProcessBundleForCRAPayment getCRAId(BigInteger icmcId);
-	
-	public List<CRA> valueFromCRA(BigInteger icmcId, long craId);
-	
-	public void processForAcceptanceOutwardDiversion(DiversionORVAllocation diversionORV,Calendar now,User user);
-	
-	public void processForAcceptanceOtherBankPayment(OtherBankAllocation diversionORV,Calendar now,User user);
-	
-	public void processForAcceptanceSoiledIndent(SoiledRemittanceAllocation diversionORV,User user);
-	
-	public Boolean deleteEmptyBinFromBinTransaction(BigInteger icmcId, String binNumber);
-	
-	public List<Tuple> getAllShrinkWrapBundleFromBranchReceipt(BigInteger icmcId);
-	
-	public List<BranchReceipt> getShrinkWrapBundleByDenomination(int denomination,BigInteger icmcId,BinCategoryType binCategoryType);
-	
-	public long processForCancelBranchPayment(BigInteger icmcId, long id);
-	
-	public boolean updatebBranchReceiptForBranchPaymentCancel(BranchReceipt branchReceipt);
-	
-	public BranchReceipt checkBinOrBoxFromBranchReceipt(BigInteger icmcId,int denomination,BigDecimal bundle,String binNumber);
-	
-	public List<Tuple> getSoiledSummary(BigInteger icmcId,CurrencyType currencyType);
 
-	public List<SoiledRemittanceAllocation> getSoiledForAccept(BigInteger icmcId,Calendar sDate, Calendar eDate);
+	public boolean updateBinTransactionPendingBundleForCashPaymentCancel(BinTransaction binTransaction);
+
+	public long updateOrvStatus1(long id);
+
+	public long updateOrvAllocationStatus1(long id);
+
+	public DiversionORV getDiversionORVById(Long id);
+
+	public ProcessBundleForCRAPayment getCRAId(BigInteger icmcId);
+
+	public List<CRA> valueFromCRA(BigInteger icmcId, long craId);
+
+	public void processForAcceptanceOutwardDiversion(DiversionORVAllocation diversionORV, Calendar now, User user);
+
+	public void processForAcceptanceOtherBankPayment(OtherBankAllocation diversionORV, Calendar now, User user);
+
+	public void processForAcceptanceSoiledIndent(SoiledRemittanceAllocation diversionORV, User user);
+
+	public Boolean deleteEmptyBinFromBinTransaction(BigInteger icmcId, String binNumber);
+
+	public List<Tuple> getAllShrinkWrapBundleFromBranchReceipt(BigInteger icmcId);
+
+	public List<BranchReceipt> getShrinkWrapBundleByDenomination(int denomination, BigInteger icmcId,
+			BinCategoryType binCategoryType);
+
+	public long processForCancelBranchPayment(BigInteger icmcId, long id);
+
+	public boolean updatebBranchReceiptForBranchPaymentCancel(BranchReceipt branchReceipt);
+
+	public BranchReceipt checkBinOrBoxFromBranchReceipt(BigInteger icmcId, int denomination, BigDecimal bundle,
+			String binNumber);
+
+	public List<Tuple> getSoiledSummary(BigInteger icmcId, CurrencyType currencyType);
+
+	public List<SoiledRemittanceAllocation> getSoiledForAccept(BigInteger icmcId, Calendar sDate, Calendar eDate);
 
 }

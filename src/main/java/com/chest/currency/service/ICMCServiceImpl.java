@@ -99,15 +99,20 @@ public class ICMCServiceImpl implements ICMCService {
 	@Override
 	public ICMC getSynchronizedIcmc(User user) {
 		LOG.info("user SynchronizedIcmc..ID." + user.getId());
-		ICMC icmc = icmcConcurrentHashMap.get(user.getIcmcId().longValue());
-		if (icmc == null) {
-			LOG.info("icmc is not in map...");
-			icmc = this.getICMCById(user.getIcmcId().longValue());
-			icmcConcurrentHashMap.putIfAbsent(icmc.getId(), icmc);
+		ICMC icmc = null;
+		try {
 			icmc = icmcConcurrentHashMap.get(user.getIcmcId().longValue());
-			LOG.info("icmc is put in map...in if", icmc.getId());
-		} else {
-			LOG.info("icmc is already in map...in else ICMCServiceImpl.getSynchronizedIcmc");
+			if (icmc == null) {
+				LOG.info("icmc is not in map...");
+				icmc = this.getICMCById(user.getIcmcId().longValue());
+				icmcConcurrentHashMap.putIfAbsent(icmc.getId(), icmc);
+				icmc = icmcConcurrentHashMap.get(user.getIcmcId().longValue());
+				LOG.info("icmc is put in map...in if", icmc.getId());
+			} else {
+				LOG.info("icmc is already in map...in else ICMCServiceImpl.getSynchronizedIcmc");
+			}
+		} catch (Exception e) {
+			LOG.info("Catch Exception" + e);
 		}
 		return icmc;
 	}

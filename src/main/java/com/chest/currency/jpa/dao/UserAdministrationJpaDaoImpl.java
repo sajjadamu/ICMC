@@ -774,4 +774,15 @@ public class UserAdministrationJpaDaoImpl implements UserAdministrationJpaDao {
 		return delegateRight;
 	}
 
+	@Override
+	public List<User> getUserListByICMC(BigInteger icmcId) {
+		LOG.info("Going to fetch Users: by icmc");
+		
+		JPAQuery jpaQuery = getFromQueryForUser();
+		jpaQuery.where(QUser.user.status.eq(Status.ENABLED).and(QUser.user.icmcId.eq(icmcId)));
+		List<User> users = jpaQuery.list(QUser.user);
+		LOG.info("Fetched Users:", users);
+		return users;
+	}
+
 }

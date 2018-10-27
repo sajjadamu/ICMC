@@ -1,7 +1,3 @@
-/*******************************************************************************
- * /* Copyright (C) Indicsoft Technologies Pvt Ltd
- * * All Rights Reserved.
- *******************************************************************************/
 package com.chest.currency.controller;
 
 import java.io.BufferedOutputStream;
@@ -121,20 +117,9 @@ public class CashPaymentController {
 	public ModelAndView sasUpload(@RequestParam MultipartFile file, HttpServletRequest request, Sas sas,
 			HttpSession session, ModelMap model, RedirectAttributes redirectAttributes) {
 		User user = (User) session.getAttribute("login");
-		Calendar sDate = Calendar.getInstance();
-		Calendar eDate = Calendar.getInstance();
 
-		sDate.set(Calendar.HOUR, 0);
-		sDate.set(Calendar.HOUR_OF_DAY, 0);
-		sDate.set(Calendar.MINUTE, 0);
-		sDate.set(Calendar.SECOND, 0);
-		sDate.set(Calendar.MILLISECOND, 0);
-
-		eDate.set(Calendar.HOUR, 24);
-		eDate.set(Calendar.HOUR_OF_DAY, 23);
-		eDate.set(Calendar.MINUTE, 59);
-		eDate.set(Calendar.SECOND, 59);
-		eDate.set(Calendar.MILLISECOND, 999);
+		Calendar sDate = UtilityJpa.getStartDate();
+		Calendar eDate = UtilityJpa.getEndDate();
 
 		// Sas sasFile = cashPaymentService.getFileName(user.getIcmcId());
 		Sas sasFile = cashPaymentService.getSameDayFileName(user.getIcmcId(), sDate, eDate);
@@ -235,7 +220,7 @@ public class CashPaymentController {
 		}
 
 		for (Tuple bin : summaryList) {
-			BinTransaction binTransactionSummary = mapList.get(bin.get(1, String.class));
+			BinTransaction binTransactionSummary = mapList.get(bin.get(1, Integer.class));
 
 			if (bin.get(0, CurrencyType.class).equals(CurrencyType.ATM)) {
 				binTransactionSummary.setATM(bin.get(2, BigDecimal.class));
@@ -373,20 +358,9 @@ public class CashPaymentController {
 	@RequestMapping("/viewSoiled")
 	public ModelAndView getSoiled(HttpSession session) {
 		User user = (User) session.getAttribute("login");
-		Calendar sDate = Calendar.getInstance();
-		Calendar eDate = Calendar.getInstance();
 
-		sDate.set(Calendar.HOUR, 0);
-		sDate.set(Calendar.HOUR_OF_DAY, 0);
-		sDate.set(Calendar.MINUTE, 0);
-		sDate.set(Calendar.SECOND, 0);
-		sDate.set(Calendar.MILLISECOND, 0);
-
-		eDate.set(Calendar.HOUR, 24);
-		eDate.set(Calendar.HOUR_OF_DAY, 23);
-		eDate.set(Calendar.MINUTE, 59);
-		eDate.set(Calendar.SECOND, 59);
-		eDate.set(Calendar.MILLISECOND, 999);
+		Calendar sDate = UtilityJpa.getStartDate();
+		Calendar eDate = UtilityJpa.getEndDate();
 
 		// List<SoiledRemittance> soiledList =
 		// cashPaymentService.soiledRecord(user.getIcmcId(), sDate, eDate);
@@ -399,18 +373,10 @@ public class CashPaymentController {
 	@RequestMapping("/editViewSoiled")
 	public ModelAndView eidtViewSoiled(@RequestParam long id, HttpSession session) {
 		User user = (User) session.getAttribute("login");
-		Calendar sDate = Calendar.getInstance();
-		Calendar eDate = Calendar.getInstance();
-		sDate.set(Calendar.HOUR, 0);
-		sDate.set(Calendar.HOUR_OF_DAY, 0);
-		sDate.set(Calendar.MINUTE, 0);
-		sDate.set(Calendar.SECOND, 0);
-		sDate.set(Calendar.MILLISECOND, 0);
-		eDate.set(Calendar.HOUR, 24);
-		eDate.set(Calendar.HOUR_OF_DAY, 23);
-		eDate.set(Calendar.MINUTE, 59);
-		eDate.set(Calendar.SECOND, 59);
-		eDate.set(Calendar.MILLISECOND, 999);
+
+		Calendar sDate = UtilityJpa.getStartDate();
+		Calendar eDate = UtilityJpa.getEndDate();
+
 		SoiledRemittance soiledRemitationRecord = cashPaymentService.getSoiledRemittanceById(user.getIcmcId(), sDate,
 				eDate, id);
 		int row = soiledRemitationRecord.getRemittanceAllocations().size();
@@ -430,18 +396,7 @@ public class CashPaymentController {
 	public SoiledRemittance insertUpdateSoiledRemittance(@RequestBody SoiledRemittance soiledRemittance,
 			HttpSession session) {
 		User user = (User) session.getAttribute("login");
-		Calendar sDate = Calendar.getInstance();
-		Calendar eDate = Calendar.getInstance();
-		sDate.set(Calendar.HOUR, 0);
-		sDate.set(Calendar.HOUR_OF_DAY, 0);
-		sDate.set(Calendar.MINUTE, 0);
-		sDate.set(Calendar.SECOND, 0);
-		sDate.set(Calendar.MILLISECOND, 0);
-		eDate.set(Calendar.HOUR, 24);
-		eDate.set(Calendar.HOUR_OF_DAY, 23);
-		eDate.set(Calendar.MINUTE, 59);
-		eDate.set(Calendar.SECOND, 59);
-		eDate.set(Calendar.MILLISECOND, 999);
+
 		boolean isAllSuccess = false;
 		// long soiledId = soiledRemittance.getId();
 		synchronized (icmcService.getSynchronizedIcmc(user)) {
@@ -450,8 +405,8 @@ public class CashPaymentController {
 			soiledRemittance.setIcmcId(user.getIcmcId());
 			soiledRemittance.setInsertBy(user.getId());
 			soiledRemittance.setUpdateBy(user.getId());
-			soiledRemittance.setInsertTime(sDate);
-			soiledRemittance.setUpdateTime(sDate);
+			soiledRemittance.setInsertTime(Calendar.getInstance());
+			soiledRemittance.setUpdateTime(Calendar.getInstance());
 			// soiledRemittance.setId(null);
 			isAllSuccess = cashPaymentService.processSoiledRemmitanceAllocation(soiledRemittance, user);
 			if (!isAllSuccess) {
@@ -492,15 +447,18 @@ public class CashPaymentController {
 	public SoiledRemittance insertSoiledRemittance(@RequestBody SoiledRemittance soiledRemittance, HttpSession session,
 			RedirectAttributes redirectAttributes) {
 		User user = (User) session.getAttribute("login");
-		Calendar now = Calendar.getInstance();
+
 		boolean isAllSuccess = false;
 		synchronized (icmcService.getSynchronizedIcmc(user)) {
+
 			soiledRemittance.setIcmcId(user.getIcmcId());
 			soiledRemittance.setInsertBy(user.getId());
 			soiledRemittance.setUpdateBy(user.getId());
-			soiledRemittance.setInsertTime(now);
-			soiledRemittance.setUpdateTime(now);
+			soiledRemittance.setInsertTime(Calendar.getInstance());
+			soiledRemittance.setUpdateTime(Calendar.getInstance());
+
 			isAllSuccess = cashPaymentService.processSoiledRemmitanceAllocation(soiledRemittance, user);
+
 			if (!isAllSuccess) {
 				throw new RuntimeException("Problem while saving Soiled And Soiled Allocation, Please try again");
 			}
@@ -511,27 +469,19 @@ public class CashPaymentController {
 	@RequestMapping("/viewDorv")
 	public ModelAndView getDORV(HttpSession session) {
 		User user = (User) session.getAttribute("login");
-		Calendar sDate = Calendar.getInstance();
-		Calendar eDate = Calendar.getInstance();
 
-		sDate.set(Calendar.HOUR, 0);
-		sDate.set(Calendar.HOUR_OF_DAY, 0);
-		sDate.set(Calendar.MINUTE, 0);
-		sDate.set(Calendar.SECOND, 0);
-		sDate.set(Calendar.MILLISECOND, 0);
+		Calendar sDate = UtilityJpa.getStartDate();
+		Calendar eDate = UtilityJpa.getEndDate();
 
-		eDate.set(Calendar.HOUR, 24);
-		eDate.set(Calendar.HOUR_OF_DAY, 23);
-		eDate.set(Calendar.MINUTE, 59);
-		eDate.set(Calendar.SECOND, 59);
-		eDate.set(Calendar.MILLISECOND, 999);
 		List<DiversionORV> dorvList = cashPaymentService.getDiversionORV(user.getIcmcId(), sDate, eDate);
+
 		return new ModelAndView("/viewDorv", "records", dorvList);
 	}
 
 	@RequestMapping("/Dorv")
 	public ModelAndView DORV() {
 		DiversionORV obj = new DiversionORV();
+
 		return new ModelAndView("Dorv", "user", obj);
 	}
 
@@ -539,16 +489,18 @@ public class CashPaymentController {
 	@ResponseBody
 	public DiversionORV insertDiversionORV(@RequestBody DiversionORV diversionORV, HttpSession session) {
 		User user = (User) session.getAttribute("login");
-		Calendar now = Calendar.getInstance();
+
 		boolean isAllSuccess = false;
+
 		synchronized (icmcService.getSynchronizedIcmc(user)) {
 			diversionORV.setIcmcId(user.getIcmcId());
 			diversionORV.setInsertBy(user.getId());
 			diversionORV.setUpdateBy(user.getId());
-			diversionORV.setInsertTime(now);
-			diversionORV.setUpdateTime(now);
+			diversionORV.setInsertTime(Calendar.getInstance());
+			diversionORV.setUpdateTime(Calendar.getInstance());
 			diversionORV.setOtherStatus(OtherStatus.REQUESTED);
 			isAllSuccess = cashPaymentService.processDiversionORVAllocation(diversionORV, user);
+
 			if (!isAllSuccess) {
 				throw new BaseGuiException("Error while saving Diversion And Diversion Allocation, Please try again");
 			}
@@ -560,22 +512,12 @@ public class CashPaymentController {
 	@ResponseBody
 	public ModelAndView getORV(HttpSession session) {
 		User user = (User) session.getAttribute("login");
-		Calendar sDate = Calendar.getInstance();
-		Calendar eDate = Calendar.getInstance();
 
-		sDate.set(Calendar.HOUR, 0);
-		sDate.set(Calendar.HOUR_OF_DAY, 0);
-		sDate.set(Calendar.MINUTE, 0);
-		sDate.set(Calendar.SECOND, 0);
-		sDate.set(Calendar.MILLISECOND, 0);
-
-		eDate.set(Calendar.HOUR, 24);
-		eDate.set(Calendar.HOUR_OF_DAY, 23);
-		eDate.set(Calendar.MINUTE, 59);
-		eDate.set(Calendar.SECOND, 59);
-		eDate.set(Calendar.MILLISECOND, 999);
+		Calendar sDate = UtilityJpa.getStartDate();
+		Calendar eDate = UtilityJpa.getEndDate();
 
 		List<Sas> sasList = cashPaymentService.getRequestAcceptORVRecords(user.getIcmcId(), sDate, eDate);
+
 		return new ModelAndView("/viewORV", "records", sasList);
 	}
 
@@ -584,11 +526,14 @@ public class CashPaymentController {
 			RedirectAttributes redirectAttributes) {
 		ModelMap model = new ModelMap();
 		User user = (User) session.getAttribute("login");
+
 		sasDetails = cashPaymentService.getSASRecordById(user.getIcmcId(), id);
 		model.put("total", sasDetails.getTotalValue());
+
 		List<SASAllocation> sasAlList = cashPaymentService.getSasAllocationBySasId(id);
 		LOG.info("sasAlList " + sasAlList);
 		int row = sasAlList.size();
+
 		BranchReceipt branchReceipt = cashPaymentService.checkBinOrBoxFromBranchReceipt(user.getIcmcId(),
 				sasAlList.get(0).getDenomination(), sasAlList.get(0).getBundle(), sasAlList.get(0).getBinNumber());
 		LOG.info("branchReceipt " + branchReceipt);
@@ -615,10 +560,12 @@ public class CashPaymentController {
 		ORV obj = new ORV();
 		User user = (User) session.getAttribute("login");
 		ModelMap map = new ModelMap();
+
 		List<CITCRAVendor> vendorList = cashPaymentService.getVendor();
 		// List<Tuple> branchReceipts =
 		// cashPaymentService.getAllShrinkWrapBundleFromBranchReceipt(user.getIcmcId());
 		List<Tuple> branchReceipts = processingRoomService.indentSummary(user.getIcmcId(), CashSource.BRANCH);
+
 		map.put("branchReceipts", branchReceipts);
 		map.put("user", obj);
 		map.put("vendorList", vendorList);
@@ -646,13 +593,17 @@ public class CashPaymentController {
 	@ResponseBody
 	public ORV insertORV(@RequestBody ORV orv, HttpSession session) {
 		User user = (User) session.getAttribute("login");
+
 		orv.setIcmcId(user.getIcmcId());
 		orv.setInsertBy(user.getId());
 		orv.setUpdateBy(user.getId());
+
 		boolean isAllSuccess = cashPaymentService.processORVAllocation(orv, user);
+
 		if (!isAllSuccess) {
 			throw new RuntimeException("Error while saving ORV And ORV Allocation, Please try again");
 		}
+
 		return orv;
 	}
 
@@ -660,54 +611,13 @@ public class CashPaymentController {
 	@ResponseBody
 	public ORV insertUpdateORV(@RequestBody ORV orv, HttpSession session, RedirectAttributes redirectAttributes) {
 		User user = (User) session.getAttribute("login");
-		/*
-		 * long sasId = orv.getId(); Sas checkSasStatus =
-		 * cashPaymentService.getSASRecordById(user.getIcmcId(), sasId);
-		 * if(checkSasStatus.getStatus()==0){ List<SASAllocation> sasAllocation
-		 * = cashPaymentService.getDataToUpdateBinTransaction(user.getIcmcId(),
-		 * sasId); BinTransaction binTransaction = new BinTransaction();
-		 * BranchReceipt branchReceipt = new BranchReceipt(); BigDecimal
-		 * finalBundle=new BigDecimal(0); for(SASAllocation
-		 * sasAloData:sasAllocation){ binTransaction =
-		 * cashPaymentService.getDataFromBinTransactionForSasAllocationCancel(
-		 * user.getIcmcId(), sasAloData.getBinNumber(),
-		 * sasAloData.getDenomination()); finalBundle =
-		 * binTransaction.getPendingBundleRequest().subtract(sasAloData.
-		 * getBundle()); binTransaction.setIcmcId(user.getIcmcId());
-		 * binTransaction.setBinNumber(sasAloData.getBinNumber());
-		 * binTransaction.setDenomination(sasAloData.getDenomination());
-		 * binTransaction.setPendingBundleRequest(finalBundle);
-		 * branchReceipt.setIcmcId(user.getIcmcId());
-		 * branchReceipt.setBin(sasAloData.getBinNumber());
-		 * branchReceipt.setDenomination(sasAloData.getDenomination());
-		 * cashPaymentService.
-		 * updateBinTransactionPendingBundleForCashPaymentCancel(binTransaction)
-		 * ;
-		 * 
-		 * cashPaymentService.updatebBranchReceiptForBranchPaymentCancel(
-		 * branchReceipt); }
-		 */
-		/*
-		 * orv.setIcmcId(user.getIcmcId()); orv.setInsertBy(user.getId());
-		 * orv.setUpdateBy(user.getId()); orv.setId(null); Calendar now =
-		 * Calendar.getInstance(); orv.setInsertTime(now);
-		 * orv.setUpdateTime(now); Sas sas = new Sas(); sas.setInsertTime(now);
-		 * sas.setUpdateTime(now); sas.setId(null);
-		 */
+
 		boolean isAllSuccess = cashPaymentService.processORVAllocation(orv, user);
+
 		if (!isAllSuccess) {
 			throw new RuntimeException("Error while saving ORV And ORV Allocation, Please try again");
-		} /*
-			 * else {
-			 * cashPaymentService.updateSasForCancelBranchPayment(user.getIcmcId
-			 * (), sasId);
-			 * cashPaymentService.updateSasAllocationForCancelEditBranchPayment(
-			 * user.getIcmcId(), sasId); }
-			 */
-		/*
-		 * }else { throw new BaseGuiException("Accepted value cant be edited");
-		 * }
-		 */
+		}
+
 		return orv;
 	}
 
@@ -735,35 +645,7 @@ public class CashPaymentController {
 						LOG.info("Error has occred", ex);
 						throw ex;
 					}
-					/*
-					 * cashPaymentService.updateSasForCancelBranchPayment(user.
-					 * getIcmcId(), idFromUI); cashPaymentService.
-					 * updateSasAllocationForCancelEditBranchPayment(user.
-					 * getIcmcId(), idFromUI); List<SASAllocation> sasAllocation
-					 * = cashPaymentService.getDataToUpdateBinTransaction(user.
-					 * getIcmcId(), idFromUI); BinTransaction binTransaction =
-					 * new BinTransaction(); BigDecimal finalBundle=new
-					 * BigDecimal(0); for(SASAllocation
-					 * sasAloData:sasAllocation){ binTransaction =
-					 * cashPaymentService.
-					 * getDataFromBinTransactionForSasAllocationCancel(
-					 * user.getIcmcId(), sasAloData.getBinNumber(),
-					 * sasAloData.getDenomination());
-					 * 
-					 * finalBundle =
-					 * binTransaction.getPendingBundleRequest().subtract(
-					 * sasAloData.getBundle());
-					 * 
-					 * binTransaction.setIcmcId(user.getIcmcId());
-					 * binTransaction.setBinNumber(sasAloData.getBinNumber());
-					 * binTransaction.setDenomination(sasAloData.getDenomination
-					 * ()); binTransaction.setPendingBundleRequest(finalBundle);
-					 * cashPaymentService.
-					 * updateBinTransactionPendingBundleForCashPaymentCancel(
-					 * binTransaction);
-					 * 
-					 * }
-					 */
+
 				}
 			} catch (Exception ex) {
 				LOG.info("Error has occred", ex);
@@ -820,11 +702,8 @@ public class CashPaymentController {
 		User user = (User) session.getAttribute("login");
 		synchronized (icmcService.getSynchronizedIcmc(user)) {
 			Calendar now = Calendar.getInstance();
-			now.set(Calendar.HOUR, 0);
-			now.set(Calendar.HOUR_OF_DAY, 0);
-			now.set(Calendar.MINUTE, 0);
-			now.set(Calendar.SECOND, 0);
-			now.set(Calendar.MILLISECOND, 0);
+			UtilityJpa.setStartDate(now);
+
 			try {
 				cashPaymentService.processForAcceptanceOutwardDiversion(diversionORV, now, user);
 			} catch (Exception ex) {
@@ -901,9 +780,7 @@ public class CashPaymentController {
 
 		List<SASAllocation> acceptedListFromSASAllocation = cashPaymentService
 				.getAllTodayAcceptedFromSASAllocation(user.getIcmcId(), sDate, eDate);
-		List<SASAllocation> requestedListFromSASAllocation = cashPaymentService
-				.getRequestedFromSASAllocation(user.getIcmcId(), sDate, eDate);
-		
+
 		Set<Long> pList = new HashSet<Long>();
 		for (SASAllocation parentId : acceptedListFromSASAllocation) {
 			if (parentId.getParentId() != null) {
@@ -912,20 +789,19 @@ public class CashPaymentController {
 		}
 		List<Sas> sasFileUploadList = cashPaymentService.getSASRecordForceHandover(user, sDate, eDate);
 		for (Sas sasId : sasFileUploadList) {
-
 			if (sasId.getId() != null) {
 				pList.add(sasId.getId());
 			}
 		}
-		for (SASAllocation parentId : requestedListFromSASAllocation) {
-			if (parentId.getParentId() != null) {
-				pList.remove(parentId.getParentId());
-			}
+		for (Long sasId : pList) {
+			SASAllocation allocation = cashPaymentService.getRequestedFromSASAllocation(user.getIcmcId(), sDate, eDate,
+					sasId);
+			if (allocation != null)
+				pList.remove(sasId);
 		}
 		if (acceptedListFromSASAllocation.size() != 0 || sasFileUploadList.size() != 0) {
 			solIdList = cashPaymentService.solIdForSASPaymentAccepted(user.getIcmcId(), sDate, eDate, pList);
 		}
-
 		map.put("user", obj);
 		map.put("sas", solIdList);
 		map.put("denominationList", DenominationType.values());
@@ -943,44 +819,29 @@ public class CashPaymentController {
 		List<Sas> solIdList = new ArrayList<>();
 		List<SoiledRemittance> remittanceOrder = new ArrayList<>();
 
-		/*
-		 * List<SASAllocation> acceptedListFromSASAllocation =
-		 * cashPaymentService
-		 * .getAllAcceptedFromSASAllocation(user.getIcmcId());
-		 */
-
 		List<SASAllocation> acceptedListFromSASAllocation = cashPaymentService
 				.getAllTodayAcceptedFromSASAllocation(user.getIcmcId(), sDate, eDate);
-		List<SASAllocation> requestedListFromSASAllocation = cashPaymentService
-				.getRequestedFromSASAllocation(user.getIcmcId(), sDate, eDate);
 		Set<Long> pList = new HashSet<Long>();
 		for (SASAllocation parentId : acceptedListFromSASAllocation) {
-			if (parentId.getParentId() != null) {
+			if (parentId.getParentId() != null)
 				pList.add(parentId.getParentId());
-			}
 		}
 		List<Sas> sasFileUploadList = cashPaymentService.getSASRecordForceHandover(user, sDate, eDate);
 		for (Sas sasId : sasFileUploadList) {
-
-			if (sasId.getId() != null) {
+			if (sasId.getId() != null)
 				pList.add(sasId.getId());
-			}
 		}
-		for (SASAllocation parentId : requestedListFromSASAllocation) {
-			if (parentId.getParentId() != null) {
-				pList.remove(parentId.getParentId());
-			}
+		for (Long sasId : pList) {
+			SASAllocation allocation = cashPaymentService.getRequestedFromSASAllocation(user.getIcmcId(), sDate, eDate,
+					sasId);
+			if (allocation != null)
+				pList.remove(sasId);
 		}
-
 		if (acceptedListFromSASAllocation.size() != 0 || sasFileUploadList.size() != 0) {
-			// solIdList =
-			// cashPaymentService.solIdForSASPayment(user.getIcmcId(), sDate,
-			// eDate);
 			solIdList = cashPaymentService.solIdForSASPaymentAccepted(user.getIcmcId(), sDate, eDate, pList);
 		}
 		/*
-		 * ProcessBundleForCRAPayment processDetails = new
-		 * ProcessBundleForCRAPayment();
+		 * ProcessBundleForCRAPayment processDetails = new ProcessBundleForCRAPayment();
 		 * 
 		 * processDetails = cashPaymentService.getCRAId(user.getIcmcId());
 		 */
@@ -996,8 +857,7 @@ public class CashPaymentController {
 			for (ProcessBundleForCRAPayment process : processDetails) {
 				sortingCraId.add(process.getCraId());
 				/*
-				 * List<CRA> solIdForCraById =
-				 * cashPaymentService.valueFromCRA(user.getIcmcId(),
+				 * List<CRA> solIdForCraById = cashPaymentService.valueFromCRA(user.getIcmcId(),
 				 * process.getCraId()); solIdForCra.addAll(solIdForCraById);
 				 */
 			}
@@ -1045,19 +905,17 @@ public class CashPaymentController {
 			sDate = dateRange.getFromDate();
 			eDate = dateRange.getToDate();
 		}
-		sDate.set(Calendar.HOUR, 0);
-		sDate.set(Calendar.HOUR_OF_DAY, 0);
-		sDate.set(Calendar.MINUTE, 0);
-		sDate.set(Calendar.SECOND, 0);
-		sDate.set(Calendar.MILLISECOND, 0);
+		UtilityJpa.setStartDate(sDate);
+		UtilityJpa.setEndDate(eDate);
 
-		eDate.set(Calendar.HOUR, 24);
-		eDate.set(Calendar.HOUR_OF_DAY, 23);
-		eDate.set(Calendar.MINUTE, 59);
-		eDate.set(Calendar.SECOND, 59);
-		eDate.set(Calendar.MILLISECOND, 999);
-
-		List<Sas> orvList = cashPaymentService.getORVReport(user.getIcmcId(), sDate, eDate);
+		List<Sas> allSasList = cashPaymentService.getORVReport(user.getIcmcId(), sDate, eDate);
+		List<Sas> orvList = new LinkedList<>(allSasList);
+		for (Sas sas : allSasList) {
+			SASAllocation allocation = cashPaymentService.getRequestedFromSASAllocation(user.getIcmcId(), sDate, eDate,
+					sas.getId());
+			if (allocation != null)
+				orvList.remove(sas);
+		}
 		List<CRA> craList = cashPaymentService.getCRARecord(user.getIcmcId(), sDate, eDate);
 		List<OtherBank> otherBankList = cashPaymentService.getOtherBankPaymentRecord(user.getIcmcId(), sDate, eDate);
 		// IBIT
@@ -1635,13 +1493,16 @@ public class CashPaymentController {
 		User user = (User) session.getAttribute("login");
 		List<ProcessBundleForCRAPayment> forwardedCraBundles = cashPaymentService
 				.forwardedCraPaymentDetails(user.getIcmcId(), id);
+
 		return forwardedCraBundles;
 	}
 
 	@RequestMapping(value = "/bundleDetailsSAS")
 	@ResponseBody
 	public List<Sas> sasBundleDetails(@RequestParam(value = "id") long id, HttpSession session) {
+
 		List<Sas> sasTotal = cashPaymentService.getRecordFromSAS(id);
+
 		return sasTotal;
 	}
 
@@ -1650,7 +1511,9 @@ public class CashPaymentController {
 	public List<DiversionORVAllocation> diversionBundleDetails(@RequestParam(value = "id") long id,
 			HttpSession session) {
 		User user = (User) session.getAttribute("login");
+
 		List<DiversionORVAllocation> dorvAllocation = cashPaymentService.dorvPaymentDetails(user.getIcmcId(), id);
+
 		return dorvAllocation;
 	}
 
@@ -1668,8 +1531,10 @@ public class CashPaymentController {
 	public List<SoiledRemittanceAllocation> bundleDetailsForSoiled(@RequestParam(value = "id") long id,
 			HttpSession session) {
 		User user = (User) session.getAttribute("login");
+
 		List<SoiledRemittanceAllocation> soiledRemittanceAllocation = cashPaymentService
 				.soiledRemittancePaymentDetails(user.getIcmcId(), id);
+
 		return soiledRemittanceAllocation;
 	}
 
@@ -2026,15 +1891,18 @@ public class CashPaymentController {
 	@ResponseBody
 	public CRA insertCRA(@RequestBody CRA cra, HttpSession session) {
 		User user = (User) session.getAttribute("login");
-		Calendar now = Calendar.getInstance();
+
 		boolean isAllSuccess = false;
+
 		synchronized (icmcService.getSynchronizedIcmc(user)) {
 			cra.setIcmcId(user.getIcmcId());
 			cra.setInsertBy(user.getId());
 			cra.setUpdateBy(user.getId());
-			cra.setInsertTime(now);
-			cra.setUpdateTime(now);
+			cra.setInsertTime(Calendar.getInstance());
+			cra.setUpdateTime(Calendar.getInstance());
+
 			isAllSuccess = cashPaymentService.processCRAAllocation(cra, user);
+
 			if (!isAllSuccess) {
 				throw new RuntimeException("Error while saving CRA And CRA Allocation, Please try again");
 			}
@@ -2049,8 +1917,7 @@ public class CashPaymentController {
 		craDetails = cashPaymentService.getCRADetailById(id);
 		int row = craDetails.getCraAllocations().size();
 		/*
-		 * if(craDetails.getStatus().toString().equals("ACCEPTED")){ row=row-1;
-		 * }
+		 * if(craDetails.getStatus().toString().equals("ACCEPTED")){ row=row-1; }
 		 */
 		User user = (User) session.getAttribute("login");
 		List<CRAAccountDetail> vendorName = cashPaymentService.getVendorAndMSPName(user.getIcmcId());
@@ -2067,8 +1934,9 @@ public class CashPaymentController {
 	@ResponseBody
 	public CRA insertUpdateCRA(@RequestBody CRA cra, HttpSession session) {
 		User user = (User) session.getAttribute("login");
-		Calendar now = Calendar.getInstance();
+
 		CRA craDetails = cashPaymentService.getCRADetailById(cra.getId());
+
 		if (craDetails.getStatus().equals(OtherStatus.REQUESTED)) {
 			boolean isAllSuccess = false;
 			synchronized (icmcService.getSynchronizedIcmc(user)) {
@@ -2077,8 +1945,8 @@ public class CashPaymentController {
 				cra.setIcmcId(user.getIcmcId());
 				cra.setInsertBy(user.getId());
 				cra.setUpdateBy(user.getId());
-				cra.setInsertTime(now);
-				cra.setUpdateTime(now);
+				cra.setInsertTime(Calendar.getInstance());
+				cra.setUpdateTime(Calendar.getInstance());
 				cra.setId(null);
 				isAllSuccess = cashPaymentService.processCRAAllocation(cra, user);
 
@@ -2097,6 +1965,7 @@ public class CashPaymentController {
 	public String getAccountNumber(@RequestParam(value = "mspName") String mspName,
 			@RequestParam(value = "vendor") String vendor, HttpSession session) {
 		User user = (User) session.getAttribute("login");
+
 		return cashPaymentService.getAccountNumberByMSPName(mspName, vendor, user.getIcmcId());
 	}
 
@@ -2117,7 +1986,9 @@ public class CashPaymentController {
 		User user = (User) session.getAttribute("login");
 		OtherBank otherBankRecord = cashPaymentService.getOtherBankRecordById(user.getIcmcId(), id);
 		int row = otherBankRecord.getOtherBankAllocations().size();
+
 		ModelMap map = new ModelMap();
+
 		map.put("user", otherBankRecord);
 		map.put("status", otherBankRecord.getStatus());
 		map.put("row", row);
@@ -2130,16 +2001,20 @@ public class CashPaymentController {
 	@ResponseBody
 	public OtherBank insertOtherBankPayment(@RequestBody OtherBank otherBank, HttpSession session) {
 		User user = (User) session.getAttribute("login");
-		Calendar now = Calendar.getInstance();
+
 		boolean isAllSuccess = false;
+
 		synchronized (icmcService.getSynchronizedIcmc(user)) {
+
 			otherBank.setIcmcId(user.getIcmcId());
 			otherBank.setInsertBy(user.getId());
 			otherBank.setUpdateBy(user.getId());
-			otherBank.setInsertTime(now);
-			otherBank.setUpdateTime(now);
+			otherBank.setInsertTime(Calendar.getInstance());
+			otherBank.setUpdateTime(Calendar.getInstance());
 			otherBank.setStatus(OtherStatus.REQUESTED);
+
 			isAllSuccess = cashPaymentService.processOtherBankAllocation(otherBank, user);
+
 			if (!isAllSuccess) {
 				throw new RuntimeException("Problem while making OtherBank payment, Please try again");
 			}
@@ -2151,19 +2026,22 @@ public class CashPaymentController {
 	@ResponseBody
 	public OtherBank insertUpdateOtherBankPayment(@RequestBody OtherBank otherBank, HttpSession session) {
 		User user = (User) session.getAttribute("login");
-		Calendar now = Calendar.getInstance();
+
 		boolean isAllSuccess = false;
 		long otherBankId = otherBank.getId();
+
 		synchronized (icmcService.getSynchronizedIcmc(user)) {
 			otherBank.setIcmcId(user.getIcmcId());
 			otherBank.setInsertBy(user.getId());
 			otherBank.setUpdateBy(user.getId());
-			otherBank.setInsertTime(now);
-			otherBank.setUpdateTime(now);
+			otherBank.setInsertTime(Calendar.getInstance());
+			otherBank.setUpdateTime(Calendar.getInstance());
 			otherBank.setId(null);
 			otherBank.setStatus(OtherStatus.REQUESTED);
 			cashPaymentService.processOtherBankPaymentCancellation(user, otherBankId);
+
 			isAllSuccess = cashPaymentService.processOtherBankAllocation(otherBank, user);
+
 			if (!isAllSuccess) {
 				throw new RuntimeException("Error while making OtherBank payment, Please try again");
 			}
@@ -2218,8 +2096,7 @@ public class CashPaymentController {
 
 		/*
 		 * List<OtherBank> otherBankList =
-		 * cashPaymentService.getOtherBankPaymentRecord(user.getIcmcId(), sDate,
-		 * eDate);
+		 * cashPaymentService.getOtherBankPaymentRecord(user.getIcmcId(), sDate, eDate);
 		 */
 		List<OtherBank> otherBankList = cashPaymentService.getOtherBankPaymentRequestAcceptRecord(user.getIcmcId(),
 				sDate, eDate);
@@ -2235,9 +2112,16 @@ public class CashPaymentController {
 		Calendar sDate = UtilityJpa.getStartDate();
 		Calendar eDate = UtilityJpa.getEndDate();
 
-		List<Sas> sasList = cashPaymentService.getAcceptSolId(user.getIcmcId(), sDate, eDate);
+		List<Sas> allSasList = cashPaymentService.getAcceptSolId(user.getIcmcId(), sDate, eDate);
 		// List<Sas> sasList = cashPaymentService.getSolId(user.getIcmcId(),
 		// sDate, eDate);
+		List<Sas> sasList = new LinkedList<>(allSasList);
+		for (Sas sas : allSasList) {
+			SASAllocation allocation = cashPaymentService.getRequestedFromSASAllocation(user.getIcmcId(), sDate, eDate,
+					sas.getId());
+			if (allocation != null)
+				sasList.remove(sas);
+		}
 		map.put("records", sasList);
 		map.put("user", obj);
 		return new ModelAndView("ORVVoucher", map);
@@ -2336,10 +2220,10 @@ public class CashPaymentController {
 		Calendar eDate = UtilityJpa.getEndDate();
 		if (solIdList != null) {
 			for (Sas sas : solIdList) {
-				
+
 				summaryList = cashPaymentService.getRecordORVVoucherById(sas.getId(), sDate, eDate);
 				allSummaryList.addAll(summaryList);
-			
+
 				BigDecimal totalValue = sas.getTotalValue();
 				String numberInwords = ConvertNumberInWords.getNumberInWords(totalValue.intValue());
 				recordTotalInWordList.add(numberInwords);
@@ -2360,6 +2244,7 @@ public class CashPaymentController {
 		ModelMap map = new ModelMap();
 		CRAAllocation obj = new CRAAllocation();
 		List<CRAWrapper> craWrapperList = new ArrayList<>();
+
 		synchronized (icmcService.getSynchronizedIcmc(user)) {
 			List<CRA> craListForID = cashPaymentService.getRecordFromCRA(user.getIcmcId());
 			ArrayList<CRA> MSPList = new ArrayList<CRA>();
@@ -2394,6 +2279,7 @@ public class CashPaymentController {
 		CRAAllocation cra = new CRAAllocation();
 		BinTransaction btx = new BinTransaction();
 		boolean updateRecord = false;
+
 		synchronized (icmcService.getSynchronizedIcmc(user)) {
 			btx.setIcmcId(user.getIcmcId());
 			cra.setId(craAllocation.getId());
@@ -2437,8 +2323,8 @@ public class CashPaymentController {
 		User user = (User) session.getAttribute("login");
 		binTx.setIcmcId(user.getIcmcId());
 		binTx.setRcvBundle(binTx.getRcvBundle());
-		List<BinTransaction> binNumber = cashPaymentService.getBinForCRAPayment(binTx);
-		return binNumber;
+
+		return cashPaymentService.getBinForCRAPayment(binTx);
 	}
 
 	@RequestMapping(value = "/forwardCRAPayment")
@@ -2447,12 +2333,14 @@ public class CashPaymentController {
 			HttpSession session) {
 		User user = (User) session.getAttribute("login");
 		synchronized (icmcService.getSynchronizedIcmc(user)) {
+
 			forwardBundlePayment.setIcmcId(user.getIcmcId());
 			Calendar now = Calendar.getInstance();
 			forwardBundlePayment.setInsertBy(user.getId());
 			forwardBundlePayment.setUpdateBy(user.getId());
 			forwardBundlePayment.setInsertTime(now);
 			forwardBundlePayment.setUpdateTime(now);
+
 			cashPaymentService.ForwardCRAPayment(forwardBundlePayment);
 		}
 		return forwardBundlePayment;
@@ -2464,14 +2352,14 @@ public class CashPaymentController {
 	 * @ResponseBody public List<Tuple> craPayment(@RequestBody List<CRA> cra,
 	 * HttpSession session) { User user = (User) session.getAttribute("login");
 	 * //List<Tuple> CRAPaymentIndentList =
-	 * cashPaymentService.craRequestSummary(user.getIcmcId(), cra.getId());
-	 * return CRAPaymentIndentList; }
+	 * cashPaymentService.craRequestSummary(user.getIcmcId(), cra.getId()); return
+	 * CRAPaymentIndentList; }
 	 */
 
 	/*
 	 * @RequestMapping("/soiledPreparation") public ModelAndView
-	 * soiledRemittancePreparation(HttpSession session, ModelMap model) { User
-	 * user = (User) session.getAttribute("login"); List<Tuple> soiledSummary =
+	 * soiledRemittancePreparation(HttpSession session, ModelMap model) { User user
+	 * = (User) session.getAttribute("login"); List<Tuple> soiledSummary =
 	 * cashPaymentService.getSoiledSummary(user.getIcmcId());
 	 * model.put("soiledBinSummary", soiledSummary); return new
 	 * ModelAndView("soiledRemittancePreparation", model); }
@@ -2489,6 +2377,7 @@ public class CashPaymentController {
 			soiledSummary = cashPaymentService.getSoiledSummary(user.getIcmcId(), CurrencyType.SOILED);
 		}
 		model.put("soiledBinSummary", soiledSummary);
+		
 		return new ModelAndView("soiledRemittancePreparation", model);
 	}
 
@@ -2501,7 +2390,9 @@ public class CashPaymentController {
 		StringBuilder sb = null;
 		StringBuilder sbBinName = new StringBuilder();
 		List<String> prnList = new ArrayList<>();
+
 		synchronized (icmcService.getSynchronizedIcmc(user)) {
+		
 			soiled.setInsertBy(user.getId());
 			soiled.setUpdateBy(user.getId());
 			soiled.setIcmcId(user.getIcmcId());
@@ -2549,8 +2440,7 @@ public class CashPaymentController {
 					}
 					LOG.info("Prepration Soild Remittence sbBinName.toString() " + sbBinName.toString());
 					/*
-					 * if(sbBinName.toString() !=""){ prnList.set(0,
-					 * sbBinName.toString()); }
+					 * if(sbBinName.toString() !=""){ prnList.set(0, sbBinName.toString()); }
 					 */
 					LOG.info("Prepration Soild Remittence ");
 				}
@@ -2684,17 +2574,9 @@ public class CashPaymentController {
 			sDate = dateRange.getFromDate();
 			eDate = dateRange.getToDate();
 		}
-		sDate.set(Calendar.HOUR, 0);
-		sDate.set(Calendar.HOUR_OF_DAY, 0);
-		sDate.set(Calendar.MINUTE, 0);
-		sDate.set(Calendar.SECOND, 0);
-		sDate.set(Calendar.MILLISECOND, 0);
+		UtilityJpa.setStartDate(sDate);
+		UtilityJpa.setEndDate(eDate);
 
-		eDate.set(Calendar.HOUR, 24);
-		eDate.set(Calendar.HOUR_OF_DAY, 23);
-		eDate.set(Calendar.MINUTE, 59);
-		eDate.set(Calendar.SECOND, 59);
-		eDate.set(Calendar.MILLISECOND, 999);
 		List<Tuple> cashOutList = cashPaymentService.getBranchOutRecordFromSAS(user.getIcmcId(), sDate, eDate);
 		return new ModelAndView("CashOutReport", "records", cashOutList);
 	}
@@ -2774,20 +2656,9 @@ public class CashPaymentController {
 	@RequestMapping("/machineInputOutputReport")
 	public ModelAndView machineInputOutprutReport(HttpSession session) {
 		User user = (User) session.getAttribute("login");
-		Calendar sDate = Calendar.getInstance();
-		Calendar eDate = Calendar.getInstance();
 
-		sDate.set(Calendar.HOUR, 0);
-		sDate.set(Calendar.HOUR_OF_DAY, 0);
-		sDate.set(Calendar.MINUTE, 0);
-		sDate.set(Calendar.SECOND, 0);
-		sDate.set(Calendar.MILLISECOND, 0);
-
-		eDate.set(Calendar.HOUR, 24);
-		eDate.set(Calendar.HOUR_OF_DAY, 23);
-		eDate.set(Calendar.MINUTE, 59);
-		eDate.set(Calendar.SECOND, 59);
-		eDate.set(Calendar.MILLISECOND, 999);
+		Calendar sDate = UtilityJpa.getStartDate();
+		Calendar eDate = UtilityJpa.getEndDate();
 
 		ModelMap map = new ModelMap();
 
@@ -2965,20 +2836,10 @@ public class CashPaymentController {
 	@RequestMapping("/indentAndPayment")
 	public ModelAndView indentAndPaymentReport(HttpSession session) {
 		User user = (User) session.getAttribute("login");
-		Calendar sDate = Calendar.getInstance();
-		Calendar eDate = Calendar.getInstance();
 
-		sDate.set(Calendar.HOUR, 0);
-		sDate.set(Calendar.HOUR_OF_DAY, 0);
-		sDate.set(Calendar.MINUTE, 0);
-		sDate.set(Calendar.SECOND, 0);
-		sDate.set(Calendar.MILLISECOND, 0);
+		Calendar sDate = UtilityJpa.getStartDate();
+		Calendar eDate = UtilityJpa.getEndDate();
 
-		eDate.set(Calendar.HOUR, 24);
-		eDate.set(Calendar.HOUR_OF_DAY, 23);
-		eDate.set(Calendar.MINUTE, 59);
-		eDate.set(Calendar.SECOND, 59);
-		eDate.set(Calendar.MILLISECOND, 999);
 		List<Tuple> branchPaymentList = cashPaymentService.getBranchPaymentTotal(user.getIcmcId(), sDate, eDate);
 		ModelMap map = new ModelMap();
 		List<Tuple> craProcessedDataList = cashPaymentService.getCraPaymentTotalProcessed(user.getIcmcId(), sDate,
@@ -3335,8 +3196,8 @@ public class CashPaymentController {
 	@RequestMapping("/getSRNumberBySolId")
 	@ResponseBody
 	public String srNumberBySolId(HttpSession session, @RequestParam(value = "Id") long Id) {
-		String srNumberList = cashPaymentService.getSRNumberById(Id);
-		return srNumberList;
+
+		return cashPaymentService.getSRNumberById(Id);
 	}
 
 	@RequestMapping("/TRReports")
@@ -3345,21 +3206,15 @@ public class CashPaymentController {
 		ModelMap map = new ModelMap();
 		Calendar sDate = Calendar.getInstance();
 		Calendar eDate = Calendar.getInstance();
+		
 		if (dateRange.getFromDate() != null) {
 			sDate = dateRange.getFromDate();
 			eDate = (Calendar) dateRange.getFromDate().clone();
 		}
-		sDate.set(Calendar.HOUR, 0);
-		sDate.set(Calendar.HOUR_OF_DAY, 0);
-		sDate.set(Calendar.MINUTE, 0);
-		sDate.set(Calendar.SECOND, 0);
-		sDate.set(Calendar.MILLISECOND, 0);
 
-		eDate.set(Calendar.HOUR, 24);
-		eDate.set(Calendar.HOUR_OF_DAY, 23);
-		eDate.set(Calendar.MINUTE, 59);
-		eDate.set(Calendar.SECOND, 59);
-		eDate.set(Calendar.MILLISECOND, 999);
+		UtilityJpa.setStartDate(sDate);
+		UtilityJpa.setEndDate(eDate);
+
 		List<SoiledRemittanceAllocation> trReports = cashPaymentService.TRReports(user.getIcmcId(), sDate, eDate);
 		map.put("trReports", trReports);
 		return new ModelAndView("TRReports", map);
@@ -3371,12 +3226,13 @@ public class CashPaymentController {
 		diversionORV = cashPaymentService.getDiversionORVById(id);
 		int row = diversionORV.getDiversionAllocations().size();
 		ModelMap map = new ModelMap();
+		
 		map.put("user", diversionORV);
 		map.put("row", row);
 		map.put("status", diversionORV.getOtherStatus());
 		map.put("diversionAllocations", diversionORV.getDiversionAllocations());
+	
 		return new ModelAndView("editDiversionORV", map);
-
 	}
 
 	@RequestMapping(value = "/UpdateDorvAllocation")
@@ -3386,15 +3242,17 @@ public class CashPaymentController {
 
 		/*
 		 * long id =diversionORV.getId();
-		 * cashPaymentService.processDiversionORVCancellation(user, id); long
-		 * count = cashPaymentService.updateOrvStatus1(id); //code for update
-		 * long count1=cashPaymentService.updateOrvAllocationStatus1(id);
+		 * cashPaymentService.processDiversionORVCancellation(user, id); long count =
+		 * cashPaymentService.updateOrvStatus1(id); //code for update long
+		 * count1=cashPaymentService.updateOrvAllocationStatus1(id);
 		 */
 
 		Calendar now = Calendar.getInstance();
 
 		boolean isAllSuccess = false;
+
 		synchronized (icmcService.getSynchronizedIcmc(user)) {
+
 			diversionORV.setIcmcId(user.getIcmcId());
 			diversionORV.setInsertBy(user.getId());
 			diversionORV.setUpdateBy(user.getId());
@@ -3402,12 +3260,13 @@ public class CashPaymentController {
 			diversionORV.setUpdateTime(now);
 			diversionORV.setOtherStatus(OtherStatus.REQUESTED);
 			diversionORV.setId(null);
+
 			isAllSuccess = cashPaymentService.processDiversionORVAllocation(diversionORV, user);
+
 			if (!isAllSuccess) {
 				throw new RuntimeException("Error while saving Diversion And Diversion Allocation, Please try again");
 			}
 		}
-
 		return diversionORV;
 	}
 
@@ -3423,20 +3282,12 @@ public class CashPaymentController {
 			eDate = dateRange.getToDate();
 		}
 
-		sDate.set(Calendar.HOUR, 0);
-		sDate.set(Calendar.HOUR_OF_DAY, 0);
-		sDate.set(Calendar.MINUTE, 0);
-		sDate.set(Calendar.SECOND, 0);
-		sDate.set(Calendar.MILLISECOND, 0);
-
-		eDate.set(Calendar.HOUR, 23);
-		eDate.set(Calendar.HOUR_OF_DAY, 23);
-		eDate.set(Calendar.MINUTE, 59);
-		eDate.set(Calendar.SECOND, 59);
-		eDate.set(Calendar.MILLISECOND, 999);
+		UtilityJpa.setStartDate(sDate);
+		UtilityJpa.setEndDate(eDate);
 
 		List<SoiledRemittanceAllocation> soiledList = cashPaymentService.getSoiledForAccept(user.getIcmcId(), sDate,
 				eDate);
+
 		return new ModelAndView("/TR64Report", "records", soiledList);
 	}
 }

@@ -2,8 +2,9 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
-<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %> 
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="sec"
+	uri="http://www.springframework.org/security/tags"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <html lang="en">
 <head>
 <meta charset="utf-8">
@@ -14,7 +15,8 @@
 <link rel="shortcut icon" href="./resources/logo/favicon.ico"
 	type="image/x-icon">
 
-<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script type="text/javascript"
+	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script type="text/javascript" src="./js/jquery.validate.min.js"></script>
 
 <title>ICICI : Assign Vault Custodian</title>
@@ -49,30 +51,31 @@
 </head>
 
 <script type="text/javascript">
-
-
-function doAjaxForCoustodianName() {
-	addHeader();
-	var name = $('#name').val();
-	$.ajax({
-		type : "POST",
-		url : "././getCoustodianName",
-		data : "name=" + name,
-		success : function(response) {
-			var newStr = response.substring(1, response .length-1); // Remove Array Brackets
-	        var data=newStr.split(",");
-			$('#accountNumber').val(data)
-		},
-		error : function(e) {
-			alert('accountNumber  Error: ' + e);
-		}
-	});
-}</script>
+	function doAjaxForCoustodianHandover() {
+		addHeader();
+		var custodian = $('#custodian').val();
+		$.ajax({
+			type : "POST",
+			url : "././getHandoverdCharge",
+			data : "custodian=" + custodian,
+			success : function(response) {
+				/* var newStr = response.substring(1, response.length - 1); // Remove Array Brackets
+				var data = newStr.split(","); */
+				console.log(response);
+				//alert(data);
+				$('#userId').val(response.handingOverCharge);
+			},
+			error : function(e) {
+				alert('Hanndover Charge  Error: ' + e);
+			}
+		});
+	}
+</script>
 
 <body oncontextmenu="return false;">
 	<div id="wrapper">
 		<!-- Navigation -->
-		<jsp:include page="common.jsp" /> 
+		<jsp:include page="common.jsp" />
 
 		<div id="page-wrapper">
 			<!--  <div class="row">
@@ -86,47 +89,68 @@ function doAjaxForCoustodianName() {
 				<div class="col-lg-12">
 					<div class="panel panel-default">
 						<div class="panel-heading">
-	                        <ul>
-	                        	<li>
-	                        		<sec:authorize access="hasRole('VIEW_ASSIGN_VAULT_CUSTODIAN')">
-		                        		<a href="././viewAssignVaultCustodian"><i
+							<ul>
+								<li><sec:authorize
+										access="hasRole('VIEW_ASSIGN_VAULT_CUSTODIAN')">
+										<a href="././viewAssignVaultCustodian"><i
 											class="fa fa-table fa-fw"></i> View Vault Custodian Details</a>
-									</sec:authorize>
-								</li>
-							</ul>Assign Vault Custodian
-                        </div>
+									</sec:authorize></li>
+							</ul>
+							Assign Vault Custodian
+						</div>
 						<div class="panel-body">
 							<div class="row">
 								<div class="col-lg-6">
 									<!--<form role="form">-->
-									<form:form id="userPage" action="AddAssignVaultCustodian" method="post" name="userPage"
-										modelAttribute="user" autocomplete="off">
-										<div align="center" style="color: red"><b>${takingOverCharge}</b></div>
-										<div align="center" style="color: red"><b>${HandingOverCharge}</b></div>
-									<div class="form-group">
-											<label>Custodian</label>
-											<%-- <form:select path="custodian" id="custodian" name="custodian" cssClass="form-control">
-												<option value="" label="Select Custdian"></option>
-    											<form:options items="${custodianList}" itemValue="custodian" itemLabel="custodian"/>
-											</form:select> --%>
-<select  id="custodian" name="custodian" >
-   <option value="" label="Select Custdian"></option>
-    <c:forEach items="${custodianList}" var="custodian">
-            <option value="${custodian}">${custodian}</option>
-    </c:forEach>
-</select>
-										</div> 
-									
-										<div class="form-group">
-											<label>User ID Of Taking Over Charge</label>
-											<form:input path="userId" maxlength="45" id="userId" name="userId" cssClass="form-control" />
+									<form:form id="userPage" action="AddAssignVaultCustodian"
+										method="post" name="userPage" modelAttribute="user"
+										autocomplete="off">
+										<div align="center" style="color: red">
+											<b>${takingOverCharge}</b>
 										</div>
-										
+										<div align="center" style="color: red">
+											<b>${HandingOverCharge}</b>
+										</div>
+
+										<div class="form-group">
+											<label>Custodian</label>
+											<form:select path="custodian" id="custodian" name="custodian"
+												cssClass="form-control"
+												onchange="doAjaxForCoustodianHandover();">
+												<form:option value="">Select Custodian</form:option>
+												<form:options items="${custodianList}" itemValue="custodian"
+													itemLabel="custodian" />
+											</form:select>
+										</div>
+
 										<div class="form-group">
 											<label>User ID Of Handing Over Charge</label>
-											<form:input path="handingOverCharge" maxlength="45" id="handingOverCharge" name="handingOverCharge" cssClass="form-control" />
+											<%-- <form:input path="handingOverCharge" maxlength="45"
+												id="handingOverCharge" name="handingOverCharge" cssClass="form-control" /> --%>
+										<form:select path="handingOverCharge" id="handingOverCharge" name="handingOverCharge"
+												cssClass="form-control"
+												onchange="doAjaxForCoustodianHandover();">
+												<form:option value="">Select User ID </form:option>
+												<form:options items="${users}" itemValue="id"
+													 itemLabel="name"  />
+											</form:select>
 										</div>
-										
+										<div class="form-group">
+											<label>User ID Of Taken Over Charge</label>
+											<form:input path="userId" maxlength="45"
+												id="userId" name="userId"
+												cssClass="form-control" readonly="true"/>
+										</div>
+										<%-- <div class="form-group">
+											<label>User ID Of Taking Over Charge</label>
+											<form:input path="userId" maxlength="45" id="userId" name="userId" cssClass="form-control" />
+										</div> --%>
+
+										<%-- <div class="form-group">
+											<label>User ID Of Handing Over Charge</label>
+											<form:input path="handingOverCharge" maxlength="45" id="handingOverCharge" name="handingOverCharge" cssClass="form-control" />
+										</div> --%>
+
 										<div class="form-group">
 											<label>Reason</label>
 											<form:select path="reason" cssClass="form-control">
@@ -136,14 +160,15 @@ function doAjaxForCoustodianName() {
 												<form:option value="Emergency">Emergency</form:option>
 											</form:select>
 										</div>
-										
+
 										<div class="form-group">
 											<label> Remarks</label>
-											<form:input path="remarks" maxlength="45" id="remarks" name="remarks" cssClass="form-control" />
+											<form:input path="remarks" maxlength="45" id="remarks"
+												name="remarks" cssClass="form-control" />
 										</div>
-										
-										<button type="submit" onclick="" class="btn btn-lg btn-success btn-block"
-											value="Details">Submit</button>
+
+										<button type="submit" onclick=""
+											class="btn btn-lg btn-success btn-block" value="Details">Submit</button>
 									</form:form>
 								</div>
 								<!-- /.col-lg-6 (nested) -->
@@ -178,44 +203,41 @@ function doAjaxForCoustodianName() {
 
 	<!-- Custom Theme JavaScript -->
 	<script src="./resources/dist/js/sb-admin-2.js"></script>
- <script type="text/javascript">
+	<script type="text/javascript">
+		$.validator.addMethod("loginRegexlicNum", function(value, element) {
+			return this.optional(element) || /^[0-9]+$/i.test(value);
+		}, "Software must contain only letters,Space , dashes.");
 
-$.validator.addMethod("loginRegexlicNum", function(value, element) {
-    return this.optional(element) || /^[0-9]+$/i.test(value);
-}, "Software must contain only letters,Space , dashes.");
+		$(function() {
+			$("form[name='userPage']").validate({
+				rules : {
+					userId : {
+						required : false,
+					},
 
+					custodian : {
+						required : true,
+					},
 
+				},
+				// Specify validation error messages
+				messages : {
+					userId : {
+						required : "Please Enter User Id.",
+					},
+					custodian : {
+						required : "Please Select custodian",
+					},
 
-	$(function() {
-	  $("form[name='userPage']").validate({
-	    rules: {
-	    	userId:{
-	    		required:true,
-	    	       }, 
-	    	
-	    	       custodian: {
-	    		required:true,
-	    	},
-	    	
-         	    },
-	    // Specify validation error messages
-	    messages: {
-	    	userId: {
-	    		required:"Please Enter User Id.",
-	    	},
-	    	custodian:{
-	    		required:"Please Select custodian",
-	    	} ,
-	    	   
-            	    },
-	    
-	    submitHandler: function(form) {
-	      form.submit();
-	    }
-	  });
-	});
-	</script> 
-<script type="text/javascript" src="./js/htmlInjection.js"></script>
+				},
+
+				submitHandler : function(form) {
+					form.submit();
+				}
+			});
+		});
+	</script>
+	<script type="text/javascript" src="./js/htmlInjection.js"></script>
 </body>
 
 </html>

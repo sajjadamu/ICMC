@@ -76,6 +76,12 @@ public class UserAdministrationServiceImpl implements UserAdministrationService 
 		List<User> userList = userAdministrationJpaDao.getUserList();
 		return userList;
 	}
+	
+	@Override
+	public List<User> getUserListByICMC(BigInteger icmcId) {
+		List<User> userList = userAdministrationJpaDao.getUserListByICMC(icmcId);
+		return userList;
+	}
 
 	public User getUserById(String id) {
 		return userAdministrationJpaDao.getUserById(id);

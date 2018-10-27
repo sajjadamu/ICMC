@@ -1,7 +1,3 @@
-/*******************************************************************************
- * /* Copyright (C) Indicsoft Technologies Pvt Ltd
- * * All Rights Reserved.
- *******************************************************************************/
 package com.chest.currency.enums;
 
 public enum PermissionName {
@@ -109,6 +105,10 @@ public enum PermissionName {
 	ADD_PREP_SOILED_REMITTANCE("ADD_PREP_SOILED_REMITTANCE", PermissionModule.VAULT_MANAGEMENT),
 	UPDATE_PREP_SOILED_REMITTANCE("UPDATE_PREP_SOILED_REMITTANCE", PermissionModule.VAULT_MANAGEMENT),
 	VIEW_PREP_SOILED_REMITTANCE("VIEW_PREP_SOILED_REMITTANCE", PermissionModule.VAULT_MANAGEMENT),
+	
+	CASH_TRANSFER("CASH_TRANSFER", PermissionModule.VAULT_MANAGEMENT),
+	ACCEPT_AUDITOR_INDENT("ACCEPT_AUDITOR_INDENT", PermissionModule.VAULT_MANAGEMENT),
+	DISABLE_BIN("DISABLE_BIN", PermissionModule.VAULT_MANAGEMENT),
 	
 	ADD_CIT_CRA_VENDOR("ADD_CIT_CRA_VENDOR", PermissionModule.CIT_CRA_DETAILS),
 	UPDATE_CIT_CRA_VENDOR("UPDATE_CIT_CRA_VENDOR", PermissionModule.CIT_CRA_DETAILS),
@@ -226,11 +226,32 @@ public enum PermissionName {
 	UPDATE_FORWARDED_CRA_PAYMENT("UPDATE_FORWARDED_CRA_PAYMENT", PermissionModule.PROCESSING_ROOM),
 	VIEW_FORWARDED_CRA_PAYMENT("VIEW_FORWARDED_CRA_PAYMENT", PermissionModule.PROCESSING_ROOM),
 	
+	
+	
+	
+	ADD_MUTILATED_FULLE_VALUE("ADD_MUTILATED_FULLE_VALUE", PermissionModule.PROCESSING_ROOM),
+	
+	ADD_SUSPENSE_DISCREPANCY("ADD_SUSPENSE_DISCREPANCY", PermissionModule.PROCESSING_ROOM),
+	
+	ADD_SUSPENSE_OPENING_BALANCE("ADD_SUSPENSE_OPENING_BALANCE", PermissionModule.PROCESSING_ROOM),
+	
+	
+	
+	
+	
 	ADD_FAKE_NOTE("ADD_FAKE_NOTE", PermissionModule.FAKE_NOTE_MANAGEMENT),
 	UPDATE_FAKE_NOTE("UPDATE_FAKE_NOTE", PermissionModule.FAKE_NOTE_MANAGEMENT),
 	VIEW_FAKE_NOTE("VIEW_FAKE_NOTE", PermissionModule.FAKE_NOTE_MANAGEMENT),
 	
+	
+	
+	
+	
+	MIGRATION("MIGRATION", PermissionModule.MIGRATION),
+	
 	VIEW_REPORTS("VIEW_REPORTS", PermissionModule.REPORTS);
+	
+	
 	
 	
 	

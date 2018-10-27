@@ -79,7 +79,13 @@ public class AssignVaultCustodian {
 	@UpdateTimestamp
 	protected Calendar updateTime;
 
+	@Column(name = "IS_ASSIGN", nullable = false)
+	protected Boolean isAssign = true;
+
 	@Transient
 	protected String userName;
+	
+	@Transient
+	protected String handOveredUserName;
 
 }

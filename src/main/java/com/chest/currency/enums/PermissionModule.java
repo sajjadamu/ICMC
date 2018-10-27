@@ -1,7 +1,3 @@
-/*******************************************************************************
- * /* Copyright (C) Indicsoft Technologies Pvt Ltd
- * * All Rights Reserved.
- *******************************************************************************/
 package com.chest.currency.enums;
 
 public enum PermissionModule {
@@ -14,6 +10,8 @@ public enum PermissionModule {
 	CASH_PAYMENT,
 	PROCESSING_ROOM,
 	FAKE_NOTE_MANAGEMENT,
+	MIGRATION,
+	VERIFICATION,
 	REPORTS;
 	
 	public String value(){

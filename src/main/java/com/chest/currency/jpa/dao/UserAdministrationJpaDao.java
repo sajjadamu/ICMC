@@ -31,6 +31,8 @@ public interface UserAdministrationJpaDao {
 	public User isValidUser(String username,BigInteger icmcId);
 
 	public List<User> getUserList();
+	
+	public List<User> getUserListByICMC(BigInteger icmcId);
 
 	public User getUserById(String id);
 

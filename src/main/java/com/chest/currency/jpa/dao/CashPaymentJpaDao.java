@@ -349,7 +349,7 @@ public interface CashPaymentJpaDao {
 
 	public List<SASAllocation> getAllTodayAcceptedFromSASAllocation(BigInteger icmcId, Calendar sDate, Calendar eDate);
 
-	public List<SASAllocation> getRequestedFromSASAllocation(BigInteger icmcId, Calendar sDate, Calendar eDate);
+	public SASAllocation getRequestedFromSASAllocation(BigInteger icmcId, Calendar sDate, Calendar eDate,Long parentId);
 
 	public String getICMCName(BigInteger icmcId);
 

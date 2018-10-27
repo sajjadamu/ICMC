@@ -35,7 +35,11 @@ form#ORV {
 
 <title>ICICI : ORV Branch</title>
 
-<script src="./resources/Currency/js/jquery.js"></script>
+<script type="text/javascript"
+	src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
+<script src="./resources/bower_components/jquery/dist/jquery.min.js"></script>
+<script src="./resources/js/jquery-1.9.1.min.js"></script>
+
 <!-- Bootstrap Core CSS -->
 <link
 	href="./resources/bower_components/bootstrap/dist/css/bootstrap.min.css"
@@ -58,7 +62,6 @@ form#ORV {
 
 <script type="text/javascript">
 
-var countrow=0;
 var countrow = 0;
 var rowCount = 0;
 var dataId=0;
@@ -85,9 +88,9 @@ var dataId=0;
 											for (i = 0; i < val; i++) {
 												
 												html += '<tr id="main'+i+'">'
-												        +'<td width="22%"><select name="Category" id="Category'+i+'" class="form-control input-margin" onClick="doAjaxPost('+i+');" onchange="checkAvailableBundleByDenoCategory('+i+');"><option value="ISSUABLE">ISSUABLE</option><option value="FRESH">FRESH</option><option value="ATM">ATM</option><option value="SOILED">SOILED</option><option value="COINS">COINS</option></td>'
-														+'<td><input type="text" id="Denomination'+i+'" class="form-control input-margin" name="Denomination" maxlength="4" minlength="1" value="" autofocus onkeyup="doAjaxPost('+i+'); checkAvailableBundleByDenoCategory('+i+')" ></td>'
-														+'<td><input type="text" id="Bundle'+i+'" class="form-control input-margin" name="Bundle" value="" onkeyup="doAjaxPost('+i+'); checkAvailableBundleByDenoCategory('+i+')" ></td>'
+												        +'<td width="22%"><select name="Category" id="Category'+i+'" class="form-control input-margin" onClick="doAjaxPost('+i+');"><option value="ISSUABLE">ISSUABLE</option><option value="FRESH">FRESH</option><option value="ATM">ATM</option><option value="SOILED">SOILED</option><option value="COINS">COINS</option></td>'
+														+'<td><input type="text" id="Denomination'+i+'" class="form-control input-margin" name="Denomination" maxlength="4" minlength="1" value="" autofocus onkeyup="doAjaxPost('+i+');" ></td>'
+														+'<td><input type="text" id="Bundle'+i+'" class="form-control input-margin" name="Bundle" value="" onkeyup="doAjaxPost('+i+');" ></td>'
 														+'<td><input type="text" id="TotalWithFormatter'+i+'"  class="form-control input-margin" name="Total" value="" readonly="true"></td>'
 														+'<td><button type="button" onclick="deleteRow('+i+')">-</button></td>'
 														+'<td><input type="hidden" id="Total'+i+'"  class="form-control input-margin" name="Total" value="" readonly="true"></td>'
@@ -136,9 +139,7 @@ var dataId=0;
 					    var rowCount = ($('#table1 tr').length)-2;
 						countrow=rowCount;
 						dataId = countrow-1;
-						
 						var selectedCategory = jQuery('#Category'+dataId).val();
-						//alert(selectedCategory)
 						var denomData = jQuery('#Denomination'+dataId).val();
 						var bundleData = jQuery('#Bundle'+dataId).val();
 						var totalData = jQuery('#TotalWithFormatter'+dataId).val();
@@ -157,7 +158,7 @@ var dataId=0;
 							totalData = "";
 						}
 						
-						rowCount = ($('#table1 tr').length)-2;
+						//rowCount = ($('#table1 tr').length)-2;
 						jQuery('#addmoreButton'+i).remove();
 						i++;
 						data = '<tr id="main'+countrow+'">'
@@ -220,10 +221,9 @@ var dataId=0;
 					 function addRow(i){
 	                        /* countrow++;
 	                         var rowCount = ($('#table1 tr').length)-2; */
-	                        
 	                         var rowCount = ($('#table1 tr').length)-2;
 	                         countrow=rowCount;
-	                         
+	                       
 	                        jQuery('#addmoreButton'+i).remove();
 	                        i++;
 	                        data = '<tr id="main'+countrow+'">'
@@ -234,8 +234,8 @@ var dataId=0;
 	                        +'<td><button type="button" onclick="deleteRow('+countrow+')">-</button></td>'
 	                        +'<td><input type="hidden" id="Total'+countrow+'"  class="form-control input-margin" name="Total" value="" readonly="true"></td>'
 	                        + '</tr>';
-	                    
 	                        $('#table1').append(data);
+	                        countrow++;
 	                        $('#table1').append('<tr class="header" id=addmoreButton'+rowCount+'><td><button type="button" class="addmoreButton" onclick="replicateValue('+rowCount+');doAjaxForTotal()">Replicate Value</button></td><td><button type="button" class="addmoreButton" onclick="addRow('+rowCount+');doAjaxForTotal()">Add Blank Row</button></td><td>Total</td><td><input class="form-control input-margin" type="text" id="totalValue"  value="" readonly></td></tr>');
 
 	                    }
@@ -370,9 +370,8 @@ var dataId=0;
 			 isValid = false;
 		} */
 		
-		
-for (i = 0; i < countrow; i++) {
-			if($('#Denomination'+i).val()==undefined ){
+for (i =0 ; i < countrow; i++) {
+	if($('#Denomination'+i).val()==undefined ){
 				$('#err6').show();
 				$('#err7').show();
 				isValid = false;

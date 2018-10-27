@@ -1062,7 +1062,7 @@ public class CashPaymentJpaDaoImpl implements CashPaymentJpaDao {
 		List<Sas> solIdList = jpaQuery.list(QSas.sas);
 		return solIdList;
 	}
-	
+
 	@Override
 	public List<Sas> getSasRecordById(BigInteger icmcId, Long[] sasId) {
 		JPAQuery jpaQuery = getFromSASForVoucher();
@@ -1866,15 +1866,16 @@ public class CashPaymentJpaDaoImpl implements CashPaymentJpaDao {
 		List<SASAllocation> solIdForPaymenta = jpaQuery.list(QSASAllocation.sASAllocation);
 		return solIdForPaymenta;
 	}
-	
+
 	@Override
-	public List<SASAllocation> getRequestedFromSASAllocation(BigInteger icmcId, Calendar sDate, Calendar eDate) {
+	public SASAllocation getRequestedFromSASAllocation(BigInteger icmcId, Calendar sDate, Calendar eDate,
+			Long parentId) {
 		JPAQuery jpaQuery = new JPAQuery(em);
 		jpaQuery.distinct().from(QSASAllocation.sASAllocation)
 				.where(QSASAllocation.sASAllocation.status.eq(OtherStatus.REQUESTED)
-						.and(QSASAllocation.sASAllocation.insertTime.between(sDate, eDate)))
-				.orderBy(QSASAllocation.sASAllocation.parentId.asc());
-		List<SASAllocation> solIdForPaymenta = jpaQuery.list(QSASAllocation.sASAllocation);
+						.and(QSASAllocation.sASAllocation.insertTime.between(sDate, eDate))
+						.and(QSASAllocation.sASAllocation.parentId.eq(parentId)));
+		SASAllocation solIdForPaymenta = jpaQuery.singleResult(QSASAllocation.sASAllocation);
 		return solIdForPaymenta;
 	}
 
@@ -2334,16 +2335,14 @@ public class CashPaymentJpaDaoImpl implements CashPaymentJpaDao {
 	public List<Tuple> getSASAllocationRecordFromTuple(BigInteger icmcId, Calendar sDate, Calendar eDate) {
 		JPAQuery jpaQuery = getFromQueryForSASAllocation();
 		jpaQuery.where(QSASAllocation.sASAllocation.icmcId.eq(icmcId)
-				.and(QSASAllocation.sASAllocation.status.eq(OtherStatus.REQUESTED))
-		/*
-		 * .and(QSASAllocation.sASAllocation.insertTime.between(sDate, eDate))
-		 */
-		);
+				.and(QSASAllocation.sASAllocation.status.eq(OtherStatus.REQUESTED)));
+		
 		jpaQuery.groupBy(QSASAllocation.sASAllocation.binNumber, QSASAllocation.sASAllocation.denomination,
 				QSASAllocation.sASAllocation.cashType, QSASAllocation.sASAllocation.binType);
 		List<Tuple> sasAllocation = jpaQuery.list(QSASAllocation.sASAllocation.binNumber,
 				QSASAllocation.sASAllocation.denomination, QSASAllocation.sASAllocation.cashType,
 				QSASAllocation.sASAllocation.binType, QSASAllocation.sASAllocation.bundle.sum());
+		
 		return sasAllocation;
 	}
 

@@ -217,7 +217,8 @@ function doAjaxPostUpdateStatus(str) {
 			<!-- /.row -->
 			<div class="panel-body">
 
-				<Table align="center">
+				<!-- <Table align="center"> -->
+				<Table>
 					<Tr>
 						<th style="color: blue"><u>CRA INDENT SUMMARY</u></th>
 					</Tr>

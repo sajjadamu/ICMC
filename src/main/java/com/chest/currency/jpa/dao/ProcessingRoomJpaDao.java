@@ -60,6 +60,10 @@ public interface ProcessingRoomJpaDao {
 
 	public Indent getIndentById(long id);
 
+	public AssignVaultCustodian getHandoveredChargUserId(BigInteger icmcId, String cudtodian);
+
+	public AssignVaultCustodian getHandoveredChargByHandOverId(BigInteger icmcId, String userId);
+
 	// code for the searching data on the basis of date
 
 	List<DiscrepancyAllocation> getDiscrepancyByDate(BigInteger icmcId, java.util.Date sDate, java.util.Date tDate,
@@ -122,7 +126,8 @@ public interface ProcessingRoomJpaDao {
 
 	public List<AssignVaultCustodian> getListAssignVaultCustodian(BigInteger icmcId, Calendar sDate, Calendar eDate);
 
-	public boolean saveAssignVaultCustodian(AssignVaultCustodian assignVaultCustodian);
+	public boolean saveAssignVaultCustodian(AssignVaultCustodian assignVaultCustodian,
+			AssignVaultCustodian vaultCustodian);
 
 	public AssignVaultCustodian assignVaultCustodianRecordForModify(Long id);
 
@@ -208,8 +213,7 @@ public interface ProcessingRoomJpaDao {
 	public boolean updateFreshFromRBI(FreshFromRBI br);
 
 	/*
-	 * public List<Tuple> getDataFromCRAAllocationForProcessing(BigInteger
-	 * icmcId);
+	 * public List<Tuple> getDataFromCRAAllocationForProcessing(BigInteger icmcId);
 	 */
 
 	public List<CRAAllocation> getDataFromCRAAllocationForProcessing(BigInteger icmcId);
@@ -372,13 +376,13 @@ public interface ProcessingRoomJpaDao {
 	List<DSB> getDSB(Indent indent, Calendar sDate, Calendar eDate);
 
 	List<BankReceipt> getBankReceipt(Indent indent, Calendar sDate, Calendar eDate);
-	
+
 	List<DiversionIRV> getDiversionIRV(Indent indent, Calendar sDate, Calendar eDate);
 
 	boolean updateDSB(DSB dsb);
 
 	boolean updateBankReceipt(BankReceipt bankReceipt);
-	
+
 	Boolean updateDiversionIRV(DiversionIRV diversionIRV);
 
 }

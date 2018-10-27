@@ -1,7 +1,3 @@
-/*******************************************************************************
- * /* Copyright (C) Indicsoft Technologies Pvt Ltd
- * * All Rights Reserved.
- *******************************************************************************/
 package com.chest.currency.controller;
 
 import java.io.BufferedOutputStream;
@@ -48,7 +44,6 @@ import org.supercsv.io.CsvBeanReader;
 import org.supercsv.io.ICsvBeanReader;
 import org.supercsv.prefs.CsvPreference;
 
-import com.chest.currency.entity.model.SASAllocation;
 import com.chest.currency.entity.model.AuditorIndent;
 import com.chest.currency.entity.model.BankReceipt;
 import com.chest.currency.entity.model.BinMaster;
@@ -76,6 +71,7 @@ import com.chest.currency.entity.model.MachineAllocation;
 import com.chest.currency.entity.model.OtherBankAllocation;
 import com.chest.currency.entity.model.Process;
 import com.chest.currency.entity.model.RegionSummary;
+import com.chest.currency.entity.model.SASAllocation;
 import com.chest.currency.entity.model.Sas;
 import com.chest.currency.entity.model.SoiledRemittanceAllocation;
 import com.chest.currency.entity.model.TrainingRegister;
@@ -159,7 +155,7 @@ public class BinDashboardController {
 		}
 
 		for (Tuple bin : summaryList) {
-			BinTransaction binTransactionSummary = mapList.get(bin.get(1, String.class));
+			BinTransaction binTransactionSummary = mapList.get(bin.get(1, Integer.class));
 
 			BigDecimal total = bin.get(2, BigDecimal.class);
 
@@ -200,15 +196,13 @@ public class BinDashboardController {
 	public ModelAndView binList(HttpSession session, ZoneMaster zm) {
 		User user = (User) session.getAttribute("login");
 		ModelMap map = new ModelMap();
-
 		IcmcAccess access = user.getRole().getIcmcAccess();
 
 		if (access == IcmcAccess.ICMC) {
 
 			/*
 			 * List<BinTransaction> list = binDashboardService
-			 * .getBinNumAndTypeFromBinTransactionForVefiedYes(user.getIcmcId())
-			 * ;
+			 * .getBinNumAndTypeFromBinTransactionForVefiedYes(user.getIcmcId()) ;
 			 */
 
 			List<BinTransaction> listBox = binDashboardService
@@ -235,7 +229,7 @@ public class BinDashboardController {
 				mapList.put(denom.getDenomination(), new BinTransaction());
 			}
 			for (Tuple bin : summaryList) {
-				BinTransaction binTransactionSummary = mapList.get(bin.get(1, String.class));
+				BinTransaction binTransactionSummary = mapList.get(bin.get(1, Integer.class));
 
 				BigDecimal total = bin.get(2, BigDecimal.class);
 
@@ -515,7 +509,7 @@ public class BinDashboardController {
 		}
 
 		for (Tuple bin : summaryList) {
-			BinTransaction binTransactionSummary = mapList.get(bin.get(1, String.class));
+			BinTransaction binTransactionSummary = mapList.get(bin.get(1, Integer.class));
 
 			BigDecimal total = bin.get(2, BigDecimal.class);
 
@@ -705,24 +699,15 @@ public class BinDashboardController {
 
 		ModelMap map = new ModelMap();
 
-		Calendar sDate = Calendar.getInstance();
-		Calendar eDate = Calendar.getInstance();
+		Calendar sDate = UtilityJpa.getStartDate();
+		Calendar eDate = UtilityJpa.getEndDate();
 
 		if (dateRange.getFromDate() != null) {
 			sDate = dateRange.getFromDate();
 			eDate = (Calendar) dateRange.getFromDate().clone();
 		}
-		sDate.set(Calendar.HOUR, 0);
-		sDate.set(Calendar.HOUR_OF_DAY, 0);
-		sDate.set(Calendar.MINUTE, 0);
-		sDate.set(Calendar.SECOND, 0);
-		sDate.set(Calendar.MILLISECOND, 0);
-
-		eDate.set(Calendar.HOUR, 24);
-		eDate.set(Calendar.HOUR_OF_DAY, 23);
-		eDate.set(Calendar.MINUTE, 59);
-		eDate.set(Calendar.SECOND, 59);
-		eDate.set(Calendar.MILLISECOND, 999);
+		UtilityJpa.setStartDate(sDate);
+		UtilityJpa.setEndDate(eDate);
 
 		List<BinTransactionBOD> binTxBodList = binDashboardService.processIO2(user.getIcmcId(), sDate, eDate,
 				dateRange);
@@ -954,7 +939,9 @@ public class BinDashboardController {
 
 		binDashboardService.insertInBinTxnBOD(binTransactionBODForCoins);
 		redirectAttributes.addFlashAttribute("successMsgForEOD", "EOD successfully");
-		return new ModelAndView("redirect:./dailyBinRecon");
+		// return new ModelAndView("redirect:./dailyBinRecon");
+
+		return new ModelAndView("redirect:./IO2Reports");
 	}
 
 	private void mapTupleToBinTransactionBOD(BinTransactionBOD binTransactionBOD, List<Tuple> summaryListForRemittance1,
@@ -1145,7 +1132,7 @@ public class BinDashboardController {
 		}
 
 		for (Tuple bin : summaryList) {
-			BinTransaction binTransactionSummary = mapList.get(bin.get(1, String.class));
+			BinTransaction binTransactionSummary = mapList.get(bin.get(1, Integer.class));
 
 			BigDecimal total = bin.get(2, BigDecimal.class);
 
@@ -1406,28 +1393,25 @@ public class BinDashboardController {
 	public ModelAndView cashBookWithdrawal(@ModelAttribute("reportDate") DateRange dateRange, HttpSession session) {
 		User user = (User) session.getAttribute("login");
 		ModelMap map = new ModelMap();
-		Calendar sDate = Calendar.getInstance();
-		Calendar eDate = Calendar.getInstance();
+		Calendar sDate = UtilityJpa.getStartDate();
+		Calendar eDate = UtilityJpa.getEndDate();
 
 		if (dateRange.getFromDate() != null) {
 			sDate = dateRange.getFromDate();
 			eDate = (Calendar) dateRange.getFromDate().clone();
 		}
 
-		sDate.set(Calendar.HOUR, 0);
-		sDate.set(Calendar.HOUR_OF_DAY, 0);
-		sDate.set(Calendar.MINUTE, 0);
-		sDate.set(Calendar.SECOND, 0);
-		sDate.set(Calendar.MILLISECOND, 0);
+		UtilityJpa.setStartDate(sDate);
+		UtilityJpa.setEndDate(eDate);
 
-		eDate.set(Calendar.HOUR, 24);
-		eDate.set(Calendar.HOUR_OF_DAY, 23);
-		eDate.set(Calendar.MINUTE, 59);
-		eDate.set(Calendar.SECOND, 59);
-		eDate.set(Calendar.MILLISECOND, 999);
-
-		List<Sas> sasList = cashPaymentJpaDao.getORVRecords(user.getIcmcId(), sDate, eDate);
-
+		List<Sas> allSasList = cashPaymentService.getORVRecords(user.getIcmcId(), sDate, eDate);
+		List<Sas> sasList = new LinkedList<>(allSasList);
+		for (Sas sas : allSasList) {
+			SASAllocation allocation = cashPaymentService.getRequestedFromSASAllocation(user.getIcmcId(), sDate, eDate,
+					sas.getId());
+			if (allocation != null)
+				sasList.remove(sas);
+		}
 		Map<String, CRAAllocation> craPaymentList = binDashboardService.getCRAForCashBookWithDrawal(user.getIcmcId(),
 				sDate, eDate);
 
@@ -1531,28 +1515,13 @@ public class BinDashboardController {
 		Calendar sDate = Calendar.getInstance();
 		Calendar eDate = Calendar.getInstance();
 
-		/*
-		 * if (dateRange.getFromDate() != null) { sDate =
-		 * dateRange.getFromDate(); eDate = (Calendar)
-		 * dateRange.getFromDate().clone(); }
-		 */
-
 		if (dateRange.getFromDate() != null && dateRange.getToDate() != null) {
 			sDate = dateRange.getFromDate();
 			eDate = dateRange.getToDate();
 		}
 
-		sDate.set(Calendar.HOUR, 0);
-		sDate.set(Calendar.HOUR_OF_DAY, 0);
-		sDate.set(Calendar.MINUTE, 0);
-		sDate.set(Calendar.SECOND, 0);
-		sDate.set(Calendar.MILLISECOND, 0);
-
-		eDate.set(Calendar.HOUR, 24);
-		eDate.set(Calendar.HOUR_OF_DAY, 23);
-		eDate.set(Calendar.MINUTE, 59);
-		eDate.set(Calendar.SECOND, 59);
-		eDate.set(Calendar.MILLISECOND, 999);
+		UtilityJpa.setStartDate(sDate);
+		UtilityJpa.setEndDate(eDate);
 
 		BigDecimal sairremTotal = BigDecimal.ZERO;
 		BigDecimal samutcurTotal = BigDecimal.ZERO;
@@ -1579,9 +1548,6 @@ public class BinDashboardController {
 			samutcurTotal = samutcurTotal.add(discrepancy.getSamutcurTotal());
 			sadscashTotal = sadscashTotal.add(discrepancy.getSadscashTotal());
 			excessTotal = excessTotal.add(discrepancy.getExcessTotal());
-			/*
-			 * } }
-			 */
 		}
 		ICMC icmc = binDashboardService.getICMCObj(user.getIcmcId());
 
@@ -1613,17 +1579,8 @@ public class BinDashboardController {
 			sDate = dateRange.getFromDate();
 			eDate = (Calendar) dateRange.getFromDate().clone();
 		}
-		sDate.set(Calendar.HOUR, 0);
-		sDate.set(Calendar.HOUR_OF_DAY, 0);
-		sDate.set(Calendar.MINUTE, 0);
-		sDate.set(Calendar.SECOND, 0);
-		sDate.set(Calendar.MILLISECOND, 0);
-
-		eDate.set(Calendar.HOUR, 24);
-		eDate.set(Calendar.HOUR_OF_DAY, 23);
-		eDate.set(Calendar.MINUTE, 59);
-		eDate.set(Calendar.SECOND, 59);
-		eDate.set(Calendar.MILLISECOND, 999);
+		UtilityJpa.setStartDate(sDate);
+		UtilityJpa.setEndDate(eDate);
 
 		ICMC icmc = binDashboardService.getICMCObj(user.getIcmcId());
 		SimpleDateFormat fmt = new SimpleDateFormat("dd/MM/yyyy");
@@ -1656,17 +1613,8 @@ public class BinDashboardController {
 			sDate = dateRange.getFromDate();
 			eDate = (Calendar) dateRange.getFromDate().clone();
 		}
-		sDate.set(Calendar.HOUR, 0);
-		sDate.set(Calendar.HOUR_OF_DAY, 0);
-		sDate.set(Calendar.MINUTE, 0);
-		sDate.set(Calendar.SECOND, 0);
-		sDate.set(Calendar.MILLISECOND, 0);
-
-		eDate.set(Calendar.HOUR, 24);
-		eDate.set(Calendar.HOUR_OF_DAY, 23);
-		eDate.set(Calendar.MINUTE, 59);
-		eDate.set(Calendar.SECOND, 59);
-		eDate.set(Calendar.MILLISECOND, 999);
+		UtilityJpa.setStartDate(sDate);
+		UtilityJpa.setEndDate(eDate);
 
 		ICMC icmc = binDashboardService.getICMCObj(user.getIcmcId());
 		SimpleDateFormat fmt = new SimpleDateFormat("dd/MM/yyyy");
@@ -1845,8 +1793,8 @@ public class BinDashboardController {
 
 	/*
 	 * @RequestMapping("/trainingRegister") public ModelAndView
-	 * trainingRegister(HttpSession session) { ModelMap map = new ModelMap();
-	 * return new ModelAndView("/trainingRegister", map); }
+	 * trainingRegister(HttpSession session) { ModelMap map = new ModelMap(); return
+	 * new ModelAndView("/trainingRegister", map); }
 	 */
 
 	@RequestMapping("/currencyChestBook")
@@ -1863,17 +1811,8 @@ public class BinDashboardController {
 			eDate = (Calendar) dateRange.getFromDate().clone();
 		}
 
-		sDate.set(Calendar.HOUR, 0);
-		sDate.set(Calendar.HOUR_OF_DAY, 0);
-		sDate.set(Calendar.MINUTE, 0);
-		sDate.set(Calendar.SECOND, 0);
-		sDate.set(Calendar.MILLISECOND, 0);
-
-		eDate.set(Calendar.HOUR, 24);
-		eDate.set(Calendar.HOUR_OF_DAY, 23);
-		eDate.set(Calendar.MINUTE, 59);
-		eDate.set(Calendar.SECOND, 59);
-		eDate.set(Calendar.MILLISECOND, 999);
+		UtilityJpa.setStartDate(sDate);
+		UtilityJpa.setEndDate(eDate);
 
 		List<BinTransactionBOD> binTxBodList = binDashboardService.processTE2(user.getIcmcId(), sDate, eDate,
 				dateRange);
@@ -2664,17 +2603,9 @@ public class BinDashboardController {
 			eDate = dateRange.getToDate();
 		}
 
-		sDate.set(Calendar.HOUR, 0);
-		sDate.set(Calendar.HOUR_OF_DAY, 0);
-		sDate.set(Calendar.MINUTE, 0);
-		sDate.set(Calendar.SECOND, 0);
-		sDate.set(Calendar.MILLISECOND, 0);
+		UtilityJpa.setStartDate(sDate);
+		UtilityJpa.setEndDate(eDate);
 
-		eDate.set(Calendar.HOUR, 24);
-		eDate.set(Calendar.HOUR_OF_DAY, 23);
-		eDate.set(Calendar.MINUTE, 59);
-		eDate.set(Calendar.SECOND, 59);
-		eDate.set(Calendar.MILLISECOND, 999);
 		List<TrainingRegister> trainingRegisterList = binDashboardService.getTrainingRegisterReport(user.getIcmcId(),
 				sDate, eDate);
 		return new ModelAndView("trainingRegisterReport", "records", trainingRegisterList);
@@ -2692,17 +2623,8 @@ public class BinDashboardController {
 			eDate = dateRange.getToDate();
 		}
 
-		sDate.set(Calendar.HOUR, 0);
-		sDate.set(Calendar.HOUR_OF_DAY, 0);
-		sDate.set(Calendar.MINUTE, 0);
-		sDate.set(Calendar.SECOND, 0);
-		sDate.set(Calendar.MILLISECOND, 0);
-
-		eDate.set(Calendar.HOUR, 24);
-		eDate.set(Calendar.HOUR_OF_DAY, 23);
-		eDate.set(Calendar.MINUTE, 59);
-		eDate.set(Calendar.SECOND, 59);
-		eDate.set(Calendar.MILLISECOND, 999);
+		UtilityJpa.setStartDate(sDate);
+		UtilityJpa.setEndDate(eDate);
 
 		List<Sas> coinsList = binDashboardService.coinsRegister(user.getIcmcId(), sDate, eDate);
 		return new ModelAndView("coinDistributionReport", "records", coinsList);
@@ -2719,21 +2641,11 @@ public class BinDashboardController {
 		if (dateRange.getFromDate() != null) {
 			sDate = dateRange.getFromDate();
 			eDate = (Calendar) dateRange.getFromDate().clone();
-
 			sDate.getTime();// For date
 		}
 
-		sDate.set(Calendar.HOUR, 0);
-		sDate.set(Calendar.HOUR_OF_DAY, 0);
-		sDate.set(Calendar.MINUTE, 0);
-		sDate.set(Calendar.SECOND, 0);
-		sDate.set(Calendar.MILLISECOND, 0);
-
-		eDate.set(Calendar.HOUR, 24);
-		eDate.set(Calendar.HOUR_OF_DAY, 23);
-		eDate.set(Calendar.MINUTE, 59);
-		eDate.set(Calendar.SECOND, 59);
-		eDate.set(Calendar.MILLISECOND, 999);
+		UtilityJpa.setStartDate(sDate);
+		UtilityJpa.setEndDate(eDate);
 
 		List<BinTransactionBOD> binTxBodList = binDashboardService.cashMovementRegister(user.getIcmcId(), sDate, eDate,
 				dateRange);
@@ -2776,17 +2688,9 @@ public class BinDashboardController {
 			eDate = (Calendar) dateRange.getFromDate().clone();
 		}
 
-		sDate.set(Calendar.HOUR, 0);
-		sDate.set(Calendar.HOUR_OF_DAY, 0);
-		sDate.set(Calendar.MINUTE, 0);
-		sDate.set(Calendar.SECOND, 0);
-		sDate.set(Calendar.MILLISECOND, 0);
+		UtilityJpa.setStartDate(sDate);
+		UtilityJpa.setEndDate(eDate);
 
-		eDate.set(Calendar.HOUR, 24);
-		eDate.set(Calendar.HOUR_OF_DAY, 23);
-		eDate.set(Calendar.MINUTE, 59);
-		eDate.set(Calendar.SECOND, 59);
-		eDate.set(Calendar.MILLISECOND, 999);
 		List<Tuple> depositList = new ArrayList<>();
 		String binNumber = dateRange.getBinNumber();
 
@@ -2807,19 +2711,9 @@ public class BinDashboardController {
 	public ModelAndView binRegisterUpdate(HttpSession session) {
 		User user = (User) session.getAttribute("login");
 		ModelMap map = new ModelMap();
-		Calendar sDate = Calendar.getInstance();
-		Calendar eDate = Calendar.getInstance();
-		sDate.set(Calendar.HOUR, 0);
-		sDate.set(Calendar.HOUR_OF_DAY, 0);
-		sDate.set(Calendar.MINUTE, 0);
-		sDate.set(Calendar.SECOND, 0);
-		sDate.set(Calendar.MILLISECOND, 0);
+		Calendar sDate = UtilityJpa.getStartDate();
+		Calendar eDate = UtilityJpa.getEndDate();
 
-		eDate.set(Calendar.HOUR, 24);
-		eDate.set(Calendar.HOUR_OF_DAY, 23);
-		eDate.set(Calendar.MINUTE, 59);
-		eDate.set(Calendar.SECOND, 59);
-		eDate.set(Calendar.MILLISECOND, 999);
 		List<Tuple> receiptDataFromHistory = binDashboardService.getAllReceiptDataForBinRegister(user.getIcmcId(),
 				sDate, eDate);
 		map.put("receiptDataFromHistory", receiptDataFromHistory);
@@ -2923,17 +2817,8 @@ public class BinDashboardController {
 			sDate.getTime();// For date
 		}
 
-		sDate.set(Calendar.HOUR, 0);
-		sDate.set(Calendar.HOUR_OF_DAY, 0);
-		sDate.set(Calendar.MINUTE, 0);
-		sDate.set(Calendar.SECOND, 0);
-		sDate.set(Calendar.MILLISECOND, 0);
-
-		eDate.set(Calendar.HOUR, 24);
-		eDate.set(Calendar.HOUR_OF_DAY, 23);
-		eDate.set(Calendar.MINUTE, 59);
-		eDate.set(Calendar.SECOND, 59);
-		eDate.set(Calendar.MILLISECOND, 999);
+		UtilityJpa.setStartDate(sDate);
+		UtilityJpa.setEndDate(eDate);
 
 		BigDecimal BundleDenomination2000 = BigDecimal.ZERO;
 		BigDecimal BundleDenomination1000 = BigDecimal.ZERO;

@@ -225,7 +225,7 @@ public class CashReceiptController {
 							String oldtext = readPRNFileData();
 							String replacedtext = UtilityMapper.getPRNToPrintForFreshNotes(freshFromRBI, oldtext);
 							sb = new StringBuilder(replacedtext);
-							prnList.add(sb.toString());
+							//prnList.add(sb.toString());
 
 							LOG.info("Fresh From Notes RBI PRN: " + sb);
 							UtilityJpa.PrintToPrinter(sb, user);
@@ -241,7 +241,7 @@ public class CashReceiptController {
 								String replacedtext = UtilityMapper.getPRNToPrintForFreshCoins(freshFromRBI, oldtext,
 										sequence);
 								sb = new StringBuilder(replacedtext);
-								prnList.add(sb.toString());
+								//prnList.add(sb.toString());
 
 								LOG.info("Fresh Coins From RBI PRN: " + sb);
 								UtilityJpa.PrintToPrinter(sb, user);
@@ -424,24 +424,13 @@ public class CashReceiptController {
 
 	@RequestMapping("/viewShrink")
 	public ModelAndView branchReceiptList(HttpSession session) {
+	
 		User user = (User) session.getAttribute("login");
-
-		Calendar sDate = Calendar.getInstance();
-		Calendar eDate = Calendar.getInstance();
-
-		sDate.set(Calendar.HOUR, 0);
-		sDate.set(Calendar.HOUR_OF_DAY, 0);
-		sDate.set(Calendar.MINUTE, 0);
-		sDate.set(Calendar.SECOND, 0);
-		sDate.set(Calendar.MILLISECOND, 0);
-
-		eDate.set(Calendar.HOUR, 24);
-		eDate.set(Calendar.HOUR_OF_DAY, 23);
-		eDate.set(Calendar.MINUTE, 59);
-		eDate.set(Calendar.SECOND, 59);
-		eDate.set(Calendar.MILLISECOND, 999);
+		Calendar sDate = UtilityJpa.getStartDate();
+		Calendar eDate =UtilityJpa.getEndDate();
 
 		List<BranchReceipt> list = cashReceiptService.getBrachReceiptRecord(user, sDate, eDate);
+		
 		return new ModelAndView("viewShrink", "records", list);
 	}
 
@@ -454,20 +443,9 @@ public class CashReceiptController {
 	@RequestMapping("/viewFresh")
 	public ModelAndView viewFreshFromRBI(HttpSession session) {
 		User user = (User) session.getAttribute("login");
-		Calendar sDate = Calendar.getInstance();
-		Calendar eDate = Calendar.getInstance();
 
-		sDate.set(Calendar.HOUR, 0);
-		sDate.set(Calendar.HOUR_OF_DAY, 0);
-		sDate.set(Calendar.MINUTE, 0);
-		sDate.set(Calendar.SECOND, 0);
-		sDate.set(Calendar.MILLISECOND, 0);
-
-		eDate.set(Calendar.HOUR, 24);
-		eDate.set(Calendar.HOUR_OF_DAY, 23);
-		eDate.set(Calendar.MINUTE, 59);
-		eDate.set(Calendar.SECOND, 59);
-		eDate.set(Calendar.MILLISECOND, 999);
+		Calendar sDate = UtilityJpa.getStartDate();
+		Calendar eDate =UtilityJpa.getEndDate();
 
 		List<FreshFromRBI> freshList = cashReceiptService.getFreshFromRBIRecord(user, sDate, eDate);
 		return new ModelAndView("viewFresh", "records", freshList);
@@ -590,20 +568,8 @@ public class CashReceiptController {
 	public ModelAndView viewDiversionIRV(HttpSession session) {
 		User user = (User) session.getAttribute("login");
 
-		Calendar sDate = Calendar.getInstance();
-		Calendar eDate = Calendar.getInstance();
-
-		sDate.set(Calendar.HOUR, 0);
-		sDate.set(Calendar.HOUR_OF_DAY, 0);
-		sDate.set(Calendar.MINUTE, 0);
-		sDate.set(Calendar.SECOND, 0);
-		sDate.set(Calendar.MILLISECOND, 0);
-
-		eDate.set(Calendar.HOUR, 24);
-		eDate.set(Calendar.HOUR_OF_DAY, 23);
-		eDate.set(Calendar.MINUTE, 59);
-		eDate.set(Calendar.SECOND, 59);
-		eDate.set(Calendar.MILLISECOND, 999);
+		Calendar sDate = UtilityJpa.getStartDate();
+		Calendar eDate =UtilityJpa.getEndDate();
 
 		List<DiversionIRV> diversionIRVList = cashReceiptService.getDiversionIRVRecord(user, sDate, eDate);
 		return new ModelAndView("viewDirv", "records", diversionIRVList);
@@ -623,20 +589,9 @@ public class CashReceiptController {
 	@RequestMapping("/viewDSB")
 	public ModelAndView viewDSB(HttpSession session) {
 		User user = (User) session.getAttribute("login");
-		Calendar sDate = Calendar.getInstance();
-		Calendar eDate = Calendar.getInstance();
-
-		sDate.set(Calendar.HOUR, 0);
-		sDate.set(Calendar.HOUR_OF_DAY, 0);
-		sDate.set(Calendar.MINUTE, 0);
-		sDate.set(Calendar.SECOND, 0);
-		sDate.set(Calendar.MILLISECOND, 0);
-
-		eDate.set(Calendar.HOUR, 24);
-		eDate.set(Calendar.HOUR_OF_DAY, 23);
-		eDate.set(Calendar.MINUTE, 59);
-		eDate.set(Calendar.SECOND, 59);
-		eDate.set(Calendar.MILLISECOND, 999);
+		
+		Calendar sDate = UtilityJpa.getStartDate();
+		Calendar eDate =UtilityJpa.getEndDate();
 
 		List<DSB> dsbList = cashReceiptService.getDSBRecord(user, sDate, eDate);
 		return new ModelAndView("viewDSB", "records", dsbList);
@@ -645,20 +600,9 @@ public class CashReceiptController {
 	@RequestMapping("/viewBankReceipt")
 	public ModelAndView viewOtherBankReceipt(HttpSession session) {
 		User user = (User) session.getAttribute("login");
-		Calendar sDate = Calendar.getInstance();
-		Calendar eDate = Calendar.getInstance();
-
-		sDate.set(Calendar.HOUR, 0);
-		sDate.set(Calendar.HOUR_OF_DAY, 0);
-		sDate.set(Calendar.MINUTE, 0);
-		sDate.set(Calendar.SECOND, 0);
-		sDate.set(Calendar.MILLISECOND, 0);
-
-		eDate.set(Calendar.HOUR, 24);
-		eDate.set(Calendar.HOUR_OF_DAY, 23);
-		eDate.set(Calendar.MINUTE, 59);
-		eDate.set(Calendar.SECOND, 59);
-		eDate.set(Calendar.MILLISECOND, 999);
+		
+		Calendar sDate = UtilityJpa.getStartDate();
+		Calendar eDate =UtilityJpa.getEndDate();
 
 		List<BankReceipt> list = cashReceiptService.getBankReceiptRecord(user, sDate, eDate);
 		return new ModelAndView("viewBankReceipt", "records", list);
@@ -752,7 +696,6 @@ public class CashReceiptController {
 		LOG.info("From Date: " + dateRange.getFromDate());
 		LOG.info("To Date: " + dateRange.getToDate());
 
-		// orv
 		Calendar sDate = Calendar.getInstance();
 		Calendar eDate = Calendar.getInstance();
 
@@ -760,17 +703,8 @@ public class CashReceiptController {
 			sDate = dateRange.getFromDate();
 			eDate = dateRange.getToDate();
 		}
-		sDate.set(Calendar.HOUR, 0);
-		sDate.set(Calendar.HOUR_OF_DAY, 0);
-		sDate.set(Calendar.MINUTE, 0);
-		sDate.set(Calendar.SECOND, 0);
-		sDate.set(Calendar.MILLISECOND, 0);
-
-		eDate.set(Calendar.HOUR, 24);
-		eDate.set(Calendar.HOUR_OF_DAY, 23);
-		eDate.set(Calendar.MINUTE, 59);
-		eDate.set(Calendar.SECOND, 59);
-		eDate.set(Calendar.MILLISECOND, 999);
+		UtilityJpa.setStartDate(sDate);
+		UtilityJpa.setEndDate(eDate);
 
 		List<Tuple> IRVList = cashReceiptService.getIRVReportRecord(user.getIcmcId(), sDate, eDate);
 		List<BranchReceipt> branchReceipts = new ArrayList<>();
@@ -1326,17 +1260,8 @@ public class CashReceiptController {
 			sDate = dateRange.getFromDate();
 			eDate = dateRange.getToDate();
 		}
-		sDate.set(Calendar.HOUR, 0);
-		sDate.set(Calendar.HOUR_OF_DAY, 0);
-		sDate.set(Calendar.MINUTE, 0);
-		sDate.set(Calendar.SECOND, 0);
-		sDate.set(Calendar.MILLISECOND, 0);
-
-		eDate.set(Calendar.HOUR, 24);
-		eDate.set(Calendar.HOUR_OF_DAY, 23);
-		eDate.set(Calendar.MINUTE, 59);
-		eDate.set(Calendar.SECOND, 59);
-		eDate.set(Calendar.MILLISECOND, 999);
+		UtilityJpa.setStartDate(sDate);
+		UtilityJpa.setEndDate(eDate);
 
 		List<Tuple> cashReceiptList = cashReceiptService.getIRVReportRecord(user.getIcmcId(), sDate, eDate);
 		List<BranchReceipt> branchReceipts = new ArrayList<>();

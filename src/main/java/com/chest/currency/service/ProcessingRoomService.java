@@ -151,7 +151,8 @@ public interface ProcessingRoomService {
 
 	public List<AssignVaultCustodian> getAssignVaultCustodian(BigInteger icmcId, Calendar sDate, Calendar eDate);
 
-	public boolean saveAssignVaultCustodian(AssignVaultCustodian assignVaultCustodian);
+	public boolean saveAssignVaultCustodian(AssignVaultCustodian assignVaultCustodian,
+			AssignVaultCustodian vaultCustodian);
 
 	public AssignVaultCustodian assignVaultCustodianRecordForModify(Long id);
 
@@ -237,8 +238,7 @@ public interface ProcessingRoomService {
 			CashSource cashSource, BinCategoryType binCategoryType, String rbiOrderNo);
 
 	/*
-	 * public List<Tuple> getDataFromCRAAllocationForProcessing(BigInteger
-	 * icmcId);
+	 * public List<Tuple> getDataFromCRAAllocationForProcessing(BigInteger icmcId);
 	 */
 
 	public List<CRAAllocation> getDataFromCRAAllocationForProcessing(BigInteger icmcId);
@@ -368,6 +368,10 @@ public interface ProcessingRoomService {
 
 	public List<CustodianKeySet> getAssignVaultCustodian(BigInteger icmcId);
 
+	public AssignVaultCustodian getHandoveredChargUserId(BigInteger icmcId, String custodian);
+
+	public AssignVaultCustodian getHandoveredChargByHandOverId(BigInteger icmcId, String userId);
+
 	public User isValidUser(String username, BigInteger icmcId);
 
 	public boolean InsertByDAteSuspeseOpeningBalance(long id, BigInteger icmcId,
@@ -395,8 +399,9 @@ public interface ProcessingRoomService {
 
 	public boolean processMutilatedRequest(Long id);
 
-	//public boolean getUpdateCashReceiveForIndentRequest(CashSource cashSource, String binNum, BigInteger icmcId);
-	
+	// public boolean getUpdateCashReceiveForIndentRequest(CashSource cashSource,
+	// String binNum, BigInteger icmcId);
+
 	public boolean updateCashReceiveForIndentRequest(List<Indent> indenrRequest);
 
 }

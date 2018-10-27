@@ -1,7 +1,3 @@
-/*******************************************************************************
- * /* Copyright (C) Indicsoft Technologies Pvt Ltd
- * * All Rights Reserved.
- *******************************************************************************/
 package com.chest.currency.service;
 
 import static com.chest.currency.util.UtilityJpa.addBigDecimal;
@@ -196,6 +192,7 @@ public class CashPaymentServiceImpl implements CashPaymentService {
 				for (BinTransaction btx : txnList) {
 					LOG.info("binTransaction updation except Unprocess  " + btx);
 					if (btx.isDirty()) {
+						btx.setUpdateBy(user.getId());
 						btx.setUpdateTime(Calendar.getInstance());
 						this.updateBinTxn(btx);
 					}
@@ -1426,7 +1423,7 @@ public class CashPaymentServiceImpl implements CashPaymentService {
 					user);
 		}
 		if (isSaved) {
-			isSaved = this.insertSoiledBoxInBinTx(eligibleIndentRequestList, user);
+			isSaved = this.insertSoiledBoxInBinTx(eligibleIndentRequestList, user,soiled.getBox());
 
 		} else if (!isSaved) {
 			throw new RuntimeException("you can not processing request");
@@ -1486,16 +1483,14 @@ public class CashPaymentServiceImpl implements CashPaymentService {
 		return true;
 	}
 
-	private boolean insertSoiledBoxInBinTx(List<SoiledRemittanceAllocation> eligibleIndentRequestList, User user) {
+	private boolean insertSoiledBoxInBinTx(List<SoiledRemittanceAllocation> eligibleIndentRequestList, User user,String box) {
 		Calendar now = Calendar.getInstance();
 		BigDecimal receiveBundle = BigDecimal.ZERO;
 
 		BinTransaction binTx = new BinTransaction();
-		binTx.setIcmcId(user.getIcmcId());
-		// binTx.setBinNumber("BOX");
 
-		binTx.setBinNumber("BOX:" + user.getIcmcId() + Instant.now().toEpochMilli());
-		// binTx.setBinType(CurrencyType.SOILED);
+		binTx.setIcmcId(user.getIcmcId());
+		binTx.setBinNumber(box);
 		binTx.setStatus(BinStatus.FULL);
 		binTx.setInsertBy(user.getId());
 		binTx.setUpdateBy(user.getId());
@@ -1510,11 +1505,10 @@ public class CashPaymentServiceImpl implements CashPaymentService {
 			receiveBundle = receiveBundle.add(soiled.getBundle());
 			binTx.setBinType(soiled.getCurrencyType());
 		}
-
 		binTx.setReceiveBundle(receiveBundle);
 		binTx.setMaxCapacity(binTx.getReceiveBundle());
-		boolean isSuccess = cashPaymentJpaDao.insertSoiledBoxInBinTx(binTx);
-		return isSuccess;
+
+		return cashPaymentJpaDao.insertSoiledBoxInBinTx(binTx);
 	}
 
 	@Override
@@ -1697,7 +1691,6 @@ public class CashPaymentServiceImpl implements CashPaymentService {
 
 	@Override
 	public BinTransaction getBinRecordForAcceptInVault(BinTransaction txn) {
-		// TODO Auto-generated method stub
 		BinTransaction binTxn = cashPaymentJpaDao.getBinRecordForAcceptInVault(txn);
 		return binTxn;
 	}
@@ -1802,9 +1795,9 @@ public class CashPaymentServiceImpl implements CashPaymentService {
 	}
 	
 	@Override
-	public List<SASAllocation> getRequestedFromSASAllocation(BigInteger icmcId, Calendar sDate, Calendar eDate) {
-		List<SASAllocation> requestedSasAllocation = cashPaymentJpaDao.getRequestedFromSASAllocation(icmcId,
-				sDate, eDate);
+	public SASAllocation getRequestedFromSASAllocation(BigInteger icmcId, Calendar sDate, Calendar eDate,Long parentId) {
+		SASAllocation requestedSasAllocation = cashPaymentJpaDao.getRequestedFromSASAllocation(icmcId,
+				sDate, eDate, parentId);
 		return requestedSasAllocation;
 	}
 
@@ -2062,6 +2055,7 @@ public class CashPaymentServiceImpl implements CashPaymentService {
 	}
 
 	@Override
+	@Transactional
 	public List<Tuple> getSASAllocationRecordFromTuple(BigInteger icmcId, Calendar sDate, Calendar eDate) {
 		List<Tuple> sasAllocationList = cashPaymentJpaDao.getSASAllocationRecordFromTuple(icmcId, sDate, eDate);
 		return sasAllocationList;

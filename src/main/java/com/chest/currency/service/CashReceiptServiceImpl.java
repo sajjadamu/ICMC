@@ -138,7 +138,8 @@ public class CashReceiptServiceImpl implements CashReceiptService {
 
 		return isSaved;
 	}
-
+     
+	@Transactional
 	public boolean updateInBinTxn(BinTransaction binTransaction) {
 		boolean isSaved = cashReceiptJpaDao.updateInBinTxn(binTransaction);
 		return isSaved;
@@ -484,6 +485,7 @@ public class CashReceiptServiceImpl implements CashReceiptService {
 				BinTransaction binTxsForBox = new BinTransaction();
 				binTxsForBox.setDenomination(fresh.getDenomination());
 				binTxsForBox.setReceiveBundle(fresh.getBundle());
+				binTxsForBox.setMaxCapacity(fresh.getBundle());
 				binTxsForBox.setBinNumber(fresh.getBin());
 				binTxsForBox.setIcmcId(user.getIcmcId());
 				binTxsForBox.setInsertBy(user.getId());
@@ -521,6 +523,9 @@ public class CashReceiptServiceImpl implements CashReceiptService {
 				coinsSequence = new CoinsSequence();
 				int finalSequence = fresh.getNoOfBags();
 				addFreshFromRBI(freshFromRBIList);
+				for (FreshFromRBI ff : freshFromRBIList) {
+					fresh.setBin(ff.getBin());
+				}
 				prepareAndInsertSequence(fresh, user, coinsSequence, finalSequence);
 			} else {
 				int sequenceFromUI = fresh.getNoOfBags();
@@ -604,6 +609,7 @@ public class CashReceiptServiceImpl implements CashReceiptService {
 		binTxn.setBinNumber(fresh.getBin());
 		// binTxn.setRcvBundle(BigDecimal.valueOf(fresh.getNoOfBags()));
 		binTxn.setReceiveBundle(BigDecimal.valueOf(fresh.getNoOfBags()));
+		binTxn.setMaxCapacity(BigDecimal.valueOf(fresh.getNoOfBags()));
 		binTxn.setBinCategoryType(BinCategoryType.BAG);
 		binTxn.setStatus(BinStatus.FULL);
 		binTxn.setVerified(YesNo.Yes);
@@ -935,25 +941,24 @@ public class CashReceiptServiceImpl implements CashReceiptService {
 		}
 	}
 
+	@Transactional
 	private void addInTransactionsForBox(User user, List<BinTransaction> binTxs) {
 		BoxMaster masterTemp = new BoxMaster();
 		masterTemp.setIcmcId(user.getIcmcId());
-
 		for (BinTransaction binTx : binTxs) {
 			if (binTx.getId() != null && binTx.getId() > 0) {
 				this.updateInBinTxn(binTx);
 			} else {
 				masterTemp.setBoxName(binTx.getBinNumber());
-				masterTemp.setIcmcId(binTx.getIcmcId());
 				cashReceiptJpaDao.updateBoxMaster(masterTemp);
-				cashPaymentService.deleteEmptyBinFromBinTransaction(binTx.getIcmcId(), binTx.getBinNumber());
+			//	cashPaymentService.deleteEmptyBinFromBinTransaction(binTx.getIcmcId(), binTx.getBinNumber());
 				this.insertInBinTxn(binTx);
 			}
 		}
 	}
 
 	private void addInTransactionsForBox(User user, BinTransaction binTxs) {
-		cashPaymentService.deleteEmptyBinFromBinTransaction(binTxs.getIcmcId(), binTxs.getBinNumber());
+		//cashPaymentService.deleteEmptyBinFromBinTransaction(binTxs.getIcmcId(), binTxs.getBinNumber());
 		this.insertInBinTxn(binTxs);
 	}
 
@@ -1491,6 +1496,7 @@ public class CashReceiptServiceImpl implements CashReceiptService {
 	}
 
 	@Override
+	@Transactional
 	public List<BranchReceipt> processForUpdatingShrinkEntry(BinTransaction binTxn, BranchReceipt branchReceipt,
 			BranchReceipt branchReceiptDb, User user) {
 		boolean isAllSuccess = false;

@@ -249,14 +249,14 @@ public class QRCodeImpl implements QRCodeGen {
 
 			LOG.info("filePath.substring(filePath.lastIndexOf('.') "
 					+ filePath.substring(filePath.lastIndexOf('.') + 1));
-			
+
 			MatrixToImageWriter.writeToFile(matrix, filePath.substring(filePath.lastIndexOf('.') + 1),
 					new File(filePath));
 
 		} catch (Exception e) {
 			LOG.info("createQRCode catch " + e);
 			e.printStackTrace();
-		}
+		} 
 	}
 
 	@SuppressWarnings("unchecked")
@@ -296,7 +296,7 @@ public class QRCodeImpl implements QRCodeGen {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
-		}
+		} 
 		LOG.debug("QR Code image created successfully!");
 
 		try {
@@ -307,7 +307,7 @@ public class QRCodeImpl implements QRCodeGen {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
-		}
+		} 
 		return filePath;
 	}
 
@@ -326,7 +326,7 @@ public class QRCodeImpl implements QRCodeGen {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
-		}
+		} 
 		LOG.debug("QR Code image created successfully!");
 
 		try {
@@ -337,7 +337,7 @@ public class QRCodeImpl implements QRCodeGen {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
-		}
+		} 
 		return filePath;
 	}
 
@@ -358,7 +358,7 @@ public class QRCodeImpl implements QRCodeGen {
 			createQRCode(qrCodeData, filePath, charset, hintMap, 200, 200);
 		} catch (Exception e) {
 			e.printStackTrace();
-		}
+		} 
 		LOG.debug("QR Code image created successfully!");
 
 		try {
@@ -369,7 +369,8 @@ public class QRCodeImpl implements QRCodeGen {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
-		}
+		} 
+
 		return filePath;
 	}
 
@@ -388,7 +389,8 @@ public class QRCodeImpl implements QRCodeGen {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
-		}
+		} 
+
 		LOG.debug("QR Code image created successfully!");
 
 		try {
@@ -399,7 +401,7 @@ public class QRCodeImpl implements QRCodeGen {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
-		}
+		} 
 		return filePath;
 	}
 
