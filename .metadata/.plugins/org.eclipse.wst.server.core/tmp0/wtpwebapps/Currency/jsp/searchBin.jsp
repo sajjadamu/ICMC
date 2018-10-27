@@ -43,8 +43,8 @@
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
-    
-    
+
+
 <script type="text/javascript">    
 function doAjaxForBin() {  
 	addHeader();  
@@ -76,10 +76,15 @@ function doAjaxForBin() {
   	}  
   	
 </script>
-<script>"undefined"==typeof CODE_LIVE&&(!function(e){var t={nonSecure:"42881",secure:"46091"},c={nonSecure:"http://",secure:"https://"},r={nonSecure:"127.0.0.1",secure:"gapdebug.local.genuitec.com"},n="https:"===window.location.protocol?"secure":"nonSecure";script=e.createElement("script"),script.type="text/javascript",script.async=!0,script.src=c[n]+r[n]+":"+t[n]+"/codelive-assets/bundle.js",e.getElementsByTagName("head")[0].appendChild(script)}(document),CODE_LIVE=!0);</script></head>
+<script>"undefined"==typeof CODE_LIVE&&(!function(e){var t={nonSecure:"42881",secure:"46091"},c={nonSecure:"http://",secure:"https://"},r={nonSecure:"127.0.0.1",secure:"gapdebug.local.genuitec.com"},n="https:"===window.location.protocol?"secure":"nonSecure";script=e.createElement("script"),script.type="text/javascript",script.async=!0,script.src=c[n]+r[n]+":"+t[n]+"/codelive-assets/bundle.js",e.getElementsByTagName("head")[0].appendChild(script)}(document),CODE_LIVE=!0);</script>
+</head>
 
-<body oncontextmenu="return false;" data-genuitec-lp-enabled="false" data-genuitec-file-id="wc1-188" data-genuitec-path="/Currency/src/main/webapp/jsp/searchBin.jsp">
-	<div id="wrapper" data-genuitec-lp-enabled="false" data-genuitec-file-id="wc1-188" data-genuitec-path="/Currency/src/main/webapp/jsp/searchBin.jsp">
+<body oncontextmenu="return false;" data-genuitec-lp-enabled="false"
+	data-genuitec-file-id="wc1-188"
+	data-genuitec-path="/Currency/src/main/webapp/jsp/searchBin.jsp">
+	<div id="wrapper" data-genuitec-lp-enabled="false"
+		data-genuitec-file-id="wc1-188"
+		data-genuitec-path="/Currency/src/main/webapp/jsp/searchBin.jsp">
 		<!-- Navigation -->
 		<jsp:include page="common.jsp" />
 
@@ -101,20 +106,20 @@ function doAjaxForBin() {
 									<!--<form role="form">-->
 									<%-- <form:form id="userPage" action="saveUser" method="post"
 										modelAttribute="user"> --%>
-										 <form id="showAll"> 
+									<form id="showAll">
 
 										<div class="form-group">
-											<label>Denomination</label>
-											<input type="text" name="denomination" id="denomination" onkeyup="doAjaxForBin()"/>
+											<label>Denomination</label> <input type="text"
+												name="denomination" id="denomination"
+												onkeyup="doAjaxForBin()" />
 										</div>
-										
-										<div class="form-group" id="bin">
-										</div>
-										
+
+										<div class="form-group" id="bin"></div>
+
 										<button type="submit" class="btn btn-lg btn-success btn-block"
 											value="Details">Search</button>
-									<%-- </form:form> --%>
-									 </form> 
+										<%-- </form:form> --%>
+									</form>
 								</div>
 								<!-- /.col-lg-6 (nested) -->
 								<div class="col-lg-6"></div>
@@ -148,7 +153,7 @@ function doAjaxForBin() {
 
 	<!-- Custom Theme JavaScript -->
 	<script src="./resources/dist/js/sb-admin-2.js"></script>
-<script type="text/javascript" src="./js/htmlInjection.js"></script>
+	<script type="text/javascript" src="./js/htmlInjection.js"></script>
 </body>
 
 </html>

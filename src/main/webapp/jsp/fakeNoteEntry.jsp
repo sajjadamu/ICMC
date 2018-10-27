@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+	pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <html lang="en">
 <head>
@@ -8,28 +9,38 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="">
 <meta name="author" content="">
-<link rel="shortcut icon" href="./resources/logo/favicon.ico" type="image/x-icon">
+<link rel="shortcut icon" href="./resources/logo/favicon.ico"
+	type="image/x-icon">
 <script type="text/javascript" src="./js/jquery-1.11.1.min.js"></script>
 <script type="text/javascript" src="./js/jquery.validate.min.js"></script>
 
 <title>ICICI : Add Fake Note Data</title>
 
-<link href="./resources/css/calendar.css" rel="stylesheet" type="text/css" />
-<link rel="stylesheet" type="text/css" href="./resources/css/jquery.datetimepicker.css" />
+<link href="./resources/css/calendar.css" rel="stylesheet"
+	type="text/css" />
+<link rel="stylesheet" type="text/css"
+	href="./resources/css/jquery.datetimepicker.css" />
 
 <!-- Bootstrap Core CSS -->
-<link href="./resources/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+<link
+	href="./resources/bower_components/bootstrap/dist/css/bootstrap.min.css"
+	rel="stylesheet">
 
 <!-- MetisMenu CSS -->
-<link href="./resources/bower_components/metisMenu/dist/metisMenu.min.css" rel="stylesheet">
+<link
+	href="./resources/bower_components/metisMenu/dist/metisMenu.min.css"
+	rel="stylesheet">
 
 <!-- Custom CSS -->
 <link href="./resources/dist/css/sb-admin-2.css" rel="stylesheet">
 
 <!-- Custom Fonts -->
-<link href="./resources/bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+<link
+	href="./resources/bower_components/font-awesome/css/font-awesome.min.css"
+	rel="stylesheet" type="text/css">
 
-<link rel="stylesheet" type="text/css" href="./resources/dist/css/style.css">
+<link rel="stylesheet" type="text/css"
+	href="./resources/dist/css/style.css">
 
 <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -89,15 +100,15 @@ function doAjaxPostForBranch() {
 			<div class="row">
 				<div class="col-lg-12">
 					<div class="panel panel-default">
-						
+
 						<div class="panel-heading">
-                        	<ul>
-                        		<li>
-                        			<a href="././viewFakeNote"><i  class="fa fa-table fa-fw"></i> View List of Fake Notes</a>
-                        		</li>
-                        	</ul>Add Fake Note Data
-                        </div>
-                        
+							<ul>
+								<li><a href="././viewFakeNote"><i
+										class="fa fa-table fa-fw"></i> View List of Fake Notes</a></li>
+							</ul>
+							Add Fake Note Data
+						</div>
+
 						<div class="panel-body">
 							<div class="row">
 								<div class="col-lg-6">
@@ -109,7 +120,7 @@ function doAjaxPostForBranch() {
 										<div class="form-group">
 											<label>Date</label>
 											<form:input path="fakeNoteDate" id="fakeNoteDate"
-												name="fakeNoteDate"  cssClass="form-control" />
+												name="fakeNoteDate" cssClass="form-control" />
 										</div>
 
 										<div class="form-group">
@@ -184,10 +195,12 @@ function doAjaxPostForBranch() {
 	<!-- <script src="./resources/bower_components/jquery/dist/jquery.min.js"></script> -->
 
 	<!-- Bootstrap Core JavaScript -->
-	<script src="./resources/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+	<script
+		src="./resources/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 
 	<!-- Metis Menu Plugin JavaScript -->
-	<script src="./resources/bower_components/metisMenu/dist/metisMenu.min.js"></script>
+	<script
+		src="./resources/bower_components/metisMenu/dist/metisMenu.min.js"></script>
 
 	<!-- Custom Theme JavaScript -->
 	<script src="./resources/dist/js/sb-admin-2.js"></script>
@@ -199,8 +212,8 @@ function doAjaxPostForBranch() {
 
 		});
 	</script>
-	
-	
+
+
 	<script type="text/javascript">
 	$.validator.addMethod("loginRegex", function(value, element) {
 	    return this.optional(element) || /^[0-9]+$/i.test(value);
@@ -311,8 +324,8 @@ function doAjaxPostForBranch() {
 	  });
 	});
 	</script>
-	
-<script type="text/javascript" src="./js/htmlInjection.js"></script>	
+
+	<script type="text/javascript" src="./js/htmlInjection.js"></script>
 </body>
 
 </html>

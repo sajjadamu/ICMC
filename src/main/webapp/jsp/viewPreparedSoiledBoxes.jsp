@@ -155,7 +155,8 @@ function doAjaxPostCancel(id){
 															<td><fmt:formatDate pattern="dd-MMM-yy"
 																	value="${row.insertTime.time}" /></td>
 															<td>${row.value}</td>
-															<td><input id="cancel${row.id}" type="button" value="Cancel" onclick="doAjaxPostCancel(${row.id});"></td>
+															<td><input id="cancel${row.id}" type="button"
+																value="Cancel" onclick="doAjaxPostCancel(${row.id});"></td>
 														</tr>
 													</c:forEach>
 												</tbody>

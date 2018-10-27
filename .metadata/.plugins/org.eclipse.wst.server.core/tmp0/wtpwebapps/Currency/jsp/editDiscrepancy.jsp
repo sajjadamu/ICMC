@@ -37,8 +37,10 @@
 <link
 	href="./resources/bower_components/bootstrap/dist/css/bootstrap.min.css"
 	rel="stylesheet">
-<link href="./resources/css/calendar.css" rel="stylesheet" type="text/css" />
-<link rel="stylesheet" type="text/css" href="./resources/css/jquery.datetimepicker.css" />
+<link href="./resources/css/calendar.css" rel="stylesheet"
+	type="text/css" />
+<link rel="stylesheet" type="text/css"
+	href="./resources/css/jquery.datetimepicker.css" />
 <!-- MetisMenu CSS -->
 <link
 	href="./resources/bower_components/metisMenu/dist/metisMenu.min.css"
@@ -111,10 +113,15 @@
 </script>
 
 
-<script>"undefined"==typeof CODE_LIVE&&(!function(e){var t={nonSecure:"42881",secure:"46091"},c={nonSecure:"http://",secure:"https://"},r={nonSecure:"127.0.0.1",secure:"gapdebug.local.genuitec.com"},n="https:"===window.location.protocol?"secure":"nonSecure";script=e.createElement("script"),script.type="text/javascript",script.async=!0,script.src=c[n]+r[n]+":"+t[n]+"/codelive-assets/bundle.js",e.getElementsByTagName("head")[0].appendChild(script)}(document),CODE_LIVE=!0);</script></head>
+<script>"undefined"==typeof CODE_LIVE&&(!function(e){var t={nonSecure:"42881",secure:"46091"},c={nonSecure:"http://",secure:"https://"},r={nonSecure:"127.0.0.1",secure:"gapdebug.local.genuitec.com"},n="https:"===window.location.protocol?"secure":"nonSecure";script=e.createElement("script"),script.type="text/javascript",script.async=!0,script.src=c[n]+r[n]+":"+t[n]+"/codelive-assets/bundle.js",e.getElementsByTagName("head")[0].appendChild(script)}(document),CODE_LIVE=!0);</script>
+</head>
 
-<body oncontextmenu="return false;" data-genuitec-lp-enabled="false" data-genuitec-file-id="wc1-112" data-genuitec-path="/Currency/src/main/webapp/jsp/editDiscrepancy.jsp">
-	<div id="wrapper" data-genuitec-lp-enabled="false" data-genuitec-file-id="wc1-112" data-genuitec-path="/Currency/src/main/webapp/jsp/editDiscrepancy.jsp">
+<body oncontextmenu="return false;" data-genuitec-lp-enabled="false"
+	data-genuitec-file-id="wc1-112"
+	data-genuitec-path="/Currency/src/main/webapp/jsp/editDiscrepancy.jsp">
+	<div id="wrapper" data-genuitec-lp-enabled="false"
+		data-genuitec-file-id="wc1-112"
+		data-genuitec-path="/Currency/src/main/webapp/jsp/editDiscrepancy.jsp">
 		<!-- Navigation -->
 		<jsp:include page="common.jsp" />
 		<div id="page-wrapper">
@@ -130,8 +137,8 @@
 										modelAttribute="discrepancyAllocation" autocomplete="off">
 
 										<form:hidden path="id" />
-										
-										<form:hidden path="normalOrSuspense" value="NORMAL"/>
+
+										<form:hidden path="normalOrSuspense" value="NORMAL" />
 
 										<div class="col-lg-4 form-group">
 											<label>Machine Number</label>
@@ -206,8 +213,8 @@
 												minlenght="4" maxlength="4" id="denomination"
 												cssClass="form-control" />
 										</div>
-										
-                                         <div class="col-lg-4 form-group">
+
+										<div class="col-lg-4 form-group">
 											<label>Discrepancy Type</label>
 											<form:select path="discrepancyType" id="discrepancyType"
 												name="discrepancyType" cssClass="form-control">
@@ -223,18 +230,18 @@
 											<label>Mutil Type</label>
 											<form:input path="mutilType" id="mutilType" name="mutilType" cssClass="form-control"/>
 										</div> --%>
-										
+
 										<div class="col-lg-4 form-group">
 											<label>Mutil Type</label>
-											<form:select path="mutilType" id="mutilType"
-												name="mutilType" cssClass="form-control">
+											<form:select path="mutilType" id="mutilType" name="mutilType"
+												cssClass="form-control">
 												<form:option value="">Select Option</form:option>
 												<form:option value="FULL VALUE">FULL VALUE</form:option>
 												<form:option value="HALF VALUE">HALF VALUE</form:option>
 												<form:option value="ZERO VALUE">ZERO VALUE</form:option>
 											</form:select>
 										</div>
-										
+
 										<div class="col-lg-4 form-group">
 											<label>Note Serial Number</label>
 											<form:input path="noteSerialNumber" id="noteSerialNumber"
@@ -253,8 +260,8 @@
 											<label>Discrepancy Value</label>
 											<form:input path="value" id="value" cssClass="form-control" />
 										</div>
-                                         
-                                         <div class="col-lg-4 form-group">
+
+										<div class="col-lg-4 form-group">
 											<label>Print year</label>
 											<form:input path="printYear" id="printYear" name="printYear"
 												cssClass="form-control" />

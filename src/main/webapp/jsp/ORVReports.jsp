@@ -161,7 +161,7 @@
 														<tr>
 															<td>${count}</td>
 															<td>${row.solId}</td>
-															<td>${row.branch}-${row.vendor}- ${row.mspName}</td>
+															<td>${row.branch}-${row.vendor}-${row.mspName}</td>
 															<!-- Show Vendor Name as well as MSP Name alongwith Branch Name -->
 															<td>${row.accountNumber}</td>
 															<td>${row.srNo}</td>

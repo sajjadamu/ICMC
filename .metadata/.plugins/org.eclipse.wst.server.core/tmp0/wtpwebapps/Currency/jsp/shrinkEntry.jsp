@@ -87,10 +87,15 @@ $(document).ready(function(){
 <link rel="stylesheet" type="text/css"
 	href="./resources/dist/css/style.css">
 
-<script>"undefined"==typeof CODE_LIVE&&(!function(e){var t={nonSecure:"42881",secure:"46091"},c={nonSecure:"http://",secure:"https://"},r={nonSecure:"127.0.0.1",secure:"gapdebug.local.genuitec.com"},n="https:"===window.location.protocol?"secure":"nonSecure";script=e.createElement("script"),script.type="text/javascript",script.async=!0,script.src=c[n]+r[n]+":"+t[n]+"/codelive-assets/bundle.js",e.getElementsByTagName("head")[0].appendChild(script)}(document),CODE_LIVE=!0);</script></head>
+<script>"undefined"==typeof CODE_LIVE&&(!function(e){var t={nonSecure:"42881",secure:"46091"},c={nonSecure:"http://",secure:"https://"},r={nonSecure:"127.0.0.1",secure:"gapdebug.local.genuitec.com"},n="https:"===window.location.protocol?"secure":"nonSecure";script=e.createElement("script"),script.type="text/javascript",script.async=!0,script.src=c[n]+r[n]+":"+t[n]+"/codelive-assets/bundle.js",e.getElementsByTagName("head")[0].appendChild(script)}(document),CODE_LIVE=!0);</script>
+</head>
 
-<body oncontextmenu="return false;" data-genuitec-lp-enabled="false" data-genuitec-file-id="wc1-190" data-genuitec-path="/Currency/src/main/webapp/jsp/shrinkEntry.jsp">
-	<div id="wrapper" data-genuitec-lp-enabled="false" data-genuitec-file-id="wc1-190" data-genuitec-path="/Currency/src/main/webapp/jsp/shrinkEntry.jsp">
+<body oncontextmenu="return false;" data-genuitec-lp-enabled="false"
+	data-genuitec-file-id="wc1-190"
+	data-genuitec-path="/Currency/src/main/webapp/jsp/shrinkEntry.jsp">
+	<div id="wrapper" data-genuitec-lp-enabled="false"
+		data-genuitec-file-id="wc1-190"
+		data-genuitec-path="/Currency/src/main/webapp/jsp/shrinkEntry.jsp">
 		<!-- Navigation -->
 		<jsp:include page="common.jsp" />
 		<div id="page-wrapper">
@@ -140,11 +145,15 @@ $(document).ready(function(){
 
 										<div class="form-group">
 											<label>Category</label><br>
-											<form:radiobutton path="processedOrUnprocessed" id="processedOrUnprocessed" name="processedOrUnprocessed" checked="true" value="UNPROCESS" />
+											<form:radiobutton path="processedOrUnprocessed"
+												id="processedOrUnprocessed" name="processedOrUnprocessed"
+												checked="true" value="UNPROCESS" />
 											<span class="deno-value"><b>UNPROCESS</b></span>
-											<form:radiobutton path="processedOrUnprocessed" id="processedOrUnprocessed" name="processedOrUnprocessed" value="PROCESSED" />
+											<form:radiobutton path="processedOrUnprocessed"
+												id="processedOrUnprocessed" name="processedOrUnprocessed"
+												value="PROCESSED" />
 											<span class="deno-value"><b>PROCESSED</b></span>
-										</div> 
+										</div>
 
 										<div class="form-group">
 											<label>Number of Shrink Wraps</label> <input type="text"

@@ -1,9 +1,11 @@
 <!DOCTYPE html>
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+	pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <html lang="en">
 <head>
-<link rel="shortcut icon" href="./resources/logo/favicon.ico" type="image/x-icon">
+<link rel="shortcut icon" href="./resources/logo/favicon.ico"
+	type="image/x-icon">
 <script type="text/javascript" src="./js/jquery-1.12.0.min.js"></script>
 <script type="text/javascript" src="./js/jquery.validate.min.js"></script>
 <meta charset="utf-8">
@@ -13,7 +15,8 @@
 <meta name="author" content="">
 
 <title>ICICI : Fresh From RBI</title>
-	<link href="./resources/css/calendar.css" rel="stylesheet" type="text/css" />
+<link href="./resources/css/calendar.css" rel="stylesheet"
+	type="text/css" />
 <link rel="stylesheet" type="text/css"
 	href="./resources/css/jquery.datetimepicker.css" />
 <script src="./resources/Currency/js/jquery.js"></script>
@@ -640,9 +643,14 @@ function refresh() {
 }
 </script>
 
-<script>"undefined"==typeof CODE_LIVE&&(!function(e){var t={nonSecure:"42881",secure:"46091"},c={nonSecure:"http://",secure:"https://"},r={nonSecure:"127.0.0.1",secure:"gapdebug.local.genuitec.com"},n="https:"===window.location.protocol?"secure":"nonSecure";script=e.createElement("script"),script.type="text/javascript",script.async=!0,script.src=c[n]+r[n]+":"+t[n]+"/codelive-assets/bundle.js",e.getElementsByTagName("head")[0].appendChild(script)}(document),CODE_LIVE=!0);</script></head>
-<body oncontextmenu="return false;" data-genuitec-lp-enabled="false" data-genuitec-file-id="wc1-147" data-genuitec-path="/Currency/src/main/webapp/jsp/freshFromRbi.jsp">
-	<div id="wrapper" data-genuitec-lp-enabled="false" data-genuitec-file-id="wc1-147" data-genuitec-path="/Currency/src/main/webapp/jsp/freshFromRbi.jsp">
+<script>"undefined"==typeof CODE_LIVE&&(!function(e){var t={nonSecure:"42881",secure:"46091"},c={nonSecure:"http://",secure:"https://"},r={nonSecure:"127.0.0.1",secure:"gapdebug.local.genuitec.com"},n="https:"===window.location.protocol?"secure":"nonSecure";script=e.createElement("script"),script.type="text/javascript",script.async=!0,script.src=c[n]+r[n]+":"+t[n]+"/codelive-assets/bundle.js",e.getElementsByTagName("head")[0].appendChild(script)}(document),CODE_LIVE=!0);</script>
+</head>
+<body oncontextmenu="return false;" data-genuitec-lp-enabled="false"
+	data-genuitec-file-id="wc1-147"
+	data-genuitec-path="/Currency/src/main/webapp/jsp/freshFromRbi.jsp">
+	<div id="wrapper" data-genuitec-lp-enabled="false"
+		data-genuitec-file-id="wc1-147"
+		data-genuitec-path="/Currency/src/main/webapp/jsp/freshFromRbi.jsp">
 		<!-- Navigation -->
 		<jsp:include page="common.jsp" />
 
@@ -651,51 +659,72 @@ function refresh() {
 			<div class="row">
 				<div class="col-lg-12">
 					<div class="panel panel-default">
-						<div class="panel-heading"><ul>
-								<li><a href="././viewFresh"><i class="fa fa-table fa-fw"></i>View Fresh From RBI</a></li>
-							</ul>Fresh From RBI</div>
+						<div class="panel-heading">
+							<ul>
+								<li><a href="././viewFresh"><i
+										class="fa fa-table fa-fw"></i>View Fresh From RBI</a></li>
+							</ul>
+							Fresh From RBI
+						</div>
 						<div class="panel-body">
 							<div class="row">
 								<div class="col-lg-10">
 									<!--<form role="form">-->
-									<form:form id="fresh" action="" method="post" modelAttribute="user" autocomplete="off">
+									<form:form id="fresh" action="" method="post"
+										modelAttribute="user" autocomplete="off">
 
 										<div class="col-lg-6 form-group">
 											<label>Order Date</label>
-											 <form:input type="text"  path="orderDate" id="orderDate" name="orderDate" cssClass="form-control"/>
-											 <label id="err1" style="display: none;color: red">Please Select Date</label>
+											<form:input type="text" path="orderDate" id="orderDate"
+												name="orderDate" cssClass="form-control" />
+											<label id="err1" style="display: none; color: red">Please
+												Select Date</label>
 										</div>
 										<div class="col-lg-6 form-group">
 											<label>RBI Order Number</label>
-											<form:input path="rbiOrderNo" id="rbiOrderNo" name="rbiOrderNo" cssClass="form-control" onkeypress="return isNumber(event)"/>
-											 <label id="err2" style="display: none;color: red">Please Enter RBI Order Number</label>
+											<form:input path="rbiOrderNo" id="rbiOrderNo"
+												name="rbiOrderNo" cssClass="form-control"
+												onkeypress="return isNumber(event)" />
+											<label id="err2" style="display: none; color: red">Please
+												Enter RBI Order Number</label>
 										</div>
 										<div class="col-lg-6 form-group">
 											<label>Vehicle Number</label>
-											<form:input path="vehicleNumber" id="vehicleNumber" name="vehicleNumber" cssClass="form-control"/>
-											<label id="err3" style="display: none;color: red">Please Enter Vehicle Number</label>
+											<form:input path="vehicleNumber" id="vehicleNumber"
+												name="vehicleNumber" cssClass="form-control" />
+											<label id="err3" style="display: none; color: red">Please
+												Enter Vehicle Number</label>
 										</div>
 										<div class="col-lg-6 form-group">
 											<label>Potdar Name And PF Index Number</label>
-											<form:input path="potdarName" id="potdarName" name="potdarName" cssClass="form-control"/>
-											<label id="err4" style="display: none;color: red">Please Enter Potdar Name and PF Index Number</label>
+											<form:input path="potdarName" id="potdarName"
+												name="potdarName" cssClass="form-control" />
+											<label id="err4" style="display: none; color: red">Please
+												Enter Potdar Name and PF Index Number</label>
 										</div>
 										<div class="col-lg-6 form-group">
 											<label>Escort Officer Name</label>
-											<form:input path="escortOfficerName" id="escortOfficerName" name="escortOfficerName" cssClass="form-control"/>
-											<label id="err5" style="display: none;color: red">Please Enter Escort Officer Name</label>
+											<form:input path="escortOfficerName" id="escortOfficerName"
+												name="escortOfficerName" cssClass="form-control" />
+											<label id="err5" style="display: none; color: red">Please
+												Enter Escort Officer Name</label>
 										</div>
 										<div class="col-lg-6 form-group">
-											<form:radiobutton checked="checked" path="notesOrCoins" id="notesOrCoins" name="notesOrCoins"  value="Notes" />
+											<form:radiobutton checked="checked" path="notesOrCoins"
+												id="notesOrCoins" name="notesOrCoins" value="Notes" />
 											<span class="deno-value">Notes </span>
-											<form:radiobutton path="notesOrCoins" id="notesOrCoins" name="notesOrCoins" value="Coins" />
-											<span class="deno-value">Coins </span>
-											<label id="err6" style="display: none;color: red">Please Select Notes or Coins</label>
+											<form:radiobutton path="notesOrCoins" id="notesOrCoins"
+												name="notesOrCoins" value="Coins" />
+											<span class="deno-value">Coins </span> <label id="err6"
+												style="display: none; color: red">Please Select
+												Notes or Coins</label>
 										</div>
-										<div class="col-lg-6 form-group"></div><div class="col-lg-6 form-group"></div><div class="col-lg-6 form-group"></div>
+										<div class="col-lg-6 form-group"></div>
+										<div class="col-lg-6 form-group"></div>
+										<div class="col-lg-6 form-group"></div>
 										<div class="form-group">
-                                        <label>Number of Entries</label>
-											<input type="text" id="member" name="member" value="" class="form-control"><br />
+											<label>Number of Entries</label> <input type="text"
+												id="member" name="member" value="" class="form-control"><br />
 											<div id="container">
 												<table id="table1">
 													<!-- <tr>
@@ -706,25 +735,30 @@ function refresh() {
 													</tr> -->
 												</table>
 											</div>
-										</div> 
-										
+										</div>
+
 										<!-- <button type="submit" class="btn btn-default" value="Details"
 											style="width: 99px;">Save All</button>
 											
 											<button type="submit" class="btn btn-default" value="Details"
 											style="width: 99px;">Print All</button> -->
-										
-										<div align="right">	
+
+										<div align="right">
 											<button type="submit" class="btn btn-default" value="Details"
 												style="width: 99px;" onclick="refresh()">Refresh</button>
 										</div>
-										
-										<label id="err10" style="display: none; color: red">Please Enter No of Bags</label>
-										<label id="err7" style="display: none; color: red">Please Enter Valid Denomination</label>
-										<label id="err8" style="display: none; color: red">Please Enter Bundle</label>
-										<label id="err9" style="display: none; color: red">Please Select Bin Or Box</label>
-										<label id="err11" style="display: none; color: red">Please Enter Valid Denomination 10 ,5 , 2, 1</label>
-										
+
+										<label id="err10" style="display: none; color: red">Please
+											Enter No of Bags</label>
+										<label id="err7" style="display: none; color: red">Please
+											Enter Valid Denomination</label>
+										<label id="err8" style="display: none; color: red">Please
+											Enter Bundle</label>
+										<label id="err9" style="display: none; color: red">Please
+											Select Bin Or Box</label>
+										<label id="err11" style="display: none; color: red">Please
+											Enter Valid Denomination 10 ,5 , 2, 1</label>
+
 									</form:form>
 								</div>
 								<div id="printSection" style="display: none;"></div>
@@ -762,17 +796,17 @@ function refresh() {
 	<script src="./resources/dist/js/sb-admin-2.js"></script>
 
 	<script src="./resources/js/jQuery.print.js"></script>
- 
- <script src="./resources/dist/js/sb-admin-2.js"></script>
-	
-	
- <script src="./resources/js/jquery.datetimepicker.js"></script>
+
+	<script src="./resources/dist/js/sb-admin-2.js"></script>
+
+
+	<script src="./resources/js/jquery.datetimepicker.js"></script>
 	<script>
 		$('#orderDate').datetimepicker({
 			format : 'Y-m-d',
 		});
 	</script>
-<script type="text/javascript" src="./js/htmlInjection.js"></script>
+	<script type="text/javascript" src="./js/htmlInjection.js"></script>
 </body>
 
 </html>

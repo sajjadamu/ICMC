@@ -1,10 +1,12 @@
 <!DOCTYPE html>
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+	pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <html lang="en">
 
 <head>
-<link rel="shortcut icon" href="./resources/logo/favicon.ico" type="image/x-icon">
+<link rel="shortcut icon" href="./resources/logo/favicon.ico"
+	type="image/x-icon">
 <script type="text/javascript" src="./js/jquery-1.12.0.min.js"></script>
 <script src="./js/unprocess.js"></script>
 <meta charset="utf-8">
@@ -51,10 +53,15 @@
 	}
 </script>
 
-<script>"undefined"==typeof CODE_LIVE&&(!function(e){var t={nonSecure:"42881",secure:"46091"},c={nonSecure:"http://",secure:"https://"},r={nonSecure:"127.0.0.1",secure:"gapdebug.local.genuitec.com"},n="https:"===window.location.protocol?"secure":"nonSecure";script=e.createElement("script"),script.type="text/javascript",script.async=!0,script.src=c[n]+r[n]+":"+t[n]+"/codelive-assets/bundle.js",e.getElementsByTagName("head")[0].appendChild(script)}(document),CODE_LIVE=!0);</script></head>
+<script>"undefined"==typeof CODE_LIVE&&(!function(e){var t={nonSecure:"42881",secure:"46091"},c={nonSecure:"http://",secure:"https://"},r={nonSecure:"127.0.0.1",secure:"gapdebug.local.genuitec.com"},n="https:"===window.location.protocol?"secure":"nonSecure";script=e.createElement("script"),script.type="text/javascript",script.async=!0,script.src=c[n]+r[n]+":"+t[n]+"/codelive-assets/bundle.js",e.getElementsByTagName("head")[0].appendChild(script)}(document),CODE_LIVE=!0);</script>
+</head>
 
-<body oncontextmenu="return false;" data-genuitec-lp-enabled="false" data-genuitec-file-id="wc1-189" data-genuitec-path="/Currency/src/main/webapp/jsp/servicingBranch.jsp">
-	<div id="wrapper" data-genuitec-lp-enabled="false" data-genuitec-file-id="wc1-189" data-genuitec-path="/Currency/src/main/webapp/jsp/servicingBranch.jsp">
+<body oncontextmenu="return false;" data-genuitec-lp-enabled="false"
+	data-genuitec-file-id="wc1-189"
+	data-genuitec-path="/Currency/src/main/webapp/jsp/servicingBranch.jsp">
+	<div id="wrapper" data-genuitec-lp-enabled="false"
+		data-genuitec-file-id="wc1-189"
+		data-genuitec-path="/Currency/src/main/webapp/jsp/servicingBranch.jsp">
 		<!-- Navigation -->
 		<jsp:include page="common.jsp" />
 
@@ -78,8 +85,9 @@
 									modelAttribute="user">
 									<div class="col-lg-6 form-group">
 										<label>Choose Servicing Branch File</label> <input type="file"
-											name="file" Class="form-control" />
-										<a href="${documentFilePath}/ServicingBranch.csv" download>Download CSV Format</a>
+											name="file" Class="form-control" /> <a
+											href="${documentFilePath}/ServicingBranch.csv" download>Download
+											CSV Format</a>
 									</div>
 									<div class="col-lg-12">
 										<button style="width: 99px;" value="Details"
@@ -119,7 +127,7 @@
 	<script src="./resources/dist/js/sb-admin-2.js"></script>
 
 	<script src="./resources/js/jQuery.print.js"></script>
-<script type="text/javascript" src="./js/htmlInjection.js"></script>
+	<script type="text/javascript" src="./js/htmlInjection.js"></script>
 </body>
 
 </html>

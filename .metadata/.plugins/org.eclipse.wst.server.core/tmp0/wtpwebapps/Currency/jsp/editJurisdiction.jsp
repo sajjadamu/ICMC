@@ -12,7 +12,8 @@
 <link rel="shortcut icon" href="./resources/logo/favicon.ico"
 	type="image/x-icon">
 
-<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script type="text/javascript"
+	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script type="text/javascript" src="./js/jquery.validate.min.js"></script>
 
 <title>ICICI : Edit Jurisdiction</title>
@@ -44,10 +45,15 @@
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
-    
-<script>"undefined"==typeof CODE_LIVE&&(!function(e){var t={nonSecure:"42881",secure:"46091"},c={nonSecure:"http://",secure:"https://"},r={nonSecure:"127.0.0.1",secure:"gapdebug.local.genuitec.com"},n="https:"===window.location.protocol?"secure":"nonSecure";script=e.createElement("script"),script.type="text/javascript",script.async=!0,script.src=c[n]+r[n]+":"+t[n]+"/codelive-assets/bundle.js",e.getElementsByTagName("head")[0].appendChild(script)}(document),CODE_LIVE=!0);</script></head>
-<body oncontextmenu="return false;" data-genuitec-lp-enabled="false" data-genuitec-file-id="wc1-119" data-genuitec-path="/Currency/src/main/webapp/jsp/editJurisdiction.jsp">
-	<div id="wrapper" data-genuitec-lp-enabled="false" data-genuitec-file-id="wc1-119" data-genuitec-path="/Currency/src/main/webapp/jsp/editJurisdiction.jsp">
+
+<script>"undefined"==typeof CODE_LIVE&&(!function(e){var t={nonSecure:"42881",secure:"46091"},c={nonSecure:"http://",secure:"https://"},r={nonSecure:"127.0.0.1",secure:"gapdebug.local.genuitec.com"},n="https:"===window.location.protocol?"secure":"nonSecure";script=e.createElement("script"),script.type="text/javascript",script.async=!0,script.src=c[n]+r[n]+":"+t[n]+"/codelive-assets/bundle.js",e.getElementsByTagName("head")[0].appendChild(script)}(document),CODE_LIVE=!0);</script>
+</head>
+<body oncontextmenu="return false;" data-genuitec-lp-enabled="false"
+	data-genuitec-file-id="wc1-119"
+	data-genuitec-path="/Currency/src/main/webapp/jsp/editJurisdiction.jsp">
+	<div id="wrapper" data-genuitec-lp-enabled="false"
+		data-genuitec-file-id="wc1-119"
+		data-genuitec-path="/Currency/src/main/webapp/jsp/editJurisdiction.jsp">
 		<!-- Navigation -->
 		<jsp:include page="common.jsp" />
 
@@ -67,9 +73,10 @@
 							<div class="row">
 								<div class="col-lg-6">
 									<!--<form role="form">-->
-									<form:form id="userPage" name="userPage" action="updateJurisdiction" method="post"
+									<form:form id="userPage" name="userPage"
+										action="updateJurisdiction" method="post"
 										modelAttribute="user" autocomplete="off">
-										
+
 										<table>
 											<tr>
 												<td style="visibility: hidden;">id</td>
@@ -77,43 +84,43 @@
 														id="id" name="id" /></td>
 											</tr>
 										</table>
-										
+
 										<div class="form-group">
 											<label>Sol ID</label>
-											<form:input path="SolId" id="SolId" name="SolId" minlength="4" 
-												maxlength="4" cssClass="form-control" />
+											<form:input path="SolId" id="SolId" name="SolId"
+												minlength="4" maxlength="4" cssClass="form-control" />
 										</div>
-										
+
 										<div class="form-group">
 											<label>Branch Name</label>
-											<form:input path="branchName" id="branchName" name="branchName"
-												maxlength="45" cssClass="form-control" />
+											<form:input path="branchName" id="branchName"
+												name="branchName" maxlength="45" cssClass="form-control" />
 										</div>
-										
+
 										<div class="form-group">
 											<label>ICMC Name</label>
 											<form:input path="icmcName" id="icmcName" name="icmcName"
 												maxlength="45" cssClass="form-control" />
 										</div>
-										
+
 										<div class="form-group">
 											<label>Jurisdiction</label>
-											<form:input path="jurisdiction" id="jurisdiction" name="jurisdiction"
-												maxlength="45" cssClass="form-control" />
+											<form:input path="jurisdiction" id="jurisdiction"
+												name="jurisdiction" maxlength="45" cssClass="form-control" />
 										</div>
-										
+
 										<div class="form-group">
 											<label>City</label>
-											<form:input path="city" id="city" name="city"
-												maxlength="45" cssClass="form-control" />
+											<form:input path="city" id="city" name="city" maxlength="45"
+												cssClass="form-control" />
 										</div>
-										
+
 										<div class="form-group">
 											<label>Pin Code</label>
-											<form:input path="pincode" id="pincode" name="pincode" minlength="6" 
-												maxlength="6" cssClass="form-control" />
+											<form:input path="pincode" id="pincode" name="pincode"
+												minlength="6" maxlength="6" cssClass="form-control" />
 										</div>
-										
+
 										<button type="submit" class="btn btn-lg btn-success btn-block"
 											value="Details">Save</button>
 									</form:form>
@@ -150,7 +157,7 @@
 
 	<!-- Custom Theme JavaScript -->
 	<script src="./resources/dist/js/sb-admin-2.js"></script>
-	
+
 	<script type="text/javascript">
 	
 	$.validator.addMethod("loginRegexCity", function(value, element) {
@@ -239,7 +246,7 @@
 	  });
 	});
 	</script>
-<script type="text/javascript" src="./js/htmlInjection.js"></script>
+	<script type="text/javascript" src="./js/htmlInjection.js"></script>
 </body>
 
 </html>

@@ -1,10 +1,12 @@
 <!DOCTYPE html>
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+	pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <html lang="en">
 
 <head>
-<link rel="shortcut icon" href="./resources/logo/favicon.ico" type="image/x-icon">
+<link rel="shortcut icon" href="./resources/logo/favicon.ico"
+	type="image/x-icon">
 <script type="text/javascript" src="./js/jquery-1.12.0.min.js"></script>
 <script src="./js/unprocess.js"></script>
 <meta charset="utf-8">
@@ -78,8 +80,9 @@
 									modelAttribute="user">
 									<div class="col-lg-6 form-group">
 										<label>Choose Servicing Branch File</label> <input type="file"
-											name="file" Class="form-control" />
-										<a href="${documentFilePath}/ServicingBranch.csv" download>Download CSV Format</a>
+											name="file" Class="form-control" /> <a
+											href="${documentFilePath}/ServicingBranch.csv" download>Download
+											CSV Format</a>
 									</div>
 									<div class="col-lg-12">
 										<button style="width: 99px;" value="Details"
@@ -119,7 +122,7 @@
 	<script src="./resources/dist/js/sb-admin-2.js"></script>
 
 	<script src="./resources/js/jQuery.print.js"></script>
-<script type="text/javascript" src="./js/htmlInjection.js"></script>
+	<script type="text/javascript" src="./js/htmlInjection.js"></script>
 </body>
 
 </html>

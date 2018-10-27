@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<dt-example table-type="html-wide" table-class="display responsive nowrap" order="3" framework="jqueryui">
+<dt-example table-type="html-wide"
+	table-class="display responsive nowrap" order="3" framework="jqueryui">
 
-<css lib="datatables responsive"/>
-<js lib="jquery datatables responsive">
+	<css lib="datatables responsive" />
+	<js lib="jquery datatables responsive">
 <![CDATA[
 
 $(document).ready(function() {
@@ -10,11 +11,11 @@ $(document).ready(function() {
 } );
 
 ]]>
-</js>
+	</js>
 
-<title lib="Responsive">jQuery UI styling</title>
+	<title lib="Responsive">jQuery UI styling</title>
 
-<info><![CDATA[
+	<info><![CDATA[
 
 This example shows DataTables and Responsive being used with [jQuery UI](http://jqueryui.com/) providing the base styling information.
 

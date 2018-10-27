@@ -13,7 +13,8 @@
 <link rel="shortcut icon" href="./resources/logo/favicon.ico"
 	type="image/x-icon">
 
-<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script type="text/javascript"
+	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script type="text/javascript" src="./js/jquery.validate.min.js"></script>
 
 <title>ICICI : Add ICMC Report</title>
@@ -46,12 +47,17 @@
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 
-<script>"undefined"==typeof CODE_LIVE&&(!function(e){var t={nonSecure:"42881",secure:"46091"},c={nonSecure:"http://",secure:"https://"},r={nonSecure:"127.0.0.1",secure:"gapdebug.local.genuitec.com"},n="https:"===window.location.protocol?"secure":"nonSecure";script=e.createElement("script"),script.type="text/javascript",script.async=!0,script.src=c[n]+r[n]+":"+t[n]+"/codelive-assets/bundle.js",e.getElementsByTagName("head")[0].appendChild(script)}(document),CODE_LIVE=!0);</script></head>
+<script>"undefined"==typeof CODE_LIVE&&(!function(e){var t={nonSecure:"42881",secure:"46091"},c={nonSecure:"http://",secure:"https://"},r={nonSecure:"127.0.0.1",secure:"gapdebug.local.genuitec.com"},n="https:"===window.location.protocol?"secure":"nonSecure";script=e.createElement("script"),script.type="text/javascript",script.async=!0,script.src=c[n]+r[n]+":"+t[n]+"/codelive-assets/bundle.js",e.getElementsByTagName("head")[0].appendChild(script)}(document),CODE_LIVE=!0);</script>
+</head>
 
-<body oncontextmenu="return false;" data-genuitec-lp-enabled="false" data-genuitec-file-id="wc1-52" data-genuitec-path="/Currency/src/main/webapp/jsp/addICMCReport.jsp">
-	<div id="wrapper" data-genuitec-lp-enabled="false" data-genuitec-file-id="wc1-52" data-genuitec-path="/Currency/src/main/webapp/jsp/addICMCReport.jsp">
+<body oncontextmenu="return false;" data-genuitec-lp-enabled="false"
+	data-genuitec-file-id="wc1-52"
+	data-genuitec-path="/Currency/src/main/webapp/jsp/addICMCReport.jsp">
+	<div id="wrapper" data-genuitec-lp-enabled="false"
+		data-genuitec-file-id="wc1-52"
+		data-genuitec-path="/Currency/src/main/webapp/jsp/addICMCReport.jsp">
 		<!-- Navigation -->
-		<jsp:include page="common.jsp" /> 
+		<jsp:include page="common.jsp" />
 
 		<div id="page-wrapper">
 			<!--  <div class="row">
@@ -65,32 +71,39 @@
 				<div class="col-lg-12">
 					<div class="panel panel-default">
 						<div class="panel-heading">
-                          <ul><li><a href="././viewICMCReport"><i
-								class="fa fa-table fa-fw"></i> View List of ICMC Report's</a></li></ul>
-                          Add ICMC Report
-                        </div>
-						
+							<ul>
+								<li><a href="././viewICMCReport"><i
+										class="fa fa-table fa-fw"></i> View List of ICMC Report's</a></li>
+							</ul>
+							Add ICMC Report
+						</div>
+
 						<div class="panel-body">
 							<div class="row">
 								<div class="col-lg-6">
 									<!--<form role="form">-->
-									<form:form id="userPage" name="userPage" action="saveICMCReport" method="post"
-										modelAttribute="user" autocomplete="off">
-										
-										<div align="center" style="color: red"><b>${duplicateReport}</b></div><br>
-										
+									<form:form id="userPage" name="userPage"
+										action="saveICMCReport" method="post" modelAttribute="user"
+										autocomplete="off">
+
+										<div align="center" style="color: red">
+											<b>${duplicateReport}</b>
+										</div>
+										<br>
+
 										<div class="form-group">
 											<label>New Report Type</label>
-											<form:input path="newReportType" id="newReportType" name="newReportType"
-												maxlength="45" cssClass="form-control" />
+											<form:input path="newReportType" id="newReportType"
+												name="newReportType" maxlength="45" cssClass="form-control" />
 										</div>
 
 										<div class="form-group">
 											<label>Report Content</label><br>
-											<form:checkboxes items="${reportList}" path="reportType" id="reportType" name="reportType" />
+											<form:checkboxes items="${reportList}" path="reportType"
+												id="reportType" name="reportType" />
 										</div>
-										
-										
+
+
 										<button type="submit" class="btn btn-lg btn-success btn-block"
 											value="Details">Create</button>
 									</form:form>
@@ -173,7 +186,7 @@
 	  });
 	});
 	</script>
-<script type="text/javascript" src="./js/htmlInjection.js"></script>
+	<script type="text/javascript" src="./js/htmlInjection.js"></script>
 </body>
 
 </html>

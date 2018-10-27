@@ -12,10 +12,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="">
 <meta name="author" content="">
-<link rel="shortcut icon" href="./resources/logo/favicon.ico" type="image/x-icon">
+<link rel="shortcut icon" href="./resources/logo/favicon.ico"
+	type="image/x-icon">
 <title>ICICI : Update User</title>
 
-<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script type="text/javascript"
+	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script type="text/javascript" src="./js/jquery.validate.min.js"></script>
 
 <script type="text/javascript">
@@ -89,7 +91,7 @@ function doAjaxForRegion() {
    	             }
    	          );
      	}
- </script> 
+ </script>
 
 <!-- Bootstrap Core CSS -->
 <link
@@ -142,70 +144,82 @@ function doAjaxForRegion() {
 							<div class="row">
 								<div class="col-lg-6">
 									<!--<form role="form">-->
-									<form:form id="userPage" name="userPage" action="updateUser" method="post" 
-										modelAttribute="user" autocomplete="off">
+									<form:form id="userPage" name="userPage" action="updateUser"
+										method="post" modelAttribute="user" autocomplete="off">
 										<div class="form-group">
 											<label>User ID</label>
-											 <form:input path="id" id="id" name="id" cssClass="form-control" maxlength="32" readonly="true" />
+											<form:input path="id" id="id" name="id"
+												cssClass="form-control" maxlength="32" readonly="true" />
 										</div>
-												
+
 										<div class="form-group">
 											<label>User Name</label>
-											 <form:input path="name" id="name" name="name" maxlength="45" cssClass="form-control"/>
+											<form:input path="name" id="name" name="name" maxlength="45"
+												cssClass="form-control" />
 										</div>
-										
+
 										<div class="form-group">
 											<label>Email ID</label>
-											 <form:input path="email" id="email" name="email" maxlength="45" cssClass="form-control"/>
+											<form:input path="email" id="email" name="email"
+												maxlength="45" cssClass="form-control" />
 										</div>
-										
+
 										<div class="form-group">
 											<label>Roles</label><br>
 											<%-- <form:checkboxes items="${rolesList}" path="roles" id="role" name="role"/> --%>
-											<form:radiobuttons items="${rolesList}" itemValue="id" itemLabel="id" path="roleId" id="role" name="role"/>
+											<form:radiobuttons items="${rolesList}" itemValue="id"
+												itemLabel="id" path="roleId" id="role" name="role" />
 										</div>
-										
+
 										<div class="form-group">
 											<label>Zone</label>
-											 <form:select path="zoneId" id="zoneId" name="zoneId" cssClass="form-control" onchange="doAjaxForRegion()">
-    											<option value="" label="Select Zone"></option>
-    											<form:options items="${zoneList}" />
+											<form:select path="zoneId" id="zoneId" name="zoneId"
+												cssClass="form-control" onchange="doAjaxForRegion()">
+												<option value="" label="Select Zone"></option>
+												<form:options items="${zoneList}" />
 											</form:select>
 										</div>
-										
+
 										<div class="form-group">
 											<label>Region</label>
-											 <form:select path="regionId" id="regionId" name="regionId" cssClass="form-control" onchange="getICMC()">
+											<form:select path="regionId" id="regionId" name="regionId"
+												cssClass="form-control" onchange="getICMC()">
 												<option value="" label="Select Region"></option>
-												<form:options items="${regionList}" itemValue="region" itemLabel="region"/>
-											 </form:select>
+												<form:options items="${regionList}" itemValue="region"
+													itemLabel="region" />
+											</form:select>
 										</div>
-										
+
 										<div class="form-group">
 											<label>ICMC Name</label>
-											<form:select path="icmcId" id="icmcId" name="icmcId" cssClass="form-control" onchange="getPrinter(true)">
+											<form:select path="icmcId" id="icmcId" name="icmcId"
+												cssClass="form-control" onchange="getPrinter(true)">
 												<option value="" label="Select ICMC"></option>
-												<form:options items="${icmcList}" itemValue="id" itemLabel="name"></form:options>
+												<form:options items="${icmcList}" itemValue="id"
+													itemLabel="name"></form:options>
 											</form:select>
 										</div>
-										
+
 										<div class="form-group">
 											<label>ICMC Printer</label>
-											<form:select path="icmcPrinter.id" id="icmcPrinterId" name="icmcPrinter" cssClass="form-control">
+											<form:select path="icmcPrinter.id" id="icmcPrinterId"
+												name="icmcPrinter" cssClass="form-control">
 												<option value="" label="Select Printer"></option>
-												<form:options items="${icmcPrinterList}" itemValue="id" itemLabel="printerName"></form:options>
+												<form:options items="${icmcPrinterList}" itemValue="id"
+													itemLabel="printerName"></form:options>
 											</form:select>
 										</div>
-										
+
 										<div class="form-group">
 											<label>Status</label>
-											 <form:select path="status" id="status" name="status" cssClass="form-control">
-											 	<form:option value="ENABLED">Enabled</form:option>
-											 	<form:option value="DISABLED">Disabled</form:option>
-											 	<form:option value="DELETED">Deleted</form:option>
-											 </form:select>
+											<form:select path="status" id="status" name="status"
+												cssClass="form-control">
+												<form:option value="ENABLED">Enabled</form:option>
+												<form:option value="DISABLED">Disabled</form:option>
+												<form:option value="DELETED">Deleted</form:option>
+											</form:select>
 										</div>
-										
+
 										<button type="submit" class="btn btn-lg btn-success btn-block"
 											value="Details">Update</button>
 									</form:form>
@@ -242,7 +256,7 @@ function doAjaxForRegion() {
 
 	<!-- Custom Theme JavaScript -->
 	<script src="./resources/dist/js/sb-admin-2.js"></script>
-	
+
 	<script type="text/javascript">
 	$.validator.addMethod("nameRegex", function(value, element) {
 	    return this.optional(element) || /^[A-Za-z\s]+$/i.test(value);
@@ -298,7 +312,7 @@ function doAjaxForRegion() {
 	  });
 	});
 	</script>
-<script type="text/javascript" src="./js/htmlInjection.js"></script>
+	<script type="text/javascript" src="./js/htmlInjection.js"></script>
 </body>
 
 </html>

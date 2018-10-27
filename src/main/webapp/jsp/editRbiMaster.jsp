@@ -2,7 +2,8 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
-<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="sec"
+	uri="http://www.springframework.org/security/tags"%>
 <html lang="en">
 
 <head>
@@ -15,7 +16,8 @@
 <link rel="shortcut icon" href="./resources/logo/favicon.ico"
 	type="image/x-icon">
 
-<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script type="text/javascript"
+	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script type="text/javascript" src="./js/jquery.validate.min.js"></script>
 
 <title>ICICI : Edit RBI Master</title>
@@ -73,7 +75,7 @@ function doAjaxForRegion() {
 <body oncontextmenu="return false;">
 	<div id="wrapper">
 		<!-- Navigation -->
-		<jsp:include page="common.jsp" /> 
+		<jsp:include page="common.jsp" />
 
 		<div id="page-wrapper">
 			<!--  <div class="row">
@@ -86,86 +88,91 @@ function doAjaxForRegion() {
 			<div class="row">
 				<div class="col-lg-12">
 					<div class="panel panel-default">
-						
+
 						<div class="panel-heading">
-                        	<ul>
-                        		<li>
-                        			<sec:authorize access="hasRole('VIEW_RBI_MASTER')">
-                        				<a href="././viewRbiMaster"><i class="fa fa-table fa-fw"></i> View RBI Master List</a>
-                        			</sec:authorize>
-                        		</li>
-                        	</ul>Edit RBI Master
-                        </div>
-						
+							<ul>
+								<li><sec:authorize access="hasRole('VIEW_RBI_MASTER')">
+										<a href="././viewRbiMaster"><i class="fa fa-table fa-fw"></i>
+											View RBI Master List</a>
+									</sec:authorize></li>
+							</ul>
+							Edit RBI Master
+						</div>
+
 						<div class="panel-body">
 							<div class="row">
 								<div class="col-lg-6">
 									<!--<form role="form">-->
-									
-									<form:form id="rbiMaster" name="rbiMaster" action="updateRbiMaster" method="post"
+
+									<form:form id="rbiMaster" name="rbiMaster"
+										action="updateRbiMaster" method="post"
 										modelAttribute="rbiMaster" autocomplete="off">
-                                      <form:hidden path="id"/>
-                                      
-                                      	<div class="form-group">
+										<form:hidden path="id" />
+
+										<div class="form-group">
 											<label>RBI Name</label>
-											<form:input path="rbiname" id="rbiname" name="rbiname" maxlength="45"
-												cssClass="form-control" />
-									  	</div>
-									  
-									  <div class="form-group">
+											<form:input path="rbiname" id="rbiname" name="rbiname"
+												maxlength="45" cssClass="form-control" />
+										</div>
+
+										<div class="form-group">
 											<label>Zone</label>
-											 <form:select path="zone" id="zone" name="zone" cssClass="form-control" onchange="doAjaxForRegion()">
-    											<option value="Select" label="Select Zone"></option>
-    											 <form:options items="${zoneList}" /> 
+											<form:select path="zone" id="zone" name="zone"
+												cssClass="form-control" onchange="doAjaxForRegion()">
+												<option value="Select" label="Select Zone"></option>
+												<form:options items="${zoneList}" />
 											</form:select>
 										</div>
-									  
+
 										<div class="form-group">
 											<label>Region</label>
-											 <form:select path="region" id="region" name="region" cssClass="form-control" >
-    											 <form:options items="${regionList}" itemValue="region" itemLabel="region" /> 
+											<form:select path="region" id="region" name="region"
+												cssClass="form-control">
+												<form:options items="${regionList}" itemValue="region"
+													itemLabel="region" />
 											</form:select>
 										</div>
-										
+
 										<div class="form-group">
 											<label>Address</label><br>
-											<form:input path="address" id="address" name="address" maxlength="80"
-												cssClass="form-control" />
+											<form:input path="address" id="address" name="address"
+												maxlength="80" cssClass="form-control" />
 										</div>
-										
+
 										<div class="form-group">
 											<label>City</label><br>
 											<form:input path="city" id="city" name="city" maxlength="45"
 												cssClass="form-control" />
 										</div>
-										
+
 										<div class="form-group">
 											<label>State</label>
-												<form:select path="state" itemValue="state"  cssClass="form-control"> 
-												 <form:option value="">Select State </form:option>
-												 <form:options items="${stateList}"  />
-											</form:select> 
-										</div>
-										
-										<div class="form-group">
-											<label>Pin Code</label><br>
-											<form:input path="pinno" id="pinno" name="pinno" maxlength="6"
-												cssClass="form-control" />
-										</div>
-										
-										<div class="form-group">
-											<label>Status</label>
-											<form:select path="status" id="status" name="status" maxlength="45"
+											<form:select path="state" itemValue="state"
 												cssClass="form-control">
-												<form:options items="${statusList}"/>
+												<form:option value="">Select State </form:option>
+												<form:options items="${stateList}" />
 											</form:select>
 										</div>
-										
-                                      
+
+										<div class="form-group">
+											<label>Pin Code</label><br>
+											<form:input path="pinno" id="pinno" name="pinno"
+												maxlength="6" cssClass="form-control" />
+										</div>
+
+										<div class="form-group">
+											<label>Status</label>
+											<form:select path="status" id="status" name="status"
+												maxlength="45" cssClass="form-control">
+												<form:options items="${statusList}" />
+											</form:select>
+										</div>
+
+
 										<button type="submit" class="btn btn-lg btn-success btn-block"
 											value="Details">Update</button>
 									</form:form>
-										</div>
+								</div>
 								<!-- /.col-lg-6 (nested) -->
 								<div class="col-lg-6"></div>
 								<!-- /.col-lg-6 (nested) -->
@@ -198,7 +205,7 @@ function doAjaxForRegion() {
 
 	<!-- Custom Theme JavaScript -->
 	<script src="./resources/dist/js/sb-admin-2.js"></script>
-<script type="text/javascript">
+	<script type="text/javascript">
 
 	
 	$.validator.addMethod("nameRegex", function(value, element) {
@@ -296,7 +303,7 @@ function doAjaxForRegion() {
 	  });
 	});
 	</script>
-<script type="text/javascript" src="./js/htmlInjection.js"></script>	
+	<script type="text/javascript" src="./js/htmlInjection.js"></script>
 </body>
 
 </html>

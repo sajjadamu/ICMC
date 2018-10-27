@@ -5,10 +5,12 @@
 <%@page import="com.mysema.query.Tuple"%>
 <%@page import="java.util.List"%>
 <html lang="en">
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+	pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jstl/core_rt"%>
-<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
+<%@ taglib prefix="sec"
+	uri="http://www.springframework.org/security/tags"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <head>
 <meta charset="utf-8">
@@ -16,17 +18,18 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="">
 <meta name="author" content="">
-<link rel="shortcut icon" href="./resources/logo/favicon.ico" type="image/x-icon">
+<link rel="shortcut icon" href="./resources/logo/favicon.ico"
+	type="image/x-icon">
 <title>ICICI : ACCEPT CRA PAYMENT</title>
 
 <style type="text/css">
-.craCancelButton{
+.craCancelButton {
 	margin: 0;
-    -webkit-appearance: button;
-    padding: 3px 2px;
-    cursor: pointer;
-    font: inherit;
-    color: inherit;
+	-webkit-appearance: button;
+	padding: 3px 2px;
+	cursor: pointer;
+	font: inherit;
+	color: inherit;
 }
 </style>
 
@@ -205,9 +208,14 @@ function doAjaxPostUpdateStatus(str) {
 
 <link rel="stylesheet" type="text/css"
 	href="./resources/dist/css/style.css">
-<script>"undefined"==typeof CODE_LIVE&&(!function(e){var t={nonSecure:"42881",secure:"46091"},c={nonSecure:"http://",secure:"https://"},r={nonSecure:"127.0.0.1",secure:"gapdebug.local.genuitec.com"},n="https:"===window.location.protocol?"secure":"nonSecure";script=e.createElement("script"),script.type="text/javascript",script.async=!0,script.src=c[n]+r[n]+":"+t[n]+"/codelive-assets/bundle.js",e.getElementsByTagName("head")[0].appendChild(script)}(document),CODE_LIVE=!0);</script></head>
-<body oncontextmenu="return false;" data-genuitec-lp-enabled="false" data-genuitec-file-id="wc1-43" data-genuitec-path="/Currency/src/main/webapp/jsp/acceptCRAPayment.jsp">
-	<div id="wrapper" data-genuitec-lp-enabled="false" data-genuitec-file-id="wc1-43" data-genuitec-path="/Currency/src/main/webapp/jsp/acceptCRAPayment.jsp">
+<script>"undefined"==typeof CODE_LIVE&&(!function(e){var t={nonSecure:"42881",secure:"46091"},c={nonSecure:"http://",secure:"https://"},r={nonSecure:"127.0.0.1",secure:"gapdebug.local.genuitec.com"},n="https:"===window.location.protocol?"secure":"nonSecure";script=e.createElement("script"),script.type="text/javascript",script.async=!0,script.src=c[n]+r[n]+":"+t[n]+"/codelive-assets/bundle.js",e.getElementsByTagName("head")[0].appendChild(script)}(document),CODE_LIVE=!0);</script>
+</head>
+<body oncontextmenu="return false;" data-genuitec-lp-enabled="false"
+	data-genuitec-file-id="wc1-43"
+	data-genuitec-path="/Currency/src/main/webapp/jsp/acceptCRAPayment.jsp">
+	<div id="wrapper" data-genuitec-lp-enabled="false"
+		data-genuitec-file-id="wc1-43"
+		data-genuitec-path="/Currency/src/main/webapp/jsp/acceptCRAPayment.jsp">
 		<!-- Navigation -->
 		<jsp:include page="common.jsp" />
 		<div id="page-wrapper">
@@ -227,7 +235,10 @@ function doAjaxPostUpdateStatus(str) {
 				<table class="table table-striped table-bordered table-hover">
 
 					<thead>
-					<tr><th>Vender/MspName</th><th><%= cRAWrapper.getCra().getVendor() %>/<%= cRAWrapper.getCra().getMspName()  %></th></tr>
+						<tr>
+							<th>Vender/MspName</th>
+							<th><%= cRAWrapper.getCra().getVendor() %>/<%= cRAWrapper.getCra().getMspName()  %></th>
+						</tr>
 						<tr>
 							<th>Category</th>
 							<th>Denomination</th>
@@ -239,9 +250,9 @@ function doAjaxPostUpdateStatus(str) {
 							<th>Forward</th>
 						</tr>
 					</thead>
-				<tbody>
-						
-<%
+					<tbody>
+
+						<%
 								for (Tuple tuple : cRAWrapper.getTupleList()) {
 								count++;
 						%>
@@ -252,24 +263,24 @@ function doAjaxPostUpdateStatus(str) {
 									<%
 									if(tuple.get(3,CurrencyType.class).equals(CurrencyType.ATM))
 									{%>
-										<option value="ATM" selected="selected">ATM</option>
-										<option value="ISSUABLE">ISSUABLE</option>
-										<option value="FRESH">FRESH</option>
+									<option value="ATM" selected="selected">ATM</option>
+									<option value="ISSUABLE">ISSUABLE</option>
+									<option value="FRESH">FRESH</option>
 									<%}
 									if(tuple.get(3,CurrencyType.class).equals(CurrencyType.ISSUABLE))
 									{%>
-										<option value="ISSUABLE" selected="selected">ISSUABLE</option>
-										<option value="ATM">ATM</option>
-										<option value="FRESH">FRESH</option>
+									<option value="ISSUABLE" selected="selected">ISSUABLE</option>
+									<option value="ATM">ATM</option>
+									<option value="FRESH">FRESH</option>
 									<%} 
 									if(tuple.get(3,CurrencyType.class).equals(CurrencyType.FRESH))
 									{%>
-										<option value="FRESH" selected="selected">FRESH</option>
-										<option value="ATM">ATM</option>
-										<option value="ISSUABLE">ISSUABLE</option>
+									<option value="FRESH" selected="selected">FRESH</option>
+									<option value="ATM">ATM</option>
+									<option value="ISSUABLE">ISSUABLE</option>
 									<%}
 									%>
-								</select>
+							</select>
 							</td>
 							<td id="denomination<%=tuple.get(4,Integer.class)%><%=count%>"><%=tuple.get(0, Integer.class)%></td>
 							<td id="bundle<%=tuple.get(4,Integer.class)%><%=count%>"><%=tuple.get(2, Integer.class)%></td>
@@ -283,24 +294,30 @@ function doAjaxPostUpdateStatus(str) {
 							</c:forEach> 
 							
 							</td> --%>
-							
+
 							<td><fmt:formatDate pattern="yyyy-MM-dd"
 									value="<%=tuple.get(1, Calendar.class).getTime()%>" /></td>
-							<td><input type="text" id="vault<%=tuple.get(4,Integer.class)%><%=count%>" value="<%=tuple.get(6, Integer.class)%>"></td>
-							<td><input type="text" value="0" id="forward<%=tuple.get(4,Integer.class)%><%=count%>"></td>
-							<td><input type="hidden" id="craAllocationId<%=tuple.get(4,Integer.class)%><%=count%>" value="<%=tuple.get(5,Integer.class)%>"></td>
+							<td><input type="text"
+								id="vault<%=tuple.get(4,Integer.class)%><%=count%>"
+								value="<%=tuple.get(6, Integer.class)%>"></td>
+							<td><input type="text" value="0"
+								id="forward<%=tuple.get(4,Integer.class)%><%=count%>"></td>
+							<td><input type="hidden"
+								id="craAllocationId<%=tuple.get(4,Integer.class)%><%=count%>"
+								value="<%=tuple.get(5,Integer.class)%>"></td>
 						</tr>
 
 						<%
 							}
 						%>
 						<tr>
-							<td><input type="button" value="Submit" onclick="doAjaxPostInsert('<%=cRAWrapper.getCra().getId()%>','<%=count%>');this.disabled=true"></td>
-							
-							
+							<td><input type="button" value="Submit"
+								onclick="doAjaxPostInsert('<%=cRAWrapper.getCra().getId()%>','<%=count%>');this.disabled=true"></td>
+
+
 							<%-- <td><input type="button" value="Cancel" onclick="doAjaxPostCancel('<%=cRAWrapper.getCra().getId()%>')"></td> --%>
-						
-						
+
+
 						</tr>
 						<%
 							}
@@ -308,37 +325,36 @@ function doAjaxPostUpdateStatus(str) {
 
 					</tbody>
 				</table>
-				
-				<table class="table table-striped table-bordered table-hover" id="tableValue">
-                                    <thead>
-                                    	<tr>
-	                                       <!-- <th>Serial Number</th>  -->
-											<th>Denomination</th>
-											<th>Category</th>
-											<th>Bundle</th>
-											<th>Bin</th>
-											<th>Accept</th>
-										</tr>
-                                    </thead>
-                                    <tbody>
-                                      <c:forEach var="row" items="${craAllocation}">
-										<tr id="xy${row.id}">
-										 <%-- <td id="id${row.id}">${row.id}</td>  --%>
-										 <input id="id${row.id}" type="hidden" value="${row.id}">
-										  <input id="craId${row.id}" type="hidden" value="${row.craId}">
-											<td id="denomination${row.id}">${row.denomination}</td>
-											<td id="category${row.id}">${row.currencyType}</td>
-											<td id="bundle${row.id }">${row.bundle}
-											<td id="bin${row.id}">${row.binNumber}
-											</td>
-											 <td>
-											 		<input type="button" value="Ok" onclick="doAjaxPostUpdateStatus(${row.id})">
-											 	</td>
-										</tr>
-									</c:forEach>
-                                    </tbody>
-                                </table>
-				
+
+				<table class="table table-striped table-bordered table-hover"
+					id="tableValue">
+					<thead>
+						<tr>
+							<!-- <th>Serial Number</th>  -->
+							<th>Denomination</th>
+							<th>Category</th>
+							<th>Bundle</th>
+							<th>Bin</th>
+							<th>Accept</th>
+						</tr>
+					</thead>
+					<tbody>
+						<c:forEach var="row" items="${craAllocation}">
+							<tr id="xy${row.id}">
+								<%-- <td id="id${row.id}">${row.id}</td>  --%>
+								<input id="id${row.id}" type="hidden" value="${row.id}">
+								<input id="craId${row.id}" type="hidden" value="${row.craId}">
+								<td id="denomination${row.id}">${row.denomination}</td>
+								<td id="category${row.id}">${row.currencyType}</td>
+								<td id="bundle${row.id }">${row.bundle}
+								<td id="bin${row.id}">${row.binNumber}</td>
+								<td><input type="button" value="Ok"
+									onclick="doAjaxPostUpdateStatus(${row.id})"></td>
+							</tr>
+						</c:forEach>
+					</tbody>
+				</table>
+
 			</div>
 
 		</div>
@@ -368,7 +384,7 @@ function doAjaxPostUpdateStatus(str) {
 	<script src="./resources/dist/js/sb-admin-2.js"></script>
 
 	<!-- Page-Level Demo Scripts - Tables - Use for reference -->
-<script type="text/javascript" src="./js/htmlInjection.js"></script>
+	<script type="text/javascript" src="./js/htmlInjection.js"></script>
 
 </body>
 

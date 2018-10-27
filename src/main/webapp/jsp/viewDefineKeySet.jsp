@@ -136,18 +136,19 @@
 												<th>View Detail</th>
 											</tr>
 										</thead>
-										
+
 										<tbody>
-											 <c:forEach var="row" items="${records}">
-										<tr>
-											<td>${row}</td>
-											<td><sec:authorize access="hasRole('UPDATE_DEFINE_KEYSET')">
-													<%-- <a href="editDefineKeySet?id=${row.id}">Edit</a> --%>
-													 <a href="viewKeySetDetail?custodian=${row}">View Detail</a>
-												</sec:authorize>
-											</td>
-										</tr>
-									</c:forEach>
+											<c:forEach var="row" items="${records}">
+												<tr>
+													<td>${row}</td>
+													<td><sec:authorize
+															access="hasRole('UPDATE_DEFINE_KEYSET')">
+															<%-- <a href="editDefineKeySet?id=${row.id}">Edit</a> --%>
+															<a href="viewKeySetDetail?custodian=${row}">View
+																Detail</a>
+														</sec:authorize></td>
+												</tr>
+											</c:forEach>
 										</tbody>
 									</table>
 								</form>

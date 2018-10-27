@@ -7,7 +7,8 @@
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c"%>
 <html lang="en">
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+	pageEncoding="ISO-8859-1"%>
 
 <head>
 <meta charset="utf-8">
@@ -15,28 +16,40 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="">
 <meta name="author" content="">
-<link rel="shortcut icon" href="./resources/logo/favicon.ico" type="image/x-icon">
+<link rel="shortcut icon" href="./resources/logo/favicon.ico"
+	type="image/x-icon">
 <title>ICICI : Indent</title>
 
 <!-- Bootstrap Core CSS -->
-<link href="./resources/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+<link
+	href="./resources/bower_components/bootstrap/dist/css/bootstrap.min.css"
+	rel="stylesheet">
 
 <!-- MetisMenu CSS -->
-<link href="./resources/bower_components/metisMenu/dist/metisMenu.min.css" rel="stylesheet">
+<link
+	href="./resources/bower_components/metisMenu/dist/metisMenu.min.css"
+	rel="stylesheet">
 
 <!-- DataTables CSS -->
-<link href="./resources/bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.css" rel="stylesheet">
+<link
+	href="./resources/bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.css"
+	rel="stylesheet">
 
 <!-- DataTables Responsive CSS -->
-<link href="./resources/bower_components/datatables-responsive/css/responsive.dataTables.scss" rel="stylesheet">
+<link
+	href="./resources/bower_components/datatables-responsive/css/responsive.dataTables.scss"
+	rel="stylesheet">
 
 <!-- Custom CSS -->
 <link href="./resources/dist/css/sb-admin-2.css" rel="stylesheet">
 
 <!-- Custom Fonts -->
-<link href="./resources/bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+<link
+	href="./resources/bower_components/font-awesome/css/font-awesome.min.css"
+	rel="stylesheet" type="text/css">
 
-<link rel="./resources/stylesheet" type="text/css" href="dist/css/style.css">
+<link rel="./resources/stylesheet" type="text/css"
+	href="dist/css/style.css">
 
 <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -46,11 +59,16 @@
     <![endif]-->
 
 <!--    DataTable  -->
-<script type="text/javascript" charset="utf8" src="./resources/js/jquery.dataTables.min.js"></script>
-<link rel="stylesheet" href="https://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css">
-<script type="text/javascript" charset="utf8" src="./resources/js/dataTables.jqueryui.js"></script>
-<link rel="stylesheet" type="text/css" href="./resources/css/dataTables.jqueryui.css">
-<link rel="stylesheet" type="text/css" href="./resources/css/jquery.dataTables.css">
+<script type="text/javascript" charset="utf8"
+	src="./resources/js/jquery.dataTables.min.js"></script>
+<link rel="stylesheet"
+	href="https://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css">
+<script type="text/javascript" charset="utf8"
+	src="./resources/js/dataTables.jqueryui.js"></script>
+<link rel="stylesheet" type="text/css"
+	href="./resources/css/dataTables.jqueryui.css">
+<link rel="stylesheet" type="text/css"
+	href="./resources/css/jquery.dataTables.css">
 <!--    DataTable  -->
 
 
@@ -86,8 +104,8 @@
   	  }); 
   	}  	
   </script>
-  
-  <script type="text/javascript">
+
+<script type="text/javascript">
     function doAjaxCancelBranchPayment(str) {  
     	addHeader();
 		// get the form values 
@@ -120,13 +138,18 @@
   	}  	
   </script>
 
-<script>"undefined"==typeof CODE_LIVE&&(!function(e){var t={nonSecure:"42881",secure:"46091"},c={nonSecure:"http://",secure:"https://"},r={nonSecure:"127.0.0.1",secure:"gapdebug.local.genuitec.com"},n="https:"===window.location.protocol?"secure":"nonSecure";script=e.createElement("script"),script.type="text/javascript",script.async=!0,script.src=c[n]+r[n]+":"+t[n]+"/codelive-assets/bundle.js",e.getElementsByTagName("head")[0].appendChild(script)}(document),CODE_LIVE=!0);</script></head>
-<body oncontextmenu="return false;" data-genuitec-lp-enabled="false" data-genuitec-file-id="wc1-4" data-genuitec-path="/Currency/src/main/webapp/jsp/AcceptSASIndent.jsp">
+<script>"undefined"==typeof CODE_LIVE&&(!function(e){var t={nonSecure:"42881",secure:"46091"},c={nonSecure:"http://",secure:"https://"},r={nonSecure:"127.0.0.1",secure:"gapdebug.local.genuitec.com"},n="https:"===window.location.protocol?"secure":"nonSecure";script=e.createElement("script"),script.type="text/javascript",script.async=!0,script.src=c[n]+r[n]+":"+t[n]+"/codelive-assets/bundle.js",e.getElementsByTagName("head")[0].appendChild(script)}(document),CODE_LIVE=!0);</script>
+</head>
+<body oncontextmenu="return false;" data-genuitec-lp-enabled="false"
+	data-genuitec-file-id="wc1-4"
+	data-genuitec-path="/Currency/src/main/webapp/jsp/AcceptSASIndent.jsp">
 
-	<div id="wrapper" data-genuitec-lp-enabled="false" data-genuitec-file-id="wc1-4" data-genuitec-path="/Currency/src/main/webapp/jsp/AcceptSASIndent.jsp">
+	<div id="wrapper" data-genuitec-lp-enabled="false"
+		data-genuitec-file-id="wc1-4"
+		data-genuitec-path="/Currency/src/main/webapp/jsp/AcceptSASIndent.jsp">
 
 		<!-- Navigation -->
-		<jsp:include page="common.jsp" /> 
+		<jsp:include page="common.jsp" />
 
 		<div id="page-wrapper">
 			<!-- <div class="row">
@@ -179,24 +202,24 @@
 													<td><input type="button" value="Cancel" onClick="doAjaxCancelBranchPayment(${row.id})"></td>
 												</tr>
 											</c:forEach> --%>
-											
+
 											<%
 											
 											List<Tuple> tupleForSASAllocation = (List<Tuple>) request.getAttribute("records");
 											for(Tuple tuple:tupleForSASAllocation)
 											{
 											%>
-											
+
 											<tr>
-											<td id="binNumber<%=tuple.get(0,String.class)%>"><%=tuple.get(0, String.class)%></td>
-											<td id="denomination<%=tuple.get(0,String.class)%>"><%=tuple.get(1, Integer.class) %></td>
-											<td id="cashType<%=tuple.get(0,String.class)%>"><%=tuple.get(2, CashType.class)%></td>
-											<td id="binType<%=tuple.get(0,String.class)%>"><%=tuple.get(3, CurrencyType.class) %></td>
-											<td id="bundle<%=tuple.get(0,String.class)%>"><%=tuple.get(4, BigDecimal.class) %></td>
-											<td><input type="button" value="Accept"
-														onclick="doAjaxPostUpdateStatus('<%=tuple.get(0, String.class)%>')"></td>
+												<td id="binNumber<%=tuple.get(0,String.class)%>"><%=tuple.get(0, String.class)%></td>
+												<td id="denomination<%=tuple.get(0,String.class)%>"><%=tuple.get(1, Integer.class) %></td>
+												<td id="cashType<%=tuple.get(0,String.class)%>"><%=tuple.get(2, CashType.class)%></td>
+												<td id="binType<%=tuple.get(0,String.class)%>"><%=tuple.get(3, CurrencyType.class) %></td>
+												<td id="bundle<%=tuple.get(0,String.class)%>"><%=tuple.get(4, BigDecimal.class) %></td>
+												<td><input type="button" value="Accept"
+													onclick="doAjaxPostUpdateStatus('<%=tuple.get(0, String.class)%>')"></td>
 											</tr>
-											
+
 											<%} %>
 										</tbody>
 									</table>
@@ -247,7 +270,7 @@
         });
     });
     </script>
-<script type="text/javascript" src="./js/htmlInjection.js"></script>
+	<script type="text/javascript" src="./js/htmlInjection.js"></script>
 </body>
 
 </html>

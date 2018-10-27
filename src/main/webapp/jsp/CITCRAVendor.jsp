@@ -17,7 +17,8 @@ function pageSubmit(){
 	window.location='././viewCITCRAVendor';
 } 
 </script>
-<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script type="text/javascript"
+	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script type="text/javascript" src="./js/jquery.validate.min.js"></script>
 
 <title>ICICI : Vendor</title>
@@ -107,25 +108,27 @@ function doAjaxForRegion() {
 			<div class="row">
 				<div class="col-lg-12">
 					<div class="panel panel-default">
-						
+
 						<div class="panel-heading">
-                        	<ul>
-                        		<li>
-                        			<a href="././viewCITCRAVendor"><i class="fa fa-table fa-fw"></i> View List of CIT/CRA Vendor's</a>
-                        		</li>
-							</ul>Add CIT/CRA Vendor
-                        </div>
-						
+							<ul>
+								<li><a href="././viewCITCRAVendor"><i
+										class="fa fa-table fa-fw"></i> View List of CIT/CRA Vendor's</a></li>
+							</ul>
+							Add CIT/CRA Vendor
+						</div>
+
 						<div class="panel-body">
 							<div class="row">
 								<div class="col-lg-6">
 									<!--<form role="form">-->
-									<form:form id="userPage" name="userPage" action="addCITCRAVendor" method="post"
-										modelAttribute="user" enctype="multipart/form-data" autocomplete="off">
+									<form:form id="userPage" name="userPage"
+										action="addCITCRAVendor" method="post" modelAttribute="user"
+										enctype="multipart/form-data" autocomplete="off">
 										<div class="form-group">
-										
+
 											<label>Zone</label>
-											<form:select path="zone" id="zone" name="zone"  cssClass="form-control" onchange="doAjaxForRegion()">
+											<form:select path="zone" id="zone" name="zone"
+												cssClass="form-control" onchange="doAjaxForRegion()">
 												<form:option value="">Select Zone</form:option>
 												<form:option value="NORTH">NORTH</form:option>
 												<form:option value="SOUTH">SOUTH</form:option>
@@ -133,60 +136,62 @@ function doAjaxForRegion() {
 												<form:option value="WEST">WEST</form:option>
 											</form:select>
 										</div>
-										
+
 										<div class="form-group">
 											<label>Region</label>
-											<form:select path="region" id="region" name="region" cssClass="form-control" onchange="getICMC()">
+											<form:select path="region" id="region" name="region"
+												cssClass="form-control" onchange="getICMC()">
 												<form:option value="">Select Region</form:option>
 											</form:select>
 										</div>
-										
+
 										<div class="form-group">
 											<label>ICMC</label>
-											<form:select path="icmcIds" id="icmcIds" name="icmcIds" cssClass="form-control">
+											<form:select path="icmcIds" id="icmcIds" name="icmcIds"
+												cssClass="form-control">
 												<form:option value="">Select ICMC</form:option>
 											</form:select>
 										</div>
-										
+
 										<div class="form-group">
 											<label>Vendor Name</label>
 											<form:input path="name" id="name" name="name" maxlength="45"
 												cssClass="form-control" />
 										</div>
-										
+
 										<div class="form-group">
 											<label>Type One</label>
-											<form:input path="typeOne" id="typeOne" name="typeOne" maxlength="45"
-												cssClass="form-control" />
+											<form:input path="typeOne" id="typeOne" name="typeOne"
+												maxlength="45" cssClass="form-control" />
 										</div>
-										
+
 										<div class="form-group">
 											<label>Type Two</label>
-											<form:input path="typeTwo" id="typeTwo" name="typeTwo" maxlength="45"
-												cssClass="form-control" />
+											<form:input path="typeTwo" id="typeTwo" name="typeTwo"
+												maxlength="45" cssClass="form-control" />
 										</div>
-										
+
 										<div class="form-group">
 											<label>Type Three</label>
-											<form:input path="typeThree" id="typeThree" name="typeThree" maxlength="45"
-												cssClass="form-control" />
+											<form:input path="typeThree" id="typeThree" name="typeThree"
+												maxlength="45" cssClass="form-control" />
 										</div>
-										
+
 										<div class="form-group">
 											<label>FPR Name</label>
-											<form:input path="FPRName" id="FPRName" name="FPRName" maxlength="45"
-												cssClass="form-control" />
+											<form:input path="FPRName" id="FPRName" name="FPRName"
+												maxlength="45" cssClass="form-control" />
 										</div>
-										
+
 										<div class="form-group">
 											<label>FPR Number</label>
-											<form:input path="FPRNumber" id="FPRNumber" name="FPRNumber" maxlength="11"
-												cssClass="form-control" />
+											<form:input path="FPRNumber" id="FPRNumber" name="FPRNumber"
+												maxlength="11" cssClass="form-control" />
 										</div>
 										<div class="col-lg-6 form-group">
-										<label>Choose File</label> <input type="file" id="file" name="file"
-											Class="form-control" />
-									</div>
+											<label>Choose File</label> <input type="file" id="file"
+												name="file" Class="form-control" />
+										</div>
 										<button type="submit" class="btn btn-lg btn-success btn-block"
 											value="Details">Submit</button>
 									</form:form>
@@ -223,7 +228,7 @@ function doAjaxForRegion() {
 
 	<!-- Custom Theme JavaScript -->
 	<script src="./resources/dist/js/sb-admin-2.js"></script>
-	
+
 	<script type="text/javascript">
 	
 	$.validator.addMethod("multipeFieldValidator", function(value) { 
@@ -375,7 +380,7 @@ function doAjaxForRegion() {
 	  });
 	});
 	</script>
-<script type="text/javascript" src="./js/htmlInjection.js"></script>
+	<script type="text/javascript" src="./js/htmlInjection.js"></script>
 </body>
 
 </html>

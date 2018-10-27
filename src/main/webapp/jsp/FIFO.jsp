@@ -145,7 +145,7 @@
 								<div id="printableArea">
 									<div id="table_wrapper">
 										<table class="table table-striped table-bordered table-hover"
-											 id="tableValue">
+											id="tableValue">
 
 											<thead>
 												<tr>

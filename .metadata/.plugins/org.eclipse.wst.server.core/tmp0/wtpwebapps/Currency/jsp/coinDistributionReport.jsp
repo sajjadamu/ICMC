@@ -13,7 +13,7 @@
 <meta name="author" content="">
 <link rel="shortcut icon" href="./resources/logo/favicon.ico"
 	type="image/x-icon">
-	<link rel="stylesheet" type="text/css"
+<link rel="stylesheet" type="text/css"
 	href="./resources/css/jquery.datetimepicker.css" />
 <title>ICICI : Coin Distribution Report</title>
 
@@ -107,10 +107,15 @@ $(document).ready(function() {
 	  });
 	});
 </script>
-<script>"undefined"==typeof CODE_LIVE&&(!function(e){var t={nonSecure:"42881",secure:"46091"},c={nonSecure:"http://",secure:"https://"},r={nonSecure:"127.0.0.1",secure:"gapdebug.local.genuitec.com"},n="https:"===window.location.protocol?"secure":"nonSecure";script=e.createElement("script"),script.type="text/javascript",script.async=!0,script.src=c[n]+r[n]+":"+t[n]+"/codelive-assets/bundle.js",e.getElementsByTagName("head")[0].appendChild(script)}(document),CODE_LIVE=!0);</script></head>
+<script>"undefined"==typeof CODE_LIVE&&(!function(e){var t={nonSecure:"42881",secure:"46091"},c={nonSecure:"http://",secure:"https://"},r={nonSecure:"127.0.0.1",secure:"gapdebug.local.genuitec.com"},n="https:"===window.location.protocol?"secure":"nonSecure";script=e.createElement("script"),script.type="text/javascript",script.async=!0,script.src=c[n]+r[n]+":"+t[n]+"/codelive-assets/bundle.js",e.getElementsByTagName("head")[0].appendChild(script)}(document),CODE_LIVE=!0);</script>
+</head>
 
-<body oncontextmenu="return false;" data-genuitec-lp-enabled="false" data-genuitec-file-id="wc1-81" data-genuitec-path="/Currency/src/main/webapp/jsp/coinDistributionReport.jsp">
-	<div id="wrapper" data-genuitec-lp-enabled="false" data-genuitec-file-id="wc1-81" data-genuitec-path="/Currency/src/main/webapp/jsp/coinDistributionReport.jsp">
+<body oncontextmenu="return false;" data-genuitec-lp-enabled="false"
+	data-genuitec-file-id="wc1-81"
+	data-genuitec-path="/Currency/src/main/webapp/jsp/coinDistributionReport.jsp">
+	<div id="wrapper" data-genuitec-lp-enabled="false"
+		data-genuitec-file-id="wc1-81"
+		data-genuitec-path="/Currency/src/main/webapp/jsp/coinDistributionReport.jsp">
 		<!-- Navigation -->
 		<jsp:include page="common.jsp" />
 
@@ -127,11 +132,12 @@ $(document).ready(function() {
 								<div>
 									<input type="button" class="btn btn-default qr-button"
 										onclick="printDiv('printableArea')" value="Print" />
-										<button id="btnExport" class="btn btn-default qr-button">Export to xls</button>
+									<button id="btnExport" class="btn btn-default qr-button">Export
+										to xls</button>
 								</div>
-							
+
 							</div>
-							
+
 							<div class="region-con">
 								<form:form id="userPage" name="userPage"
 									action="coinDistributionReport" method="post"
@@ -146,9 +152,8 @@ $(document).ready(function() {
 																id="fromDate" name="fromDate" cssClass="form-control" />
 														</td>
 														<td><B>Select To Date</B></td>
-														<td><form:input type="text" path="toDate"
-																id="toDate" name="toDate" cssClass="form-control" />
-														</td>
+														<td><form:input type="text" path="toDate" id="toDate"
+																name="toDate" cssClass="form-control" /></td>
 														<td><button type="submit" class="btn btn-default"
 																value="Details" style="width: 99px;">Search</button></td>
 													</tr>
@@ -161,67 +166,72 @@ $(document).ready(function() {
 							<form id="showAll">
 								<!-- <table class="table table-striped table-bordered table-hover" id="dataTables-example"> -->
 								<div id="printableArea">
-								<div id="table_wrapper">
-									<table class="table table-striped table-bordered table-hover"
-										id="tableValue">
+									<div id="table_wrapper">
+										<table class="table table-striped table-bordered table-hover"
+											id="tableValue">
 
-										<thead>
-											<tr>
-												 <th>Date</th>
-        <th>Branch Name/Bulk Customer Name</th>
-        <th>SOL ID</th>
-        <th>Denomination</th>
-        <th>Total Value of Coins</th>
-        <th>SR Number</th>
-											</tr>
-										</thead>
-										<tbody class="table table-striped table-bordered table-hover">
-										<c:forEach var="row" items="${records}">
-										<tr>
-										<td><fmt:formatDate type="both" value="${row.insertTime.time}"/></td>
-										<td>${row.branch}</td>
-										<td>${row.solID}</td>
-										<td>1</td>
-										<td>${row.totalValueOfCoinsRs1}</td>
-										<td>${row.srNo}</td>
-										</tr>
-										</c:forEach>
-										
-										<c:forEach var="row" items="${records}">
-										<tr>
-										<td><fmt:formatDate type="both" value="${row.insertTime.time}"/></td>
-										<td>${row.branch}</td>
-										<td>${row.solID}</td>
-										<td>2</td>
-										<td>${row.totalValueOfCoinsRs2}</td>
-										<td>${row.srNo}</td>
-										</tr>
-										</c:forEach>
-										
-										
-										<c:forEach var="row" items="${records}">
-										<tr>
-										<td><fmt:formatDate type="both" value="${row.insertTime.time}"/></td>
-										<td>${row.branch}</td>
-										<td>${row.solID}</td>
-										<td>5</td>
-										<td>${row.totalValueOfCoinsRs5}</td>
-										<td>${row.srNo}</td>
-										</tr>
-										</c:forEach>
-										
-										<c:forEach var="row" items="${records}">
-										<tr>
-										<td><fmt:formatDate type="both" value="${row.insertTime.time}"/></td>
-										<td>${row.branch}</td>
-										<td>${row.solID}</td>
-										<td>10</td>
-										<td>${row.totalValueOfCoinsRs10}</td>
-										<td>${row.srNo}</td>
-										</tr>
-										</c:forEach>
-										</tbody>
-									</table></div>
+											<thead>
+												<tr>
+													<th>Date</th>
+													<th>Branch Name/Bulk Customer Name</th>
+													<th>SOL ID</th>
+													<th>Denomination</th>
+													<th>Total Value of Coins</th>
+													<th>SR Number</th>
+												</tr>
+											</thead>
+											<tbody class="table table-striped table-bordered table-hover">
+												<c:forEach var="row" items="${records}">
+													<tr>
+														<td><fmt:formatDate type="both"
+																value="${row.insertTime.time}" /></td>
+														<td>${row.branch}</td>
+														<td>${row.solID}</td>
+														<td>1</td>
+														<td>${row.totalValueOfCoinsRs1}</td>
+														<td>${row.srNo}</td>
+													</tr>
+												</c:forEach>
+
+												<c:forEach var="row" items="${records}">
+													<tr>
+														<td><fmt:formatDate type="both"
+																value="${row.insertTime.time}" /></td>
+														<td>${row.branch}</td>
+														<td>${row.solID}</td>
+														<td>2</td>
+														<td>${row.totalValueOfCoinsRs2}</td>
+														<td>${row.srNo}</td>
+													</tr>
+												</c:forEach>
+
+
+												<c:forEach var="row" items="${records}">
+													<tr>
+														<td><fmt:formatDate type="both"
+																value="${row.insertTime.time}" /></td>
+														<td>${row.branch}</td>
+														<td>${row.solID}</td>
+														<td>5</td>
+														<td>${row.totalValueOfCoinsRs5}</td>
+														<td>${row.srNo}</td>
+													</tr>
+												</c:forEach>
+
+												<c:forEach var="row" items="${records}">
+													<tr>
+														<td><fmt:formatDate type="both"
+																value="${row.insertTime.time}" /></td>
+														<td>${row.branch}</td>
+														<td>${row.solID}</td>
+														<td>10</td>
+														<td>${row.totalValueOfCoinsRs10}</td>
+														<td>${row.srNo}</td>
+													</tr>
+												</c:forEach>
+											</tbody>
+										</table>
+									</div>
 								</div>
 							</form>
 							<!-- </div> DataTable_wrapper bundle div close -->

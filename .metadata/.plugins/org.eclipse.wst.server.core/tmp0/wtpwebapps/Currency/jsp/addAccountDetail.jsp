@@ -13,7 +13,8 @@
 <link rel="shortcut icon" href="./resources/logo/favicon.ico"
 	type="image/x-icon">
 
-<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script type="text/javascript"
+	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script type="text/javascript" src="./js/jquery.validate.min.js"></script>
 
 <title>ICICI : Add Account Detail</title>
@@ -46,12 +47,17 @@
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 
-<script>"undefined"==typeof CODE_LIVE&&(!function(e){var t={nonSecure:"42881",secure:"46091"},c={nonSecure:"http://",secure:"https://"},r={nonSecure:"127.0.0.1",secure:"gapdebug.local.genuitec.com"},n="https:"===window.location.protocol?"secure":"nonSecure";script=e.createElement("script"),script.type="text/javascript",script.async=!0,script.src=c[n]+r[n]+":"+t[n]+"/codelive-assets/bundle.js",e.getElementsByTagName("head")[0].appendChild(script)}(document),CODE_LIVE=!0);</script></head>
+<script>"undefined"==typeof CODE_LIVE&&(!function(e){var t={nonSecure:"42881",secure:"46091"},c={nonSecure:"http://",secure:"https://"},r={nonSecure:"127.0.0.1",secure:"gapdebug.local.genuitec.com"},n="https:"===window.location.protocol?"secure":"nonSecure";script=e.createElement("script"),script.type="text/javascript",script.async=!0,script.src=c[n]+r[n]+":"+t[n]+"/codelive-assets/bundle.js",e.getElementsByTagName("head")[0].appendChild(script)}(document),CODE_LIVE=!0);</script>
+</head>
 
-<body oncontextmenu="return false;" data-genuitec-lp-enabled="false" data-genuitec-file-id="wc1-47" data-genuitec-path="/Currency/src/main/webapp/jsp/addAccountDetail.jsp">
-	<div id="wrapper" data-genuitec-lp-enabled="false" data-genuitec-file-id="wc1-47" data-genuitec-path="/Currency/src/main/webapp/jsp/addAccountDetail.jsp">
+<body oncontextmenu="return false;" data-genuitec-lp-enabled="false"
+	data-genuitec-file-id="wc1-47"
+	data-genuitec-path="/Currency/src/main/webapp/jsp/addAccountDetail.jsp">
+	<div id="wrapper" data-genuitec-lp-enabled="false"
+		data-genuitec-file-id="wc1-47"
+		data-genuitec-path="/Currency/src/main/webapp/jsp/addAccountDetail.jsp">
 		<!-- Navigation -->
-		<jsp:include page="common.jsp" /> 
+		<jsp:include page="common.jsp" />
 
 		<div id="page-wrapper">
 			<!--  <div class="row">
@@ -69,43 +75,45 @@
 							<div class="row">
 								<div class="col-lg-6">
 									<!--<form role="form">-->
-									
-									<form:form id="userPage" name="userPage" action="saveAccountDetails" method="post"
+
+									<form:form id="userPage" name="userPage"
+										action="saveAccountDetails" method="post"
 										modelAttribute="user" autocomplete="off">
-                                      
-                                      	<div class="form-group">
+
+										<div class="form-group">
 											<label>Activity</label>
-											<form:input path="activity" id="activity" name="activity" maxlength="45"
-												cssClass="form-control" />
+											<form:input path="activity" id="activity" name="activity"
+												maxlength="45" cssClass="form-control" />
 										</div>
-										
+
 										<div class="form-group">
 											<label>Usage</label>
-											<form:input path="usage" id="usage" name="usage" maxlength="45"
-												cssClass="form-control" />
+											<form:input path="usage" id="usage" name="usage"
+												maxlength="45" cssClass="form-control" />
 										</div>
-										
-                                      	<div class="form-group">
+
+										<div class="form-group">
 											<label>Dr/Cr</label>
-											<form:select path="debitOrCredit" id="debitOrCredit" name="debitOrCredit" cssClass="form-control">
+											<form:select path="debitOrCredit" id="debitOrCredit"
+												name="debitOrCredit" cssClass="form-control">
 												<form:option value="error">Select Dr/Cr</form:option>
 												<form:option value="Dr">Dr</form:option>
 												<form:option value="Cr">Cr</form:option>
 											</form:select>
 										</div>
-										
+
 										<div class="form-group">
 											<label>Account Details</label>
-											<form:input path="accountDetails" id="accountDetails" name="accountDetails" maxlength="45"
-												cssClass="form-control" />
+											<form:input path="accountDetails" id="accountDetails"
+												name="accountDetails" maxlength="45" cssClass="form-control" />
 										</div>
-										
+
 										<div class="form-group">
 											<label>Branch Details</label>
-											<form:input path="branchDetails" id="branchDetails" name="branchDetails" maxlength="45"
-												cssClass="form-control" />
+											<form:input path="branchDetails" id="branchDetails"
+												name="branchDetails" maxlength="45" cssClass="form-control" />
 										</div>
-										
+
 										<button type="submit" class="btn btn-lg btn-success btn-block"
 											value="Details">Save</button>
 									</form:form>
@@ -142,7 +150,7 @@
 
 	<!-- Custom Theme JavaScript -->
 	<script src="./resources/dist/js/sb-admin-2.js"></script>
-	
+
 	<!-- <script type="text/javascript">
 	$(function() {
 	  $("form[name='userPage']").validate({
@@ -192,7 +200,7 @@
 	  });
 	});
 	</script> -->
-<script type="text/javascript" src="./js/htmlInjection.js"></script>
+	<script type="text/javascript" src="./js/htmlInjection.js"></script>
 </body>
 
 </html>

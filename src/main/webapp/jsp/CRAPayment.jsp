@@ -1,11 +1,15 @@
 <!DOCTYPE html>
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+	pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <html lang="en">
 <head>
-<link href="./resources/css/calendar.css" rel="stylesheet" type="text/css" />
-<link rel="stylesheet" type="text/css" href="./resources/css/jquery.datetimepicker.css" />
-<link rel="shortcut icon" href="./resources/logo/favicon.ico" type="image/x-icon">
+<link href="./resources/css/calendar.css" rel="stylesheet"
+	type="text/css" />
+<link rel="stylesheet" type="text/css"
+	href="./resources/css/jquery.datetimepicker.css" />
+<link rel="shortcut icon" href="./resources/logo/favicon.ico"
+	type="image/x-icon">
 <script src="./js/jquery-1.12.0.min.js"></script>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -17,18 +21,25 @@
 
 <script src="./resources/js/jquery-1.9.1.min.js"></script>
 <!-- Bootstrap Core CSS -->
-<link href="./resources/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+<link
+	href="./resources/bower_components/bootstrap/dist/css/bootstrap.min.css"
+	rel="stylesheet">
 
 <!-- MetisMenu CSS -->
-<link href="./resources/bower_components/metisMenu/dist/metisMenu.min.css" rel="stylesheet">
+<link
+	href="./resources/bower_components/metisMenu/dist/metisMenu.min.css"
+	rel="stylesheet">
 
 <!-- Custom CSS -->
 <link href="./resources/dist/css/sb-admin-2.css" rel="stylesheet">
 
 <!-- Custom Fonts -->
-<link href="./resources/bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+<link
+	href="./resources/bower_components/font-awesome/css/font-awesome.min.css"
+	rel="stylesheet" type="text/css">
 
-<link rel="stylesheet" type="text/css" href="./resources/dist/css/style.css">
+<link rel="stylesheet" type="text/css"
+	href="./resources/dist/css/style.css">
 
 <script type="text/javascript">
 var countrow=0;
@@ -186,7 +197,7 @@ function doAjaxForTotal() {
 } 
   
 	
-</script> 
+</script>
 
 <script type="text/javascript">
 function doAjaxPostInsert(str) {
@@ -434,84 +445,107 @@ function refresh() {
 			<div class="row">
 				<div class="col-lg-12">
 					<div class="panel panel-default">
-						<div class="panel-heading"><ul>
-								<li><a href="././viewCRA"><i class="fa fa-table fa-fw"></i>View CRA Payment</a></li>
-							</ul>CRA Payment</div>
+						<div class="panel-heading">
+							<ul>
+								<li><a href="././viewCRA"><i class="fa fa-table fa-fw"></i>View
+										CRA Payment</a></li>
+							</ul>
+							CRA Payment
+						</div>
 						<div class="panel-body">
 							<div class="row">
 								<div class="col-lg-8">
 									<!--<form role="form">-->
-									<form:form id="" action="" method="post" modelAttribute="user" autocomplete="off">
+									<form:form id="" action="" method="post" modelAttribute="user"
+										autocomplete="off">
 										<div class="col-lg-6 form-group">
 											<label>SR No.</label>
-											<form:input type="text"  path="srNo" id="srNo" name="srNo" value="SR" 
-												minlength="11" maxlength="11" cssClass="form-control"/>
-											<label id="err1" style="display: none;color: red">Please Enter SR Number</label>
-											<label id="err9" style="display: none;color: red">SR Number should have 11 digits</label>
+											<form:input type="text" path="srNo" id="srNo" name="srNo"
+												value="SR" minlength="11" maxlength="11"
+												cssClass="form-control" />
+											<label id="err1" style="display: none; color: red">Please
+												Enter SR Number</label> <label id="err9"
+												style="display: none; color: red">SR Number should
+												have 11 digits</label>
 										</div>
 										<div class="col-lg-6 form-group">
 											<label>SOL ID</label>
-											<form:input path="solId" id="solId" maxlength="4" cssClass="form-control" onkeyup="doAjaxPostForBranch()"/>
-											<label id="err2" style="display: none;color: red">Please Enter Sol Id</label>
-											<label id="err12" style="display: none;color: red">Enter 4 Digit Sol ID</label>
+											<form:input path="solId" id="solId" maxlength="4"
+												cssClass="form-control" onkeyup="doAjaxPostForBranch()" />
+											<label id="err2" style="display: none; color: red">Please
+												Enter Sol Id</label> <label id="err12"
+												style="display: none; color: red">Enter 4 Digit Sol
+												ID</label>
 										</div>
 										<div class="col-lg-6 form-group">
 											<label>Branch Name</label>
-											<form:input type="text"   path="branch" id="branch" name="branch" cssClass="form-control" readonly="true"/>
-											<label id="err3" style="display: none;color: red">Enter Branch Name</label>
+											<form:input type="text" path="branch" id="branch"
+												name="branch" cssClass="form-control" readonly="true" />
+											<label id="err3" style="display: none; color: red">Enter
+												Branch Name</label>
 										</div>
 										<div class="col-lg-6 form-group">
 											<label>Vendor</label>
-											<form:select path="vendor" id="vendor" name="vendor" cssClass="form-control" onchange="doAjaxForAccountNumber()">
-											 <form:option value="">Select Vendor </form:option>
-    						<form:options items="${vendorName}" itemValue="craVendorName"
-															itemLabel="craVendorName" />
+											<form:select path="vendor" id="vendor" name="vendor"
+												cssClass="form-control" onchange="doAjaxForAccountNumber()">
+												<form:option value="">Select Vendor </form:option>
+												<form:options items="${vendorName}"
+													itemValue="craVendorName" itemLabel="craVendorName" />
 											</form:select>
-											<label id="err4" style="display: none;color: red">Select Vendor</label>
+											<label id="err4" style="display: none; color: red">Select
+												Vendor</label>
 										</div>
-										
+
 										<div class="col-lg-6 form-group">
 											<label>MSP Name</label>
-											<form:select path="mspName" id="mspName" name="mspName" cssClass="form-control" onchange="doAjaxForAccountNumber()" >
-											 <form:option value="">Select MSP Name </form:option>
-    											<form:options items="${vendorName}" itemValue="mspName"
-															itemLabel="mspName" />
+											<form:select path="mspName" id="mspName" name="mspName"
+												cssClass="form-control" onchange="doAjaxForAccountNumber()">
+												<form:option value="">Select MSP Name </form:option>
+												<form:options items="${vendorName}" itemValue="mspName"
+													itemLabel="mspName" />
 											</form:select>
-											<label id="err5" style="display: none;color: red">Select MSP Name</label>
+											<label id="err5" style="display: none; color: red">Select
+												MSP Name</label>
 										</div>
-										
+
 										<div class="col-lg-6 form-group">
 											<label>Account Number</label>
-											<form:input path="accountNumber"  readonly="true" id="accountNumber" name="accountNumber" cssClass="form-control"/>
-											<label id="err6" style="display: none;color: red">Enter Account Number</label>
+											<form:input path="accountNumber" readonly="true"
+												id="accountNumber" name="accountNumber"
+												cssClass="form-control" />
+											<label id="err6" style="display: none; color: red">Enter
+												Account Number</label>
 										</div>
-										 <img  id="waitingImg"  style="width:150px;height:60px;" src="./resources/logo/response-waiting.gif">
+										<img id="waitingImg" style="width: 150px; height: 60px;"
+											src="./resources/logo/response-waiting.gif">
 										<div class="form-group">
-                                        <label>Number of Entries</label>
-											<input type="text" id="member" name="member" value="" class="form-control"><br />
+											<label>Number of Entries</label> <input type="text"
+												id="member" name="member" value="" class="form-control"><br />
 											<div id="container">
 												<table id="table1">
 													<tr>
-														
+
 													</tr>
 												</table>
 											</div>
-										</div> 
-											<label id="err7" style="display: none; color: red">Please Enter Valid Denomination</label>
-											<label id="err8" style="display: none; color: red">Please Enter Bundle</label>
-											<!-- <label id="err8" style="display: none; color: red">Please Enter Category</label> -->
+										</div>
+										<label id="err7" style="display: none; color: red">Please
+											Enter Valid Denomination</label>
+										<label id="err8" style="display: none; color: red">Please
+											Enter Bundle</label>
+										<!-- <label id="err8" style="display: none; color: red">Please Enter Category</label> -->
 										<div class="col-lg-12">
-															<button type="submit" class="btn btn-default" value="Details" style="width: 99px;" onclick="refresh()">Refresh</button>
-										
-                       						<!-- <input type="button" id="btnsubmit" value="Save"	onclick="doAjaxPostInsert('+i+');" >
-                       						 -->	
-                       							<button type="button"
-											class="btn btn-primary" id="btnsubmit" onclick="doAjaxPostInsert('+i+');">Save</button>
-                    					<!-- this.disabled=true; return false -->
-                    					</div>
+											<button type="submit" class="btn btn-default" value="Details"
+												style="width: 99px;" onclick="refresh()">Refresh</button>
 
-										<div align="right">
-																</div>
+											<!-- <input type="button" id="btnsubmit" value="Save"	onclick="doAjaxPostInsert('+i+');" >
+                       						 -->
+											<button type="button" class="btn btn-primary" id="btnsubmit"
+												onclick="doAjaxPostInsert('+i+');">Save</button>
+											<!-- this.disabled=true; return false -->
+										</div>
+
+										<div align="right"></div>
 
 									</form:form>
 								</div>
@@ -550,7 +584,7 @@ function refresh() {
 	<script src="./resources/dist/js/sb-admin-2.js"></script>
 
 	<script src="./resources/js/jQuery.print.js"></script>
- <script src="./resources/js/jquery.datetimepicker.js"></script>
+	<script src="./resources/js/jquery.datetimepicker.js"></script>
 	<script>
 		$('#orderDate').datetimepicker({
 			format : 'Y-m-d',
@@ -561,8 +595,8 @@ function refresh() {
 
 		});
 	</script>
-	
-<script type="text/javascript" src="./js/htmlInjection.js"></script>
+
+	<script type="text/javascript" src="./js/htmlInjection.js"></script>
 </body>
 
 </html>

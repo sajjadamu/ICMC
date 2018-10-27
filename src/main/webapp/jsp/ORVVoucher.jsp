@@ -162,15 +162,15 @@
 								</form:form>
 
 
-								<form:form id="userPage" action="viewSelectedORVVoucher" method="post"
-									modelAttribute="user">
+								<form:form id="userPage" action="viewSelectedORVVoucher"
+									method="post" modelAttribute="user">
 									<div class="row">
 										<div class="col-lg-12">
 											<div class="col-sm-10 no-margin">
 												<div class="form-group">
 													<div class="form-group rolewrap">
-														<form:checkboxes name="sasId" items="${records}" itemValue="id"
-															itemLabel="solID" path="id" />
+														<form:checkboxes name="sasId" items="${records}"
+															itemValue="id" itemLabel="solID" path="id" />
 													</div>
 												</div>
 											</div>

@@ -176,9 +176,7 @@ div {
 
 											<tr>
 												<td>Date</td>
-												<td colspan="2">${date}
-												
-												<%-- <fmt:formatDate type="date"
+												<td colspan="2">${date}<%-- <fmt:formatDate type="date"
 														pattern="dd-MM-yyyy" dateStyle="short" timeStyle="short"
 														value="<%=new java.util.Date()%>" /> --%></td>
 												<td colspan="17">Withdrawals</td>
@@ -241,14 +239,14 @@ div {
 											<c:set var="totalPiecesSOILED" value="${0}" />
 											<c:set var="totalPiecesBANK" value="${0}" />
 											<c:set var="totalValues" value="${0}" />
-											<c:set var="totalValueNotes" value="${0}"/>
-											<c:set var="total1RsPieces" value="${0}"/>
+											<c:set var="totalValueNotes" value="${0}" />
+											<c:set var="total1RsPieces" value="${0}" />
 											<c:set var="coins1" value="${0}" />
 											<c:set var="coins2" value="${0}" />
 											<c:set var="coins5" value="${0}" />
 											<c:set var="coins10" value="${0}" />
-											<c:set var="totalValueAllCoins" value="${0}"/>
-                                            <c:set var="totalValueOfBankNotesIBIT" value="${0}"/>
+											<c:set var="totalValueAllCoins" value="${0}" />
+											<c:set var="totalValueOfBankNotesIBIT" value="${0}" />
 											<c:forEach var="row" items="${sasList}">
 												<c:set var="count" value="${count + 1}" scope="page" />
 												<tr>
@@ -275,12 +273,17 @@ div {
 											   row.totalValueOfNotesRs1000S + row.totalValueOfNotesRs1000A + row.totalValueOfNotesRs1000F + row.totalValueOfNotesRs1000I+
 											   row.totalValueOfNotesRs2000S + row.totalValueOfNotesRs2000A + row.totalValueOfNotesRs2000F + row.totalValueOfNotesRs2000I+row.totalValueOfNotesRs2000U)*1000}
 													</td>
-													<c:set var="totalValue1" value="${row.totalValueOfCoinsRs1*2500}" />
-													<c:set var="totalValue2" value="${(row.totalValueOfCoinsRs2*2500)*2}" />
-													<c:set var="totalValue5" value="${(row.totalValueOfCoinsRs5*2500)*5}" />
-													<c:set var="totalValue10" value="${(row.totalValueOfCoinsRs10*2500)*10}" />
+													<c:set var="totalValue1"
+														value="${row.totalValueOfCoinsRs1*2500}" />
+													<c:set var="totalValue2"
+														value="${(row.totalValueOfCoinsRs2*2500)*2}" />
+													<c:set var="totalValue5"
+														value="${(row.totalValueOfCoinsRs5*2500)*5}" />
+													<c:set var="totalValue10"
+														value="${(row.totalValueOfCoinsRs10*2500)*10}" />
 													<%-- <td>${row.totalValue}</td> --%>
-													<c:set var="totalValueNotes" value="${row.totalValue-(totalValue1+totalValue2+totalValue5+totalValue10)}" />
+													<c:set var="totalValueNotes"
+														value="${row.totalValue-(totalValue1+totalValue2+totalValue5+totalValue10)}" />
 													<td>${totalValueNotes}</td>
 													<td>${row.totalValueOfCoinsRs1*2500}</td>
 													<td>${row.totalValueOfCoinsRs2*2500}</td>
@@ -288,13 +291,14 @@ div {
 													<td>${row.totalValueOfCoinsRs10*2500}</td>
 													<td>${(row.totalValueOfNotesRs1F + row.totalValueOfNotesRs1I + row.totalValueOfNotesRs1U)*1000}</td>
 													<td>${totalValue1+totalValue2+totalValue5+totalValue10}</td>
-													<c:set var="totalValueAllCoins" value="${totalValueAllCoins+(totalValue1+totalValue2+totalValue5+totalValue10)}" />
+													<c:set var="totalValueAllCoins"
+														value="${totalValueAllCoins+(totalValue1+totalValue2+totalValue5+totalValue10)}" />
 													<td>${row.totalValue}</td>
 													<td></td>
 													<td></td>
 												</tr>
-												<c:set var="notes1" 
-												        value="${notes1+(row.totalValueOfNotesRs1F + row.totalValueOfNotesRs1I + row.totalValueOfNotesRs1U)*1000}"/>
+												<c:set var="notes1"
+													value="${notes1+(row.totalValueOfNotesRs1F + row.totalValueOfNotesRs1I + row.totalValueOfNotesRs1U)*1000}" />
 												<c:set var="notes5"
 													value="${notes5+(row.totalValueOfNotesRs5F + row.totalValueOfNotesRs5I+row.totalValueOfNotesRs5U)*1000}" />
 												<c:set var="notes10"
@@ -313,7 +317,7 @@ div {
 													value="${notes1000+(row.totalValueOfNotesRs1000A + row.totalValueOfNotesRs1000F + row.totalValueOfNotesRs1000I)*1000}" />
 												<c:set var="notes2000"
 													value="${notes2000+(row.totalValueOfNotesRs2000A + row.totalValueOfNotesRs2000F + row.totalValueOfNotesRs2000I+ row.totalValueOfNotesRs2000U)*1000}" />
-                                                <c:set var="coins1"
+												<c:set var="coins1"
 													value="${coins1+(row.totalValueOfCoinsRs1)*2500}" />
 												<c:set var="coins2"
 													value="${coins2+(row.totalValueOfCoinsRs2)*2500}" />
@@ -332,7 +336,7 @@ div {
 											   row.totalValueOfNotesRs1000A + row.totalValueOfNotesRs1000F + row.totalValueOfNotesRs1000I+
 											   row.totalValueOfNotesRs2000A + row.totalValueOfNotesRs2000F + row.totalValueOfNotesRs2000I+row.totalValueOfNotesRs2000U)*1000}" />
 
-                                            <c:set var="total1RsPieces"
+												<c:set var="total1RsPieces"
 													value="${total1RsPieces+(row.totalValueOfNotesRs1F + row.totalValueOfNotesRs1I + row.totalValueOfNotesRs1U)*1000}" />
 												<c:set var="totalValues"
 													value="${totalValues+row.totalValue}" />
@@ -358,8 +362,9 @@ div {
 													<td>${row.value.denom1000Pieces}</td>
 													<td>${row.value.denom2000Pieces}</td>
 													<td>${row.value.totalInPieces}</td>
-													<c:set var="totalPiecesCRA" value="${totalPiecesCRA+row.value.totalInPieces}" />
-													
+													<c:set var="totalPiecesCRA"
+														value="${totalPiecesCRA+row.value.totalInPieces}" />
+
 													<td>${row.value.totalValueOfBankNotes+row.value.denom1Pieces}</td>
 													<td>0</td>
 													<td>0</td>
@@ -390,8 +395,9 @@ div {
 													<td>${row.value.denom1000Pieces}</td>
 													<td>${row.value.denom2000Pieces}</td>
 													<td>${row.value.totalInPieces}</td>
-													<c:set var="totalPiecesDRV" value="${totalPiecesDRV+row.value.totalInPieces}" />
-													
+													<c:set var="totalPiecesDRV"
+														value="${totalPiecesDRV+row.value.totalInPieces}" />
+
 													<td>${row.value.totalValueOfBankNotes+row.value.denom1Pieces}</td>
 													<td>0</td>
 													<td>0</td>
@@ -404,7 +410,7 @@ div {
 													<td></td>
 												</tr>
 											</c:forEach>
-											
+
 
 											<c:forEach var="row" items="${otherBankAllocationList}">
 												<c:set var="count" value="${count + 1}" scope="page" />
@@ -423,7 +429,8 @@ div {
 													<td>${row.value.denom1000Pieces}</td>
 													<td>${row.value.denom2000Pieces}</td>
 													<td>${row.value.totalInPieces}</td>
-													<c:set var="totalPiecesBANK" value="${totalPiecesBANK+row.value.totalInPieces}" />
+													<c:set var="totalPiecesBANK"
+														value="${totalPiecesBANK+row.value.totalInPieces}" />
 													<td>${row.value.totalValueOfBankNotes+row.value.denom1Pieces}</td>
 													<td>0</td>
 													<td>0</td>
@@ -454,7 +461,8 @@ div {
 													<td>${row.value.denom1000Pieces}</td>
 													<td>${row.value.denom2000Pieces}</td>
 													<td>${row.value.totalInPieces}</td>
-													<c:set var="totalPiecesSOILED" value="${totalPiecesSOILED+row.value.totalInPieces}" />
+													<c:set var="totalPiecesSOILED"
+														value="${totalPiecesSOILED+row.value.totalInPieces}" />
 													<td>${row.value.totalValueOfBankNotes+row.value.denom1Pieces}</td>
 													<td>0</td>
 													<td>0</td>
@@ -467,7 +475,7 @@ div {
 													<td></td>
 												</tr>
 											</c:forEach>
-                                         
+
 											<c:forEach var="row" items="${ibitListValues}">
 												<c:set var="count" value="${count + 1}" scope="page" />
 												<tr>
@@ -484,9 +492,11 @@ div {
 													<td>${row.denom1000Pieces}</td>
 													<td>${row.denom2000Pieces}</td>
 													<td>${row.denom5Pieces+row.denom10Pieces+row.denom20Pieces+row.denom50Pieces+row.denom100Pieces+row.denom200Pieces+row.denom500Pieces+row.denom1000Pieces+row.denom2000Pieces}</td>
-													<c:set var="totalNotesPiesesIBIT" value="${totalNotesPiesesIBIT + row.denom5Pieces+row.denom10Pieces+row.denom20Pieces+row.denom50Pieces+row.denom100Pieces+row.denom200Pieces+row.denom500Pieces+row.denom1000Pieces+row.denom2000Pieces}"/>
+													<c:set var="totalNotesPiesesIBIT"
+														value="${totalNotesPiesesIBIT + row.denom5Pieces+row.denom10Pieces+row.denom20Pieces+row.denom50Pieces+row.denom100Pieces+row.denom200Pieces+row.denom500Pieces+row.denom1000Pieces+row.denom2000Pieces}" />
 													<td>${row.denom5Pieces*5+row.denom10Pieces*10+row.denom20Pieces*20+row.denom50Pieces*50+row.denom100Pieces*100+row.denom200Pieces*200+row.denom500Pieces*500+row.denom1000Pieces*1000+row.denom2000Pieces*2000}</td>
-													<c:set var="totalValueOfBankNotesIBIT" value="${totalValueOfBankNotesIBIT+row.denom5Pieces*5+row.denom10Pieces*10+row.denom20Pieces*20+row.denom50Pieces*50+row.denom100Pieces*100+row.denom200Pieces*200+row.denom500Pieces*500+row.denom1000Pieces*1000+row.denom2000Pieces*2000}" />
+													<c:set var="totalValueOfBankNotesIBIT"
+														value="${totalValueOfBankNotesIBIT+row.denom5Pieces*5+row.denom10Pieces*10+row.denom20Pieces*20+row.denom50Pieces*50+row.denom100Pieces*100+row.denom200Pieces*200+row.denom500Pieces*500+row.denom1000Pieces*1000+row.denom2000Pieces*2000}" />
 													<td></td>
 													<td></td>
 													<td></td>
@@ -511,7 +521,7 @@ div {
 												<td><b>${modelMap.denom500TotalPieces+notes500}</b></td>
 												<td><b>${modelMap.denom1000TotalPieces+notes1000}</b></td>
 												<td><b>${modelMap.denom2000TotalPieces+notes2000}</b></td>
-											<%-- 	<td><b>${modelMap.totalInPieces}</b></td> --%>
+												<%-- 	<td><b>${modelMap.totalInPieces}</b></td> --%>
 												<td><b>${totalPieces+totalPiecesCRA+totalPiecesDRV+totalPiecesBANK+totalPiecesSOILED+totalNotesPiesesIBIT}</b></td>
 												<td><b>${modelMap.totalValueOfBankNotes+totalValueOfBankNotesIBIT+totalValues-totalValueAllCoins}</b></td>
 												<td><b>${modelMap.coin1TotalPieces+coins1}</b></td>

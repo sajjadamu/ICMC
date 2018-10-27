@@ -140,8 +140,8 @@
 												cssClass="form-control" />
 										</div>
 
-										<button id="submit" type="submit" class="btn btn-lg btn-success btn-block"
-											value="Details">Submit</button>
+										<button id="submit" type="submit"
+											class="btn btn-lg btn-success btn-block" value="Details">Submit</button>
 									</form:form>
 								</div>
 								<!-- /.col-lg-6 (nested) -->

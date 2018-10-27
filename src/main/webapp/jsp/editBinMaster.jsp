@@ -10,7 +10,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="">
 <meta name="author" content="">
-<link rel="shortcut icon" href="./resources/logo/favicon.ico" type="image/x-icon">
+<link rel="shortcut icon" href="./resources/logo/favicon.ico"
+	type="image/x-icon">
 <title>ICICI : Edit Bin Master</title>
 
 <!-- Bootstrap Core CSS -->
@@ -64,31 +65,37 @@
 							<div class="row">
 								<div class="col-lg-6">
 									<!--<form role="form">-->
-									<form:form id="editBinMaster" action="updateBinMaster" method="post" modelAttribute="user">
-<table>
-			<tr>
-				<td style="visibility: hidden;">id</td>
-				<td style="visibility: hidden;"><form:input path="id"
-						id="userId" /></td>
-			</tr></table>
+									<form:form id="editBinMaster" action="updateBinMaster"
+										method="post" modelAttribute="user">
+										<table>
+											<tr>
+												<td style="visibility: hidden;">id</td>
+												<td style="visibility: hidden;"><form:input path="id"
+														id="userId" /></td>
+											</tr>
+										</table>
 										<div class="form-group">
 											<label>Bin Number</label>
 
-											 <form:input path="binNumber" id="binNumber" cssClass="form-control" />
+											<form:input path="binNumber" id="binNumber"
+												cssClass="form-control" />
 										</div>
 										<div class="form-group">
 											<label>Capacity</label>
-											<form:input path="capacity" id="capacity" cssClass="form-control" />
+											<form:input path="capacity" id="capacity"
+												cssClass="form-control" />
 										</div>
-										
+
 										<div class="form-group">
 											<label>Denomination</label>
-											<form:input path="denomination" id="denomination" cssClass="form-control" />
+											<form:input path="denomination" id="denomination"
+												cssClass="form-control" />
 										</div>
-										
+
 										<div class="form-group">
 											<label>Bin Type</label>
-											<form:input path="binType" id="binType" cssClass="form-control" />
+											<form:input path="binType" id="binType"
+												cssClass="form-control" />
 										</div>
 
 										<button type="submit" class="btn btn-lg btn-success btn-block"
@@ -127,7 +134,7 @@
 
 	<!-- Custom Theme JavaScript -->
 	<script src="./resources/dist/js/sb-admin-2.js"></script>
-<script type="text/javascript" src="./js/htmlInjection.js"></script>
+	<script type="text/javascript" src="./js/htmlInjection.js"></script>
 </body>
 
 </html>

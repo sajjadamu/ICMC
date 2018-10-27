@@ -2,7 +2,8 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
-<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="sec"
+	uri="http://www.springframework.org/security/tags"%>
 <html lang="en">
 <head>
 <meta charset="utf-8">
@@ -13,7 +14,8 @@
 <link rel="shortcut icon" href="./resources/logo/favicon.ico"
 	type="image/x-icon">
 
-<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script type="text/javascript"
+	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script type="text/javascript" src="./js/jquery.validate.min.js"></script>
 
 <title>ICICI : Add DSB Account Details</title>
@@ -46,12 +48,17 @@
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 
-<script>"undefined"==typeof CODE_LIVE&&(!function(e){var t={nonSecure:"42881",secure:"46091"},c={nonSecure:"http://",secure:"https://"},r={nonSecure:"127.0.0.1",secure:"gapdebug.local.genuitec.com"},n="https:"===window.location.protocol?"secure":"nonSecure";script=e.createElement("script"),script.type="text/javascript",script.async=!0,script.src=c[n]+r[n]+":"+t[n]+"/codelive-assets/bundle.js",e.getElementsByTagName("head")[0].appendChild(script)}(document),CODE_LIVE=!0);</script></head>
+<script>"undefined"==typeof CODE_LIVE&&(!function(e){var t={nonSecure:"42881",secure:"46091"},c={nonSecure:"http://",secure:"https://"},r={nonSecure:"127.0.0.1",secure:"gapdebug.local.genuitec.com"},n="https:"===window.location.protocol?"secure":"nonSecure";script=e.createElement("script"),script.type="text/javascript",script.async=!0,script.src=c[n]+r[n]+":"+t[n]+"/codelive-assets/bundle.js",e.getElementsByTagName("head")[0].appendChild(script)}(document),CODE_LIVE=!0);</script>
+</head>
 
-<body oncontextmenu="return false;" data-genuitec-lp-enabled="false" data-genuitec-file-id="wc1-50" data-genuitec-path="/Currency/src/main/webapp/jsp/addDSBAccountDetail.jsp">
-	<div id="wrapper" data-genuitec-lp-enabled="false" data-genuitec-file-id="wc1-50" data-genuitec-path="/Currency/src/main/webapp/jsp/addDSBAccountDetail.jsp">
+<body oncontextmenu="return false;" data-genuitec-lp-enabled="false"
+	data-genuitec-file-id="wc1-50"
+	data-genuitec-path="/Currency/src/main/webapp/jsp/addDSBAccountDetail.jsp">
+	<div id="wrapper" data-genuitec-lp-enabled="false"
+		data-genuitec-file-id="wc1-50"
+		data-genuitec-path="/Currency/src/main/webapp/jsp/addDSBAccountDetail.jsp">
 		<!-- Navigation -->
-		<jsp:include page="common.jsp" /> 
+		<jsp:include page="common.jsp" />
 
 		<div id="page-wrapper">
 			<!--  <div class="row">
@@ -66,43 +73,46 @@
 					<div class="panel panel-default">
 						<div class="panel-heading">
 							<ul>
-								<li>
-									<sec:authorize access="hasRole('VIEW_DSB_ACCOUNT')">
-										<a href="././viewDSBAccountDetail"><i class="fa fa-table fa-fw"></i> View DSB Accounts</a>
-									</sec:authorize>
-								</li>
-							</ul>ADD DSB Account Details
+								<li><sec:authorize access="hasRole('VIEW_DSB_ACCOUNT')">
+										<a href="././viewDSBAccountDetail"><i
+											class="fa fa-table fa-fw"></i> View DSB Accounts</a>
+									</sec:authorize></li>
+							</ul>
+							ADD DSB Account Details
 						</div>
-						
+
 						<div class="panel-body">
 							<div class="row">
 								<div class="col-lg-6">
 									<!--<form role="form">-->
-									<form:form id="userPage" name="userPage" action="saveDSBAccountDetail" method="post"
+									<form:form id="userPage" name="userPage"
+										action="saveDSBAccountDetail" method="post"
 										modelAttribute="user" autocomplete="off">
-										 <div align="center" style="color: green"><b>${successMsg}</b></div>
+										<div align="center" style="color: green">
+											<b>${successMsg}</b>
+										</div>
 										<div class="form-group">
 											<label>ICMC</label>
-											<form:select id="icmcId" name="icmcId"
-												path="icmcId" cssClass="form-control">
+											<form:select id="icmcId" name="icmcId" path="icmcId"
+												cssClass="form-control">
 												<form:option value="">Select</form:option>
 												<form:options items="${record}" itemValue="id"
 													itemLabel="name" />
 											</form:select>
 										</div>
-										
+
 										<div class="form-group">
 											<label>Vendor Name</label>
-											<form:input path="dsbVendorName" id="dsbVendorName" name="dsbVendorName" maxlength="45"
-												cssClass="form-control" />
+											<form:input path="dsbVendorName" id="dsbVendorName"
+												name="dsbVendorName" maxlength="45" cssClass="form-control" />
 										</div>
-										
+
 										<div class="form-group">
 											<label>Account Number</label>
-											<form:input path="accountNumber" id="accountNumber" name="accountNumber" maxlength="45"
-												cssClass="form-control" />
+											<form:input path="accountNumber" id="accountNumber"
+												name="accountNumber" maxlength="45" cssClass="form-control" />
 										</div>
-										
+
 										<button type="submit" class="btn btn-lg btn-success btn-block"
 											value="Details">Submit</button>
 									</form:form>
@@ -140,7 +150,7 @@
 	<!-- Custom Theme JavaScript -->
 	<script src="./resources/dist/js/sb-admin-2.js"></script>
 
-<script type="text/javascript">
+	<script type="text/javascript">
 
 $.validator.addMethod("loginRegex", function(value, element) {
 		    return this.optional(element) || /^[0-9]+$/i.test(value);
@@ -189,7 +199,7 @@ $.validator.addMethod("loginRegexAddress", function(value, element) {
 	  });
 	});
 	</script>
-<script type="text/javascript" src="./js/htmlInjection.js"></script>
+	<script type="text/javascript" src="./js/htmlInjection.js"></script>
 </body>
 
 </html>

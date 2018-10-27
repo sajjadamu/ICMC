@@ -34,7 +34,7 @@
 	rel="stylesheet" type="text/css">
 <link rel="stylesheet" type="text/css"
 	href="./resources/dist/css/style.css">
-	<script>
+<script>
     $(function()
 {
   $('#btnsubmit').on('click',function()
@@ -265,9 +265,10 @@
 
 									<div class="form-group">
 										<label>Choose Reason</label> <input type="radio" name="reason"
-											id="reason" checked="checked" value="defaulty" onclick="getPatialOrDefaulty()">Faulty
-											
-											<!-- <input type="radio" name="reason"
+											id="reason" checked="checked" value="defaulty"
+											onclick="getPatialOrDefaulty()">Faulty
+
+										<!-- <input type="radio" name="reason"
 											id="reason" value="partial" onclick="getPatialOrDefaulty()">Partially -->
 									</div>
 
@@ -277,16 +278,16 @@
 											<option value="">Select Bin/Box</option>
 										</select>
 									</div>
-                               <div class="form-group">
-										<label >Category</label> <div
-											id="category" ></div>
-											
-									</div>
-									
 									<div class="form-group">
-										<label >Denomination</label> <div
-											id="denomination" ></div>
-											
+										<label>Category</label>
+										<div id="category"></div>
+
+									</div>
+
+									<div class="form-group">
+										<label>Denomination</label>
+										<div id="denomination"></div>
+
 									</div>
 									<div class="form-group">
 										<label>Bundle</label> <input type="text" name="bundle"
@@ -298,17 +299,17 @@
 											<option value="">Select Bin/Box</option>
 										</select>
 									</div>
-									
+
 									<div class="form-group">
 										<label>Remarks</label> <input type="text" name=remarks
 											id="remarks">
 									</div>
 
 									<div class="form-group">
-<!-- 										<input type="button" value="Submit"
+										<!-- 										<input type="button" value="Submit"
 											onclick="cashTransferFromMasterToTransaction()"> -->
-											<input type="button" value="Submit" id="btnsubmit" 
-                                         onclick="cashTransferFromMasterToTransaction()">
+										<input type="button" value="Submit" id="btnsubmit"
+											onclick="cashTransferFromMasterToTransaction()">
 									</div>
 
 								</div>

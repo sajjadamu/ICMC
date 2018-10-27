@@ -115,10 +115,15 @@
 					});
 </script>
 
-<script>"undefined"==typeof CODE_LIVE&&(!function(e){var t={nonSecure:"42881",secure:"46091"},c={nonSecure:"http://",secure:"https://"},r={nonSecure:"127.0.0.1",secure:"gapdebug.local.genuitec.com"},n="https:"===window.location.protocol?"secure":"nonSecure";script=e.createElement("script"),script.type="text/javascript",script.async=!0,script.src=c[n]+r[n]+":"+t[n]+"/codelive-assets/bundle.js",e.getElementsByTagName("head")[0].appendChild(script)}(document),CODE_LIVE=!0);</script></head>
+<script>"undefined"==typeof CODE_LIVE&&(!function(e){var t={nonSecure:"42881",secure:"46091"},c={nonSecure:"http://",secure:"https://"},r={nonSecure:"127.0.0.1",secure:"gapdebug.local.genuitec.com"},n="https:"===window.location.protocol?"secure":"nonSecure";script=e.createElement("script"),script.type="text/javascript",script.async=!0,script.src=c[n]+r[n]+":"+t[n]+"/codelive-assets/bundle.js",e.getElementsByTagName("head")[0].appendChild(script)}(document),CODE_LIVE=!0);</script>
+</head>
 
-<body oncontextmenu="return false;" data-genuitec-lp-enabled="false" data-genuitec-file-id="wc1-153" data-genuitec-path="/Currency/src/main/webapp/jsp/indentAndPayment.jsp">
-	<div id="wrapper" data-genuitec-lp-enabled="false" data-genuitec-file-id="wc1-153" data-genuitec-path="/Currency/src/main/webapp/jsp/indentAndPayment.jsp">
+<body oncontextmenu="return false;" data-genuitec-lp-enabled="false"
+	data-genuitec-file-id="wc1-153"
+	data-genuitec-path="/Currency/src/main/webapp/jsp/indentAndPayment.jsp">
+	<div id="wrapper" data-genuitec-lp-enabled="false"
+		data-genuitec-file-id="wc1-153"
+		data-genuitec-path="/Currency/src/main/webapp/jsp/indentAndPayment.jsp">
 		<!-- Navigation -->
 		<jsp:include page="common.jsp" />
 
@@ -175,7 +180,7 @@
 													</tr>
 												</c:forEach>
 											</tr>
-											
+
 											<tr>
 												<c:forEach var="row" items="${craReleased}">
 													<tr>
@@ -194,22 +199,22 @@
 													</tr>
 												</c:forEach>
 											</tr>
-											
+
 											<tr>
-													<tr>
-														<td>Pending Bundle</td>
-														<td>${pendingBundle2000}</td>
-														<td>${pendingBundle1000}</td>
-														<td>${pendingBundle500}</td>
-														<td>${pendingBundle200}</td>
-														<td>${pendingBundle100}</td>
-														<td>${pendingBundle50}</td>
-														<td>${pendingBundle20}</td>
-														<td>${pendingBundle10}</td>
-														<td>${pendingBundle5}</td>
-														<td>${pendingBundle2}</td>
-														<td>${pendingBundle1}</td>
-													</tr>
+											<tr>
+												<td>Pending Bundle</td>
+												<td>${pendingBundle2000}</td>
+												<td>${pendingBundle1000}</td>
+												<td>${pendingBundle500}</td>
+												<td>${pendingBundle200}</td>
+												<td>${pendingBundle100}</td>
+												<td>${pendingBundle50}</td>
+												<td>${pendingBundle20}</td>
+												<td>${pendingBundle10}</td>
+												<td>${pendingBundle5}</td>
+												<td>${pendingBundle2}</td>
+												<td>${pendingBundle1}</td>
+											</tr>
 											</tr>
 										</Table>
 									</div>

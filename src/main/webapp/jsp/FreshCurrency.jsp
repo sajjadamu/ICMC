@@ -12,7 +12,8 @@
 <link rel="shortcut icon" href="./resources/logo/favicon.ico"
 	type="image/x-icon">
 
-<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script type="text/javascript"
+	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script type="text/javascript" src="./js/jquery.validate.min.js"></script>
 
 <title>ICICI : Add Fresh Currency</title>
@@ -62,40 +63,42 @@
 				<div class="col-lg-12">
 					<div class="panel panel-default">
 						<div class="panel-heading">
-                        	<ul>
-                        		<li>
-                        			<a href="././viewfreshCurrency"><i class="fa fa-table fa-fw"></i> View Fresh Currency Details</a>
-                        		</li>
-							</ul>Add Fresh Currency
-                        </div>
+							<ul>
+								<li><a href="././viewfreshCurrency"><i
+										class="fa fa-table fa-fw"></i> View Fresh Currency Details</a></li>
+							</ul>
+							Add Fresh Currency
+						</div>
 						<div class="panel-body">
 							<div class="row">
 								<div class="col-lg-6">
 									<!--<form role="form">-->
-									<form:form id="userPage" action="AddFreshCurrency" method="post" name="userPage"
-										modelAttribute="user" >
-										
+									<form:form id="userPage" action="AddFreshCurrency"
+										method="post" name="userPage" modelAttribute="user">
+
 										<%-- <div class="form-group">
 											<label>Machine No.</label>
 											<form:input path="machineNo" id="machineNo" name="machineNo" cssClass="form-control" maxlength="45" />
 										</div> --%>
-									
+
 										<div class="form-group">
 											<label>Denomination</label><br>
-											<form:radiobuttons items="${denominationList}" itemLabel="denomination" 
-												itemValue="denomination" id="denomination" path="denomination" name="denomination" />
-										</div>	
+											<form:radiobuttons items="${denominationList}"
+												itemLabel="denomination" itemValue="denomination"
+												id="denomination" path="denomination" name="denomination" />
+										</div>
 
 										<div class="form-group">
 											<label>Bundle</label>
-											<form:input path="bundle" id="bundle" name="bundle" cssClass="form-control" maxlength="45"/>
+											<form:input path="bundle" id="bundle" name="bundle"
+												cssClass="form-control" maxlength="45" />
 										</div>
-										
+
 										<%-- <div class="form-group">
 											<label>Total Value</label>
 											<form:input path="totalValue" id="totalValue" name="totalValue" cssClass="form-control" maxlength="45"/>
 										</div> --%>
-										
+
 										<button type="submit" class="btn btn-lg btn-success btn-block"
 											value="Details">Save AND Print QR</button>
 									</form:form>
@@ -132,7 +135,7 @@
 
 	<!-- Custom Theme JavaScript -->
 	<script src="./resources/dist/js/sb-admin-2.js"></script>
-<!-- <script type="text/javascript">
+	<!-- <script type="text/javascript">
 $.validator.addMethod("loginRegex", function(value, element) {
     return this.optional(element) || /^[0-9]+$/i.test(value);
 }, "Software must contain only letters,Space , dashes.");
@@ -175,7 +178,7 @@ $.validator.addMethod("loginRegex", function(value, element) {
 	  });
 	});
 	</script> -->
-<script type="text/javascript" src="./js/htmlInjection.js"></script>
+	<script type="text/javascript" src="./js/htmlInjection.js"></script>
 </body>
 
 </html>

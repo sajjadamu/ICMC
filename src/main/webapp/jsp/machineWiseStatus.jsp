@@ -94,8 +94,7 @@
 							<div class="dataTable_wrapper">
 								<form id="showAll">
 
-									<table width="100%" border="1"  cellpadding="0"
-										cellspacing="0"
+									<table width="100%" border="1" cellpadding="0" cellspacing="0"
 										class="table table-striped table-bordered table-hover">
 										<tbody>
 											<tr align="center">
@@ -316,7 +315,7 @@
 			});
 		});
 	</script>
-<script type="text/javascript" src="./js/htmlInjection.js"></script>
+	<script type="text/javascript" src="./js/htmlInjection.js"></script>
 </body>
 
 </html>

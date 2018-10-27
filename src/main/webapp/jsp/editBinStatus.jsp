@@ -12,10 +12,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="">
 <meta name="author" content="">
-<link rel="shortcut icon" href="./resources/logo/favicon.ico" type="image/x-icon">
+<link rel="shortcut icon" href="./resources/logo/favicon.ico"
+	type="image/x-icon">
 <title>ICICI : Update Bin</title>
 
-<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script type="text/javascript"
+	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script type="text/javascript" src="./js/jquery.validate.min.js"></script>
 
 
@@ -71,17 +73,18 @@
 							<div class="row">
 								<div class="col-lg-6">
 									<!--<form role="form">-->
-									<form:form id="userPage" name="userPage" action="updateBinStatus" method="post" 
-										modelAttribute="user" autocomplete="off">
-										
-										<form:hidden path="id"/>
-										
+									<form:form id="userPage" name="userPage"
+										action="updateBinStatus" method="post" modelAttribute="user"
+										autocomplete="off">
+
+										<form:hidden path="id" />
+
 										<div class="form-group">
 											<label>Bin Number</label>
 											<form:input path="binNumber" id="binNumber"
 												cssClass="form-control" />
-										</div> 	
-										
+										</div>
+
 										<button type="submit" class="btn btn-lg btn-success btn-block"
 											value="Details">Disable Bin</button>
 									</form:form>
@@ -118,8 +121,8 @@
 
 	<!-- Custom Theme JavaScript -->
 	<script src="./resources/dist/js/sb-admin-2.js"></script>
-	
-<script type="text/javascript" src="./js/htmlInjection.js"></script>	
+
+	<script type="text/javascript" src="./js/htmlInjection.js"></script>
 </body>
 
 </html>

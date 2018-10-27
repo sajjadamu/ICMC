@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+	pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jstl/core_rt"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <html lang="en">
@@ -67,9 +68,9 @@ function doAjaxForRegion() {
              }
           );
  		}
- </script> 
- 
- <script type="text/javascript" charset="utf-8"> 
+ </script>
+
+<script type="text/javascript" charset="utf-8"> 
    		function getPrinter(){
    			$.getJSON(
    	             "icmcPrinterList.json",
@@ -86,9 +87,9 @@ function doAjaxForRegion() {
    	             }
    	          );
      	}
- </script> 
- 
- <script type="text/javascript" charset="utf-8">    
+ </script>
+
+<script type="text/javascript" charset="utf-8">    
      function vailidRegionZoneIcmc(){
     	 addHeader();
     	// alert("vailidRegionZoneIcmc   :"+$("input[name=roleId]:checked").val())
@@ -178,88 +179,102 @@ function doAjaxForRegion() {
 <body oncontextmenu="return false;">
 	<div id="wrapper">
 		<!-- Navigation -->
-		<jsp:include page="common.jsp" /> 
+		<jsp:include page="common.jsp" />
 
 		<div id="page-wrapper">
 			<!-- /.row -->
 			<div class="row">
 				<div class="col-lg-12">
 					<div class="panel panel-default">
-						
+
 						<div class="panel-heading">
-                          <ul><li><a href="././viewAll"><i
-								class="fa fa-table fa-fw"></i> View Users List</a></li></ul>
-                          Add User
-                        </div>
-						
+							<ul>
+								<li><a href="././viewAll"><i class="fa fa-table fa-fw"></i>
+										View Users List</a></li>
+							</ul>
+							Add User
+						</div>
+
 						<div class="panel-body">
 							<div class="row">
 								<div class="col-lg-6">
 									<!--<form role="form">-->
-									
-									<form:form id="userPage" name="userPage" action="saveUser" method="post"
-										modelAttribute="user" autocomplete="off">
-                                      
-                                      	<div align="center" style="color: red"><b>${duplicateUser}</b></div>
-                                      
-                                      	<div class="form-group">
+
+									<form:form id="userPage" name="userPage" action="saveUser"
+										method="post" modelAttribute="user" autocomplete="off">
+
+										<div align="center" style="color: red">
+											<b>${duplicateUser}</b>
+										</div>
+
+										<div class="form-group">
 											<label>User ID</label>
-											<form:input path="id" id="id" name="id" maxlength="32" cssClass="form-control" />
-									  	</div>
-									  
+											<form:input path="id" id="id" name="id" maxlength="32"
+												cssClass="form-control" />
+										</div>
+
 										<div class="form-group">
 											<label>User Name</label>
-											<form:input path="name" id="name" name="name" maxlength="45" cssClass="form-control" />
+											<form:input path="name" id="name" name="name" maxlength="45"
+												cssClass="form-control" />
 										</div>
-										
+
 										<div class="form-group">
 											<label>Email</label>
-											<form:input path="email" id="email" name="email" maxlength="45" cssClass="form-control" />
+											<form:input path="email" id="email" name="email"
+												maxlength="45" cssClass="form-control" />
 										</div>
-										
+
 										<div class="form-group">
 											<label>Roles</label><br>
-											<form:radiobuttons items="${rolesList}" itemValue="id" itemLabel="id" path="roleId" id="roleId" name="role" onchange="vailidRegionZoneIcmc()" />
+											<form:radiobuttons items="${rolesList}" itemValue="id"
+												itemLabel="id" path="roleId" id="roleId" name="role"
+												onchange="vailidRegionZoneIcmc()" />
 										</div>
-                                      
-                                        <div class="form-group">
+
+										<div class="form-group">
 											<label>Zone</label>
-											<form:select path="zoneId" id="zoneId" name="zoneId" cssClass="form-control" onchange="doAjaxForRegion()">
+											<form:select path="zoneId" id="zoneId" name="zoneId"
+												cssClass="form-control" onchange="doAjaxForRegion()">
 												<option value="" label="Select Zone"></option>
-    											<form:options items="${zoneList}" />
+												<form:options items="${zoneList}" />
 											</form:select>
 										</div>
-										
+
 										<div class="form-group">
 											<label>Region</label>
-											<form:select path="regionId" id="regionId" name="regionId" cssClass="form-control" onchange="getICMC()">
+											<form:select path="regionId" id="regionId" name="regionId"
+												cssClass="form-control" onchange="getICMC()">
 												<form:option value="">Select Region</form:option>
 											</form:select>
 										</div>
-										
+
 										<div class="form-group">
 											<label>ICMC Name</label>
-											<form:select path="icmcId" id="icmcId" name="icmcId" cssClass="form-control" onchange="getPrinter()">
+											<form:select path="icmcId" id="icmcId" name="icmcId"
+												cssClass="form-control" onchange="getPrinter()">
 												<form:option value="">Select ICMC</form:option>
 											</form:select>
 										</div>
-										
+
 										<div class="form-group">
 											<label>ICMC Printer</label>
-											<form:select path="icmcPrinterId" id="icmcPrinterId" name="icmcPrinter" cssClass="form-control">
+											<form:select path="icmcPrinterId" id="icmcPrinterId"
+												name="icmcPrinter" cssClass="form-control">
 												<option value="" label="Select Printer"></option>
 											</form:select>
 										</div>
-										
+
 										<div class="form-group">
 											<label>Status</label>
-											<form:select path="status" id="status" name="status" cssClass="form-control">
+											<form:select path="status" id="status" name="status"
+												cssClass="form-control">
 												<form:option value="ENABLED">Enabled</form:option>
-											 	<form:option value="DISABLED">Disabled</form:option>
-											 	<form:option value="DELETED">Deleted</form:option>
+												<form:option value="DISABLED">Disabled</form:option>
+												<form:option value="DELETED">Deleted</form:option>
 											</form:select>
 										</div>
-										
+
 										<button type="submit" class="btn btn-lg btn-success btn-block"
 											value="Details">Save</button>
 									</form:form>
@@ -296,7 +311,7 @@ function doAjaxForRegion() {
 
 	<!-- Custom Theme JavaScript -->
 	<script src="./resources/dist/js/sb-admin-2.js"></script>
-	
+
 	<script type="text/javascript">
 	
 	$.validator.addMethod("loginRegex", function(value, element) {
@@ -394,7 +409,7 @@ function doAjaxForRegion() {
 	  });
 	});
 	</script>
-<script type="text/javascript" src="./js/htmlInjection.js"></script>
+	<script type="text/javascript" src="./js/htmlInjection.js"></script>
 </body>
 
 </html>

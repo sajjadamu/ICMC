@@ -12,7 +12,8 @@
 <link rel="shortcut icon" href="./resources/logo/favicon.ico"
 	type="image/x-icon">
 
-<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script type="text/javascript"
+	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script type="text/javascript" src="./js/jquery.validate.min.js"></script>
 
 <title>ICICI : Edit Servicing Branch</title>
@@ -44,9 +45,14 @@
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
-<script>"undefined"==typeof CODE_LIVE&&(!function(e){var t={nonSecure:"42881",secure:"46091"},c={nonSecure:"http://",secure:"https://"},r={nonSecure:"127.0.0.1",secure:"gapdebug.local.genuitec.com"},n="https:"===window.location.protocol?"secure":"nonSecure";script=e.createElement("script"),script.type="text/javascript",script.async=!0,script.src=c[n]+r[n]+":"+t[n]+"/codelive-assets/bundle.js",e.getElementsByTagName("head")[0].appendChild(script)}(document),CODE_LIVE=!0);</script></head>
-<body oncontextmenu="return false;" data-genuitec-lp-enabled="false" data-genuitec-file-id="wc1-132" data-genuitec-path="/Currency/src/main/webapp/jsp/editServicingBranch.jsp">
-	<div id="wrapper" data-genuitec-lp-enabled="false" data-genuitec-file-id="wc1-132" data-genuitec-path="/Currency/src/main/webapp/jsp/editServicingBranch.jsp">
+<script>"undefined"==typeof CODE_LIVE&&(!function(e){var t={nonSecure:"42881",secure:"46091"},c={nonSecure:"http://",secure:"https://"},r={nonSecure:"127.0.0.1",secure:"gapdebug.local.genuitec.com"},n="https:"===window.location.protocol?"secure":"nonSecure";script=e.createElement("script"),script.type="text/javascript",script.async=!0,script.src=c[n]+r[n]+":"+t[n]+"/codelive-assets/bundle.js",e.getElementsByTagName("head")[0].appendChild(script)}(document),CODE_LIVE=!0);</script>
+</head>
+<body oncontextmenu="return false;" data-genuitec-lp-enabled="false"
+	data-genuitec-file-id="wc1-132"
+	data-genuitec-path="/Currency/src/main/webapp/jsp/editServicingBranch.jsp">
+	<div id="wrapper" data-genuitec-lp-enabled="false"
+		data-genuitec-file-id="wc1-132"
+		data-genuitec-path="/Currency/src/main/webapp/jsp/editServicingBranch.jsp">
 		<!-- Navigation -->
 		<jsp:include page="common.jsp" />
 
@@ -62,22 +68,23 @@
 				<div class="col-lg-12">
 					<div class="panel panel-default">
 						<!-- <div class="panel-heading"> Update Servicing Branch</div> -->
-						
+
 						<div class="panel-heading">
 							<ul>
-								<li>
-									<a href="././viewServicingBranch"><i class="fa fa-table fa-fw"></i> Servicing Branch List</a>
-								</li>
-							</ul>Update Servicing Branch
+								<li><a href="././viewServicingBranch"><i
+										class="fa fa-table fa-fw"></i> Servicing Branch List</a></li>
+							</ul>
+							Update Servicing Branch
 						</div>
-						
+
 						<div class="panel-body">
 							<div class="row">
 								<div class="col-lg-6">
 									<!--<form role="form">-->
-									<form:form id="userPage" name="userPage" action="updateServicingBranch" method="post"
+									<form:form id="userPage" name="userPage"
+										action="updateServicingBranch" method="post"
 										modelAttribute="user" autocomplete="off">
-										
+
 										<table>
 											<tr>
 												<td style="visibility: hidden;">id</td>
@@ -85,49 +92,49 @@
 														id="id" /></td>
 											</tr>
 										</table>
-										
+
 										<div class="form-group">
 											<label>Sol ID</label>
 											<form:input path="SolId" id="SolId" name="SolId"
 												minlength="4" maxlength="4" cssClass="form-control" />
 										</div>
-										
+
 										<div class="form-group">
 											<label>ICMC Name</label>
 											<form:input path="icmcName" id="icmcName" name="icmcName"
 												maxlength="45" cssClass="form-control" />
 										</div>
-										
+
 										<div class="form-group">
 											<label>Branch Name</label>
-											<form:input path="branchName" id="branchName" name="branchName"
-												maxlength="45" cssClass="form-control" />
+											<form:input path="branchName" id="branchName"
+												name="branchName" maxlength="45" cssClass="form-control" />
 										</div>
-										
+
 										<div class="form-group">
 											<label>RBI JI</label>
 											<form:input path="rbiJI" id="rbiJI" name="rbiJI"
 												maxlength="45" cssClass="form-control" />
 										</div>
-										
+
 										<div class="form-group">
 											<label>RBI SI</label>
 											<form:input path="rbiSI" id="rbiSI" name="rbiSI"
 												maxlength="45" cssClass="form-control" />
 										</div>
-										
+
 										<div class="form-group">
 											<label>Category</label>
 											<form:input path="Category" id="Category" name="Category"
 												maxlength="45" cssClass="form-control" />
 										</div>
-										
+
 										<div class="form-group">
 											<label>RBI ICMC</label>
 											<form:input path="rbiICMC" id="rbiICMC" name="rbiICMC"
 												maxlength="45" cssClass="form-control" />
 										</div>
-										
+
 										<button type="submit" class="btn btn-lg btn-success btn-block"
 											value="Details">Save</button>
 									</form:form>
@@ -164,7 +171,7 @@
 
 	<!-- Custom Theme JavaScript -->
 	<script src="./resources/dist/js/sb-admin-2.js"></script>
-	
+
 	<script type="text/javascript">
 	$(function() {
 	  $("form[name='userPage']").validate({
@@ -240,8 +247,8 @@
 	  });
 	});
 	</script>
-	
-<script type="text/javascript" src="./js/htmlInjection.js"></script>
+
+	<script type="text/javascript" src="./js/htmlInjection.js"></script>
 </body>
 
 </html>

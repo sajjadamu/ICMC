@@ -1,11 +1,14 @@
 <!DOCTYPE html>
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+	pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
-<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="sec"
+	uri="http://www.springframework.org/security/tags"%>
 <html lang="en">
 
 <head>
-<link rel="shortcut icon" href="./resources/logo/favicon.ico" type="image/x-icon">
+<link rel="shortcut icon" href="./resources/logo/favicon.ico"
+	type="image/x-icon">
 <script src="./js/jquery-1.12.0.min.js"></script>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -15,21 +18,30 @@
 
 <title>ICICI : Add Other Bank Receipt</title>
 
-<link href="./resources/css/calendar.css" rel="stylesheet" type="text/css" />
-<link rel="stylesheet" type="text/css" href="./resources/css/jquery.datetimepicker.css" />
+<link href="./resources/css/calendar.css" rel="stylesheet"
+	type="text/css" />
+<link rel="stylesheet" type="text/css"
+	href="./resources/css/jquery.datetimepicker.css" />
 <!-- Bootstrap Core CSS -->
-<link href="./resources/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+<link
+	href="./resources/bower_components/bootstrap/dist/css/bootstrap.min.css"
+	rel="stylesheet">
 
 <!-- MetisMenu CSS -->
-<link href="./resources/bower_components/metisMenu/dist/metisMenu.min.css" rel="stylesheet">
+<link
+	href="./resources/bower_components/metisMenu/dist/metisMenu.min.css"
+	rel="stylesheet">
 
 <!-- Custom CSS -->
 <link href="./resources/dist/css/sb-admin-2.css" rel="stylesheet">
 
 <!-- Custom Fonts -->
-<link href="./resources/bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+<link
+	href="./resources/bower_components/font-awesome/css/font-awesome.min.css"
+	rel="stylesheet" type="text/css">
 
-<link rel="stylesheet" type="text/css" href="./resources/dist/css/style.css">
+<link rel="stylesheet" type="text/css"
+	href="./resources/dist/css/style.css">
 
 <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -358,78 +370,96 @@ function refresh() {
 }
 </script>
 
-<script>"undefined"==typeof CODE_LIVE&&(!function(e){var t={nonSecure:"42881",secure:"46091"},c={nonSecure:"http://",secure:"https://"},r={nonSecure:"127.0.0.1",secure:"gapdebug.local.genuitec.com"},n="https:"===window.location.protocol?"secure":"nonSecure";script=e.createElement("script"),script.type="text/javascript",script.async=!0,script.src=c[n]+r[n]+":"+t[n]+"/codelive-assets/bundle.js",e.getElementsByTagName("head")[0].appendChild(script)}(document),CODE_LIVE=!0);</script></head>
-<body oncontextmenu="return false;" data-genuitec-lp-enabled="false" data-genuitec-file-id="wc1-6" data-genuitec-path="/Currency/src/main/webapp/jsp/AddOtherBankReceipt.jsp">
-	<div id="wrapper" data-genuitec-lp-enabled="false" data-genuitec-file-id="wc1-6" data-genuitec-path="/Currency/src/main/webapp/jsp/AddOtherBankReceipt.jsp">
+<script>"undefined"==typeof CODE_LIVE&&(!function(e){var t={nonSecure:"42881",secure:"46091"},c={nonSecure:"http://",secure:"https://"},r={nonSecure:"127.0.0.1",secure:"gapdebug.local.genuitec.com"},n="https:"===window.location.protocol?"secure":"nonSecure";script=e.createElement("script"),script.type="text/javascript",script.async=!0,script.src=c[n]+r[n]+":"+t[n]+"/codelive-assets/bundle.js",e.getElementsByTagName("head")[0].appendChild(script)}(document),CODE_LIVE=!0);</script>
+</head>
+<body oncontextmenu="return false;" data-genuitec-lp-enabled="false"
+	data-genuitec-file-id="wc1-6"
+	data-genuitec-path="/Currency/src/main/webapp/jsp/AddOtherBankReceipt.jsp">
+	<div id="wrapper" data-genuitec-lp-enabled="false"
+		data-genuitec-file-id="wc1-6"
+		data-genuitec-path="/Currency/src/main/webapp/jsp/AddOtherBankReceipt.jsp">
 		<!-- Navigation -->
-		<jsp:include page="common.jsp" /> 
+		<jsp:include page="common.jsp" />
 
 		<div id="page-wrapper">
 			<!-- /.row -->
 			<div class="row">
 				<div class="col-lg-12">
 					<div class="panel panel-default">
-						
+
 						<div class="panel-heading">
-                        	<ul>
-                        		<li>
-                        			<sec:authorize access="hasRole('VIEW_OTHER_BANK_RECEIPT')">
-                        				<a href="././viewBankReceipt"><i class="fa fa-table fa-fw"></i> View Other Bank Receipt Data</a>
-                        			</sec:authorize>
-								</li>
-							</ul>Add Other Bank Receipt
-                        </div>
-						
+							<ul>
+								<li><sec:authorize
+										access="hasRole('VIEW_OTHER_BANK_RECEIPT')">
+										<a href="././viewBankReceipt"><i class="fa fa-table fa-fw"></i>
+											View Other Bank Receipt Data</a>
+									</sec:authorize></li>
+							</ul>
+							Add Other Bank Receipt
+						</div>
+
 						<div class="panel-body">
 							<div class="row">
 								<div class="col-lg-10">
 									<!--<form role="form">-->
-									<form:form id="" action="" method="post" modelAttribute="user" autocomplete="off">
+									<form:form id="" action="" method="post" modelAttribute="user"
+										autocomplete="off">
 
 										<div class="form-group">
-										<label>Bank Name</label>
-										<form:input path="bankName" id="bankName" name="bankName"
-											cssClass="form-control" />
-										<label id="err1" style="display: none;color: red">Please Enter Bank Name</label>	
-									</div>
-									
-									<div class="form-group">
-										<label>Sol ID</label>
-										<form:input path="solId" name="solId" maxlength="4" id="solId" cssClass="form-control"
-												onkeyup="doAjaxPostForBranch()" />
-										<label id="err2" style="display: none;color: red">Please Enter Sol ID</label>	
-										<label id="err12" style="display: none;color: red">Please  Enter  Four Digit Sol ID </label>	
-									</div>
-
-									<div class="form-group">
-										<label>Branch</label>
-										<form:input path="branch" id="branch" cssClass="form-control" readonly="true" />
-									</div>
-
-                                    <div class="form-group">
-										<label>RTGS UTR No.</label>
-										<form:input path="rtgsUTRNo" id="rtgsUTRNo" name="rtgsUTRNo" cssClass="form-control" />
-										<label id="err3" style="display: none;color: red">Please Enter RTGS UTR No.</label>	
-									</div>
-										
-									<div class="form-group">
-                                        <label>Number of Shrink Wraps</label>
-										<input type="text" id="member" maxlength="45" name="member" value="" class="form-control"><br />
-										<div id="container">
-											<table id="table1"></table>
+											<label>Bank Name</label>
+											<form:input path="bankName" id="bankName" name="bankName"
+												cssClass="form-control" />
+											<label id="err1" style="display: none; color: red">Please
+												Enter Bank Name</label>
 										</div>
-									</div>
-									
-									<div align="right">	
-										<button type="submit" class="btn btn-default" value="Details" style="width: 99px;" onclick="refresh()">Refresh</button>
-									</div>
-										
-									<label id="err4" style="display: none;color: red">Enter Valid Denomination</label>
-									<label id="err5" style="display: none;color: red">Enter Bundle</label>
-											
-							</form:form>
-						</div>
-						<div id="printSection" style="display: none;"></div>
+
+										<div class="form-group">
+											<label>Sol ID</label>
+											<form:input path="solId" name="solId" maxlength="4"
+												id="solId" cssClass="form-control"
+												onkeyup="doAjaxPostForBranch()" />
+											<label id="err2" style="display: none; color: red">Please
+												Enter Sol ID</label> <label id="err12"
+												style="display: none; color: red">Please Enter Four
+												Digit Sol ID </label>
+										</div>
+
+										<div class="form-group">
+											<label>Branch</label>
+											<form:input path="branch" id="branch" cssClass="form-control"
+												readonly="true" />
+										</div>
+
+										<div class="form-group">
+											<label>RTGS UTR No.</label>
+											<form:input path="rtgsUTRNo" id="rtgsUTRNo" name="rtgsUTRNo"
+												cssClass="form-control" />
+											<label id="err3" style="display: none; color: red">Please
+												Enter RTGS UTR No.</label>
+										</div>
+
+										<div class="form-group">
+											<label>Number of Shrink Wraps</label> <input type="text"
+												id="member" maxlength="45" name="member" value=""
+												class="form-control"><br />
+											<div id="container">
+												<table id="table1"></table>
+											</div>
+										</div>
+
+										<div align="right">
+											<button type="submit" class="btn btn-default" value="Details"
+												style="width: 99px;" onclick="refresh()">Refresh</button>
+										</div>
+
+										<label id="err4" style="display: none; color: red">Enter
+											Valid Denomination</label>
+										<label id="err5" style="display: none; color: red">Enter
+											Bundle</label>
+
+									</form:form>
+								</div>
+								<div id="printSection" style="display: none;"></div>
 								<!-- /.col-lg-6 (nested) -->
 								<div class="col-lg-6"></div>
 								<!-- /.col-lg-6 (nested) -->
@@ -464,13 +494,13 @@ function refresh() {
 	<script src="./resources/dist/js/sb-admin-2.js"></script>
 
 	<script src="./resources/js/jQuery.print.js"></script>
- <script src="./resources/js/jquery.datetimepicker.js"></script>
+	<script src="./resources/js/jquery.datetimepicker.js"></script>
 	<script>
 		$('#receiptDate').datetimepicker({
 			format : 'Y-m-d',
 		});
 	</script>
-<script type="text/javascript" src="./js/htmlInjection.js"></script>
+	<script type="text/javascript" src="./js/htmlInjection.js"></script>
 </body>
 
 </html>

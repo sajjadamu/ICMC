@@ -2,7 +2,8 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
-<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="sec"
+	uri="http://www.springframework.org/security/tags"%>
 <html lang="en">
 <head>
 <meta charset="utf-8">
@@ -13,7 +14,8 @@
 <link rel="shortcut icon" href="./resources/logo/favicon.ico"
 	type="image/x-icon">
 
-<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script type="text/javascript"
+	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script type="text/javascript" src="./js/jquery.validate.min.js"></script>
 
 <title>ICICI : Define Key Set</title>
@@ -45,9 +47,14 @@
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
-<script>"undefined"==typeof CODE_LIVE&&(!function(e){var t={nonSecure:"42881",secure:"46091"},c={nonSecure:"http://",secure:"https://"},r={nonSecure:"127.0.0.1",secure:"gapdebug.local.genuitec.com"},n="https:"===window.location.protocol?"secure":"nonSecure";script=e.createElement("script"),script.type="text/javascript",script.async=!0,script.src=c[n]+r[n]+":"+t[n]+"/codelive-assets/bundle.js",e.getElementsByTagName("head")[0].appendChild(script)}(document),CODE_LIVE=!0);</script></head>
-<body oncontextmenu="return false;" data-genuitec-lp-enabled="false" data-genuitec-file-id="wc1-17" data-genuitec-path="/Currency/src/main/webapp/jsp/DefineKeySet.jsp">
-	<div id="wrapper" data-genuitec-lp-enabled="false" data-genuitec-file-id="wc1-17" data-genuitec-path="/Currency/src/main/webapp/jsp/DefineKeySet.jsp">
+<script>"undefined"==typeof CODE_LIVE&&(!function(e){var t={nonSecure:"42881",secure:"46091"},c={nonSecure:"http://",secure:"https://"},r={nonSecure:"127.0.0.1",secure:"gapdebug.local.genuitec.com"},n="https:"===window.location.protocol?"secure":"nonSecure";script=e.createElement("script"),script.type="text/javascript",script.async=!0,script.src=c[n]+r[n]+":"+t[n]+"/codelive-assets/bundle.js",e.getElementsByTagName("head")[0].appendChild(script)}(document),CODE_LIVE=!0);</script>
+</head>
+<body oncontextmenu="return false;" data-genuitec-lp-enabled="false"
+	data-genuitec-file-id="wc1-17"
+	data-genuitec-path="/Currency/src/main/webapp/jsp/DefineKeySet.jsp">
+	<div id="wrapper" data-genuitec-lp-enabled="false"
+		data-genuitec-file-id="wc1-17"
+		data-genuitec-path="/Currency/src/main/webapp/jsp/DefineKeySet.jsp">
 		<!-- Navigation -->
 		<jsp:include page="common.jsp" />
 
@@ -63,30 +70,33 @@
 				<div class="col-lg-12">
 					<div class="panel panel-default">
 						<div class="panel-heading">
-                        	<ul>
-                        		<li>
-                        			<sec:authorize access="hasRole('VIEW_DEFINE_KEYSET')">
-                        				<a href="././viewDefineKeySet"><i class="fa fa-table fa-fw"></i> View Key Set Details</a>
-                        			</sec:authorize>
-                        		</li>
-							</ul>Upload Key Set Details
-                        </div>
+							<ul>
+								<li><sec:authorize access="hasRole('VIEW_DEFINE_KEYSET')">
+										<a href="././viewDefineKeySet"><i
+											class="fa fa-table fa-fw"></i> View Key Set Details</a>
+									</sec:authorize></li>
+							</ul>
+							Upload Key Set Details
+						</div>
 						<div class="panel-body">
 							<div class="row">
 								<div class="col-lg-6">
 									<!--<form role="form">-->
-									<form:form id="userPage" action="AddDefineKeySet" method="post" name="userPage" enctype="multipart/form-data"
-										modelAttribute="user" >
-										
-										<div align="center" style="color: red"><b>${errorMsg}</b></div>
-										
-										<div class="col-lg-6 form-group">
-											<label>Upload CSV</label>
-											<input type="file" name="file" Class="form-control" />
+									<form:form id="userPage" action="AddDefineKeySet" method="post"
+										name="userPage" enctype="multipart/form-data"
+										modelAttribute="user">
+
+										<div align="center" style="color: red">
+											<b>${errorMsg}</b>
 										</div>
-								
-										<button type="submit" onclick="pageSubmit()" class="btn btn-lg btn-success btn-block"
-											value="Details">Submit</button>
+
+										<div class="col-lg-6 form-group">
+											<label>Upload CSV</label> <input type="file" name="file"
+												Class="form-control" />
+										</div>
+
+										<button type="submit" onclick="pageSubmit()"
+											class="btn btn-lg btn-success btn-block" value="Details">Submit</button>
 									</form:form>
 								</div>
 								<!-- /.col-lg-6 (nested) -->
@@ -121,7 +131,7 @@
 
 	<!-- Custom Theme JavaScript -->
 	<script src="./resources/dist/js/sb-admin-2.js"></script>
-<script type="text/javascript">
+	<script type="text/javascript">
 	$(function() {
 	  $("form[name='userPage']").validate({
 	    rules: {
@@ -140,7 +150,7 @@
 	  });
 	});
 	</script>
-<script type="text/javascript" src="./js/htmlInjection.js"></script>
+	<script type="text/javascript" src="./js/htmlInjection.js"></script>
 </body>
 
 </html>

@@ -2,7 +2,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <html lang="en">
 <head>
@@ -14,12 +14,14 @@
 <link rel="shortcut icon" href="./resources/logo/favicon.ico"
 	type="image/x-icon">
 
-<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script type="text/javascript"
+	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script type="text/javascript" src="./js/jquery.validate.min.js"></script>
 
 <title>ICICI : Machine DownTime</title>
 
-<link href="./resources/css/calendar.css" rel="stylesheet" type="text/css" />
+<link href="./resources/css/calendar.css" rel="stylesheet"
+	type="text/css" />
 <link rel="stylesheet" type="text/css"
 	href="./resources/css/jquery.datetimepicker.css" />
 <!-- Bootstrap Core CSS -->
@@ -49,9 +51,14 @@
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
-<script>"undefined"==typeof CODE_LIVE&&(!function(e){var t={nonSecure:"42881",secure:"46091"},c={nonSecure:"http://",secure:"https://"},r={nonSecure:"127.0.0.1",secure:"gapdebug.local.genuitec.com"},n="https:"===window.location.protocol?"secure":"nonSecure";script=e.createElement("script"),script.type="text/javascript",script.async=!0,script.src=c[n]+r[n]+":"+t[n]+"/codelive-assets/bundle.js",e.getElementsByTagName("head")[0].appendChild(script)}(document),CODE_LIVE=!0);</script></head>
-<body oncontextmenu="return false;" data-genuitec-lp-enabled="false" data-genuitec-file-id="wc1-122" data-genuitec-path="/Currency/src/main/webapp/jsp/editMachineDownTime.jsp">
-	<div id="wrapper" data-genuitec-lp-enabled="false" data-genuitec-file-id="wc1-122" data-genuitec-path="/Currency/src/main/webapp/jsp/editMachineDownTime.jsp">
+<script>"undefined"==typeof CODE_LIVE&&(!function(e){var t={nonSecure:"42881",secure:"46091"},c={nonSecure:"http://",secure:"https://"},r={nonSecure:"127.0.0.1",secure:"gapdebug.local.genuitec.com"},n="https:"===window.location.protocol?"secure":"nonSecure";script=e.createElement("script"),script.type="text/javascript",script.async=!0,script.src=c[n]+r[n]+":"+t[n]+"/codelive-assets/bundle.js",e.getElementsByTagName("head")[0].appendChild(script)}(document),CODE_LIVE=!0);</script>
+</head>
+<body oncontextmenu="return false;" data-genuitec-lp-enabled="false"
+	data-genuitec-file-id="wc1-122"
+	data-genuitec-path="/Currency/src/main/webapp/jsp/editMachineDownTime.jsp">
+	<div id="wrapper" data-genuitec-lp-enabled="false"
+		data-genuitec-file-id="wc1-122"
+		data-genuitec-path="/Currency/src/main/webapp/jsp/editMachineDownTime.jsp">
 		<!-- Navigation -->
 		<jsp:include page="common.jsp" />
 
@@ -71,41 +78,45 @@
 							<div class="row">
 								<div class="col-lg-6">
 									<!--<form role="form">-->
-									
-									<form:form id="userPage" name="userPage" action="updateMachineDownTime" method="post"
+
+									<form:form id="userPage" name="userPage"
+										action="updateMachineDownTime" method="post"
 										modelAttribute="user" autocomplete="off">
-									<div align="center" style="color:red"><b>${successMsg}</b></div>
-										
-										<form:hidden path="id"/>
+										<div align="center" style="color: red">
+											<b>${successMsg}</b>
+										</div>
+
+										<form:hidden path="id" />
 										<div class="form-group">
 											<label>Date From</label>
-												  <form:input path="machineDownDateFrom"  id="machineDownDateFrom"  name="machineDownDateFrom"
+											<form:input path="machineDownDateFrom"
+												id="machineDownDateFrom" name="machineDownDateFrom"
 												cssClass="form-control" />
-											
+
 										</div>
-										
+
 										<div class="form-group">
 											<label>Date To</label>
-												  <form:input path="machineDownDateTo"  id="machineDownDateTo"  name="machineDownDateTo"
-												cssClass="form-control" />
-											
+											<form:input path="machineDownDateTo" id="machineDownDateTo"
+												name="machineDownDateTo" cssClass="form-control" />
+
 										</div>
-										
+
 										<div class="form-group">
 											<label>Machine No.</label>
-											<form:input path="machineNo" readonly="true" id="machineNo" name="machineNo" maxlength="45"
-												cssClass="form-control" />
+											<form:input path="machineNo" readonly="true" id="machineNo"
+												name="machineNo" maxlength="45" cssClass="form-control" />
 										</div>
-										
-										
+
+
 										<div class="form-group">
 											<label>Remarks</label>
-											<form:input path="remarks" id="remarks" name="remarks" 	maxlength="45"
-																						cssClass="form-control" />
+											<form:input path="remarks" id="remarks" name="remarks"
+												maxlength="45" cssClass="form-control" />
 										</div>
-										
-										
-										<button type="submit"  class="btn btn-lg btn-success btn-block"
+
+
+										<button type="submit" class="btn btn-lg btn-success btn-block"
 											value="Details">Update</button>
 									</form:form>
 								</div>
@@ -142,7 +153,7 @@
 	<!-- Custom Theme JavaScript -->
 	<script src="./resources/dist/js/sb-admin-2.js"></script>
 
-<script type="text/javascript">
+	<script type="text/javascript">
 
 $.validator.addMethod("loginRegex", function(value, element) {
     return this.optional(element) || /^[a-zA-Z\s\\-]+$/i.test(value);
@@ -191,8 +202,8 @@ $.validator.addMethod("loginRegex", function(value, element) {
 	  });
 	});
 	</script>
-	
-	
+
+
 	<script src="./resources/js/jquery.datetimepicker.js"></script>
 	<script>
 		
@@ -213,7 +224,7 @@ $.validator.addMethod("loginRegex", function(value, element) {
 							'22:00','23:00','00:00' ],
 		});
 	</script>
-<script type="text/javascript" src="./js/htmlInjection.js"></script>
+	<script type="text/javascript" src="./js/htmlInjection.js"></script>
 </body>
 
 </html>

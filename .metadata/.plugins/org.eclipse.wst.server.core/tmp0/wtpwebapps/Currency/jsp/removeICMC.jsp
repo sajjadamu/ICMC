@@ -12,7 +12,8 @@
 <link rel="shortcut icon" href="./resources/logo/favicon.ico"
 	type="image/x-icon">
 
-<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script type="text/javascript"
+	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script type="text/javascript" src="./js/jquery.validate.min.js"></script>
 
 <title>ICICI : Remove ICMC/CPC</title>
@@ -44,13 +45,18 @@
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
-<script>"undefined"==typeof CODE_LIVE&&(!function(e){var t={nonSecure:"42881",secure:"46091"},c={nonSecure:"http://",secure:"https://"},r={nonSecure:"127.0.0.1",secure:"gapdebug.local.genuitec.com"},n="https:"===window.location.protocol?"secure":"nonSecure";script=e.createElement("script"),script.type="text/javascript",script.async=!0,script.src=c[n]+r[n]+":"+t[n]+"/codelive-assets/bundle.js",e.getElementsByTagName("head")[0].appendChild(script)}(document),CODE_LIVE=!0);</script></head>
-<body oncontextmenu="return false;" data-genuitec-lp-enabled="false" data-genuitec-file-id="wc1-181" data-genuitec-path="/Currency/src/main/webapp/jsp/removeICMC.jsp">
+<script>"undefined"==typeof CODE_LIVE&&(!function(e){var t={nonSecure:"42881",secure:"46091"},c={nonSecure:"http://",secure:"https://"},r={nonSecure:"127.0.0.1",secure:"gapdebug.local.genuitec.com"},n="https:"===window.location.protocol?"secure":"nonSecure";script=e.createElement("script"),script.type="text/javascript",script.async=!0,script.src=c[n]+r[n]+":"+t[n]+"/codelive-assets/bundle.js",e.getElementsByTagName("head")[0].appendChild(script)}(document),CODE_LIVE=!0);</script>
+</head>
+<body oncontextmenu="return false;" data-genuitec-lp-enabled="false"
+	data-genuitec-file-id="wc1-181"
+	data-genuitec-path="/Currency/src/main/webapp/jsp/removeICMC.jsp">
 
-	<div id="wrapper" data-genuitec-lp-enabled="false" data-genuitec-file-id="wc1-181" data-genuitec-path="/Currency/src/main/webapp/jsp/removeICMC.jsp">
+	<div id="wrapper" data-genuitec-lp-enabled="false"
+		data-genuitec-file-id="wc1-181"
+		data-genuitec-path="/Currency/src/main/webapp/jsp/removeICMC.jsp">
 
 		<!-- Navigation -->
-		<jsp:include page="common.jsp" /> 
+		<jsp:include page="common.jsp" />
 
 		<div id="page-wrapper">
 			<!--  <div class="row">
@@ -68,76 +74,80 @@
 							<div class="row">
 								<div class="col-lg-6">
 									<!--<form role="form">-->
-									<form:form id="userPage" name="userPage" action="deleteICMC" method="post"
-										modelAttribute="user" autocomplete="off">
-										
+									<form:form id="userPage" name="userPage" action="deleteICMC"
+										method="post" modelAttribute="user" autocomplete="off">
+
 										<table>
 											<tr>
 												<td style="visibility: hidden;">id</td>
-												<td style="visibility: hidden;"><form:input path="id" id="userId" /></td>
+												<td style="visibility: hidden;"><form:input path="id"
+														id="userId" /></td>
 											</tr>
-										</table> 
-										
+										</table>
+
 										<div class="form-group">
 											<label>Name</label>
 											<form:input path="name" id="name" name="name" readonly="true"
 												cssClass="form-control" />
 										</div>
-										
+
 										<div class="form-group">
 											<label>Link Branch Sol ID</label>
-											<form:input path="linkBranchSolId" id="linkBranchSolId" name="linkBranchSolId" 
-												readonly="true" cssClass="form-control" />
+											<form:input path="linkBranchSolId" id="linkBranchSolId"
+												name="linkBranchSolId" readonly="true"
+												cssClass="form-control" />
 										</div>
-										
+
 										<div class="form-group">
 											<label>RBI Name</label>
-											<form:input path="rbiName" id="rbiName" name="rbiName" 
-												cssClass="form-control" readonly="true"/>
+											<form:input path="rbiName" id="rbiName" name="rbiName"
+												cssClass="form-control" readonly="true" />
 										</div>
-										
+
 										<div class="form-group">
 											<label>Zone</label>
-											 <form:input path="zone" id="zone" name="zone" readonly="true"
+											<form:input path="zone" id="zone" name="zone" readonly="true"
 												cssClass="form-control" />
 										</div>
-										
+
 										<div class="form-group">
 											<label>Region</label>
-											 <form:input path="region" id="region" name="region" readonly="true"
-												cssClass="form-control" />
+											<form:input path="region" id="region" name="region"
+												readonly="true" cssClass="form-control" />
 										</div>
-										
+
 										<div class="form-group">
 											<label>Address</label>
-											<form:input path="address" id="address" name="address" readonly="true"
-												cssClass="form-control" />
+											<form:input path="address" id="address" name="address"
+												readonly="true" cssClass="form-control" />
 										</div>
-										
+
 										<div class="form-group">
 											<label>City</label>
 											<form:input path="city" id="city" name="city" readonly="true"
 												cssClass="form-control" />
 										</div>
-										
+
 										<div class="form-group">
 											<label>Pincode</label>
-											<form:input path="pincode" id="pincode" name="pincode" readonly="true"
-												cssClass="form-control" />
+											<form:input path="pincode" id="pincode" name="pincode"
+												readonly="true" cssClass="form-control" />
 										</div>
-										
+
 										<div class="form-group">
 											<label>Reason For Deletion</label>
-											<form:input path="reasonForDeletion" id="reasonForDeletion" name="reasonForDeletion"
-												maxlength="45" cssClass="form-control" />
+											<form:input path="reasonForDeletion" id="reasonForDeletion"
+												name="reasonForDeletion" maxlength="45"
+												cssClass="form-control" />
 										</div>
-										
+
 										<div class="form-group">
 											<label>Approval For Deletion</label>
-											<form:input path="approvalForDeletion" id="approvalForDeletion" name="approvalForDeletion"
+											<form:input path="approvalForDeletion"
+												id="approvalForDeletion" name="approvalForDeletion"
 												maxlength="45" cssClass="form-control" />
 										</div>
-										
+
 										<button type="submit" class="btn btn-lg btn-success btn-block"
 											value="Details">Submit</button>
 									</form:form>
@@ -174,7 +184,7 @@
 
 	<!-- Custom Theme JavaScript -->
 	<script src="./resources/dist/js/sb-admin-2.js"></script>
-	
+
 	<script type="text/javascript">
 	
 	$.validator.addMethod("loginRegex", function(value, element) {
@@ -214,7 +224,7 @@
 	  });
 	});
 	</script>
-<script type="text/javascript" src="./js/htmlInjection.js"></script>
+	<script type="text/javascript" src="./js/htmlInjection.js"></script>
 </body>
 
 </html>

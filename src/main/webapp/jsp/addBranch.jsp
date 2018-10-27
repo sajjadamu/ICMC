@@ -73,7 +73,7 @@ function doAjaxForZoneAndRegion() {
 	});
 }
 </script>
-    
+
 <script type="text/javascript">
 function doAjaxForRegion(region) {
 	addHeader();
@@ -108,7 +108,7 @@ function doAjaxForRegion(region) {
 <body oncontextmenu="return false;">
 	<div id="wrapper">
 		<!-- Navigation -->
-		<jsp:include page="common.jsp" /> 
+		<jsp:include page="common.jsp" />
 
 		<div id="page-wrapper">
 			<!--  <div class="row">
@@ -123,79 +123,96 @@ function doAjaxForRegion(region) {
 					<div class="panel panel-default">
 						<!-- <div class="panel-heading">Add/Upload Branch</div> -->
 						<div class="panel-heading">
-                        	<ul>
-                          		<li>
-                          			<a href="././viewBranch"><i class="fa fa-table fa-fw"></i> View List of Branch's</a>
-                          		</li>
-							</ul>Add/Upload Branch
-                        </div>
-						
+							<ul>
+								<li><a href="././viewBranch"><i
+										class="fa fa-table fa-fw"></i> View List of Branch's</a></li>
+							</ul>
+							Add/Upload Branch
+						</div>
+
 						<div class="panel-body">
 							<div class="row">
 								<div class="col-lg-6">
 									<!--<form role="form">-->
-									<form:form id="userPage" name="userPage" action="saveBranch" method="post"
-										modelAttribute="user" enctype="multipart/form-data" autocomplete="off">
-										
-										<div align="center" style="color: red"><b>${errorMsg}</b></div>
-										<div align="center" style="color: red"><b>${duplicateBranch}</b></div>
-										<div align="center" style="color: red"><b>${duplicateSolId}</b></div>
-										<div align="center" style="color: red"><b>${samePrimaryAndSecondaryICMC}</b></div>
+									<form:form id="userPage" name="userPage" action="saveBranch"
+										method="post" modelAttribute="user"
+										enctype="multipart/form-data" autocomplete="off">
+
+										<div align="center" style="color: red">
+											<b>${errorMsg}</b>
+										</div>
+										<div align="center" style="color: red">
+											<b>${duplicateBranch}</b>
+										</div>
+										<div align="center" style="color: red">
+											<b>${duplicateSolId}</b>
+										</div>
+										<div align="center" style="color: red">
+											<b>${samePrimaryAndSecondaryICMC}</b>
+										</div>
 
 										<div class="form-group">
 											<label>Sol Id</label>
 											<form:input path="solId" id="solId" name="solId"
 												minlength="4" maxlength="4" cssClass="form-control" />
 										</div>
-										
+
 										<div class="form-group">
 											<label>Branch Name</label>
 											<form:input path="branch" id="branch" name="branch"
 												maxlength="45" cssClass="form-control" />
 										</div>
-										
+
 										<div class="form-group">
 											<label>Servicing ICMC (SI)</label>
-											<form:select id="servicingICMC" name="servicingICMC" path="servicingICMC" cssClass="form-control">
+											<form:select id="servicingICMC" name="servicingICMC"
+												path="servicingICMC" cssClass="form-control">
 												<form:option value="">Select Servicing ICMC Name</form:option>
-												<form:options items="${records}" itemValue="name" itemLabel="name" />
+												<form:options items="${records}" itemValue="name"
+													itemLabel="name" />
 											</form:select>
 										</div>
-										
+
 										<div class="form-group">
 											<label>Jurisdiction ICMC (JI)</label>
-											<form:select path="jurisdictionICMC" id="jurisdictionICMC" name="jurisdictionICMC"
-												maxlength="45" cssClass="form-control" >
+											<form:select path="jurisdictionICMC" id="jurisdictionICMC"
+												name="jurisdictionICMC" maxlength="45"
+												cssClass="form-control">
 												<form:option value="">Select Jurisdiction ICMC Name</form:option>
-												<form:options items="${records}" itemValue="name" itemLabel="name" />
+												<form:options items="${records}" itemValue="name"
+													itemLabel="name" />
 											</form:select>
 										</div>
-										
+
 										<div class="form-group">
 											<label>RBI Name</label>
-											<form:select id="rbiName" name="rbiName" path="rbiName" 
+											<form:select id="rbiName" name="rbiName" path="rbiName"
 												cssClass="form-control" onchange="doAjaxForZoneAndRegion()">
 												<form:option value="">Select RBI Name</form:option>
-												<form:options items="${rbiMasterList}" itemValue="rbiname" itemLabel="rbiname" />
+												<form:options items="${rbiMasterList}" itemValue="rbiname"
+													itemLabel="rbiname" />
 											</form:select>
 										</div>
-										
-										<form:hidden path="zoneHidden" id="zoneHidden" name="zoneHidden"/>
-										<form:hidden path="regionHidden" id="regionHidden" name="regionHidden"/>
-										
+
+										<form:hidden path="zoneHidden" id="zoneHidden"
+											name="zoneHidden" />
+										<form:hidden path="regionHidden" id="regionHidden"
+											name="regionHidden" />
+
 										<div class="form-group">
 											<label>Zone</label>
-											<form:select path="zone" id="zone" name="zone" cssClass="form-control" 
-												disabled="true" onchange="doAjaxForRegion()">
+											<form:select path="zone" id="zone" name="zone"
+												cssClass="form-control" disabled="true"
+												onchange="doAjaxForRegion()">
 												<option value="" label="Select Zone"></option>
-    											<form:options items="${zoneList}" />
+												<form:options items="${zoneList}" />
 											</form:select>
 										</div>
-										
+
 										<div class="form-group">
 											<label>Region</label>
-											<form:select path="region" id="region" name="region" cssClass="form-control"
-												disabled="true" >
+											<form:select path="region" id="region" name="region"
+												cssClass="form-control" disabled="true">
 												<form:option value="">Select Region</form:option>
 											</form:select>
 										</div>
@@ -208,8 +225,8 @@ function doAjaxForRegion(region) {
 
 										<div class="form-group">
 											<label>City</label>
-											<form:input path="city" id="city" name="city"
-												maxlength="45" cssClass="form-control" />
+											<form:input path="city" id="city" name="city" maxlength="45"
+												cssClass="form-control" />
 										</div>
 
 										<div class="form-group">
@@ -217,14 +234,15 @@ function doAjaxForRegion(region) {
 											<form:input path="pincode" id="pincode" name="pincode"
 												maxlength="6" cssClass="form-control" />
 										</div>
-										
+
 										<div class="col-lg-6 form-group">
-											<label>Choose File</label> <input type="file" name="file" id="file"
-												Class="form-control" />
-											<a href="${documentFilePath}/Branch.csv" download>Download CSV Format</a>
+											<label>Choose File</label> <input type="file" name="file"
+												id="file" Class="form-control" /> <a
+												href="${documentFilePath}/Branch.csv" download>Download
+												CSV Format</a>
 										</div>
-										<button type="submit" 
-											class="btn btn-lg btn-success btn-block" value="Details">Submit</button>
+										<button type="submit" class="btn btn-lg btn-success btn-block"
+											value="Details">Submit</button>
 									</form:form>
 								</div>
 								<!-- /.col-lg-6 (nested) -->
@@ -259,7 +277,7 @@ function doAjaxForRegion(region) {
 
 	<!-- Custom Theme JavaScript -->
 	<script src="./resources/dist/js/sb-admin-2.js"></script>
-	
+
 	<script type="text/javascript">
 	
 	$.validator.addMethod("loginRegex", function(value, element) {
@@ -447,7 +465,7 @@ function doAjaxForRegion(region) {
 	  });
 	});
 	</script>
-<script type="text/javascript" src="./js/htmlInjection.js"></script>
+	<script type="text/javascript" src="./js/htmlInjection.js"></script>
 </body>
 
 </html>

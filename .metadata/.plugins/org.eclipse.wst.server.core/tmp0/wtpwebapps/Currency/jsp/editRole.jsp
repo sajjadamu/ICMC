@@ -12,10 +12,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="">
 <meta name="author" content="">
-<link rel="shortcut icon" href="./resources/logo/favicon.ico" type="image/x-icon">
+<link rel="shortcut icon" href="./resources/logo/favicon.ico"
+	type="image/x-icon">
 <title>ICICI : Update Role</title>
 
-<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script type="text/javascript"
+	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script type="text/javascript" src="./js/jquery.validate.min.js"></script>
 
 <!-- Bootstrap Core CSS -->
@@ -45,10 +47,15 @@
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
-<script>"undefined"==typeof CODE_LIVE&&(!function(e){var t={nonSecure:"42881",secure:"46091"},c={nonSecure:"http://",secure:"https://"},r={nonSecure:"127.0.0.1",secure:"gapdebug.local.genuitec.com"},n="https:"===window.location.protocol?"secure":"nonSecure";script=e.createElement("script"),script.type="text/javascript",script.async=!0,script.src=c[n]+r[n]+":"+t[n]+"/codelive-assets/bundle.js",e.getElementsByTagName("head")[0].appendChild(script)}(document),CODE_LIVE=!0);</script></head>
+<script>"undefined"==typeof CODE_LIVE&&(!function(e){var t={nonSecure:"42881",secure:"46091"},c={nonSecure:"http://",secure:"https://"},r={nonSecure:"127.0.0.1",secure:"gapdebug.local.genuitec.com"},n="https:"===window.location.protocol?"secure":"nonSecure";script=e.createElement("script"),script.type="text/javascript",script.async=!0,script.src=c[n]+r[n]+":"+t[n]+"/codelive-assets/bundle.js",e.getElementsByTagName("head")[0].appendChild(script)}(document),CODE_LIVE=!0);</script>
+</head>
 
-<body oncontextmenu="return false;" data-genuitec-lp-enabled="false" data-genuitec-file-id="wc1-131" data-genuitec-path="/Currency/src/main/webapp/jsp/editRole.jsp">
-	<div id="wrapper" data-genuitec-lp-enabled="false" data-genuitec-file-id="wc1-131" data-genuitec-path="/Currency/src/main/webapp/jsp/editRole.jsp">
+<body oncontextmenu="return false;" data-genuitec-lp-enabled="false"
+	data-genuitec-file-id="wc1-131"
+	data-genuitec-path="/Currency/src/main/webapp/jsp/editRole.jsp">
+	<div id="wrapper" data-genuitec-lp-enabled="false"
+		data-genuitec-file-id="wc1-131"
+		data-genuitec-path="/Currency/src/main/webapp/jsp/editRole.jsp">
 		<!-- Navigation -->
 		<jsp:include page="common.jsp" />
 		<div id="page-wrapper">
@@ -67,94 +74,103 @@
 							<div class="row">
 								<div class="col-lg-6">
 									<!--<form role="form">-->
-									<form:form id="userPage" name="userPage" action="updateRole" method="post" 
-										modelAttribute="user" autocomplete="off">
-										
+									<form:form id="userPage" name="userPage" action="updateRole"
+										method="post" modelAttribute="user" autocomplete="off">
+
 										<div class="form-group">
 											<label>New Role</label>
 											<form:input path="id" id="id" name="id" maxlength="32"
-												cssClass="form-control" readonly="true"/>
-									  	</div>
-									  	
-									  	<div class="form-group">
-											<label>ICMC Access</label><br>
-											<form:radiobuttons items="${icmcAccessList}" path="icmcAccess" />
+												cssClass="form-control" readonly="true" />
 										</div>
-									  
+
+										<div class="form-group">
+											<label>ICMC Access</label><br>
+											<form:radiobuttons items="${icmcAccessList}"
+												path="icmcAccess" />
+										</div>
+
 										<div class="form-group">
 											<label>Function Permissions</label><br>
 										</div>
-										
+
 										<div class="panel panel-default">
 											<label>Administration Module</label>
 											<div class="form-group">
 												<form:checkboxes items="${ADMIN}" path="rolePermission" />
 											</div>
 										</div>
-										
+
 										<div class="panel panel-default">
 											<label>Bin DashBoard Module</label>
-											<div class="form-group">	
-												<form:checkboxes items="${BIN_DASHBOARD}" path="rolePermission" />
+											<div class="form-group">
+												<form:checkboxes items="${BIN_DASHBOARD}"
+													path="rolePermission" />
 											</div>
 										</div>
-										
+
 										<div class="panel panel-default">
 											<label>Vault Management Module</label>
-											<div class="form-group">	
-												<form:checkboxes items="${VAULT_MANAGEMENT}" path="rolePermission" />
+											<div class="form-group">
+												<form:checkboxes items="${VAULT_MANAGEMENT}"
+													path="rolePermission" />
 											</div>
 										</div>
-										
+
 										<div class="panel panel-default">
 											<label>CIT/CRA Details Module</label>
-											<div class="form-group">	
-												<form:checkboxes items="${CIT_CRA_DETAILS}" path="rolePermission" />
+											<div class="form-group">
+												<form:checkboxes items="${CIT_CRA_DETAILS}"
+													path="rolePermission" />
 											</div>
 										</div>
-										
+
 										<div class="panel panel-default">
 											<label>Cash Receipt Module</label>
-											<div class="form-group">	
-												<form:checkboxes items="${CASH_RECEIPT}" path="rolePermission" />
+											<div class="form-group">
+												<form:checkboxes items="${CASH_RECEIPT}"
+													path="rolePermission" />
 											</div>
 										</div>
-										
+
 										<div class="panel panel-default">
 											<label>Cash Payment Module</label>
-											<div class="form-group">	
-												<form:checkboxes items="${CASH_PAYMENT}" path="rolePermission" />
+											<div class="form-group">
+												<form:checkboxes items="${CASH_PAYMENT}"
+													path="rolePermission" />
 											</div>
 										</div>
-										
+
 										<div class="panel panel-default">
 											<label>Processing Room Module</label>
-											<div class="form-group">	
-												<form:checkboxes items="${PROCESSING_ROOM}" path="rolePermission" />
+											<div class="form-group">
+												<form:checkboxes items="${PROCESSING_ROOM}"
+													path="rolePermission" />
 											</div>
 										</div>
-										
+
 										<div class="panel panel-default">
 											<label>Fake Note Management Module</label>
-											<div class="form-group">	
-												<form:checkboxes items="${FAKE_NOTE_MANAGEMENT}" path="rolePermission" />
+											<div class="form-group">
+												<form:checkboxes items="${FAKE_NOTE_MANAGEMENT}"
+													path="rolePermission" />
 											</div>
 										</div>
-										
+
 										<div class="panel panel-default">
 											<label>Reports Module</label>
-											<div class="form-group">	
+											<div class="form-group">
 												<form:checkboxes items="${REPORTS}" path="rolePermission" />
 											</div>
 										</div>
-										
+
 										<div class="form-group">
 											<label>Status</label>
-											<form:select path="status" id="status" name="status" cssClass="form-control">
+											<form:select path="status" id="status" name="status"
+												cssClass="form-control">
 												<form:options items="${statusList}" />
 											</form:select>
 										</div>
-										
+
 										<button type="submit" class="btn btn-lg btn-success btn-block"
 											value="Details">Update</button>
 									</form:form>
@@ -191,7 +207,7 @@
 
 	<!-- Custom Theme JavaScript -->
 	<script src="./resources/dist/js/sb-admin-2.js"></script>
-<script type="text/javascript" src="./js/htmlInjection.js"></script>
+	<script type="text/javascript" src="./js/htmlInjection.js"></script>
 </body>
 
 </html>

@@ -14,7 +14,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="sec"
 	uri="http://www.springframework.org/security/tags"%>
-	
+
 <head>
 
 <meta charset="utf-8">
@@ -189,26 +189,28 @@ function doAjaxPostRequestBundleForMutilatedPayment(str) {
 											</tr>
 										</thead>
 										<tbody>
-		
-			<%
+
+											<%
 				List<Tuple> listTuple = (List<Tuple>) request.getAttribute("mutilatedList");
 				for (Tuple tuple : listTuple) {
 			%>
-			<tr>
-				<td id="denomination<%=tuple.get(2, String.class)%>"><%=tuple.get(0, Integer.class)%></td>
-				<%-- <td id="bin<%=tuple.get(2, String.class)%>"><%=tuple.get(2, String.class)%></td> --%>
-				<td id="category<%=tuple.get(2, String.class)%>"><%=tuple.get(3,BinCategoryType.class)%></td>
-				<%-- <td><fmt:formatDate pattern="yyyy-MM-dd" value="<%=tuple.get(4, Calendar.class).getTime()%>" /></td> --%>
-				<td id="bundle<%=tuple.get(2, String.class)%>"><%=tuple.get(1, BigDecimal.class)%></td>
-				<td id="pendingBundle<%=tuple.get(2, String.class)%>"><%=tuple.get(4, BigDecimal.class)%></td>
-				<td><input type="text" id="requestBundle<%=tuple.get(2, String.class)%>"></td>
-			    <td><input type="button" value="Request" onclick="doAjaxPostRequestBundleForMutilatedPayment('<%=tuple.get(2,String.class)%>')"></td>
+											<tr>
+												<td id="denomination<%=tuple.get(2, String.class)%>"><%=tuple.get(0, Integer.class)%></td>
+												<%-- <td id="bin<%=tuple.get(2, String.class)%>"><%=tuple.get(2, String.class)%></td> --%>
+												<td id="category<%=tuple.get(2, String.class)%>"><%=tuple.get(3,BinCategoryType.class)%></td>
+												<%-- <td><fmt:formatDate pattern="yyyy-MM-dd" value="<%=tuple.get(4, Calendar.class).getTime()%>" /></td> --%>
+												<td id="bundle<%=tuple.get(2, String.class)%>"><%=tuple.get(1, BigDecimal.class)%></td>
+												<td id="pendingBundle<%=tuple.get(2, String.class)%>"><%=tuple.get(4, BigDecimal.class)%></td>
+												<td><input type="text"
+													id="requestBundle<%=tuple.get(2, String.class)%>"></td>
+												<td><input type="button" value="Request"
+													onclick="doAjaxPostRequestBundleForMutilatedPayment('<%=tuple.get(2,String.class)%>')"></td>
 
-			</tr>
-			<%
+											</tr>
+											<%
 				}
 			%>
-		</tbody>
+										</tbody>
 									</table>
 								</form>
 							</div>

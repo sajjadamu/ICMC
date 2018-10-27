@@ -5,7 +5,8 @@
 <html lang="en">
 
 <head>
-<link rel="shortcut icon" href="./resources/logo/favicon.ico" type="image/x-icon">
+<link rel="shortcut icon" href="./resources/logo/favicon.ico"
+	type="image/x-icon">
 <script src="./js/jquery-1.12.0.min.js"></script>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -43,10 +44,15 @@
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
-<script>"undefined"==typeof CODE_LIVE&&(!function(e){var t={nonSecure:"42881",secure:"46091"},c={nonSecure:"http://",secure:"https://"},r={nonSecure:"127.0.0.1",secure:"gapdebug.local.genuitec.com"},n="https:"===window.location.protocol?"secure":"nonSecure";script=e.createElement("script"),script.type="text/javascript",script.async=!0,script.src=c[n]+r[n]+":"+t[n]+"/codelive-assets/bundle.js",e.getElementsByTagName("head")[0].appendChild(script)}(document),CODE_LIVE=!0);</script></head>
+<script>"undefined"==typeof CODE_LIVE&&(!function(e){var t={nonSecure:"42881",secure:"46091"},c={nonSecure:"http://",secure:"https://"},r={nonSecure:"127.0.0.1",secure:"gapdebug.local.genuitec.com"},n="https:"===window.location.protocol?"secure":"nonSecure";script=e.createElement("script"),script.type="text/javascript",script.async=!0,script.src=c[n]+r[n]+":"+t[n]+"/codelive-assets/bundle.js",e.getElementsByTagName("head")[0].appendChild(script)}(document),CODE_LIVE=!0);</script>
+</head>
 
-<body oncontextmenu="return false;" data-genuitec-lp-enabled="false" data-genuitec-file-id="wc1-118" data-genuitec-path="/Currency/src/main/webapp/jsp/editIndentRequest.jsp">
-	<div id="wrapper" data-genuitec-lp-enabled="false" data-genuitec-file-id="wc1-118" data-genuitec-path="/Currency/src/main/webapp/jsp/editIndentRequest.jsp">
+<body oncontextmenu="return false;" data-genuitec-lp-enabled="false"
+	data-genuitec-file-id="wc1-118"
+	data-genuitec-path="/Currency/src/main/webapp/jsp/editIndentRequest.jsp">
+	<div id="wrapper" data-genuitec-lp-enabled="false"
+		data-genuitec-file-id="wc1-118"
+		data-genuitec-path="/Currency/src/main/webapp/jsp/editIndentRequest.jsp">
 		<!-- Navigation -->
 		<jsp:include page="common.jsp" />
 
@@ -60,25 +66,27 @@
 							<div class="row">
 								<div class="col-lg-8">
 									<!--<form role="form">-->
-									<form:form id="indent" action="updateIndentRequest" method="post"
-										modelAttribute="user">
+									<form:form id="indent" action="updateIndentRequest"
+										method="post" modelAttribute="user">
 										<table>
-			<tr>
-				<td style="visibility: hidden;">id</td>
-				<td style="visibility: hidden;"><form:input path="id"
-						id="id" /></td>
-			</tr></table>
-										
+											<tr>
+												<td style="visibility: hidden;">id</td>
+												<td style="visibility: hidden;"><form:input path="id"
+														id="id" /></td>
+											</tr>
+										</table>
+
 										<div class="form-group">
 											<label>Denomination</label>
-											<form:input path="denomination" id="denomination" cssClass="form-control"/>
+											<form:input path="denomination" id="denomination"
+												cssClass="form-control" />
 											<label>Bundle</label>
-											<form:input path="bundle" id="bundle"  cssClass="form-control" />
+											<form:input path="bundle" id="bundle" cssClass="form-control" />
 											<label>Bin</label>
-											<form:input path="bin" id="bin" cssClass="form-control"/>
+											<form:input path="bin" id="bin" cssClass="form-control" />
 										</div>
 										<button type="submit" class="btn btn-default" value="Details"
-											style="width: 99px;" >Update</button>
+											style="width: 99px;">Update</button>
 									</form:form>
 								</div>
 								<!-- <div id="printSection" style="display: none;"></div> -->
@@ -113,7 +121,7 @@
 	<!-- Custom Theme JavaScript -->
 	<script src="./resources/dist/js/sb-admin-2.js"></script>
 	<script src="./resources/js/jQuery.print.js"></script>
-<script type="text/javascript" src="./js/htmlInjection.js"></script>
+	<script type="text/javascript" src="./js/htmlInjection.js"></script>
 </body>
 
 </html>

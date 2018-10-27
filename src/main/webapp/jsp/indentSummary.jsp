@@ -47,6 +47,6 @@
 
 		</tbody>
 	</table>
-<script type="text/javascript" src="./js/htmlInjection.js"></script>
+	<script type="text/javascript" src="./js/htmlInjection.js"></script>
 </body>
 </html>

@@ -11,11 +11,13 @@
 <meta name="author" content="">
 <link rel="shortcut icon" href="./resources/logo/favicon.ico"
 	type="image/x-icon">
-<link href="./resources/css/calendar.css" rel="stylesheet" type="text/css" />
+<link href="./resources/css/calendar.css" rel="stylesheet"
+	type="text/css" />
 <link rel="stylesheet" type="text/css"
 	href="./resources/css/jquery.datetimepicker.css" />
 
-<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script type="text/javascript"
+	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script type="text/javascript" src="./js/jquery.validate.min.js"></script>
 
 <title>ICICI : Edit Bin Capacity</title>
@@ -70,42 +72,45 @@
 							<div class="row">
 								<div class="col-lg-6">
 									<!--<form role="form">-->
-									<form:form id="userPage" action="updateBinCapacity" method="post" name="userPage"
-										modelAttribute="user" >
-										
-										<form:hidden path="id"/>
-										
+									<form:form id="userPage" action="updateBinCapacity"
+										method="post" name="userPage" modelAttribute="user">
+
+										<form:hidden path="id" />
+
 										<div class="form-group">
 											<label>Vault Size</label>
 											<form:select path="vaultSize" cssClass="form-control">
-													<option>Select Vault Size</option>
-													<form:options items="${vaultSizeList}" />
+												<option>Select Vault Size</option>
+												<form:options items="${vaultSizeList}" />
 											</form:select>
 										</div>
-										
+
 										<div class="form-group">
 											<label>Denomination</label>
-                                        	<form:select path="denomination" cssClass="form-control">
+											<form:select path="denomination" cssClass="form-control">
 												<option>Select Denomination</option>
-												<form:options items="${denominationList}" itemValue="denomination" itemLabel="denomination" name="denomination" />
+												<form:options items="${denominationList}"
+													itemValue="denomination" itemLabel="denomination"
+													name="denomination" />
 											</form:select>
 										</div>
-										
+
 										<div class="form-group">
 											<label>Currency Type</label>
 											<form:select path="currencyType" cssClass="form-control">
-													<option>Select Currency Type</option>
-													<form:options items="${currencyTypeList}" />
+												<option>Select Currency Type</option>
+												<form:options items="${currencyTypeList}" />
 											</form:select>
 										</div>
-										
+
 										<div class="form-group">
 											<label>Maximum BIN Capacity</label>
-											<form:input path="maxBundleCapacity" id="maxBundleCapacity" name="maxBundleCapacity" 
-												maxlength="10" cssClass="form-control" />
-										</div>	
-										
-										<button type="submit"  class="btn btn-lg btn-success btn-block"
+											<form:input path="maxBundleCapacity" id="maxBundleCapacity"
+												name="maxBundleCapacity" maxlength="10"
+												cssClass="form-control" />
+										</div>
+
+										<button type="submit" class="btn btn-lg btn-success btn-block"
 											value="Details">Update</button>
 									</form:form>
 								</div>
@@ -141,7 +146,7 @@
 
 	<!-- Custom Theme JavaScript -->
 	<script src="./resources/dist/js/sb-admin-2.js"></script>
-	
+
 	<script type="text/javascript">
 	
 	$.validator.addMethod("loginRegex", function(value, element) {
@@ -179,7 +184,7 @@
 	  });
 	});
 	</script>
-<script type="text/javascript" src="./js/htmlInjection.js"></script>
+	<script type="text/javascript" src="./js/htmlInjection.js"></script>
 </body>
 
 </html>

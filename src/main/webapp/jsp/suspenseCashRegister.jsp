@@ -187,15 +187,46 @@ tr.ttlDiscBtm td:nth-child(2), tr.ttlDiscBtm td:nth-child(3) {
 	margin: 10px 0;
 }
 </style>
- <style type="text/css">
-        .reportbox{ border: none; font-family: arial; font-size: 13px; text-align: center;  }
-        .reportbox td{ border: #ccc 1px solid; margin: 0; padding: 10px; vertical-align: top; white-space: nowrap;}
-        .reportpad{ padding: 0 !important; margin: 0; border-top: 0 !important; border-left: 0 !important;width: 100%; text-align: center; }
-        .reportinnbox{ margin: 0; padding: 0;width: 100%; text-align: center; }
-        .reportinnbox td{ padding: 10px; border:0; border: 1px solid #ccc; }
-        }
-    }
-    </style>
+<style type="text/css">
+.reportbox {
+	border: none;
+	font-family: arial;
+	font-size: 13px;
+	text-align: center;
+}
+
+.reportbox td {
+	border: #ccc 1px solid;
+	margin: 0;
+	padding: 10px;
+	vertical-align: top;
+	white-space: nowrap;
+}
+
+.reportpad {
+	padding: 0 !important;
+	margin: 0;
+	border-top: 0 !important;
+	border-left: 0 !important;
+	width: 100%;
+	text-align: center;
+}
+
+.reportinnbox {
+	margin: 0;
+	padding: 0;
+	width: 100%;
+	text-align: center;
+}
+
+.reportinnbox td {
+	padding: 10px;
+	border: 0;
+	border: 1px solid #ccc;
+}
+}
+}
+</style>
 <!-- Bootstrap Core CSS -->
 <link
 	href="./resources/bower_components/bootstrap/dist/css/bootstrap.min.css"
@@ -310,12 +341,12 @@ tr.ttlDiscBtm td:nth-child(2), tr.ttlDiscBtm td:nth-child(3) {
 				<div class="col-lg-12">
 					<div class="panel panel-default">
 						<div class="panel-heading">
-						<ul>
-							<li>
-							<input type="submit" onclick="EOD()" value="EOD" class="btn btn-lg btn-success btn-block">
-							</li>
-						</ul>
-						Suspense Cash Register</div>
+							<ul>
+								<li><input type="submit" onclick="EOD()" value="EOD"
+									class="btn btn-lg btn-success btn-block"></li>
+							</ul>
+							Suspense Cash Register
+						</div>
 						<!-- /.panel-heading -->
 						<div>
 							<input type="button" class="btn btn-default qr-button"
@@ -336,7 +367,7 @@ tr.ttlDiscBtm td:nth-child(2), tr.ttlDiscBtm td:nth-child(3) {
 														type="text" path="fromDate" id="fromDate" name="fromDate"
 														cssClass="form-control" />
 											</span></li>
-											
+
 											<li><label>End Date</label> <span> <form:input
 														type="text" path="toDate" id="toDate" name="toDate"
 														cssClass="form-control" />
@@ -355,46 +386,69 @@ tr.ttlDiscBtm td:nth-child(2), tr.ttlDiscBtm td:nth-child(3) {
 								<div class="dispencery_wrap">
 									<div id="printableArea">
 										<div id="table_wrapper">
-											
-											
-											
-											<table border="none" class="reportbox" cellpadding="0" cellspacing="0">
-    <tr>
-    <td></td>
-        <td>Opening Balance (No. of Notes)</td>
-        <td>Withdrawals (No. of Notes)</td>
-        <td>Replenishment (No. of Notes)</td>
-        <td>Deposit (No. of Notes</td>
-        <td>Depletion (No. of Notes)</td>
-        <td>Closing Balance (No. of Notes)</td>
-        <td style="border-bottom: 0"></td>
-        <td style="border-bottom: 0"></td>
-        <td>Signature</td>
-        <td style="border-bottom: 0"></td>
-    </tr>
-    <tr>
-    <td class="reportpad"> 
-        <table class="reportinnbox" cellpadding="0" cellspacing="0">
-            <tr><!-- <td style="height: 57px; vertical-align: bottom;">Date</td> -->
-            <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>Date</td>
-            
-            </tr>
-            <c:forEach var="row" items="${openingBalance}">
+
+
+
+											<table border="none" class="reportbox" cellpadding="0"
+												cellspacing="0">
+												<tr>
+													<td></td>
+													<td>Opening Balance (No. of Notes)</td>
+													<td>Withdrawals (No. of Notes)</td>
+													<td>Replenishment (No. of Notes)</td>
+													<td>Deposit (No. of Notes</td>
+													<td>Depletion (No. of Notes)</td>
+													<td>Closing Balance (No. of Notes)</td>
+													<td style="border-bottom: 0"></td>
+													<td style="border-bottom: 0"></td>
+													<td>Signature</td>
+													<td style="border-bottom: 0"></td>
+												</tr>
+												<tr>
+													<td class="reportpad">
+														<table class="reportinnbox" cellpadding="0"
+															cellspacing="0">
+															<tr>
+																<!-- <td style="height: 57px; vertical-align: bottom;">Date</td> -->
+																<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>Date
+																</td>
+
+															</tr>
+															<c:forEach var="row" items="${openingBalance}">
 																<tr>
 																	<td><fmt:formatDate pattern="yyyy-MM-dd"
 																			value="${row.insertTime.time}" /></td>
-																			</tr></c:forEach>
-        </table>
-    </td>
-        <td class="reportpad">
-            <table class="reportinnbox" cellpadding="0" cellspacing="0;">
+																</tr>
+															</c:forEach>
+														</table>
+													</td>
+													<td class="reportpad">
+														<table class="reportinnbox" cellpadding="0"
+															cellspacing="0;">
 
-                    <tr>
-                        <td>Rs <br> 5</td><td>Rs <br> 10</td><td>Rs <br> 20</td><td>Rs <br> 50</td><td>Rs <br> 100</td><td>Rs <br> 200</td><td>Rs <br> 500</td><td>Rs <br> 2000</td>
-                    </tr>
-                    <c:forEach var="row" items="${openingBalance}">
+															<tr>
+																<td>Rs <br> 5
+																</td>
+																<td>Rs <br> 10
+																</td>
+																<td>Rs <br> 20
+																</td>
+																<td>Rs <br> 50
+																</td>
+																<td>Rs <br> 100
+																</td>
+																<td>Rs <br> 200
+																</td>
+																<td>Rs <br> 500
+																</td>
+																<td>Rs <br> 2000
+																</td>
+															</tr>
+															<c:forEach var="row" items="${openingBalance}">
 																<tr>
-																	<td align="center"><%-- ${row.denomination5} --%></td>
+																	<td align="center">
+																		<%-- ${row.denomination5} --%>
+																	</td>
 																	<td align="center">${row.denomination10}</td>
 																	<td align="center">${row.denomination20}</td>
 																	<td align="center">${row.denomination50}</td>
@@ -404,14 +458,30 @@ tr.ttlDiscBtm td:nth-child(2), tr.ttlDiscBtm td:nth-child(3) {
 																	<td align="center">${row.denomination2000}</td>
 																</tr>
 															</c:forEach>
-            </table>
-        </td>
-        <td class="reportpad">
-        <table class="reportinnbox" cellpadding="0" cellspacing="0;">
-                    <tr>
-                        <td>Rs <br> 5</td><td>Rs <br> 10</td><td>Rs <br> 20</td><td>Rs <br> 50</td><td>Rs <br> 100</td><td>Rs <br> 200</td><td>Rs <br>  500</td><td>Rs <br> 2000</td>
-                    </tr>
-                    <%-- <c:forEach var="row" items="${withdrawalList}">
+														</table>
+													</td>
+													<td class="reportpad">
+														<table class="reportinnbox" cellpadding="0"
+															cellspacing="0;">
+															<tr>
+																<td>Rs <br> 5
+																</td>
+																<td>Rs <br> 10
+																</td>
+																<td>Rs <br> 20
+																</td>
+																<td>Rs <br> 50
+																</td>
+																<td>Rs <br> 100
+																</td>
+																<td>Rs <br> 200
+																</td>
+																<td>Rs <br> 500
+																</td>
+																<td>Rs <br> 2000
+																</td>
+															</tr>
+															<%-- <c:forEach var="row" items="${withdrawalList}">
 																<tr>
 																	<td align="center">${row.denom5Pieces}</td>
 																	<td align="center">${row.denom10Pieces}</td>
@@ -424,9 +494,11 @@ tr.ttlDiscBtm td:nth-child(2), tr.ttlDiscBtm td:nth-child(3) {
 																</tr>
 															</c:forEach>
  --%>
-                                                  <c:forEach var="row" items="${openingBalance}">
+															<c:forEach var="row" items="${openingBalance}">
 																<tr>
-																	<td align="center"><%-- ${row.withdrawal_5} --%></td>
+																	<td align="center">
+																		<%-- ${row.withdrawal_5} --%>
+																	</td>
 																	<td align="center">${row.withdrawal_10}</td>
 																	<td align="center">${row.withdrawal_20}</td>
 																	<td align="center">${row.withdrawal_50}</td>
@@ -436,14 +508,30 @@ tr.ttlDiscBtm td:nth-child(2), tr.ttlDiscBtm td:nth-child(3) {
 																	<td align="center">${row.withdrawal_2000}</td>
 																</tr>
 															</c:forEach>
-            </table>
-        </td>
-        <td class="reportpad">
-            <table class="reportinnbox" cellpadding="0" cellspacing="0;">
-                    <tr>
-                        <td>Rs <br> 5</td><td>Rs <br> 10</td><td>Rs <br> 20</td><td>Rs <br> 50</td><td>Rs <br> 100</td><td>Rs <br> 200</td><td>Rs <br> 500</td><td>Rs <br>  2000</td>
-                    </tr>
-                   <%--  <c:forEach var="row" items="${withdrawalPrevious}">
+														</table>
+													</td>
+													<td class="reportpad">
+														<table class="reportinnbox" cellpadding="0"
+															cellspacing="0;">
+															<tr>
+																<td>Rs <br> 5
+																</td>
+																<td>Rs <br> 10
+																</td>
+																<td>Rs <br> 20
+																</td>
+																<td>Rs <br> 50
+																</td>
+																<td>Rs <br> 100
+																</td>
+																<td>Rs <br> 200
+																</td>
+																<td>Rs <br> 500
+																</td>
+																<td>Rs <br> 2000
+																</td>
+															</tr>
+															<%--  <c:forEach var="row" items="${withdrawalPrevious}">
 																<tr>
 																	<td align="center">${row.denom5Pieces}</td>
 																	<td align="center">${row.denom10Pieces}</td>
@@ -455,10 +543,12 @@ tr.ttlDiscBtm td:nth-child(2), tr.ttlDiscBtm td:nth-child(3) {
 																	<td align="center">${row.denom2000Pieces}</td>
 																</tr>
 															</c:forEach> --%>
-															
-															 <c:forEach var="row" items="${openingBalance}">
+
+															<c:forEach var="row" items="${openingBalance}">
 																<tr>
-																	<td align="center"><%-- ${row.replenishment_5} --%></td>
+																	<td align="center">
+																		<%-- ${row.replenishment_5} --%>
+																	</td>
 																	<td align="center">${row.replenishment_10}</td>
 																	<td align="center">${row.replenishment_20}</td>
 																	<td align="center">${row.replenishment_50}</td>
@@ -468,14 +558,30 @@ tr.ttlDiscBtm td:nth-child(2), tr.ttlDiscBtm td:nth-child(3) {
 																	<td align="center">${row.replenishment_2000}</td>
 																</tr>
 															</c:forEach>
-            </table>
-        </td>
-        <td class="reportpad">
-            <table class="reportinnbox" cellpadding="0" cellspacing="0;">
-                    <tr>
-                        <td>Rs <br> 5</td><td>Rs <br> 10</td><td>Rs <br> 20</td><td>Rs <br> 50</td><td>Rs <br>  100</td><td>Rs <br>  200</td><td>Rs <br>  500</td><td>Rs <br> 2000</td>
-                    </tr>
-                    <%-- <c:forEach var="row" items="${depositList}">
+														</table>
+													</td>
+													<td class="reportpad">
+														<table class="reportinnbox" cellpadding="0"
+															cellspacing="0;">
+															<tr>
+																<td>Rs <br> 5
+																</td>
+																<td>Rs <br> 10
+																</td>
+																<td>Rs <br> 20
+																</td>
+																<td>Rs <br> 50
+																</td>
+																<td>Rs <br> 100
+																</td>
+																<td>Rs <br> 200
+																</td>
+																<td>Rs <br> 500
+																</td>
+																<td>Rs <br> 2000
+																</td>
+															</tr>
+															<%-- <c:forEach var="row" items="${depositList}">
 																<tr>
 																	<td align="center">${row.denom5Pieces}</td>
 																	<td align="center">${row.denom10Pieces}</td>
@@ -487,10 +593,12 @@ tr.ttlDiscBtm td:nth-child(2), tr.ttlDiscBtm td:nth-child(3) {
 																	<td align="center">${row.denom2000Pieces}</td>
 																</tr>
 															</c:forEach> --%>
-															
-															 <c:forEach var="row" items="${openingBalance}">
+
+															<c:forEach var="row" items="${openingBalance}">
 																<tr>
-																	<td align="center"><%-- ${row.deposit_5} --%></td>
+																	<td align="center">
+																		<%-- ${row.deposit_5} --%>
+																	</td>
 																	<td align="center">${row.deposit_10}</td>
 																	<td align="center">${row.deposit_20}</td>
 																	<td align="center">${row.deposit_50}</td>
@@ -500,14 +608,30 @@ tr.ttlDiscBtm td:nth-child(2), tr.ttlDiscBtm td:nth-child(3) {
 																	<td align="center">${row.deposit_2000}</td>
 																</tr>
 															</c:forEach>
-            </table>
-        </td>
-        <td class="reportpad">
-            <table class="reportinnbox" cellpadding="0" cellspacing="0;">
-                    <tr>
-                        <td>Rs <br>  5</td><td>Rs <br> 10</td><td>Rs <br> 20</td><td>Rs <br> 50</td><td>Rs <br> 100</td><td>Rs <br> 200</td><td>Rs <br> 500</td><td>Rs <br> 2000</td>
-                    </tr>
-                    <%-- <c:forEach var="row" items="${depositListPrevious}">
+														</table>
+													</td>
+													<td class="reportpad">
+														<table class="reportinnbox" cellpadding="0"
+															cellspacing="0;">
+															<tr>
+																<td>Rs <br> 5
+																</td>
+																<td>Rs <br> 10
+																</td>
+																<td>Rs <br> 20
+																</td>
+																<td>Rs <br> 50
+																</td>
+																<td>Rs <br> 100
+																</td>
+																<td>Rs <br> 200
+																</td>
+																<td>Rs <br> 500
+																</td>
+																<td>Rs <br> 2000
+																</td>
+															</tr>
+															<%-- <c:forEach var="row" items="${depositListPrevious}">
 																<tr>
 																	<td align="center">${row.denom5Pieces}</td>
 																	<td align="center">${row.denom10Pieces}</td>
@@ -519,9 +643,11 @@ tr.ttlDiscBtm td:nth-child(2), tr.ttlDiscBtm td:nth-child(3) {
 																	<td align="center">${row.denom2000Pieces}</td>
 																</tr>
 															</c:forEach>  --%>
-                                                                   <c:forEach var="row" items="${openingBalance}">
+															<c:forEach var="row" items="${openingBalance}">
 																<tr>
-																	<td align="center"><%-- ${row.depletion_5} --%></td>
+																	<td align="center">
+																		<%-- ${row.depletion_5} --%>
+																	</td>
 																	<td align="center">${row.depletion_10}</td>
 																	<td align="center">${row.depletion_20}</td>
 																	<td align="center">${row.depletion_50}</td>
@@ -531,15 +657,31 @@ tr.ttlDiscBtm td:nth-child(2), tr.ttlDiscBtm td:nth-child(3) {
 																	<td align="center">${row.depletion_2000}</td>
 																</tr>
 															</c:forEach>
-                                                     
-            </table>
-        </td>
-        <td class="reportpad">
-            <table class="reportinnbox" cellpadding="0" cellspacing="0;">
-                    <tr>
-                        <td>Rs <br>  5</td><td>Rs <br> 10</td><td>Rs<br>  20</td><td>Rs<br> 50</td><td>Rs <br> 100</td><td>Rs <br> 200</td><td>Rs<br>  500</td><td>Rs <br> 2000</td>
-                    </tr>
-                    <%-- <tr>
+
+														</table>
+													</td>
+													<td class="reportpad">
+														<table class="reportinnbox" cellpadding="0"
+															cellspacing="0;">
+															<tr>
+																<td>Rs <br> 5
+																</td>
+																<td>Rs <br> 10
+																</td>
+																<td>Rs<br> 20
+																</td>
+																<td>Rs<br> 50
+																</td>
+																<td>Rs <br> 100
+																</td>
+																<td>Rs <br> 200
+																</td>
+																<td>Rs<br> 500
+																</td>
+																<td>Rs <br> 2000
+																</td>
+															</tr>
+															<%-- <tr>
 
 																<td align="center" id="deno5">${closingBalDeno5}</td>
 																<td align="center" id="deno10">${closingBalDeno10}</td>
@@ -552,8 +694,8 @@ tr.ttlDiscBtm td:nth-child(2), tr.ttlDiscBtm td:nth-child(3) {
 
 															</tr>
  --%>
-                                                              
-                                                              <%-- <c:forEach var="row" items="${openingBalance}">
+
+															<%-- <c:forEach var="row" items="${openingBalance}">
 																<tr>
 																	<td align="center">${row.denomination5 + row.deposit_5 - row.withdrawal_5}</td>
 																	<td align="center">${row.denomination10 + row.deposit_10 - row.withdrawal_10}</td>
@@ -565,10 +707,12 @@ tr.ttlDiscBtm td:nth-child(2), tr.ttlDiscBtm td:nth-child(3) {
 																	<td align="center">${row.denomination2000 + row.deposit_2000 - row.withdrawal_2000}</td>
 																</tr>
 															</c:forEach> --%>
-															
+
 															<c:forEach var="row" items="${openingBalance}">
 																<tr>
-																	<td align="center"><%-- ${row.denomination5 + row.deposit_5 - row.withdrawal_5} --%></td>
+																	<td align="center">
+																		<%-- ${row.denomination5 + row.deposit_5 - row.withdrawal_5} --%>
+																	</td>
 																	<td align="center">${row.denomination10 + row.deposit_10 + row.replenishment_10 - row.withdrawal_10 - row.depletion_10}</td>
 																	<td align="center">${row.denomination20 + row.deposit_20 + row.replenishment_20 - row.withdrawal_20 - row.depletion_20}</td>
 																	<td align="center">${row.denomination50 + row.deposit_50 + row.replenishment_50 - row.withdrawal_50 - row.depletion_50}</td>
@@ -578,15 +722,17 @@ tr.ttlDiscBtm td:nth-child(2), tr.ttlDiscBtm td:nth-child(3) {
 																	<td align="center">${row.denomination2000 + row.deposit_2000 + row.replenishment_2000 - row.withdrawal_2000 - row.depletion_2000}</td>
 																</tr>
 															</c:forEach>
-            </table>
-        </td>
-        
-        <td class="reportpad">
-            <table class="reportinnbox" cellpadding="0" cellspacing="0;">
-                    <tr>
-                        <td>Closing Balance <br>Value<br></td> </tr>
-    
-                                                                   <c:forEach var="row" items="${openingBalance}">
+														</table>
+													</td>
+
+													<td class="reportpad">
+														<table class="reportinnbox" cellpadding="0"
+															cellspacing="0;">
+															<tr>
+																<td>Closing Balance <br>Value<br></td>
+															</tr>
+
+															<c:forEach var="row" items="${openingBalance}">
 																<tr>
 																	<td align="center">${row.denomination10*10 + row.deposit_10*10 - row.withdrawal_10*10 - row.depletion_10*10 + row.replenishment_10*10
 									        + row.denomination20*20 + row.deposit_20*20 - row.withdrawal_20*20 - row.depletion_20*20 + row.replenishment_20*20
@@ -595,51 +741,55 @@ tr.ttlDiscBtm td:nth-child(2), tr.ttlDiscBtm td:nth-child(3) {
 									        + row.denomination200*200 + row.deposit_200*200 - row.withdrawal_200*200 - row.depletion_200*200 + row.replenishment_200*200
 									        + row.denomination500*500 + row.deposit_500*500 - row.withdrawal_500*500 - row.depletion_500*500 + row.replenishment_500*500
 									        + row.denomination2000*2000 + row.deposit_2000*2000 - row.withdrawal_2000*2000 - row.depletion_2000*2000 + row.replenishment_2000*2000}</td>
-																										</tr>
+																</tr>
 															</c:forEach>
-                                                     
-            </table>
-        </td>
-    
-                   <td class="reportpad">
-            <table class="reportinnbox" cellpadding="0" cellspacing="0;">
-                    <tr>
-                        <td>SR Number <br>(Deposit/ Withdrawal)</td> </tr>
-    
-                                                                   <c:forEach var="row" items="${openingBalance}">
+
+														</table>
+													</td>
+
+													<td class="reportpad">
+														<table class="reportinnbox" cellpadding="0"
+															cellspacing="0;">
+															<tr>
+																<td>SR Number <br>(Deposit/ Withdrawal)
+																</td>
+															</tr>
+
+															<c:forEach var="row" items="${openingBalance}">
 																<tr>
 																	<td align="center">${row.srNumber}</td>
-																										</tr>
+																</tr>
 															</c:forEach>
-                                                     
-            </table>
-        </td>
-                   
-        <td class="reportpad">
-            <table cellpadding="0" cellspacing="0">
-                <tr>
-                    <td style="height: 57px;">Custodian 1</td>
-                    <td>Custodian 2</td>
-                </tr>
-            </table>
-        </td>
-        <td style="border-top: 0; padding: 0 10px;" class="reportpad" >
-        <table cellpadding="0" cellspacing="0">
-            <tr>
-                <td style="height: 57px;">Remarks</td>
-            </tr>
-            <tr>
-                <td style="height: 57px;"></td>
-            </tr>
-        </table>
-        
-        </td>
-        
-    </tr>
-    
-</table>
-											
-											
+
+														</table>
+													</td>
+
+													<td class="reportpad">
+														<table cellpadding="0" cellspacing="0">
+															<tr>
+																<td style="height: 57px;">Custodian 1</td>
+																<td>Custodian 2</td>
+															</tr>
+														</table>
+													</td>
+													<td style="border-top: 0; padding: 0 10px;"
+														class="reportpad">
+														<table cellpadding="0" cellspacing="0">
+															<tr>
+																<td style="height: 57px;">Remarks</td>
+															</tr>
+															<tr>
+																<td style="height: 57px;"></td>
+															</tr>
+														</table>
+
+													</td>
+
+												</tr>
+
+											</table>
+
+
 										</div>
 									</div>
 								</div>

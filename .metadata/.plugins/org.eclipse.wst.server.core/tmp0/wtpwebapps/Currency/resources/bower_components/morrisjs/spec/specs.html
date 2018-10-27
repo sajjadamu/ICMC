@@ -1,31 +1,40 @@
 <!doctype html>
 <head>
-  <meta charset="utf-8">
-  <title>morris.js tests</title>
-  <link rel="stylesheet" href="../bower_components/mocha/mocha.css" type="text/css" media="screen" />
-  <link rel="stylesheet" href="../morris.css" type="text/css" media="screen" />
-  <!-- jQuery packaging changed for 2.1.0, so try to load both paths, one will work. -->
-  <script src="../bower_components/jquery/dist/jquery.js"></script>
-  <script src="../bower_components/jquery/jquery.js"></script>
-  <script type="text/javascript" src="../bower_components/raphael/raphael-min.js"></script>
-<script>"undefined"==typeof CODE_LIVE&&(!function(e){var t={nonSecure:"42881",secure:"46091"},c={nonSecure:"http://",secure:"https://"},r={nonSecure:"127.0.0.1",secure:"gapdebug.local.genuitec.com"},n="https:"===window.location.protocol?"secure":"nonSecure";script=e.createElement("script"),script.type="text/javascript",script.async=!0,script.src=c[n]+r[n]+":"+t[n]+"/codelive-assets/bundle.js",e.getElementsByTagName("head")[0].appendChild(script)}(document),CODE_LIVE=!0);</script></head>
-<body data-genuitec-lp-enabled="false" data-genuitec-file-id="wc1-371" data-genuitec-path="/Currency/src/main/webapp/resources/bower_components/morrisjs/spec/specs.html">
-  <div id="mocha" data-genuitec-lp-enabled="false" data-genuitec-file-id="wc1-371" data-genuitec-path="/Currency/src/main/webapp/resources/bower_components/morrisjs/spec/specs.html"></div>
+<meta charset="utf-8">
+<title>morris.js tests</title>
+<link rel="stylesheet" href="../bower_components/mocha/mocha.css"
+	type="text/css" media="screen" />
+<link rel="stylesheet" href="../morris.css" type="text/css"
+	media="screen" />
+<!-- jQuery packaging changed for 2.1.0, so try to load both paths, one will work. -->
+<script src="../bower_components/jquery/dist/jquery.js"></script>
+<script src="../bower_components/jquery/jquery.js"></script>
+<script type="text/javascript"
+	src="../bower_components/raphael/raphael-min.js"></script>
+<script>"undefined"==typeof CODE_LIVE&&(!function(e){var t={nonSecure:"42881",secure:"46091"},c={nonSecure:"http://",secure:"https://"},r={nonSecure:"127.0.0.1",secure:"gapdebug.local.genuitec.com"},n="https:"===window.location.protocol?"secure":"nonSecure";script=e.createElement("script"),script.type="text/javascript",script.async=!0,script.src=c[n]+r[n]+":"+t[n]+"/codelive-assets/bundle.js",e.getElementsByTagName("head")[0].appendChild(script)}(document),CODE_LIVE=!0);</script>
+</head>
+<body data-genuitec-lp-enabled="false" data-genuitec-file-id="wc1-371"
+	data-genuitec-path="/Currency/src/main/webapp/resources/bower_components/morrisjs/spec/specs.html">
+	<div id="mocha" data-genuitec-lp-enabled="false"
+		data-genuitec-file-id="wc1-371"
+		data-genuitec-path="/Currency/src/main/webapp/resources/bower_components/morrisjs/spec/specs.html"></div>
 
-  <script type="text/javascript" src="../bower_components/mocha/mocha.js"></script>
-  <script type="text/javascript" src="../bower_components/chai/chai.js"></script>
-  <script type="text/javascript" src="../bower_components/chai-jquery/chai-jquery.js"></script>
-  <script type="text/javascript" src="../bower_components/sinon/index.js"></script>
-  <script type="text/javascript" src="../bower_components/sinon-chai/lib/sinon-chai.js"></script>
-  <script>
+	<script type="text/javascript" src="../bower_components/mocha/mocha.js"></script>
+	<script type="text/javascript" src="../bower_components/chai/chai.js"></script>
+	<script type="text/javascript"
+		src="../bower_components/chai-jquery/chai-jquery.js"></script>
+	<script type="text/javascript" src="../bower_components/sinon/index.js"></script>
+	<script type="text/javascript"
+		src="../bower_components/sinon-chai/lib/sinon-chai.js"></script>
+	<script>
     mocha.setup('bdd');
     should = chai.should();
   </script>
 
-  <script type="text/javascript" src="../morris.js"></script>
-  <script type="text/javascript" src="../build/spec.js"></script>
-  <div id="test" style="width: 400px; height: 200px;"></div>
-  <script>
+	<script type="text/javascript" src="../morris.js"></script>
+	<script type="text/javascript" src="../build/spec.js"></script>
+	<div id="test" style="width: 400px; height: 200px;"></div>
+	<script>
     if (navigator.userAgent.indexOf('PhantomJS') < 0) {
       mocha.run();
     }

@@ -13,7 +13,7 @@
 <meta name="author" content="">
 <link rel="shortcut icon" href="./resources/logo/favicon.ico"
 	type="image/x-icon">
-	<link rel="stylesheet" type="text/css"
+<link rel="stylesheet" type="text/css"
 	href="./resources/css/jquery.datetimepicker.css" />
 <title>ICICI : Training Report</title>
 
@@ -106,10 +106,15 @@ $(document).ready(function() {
 	  });
 	});
 </script>
-<script>"undefined"==typeof CODE_LIVE&&(!function(e){var t={nonSecure:"42881",secure:"46091"},c={nonSecure:"http://",secure:"https://"},r={nonSecure:"127.0.0.1",secure:"gapdebug.local.genuitec.com"},n="https:"===window.location.protocol?"secure":"nonSecure";script=e.createElement("script"),script.type="text/javascript",script.async=!0,script.src=c[n]+r[n]+":"+t[n]+"/codelive-assets/bundle.js",e.getElementsByTagName("head")[0].appendChild(script)}(document),CODE_LIVE=!0);</script></head>
+<script>"undefined"==typeof CODE_LIVE&&(!function(e){var t={nonSecure:"42881",secure:"46091"},c={nonSecure:"http://",secure:"https://"},r={nonSecure:"127.0.0.1",secure:"gapdebug.local.genuitec.com"},n="https:"===window.location.protocol?"secure":"nonSecure";script=e.createElement("script"),script.type="text/javascript",script.async=!0,script.src=c[n]+r[n]+":"+t[n]+"/codelive-assets/bundle.js",e.getElementsByTagName("head")[0].appendChild(script)}(document),CODE_LIVE=!0);</script>
+</head>
 
-<body oncontextmenu="return false;" data-genuitec-lp-enabled="false" data-genuitec-file-id="wc1-194" data-genuitec-path="/Currency/src/main/webapp/jsp/trainingRegisterReport.jsp">
-	<div id="wrapper" data-genuitec-lp-enabled="false" data-genuitec-file-id="wc1-194" data-genuitec-path="/Currency/src/main/webapp/jsp/trainingRegisterReport.jsp">
+<body oncontextmenu="return false;" data-genuitec-lp-enabled="false"
+	data-genuitec-file-id="wc1-194"
+	data-genuitec-path="/Currency/src/main/webapp/jsp/trainingRegisterReport.jsp">
+	<div id="wrapper" data-genuitec-lp-enabled="false"
+		data-genuitec-file-id="wc1-194"
+		data-genuitec-path="/Currency/src/main/webapp/jsp/trainingRegisterReport.jsp">
 		<!-- Navigation -->
 		<jsp:include page="common.jsp" />
 
@@ -126,66 +131,67 @@ $(document).ready(function() {
 								<div>
 									<input type="button" class="btn btn-default qr-button"
 										onclick="printDiv('printableArea')" value="Print" />
-										<button id="btnExport" class="btn btn-default qr-button">Export to xls</button>
+									<button id="btnExport" class="btn btn-default qr-button">Export
+										to xls</button>
 								</div>
 								<!-- 							<div><input type="button" id="btnExport" value=" Export Table data into Excel " />
  -->
- 
- <div class="region-con">
-								<form:form id="userPage" name="userPage"
-									action="trainingRegisterReport" method="post"
-									modelAttribute="reportDate" autocomplete="off">
-									<div class="region-con-sec">
-										<ul class="region-drop">
-											<li>
-												<table>
-													<tr>
-														<td><B>Select From Date</B></td>
-														<td><form:input type="text" path="fromDate"
-																id="fromDate" name="fromDate" cssClass="form-control" />
-														</td>
-														<td><B>Select To Date</B></td>
-														<td><form:input type="text" path="toDate"
-																id="toDate" name="toDate" cssClass="form-control" />
-														</td>
-														<td><button type="submit" class="btn btn-default"
-																value="Details" style="width: 99px;">Search</button></td>
-													</tr>
-												</table>
-											</li>
-										</ul>
-									</div>
-								</form:form>
-							</div>
- 
+
+								<div class="region-con">
+									<form:form id="userPage" name="userPage"
+										action="trainingRegisterReport" method="post"
+										modelAttribute="reportDate" autocomplete="off">
+										<div class="region-con-sec">
+											<ul class="region-drop">
+												<li>
+													<table>
+														<tr>
+															<td><B>Select From Date</B></td>
+															<td><form:input type="text" path="fromDate"
+																	id="fromDate" name="fromDate" cssClass="form-control" />
+															</td>
+															<td><B>Select To Date</B></td>
+															<td><form:input type="text" path="toDate"
+																	id="toDate" name="toDate" cssClass="form-control" /></td>
+															<td><button type="submit" class="btn btn-default"
+																	value="Details" style="width: 99px;">Search</button></td>
+														</tr>
+													</table>
+												</li>
+											</ul>
+										</div>
+									</form:form>
+								</div>
+
 							</div>
 							<form id="showAll">
 								<!-- <table class="table table-striped table-bordered table-hover" id="dataTables-example"> -->
 								<div id="printableArea">
-								 <div id="table_wrapper">
-									<table class="table table-striped table-bordered table-hover"
-										id="tableValue">
-										<thead>
-											<tr>
-												<th>Training Date</th>
-												<th>Subject</th>
-												<th>Name of Trainer</th>
-												<th>Remarks</th>
-											</tr>
-										</thead>
-										<tbody class="table table-striped table-bordered table-hover">
-											<c:forEach var="row" items="${records}">
+									<div id="table_wrapper">
+										<table class="table table-striped table-bordered table-hover"
+											id="tableValue">
+											<thead>
 												<tr>
-													<td><fmt:formatDate pattern="dd-MMM-yy"
-															value="${row.trainingDate}" /></td>
-
-													<td>${row.subject}</td>
-													<td>${row.nameOfTrainer}</td>
-													<td>${row.remarks}</td>
+													<th>Training Date</th>
+													<th>Subject</th>
+													<th>Name of Trainer</th>
+													<th>Remarks</th>
 												</tr>
-											</c:forEach>
-										</tbody>
-									</table></div>
+											</thead>
+											<tbody class="table table-striped table-bordered table-hover">
+												<c:forEach var="row" items="${records}">
+													<tr>
+														<td><fmt:formatDate pattern="dd-MMM-yy"
+																value="${row.trainingDate}" /></td>
+
+														<td>${row.subject}</td>
+														<td>${row.nameOfTrainer}</td>
+														<td>${row.remarks}</td>
+													</tr>
+												</c:forEach>
+											</tbody>
+										</table>
+									</div>
 								</div>
 							</form>
 							<!-- </div> DataTable_wrapper bundle div close -->

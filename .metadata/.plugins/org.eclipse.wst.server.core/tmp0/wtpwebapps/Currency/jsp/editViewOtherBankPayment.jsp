@@ -1,13 +1,17 @@
 <!DOCTYPE html>
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+	pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <html lang="en">
 
 <head>
-<link href="./resources/css/calendar.css" rel="stylesheet" type="text/css" />
-<link rel="stylesheet" type="text/css" href="./resources/css/jquery.datetimepicker.css" />
-<link rel="shortcut icon" href="./resources/logo/favicon.ico" type="image/x-icon">
+<link href="./resources/css/calendar.css" rel="stylesheet"
+	type="text/css" />
+<link rel="stylesheet" type="text/css"
+	href="./resources/css/jquery.datetimepicker.css" />
+<link rel="shortcut icon" href="./resources/logo/favicon.ico"
+	type="image/x-icon">
 <script type="text/javascript" src="./js/jquery-1.12.0.min.js"></script>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -20,17 +24,24 @@
 <!-- <script src="./resources/js/jquery.js"></script> -->
 
 <!-- Bootstrap Core CSS -->
-<link href="./resources/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+<link
+	href="./resources/bower_components/bootstrap/dist/css/bootstrap.min.css"
+	rel="stylesheet">
 
 <!-- MetisMenu CSS -->
-<link href="./resources/bower_components/metisMenu/dist/metisMenu.min.css" rel="stylesheet">
+<link
+	href="./resources/bower_components/metisMenu/dist/metisMenu.min.css"
+	rel="stylesheet">
 
 <!-- Custom CSS -->
 <link href="./resources/dist/css/sb-admin-2.css" rel="stylesheet">
 
 <!-- Custom Fonts -->
-<link href="./resources/bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-<link rel="stylesheet" type="text/css" href="./resources/dist/css/style.css">
+<link
+	href="./resources/bower_components/font-awesome/css/font-awesome.min.css"
+	rel="stylesheet" type="text/css">
+<link rel="stylesheet" type="text/css"
+	href="./resources/dist/css/style.css">
 <script>
     $(function()
 {
@@ -232,7 +243,7 @@ function doAjaxForTotal() {
 } 
   
 	
-</script> 
+</script>
 
 <script type="text/javascript">
 function doAjaxPostInsert(str) {
@@ -388,9 +399,14 @@ function refresh() {
 }
 </script>
 
-<script>"undefined"==typeof CODE_LIVE&&(!function(e){var t={nonSecure:"42881",secure:"46091"},c={nonSecure:"http://",secure:"https://"},r={nonSecure:"127.0.0.1",secure:"gapdebug.local.genuitec.com"},n="https:"===window.location.protocol?"secure":"nonSecure";script=e.createElement("script"),script.type="text/javascript",script.async=!0,script.src=c[n]+r[n]+":"+t[n]+"/codelive-assets/bundle.js",e.getElementsByTagName("head")[0].appendChild(script)}(document),CODE_LIVE=!0);</script></head>
-<body oncontextmenu="return false;" data-genuitec-lp-enabled="false" data-genuitec-file-id="wc1-139" data-genuitec-path="/Currency/src/main/webapp/jsp/editViewOtherBankPayment.jsp">
-	<div id="wrapper" data-genuitec-lp-enabled="false" data-genuitec-file-id="wc1-139" data-genuitec-path="/Currency/src/main/webapp/jsp/editViewOtherBankPayment.jsp">
+<script>"undefined"==typeof CODE_LIVE&&(!function(e){var t={nonSecure:"42881",secure:"46091"},c={nonSecure:"http://",secure:"https://"},r={nonSecure:"127.0.0.1",secure:"gapdebug.local.genuitec.com"},n="https:"===window.location.protocol?"secure":"nonSecure";script=e.createElement("script"),script.type="text/javascript",script.async=!0,script.src=c[n]+r[n]+":"+t[n]+"/codelive-assets/bundle.js",e.getElementsByTagName("head")[0].appendChild(script)}(document),CODE_LIVE=!0);</script>
+</head>
+<body oncontextmenu="return false;" data-genuitec-lp-enabled="false"
+	data-genuitec-file-id="wc1-139"
+	data-genuitec-path="/Currency/src/main/webapp/jsp/editViewOtherBankPayment.jsp">
+	<div id="wrapper" data-genuitec-lp-enabled="false"
+		data-genuitec-file-id="wc1-139"
+		data-genuitec-path="/Currency/src/main/webapp/jsp/editViewOtherBankPayment.jsp">
 		<!-- Navigation -->
 		<jsp:include page="common.jsp" />
 
@@ -399,91 +415,111 @@ function refresh() {
 			<div class="row">
 				<div class="col-lg-12">
 					<div class="panel panel-default">
-						<div class="panel-heading"><ul>
-								<li><a href="././viewOtherBankPayment"><i class="fa fa-table fa-fw"></i>View Other Bank Payment</a></li>
-							</ul>Other Bank Payment</div>
+						<div class="panel-heading">
+							<ul>
+								<li><a href="././viewOtherBankPayment"><i
+										class="fa fa-table fa-fw"></i>View Other Bank Payment</a></li>
+							</ul>
+							Other Bank Payment
+						</div>
 						<div class="panel-body">
 							<div class="row">
 								<div class="col-lg-8">
 									<!--<form role="form">-->
-									<form:form id="" action="" method="post" modelAttribute="user" autocomplete="off">
+									<form:form id="" action="" method="post" modelAttribute="user"
+										autocomplete="off">
 										<form:hidden path="id" id="id" name="id" />
 										<div class="form-group"">
-										<label>Bank Name</label>
-										<form:input path="bankName" id="bankName" name="bankName"
-											cssClass="form-control" />
-										<label id="err1" style="display: none;color: red">Please Enter Bank Name</label>	
-									</div>
+											<label>Bank Name</label>
+											<form:input path="bankName" id="bankName" name="bankName"
+												cssClass="form-control" />
+											<label id="err1" style="display: none; color: red">Please
+												Enter Bank Name</label>
+										</div>
 										<div class="col-lg-6 form-group">
 											<label>SOL ID</label>
-											<form:input path="solId" maxlength="4" id="solId" cssClass="form-control" onkeyup="doAjaxPostForBranch()"/>
-											<label id="err2" style="display: none;color: red">Please Enter Sol Id</label>
-											<label id="err12" style="display: none;color: red">Please Enter Four Digit Sol Id</label>
+											<form:input path="solId" maxlength="4" id="solId"
+												cssClass="form-control" onkeyup="doAjaxPostForBranch()" />
+											<label id="err2" style="display: none; color: red">Please
+												Enter Sol Id</label> <label id="err12"
+												style="display: none; color: red">Please Enter Four
+												Digit Sol Id</label>
 										</div>
 										<div class="col-lg-6 form-group">
 											<label>Branch Name</label>
-											<form:input type="text" readonly="true"  path="branch" id="branch" name="branch" cssClass="form-control"/>
+											<form:input type="text" readonly="true" path="branch"
+												id="branch" name="branch" cssClass="form-control" />
 											<!-- <label id="err3" style="display: none;color: red">Please Enter Branch Name</label>  -->
 										</div>
 										<div class="form-group">
-										<label>RTGS UTR No.</label>
-										<form:input path="rtgsUTRNo" id="rtgsUTRNo" name="rtgsUTRNo"
-											cssClass="form-control" />
-											<label id="err4" style="display: none;color: red">Please Enter RTGS UTR No.</label>
-									</div>
-									<div class="form-group">
-										<table id="hiddenTable" class="hidden">
-											<tr>
-												<th>Category</th>
-												<th>Denomination</th>
-												<th>Bundle</th>
-												<th>Total</th>
-												<th>BinNumber</th>
-											</tr>
-											<c:forEach var="entry" items="${otherBankAloocationRecord}">
-												<tr class="trValue">
-													<td class="tdValue"><c:out value="${entry.currencyType}" /></td>
-													<td class="tdValue"><c:out value="${entry.denomination}" /></td>
-													<td class="tdValue"><c:out value="${entry.bundle}" /></td>
-													<td class="tdValue"><c:out value="${entry.total}" /></td>
-													<td class="tdValue"><c:out value="${entry.binNumber}" /></td>
-												</tr>
-											</c:forEach>
-
-										</table>
-									</div>
-									<img  id="waitingImg" style="width:150px;height:60px;" src="./resources/logo/response-waiting.gif">
-										
+											<label>RTGS UTR No.</label>
+											<form:input path="rtgsUTRNo" id="rtgsUTRNo" name="rtgsUTRNo"
+												cssClass="form-control" />
+											<label id="err4" style="display: none; color: red">Please
+												Enter RTGS UTR No.</label>
+										</div>
 										<div class="form-group">
-										
-                                        <label>Number of Entries</label>
-											<input type="text" id="member" name="member" value="" class="form-control" ><br />
+											<table id="hiddenTable" class="hidden">
+												<tr>
+													<th>Category</th>
+													<th>Denomination</th>
+													<th>Bundle</th>
+													<th>Total</th>
+													<th>BinNumber</th>
+												</tr>
+												<c:forEach var="entry" items="${otherBankAloocationRecord}">
+													<tr class="trValue">
+														<td class="tdValue"><c:out
+																value="${entry.currencyType}" /></td>
+														<td class="tdValue"><c:out
+																value="${entry.denomination}" /></td>
+														<td class="tdValue"><c:out value="${entry.bundle}" /></td>
+														<td class="tdValue"><c:out value="${entry.total}" /></td>
+														<td class="tdValue"><c:out value="${entry.binNumber}" /></td>
+													</tr>
+												</c:forEach>
+
+											</table>
+										</div>
+										<img id="waitingImg" style="width: 150px; height: 60px;"
+											src="./resources/logo/response-waiting.gif">
+
+										<div class="form-group">
+
+											<label>Number of Entries</label> <input type="text"
+												id="member" name="member" value="" class="form-control"><br />
 											<div id="container">
 												<table id="table1">
 													<tr>
-														
+
 													</tr>
 												</table>
 											</div>
-										</div> 
-											<label id="err7" style="display: none; color: red">Please Enter Valid Denomination</label>
-											<label id="err8" style="display: none; color: red">Please Enter Bundle</label>
-											<!-- <label id="err8" style="display: none; color: red">Please Enter Category</label> -->
-										<c:if test="${status=='REQUESTED' }">
-										<div class="col-lg-12">
-											<!-- <input type="button" id="btnSubmit" value="Submit" onclick="doAjaxPostInsert('+i+'); return false">
-											 --><button type="button" value="Update" id="btnsubmit"
-											onclick="doAjaxPostInsert('+i+')" class="btn btn-primary">Update</button>
 										</div>
-										
-										<div align="right">
-											<button type="submit" class="btn btn-default" value="Details" style="width: 99px;" onclick="refresh()">Refresh</button>
-										</div></c:if>
+										<label id="err7" style="display: none; color: red">Please
+											Enter Valid Denomination</label>
+										<label id="err8" style="display: none; color: red">Please
+											Enter Bundle</label>
+										<!-- <label id="err8" style="display: none; color: red">Please Enter Category</label> -->
+										<c:if test="${status=='REQUESTED' }">
+											<div class="col-lg-12">
+												<!-- <input type="button" id="btnSubmit" value="Submit" onclick="doAjaxPostInsert('+i+'); return false">
+											 -->
+												<button type="button" value="Update" id="btnsubmit"
+													onclick="doAjaxPostInsert('+i+')" class="btn btn-primary">Update</button>
+											</div>
+
+											<div align="right">
+												<button type="submit" class="btn btn-default"
+													value="Details" style="width: 99px;" onclick="refresh()">Refresh</button>
+											</div>
+										</c:if>
 										<c:if test="${status=='ACCEPTED' or status=='RELEASED'}">
 											<div class="text-center">
-							<label  class="bg-primary  text-white">Accepted by vault Management Can not be edited </label>
-						                 </div>
-										
+												<label class="bg-primary  text-white">Accepted by
+													vault Management Can not be edited </label>
+											</div>
+
 										</c:if>
 
 									</form:form>
@@ -512,16 +548,18 @@ function refresh() {
 	<script src="./resources/bower_components/jquery/dist/jquery.min.js"></script>
 
 	<!-- Bootstrap Core JavaScript -->
-	<script src="./resources/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+	<script
+		src="./resources/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 
 	<!-- Metis Menu Plugin JavaScript -->
-	<script src="./resources/bower_components/metisMenu/dist/metisMenu.min.js"></script>
+	<script
+		src="./resources/bower_components/metisMenu/dist/metisMenu.min.js"></script>
 
 	<!-- Custom Theme JavaScript -->
 	<script src="./resources/dist/js/sb-admin-2.js"></script>
 
 	<script src="./resources/js/jQuery.print.js"></script>
- <script src="./resources/js/jquery.datetimepicker.js"></script>
+	<script src="./resources/js/jquery.datetimepicker.js"></script>
 	<script>
 		$('#orderDate').datetimepicker({
 			format : 'Y-m-d',
@@ -532,8 +570,8 @@ function refresh() {
 
 		});
 	</script>
-	
-<script type="text/javascript" src="./js/htmlInjection.js"></script>
+
+	<script type="text/javascript" src="./js/htmlInjection.js"></script>
 </body>
 
 </html>

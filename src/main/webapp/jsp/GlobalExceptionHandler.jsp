@@ -167,10 +167,10 @@ div {
 	<div id="wrapper">
 		<!-- Navigation -->
 		<jsp:useBean id="now" class="java.util.Date" />
-			
-				<div><jsp:include page="logOut.jsp" /></div>
-			
-	
+
+		<div><jsp:include page="logOut.jsp" /></div>
+
+
 		<div id="page-wrapper">
 			<!-- /.row -->
 			<div class="row">
@@ -190,7 +190,7 @@ div {
 							<c:out value="${message }" />
 							<br /> Global Message
 							<c:out value="${GlobalExceptionMessage }" />
-							
+
 							<br />
 
 

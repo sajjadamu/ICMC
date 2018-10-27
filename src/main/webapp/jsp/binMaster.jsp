@@ -2,7 +2,8 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
-<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="sec"
+	uri="http://www.springframework.org/security/tags"%>
 <html lang="en">
 <head>
 <meta charset="utf-8">
@@ -12,10 +13,12 @@
 <meta name="author" content="">
 <link rel="shortcut icon" href="./resources/logo/favicon.ico"
 	type="image/x-icon">
-<link href="./resources/css/calendar.css" rel="stylesheet" type="text/css" />
+<link href="./resources/css/calendar.css" rel="stylesheet"
+	type="text/css" />
 <link rel="stylesheet" type="text/css"
 	href="./resources/css/jquery.datetimepicker.css" />
-<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script type="text/javascript"
+	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script type="text/javascript" src="./js/jquery.validate.min.js"></script>
 
 <title>ICICI : Bin Master Entry</title>
@@ -51,7 +54,7 @@
 <body oncontextmenu="return false;">
 	<div id="wrapper">
 		<!-- Navigation -->
-		<jsp:include page="common.jsp" /> 
+		<jsp:include page="common.jsp" />
 
 		<div id="page-wrapper">
 			<!--  <div class="row">
@@ -67,86 +70,97 @@
 
 						<div class="panel-heading">
 							<ul>
-								<li>
-									<sec:authorize access="hasRole('ADD_BIN')">
-                        				<a href="././viewBinMaster"><i class="fa fa-table fa-fw"></i> View Bin Master</a>
-									</sec:authorize>
-								</li>
-							</ul>Add Data In Bin Master
+								<li><sec:authorize access="hasRole('ADD_BIN')">
+										<a href="././viewBinMaster"><i class="fa fa-table fa-fw"></i>
+											View Bin Master</a>
+									</sec:authorize></li>
+							</ul>
+							Add Data In Bin Master
 						</div>
-						
+
 						<div class="panel-body">
 							<div class="row">
 								<div class="col-lg-6">
 									<!--<form role="form">-->
-									<form:form id="userPage" name="userPage" action="saveDataInBin" method="post"
-										modelAttribute="user"  enctype="multipart/form-data" autocomplete="off">
-									<div align="center" style="color:white; background:red;"><b>${errorMsg}</b></div>
-									<div align="center" style="color:white; background:red;"><b>${duplicateMsg}</b></div><br>
+									<form:form id="userPage" name="userPage" action="saveDataInBin"
+										method="post" modelAttribute="user"
+										enctype="multipart/form-data" autocomplete="off">
+										<div align="center" style="color: white; background: red;">
+											<b>${errorMsg}</b>
+										</div>
+										<div align="center" style="color: white; background: red;">
+											<b>${duplicateMsg}</b>
+										</div>
+										<br>
 										<div class="form-group">
 											<label>First Priority</label>
-											<form:select path="firstPriority" id="firstPriority"  onchange="javascript: check_val(this)"
+											<form:select path="firstPriority" id="firstPriority"
+												onchange="javascript: check_val(this)"
 												cssClass="form-control">
-                                      		<%-- <div align="center" style="color:white; background:red;"><b>${errorMsg}</b></div> --%>
+												<%-- <div align="center" style="color:white; background:red;"><b>${errorMsg}</b></div> --%>
 
 												<form:option value="">Select First Priority</form:option>
 												<form:options items="${ctype}" />
 											</form:select>
 										</div>
-										
-										
-										
+
+
+
 										<div class="form-group">
 											<label>Second Priority</label>
-											<form:select path="secondPriority" id="secondPriority"  onchange="javascript: check_val(this)"
+											<form:select path="secondPriority" id="secondPriority"
+												onchange="javascript: check_val(this)"
 												cssClass="form-control">
 												<form:option value="">Select Second Priority</form:option>
 												<form:options items="${ctype}" />
 											</form:select>
 										</div>
-										
-										
+
+
 										<div class="form-group">
 											<label>Third Priority</label>
-											<form:select path="thirdPriority" id="thirdPriority" onchange="javascript: check_val(this)"
+											<form:select path="thirdPriority" id="thirdPriority"
+												onchange="javascript: check_val(this)"
 												cssClass="form-control">
 												<form:option value="">Select Third Priority</form:option>
 												<form:options items="${ctype}" />
 											</form:select>
 										</div>
-										
+
 										<div class="form-group">
 											<label>Fourth Priority</label>
-											<form:select path="fourthPriority" id="fourthPriority" onchange="javascript: check_val(this)"
+											<form:select path="fourthPriority" id="fourthPriority"
+												onchange="javascript: check_val(this)"
 												cssClass="form-control">
 												<form:option value="">Select Fourth Priority</form:option>
 												<form:options items="${ctype}" />
 											</form:select>
 										</div>
-										
+
 										<div class="form-group">
 											<label>Fifth Priority</label>
-											<form:select path="fifthPriority" id="fifthPriority" onchange="javascript: check_val(this)"
+											<form:select path="fifthPriority" id="fifthPriority"
+												onchange="javascript: check_val(this)"
 												cssClass="form-control">
 												<form:option value="">Select Fifth Priority</form:option>
 												<form:options items="${ctype}" />
 											</form:select>
 										</div>
-										
-										
+
+
 										<div class="form-group">
 											<label>Priority Location</label>
 											<form:select path="locationPriority" id="locationPriority"
 												cssClass="form-control">
-												<form:option value="${null}">Select Priority Location</form:option> 
+												<form:option value="${null}">Select Priority Location</form:option>
 												<form:option value="1">1</form:option>
 												<form:option value="2">2</form:option>
 												<form:option value="3">3</form:option>
 											</form:select>
 										</div>
-										
-										
-									 <div class="form-group">
+
+
+										<div class="form-group">
 											<label>ICMC Name</label>
 											<form:select id="icmcId" name="icmcId" path="icmcId"
 												cssClass="form-control">
@@ -155,8 +169,8 @@
 													itemLabel="name" />
 
 											</form:select>
-										</div> 
-										
+										</div>
+
 										<div class="form-group">
 											<label>BIN Size</label>
 											<form:select id="vaultSize" name="vaultSize" path="vaultSize"
@@ -165,40 +179,35 @@
 												<form:options items="${binSizeList}" />
 
 											</form:select>
-										</div> 
-										
-										
+										</div>
+
+
 										<div class="form-group">
 											<label>Bin Number</label>
 											<form:input path="binNumber" id="binNumber"
 												cssClass="form-control" />
-										</div> 	
-										    
-										<div class="form-group">
-										
+										</div>
 
-									</div>									
+										<div class="form-group"></div>
 										<div class="col-lg-6 form-group">
-										<label>Choose File</label> <input type="file" id="file" name="file"
-											Class="form-control" />
-											
-											<a href="${documentFilePath}/binMaster.csv" download>Download CSV Format</a>
-									     </div>
-									     <div class="col-lg-6 form-group">
-										<label>ICMC</label><br>
-										<form:radiobutton path="oldNewIcmc"
-											id="oldNewIcmc" name="oldNewIcmc"
-											checked="true"  value="OLD"/>
-										<span class="deno-value"><b>OLD</b></span>
-										<form:radiobutton path="oldNewIcmc"
-											id="oldNewIcmc" name="oldNewIcmc"
-											value="NEW"/>
-										<span class="deno-value"><b>NEW</b></span>
-									     
-									     </div>
-									
-										<button type="submit" id='save' class="btn btn-lg btn-success btn-block"
-											value="Details" >Save</button>
+											<label>Choose File</label> <input type="file" id="file"
+												name="file" Class="form-control" /> <a
+												href="${documentFilePath}/binMaster.csv" download>Download
+												CSV Format</a>
+										</div>
+										<div class="col-lg-6 form-group">
+											<label>ICMC</label><br>
+											<form:radiobutton path="oldNewIcmc" id="oldNewIcmc"
+												name="oldNewIcmc" checked="true" value="OLD" />
+											<span class="deno-value"><b>OLD</b></span>
+											<form:radiobutton path="oldNewIcmc" id="oldNewIcmc"
+												name="oldNewIcmc" value="NEW" />
+											<span class="deno-value"><b>NEW</b></span>
+
+										</div>
+
+										<button type="submit" id='save'
+											class="btn btn-lg btn-success btn-block" value="Details">Save</button>
 									</form:form>
 								</div>
 								<!-- /.col-lg-6 (nested) -->
@@ -235,7 +244,7 @@
 	<script src="./resources/dist/js/sb-admin-2.js"></script>
 
 
- <script type="text/javascript">
+	<script type="text/javascript">
 
 $.validator.addMethod("matchValue", function (value, element) {
 	var fileValue = $('#firstPriority').val();
@@ -391,8 +400,8 @@ $.validator.addMethod("loginRegex", function(value, element) {
 	    }
 	  });
 	});
-	</script> 
-<script type="text/javascript" src="./js/htmlInjection.js"></script>
+	</script>
+	<script type="text/javascript" src="./js/htmlInjection.js"></script>
 </body>
 
 </html>

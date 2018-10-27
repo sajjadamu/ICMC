@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+	pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jstl/core_rt"%>
 <head>
@@ -9,28 +10,40 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="">
 <meta name="author" content="">
-<link rel="shortcut icon" href="./resources/logo/favicon.ico" type="image/x-icon">
+<link rel="shortcut icon" href="./resources/logo/favicon.ico"
+	type="image/x-icon">
 <title>ICICI : Bin Data</title>
 
 <!-- Bootstrap Core CSS -->
-<link href="./resources/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+<link
+	href="./resources/bower_components/bootstrap/dist/css/bootstrap.min.css"
+	rel="stylesheet">
 
 <!-- MetisMenu CSS -->
-<link href="./resources/bower_components/metisMenu/dist/metisMenu.min.css" rel="stylesheet">
+<link
+	href="./resources/bower_components/metisMenu/dist/metisMenu.min.css"
+	rel="stylesheet">
 
 <!-- DataTables CSS -->
-<link href="./resources/bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.css" rel="stylesheet">
+<link
+	href="./resources/bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.css"
+	rel="stylesheet">
 
 <!-- DataTables Responsive CSS -->
-<link href="./resources/bower_components/datatables-responsive/css/responsive.dataTables.scss" rel="stylesheet">
+<link
+	href="./resources/bower_components/datatables-responsive/css/responsive.dataTables.scss"
+	rel="stylesheet">
 
 <!-- Custom CSS -->
 <link href="./resources/dist/css/sb-admin-2.css" rel="stylesheet">
 
 <!-- Custom Fonts -->
-<link href="./resources/bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+<link
+	href="./resources/bower_components/font-awesome/css/font-awesome.min.css"
+	rel="stylesheet" type="text/css">
 
-<link rel="./resources/stylesheet" type="text/css" href="dist/css/style.css">
+<link rel="./resources/stylesheet" type="text/css"
+	href="dist/css/style.css">
 
 
 <script type="text/javascript">
@@ -126,49 +139,50 @@ return true;
 	<div id="wrapper">
 		<!-- Navigation -->
 		<jsp:include page="common.jsp" />
-		
+
 		<div id="page-wrapper">
 			<!-- /.row -->
 			<div class="row">
 				<div class="col-lg-12">
 					<div class="panel panel-default">
 						<div class="panel-heading">
-                        	<ul>
-                        		<li>
-                        			<a href="././viewBin"><i class="fa fa-table fa-fw"></i> Back</a>
-                        		</li>
-                        	</ul>Bin Dashboard
-                        </div>
-						
+							<ul>
+								<li><a href="././viewBin"><i class="fa fa-table fa-fw"></i>
+										Back</a></li>
+							</ul>
+							Bin Dashboard
+						</div>
+
 						<!-- /.panel-heading -->
 						<div class="panel-body">
 							<div class="dataTable_wrapper">
 								<%-- <form id="showAll"> --%>
-								<form:form id="userPage" name="userPage" action="viewBinStatus" method="post" modelAttribute="user" onsubmit="return dropdownValidation()">
+								<form:form id="userPage" name="userPage" action="viewBinStatus"
+									method="post" modelAttribute="user"
+									onsubmit="return dropdownValidation()">
 									<div class="row">
 										<div class="col-sm-12"></div>
 										<!-- /.row (nested) -->
-											<div class="col-sm-12">
-												<table class="table table-striped table-bordered table-hover">
-													<jsp:include page="binSummary.jsp" />
-													<jsp:include page="binSummaryForCoins.jsp" />
-												</table>
-												<table class="bundle-controling">
-													<tr>
-														<c:forEach var="row" items="${records}">
-															<td bgcolor="${row.color}">
-															<a href="#"
-																onclick="ajaxAvailableCapacity('${row.binNumber}')"
-																id="'${row.binNumber}'">${row.binNumber} </a></td>
-														</c:forEach>
-													</tr>
-													
-												</table>
-											</div>
+										<div class="col-sm-12">
+											<table class="table table-striped table-bordered table-hover">
+												<jsp:include page="binSummary.jsp" />
+												<jsp:include page="binSummaryForCoins.jsp" />
+											</table>
+											<table class="bundle-controling">
+												<tr>
+													<c:forEach var="row" items="${records}">
+														<td bgcolor="${row.color}"><a href="#"
+															onclick="ajaxAvailableCapacity('${row.binNumber}')"
+															id="'${row.binNumber}'">${row.binNumber} </a></td>
+													</c:forEach>
+												</tr>
+
+											</table>
 										</div>
-									</form:form>
-								</div>
+									</div>
+								</form:form>
 							</div>
+						</div>
 						<!-- /.panel-body -->
 					</div>
 					<!-- /.panel -->
@@ -211,7 +225,7 @@ return true;
 		});
 	</script>
 
-<script type="text/javascript" src="./js/htmlInjection.js"></script>
+	<script type="text/javascript" src="./js/htmlInjection.js"></script>
 </body>
 
 </html>

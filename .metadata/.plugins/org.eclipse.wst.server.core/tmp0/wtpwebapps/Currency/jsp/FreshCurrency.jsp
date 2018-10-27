@@ -12,7 +12,8 @@
 <link rel="shortcut icon" href="./resources/logo/favicon.ico"
 	type="image/x-icon">
 
-<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script type="text/javascript"
+	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script type="text/javascript" src="./js/jquery.validate.min.js"></script>
 
 <title>ICICI : Add Fresh Currency</title>
@@ -44,9 +45,14 @@
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
-<script>"undefined"==typeof CODE_LIVE&&(!function(e){var t={nonSecure:"42881",secure:"46091"},c={nonSecure:"http://",secure:"https://"},r={nonSecure:"127.0.0.1",secure:"gapdebug.local.genuitec.com"},n="https:"===window.location.protocol?"secure":"nonSecure";script=e.createElement("script"),script.type="text/javascript",script.async=!0,script.src=c[n]+r[n]+":"+t[n]+"/codelive-assets/bundle.js",e.getElementsByTagName("head")[0].appendChild(script)}(document),CODE_LIVE=!0);</script></head>
-<body oncontextmenu="return false;" data-genuitec-lp-enabled="false" data-genuitec-file-id="wc1-23" data-genuitec-path="/Currency/src/main/webapp/jsp/FreshCurrency.jsp">
-	<div id="wrapper" data-genuitec-lp-enabled="false" data-genuitec-file-id="wc1-23" data-genuitec-path="/Currency/src/main/webapp/jsp/FreshCurrency.jsp">
+<script>"undefined"==typeof CODE_LIVE&&(!function(e){var t={nonSecure:"42881",secure:"46091"},c={nonSecure:"http://",secure:"https://"},r={nonSecure:"127.0.0.1",secure:"gapdebug.local.genuitec.com"},n="https:"===window.location.protocol?"secure":"nonSecure";script=e.createElement("script"),script.type="text/javascript",script.async=!0,script.src=c[n]+r[n]+":"+t[n]+"/codelive-assets/bundle.js",e.getElementsByTagName("head")[0].appendChild(script)}(document),CODE_LIVE=!0);</script>
+</head>
+<body oncontextmenu="return false;" data-genuitec-lp-enabled="false"
+	data-genuitec-file-id="wc1-23"
+	data-genuitec-path="/Currency/src/main/webapp/jsp/FreshCurrency.jsp">
+	<div id="wrapper" data-genuitec-lp-enabled="false"
+		data-genuitec-file-id="wc1-23"
+		data-genuitec-path="/Currency/src/main/webapp/jsp/FreshCurrency.jsp">
 		<!-- Navigation -->
 		<jsp:include page="common.jsp" />
 
@@ -62,40 +68,42 @@
 				<div class="col-lg-12">
 					<div class="panel panel-default">
 						<div class="panel-heading">
-                        	<ul>
-                        		<li>
-                        			<a href="././viewfreshCurrency"><i class="fa fa-table fa-fw"></i> View Fresh Currency Details</a>
-                        		</li>
-							</ul>Add Fresh Currency
-                        </div>
+							<ul>
+								<li><a href="././viewfreshCurrency"><i
+										class="fa fa-table fa-fw"></i> View Fresh Currency Details</a></li>
+							</ul>
+							Add Fresh Currency
+						</div>
 						<div class="panel-body">
 							<div class="row">
 								<div class="col-lg-6">
 									<!--<form role="form">-->
-									<form:form id="userPage" action="AddFreshCurrency" method="post" name="userPage"
-										modelAttribute="user" >
-										
+									<form:form id="userPage" action="AddFreshCurrency"
+										method="post" name="userPage" modelAttribute="user">
+
 										<%-- <div class="form-group">
 											<label>Machine No.</label>
 											<form:input path="machineNo" id="machineNo" name="machineNo" cssClass="form-control" maxlength="45" />
 										</div> --%>
-									
+
 										<div class="form-group">
 											<label>Denomination</label><br>
-											<form:radiobuttons items="${denominationList}" itemLabel="denomination" 
-												itemValue="denomination" id="denomination" path="denomination" name="denomination" />
-										</div>	
+											<form:radiobuttons items="${denominationList}"
+												itemLabel="denomination" itemValue="denomination"
+												id="denomination" path="denomination" name="denomination" />
+										</div>
 
 										<div class="form-group">
 											<label>Bundle</label>
-											<form:input path="bundle" id="bundle" name="bundle" cssClass="form-control" maxlength="45"/>
+											<form:input path="bundle" id="bundle" name="bundle"
+												cssClass="form-control" maxlength="45" />
 										</div>
-										
+
 										<%-- <div class="form-group">
 											<label>Total Value</label>
 											<form:input path="totalValue" id="totalValue" name="totalValue" cssClass="form-control" maxlength="45"/>
 										</div> --%>
-										
+
 										<button type="submit" class="btn btn-lg btn-success btn-block"
 											value="Details">Save AND Print QR</button>
 									</form:form>
@@ -132,7 +140,7 @@
 
 	<!-- Custom Theme JavaScript -->
 	<script src="./resources/dist/js/sb-admin-2.js"></script>
-<!-- <script type="text/javascript">
+	<!-- <script type="text/javascript">
 $.validator.addMethod("loginRegex", function(value, element) {
     return this.optional(element) || /^[0-9]+$/i.test(value);
 }, "Software must contain only letters,Space , dashes.");
@@ -175,7 +183,7 @@ $.validator.addMethod("loginRegex", function(value, element) {
 	  });
 	});
 	</script> -->
-<script type="text/javascript" src="./js/htmlInjection.js"></script>
+	<script type="text/javascript" src="./js/htmlInjection.js"></script>
 </body>
 
 </html>

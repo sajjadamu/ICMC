@@ -4,7 +4,8 @@
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jstl/core_rt"%>
-<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="sec"
+	uri="http://www.springframework.org/security/tags"%>
 <head>
 
 <meta charset="utf-8">
@@ -72,14 +73,19 @@
 
 <link rel="stylesheet" type="text/css"
 	href="./resources/dist/css/style.css">
-	
+
 <!-- DataTable -->
- 
-  <script type="text/javascript" charset="utf8" src="./resources/js/jquery.dataTables.min.js"></script>
-  <link rel="stylesheet" href="https://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css">
-  <script type="text/javascript" charset="utf8" src="./resources/js/dataTables.jqueryui.js"></script>
-  <link rel="stylesheet" type="text/css" href="./resources/css/dataTables.jqueryui.css">
-  <link rel="stylesheet" type="text/css" href="./resources/css/jquery.dataTables.css">
+
+<script type="text/javascript" charset="utf8"
+	src="./resources/js/jquery.dataTables.min.js"></script>
+<link rel="stylesheet"
+	href="https://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css">
+<script type="text/javascript" charset="utf8"
+	src="./resources/js/dataTables.jqueryui.js"></script>
+<link rel="stylesheet" type="text/css"
+	href="./resources/css/dataTables.jqueryui.css">
+<link rel="stylesheet" type="text/css"
+	href="./resources/css/jquery.dataTables.css">
 
 <!-- DataTable -->
 </head>
@@ -102,22 +108,32 @@
 					<div class="panel panel-default">
 						<div class="panel-heading">
 							<ul>
-								<li>
-									<sec:authorize access="hasRole('ADD_BIN')">
-                        				<a href="././binMaster"><i class="fa fa-table fa-fw"></i> Add Data In Bin Master</a>
-									</sec:authorize>
-								</li>
-							</ul>Bin Master Data
+								<li><sec:authorize access="hasRole('ADD_BIN')">
+										<a href="././binMaster"><i class="fa fa-table fa-fw"></i>
+											Add Data In Bin Master</a>
+									</sec:authorize></li>
+							</ul>
+							Bin Master Data
 						</div>
 						<!-- /.panel-heading -->
 						<div class="panel-body">
 							<div class="dataTable_wrapper">
 								<form id="showAll">
 									<!-- <table class="table table-striped table-bordered table-hover" id="dataTables-example"> -->
-									<div align="center" style="color:white; background:green;"><b>${updateMsg}</b></div><br>
-									<div align="center" style="color:white; background:green;"><b>${successMsg}</b></div><br>
-									<div align="center" style="color:white; background:green;"><b>${uploadMsg}</b></div><br>
-									<table class="table table-striped table-bordered table-hover"  id="tableValue">
+									<div align="center" style="color: white; background: green;">
+										<b>${updateMsg}</b>
+									</div>
+									<br>
+									<div align="center" style="color: white; background: green;">
+										<b>${successMsg}</b>
+									</div>
+									<br>
+									<div align="center" style="color: white; background: green;">
+										<b>${uploadMsg}</b>
+									</div>
+									<br>
+									<table class="table table-striped table-bordered table-hover"
+										id="tableValue">
 										<thead>
 											<tr>
 												<th>Bin Number</th>
@@ -133,37 +149,53 @@
 											</tr>
 										</thead>
 										<tbody>
-										<c:set var="freeBin" value="${0}"/>
-										<c:set var="locatedBin" value="${0}"/>
-										<c:set var="disabledBin" value="${0}"/>
+											<c:set var="freeBin" value="${0}" />
+											<c:set var="locatedBin" value="${0}" />
+											<c:set var="disabledBin" value="${0}" />
 											<c:forEach var="row" items="${records}">
 												<tr>
-												    <td>${row.binNumber}</td>
+													<td>${row.binNumber}</td>
 													<td>${row.firstPriority}</td>
 													<td>${row.secondPriority}</td>
 													<td>${row.thirdPriority}</td>
 													<td>${row.fourthPriority}</td>
 													<td>${row.fifthPriority}</td>
 													<td>${row.locationPriority}</td>
-								              <c:if test="${row.isAllocated eq 0}"><td style="color:white; background:green;">Free</td>
-								              <c:set var="freeBin" value="${freeBin+1}"/></c:if>
-								              <c:if test="${row.isAllocated eq 1}"><td style="color:white; background:rgb(230, 230, 0);">Located</td>
-								              <c:set var="locatedBin" value="${locatedBin+1}"/></c:if>
-								              <c:if test="${row.isAllocated eq 2}"><td style="color:white; background:red;">Disable</td>
-								              <c:set var="disabledBin" value="${disabledBin+1}"/></c:if>
+													<c:if test="${row.isAllocated eq 0}">
+														<td style="color: white; background: green;">Free</td>
+														<c:set var="freeBin" value="${freeBin+1}" />
+													</c:if>
+													<c:if test="${row.isAllocated eq 1}">
+														<td style="color: white; background: rgb(230, 230, 0);">Located</td>
+														<c:set var="locatedBin" value="${locatedBin+1}" />
+													</c:if>
+													<c:if test="${row.isAllocated eq 2}">
+														<td style="color: white; background: red;">Disable</td>
+														<c:set var="disabledBin" value="${disabledBin+1}" />
+													</c:if>
 													<td>${row.vaultSize}</td>
-											<c:if test="${row.isAllocated eq 1 || row.isAllocated eq 2}"><td >Edit</td></c:if>
-											<c:if test="${row.isAllocated eq 0}"><td><a href="editBinStatus?id=${row.id}">Edit</a></td></c:if>
-												
+													<c:if
+														test="${row.isAllocated eq 1 || row.isAllocated eq 2}">
+														<td>Edit</td>
+													</c:if>
+													<c:if test="${row.isAllocated eq 0}">
+														<td><a href="editBinStatus?id=${row.id}">Edit</a></td>
+													</c:if>
+
 												</tr>
 											</c:forEach>
-											
+
 										</tbody>
 									</table>
 								</form>
-							
+
 							</div>
-							<div  style="color:white; background:blue;"><b style=" margin: 20px 50px;">Free Bin:-</b><b>${freeBin}</b><b style=" margin: 20px 50px;">Located Bin:- </b><b>${locatedBin} </b><b style=" margin: 20px 50px;"> Disabled Bin:- </b><b>${disabledBin}</b></div><br>
+							<div style="color: white; background: blue;">
+								<b style="margin: 20px 50px;">Free Bin:-</b><b>${freeBin}</b><b
+									style="margin: 20px 50px;">Located Bin:- </b><b>${locatedBin}
+								</b><b style="margin: 20px 50px;"> Disabled Bin:- </b><b>${disabledBin}</b>
+							</div>
+							<br>
 						</div>
 						<!-- /.panel-body -->
 					</div>
@@ -208,7 +240,7 @@
         });
     });
     </script>
-<script type="text/javascript" src="./js/htmlInjection.js"></script>
+	<script type="text/javascript" src="./js/htmlInjection.js"></script>
 </body>
 
 </html>

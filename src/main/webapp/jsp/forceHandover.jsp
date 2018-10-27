@@ -681,7 +681,8 @@
 												value="SOILED" onclick="ajaxShowRadioButtons()">SOILED</label>&nbsp;&nbsp;&nbsp;
 											<label><input type="radio" name="radioOption"
 												value="OTHERBANK" onclick="ajaxShowRadioButtons()">OTHER
-												BANK</label> <!-- <label><input type="radio" name="radioOption"
+												BANK</label>
+											<!-- <label><input type="radio" name="radioOption"
 												value="FORWARD" onclick="ajaxShowRadioButtons()">CRA
 												FORWARD</label> -->
 										</div>
@@ -706,9 +707,10 @@
 										<div id="craDiv" style="display: none;">
 
 											<c:forEach var="item" items="${cra}">
-											<%-- <c:out value="${cra}"/> --%>
+												<%-- <c:out value="${cra}"/> --%>
 												<form:radiobutton id="mspName" name="mspName" path="mspName"
-													value="${item.id}" onclick="ajaxBundleDetailsForCRA();ajaxBundleDetailsForForwardedCRA()" />
+													value="${item.id}"
+													onclick="ajaxBundleDetailsForCRA();ajaxBundleDetailsForForwardedCRA()" />
 										    ${item.vendor}-${item.mspName}
 										</c:forEach>
 
@@ -716,7 +718,7 @@
 												<table id="records_table1">
 												</table>
 											</div>
-											
+
 											<div id="container">
 												<table id="records_table5">
 												</table>

@@ -4,7 +4,8 @@
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jstl/core_rt"%>
-<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="sec"
+	uri="http://www.springframework.org/security/tags"%>
 <head>
 
 <meta charset="utf-8">
@@ -72,17 +73,22 @@
 
 <link rel="stylesheet" type="text/css"
 	href="./resources/dist/css/style.css">
-	
-<!-- DataTable -->
-
-  <script type="text/javascript" charset="utf8" src="./resources/js/jquery.dataTables.min.js"></script>
-  <link rel="stylesheet" href="https://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css">
-  <script type="text/javascript" charset="utf8" src="./resources/js/dataTables.jqueryui.js"></script>
-  <link rel="stylesheet" type="text/css" href="./resources/css/dataTables.jqueryui.css">
-  <link rel="stylesheet" type="text/css" href="./resources/css/jquery.dataTables.css">
 
 <!-- DataTable -->
-	
+
+<script type="text/javascript" charset="utf8"
+	src="./resources/js/jquery.dataTables.min.js"></script>
+<link rel="stylesheet"
+	href="https://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css">
+<script type="text/javascript" charset="utf8"
+	src="./resources/js/dataTables.jqueryui.js"></script>
+<link rel="stylesheet" type="text/css"
+	href="./resources/css/dataTables.jqueryui.css">
+<link rel="stylesheet" type="text/css"
+	href="./resources/css/jquery.dataTables.css">
+
+<!-- DataTable -->
+
 </head>
 
 <body oncontextmenu="return false;">
@@ -105,22 +111,26 @@
 					<div class="panel panel-default">
 						<div class="panel-heading">
 							<ul>
-								<li>
-									<sec:authorize access="hasRole('ADD_VENDOR')">
-										<a href="././addVendor"><i class="fa fa-table fa-fw"></i> Add Vendor</a>
-									</sec:authorize>
-								</li>
-							</ul>Vendor's List
+								<li><sec:authorize access="hasRole('ADD_VENDOR')">
+										<a href="././addVendor"><i class="fa fa-table fa-fw"></i>
+											Add Vendor</a>
+									</sec:authorize></li>
+							</ul>
+							Vendor's List
 						</div>
 						<!-- /.panel-heading -->
 						<div class="panel-body">
 							<div class="dataTable_wrapper">
 								<form id="showAll">
-								
-								<div align="center" style="color:white; background:green;"><b>${successMsg}</b></div><br>
-								
+
+									<div align="center" style="color: white; background: green;">
+										<b>${successMsg}</b>
+									</div>
+									<br>
+
 									<!-- <table class="table table-striped table-bordered table-hover" id="dataTables-example"> -->
-									<table class="table table-striped table-bordered table-hover"  id="tableValue" >
+									<table class="table table-striped table-bordered table-hover"
+										id="tableValue">
 										<thead>
 											<tr>
 												<th>Name</th>
@@ -189,7 +199,7 @@
 	<script src="./resources/dist/js/sb-admin-2.js"></script>
 
 	<!-- Page-Level Demo Scripts - Tables - Use for reference -->
-	 <script>
+	<script>
     $(document).ready(function () {
         $('#tableValue').dataTable({
         	
@@ -198,7 +208,7 @@
         });
     });
     </script>
-<script type="text/javascript" src="./js/htmlInjection.js"></script>
+	<script type="text/javascript" src="./js/htmlInjection.js"></script>
 </body>
 
 </html>

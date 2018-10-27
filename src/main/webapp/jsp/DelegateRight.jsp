@@ -11,11 +11,13 @@
 <meta name="author" content="">
 <link rel="shortcut icon" href="./resources/logo/favicon.ico"
 	type="image/x-icon">
-<link href="./resources/css/calendar.css" rel="stylesheet" type="text/css" />
+<link href="./resources/css/calendar.css" rel="stylesheet"
+	type="text/css" />
 <link rel="stylesheet" type="text/css"
 	href="./resources/css/jquery.datetimepicker.css" />
 
-<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script type="text/javascript"
+	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script type="text/javascript" src="./js/jquery.validate.min.js"></script>
 
 <title>ICICI : Delegate Rights</title>
@@ -64,57 +66,66 @@
 			<div class="row">
 				<div class="col-lg-12">
 					<div class="panel panel-default">
-						
+
 						<div class="panel-heading">
-                        	<ul>
-                          		<li><a href="././viewDelegateRight"><i
-								class="fa fa-table fa-fw"></i> View List of Delegated Rights</a></li>
-							</ul>Add Delegate Right
-                        </div>
-						
+							<ul>
+								<li><a href="././viewDelegateRight"><i
+										class="fa fa-table fa-fw"></i> View List of Delegated Rights</a></li>
+							</ul>
+							Add Delegate Right
+						</div>
+
 						<div class="panel-body">
 							<div class="row">
 								<div class="col-lg-6">
 									<!--<form role="form">-->
-									<form:form id="userPage" action="saveDelegateRight" method="post" name="userPage"
-										modelAttribute="user" >
-										
-										<div align="center" style="color: red"><b>${userIdNotExists}</b></div>
-										<div align="center" style="color: red"><b>${successMsg1}</b></div>
-										<div align="center" style="color: red"><b>${successMsg2}</b></div>
+									<form:form id="userPage" action="saveDelegateRight"
+										method="post" name="userPage" modelAttribute="user">
+
+										<div align="center" style="color: red">
+											<b>${userIdNotExists}</b>
+										</div>
+										<div align="center" style="color: red">
+											<b>${successMsg1}</b>
+										</div>
+										<div align="center" style="color: red">
+											<b>${successMsg2}</b>
+										</div>
 										<div class="form-group">
 											<label>User ID</label>
-											<form:input path="userId" id="userId" name="userId" maxlength="32"
-												cssClass="form-control" />
-										</div>	
-										
+											<form:input path="userId" id="userId" name="userId"
+												maxlength="32" cssClass="form-control" />
+										</div>
+
 										<div class="form-group">
 											<label>Roles</label><br>
-											<form:radiobuttons items="${rolesList}" itemValue="id" itemLabel="id" path="roleId" id="role" name="role" /> 
+											<form:radiobuttons items="${rolesList}" itemValue="id"
+												itemLabel="id" path="roleId" id="role" name="role" />
 										</div>
-											
+
 										<div class="form-group">
 											<label>Period From</label>
-                                        	<form:input path="periodFrom" id="periodFrom" name="periodFrom"
-												cssClass="form-control" />
+											<form:input path="periodFrom" id="periodFrom"
+												name="periodFrom" cssClass="form-control" />
 										</div>
-										
+
 										<div class="form-group">
 											<label>Period To</label>
-    										<form:input path="periodTo" id="periodTo" name="periodTo"
+											<form:input path="periodTo" id="periodTo" name="periodTo"
 												cssClass="form-control" />
 										</div>
-										
+
 										<div class="form-group">
 											<label>Status</label>
-											<form:select path="status" id="status" name="status" cssClass="form-control">
+											<form:select path="status" id="status" name="status"
+												cssClass="form-control">
 												<form:option value="ENABLED">Enabled</form:option>
-											 	<form:option value="DISABLED">Disabled</form:option>
-											 	<form:option value="DELETED">Deleted</form:option>
+												<form:option value="DISABLED">Disabled</form:option>
+												<form:option value="DELETED">Deleted</form:option>
 											</form:select>
 										</div>
-										
-										<button type="submit"  class="btn btn-lg btn-success btn-block"
+
+										<button type="submit" class="btn btn-lg btn-success btn-block"
 											value="Details">Submit</button>
 									</form:form>
 								</div>
@@ -150,7 +161,7 @@
 
 	<!-- Custom Theme JavaScript -->
 	<script src="./resources/dist/js/sb-admin-2.js"></script>
-<script type="text/javascript">
+	<script type="text/javascript">
 $.validator.addMethod("loginRegex", function(value, element) {
     return this.optional(element) || /^[0-9]+$/i.test(value);
 }, "Software must contain only letters,Space , dashes.");
@@ -185,7 +196,7 @@ $.validator.addMethod("loginRegex", function(value, element) {
 	  });
 	});
 	</script>
-	
+
 	<script src="./resources/js/jquery.datetimepicker.js"></script>
 	<script>
 		
@@ -205,7 +216,7 @@ $.validator.addMethod("loginRegex", function(value, element) {
 		    minDate: 0
 		});
 	</script>
-<script type="text/javascript" src="./js/htmlInjection.js"></script>
+	<script type="text/javascript" src="./js/htmlInjection.js"></script>
 </body>
 
 </html>

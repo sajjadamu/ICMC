@@ -181,12 +181,11 @@ div {
 
 											<tr>
 												<td>Date</td>
-												<td colspan="2">${date}
-												<%-- <fmt:formatDate type="date"
+												<td colspan="2">${date}<%-- <fmt:formatDate type="date"
 														pattern="dd-MM-yyyy" dateStyle="short" timeStyle="short"
 														value="<%=new java.util.Date()%>" /> --%>
-														
-														</td>
+
+												</td>
 												<td colspan="17">Deposits</td>
 												<td></td>
 												<td></td>
@@ -231,38 +230,39 @@ div {
 												<td>Custodian-1</td>
 												<td>Custodian-2</td>
 											</tr>
-                                      <c:set var="totalValueOfNotesIBIT" value="${0}"/>
-                                      <c:set var="totalPiesesOfNotesIBIT" value="${0}"/>
+											<c:set var="totalValueOfNotesIBIT" value="${0}" />
+											<c:set var="totalPiesesOfNotesIBIT" value="${0}" />
 											<c:forEach var="row" items="${branchDepositList}">
-												
+
 												<c:if test="${row.value.branch != null}">
-												<c:set var="count" value="${count + 1}" scope="page" />
-												<tr>
-													<td>${count}</td>
-													<td>${row.value.branch}</td>
-													<td>${row.value.receiptTime}</td>
-													<td>${row.value.denom2Pieces}</td>
-													<td>${row.value.denom5Pieces}</td>
-													<td>${row.value.denom10Pieces}</td>
-													<td>${row.value.denom20Pieces}</td>
-													<td>${row.value.denom50Pieces}</td>
-													<td>${row.value.denom100Pieces}</td>
-													<td>${row.value.denom200Pieces}</td>
-													<td>${row.value.denom500Pieces}</td>
-													<td>${row.value.denom1000Pieces}</td>
-													<td>${row.value.denom2000Pieces}</td>
-													<td>${row.value.totalInPieces}</td>
-													<td>${row.value.totalValueOfBankNotes}</td>
-													<td>0</td>
-													<td>0</td>
-													<td>0</td>
-													<td>0</td>
-													<td>${row.value.denom1Pieces}</td>
-													<td>0</td>
-													<td>${row.value.totalValueOfBankNotes + row.value.denom1Pieces}</td>
-													<td></td>
-													<td></td>
-												</tr></c:if>
+													<c:set var="count" value="${count + 1}" scope="page" />
+													<tr>
+														<td>${count}</td>
+														<td>${row.value.branch}</td>
+														<td>${row.value.receiptTime}</td>
+														<td>${row.value.denom2Pieces}</td>
+														<td>${row.value.denom5Pieces}</td>
+														<td>${row.value.denom10Pieces}</td>
+														<td>${row.value.denom20Pieces}</td>
+														<td>${row.value.denom50Pieces}</td>
+														<td>${row.value.denom100Pieces}</td>
+														<td>${row.value.denom200Pieces}</td>
+														<td>${row.value.denom500Pieces}</td>
+														<td>${row.value.denom1000Pieces}</td>
+														<td>${row.value.denom2000Pieces}</td>
+														<td>${row.value.totalInPieces}</td>
+														<td>${row.value.totalValueOfBankNotes}</td>
+														<td>0</td>
+														<td>0</td>
+														<td>0</td>
+														<td>0</td>
+														<td>${row.value.denom1Pieces}</td>
+														<td>0</td>
+														<td>${row.value.totalValueOfBankNotes + row.value.denom1Pieces}</td>
+														<td></td>
+														<td></td>
+													</tr>
+												</c:if>
 											</c:forEach>
 
 											<c:forEach var="row" items="${dsbDepositList}">
@@ -325,10 +325,10 @@ div {
 												</tr>
 											</c:forEach>
 											<c:set var="totalCoins1" value="${0}" />
-											<c:set var="totalCoins2" value="${0}"/>
-											<c:set var="totalCoins5" value="${0}"/>
-											<c:set var="totalCoins10" value="${0}"/>
-                                            <c:set var="sumTotalValueOfCoins" value="${0}"/>
+											<c:set var="totalCoins2" value="${0}" />
+											<c:set var="totalCoins5" value="${0}" />
+											<c:set var="totalCoins10" value="${0}" />
+											<c:set var="sumTotalValueOfCoins" value="${0}" />
 											<c:forEach var="row" items="${freshFromRBIList}">
 												<c:set var="count" value="${count + 1}" scope="page" />
 												<tr>
@@ -348,16 +348,21 @@ div {
 													<td>${row.value.totalInPieces}</td>
 													<td>${row.value.totalValueOfBankNotes}</td>
 													<td>${row.value.denom1CoinsPieces}</td>
-													<c:set var="totalCoins1" value="${totalCoins1+(row.value.denom1CoinsPieces)}"/>
+													<c:set var="totalCoins1"
+														value="${totalCoins1+(row.value.denom1CoinsPieces)}" />
 													<td>${row.value.denom2CoinsPieces}</td>
-													<c:set var="totalCoins2" value="${totalCoins2+(row.value.denom2CoinsPieces)}"/>
+													<c:set var="totalCoins2"
+														value="${totalCoins2+(row.value.denom2CoinsPieces)}" />
 													<td>${row.value.denom5CoinsPieces}</td>
-													<c:set var="totalCoins5" value="${totalCoins5+(row.value.denom5CoinsPieces)}"/>
+													<c:set var="totalCoins5"
+														value="${totalCoins5+(row.value.denom5CoinsPieces)}" />
 													<td>${row.value.denom10CoinsPieces}</td>
-													<c:set var="totalCoins10" value="${totalCoins10+(row.value.denom10CoinsPieces)}"/>
+													<c:set var="totalCoins10"
+														value="${totalCoins10+(row.value.denom10CoinsPieces)}" />
 													<td>${row.value.denom1Pieces}</td>
 													<td>${row.value.totalValueOfCoins}</td>
-													<c:set var="sumTotalValueOfCoins" value="${sumTotalValueOfCoins +(row.value.totalValueOfCoins)}"/>
+													<c:set var="sumTotalValueOfCoins"
+														value="${sumTotalValueOfCoins +(row.value.totalValueOfCoins)}" />
 													<td>${row.value.totalValueOfBankNotes + row.value.denom1Pieces + row.value.totalValueOfCoins}</td>
 													<td></td>
 													<td></td>
@@ -418,14 +423,14 @@ div {
 												<td></td>
 												<td></td>
 											</tr>
-                                     
-                                         <c:forEach var="row" items="${ibitListValues}">
+
+											<c:forEach var="row" items="${ibitListValues}">
 												<c:set var="count" value="${count + 1}" scope="page" />
 												<tr>
 													<td></td>
 													<td>${servicingICMC}-Processing</td>
 													<td></td>
-												    <td><b>${row.denom2Pieces}</b></td>
+													<td><b>${row.denom2Pieces}</b></td>
 													<td><b>${row.denom5Pieces}</b></td>
 													<td><b>${row.denom10Pieces}</b></td>
 													<td><b>${row.denom20Pieces}</b></td>
@@ -434,11 +439,13 @@ div {
 													<td><b>${row.denom200Pieces}</b></td>
 													<td><b>${row.denom500Pieces}</b></td>
 													<td><b>${row.denom1000Pieces}</b></td>
-													<td><b>${row.denom2000Pieces}</b></td> 
+													<td><b>${row.denom2000Pieces}</b></td>
 													<td>${row.denom2Pieces+row.denom5Pieces+row.denom10Pieces+row.denom20Pieces+row.denom50Pieces+row.denom100Pieces+row.denom200Pieces+row.denom500Pieces+row.denom1000Pieces+row.denom2000Pieces}</td>
-													<c:set var="totalPiesesOfNotesIBIT" value="${totalPiesesOfNotesIBIT+row.denom2Pieces+row.denom5Pieces+row.denom10Pieces+row.denom20Pieces+row.denom50Pieces+row.denom100Pieces+row.denom200Pieces+row.denom500Pieces+row.denom1000Pieces+row.denom2000Pieces}" />
+													<c:set var="totalPiesesOfNotesIBIT"
+														value="${totalPiesesOfNotesIBIT+row.denom2Pieces+row.denom5Pieces+row.denom10Pieces+row.denom20Pieces+row.denom50Pieces+row.denom100Pieces+row.denom200Pieces+row.denom500Pieces+row.denom1000Pieces+row.denom2000Pieces}" />
 													<td>${row.denom2Pieces*2+row.denom5Pieces*5+row.denom10Pieces*10+row.denom20Pieces*20+row.denom50Pieces*50+row.denom100Pieces*100+row.denom200Pieces*200+row.denom500Pieces*500+row.denom1000Pieces*1000+row.denom2000Pieces*2000}</td>
-													<c:set var="totalValueOfNotesIBIT" value="${totalValueOfNotesIBIT+(row.denom2Pieces*2+row.denom5Pieces*5+row.denom10Pieces*10+row.denom20Pieces*20+row.denom50Pieces*50+row.denom100Pieces*100+row.denom200Pieces*200+row.denom500Pieces*500+row.denom1000Pieces*1000+row.denom2000Pieces*2000)}" />
+													<c:set var="totalValueOfNotesIBIT"
+														value="${totalValueOfNotesIBIT+(row.denom2Pieces*2+row.denom5Pieces*5+row.denom10Pieces*10+row.denom20Pieces*20+row.denom50Pieces*50+row.denom100Pieces*100+row.denom200Pieces*200+row.denom500Pieces*500+row.denom1000Pieces*1000+row.denom2000Pieces*2000)}" />
 													<td></td>
 													<td></td>
 													<td></td>
@@ -446,7 +453,9 @@ div {
 													<td></td>
 													<td></td>
 													<td>${row.denom2Pieces*2+row.denom5Pieces*5+row.denom10Pieces*10+row.denom20Pieces*20+row.denom50Pieces*50+row.denom100Pieces*100+row.denom200Pieces*200+row.denom500Pieces*500+row.denom1000Pieces*1000+row.denom2000Pieces*2000}</td>
-													<td></td><td></td><td></td>
+													<td></td>
+													<td></td>
+													<td></td>
 												</tr>
 											</c:forEach>
 											<tr>
@@ -500,7 +509,7 @@ div {
 												<td></td>
 											</tr>
 
-											
+
 										</tbody>
 									</table>
 								</div>

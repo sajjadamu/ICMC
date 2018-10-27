@@ -12,7 +12,8 @@
 <link rel="shortcut icon" href="./resources/logo/favicon.ico"
 	type="image/x-icon">
 
-<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script type="text/javascript"
+	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script type="text/javascript" src="./js/jquery.validate.min.js"></script>
 
 <title>ICICI : Remove Branch</title>
@@ -66,86 +67,91 @@
 							<div class="row">
 								<div class="col-lg-6">
 									<!--<form role="form">-->
-									<form:form id="userPage" name="userPage" action="deleteBranch" method="post"
-										modelAttribute="user" autocomplete="off">
+									<form:form id="userPage" name="userPage" action="deleteBranch"
+										method="post" modelAttribute="user" autocomplete="off">
 										<table>
-			<tr>
-				<td style="visibility: hidden;">id</td>
-				<td style="visibility: hidden;"><form:input path="id" id="userId" /></td>
-			</tr>
-		</table> 
+											<tr>
+												<td style="visibility: hidden;">id</td>
+												<td style="visibility: hidden;"><form:input path="id"
+														id="userId" /></td>
+											</tr>
+										</table>
 										<div class="form-group">
 											<label>Sol Id</label>
-											<form:input path="solId" id="solId" name="solId" readonly="true"
-												cssClass="form-control" />
+											<form:input path="solId" id="solId" name="solId"
+												readonly="true" cssClass="form-control" />
 										</div>
-										
+
 										<div class="form-group">
 											<label>Branch Name</label>
-											<form:input path="branch" id="branch" name="branch" readonly="true"
-												cssClass="form-control" />
+											<form:input path="branch" id="branch" name="branch"
+												readonly="true" cssClass="form-control" />
 										</div>
-										
+
 										<div class="form-group">
 											<label>Servicing ICMC (SI)</label>
-											<form:input path="servicingICMC" id="servicingICMC" name="servicingICMC"
-												maxlength="45" cssClass="form-control" readonly="true" />
+											<form:input path="servicingICMC" id="servicingICMC"
+												name="servicingICMC" maxlength="45" cssClass="form-control"
+												readonly="true" />
 										</div>
-										
+
 										<div class="form-group">
 											<label>Jurisdiction ICMC (JI)</label>
-											<form:input path="jurisdictionICMC" id="jurisdictionICMC" name="jurisdictionICMC"
-												maxlength="45" cssClass="form-control" readonly="true" />
+											<form:input path="jurisdictionICMC" id="jurisdictionICMC"
+												name="jurisdictionICMC" maxlength="45"
+												cssClass="form-control" readonly="true" />
 										</div>
-										
+
 										<div class="form-group">
 											<label>RBI Name</label>
-											<form:input path="rbiName" id="rbiName" name="rbiName" readonly="true"
-												maxlength="45" cssClass="form-control" />
+											<form:input path="rbiName" id="rbiName" name="rbiName"
+												readonly="true" maxlength="45" cssClass="form-control" />
 										</div>
-										
+
 										<div class="form-group">
 											<label>Zone</label>
 											<form:input path="zone" id="zone" name="zone" readonly="true"
 												maxlength="45" cssClass="form-control" />
 										</div>
-										
+
 										<div class="form-group">
 											<label>Region</label>
-											<form:input path="region" id="region" name="region" readonly="true"
-												maxlength="45" cssClass="form-control" />
+											<form:input path="region" id="region" name="region"
+												readonly="true" maxlength="45" cssClass="form-control" />
 										</div>
-										
+
 										<div class="form-group">
 											<label>Address</label>
-											<form:input path="address" id="address" name="address" readonly="true"
-												cssClass="form-control" />
+											<form:input path="address" id="address" name="address"
+												readonly="true" cssClass="form-control" />
 										</div>
-										
+
 										<div class="form-group">
 											<label>City</label>
 											<form:input path="city" id="city" name="city" readonly="true"
 												cssClass="form-control" />
 										</div>
-										
+
 										<div class="form-group">
 											<label>Pin Code</label>
-											<form:input path="pincode" id="pincode" name="pincode" readonly="true"
-												maxlength="6" cssClass="form-control" />
+											<form:input path="pincode" id="pincode" name="pincode"
+												readonly="true" maxlength="6" cssClass="form-control" />
 										</div>
-										
+
 										<div class="form-group">
 											<label>Reason For Deletion</label>
-											<form:input path="reasonForDeletion" id="reasonForDeletion" name="reasonForDeletion"
-												maxlength="45" cssClass="form-control" />
+											<form:input path="reasonForDeletion" id="reasonForDeletion"
+												name="reasonForDeletion" maxlength="45"
+												cssClass="form-control" />
 										</div>
-										
+
 										<div class="form-group">
 											<label>Approval For Deletion</label>
-											<form:input path="approvalForDeletion" id="approvalForDeletion" name="approvalForDeletion"
+											<form:input path="approvalForDeletion"
+												id="approvalForDeletion" name="approvalForDeletion"
 												maxlength="45" cssClass="form-control" />
 										</div>
-										
+
 										<button type="submit" class="btn btn-lg btn-success btn-block"
 											value="Details">Remove</button>
 									</form:form>
@@ -182,7 +188,7 @@
 
 	<!-- Custom Theme JavaScript -->
 	<script src="./resources/dist/js/sb-admin-2.js"></script>
-	
+
 	<script type="text/javascript">
 	$.validator.addMethod("loginRegex", function(value, element) {
 	    return this.optional(element) || /^[0-9A-Za-z\s]+$/i.test(value);
@@ -222,7 +228,7 @@
 	  });
 	});
 	</script>
-<script type="text/javascript" src="./js/htmlInjection.js"></script>
+	<script type="text/javascript" src="./js/htmlInjection.js"></script>
 </body>
 
 </html>

@@ -12,7 +12,8 @@
 <link rel="shortcut icon" href="./resources/logo/favicon.ico"
 	type="image/x-icon">
 
-<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script type="text/javascript"
+	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script type="text/javascript" src="./js/jquery.validate.min.js"></script>
 
 <title>ICICI : Add Vendor</title>
@@ -62,72 +63,74 @@
 				<div class="col-lg-12">
 					<div class="panel panel-default">
 						<div class="panel-heading">
-                          <ul>
-                          	<li><a href="././viewVendor"><i class="fa fa-table fa-fw"></i> View Vendor's List</a></li>
-                          </ul>Add Vendor
-                        </div>
-                        
+							<ul>
+								<li><a href="././viewVendor"><i
+										class="fa fa-table fa-fw"></i> View Vendor's List</a></li>
+							</ul>
+							Add Vendor
+						</div>
+
 						<div class="panel-body">
 							<div class="row">
 								<div class="col-lg-6">
 									<!--<form role="form">-->
-									<form:form id="userPage" name = "userPage" action="saveVendor" method="post"
-										modelAttribute="user" autocomplete="off">
-										
+									<form:form id="userPage" name="userPage" action="saveVendor"
+										method="post" modelAttribute="user" autocomplete="off">
+
 										<div class="form-group">
 											<label>Vendor Name</label>
 											<form:input path="name" id="name" name="name" maxlength="45"
 												cssClass="form-control" />
 										</div>
-										
+
 										<div class="form-group">
 											<label>Address</label>
-											<form:input path="address" id="address" name="address" maxlength="45"
-												cssClass="form-control" />
+											<form:input path="address" id="address" name="address"
+												maxlength="45" cssClass="form-control" />
 										</div>
-										
+
 										<div class="form-group">
 											<label>Location</label>
-											<form:input path="location" id="location" name="location" maxlength="45"
-												cssClass="form-control" />
+											<form:input path="location" id="location" name="location"
+												maxlength="45" cssClass="form-control" />
 										</div>
-										
+
 										<div class="form-group">
 											<label>City</label>
 											<form:input path="city" id="city" name="city" maxlength="45"
 												cssClass="form-control" />
 										</div>
-										
+
 										<div class="form-group">
 											<label>Pin Code</label>
-											<form:input path="pincode" id="pincode" name="pincode" maxlength="6"
-												cssClass="form-control" />
+											<form:input path="pincode" id="pincode" name="pincode"
+												maxlength="6" cssClass="form-control" />
 										</div>
-										
+
 										<div class="form-group">
 											<label>Phone Number</label>
-											<form:input path="phoneNumber" id="phoneNumber" name="phoneNumber"
-												maxlength="10" cssClass="form-control" />
+											<form:input path="phoneNumber" id="phoneNumber"
+												name="phoneNumber" maxlength="10" cssClass="form-control" />
 										</div>
-										
+
 										<div class="form-group">
 											<label>Email ID</label>
-											<form:input path="emailID" id="emailID" name="emailID" maxlength="45"
-												cssClass="form-control" />
+											<form:input path="emailID" id="emailID" name="emailID"
+												maxlength="45" cssClass="form-control" />
 										</div>
-										
+
 										<div class="form-group">
 											<label>PF Reg Number</label>
-											<form:input path="pfRegNumber" id="pfRegNumber" name="pfRegNumber"
-												maxlength="45" cssClass="form-control" />
+											<form:input path="pfRegNumber" id="pfRegNumber"
+												name="pfRegNumber" maxlength="45" cssClass="form-control" />
 										</div>
-										
+
 										<div class="form-group">
 											<label>ESIC Reg Number</label>
-											<form:input path="esicRegNumber" id="esicRegNumber" name="esicRegNumber"
-												maxlength="45" cssClass="form-control" />
+											<form:input path="esicRegNumber" id="esicRegNumber"
+												name="esicRegNumber" maxlength="45" cssClass="form-control" />
 										</div>
-										
+
 										<button type="submit" class="btn btn-lg btn-success btn-block"
 											value="Details">Submit</button>
 									</form:form>
@@ -164,7 +167,7 @@
 
 	<!-- Custom Theme JavaScript -->
 	<script src="./resources/dist/js/sb-admin-2.js"></script>
-	
+
 	<script type="text/javascript">
 	$.validator.addMethod("loginRegexCity", function(value, element) {
 	    return this.optional(element) || /^[A-Za-z\s]+$/i.test(value);
@@ -290,7 +293,7 @@
 	  });
 	});
 	</script>
-<script type="text/javascript" src="./js/htmlInjection.js"></script>
+	<script type="text/javascript" src="./js/htmlInjection.js"></script>
 </body>
 
 </html>

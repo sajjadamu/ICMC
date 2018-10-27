@@ -175,7 +175,7 @@
 													</tr>
 												</c:forEach>
 											</tr>
-											
+
 											<tr>
 												<c:forEach var="row" items="${craReleased}">
 													<tr>
@@ -194,22 +194,22 @@
 													</tr>
 												</c:forEach>
 											</tr>
-											
+
 											<tr>
-													<tr>
-														<td>Pending Bundle</td>
-														<td>${pendingBundle2000}</td>
-														<td>${pendingBundle1000}</td>
-														<td>${pendingBundle500}</td>
-														<td>${pendingBundle200}</td>
-														<td>${pendingBundle100}</td>
-														<td>${pendingBundle50}</td>
-														<td>${pendingBundle20}</td>
-														<td>${pendingBundle10}</td>
-														<td>${pendingBundle5}</td>
-														<td>${pendingBundle2}</td>
-														<td>${pendingBundle1}</td>
-													</tr>
+											<tr>
+												<td>Pending Bundle</td>
+												<td>${pendingBundle2000}</td>
+												<td>${pendingBundle1000}</td>
+												<td>${pendingBundle500}</td>
+												<td>${pendingBundle200}</td>
+												<td>${pendingBundle100}</td>
+												<td>${pendingBundle50}</td>
+												<td>${pendingBundle20}</td>
+												<td>${pendingBundle10}</td>
+												<td>${pendingBundle5}</td>
+												<td>${pendingBundle2}</td>
+												<td>${pendingBundle1}</td>
+											</tr>
 											</tr>
 										</Table>
 									</div>

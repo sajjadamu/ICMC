@@ -12,7 +12,8 @@
 <link rel="shortcut icon" href="./resources/logo/favicon.ico"
 	type="image/x-icon">
 
-<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script type="text/javascript"
+	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script type="text/javascript" src="./js/jquery.validate.min.js"></script>
 
 <title>ICICI : Remove Vendor</title>
@@ -66,9 +67,9 @@
 							<div class="row">
 								<div class="col-lg-6">
 									<!--<form role="form">-->
-									<form:form id="userPage" name="userPage" action="removeVendor" method="post"
-										modelAttribute="user" autocomplete="off">
-										
+									<form:form id="userPage" name="userPage" action="removeVendor"
+										method="post" modelAttribute="user" autocomplete="off">
+
 										<form:hidden path="id" />
 										<form:hidden path="typeOne" />
 										<form:hidden path="typeTwo" />
@@ -81,25 +82,27 @@
 										<form:hidden path="updateBy" />
 										<form:hidden path="insertTime" />
 										<form:hidden path="updateTime" />
-										
+
 										<div class="form-group">
 											<label>Name</label>
 											<form:input path="name" id="name" name="name" readonly="true"
 												cssClass="form-control" />
 										</div>
-										
+
 										<div class="form-group">
 											<label>Reason For Deletion</label>
-											<form:input path="reasonForDeletion" id="reasonForDeletion" name="reasonForDeletion"
-												maxlength="45" cssClass="form-control" />
+											<form:input path="reasonForDeletion" id="reasonForDeletion"
+												name="reasonForDeletion" maxlength="45"
+												cssClass="form-control" />
 										</div>
-										
+
 										<div class="form-group">
 											<label>Approval For Deletion</label>
-											<form:input path="approvalForDeletion" id="approvalForDeletion" name="approvalForDeletion"
+											<form:input path="approvalForDeletion"
+												id="approvalForDeletion" name="approvalForDeletion"
 												maxlength="45" cssClass="form-control" />
 										</div>
-										
+
 										<button type="submit" class="btn btn-lg btn-success btn-block"
 											value="Details">Submit</button>
 									</form:form>
@@ -136,7 +139,7 @@
 
 	<!-- Custom Theme JavaScript -->
 	<script src="./resources/dist/js/sb-admin-2.js"></script>
-	
+
 	<script type="text/javascript">
 	$.validator.addMethod("loginRegex", function(value, element) {
 	    return this.optional(element) || /^[A-Za-z\s]+$/i.test(value);
@@ -176,7 +179,7 @@
 	  });
 	});
 	</script>
-<script type="text/javascript" src="./js/htmlInjection.js"></script>
+	<script type="text/javascript" src="./js/htmlInjection.js"></script>
 </body>
 
 </html>

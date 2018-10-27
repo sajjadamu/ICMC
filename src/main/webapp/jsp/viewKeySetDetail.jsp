@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <%@page import="java.math.BigDecimal"%>
 <%@page import="com.mysema.query.Tuple"%>
-<%@page import="java.util.List" %>
+<%@page import="java.util.List"%>
 <html lang="en">
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>

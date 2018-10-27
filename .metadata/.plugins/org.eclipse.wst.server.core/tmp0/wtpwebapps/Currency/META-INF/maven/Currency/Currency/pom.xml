@@ -1,4 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>Currency</groupId>
@@ -75,17 +76,14 @@
 			<version>5.1.6</version>
 		</dependency>
 
-	<!-- 	<dependency>
-			<groupId>com.oracle</groupId>
-			<artifactId>ojdbc6</artifactId>
-			<version>11.2.0</version>
-		</dependency> -->
-		
+		<!-- <dependency> <groupId>com.oracle</groupId> <artifactId>ojdbc6</artifactId> 
+			<version>11.2.0</version> </dependency> -->
+
 		<dependency>
-      <groupId>org.apache.poi</groupId>
-      <artifactId>poi</artifactId>
-      <version>3.15</version>
-     </dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi</artifactId>
+			<version>3.15</version>
+		</dependency>
 		<!-- https://mvnrepository.com/artifact/com.ibm.icu/icu4j -->
 		<dependency>
 			<groupId>com.ibm.icu</groupId>
@@ -302,25 +300,12 @@
 					</execution>
 				</executions>
 			</plugin>
-			
-			<!--
-			Source Code in WAR
-			 
-			 <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-war-plugin</artifactId>
-            <configuration>
-                <webResources>
-                    <resource>
-                        <directory>${build.sourceDirectory}</directory>
-                        <targetPath>WEB-INF/classes</targetPath>
-                    </resource>
-                </webResources>
-            </configuration>
-        </plugin>
-			
-			 -->
-			
+
+			<!-- Source Code in WAR <plugin> <groupId>org.apache.maven.plugins</groupId> 
+				<artifactId>maven-war-plugin</artifactId> <configuration> <webResources> 
+				<resource> <directory>${build.sourceDirectory}</directory> <targetPath>WEB-INF/classes</targetPath> 
+				</resource> </webResources> </configuration> </plugin> -->
+
 		</plugins>
 		<pluginManagement>
 			<plugins>

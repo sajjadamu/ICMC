@@ -44,7 +44,7 @@
 	href="./resources/dist/css/style.css">
 
 
- <script type="text/javascript">
+<script type="text/javascript">
     $(document).ready(function(){
 	var dateOrder=$("#orderDate").val();
 	var dateAr = dateOrder.split(' ');
@@ -57,8 +57,8 @@
 	  $("#expiryDate").val(expiryDate);
     });
     </script>
-    
-    
+
+
 <script type="text/javascript">
 
 var countrow=0;

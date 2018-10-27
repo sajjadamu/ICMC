@@ -1,30 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE xml>
 <configuration>
-	
+
 	<property name="LOG_LOCATION" value="/home/currency/logs" />
-	
-	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
-	    <layout class="ch.qos.logback.classic.PatternLayout">
-		<Pattern>
-			%d{yyyy-MM-dd HH:mm:ss} %-5level %logger{36} - %msg%n
-		</Pattern>
-	    </layout>
+
+	<appender name="STDOUT"
+		class="ch.qos.logback.core.ConsoleAppender">
+		<layout class="ch.qos.logback.classic.PatternLayout">
+			<Pattern>
+				%d{yyyy-MM-dd HH:mm:ss} %-5level %logger{36} - %msg%n
+			</Pattern>
+		</layout>
 	</appender>
-	
+
 	<appender name="CURRENCY-FILE-AUDIT"
 		class="ch.qos.logback.core.rolling.RollingFileAppender">
 		<file>${LOG_LOCATION}/currency_debug.log</file>
-		<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+		<encoder
+			class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
 			<Pattern>
 				%d{yyyy-MM-dd HH:mm:ss} - %msg%n
 			</Pattern>
 		</encoder>
 
-		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+		<rollingPolicy
+			class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
 			<!-- rollover daily -->
 			<fileNamePattern>${LOG_LOCATION}/archived/currency_debug.%d{yyyy-MM-dd}.%i.log
-                        </fileNamePattern>
+			</fileNamePattern>
 			<timeBasedFileNamingAndTriggeringPolicy
 				class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
 				<maxFileSize>10MB</maxFileSize>
@@ -32,20 +35,22 @@
 		</rollingPolicy>
 
 	</appender>
-	
+
 	<appender name="SPRING-FILE-AUDIT"
 		class="ch.qos.logback.core.rolling.RollingFileAppender">
 		<file>${LOG_LOCATION}/spring_debug.log</file>
-		<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+		<encoder
+			class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
 			<Pattern>
 				%d{yyyy-MM-dd HH:mm:ss} - %msg%n
 			</Pattern>
 		</encoder>
 
-		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+		<rollingPolicy
+			class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
 			<!-- rollover daily -->
 			<fileNamePattern>${LOG_LOCATION}/archived/spring_debug.%d{yyyy-MM-dd}.%i.log
-                        </fileNamePattern>
+			</fileNamePattern>
 			<timeBasedFileNamingAndTriggeringPolicy
 				class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
 				<maxFileSize>10MB</maxFileSize>
@@ -53,20 +58,22 @@
 		</rollingPolicy>
 
 	</appender>
-	
+
 	<appender name="FILE-ERROR"
 		class="ch.qos.logback.core.rolling.RollingFileAppender">
 		<file>${LOG_LOCATION}/error.log</file>
-		<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+		<encoder
+			class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
 			<Pattern>
 				%d{yyyy-MM-dd HH:mm:ss} - %msg%n
 			</Pattern>
 		</encoder>
 
-		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+		<rollingPolicy
+			class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
 			<!-- rollover daily -->
 			<fileNamePattern>${LOG_LOCATION}/archived/error.%d{yyyy-MM-dd}.%i.log
-                        </fileNamePattern>
+			</fileNamePattern>
 			<timeBasedFileNamingAndTriggeringPolicy
 				class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
 				<maxFileSize>10MB</maxFileSize>
@@ -74,17 +81,18 @@
 		</rollingPolicy>
 
 	</appender>
-	
-	<logger name="org.springframework" level="debug" additivity="false">
+
+	<logger name="org.springframework" level="debug"
+		additivity="false">
 		<appender-ref ref="STDOUT" />
 		<appender-ref ref="SPRING-FILE-AUDIT" />
 	</logger>
-	
+
 	<logger name="com.chest" level="debug" additivity="false">
 		<appender-ref ref="STDOUT" />
 		<appender-ref ref="CURRENCY-FILE-AUDIT" />
 	</logger>
-	 
+
 	<root level="error">
 		<appender-ref ref="STDOUT" />
 		<appender-ref ref="FILE-ERROR" />

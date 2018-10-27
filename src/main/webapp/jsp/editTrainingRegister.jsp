@@ -80,28 +80,29 @@
 							<div class="row">
 								<div class="col-lg-6">
 									<!--<form role="form">-->
-									<form:form id="userPage" name="userPage" action="updateTrainingRegister"
-										method="post" modelAttribute="user" autocomplete="off">
-                                         <form:hidden path="id"/>
-                                         
-                                          <div class="form-group">
+									<form:form id="userPage" name="userPage"
+										action="updateTrainingRegister" method="post"
+										modelAttribute="user" autocomplete="off">
+										<form:hidden path="id" />
+
+										<div class="form-group">
 											<label>Employee Name</label>
 											<form:input path="employeeName" id="employeeName"
 												name="employeeName" cssClass="form-control" />
 										</div>
-										
-										 <div class="form-group">
+
+										<div class="form-group">
 											<label>Employee Id</label>
 											<form:input path="employeeName" id="employeeId"
 												name="employeeId" cssClass="form-control" />
 										</div>
-                                         
-                                         <div class="form-group">
+
+										<div class="form-group">
 											<label>Location</label>
-											<form:input path="location" id="location"
-												name="location" cssClass="form-control" />
+											<form:input path="location" id="location" name="location"
+												cssClass="form-control" />
 										</div>
-                                         
+
 										<div class="form-group">
 											<label>Training Date and Time</label>
 											<form:input path="trainingDate" id="trainingDate"

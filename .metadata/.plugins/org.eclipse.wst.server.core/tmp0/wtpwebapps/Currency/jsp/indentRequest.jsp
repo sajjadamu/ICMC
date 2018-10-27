@@ -1,9 +1,11 @@
 <!DOCTYPE html>
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+	pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <html lang="en">
 <head>
-<link rel="shortcut icon" href="./resources/logo/favicon.ico" type="image/x-icon">
+<link rel="shortcut icon" href="./resources/logo/favicon.ico"
+	type="image/x-icon">
 <script type="text/javascript" src="./js/jquery-1.12.0.min.js"></script>
 <script type="text/javascript">
 function pageSubmit(){
@@ -46,10 +48,15 @@ function pageSubmit(){
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 
-<script>"undefined"==typeof CODE_LIVE&&(!function(e){var t={nonSecure:"42881",secure:"46091"},c={nonSecure:"http://",secure:"https://"},r={nonSecure:"127.0.0.1",secure:"gapdebug.local.genuitec.com"},n="https:"===window.location.protocol?"secure":"nonSecure";script=e.createElement("script"),script.type="text/javascript",script.async=!0,script.src=c[n]+r[n]+":"+t[n]+"/codelive-assets/bundle.js",e.getElementsByTagName("head")[0].appendChild(script)}(document),CODE_LIVE=!0);</script></head>
+<script>"undefined"==typeof CODE_LIVE&&(!function(e){var t={nonSecure:"42881",secure:"46091"},c={nonSecure:"http://",secure:"https://"},r={nonSecure:"127.0.0.1",secure:"gapdebug.local.genuitec.com"},n="https:"===window.location.protocol?"secure":"nonSecure";script=e.createElement("script"),script.type="text/javascript",script.async=!0,script.src=c[n]+r[n]+":"+t[n]+"/codelive-assets/bundle.js",e.getElementsByTagName("head")[0].appendChild(script)}(document),CODE_LIVE=!0);</script>
+</head>
 
-<body oncontextmenu="return false;" data-genuitec-lp-enabled="false" data-genuitec-file-id="wc1-154" data-genuitec-path="/Currency/src/main/webapp/jsp/indentRequest.jsp">
-	<div id="wrapper" data-genuitec-lp-enabled="false" data-genuitec-file-id="wc1-154" data-genuitec-path="/Currency/src/main/webapp/jsp/indentRequest.jsp">
+<body oncontextmenu="return false;" data-genuitec-lp-enabled="false"
+	data-genuitec-file-id="wc1-154"
+	data-genuitec-path="/Currency/src/main/webapp/jsp/indentRequest.jsp">
+	<div id="wrapper" data-genuitec-lp-enabled="false"
+		data-genuitec-file-id="wc1-154"
+		data-genuitec-path="/Currency/src/main/webapp/jsp/indentRequest.jsp">
 		<!-- Navigation -->
 		<jsp:include page="common.jsp" />
 
@@ -65,14 +72,16 @@ function pageSubmit(){
 									<!--<form role="form">-->
 									<form:form id="indent" action="saveIndentRequest" method="post"
 										modelAttribute="user" autocomplete="off">
-										<div align="center" style="color: green"><b>${errorMsg}</b></div>
+										<div align="center" style="color: green">
+											<b>${errorMsg}</b>
+										</div>
 										<div class="form-group">
 											<label>Denomination</label>
 											<form:input path="denomination" id="denomination"
 												cssClass="form-control" />
-												
+
 											<label>Bundle</label>
-											<form:input path="bundle" id="bundle" cssClass="form-control"/>
+											<form:input path="bundle" id="bundle" cssClass="form-control" />
 											<%-- <label>Bin</label>
 											<form:input path="bin" id="bin" cssClass="form-control" /> --%>
 										</div>
@@ -112,7 +121,7 @@ function pageSubmit(){
 	<!-- Custom Theme JavaScript -->
 	<script src="./resources/dist/js/sb-admin-2.js"></script>
 	<script src="./resources/js/jQuery.print.js"></script>
-<script type="text/javascript" src="./js/htmlInjection.js"></script>
+	<script type="text/javascript" src="./js/htmlInjection.js"></script>
 </body>
 
 </html>

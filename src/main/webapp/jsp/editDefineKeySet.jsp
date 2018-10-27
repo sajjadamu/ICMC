@@ -2,7 +2,8 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
-<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>   
+<%@ taglib prefix="sec"
+	uri="http://www.springframework.org/security/tags"%>
 <html lang="en">
 <head>
 <meta charset="utf-8">
@@ -13,7 +14,8 @@
 <link rel="shortcut icon" href="./resources/logo/favicon.ico"
 	type="image/x-icon">
 
-<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script type="text/javascript"
+	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script type="text/javascript" src="./js/jquery.validate.min.js"></script>
 
 <title>ICICI : Edit Define Key Set</title>
@@ -63,42 +65,46 @@
 				<div class="col-lg-12">
 					<div class="panel panel-default">
 						<div class="panel-heading">
-                        	<ul>
-                        		<li>
-                        			<sec:authorize access="hasRole('VIEW_DEFINE_KEYSET')">
-                        				<a href="././viewDefineKeySet"><i class="fa fa-table fa-fw"></i> View Key Set Details</a>
-                        			</sec:authorize>
-                        		</li>
-							</ul>Edit Key Set Details
-                        </div>
+							<ul>
+								<li><sec:authorize access="hasRole('VIEW_DEFINE_KEYSET')">
+										<a href="././viewDefineKeySet"><i
+											class="fa fa-table fa-fw"></i> View Key Set Details</a>
+									</sec:authorize></li>
+							</ul>
+							Edit Key Set Details
+						</div>
 						<div class="panel-body">
 							<div class="row">
 								<div class="col-lg-6">
 									<!--<form role="form">-->
-									<form:form id="userPage" name="userPage" action="UpdateDefineKeySet" method="post"
+									<form:form id="userPage" name="userPage"
+										action="UpdateDefineKeySet" method="post"
 										modelAttribute="user">
-										
-										<form:hidden path="id"/>
-			                       			
+
+										<form:hidden path="id" />
+
 										<div class="form-group">
 											<label>CUSTODIAN</label>
-											<form:input path="custodian" id="custodian" maxlength="45" name="custodian" cssClass="form-control" />
+											<form:input path="custodian" id="custodian" maxlength="45"
+												name="custodian" cssClass="form-control" />
 										</div>
-										
+
 										<div class="form-group">
 											<label>KEY NUMBER</label>
-											<form:input path="keyNumber" id="keyNumber" maxlength="45" name="keyNumber" cssClass="form-control" />
+											<form:input path="keyNumber" id="keyNumber" maxlength="45"
+												name="keyNumber" cssClass="form-control" />
 										</div>
-										
+
 										<div class="form-group">
 											<label>LOCATION OF LOCK</label>
-											<form:input path="locationOfLock" id="locationOfLock" maxlength="45" name="locationOfLock" cssClass="form-control" />
-										</div>								
-										
-										<button type="submit" onclick="" class="btn btn-lg btn-success btn-block"
-											value="Details">Update</button>
+											<form:input path="locationOfLock" id="locationOfLock"
+												maxlength="45" name="locationOfLock" cssClass="form-control" />
+										</div>
+
+										<button type="submit" onclick=""
+											class="btn btn-lg btn-success btn-block" value="Details">Update</button>
 									</form:form>
-									
+
 								</div>
 								<!-- /.col-lg-6 (nested) -->
 								<div class="col-lg-6"></div>
@@ -132,7 +138,7 @@
 
 	<!-- Custom Theme JavaScript -->
 	<script src="./resources/dist/js/sb-admin-2.js"></script>
-	
+
 	<script type="text/javascript">
 	$(function() {
 	  $("form[name='userPage']").validate({
@@ -155,7 +161,7 @@
 	  });
 	});
 	</script>
-<script type="text/javascript" src="./js/htmlInjection.js"></script>
+	<script type="text/javascript" src="./js/htmlInjection.js"></script>
 </body>
 
 </html>

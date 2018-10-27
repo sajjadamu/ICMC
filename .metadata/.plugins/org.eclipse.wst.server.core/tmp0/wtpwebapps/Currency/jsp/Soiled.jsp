@@ -1,20 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+	pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jstl/core_rt"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="sec"
+	uri="http://www.springframework.org/security/tags"%>
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
-	<link rel="shortcut icon" href="./resources/logo/favicon.ico" type="image/x-icon">
-	<link rel="shortcut icon" href="./resources/logo/favicon.ico" type="image/x-icon">
-<link href="./resources/css/calendar.css" rel="stylesheet" type="text/css" />
-<link rel="stylesheet" type="text/css" href="./resources/css/jquery.datetimepicker.css" />
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="">
+<meta name="author" content="">
+<link rel="shortcut icon" href="./resources/logo/favicon.ico"
+	type="image/x-icon">
+<link rel="shortcut icon" href="./resources/logo/favicon.ico"
+	type="image/x-icon">
+<link href="./resources/css/calendar.css" rel="stylesheet"
+	type="text/css" />
+<link rel="stylesheet" type="text/css"
+	href="./resources/css/jquery.datetimepicker.css" />
 <script type="text/javascript" src="./js/jquery-1.12.0.min.js"></script>
 <script>
     $(function()
@@ -170,103 +176,148 @@ function doAjaxPost(str) {
 </script>
 <title>ICICI : View Prepared Soiled Boxes</title>
 
-    <!-- Bootstrap Core CSS -->
-    <link href="./resources/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+<!-- Bootstrap Core CSS -->
+<link
+	href="./resources/bower_components/bootstrap/dist/css/bootstrap.min.css"
+	rel="stylesheet">
 
-    <!-- MetisMenu CSS -->
-    <link href="./resources/bower_components/metisMenu/dist/metisMenu.min.css" rel="stylesheet">
+<!-- MetisMenu CSS -->
+<link
+	href="./resources/bower_components/metisMenu/dist/metisMenu.min.css"
+	rel="stylesheet">
 
-    <!-- DataTables CSS -->
-    <link href="./resources/bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.css" rel="stylesheet">
+<!-- DataTables CSS -->
+<link
+	href="./resources/bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.css"
+	rel="stylesheet">
 
-    <!-- DataTables Responsive CSS -->
-    <link href="./resources/bower_components/datatables-responsive/css/responsive.dataTables.scss" rel="stylesheet">
+<!-- DataTables Responsive CSS -->
+<link
+	href="./resources/bower_components/datatables-responsive/css/responsive.dataTables.scss"
+	rel="stylesheet">
 
-    <!-- Custom CSS -->
-    <link href="./resources/dist/css/sb-admin-2.css" rel="stylesheet">
+<!-- Custom CSS -->
+<link href="./resources/dist/css/sb-admin-2.css" rel="stylesheet">
 
-    <!-- Custom Fonts -->
-    <link href="./resources/bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-    <link rel="./resources/stylesheet" type="text/css" href="dist/css/style.css">
+<!-- Custom Fonts -->
+<link
+	href="./resources/bower_components/font-awesome/css/font-awesome.min.css"
+	rel="stylesheet" type="text/css">
+<link rel="./resources/stylesheet" type="text/css"
+	href="dist/css/style.css">
 
 <!-- DataTable -->
-	<script type="text/javascript"  src="./resources/dataTable/jquery.js"></script>
-	<script type="text/javascript" src="./resources/js/jquery.dataTables.min.js"></script>
-	<script type="text/javascript" src="./resources/js/dataTables.tableTools.min.js"></script>
-	<script type="text/javascript" src="./resources/js/sum().js"></script>
-	<link rel="stylesheet" type="text/css" href="./resources/css/jquery.dataTables.min.css">
-	<link rel="stylesheet" type="text/css" href='./resources/css/dataTables.tableTools.min.css'>
-	<link rel="stylesheet" type="text/css" href='./resources/css/dataTables.tableTools.css'>
-<!-- DataTable -->	
-<script>"undefined"==typeof CODE_LIVE&&(!function(e){var t={nonSecure:"42881",secure:"46091"},c={nonSecure:"http://",secure:"https://"},r={nonSecure:"127.0.0.1",secure:"gapdebug.local.genuitec.com"},n="https:"===window.location.protocol?"secure":"nonSecure";script=e.createElement("script"),script.type="text/javascript",script.async=!0,script.src=c[n]+r[n]+":"+t[n]+"/codelive-assets/bundle.js",e.getElementsByTagName("head")[0].appendChild(script)}(document),CODE_LIVE=!0);</script></head>
+<script type="text/javascript" src="./resources/dataTable/jquery.js"></script>
+<script type="text/javascript"
+	src="./resources/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript"
+	src="./resources/js/dataTables.tableTools.min.js"></script>
+<script type="text/javascript" src="./resources/js/sum().js"></script>
+<link rel="stylesheet" type="text/css"
+	href="./resources/css/jquery.dataTables.min.css">
+<link rel="stylesheet" type="text/css"
+	href='./resources/css/dataTables.tableTools.min.css'>
+<link rel="stylesheet" type="text/css"
+	href='./resources/css/dataTables.tableTools.css'>
+<!-- DataTable -->
+<script>"undefined"==typeof CODE_LIVE&&(!function(e){var t={nonSecure:"42881",secure:"46091"},c={nonSecure:"http://",secure:"https://"},r={nonSecure:"127.0.0.1",secure:"gapdebug.local.genuitec.com"},n="https:"===window.location.protocol?"secure":"nonSecure";script=e.createElement("script"),script.type="text/javascript",script.async=!0,script.src=c[n]+r[n]+":"+t[n]+"/codelive-assets/bundle.js",e.getElementsByTagName("head")[0].appendChild(script)}(document),CODE_LIVE=!0);</script>
+</head>
 
-<body oncontextmenu="return false;" data-genuitec-lp-enabled="false" data-genuitec-file-id="wc1-38" data-genuitec-path="/Currency/src/main/webapp/jsp/Soiled.jsp">
-    <div id="wrapper" data-genuitec-lp-enabled="false" data-genuitec-file-id="wc1-38" data-genuitec-path="/Currency/src/main/webapp/jsp/Soiled.jsp">
-        <!-- Navigation -->
-        <jsp:include page="common.jsp" />
-        <div id="page-wrapper">
-            <!-- /.row -->
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="panel panel-default">
-                       <div class="panel-heading"><ul>
-								<li><a href="././viewSoiled"><i class="fa fa-table fa-fw"></i>View Soiled</a></li>
-							</ul>Soiled</div>
-                      <!--  <div>
+<body oncontextmenu="return false;" data-genuitec-lp-enabled="false"
+	data-genuitec-file-id="wc1-38"
+	data-genuitec-path="/Currency/src/main/webapp/jsp/Soiled.jsp">
+	<div id="wrapper" data-genuitec-lp-enabled="false"
+		data-genuitec-file-id="wc1-38"
+		data-genuitec-path="/Currency/src/main/webapp/jsp/Soiled.jsp">
+		<!-- Navigation -->
+		<jsp:include page="common.jsp" />
+		<div id="page-wrapper">
+			<!-- /.row -->
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<ul>
+								<li><a href="././viewSoiled"><i
+										class="fa fa-table fa-fw"></i>View Soiled</a></li>
+							</ul>
+							Soiled
+						</div>
+						<!--  <div>
 					<input type="button" class="btn btn-default qr-button" onclick="printDiv('printableArea')" value="Print" />
 						<button id="btnExport" class="btn btn-default qr-button">Export to xls</button>
 						</div> -->
-						<form:form id="cash" action="saveDorv" method="post" modelAttribute="user" autocomplete="off">
-									
-						<div class="panel-body">
-							<div align="center" style="color:white; background:red;"><b>${errorMsg}</b></div>
-							<div class="row">
+						<form:form id="cash" action="saveDorv" method="post"
+							modelAttribute="user" autocomplete="off">
+
+							<div class="panel-body">
+								<div align="center" style="color: white; background: red;">
+									<b>${errorMsg}</b>
+								</div>
+								<div class="row">
 									<!--<form role="form">-->
-									
-										<div class="col-lg-6 form-group">
-											<label>Order Date</label>
-											<form:input type="text" onkeypress="return false" path="orderDate" id="orderDate" cssClass="form-control"/>
-											<label id="err1" style="display: none;color: red">Enter Order Date</label>
-										</div>
-										
-										<div class="col-lg-6 form-group">
-											<label>Remittance Order Number</label>
-											<form:input path="remittanceOrderNo" id="remittanceOrderNo" cssClass="form-control" type="Number"/>
-											<label id="err2" style="display: none;color: red">Enter Remittance Order Number</label>
-										</div>
-										
-										<div class="col-lg-6 form-group">
-											<label>Approved Remittance Date</label>
-											<form:input type="text" onkeypress="return false" path="approvedRemittanceDate" id="approvedRemittanceDate" cssClass="form-control"/>
-											<label id="err3" style="display: none;color: red">Enter Approved Remittance Date</label>
-										</div>
-										
-										 <div class="form-group">
-											 <form:checkbox path="notes" id="notes" name="notes" value="Notes"/>
-											<span class="deno-value">Notes </span>
-											<label id="err4" style="display: none;color: red"> Please Select Notes</label>
-											<!-- <input type="radio" id="notes"> -->
-										</div>
-										
-										<div class="form-group">
-											<form:radiobutton path="types" id="types" name="types" value="Normal" />
-											<span class="deno-value">Normal </span>
-											<form:radiobutton path="types" id="types" name="types" value="Full Value Mutilated" />
-											<span class="deno-value">Full Value Mutilated </span>
-											<label id="err5" style="display: none;color: red"> Please Select at least One Radio Button</label>
-										</div>
-										
-										<div class="col-lg-6 form-group">
-											<label>Vehicle Number</label>
-											<form:input path="vehicleNumber" id="vehicleNumber" cssClass="form-control"/></div>
-											<label id="err6" style="display: none;color: red"> Enter Vehicle Number</label>
-												 
-                    					<div class="col-lg-6 form-group">
-											<label>Location</label>
-											<form:input path="location" id="location" cssClass="form-control"/>
-											<label id="err7" style="display: none;color: red"> Enter Location</label>
-										</div>
-										
+
+									<div class="col-lg-6 form-group">
+										<label>Order Date</label>
+										<form:input type="text" onkeypress="return false"
+											path="orderDate" id="orderDate" cssClass="form-control" />
+										<label id="err1" style="display: none; color: red">Enter
+											Order Date</label>
+									</div>
+
+									<div class="col-lg-6 form-group">
+										<label>Remittance Order Number</label>
+										<form:input path="remittanceOrderNo" id="remittanceOrderNo"
+											cssClass="form-control" type="Number" />
+										<label id="err2" style="display: none; color: red">Enter
+											Remittance Order Number</label>
+									</div>
+
+									<div class="col-lg-6 form-group">
+										<label>Approved Remittance Date</label>
+										<form:input type="text" onkeypress="return false"
+											path="approvedRemittanceDate" id="approvedRemittanceDate"
+											cssClass="form-control" />
+										<label id="err3" style="display: none; color: red">Enter
+											Approved Remittance Date</label>
+									</div>
+
+									<div class="form-group">
+										<form:checkbox path="notes" id="notes" name="notes"
+											value="Notes" />
+										<span class="deno-value">Notes </span> <label id="err4"
+											style="display: none; color: red"> Please Select
+											Notes</label>
+										<!-- <input type="radio" id="notes"> -->
+									</div>
+
+									<div class="form-group">
+										<form:radiobutton path="types" id="types" name="types"
+											value="Normal" />
+										<span class="deno-value">Normal </span>
+										<form:radiobutton path="types" id="types" name="types"
+											value="Full Value Mutilated" />
+										<span class="deno-value">Full Value Mutilated </span> <label
+											id="err5" style="display: none; color: red"> Please
+											Select at least One Radio Button</label>
+									</div>
+
+									<div class="col-lg-6 form-group">
+										<label>Vehicle Number</label>
+										<form:input path="vehicleNumber" id="vehicleNumber"
+											cssClass="form-control" />
+									</div>
+									<label id="err6" style="display: none; color: red">
+										Enter Vehicle Number</label>
+
+									<div class="col-lg-6 form-group">
+										<label>Location</label>
+										<form:input path="location" id="location"
+											cssClass="form-control" />
+										<label id="err7" style="display: none; color: red">
+											Enter Location</label>
+									</div>
+
 									<!-- 	<div class="form-group">
                                         	<label>Number of Entries</label>
 											<input type="text" id="member" name="member" value="" class="form-control"><br />
@@ -279,107 +330,122 @@ function doAjaxPost(str) {
 												</table>
 											</div>
 										</div> -->
-										
-										
-								
-										
-								<!-- /.col-lg-6 (nested) -->
-								<!-- /.col-lg-6 (nested) -->
+
+
+
+
+									<!-- /.col-lg-6 (nested) -->
+									<!-- /.col-lg-6 (nested) -->
+								</div>
+								<!-- /.row (nested) -->
 							</div>
-							<!-- /.row (nested) -->
-						</div>
-						<!-- /.panel-body -->
-                        <!-- /.panel-heading -->
-                        <div class="panel-body">
-                            <div class="dataTable_wrapper">
-                            <form id="showAll">
-                            <div class="containerr" id="printableArea">
-                            <label id="err10" style="display: none;color: red">Please Select Box</label>
-                            <div class="row col-lg-12 text-center">
-                            <div class="col-lg-1"></div>
-                            <div class="col-lg-1"></div>
-                            <label id="totalBundle" class="col-sm-3" style="color: green">Selected Total Bundle:</label>
-                            <label id="totalValue" class="col-sm-pull-8"style="color: green">Selected Total Value:</label>
-                            </div>
-                            <div id="table_wrapper">
-                                <table class="table table-striped table-bordered table-hover" id="tableValue">
-                                    <thead>
-                                       <tr>
-                                       		<th>Box No.</th>
-											<th>BOX Name</th>
-											<th>Denomination</th>
-											<th>Bundle</th>
-											<!-- <th>Category</th> -->
-											<!-- <th>Prepared Date</th> -->
-											<th>Total Value</th>
-											<th>Select</th>
-										</tr>
-                                    </thead>
-                                    <tfoot>
-							            <tr>
-								            <th style="text-align:right">Total:</th>
-							            </tr>
-							        </tfoot>
-                                    <tbody>
-                                   <%--  <form:checkboxes items="${records}" path=""/> --%>
-                                    
-                                   
-                                      <c:forEach var="row" items="${records}">
-                                      	<c:set var="count" value="${count + 1}" scope="page" />
-										<tr>
-											<td class="boxId">${row.id}</td>
-											<td>${row.binNumber}</td>
-											<td class="Denomination">${row.denomination}</td>
-											<td class="Bundle">${row.receiveBundle}</td>
-											<%-- <td>${row.binType}</td>
+							<!-- /.panel-body -->
+							<!-- /.panel-heading -->
+							<div class="panel-body">
+								<div class="dataTable_wrapper">
+									<form id="showAll">
+										<div class="containerr" id="printableArea">
+											<label id="err10" style="display: none; color: red">Please
+												Select Box</label>
+											<div class="row col-lg-12 text-center">
+												<div class="col-lg-1"></div>
+												<div class="col-lg-1"></div>
+												<label id="totalBundle" class="col-sm-3"
+													style="color: green">Selected Total Bundle:</label> <label
+													id="totalValue" class="col-sm-pull-8" style="color: green">Selected
+													Total Value:</label>
+											</div>
+											<div id="table_wrapper">
+												<table
+													class="table table-striped table-bordered table-hover"
+													id="tableValue">
+													<thead>
+														<tr>
+															<th>Box No.</th>
+															<th>BOX Name</th>
+															<th>Denomination</th>
+															<th>Bundle</th>
+															<!-- <th>Category</th> -->
+															<!-- <th>Prepared Date</th> -->
+															<th>Total Value</th>
+															<th>Select</th>
+														</tr>
+													</thead>
+													<tfoot>
+														<tr>
+															<th style="text-align: right">Total:</th>
+														</tr>
+													</tfoot>
+													<tbody>
+														<%--  <form:checkboxes items="${records}" path=""/> --%>
+
+
+														<c:forEach var="row" items="${records}">
+															<c:set var="count" value="${count + 1}" scope="page" />
+															<tr>
+																<td class="boxId">${row.id}</td>
+																<td>${row.binNumber}</td>
+																<td class="Denomination">${row.denomination}</td>
+																<td class="Bundle">${row.receiveBundle}</td>
+																<%-- <td>${row.binType}</td>
 											<td><fmt:formatDate pattern="dd-MMM-yy" value="${row.insertTime.time}"/></td>
 											 --%>
-											<td class="Total">${row.value}</td>
-									<td><input type="checkbox" value="${row.id}" data-id="${row.denomination}" data-id1="${row.receiveBundle}" data-id2="${row.value}" name="chekdata[]" class="chkbx" onclick="collectData();"></td>
-										</tr>
-									</c:forEach>
-                                    </tbody>
-                                </table>
-                                </div>
-                                
-                                </div></form>
-                            </div>
-                            <!-- /.table-responsive -->
-                        </div>
-                        <!-- /.panel-body -->
-                        <div class="col-lg-12">
-											<!-- <input type="button" id="btnSubmit" value="Submit"	onclick="doAjaxPostInsert()"> -->
-											<button type="button"
-											class="btn btn-primary" id="btnsubmit" onclick="doAjaxPostInsert();">Save</button>
+																<td class="Total">${row.value}</td>
+																<td><input type="checkbox" value="${row.id}"
+																	data-id="${row.denomination}"
+																	data-id1="${row.receiveBundle}" data-id2="${row.value}"
+																	name="chekdata[]" class="chkbx"
+																	onclick="collectData();"></td>
+															</tr>
+														</c:forEach>
+													</tbody>
+												</table>
+											</div>
+
 										</div>
-									</form:form><br><br>
-                    </div>
-                    
-                    <!-- /.panel -->
-                </div>
-                <!-- /.col-lg-12 -->
-            </div>
-           
-        </div>
-        <!-- /#page-wrapper -->
+									</form>
+								</div>
+								<!-- /.table-responsive -->
+							</div>
+							<!-- /.panel-body -->
+							<div class="col-lg-12">
+								<!-- <input type="button" id="btnSubmit" value="Submit"	onclick="doAjaxPostInsert()"> -->
+								<button type="button" class="btn btn-primary" id="btnsubmit"
+									onclick="doAjaxPostInsert();">Save</button>
+							</div>
+						</form:form>
+						<br>
+						<br>
+					</div>
 
-    </div>
-    <!-- /#wrapper -->
+					<!-- /.panel -->
+				</div>
+				<!-- /.col-lg-12 -->
+			</div>
 
-    <!-- Bootstrap Core JavaScript -->
-    <script src="./resources/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+		</div>
+		<!-- /#page-wrapper -->
 
-    <!-- Metis Menu Plugin JavaScript -->
-    <script src="./resources/bower_components/metisMenu/dist/metisMenu.min.js"></script>
+	</div>
+	<!-- /#wrapper -->
 
-    <!-- DataTables JavaScript -->
-    <script src="./resources/bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.min.js"></script>
+	<!-- Bootstrap Core JavaScript -->
+	<script
+		src="./resources/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 
-    <!-- Custom Theme JavaScript -->
-    <script src="./resources/dist/js/sb-admin-2.js"></script>
+	<!-- Metis Menu Plugin JavaScript -->
+	<script
+		src="./resources/bower_components/metisMenu/dist/metisMenu.min.js"></script>
 
-    <!-- Page-Level Demo Scripts - Tables - Use for reference -->
-    <script>
+	<!-- DataTables JavaScript -->
+	<script
+		src="./resources/bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.min.js"></script>
+
+	<!-- Custom Theme JavaScript -->
+	<script src="./resources/dist/js/sb-admin-2.js"></script>
+
+	<!-- Page-Level Demo Scripts - Tables - Use for reference -->
+	<script>
 	 $(document).ready(function () {
 	    	$('#tableValue').dataTable({
     		 "pagingType": "full_numbers",
@@ -412,7 +478,7 @@ function doAjaxPost(str) {
 	});
 
 </script>
-<script src="./resources/js/jquery.datetimepicker.js"></script>
+	<script src="./resources/js/jquery.datetimepicker.js"></script>
 	<script>
 		$('#orderDate').datetimepicker({
 			format : 'Y-m-d',
@@ -423,8 +489,8 @@ function doAjaxPost(str) {
 
 		});
 	</script>
-<script type="text/javascript" src="./js/htmlInjection.js"></script>
-<script type="text/javascript" src="./js/print.js"></script>
+	<script type="text/javascript" src="./js/htmlInjection.js"></script>
+	<script type="text/javascript" src="./js/print.js"></script>
 </body>
 
 </html>

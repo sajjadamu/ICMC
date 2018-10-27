@@ -1,5 +1,7 @@
-[genuitec-file-id="wc1-338"],[genuitec-lp-path="/Currency/src/main/webapp/resources/bower_components/metisMenu/dist/metisMenu.min.css"],[genuitec-lp-enabled=false]{
-  /* for codelive */
+[genuitec-file-id="wc1-338"], [genuitec-lp-path="/Currency/src/main/webapp/resources/bower_components/metisMenu/dist/metisMenu.min.css"],
+	[genuitec-lp-enabled=false] {
+	/* for codelive */
+	
 }
 
 /*
@@ -10,5 +12,52 @@
  * Made by Osman Nuri Okumus
  * Under MIT License
  */
+.arrow {
+	float: right;
+	line-height: 1.42857
+}
 
-.arrow{float:right;line-height:1.42857}.glyphicon.arrow:before{content:"\e079"}.active>a>.glyphicon.arrow:before{content:"\e114"}.fa.arrow:before{content:"\f104"}.active>a>.fa.arrow:before{content:"\f107"}.plus-times{float:right}.fa.plus-times:before{content:"\f067"}.active>a>.fa.plus-times{filter:progid:DXImageTransform.Microsoft.BasicImage(rotation=1);-webkit-transform:rotate(45deg);-moz-transform:rotate(45deg);-ms-transform:rotate(45deg);-o-transform:rotate(45deg);transform:rotate(45deg)}.plus-minus{float:right}.fa.plus-minus:before{content:"\f067"}.active>a>.fa.plus-minus:before{content:"\f068"}
+.glyphicon.arrow:before {
+	content: "\e079"
+}
+
+.active>a>.glyphicon.arrow:before {
+	content: "\e114"
+}
+
+.fa.arrow:before {
+	content: "\f104"
+}
+
+.active>a>.fa.arrow:before {
+	content: "\f107"
+}
+
+.plus-times {
+	float: right
+}
+
+.fa.plus-times:before {
+	content: "\f067"
+}
+
+.active>a>.fa.plus-times {
+	filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=1);
+	-webkit-transform: rotate(45deg);
+	-moz-transform: rotate(45deg);
+	-ms-transform: rotate(45deg);
+	-o-transform: rotate(45deg);
+	transform: rotate(45deg)
+}
+
+.plus-minus {
+	float: right
+}
+
+.fa.plus-minus:before {
+	content: "\f067"
+}
+
+.active>a>.fa.plus-minus:before {
+	content: "\f068"
+}

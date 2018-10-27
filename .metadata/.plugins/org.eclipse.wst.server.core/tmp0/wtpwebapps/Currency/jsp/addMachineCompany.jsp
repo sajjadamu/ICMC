@@ -2,7 +2,8 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
-<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="sec"
+	uri="http://www.springframework.org/security/tags"%>
 <html lang="en">
 
 <head>
@@ -15,12 +16,14 @@
 <link rel="shortcut icon" href="./resources/logo/favicon.ico"
 	type="image/x-icon">
 
-<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script type="text/javascript"
+	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script type="text/javascript" src="./js/jquery.validate.min.js"></script>
 
 <title>ICICI : Add Machine Company</title>
 
-<link href="./resources/css/calendar.css" rel="stylesheet" type="text/css" />
+<link href="./resources/css/calendar.css" rel="stylesheet"
+	type="text/css" />
 <link rel="stylesheet" type="text/css"
 	href="./resources/css/jquery.datetimepicker.css" />
 
@@ -45,13 +48,18 @@
 
 <link rel="stylesheet" type="text/css"
 	href="./resources/dist/css/style.css">
-<script>"undefined"==typeof CODE_LIVE&&(!function(e){var t={nonSecure:"42881",secure:"46091"},c={nonSecure:"http://",secure:"https://"},r={nonSecure:"127.0.0.1",secure:"gapdebug.local.genuitec.com"},n="https:"===window.location.protocol?"secure":"nonSecure";script=e.createElement("script"),script.type="text/javascript",script.async=!0,script.src=c[n]+r[n]+":"+t[n]+"/codelive-assets/bundle.js",e.getElementsByTagName("head")[0].appendChild(script)}(document),CODE_LIVE=!0);</script></head>
+<script>"undefined"==typeof CODE_LIVE&&(!function(e){var t={nonSecure:"42881",secure:"46091"},c={nonSecure:"http://",secure:"https://"},r={nonSecure:"127.0.0.1",secure:"gapdebug.local.genuitec.com"},n="https:"===window.location.protocol?"secure":"nonSecure";script=e.createElement("script"),script.type="text/javascript",script.async=!0,script.src=c[n]+r[n]+":"+t[n]+"/codelive-assets/bundle.js",e.getElementsByTagName("head")[0].appendChild(script)}(document),CODE_LIVE=!0);</script>
+</head>
 
-<body oncontextmenu="return false;" data-genuitec-lp-enabled="false" data-genuitec-file-id="wc1-53" data-genuitec-path="/Currency/src/main/webapp/jsp/addMachineCompany.jsp">
+<body oncontextmenu="return false;" data-genuitec-lp-enabled="false"
+	data-genuitec-file-id="wc1-53"
+	data-genuitec-path="/Currency/src/main/webapp/jsp/addMachineCompany.jsp">
 
-	<div id="wrapper" data-genuitec-lp-enabled="false" data-genuitec-file-id="wc1-53" data-genuitec-path="/Currency/src/main/webapp/jsp/addMachineCompany.jsp">
+	<div id="wrapper" data-genuitec-lp-enabled="false"
+		data-genuitec-file-id="wc1-53"
+		data-genuitec-path="/Currency/src/main/webapp/jsp/addMachineCompany.jsp">
 		<!-- Navigation -->
-		<jsp:include page="common.jsp" /> 
+		<jsp:include page="common.jsp" />
 
 		<div id="page-wrapper">
 			<!--  <div class="row">
@@ -64,57 +72,60 @@
 			<div class="row">
 				<div class="col-lg-12">
 					<div class="panel panel-default">
-						
+
 						<div class="panel-heading">
-                        	<ul>
-                        		<li>
-                        			<sec:authorize access="hasRole('VIEW_MACHINE_COMPANY')">
-                        				<a href="././viewMachineCompany"><i class="fa fa-table fa-fw"></i> View Machine Company List</a>
-                        			</sec:authorize>
-                        		</li>
-                        	</ul>Add Machine Company
-                        </div>
-						
+							<ul>
+								<li><sec:authorize access="hasRole('VIEW_MACHINE_COMPANY')">
+										<a href="././viewMachineCompany"><i
+											class="fa fa-table fa-fw"></i> View Machine Company List</a>
+									</sec:authorize></li>
+							</ul>
+							Add Machine Company
+						</div>
+
 						<div class="panel-body">
 							<div class="row">
 								<div class="col-lg-6">
 									<!--<form role="form">-->
-									
-									<form:form id="rbiMaster" name="rbiMaster" action="saveMachineCompany" method="post"
+
+									<form:form id="rbiMaster" name="rbiMaster"
+										action="saveMachineCompany" method="post"
 										modelAttribute="user" autocomplete="off">
-                                      
-                                   	<div align="center" style="color: red"><b>${duplicateUser}</b></div> 
-                                      
-                                      	<div class="form-group">
-											<label> Make Company</label>
-											<form:input path="companyname" id="companyname" name="companyname" maxlength="32"
-												cssClass="form-control" />
-									  	</div>
-									
-									   
-									     
-									  	<div class="form-group">
-										<label>Email</label>		
-									 		<form:input path="email" id="email" name="email" maxlength="32"
-												cssClass="form-control" />							
+
+										<div align="center" style="color: red">
+											<b>${duplicateUser}</b>
 										</div>
-									  
+
+										<div class="form-group">
+											<label> Make Company</label>
+											<form:input path="companyname" id="companyname"
+												name="companyname" maxlength="32" cssClass="form-control" />
+										</div>
+
+
+
+										<div class="form-group">
+											<label>Email</label>
+											<form:input path="email" id="email" name="email"
+												maxlength="32" cssClass="form-control" />
+										</div>
+
 										<div class="form-group">
 											<label>Phone No.</label>
-											<form:input path="phonenumber" id="phonenumber" name="phonenumber" maxlength="11"
-												cssClass="form-control" />				
+											<form:input path="phonenumber" id="phonenumber"
+												name="phonenumber" maxlength="11" cssClass="form-control" />
 										</div>
-										
+
 										<div class="form-group">
 											<label>Address</label>
-											<form:input path="address" id="address" name="address" maxlength="45"
-												cssClass="form-control" />
+											<form:input path="address" id="address" name="address"
+												maxlength="45" cssClass="form-control" />
 										</div>
-                                      
+
 										<button type="submit" class="btn btn-lg btn-success btn-block"
 											value="Details">Save</button>
 									</form:form>
-										</div>
+								</div>
 								<!-- /.col-lg-6 (nested) -->
 								<div class="col-lg-6"></div>
 								<!-- /.col-lg-6 (nested) -->
@@ -146,7 +157,7 @@
 		src="./resources/bower_components/metisMenu/dist/metisMenu.min.js"></script>
 
 	<!-- Custom Theme JavaScript -->
-	
+
 	<script src="./resources/js/jquery.datetimepicker.js"></script>
 	<script>
 		$('#purchasedate').datetimepicker({
@@ -159,10 +170,10 @@
 		
 		
 	</script>
-	
-	
+
+
 	<script src="./resources/dist/js/sb-admin-2.js"></script>
-		<script type="text/javascript">
+	<script type="text/javascript">
 
 	
 	$.validator.addMethod("nameRegex", function(value, element) {
@@ -241,7 +252,7 @@
 	  });
 	});
 	</script>
-<script type="text/javascript" src="./js/htmlInjection.js"></script>
+	<script type="text/javascript" src="./js/htmlInjection.js"></script>
 </body>
 
 </html>

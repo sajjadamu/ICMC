@@ -10,7 +10,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="">
 <meta name="author" content="">
-<link rel="shortcut icon" href="./resources/logo/favicon.ico" type="image/x-icon">
+<link rel="shortcut icon" href="./resources/logo/favicon.ico"
+	type="image/x-icon">
 <title>ICICI : Reports</title>
 
 <!-- Bootstrap Core CSS -->
@@ -34,7 +35,8 @@
 <link rel="stylesheet" type="text/css"
 	href="./resources/dist/css/style.css">
 
-<link href="./resources/css/calendar.css" rel="stylesheet" type="text/css" />
+<link href="./resources/css/calendar.css" rel="stylesheet"
+	type="text/css" />
 <link rel="stylesheet" type="text/css"
 	href="./resources/css/jquery.datetimepicker.css" />
 <script src="./resources/js/jquery-1.9.1.min.js"></script>
@@ -69,15 +71,14 @@
 							<div class="row">
 								<div class="col-lg-6">
 									<!--<form role="form">-->
-									<form:form id="userPage" action="viewBinWiseReport" method="post"
-										modelAttribute="user">
+									<form:form id="userPage" action="viewBinWiseReport"
+										method="post" modelAttribute="user">
 
 										<div class="form-group">
-											<label>Start Date</label>
-											<input type="text" name="from_date" id="from_date"
-												Class="form-control" />
+											<label>Start Date</label> <input type="text" name="from_date"
+												id="from_date" Class="form-control" />
 										</div>
-										 <div class="form-group">
+										<div class="form-group">
 											<label>Report Type</label>
 											<form:select path="status" cssClass="form-control">
 												<form:option value="">Select Report</form:option>
@@ -126,7 +127,7 @@
 
 	<!-- Custom Theme JavaScript -->
 	<script src="./resources/dist/js/sb-admin-2.js"></script>
-	
+
 	<script src="./resources/js/jquery.datetimepicker.js"></script>
 	<script>
 		$('#from_date').datetimepicker({
@@ -138,7 +139,7 @@
 
 		});
 	</script>
-<script type="text/javascript" src="./js/htmlInjection.js"></script>
+	<script type="text/javascript" src="./js/htmlInjection.js"></script>
 </body>
 
 </html>

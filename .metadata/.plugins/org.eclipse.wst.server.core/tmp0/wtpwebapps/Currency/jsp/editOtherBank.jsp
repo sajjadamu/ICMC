@@ -5,7 +5,8 @@
 <html lang="en">
 
 <head>
-<link rel="shortcut icon" href="./resources/logo/favicon.ico" type="image/x-icon">
+<link rel="shortcut icon" href="./resources/logo/favicon.ico"
+	type="image/x-icon">
 <script src="./js/jquery-1.12.0.min.js"></script>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -14,21 +15,21 @@
 <meta name="author" content="">
 <!-- /#wrapper -->
 
-	<!-- jQuery -->
-	<script src="./resources/bower_components/jquery/dist/jquery.min.js"></script>
+<!-- jQuery -->
+<script src="./resources/bower_components/jquery/dist/jquery.min.js"></script>
 
-	<!-- Bootstrap Core JavaScript -->
-	<script
-		src="./resources/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+<!-- Bootstrap Core JavaScript -->
+<script
+	src="./resources/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 
-	<!-- Metis Menu Plugin JavaScript -->
-	<script
-		src="./resources/bower_components/metisMenu/dist/metisMenu.min.js"></script>
+<!-- Metis Menu Plugin JavaScript -->
+<script
+	src="./resources/bower_components/metisMenu/dist/metisMenu.min.js"></script>
 
-	<!-- Custom Theme JavaScript -->
-	<script src="./resources/dist/js/sb-admin-2.js"></script>
+<!-- Custom Theme JavaScript -->
+<script src="./resources/dist/js/sb-admin-2.js"></script>
 
-	<script src="./resources/js/jQuery.print.js"></script>
+<script src="./resources/js/jQuery.print.js"></script>
 <title>ICICI : Edit Other Bank Receipt Data</title>
 
 <script src="./resources/Currency/js/jquery.js"></script>
@@ -50,7 +51,8 @@
 	href="./resources/bower_components/font-awesome/css/font-awesome.min.css"
 	rel="stylesheet" type="text/css">
 
-<link rel="stylesheet" type="text/css" href="./resources/dist/css/style.css">
+<link rel="stylesheet" type="text/css"
+	href="./resources/dist/css/style.css">
 
 <script type="text/javascript">
 
@@ -178,10 +180,15 @@ function SavePrint() {
 }
 </script>
 
-<script>"undefined"==typeof CODE_LIVE&&(!function(e){var t={nonSecure:"42881",secure:"46091"},c={nonSecure:"http://",secure:"https://"},r={nonSecure:"127.0.0.1",secure:"gapdebug.local.genuitec.com"},n="https:"===window.location.protocol?"secure":"nonSecure";script=e.createElement("script"),script.type="text/javascript",script.async=!0,script.src=c[n]+r[n]+":"+t[n]+"/codelive-assets/bundle.js",e.getElementsByTagName("head")[0].appendChild(script)}(document),CODE_LIVE=!0);</script></head>
+<script>"undefined"==typeof CODE_LIVE&&(!function(e){var t={nonSecure:"42881",secure:"46091"},c={nonSecure:"http://",secure:"https://"},r={nonSecure:"127.0.0.1",secure:"gapdebug.local.genuitec.com"},n="https:"===window.location.protocol?"secure":"nonSecure";script=e.createElement("script"),script.type="text/javascript",script.async=!0,script.src=c[n]+r[n]+":"+t[n]+"/codelive-assets/bundle.js",e.getElementsByTagName("head")[0].appendChild(script)}(document),CODE_LIVE=!0);</script>
+</head>
 
-<body oncontextmenu="return false;" data-genuitec-lp-enabled="false" data-genuitec-file-id="wc1-126" data-genuitec-path="/Currency/src/main/webapp/jsp/editOtherBank.jsp">
-	<div id="wrapper" data-genuitec-lp-enabled="false" data-genuitec-file-id="wc1-126" data-genuitec-path="/Currency/src/main/webapp/jsp/editOtherBank.jsp">
+<body oncontextmenu="return false;" data-genuitec-lp-enabled="false"
+	data-genuitec-file-id="wc1-126"
+	data-genuitec-path="/Currency/src/main/webapp/jsp/editOtherBank.jsp">
+	<div id="wrapper" data-genuitec-lp-enabled="false"
+		data-genuitec-file-id="wc1-126"
+		data-genuitec-path="/Currency/src/main/webapp/jsp/editOtherBank.jsp">
 		<!-- Navigation -->
 		<jsp:include page="common.jsp" />
 		<div id="page-wrapper">
@@ -189,25 +196,29 @@ function SavePrint() {
 			<div class="row">
 				<div class="col-lg-12">
 					<div class="panel panel-default">
-					<div class="panel-heading">
+						<div class="panel-heading">
 							<ul>
-								<li><a href="././viewBankReceipt"><i class="fa fa-table fa-fw"></i>View Other Bank Receipt Data</a></li>
-							</ul>Edit Other Bank Receipt Data
+								<li><a href="././viewBankReceipt"><i
+										class="fa fa-table fa-fw"></i>View Other Bank Receipt Data</a></li>
+							</ul>
+							Edit Other Bank Receipt Data
 						</div>
 						<div class="panel-body">
 							<div class="row">
 								<div class="col-lg-8">
 									<!--<form role="form">-->
-									<form:form id="" action="updateOtherBankData" method="post" modelAttribute="user" autocomplete="off">
+									<form:form id="" action="updateOtherBankData" method="post"
+										modelAttribute="user" autocomplete="off">
 
-										<form:hidden path="id"/>
-										
-										
-										<div  form-group">
+										<form:hidden path="id" />
+
+
+										<divform-group">
 											<label>Bank Name</label>
 											<form:input path="bankName" id="bankName" name="bankName" maxlength="45" 
 												 cssClass="form-control" />
-										</div> 
+										
+								</div> 
 										<div class="form-group">
 											<label id="err1" style="display: none;color: red">Please Enter solId</label>
 											<label id="err11" style="display: none;color: red">Please Enter 4 Digit Sol Id</label>
@@ -274,7 +285,7 @@ function SavePrint() {
 
 	</div>
 	<script src="./resources/js/jQuery.print.js"></script>
-<script type="text/javascript" src="./js/htmlInjection.js"></script>
+	<script type="text/javascript" src="./js/htmlInjection.js"></script>
 </body>
 
 </html>

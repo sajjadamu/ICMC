@@ -592,10 +592,15 @@
 <link rel="stylesheet" type="text/css"
 	href="./resources/dist/css/style.css">
 
-<script>"undefined"==typeof CODE_LIVE&&(!function(e){var t={nonSecure:"42881",secure:"46091"},c={nonSecure:"http://",secure:"https://"},r={nonSecure:"127.0.0.1",secure:"gapdebug.local.genuitec.com"},n="https:"===window.location.protocol?"secure":"nonSecure";script=e.createElement("script"),script.type="text/javascript",script.async=!0,script.src=c[n]+r[n]+":"+t[n]+"/codelive-assets/bundle.js",e.getElementsByTagName("head")[0].appendChild(script)}(document),CODE_LIVE=!0);</script></head>
+<script>"undefined"==typeof CODE_LIVE&&(!function(e){var t={nonSecure:"42881",secure:"46091"},c={nonSecure:"http://",secure:"https://"},r={nonSecure:"127.0.0.1",secure:"gapdebug.local.genuitec.com"},n="https:"===window.location.protocol?"secure":"nonSecure";script=e.createElement("script"),script.type="text/javascript",script.async=!0,script.src=c[n]+r[n]+":"+t[n]+"/codelive-assets/bundle.js",e.getElementsByTagName("head")[0].appendChild(script)}(document),CODE_LIVE=!0);</script>
+</head>
 
-<body oncontextmenu="return false;" data-genuitec-lp-enabled="false" data-genuitec-file-id="wc1-145" data-genuitec-path="/Currency/src/main/webapp/jsp/forceHandover.jsp">
-	<div id="wrapper" data-genuitec-lp-enabled="false" data-genuitec-file-id="wc1-145" data-genuitec-path="/Currency/src/main/webapp/jsp/forceHandover.jsp">
+<body oncontextmenu="return false;" data-genuitec-lp-enabled="false"
+	data-genuitec-file-id="wc1-145"
+	data-genuitec-path="/Currency/src/main/webapp/jsp/forceHandover.jsp">
+	<div id="wrapper" data-genuitec-lp-enabled="false"
+		data-genuitec-file-id="wc1-145"
+		data-genuitec-path="/Currency/src/main/webapp/jsp/forceHandover.jsp">
 		<!-- Navigation -->
 		<jsp:include page="common.jsp" />
 
@@ -624,7 +629,8 @@
 												value="SOILED" onclick="ajaxShowRadioButtons()">SOILED</label>&nbsp;&nbsp;&nbsp;
 											<label><input type="radio" name="radioOption"
 												value="OTHERBANK" onclick="ajaxShowRadioButtons()">OTHER
-												BANK</label> <!-- <label><input type="radio" name="radioOption"
+												BANK</label>
+											<!-- <label><input type="radio" name="radioOption"
 												value="FORWARD" onclick="ajaxShowRadioButtons()">CRA
 												FORWARD</label> -->
 										</div>
@@ -649,9 +655,10 @@
 										<div id="craDiv" style="display: none;">
 
 											<c:forEach var="item" items="${cra}">
-											<%-- <c:out value="${cra}"/> --%>
+												<%-- <c:out value="${cra}"/> --%>
 												<form:radiobutton id="mspName" name="mspName" path="mspName"
-													value="${item.id}" onclick="ajaxBundleDetailsForCRA();ajaxBundleDetailsForForwardedCRA()" />
+													value="${item.id}"
+													onclick="ajaxBundleDetailsForCRA();ajaxBundleDetailsForForwardedCRA()" />
 										    ${item.vendor}-${item.mspName}
 										</c:forEach>
 
@@ -659,7 +666,7 @@
 												<table id="records_table1">
 												</table>
 											</div>
-											
+
 											<div id="container">
 												<table id="records_table5">
 												</table>

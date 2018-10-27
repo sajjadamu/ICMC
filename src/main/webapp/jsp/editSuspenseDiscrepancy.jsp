@@ -5,7 +5,8 @@
 <html lang="en">
 
 <head>
-<link rel="shortcut icon" href="./resources/logo/favicon.ico" type="image/x-icon">
+<link rel="shortcut icon" href="./resources/logo/favicon.ico"
+	type="image/x-icon">
 <script src="./js/jquery-1.12.0.min.js"></script>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -14,21 +15,21 @@
 <meta name="author" content="">
 <!-- /#wrapper -->
 
-	<!-- jQuery -->
-	<script src="./resources/bower_components/jquery/dist/jquery.min.js"></script>
+<!-- jQuery -->
+<script src="./resources/bower_components/jquery/dist/jquery.min.js"></script>
 
-	<!-- Bootstrap Core JavaScript -->
-	<script
-		src="./resources/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+<!-- Bootstrap Core JavaScript -->
+<script
+	src="./resources/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 
-	<!-- Metis Menu Plugin JavaScript -->
-	<script
-		src="./resources/bower_components/metisMenu/dist/metisMenu.min.js"></script>
+<!-- Metis Menu Plugin JavaScript -->
+<script
+	src="./resources/bower_components/metisMenu/dist/metisMenu.min.js"></script>
 
-	<!-- Custom Theme JavaScript -->
-	<script src="./resources/dist/js/sb-admin-2.js"></script>
+<!-- Custom Theme JavaScript -->
+<script src="./resources/dist/js/sb-admin-2.js"></script>
 
-	<script src="./resources/js/jQuery.print.js"></script>
+<script src="./resources/js/jQuery.print.js"></script>
 <title>ICICI : Edit Discrepancy</title>
 
 <script src="./resources/Currency/js/jquery.js"></script>
@@ -50,7 +51,8 @@
 	href="./resources/bower_components/font-awesome/css/font-awesome.min.css"
 	rel="stylesheet" type="text/css">
 
-<link rel="stylesheet" type="text/css" href="./resources/dist/css/style.css">
+<link rel="stylesheet" type="text/css"
+	href="./resources/dist/css/style.css">
 
 <script type="text/javascript">
 
@@ -93,11 +95,12 @@ function doAjaxPost() {
 							<div class="row">
 								<div class="col-lg-8">
 									<!--<form role="form">-->
-									<form:form id="" action="updateDiscrepancy" method="post" modelAttribute="discrepancyAllocation" autocomplete="off">
+									<form:form id="" action="updateDiscrepancy" method="post"
+										modelAttribute="discrepancyAllocation" autocomplete="off">
 
 										<form:hidden path="id" />
-										
-										<form:hidden path="normalOrSuspense" value="SUSPENSE"/>
+
+										<form:hidden path="normalOrSuspense" value="SUSPENSE" />
 
 										<div class="col-lg-4 form-group">
 											<label>Machine Number</label>
@@ -172,8 +175,8 @@ function doAjaxPost() {
 												minlenght="4" maxlength="4" id="denomination"
 												cssClass="form-control" />
 										</div>
-										
-                                         <div class="col-lg-4 form-group">
+
+										<div class="col-lg-4 form-group">
 											<label>Discrepancy Type</label>
 											<form:select path="discrepancyType" id="discrepancyType"
 												name="discrepancyType" cssClass="form-control">
@@ -189,18 +192,18 @@ function doAjaxPost() {
 											<label>Mutil Type</label>
 											<form:input path="mutilType" id="mutilType" name="mutilType" cssClass="form-control"/>
 										</div> --%>
-										
+
 										<div class="col-lg-4 form-group">
 											<label>Mutil Type</label>
-											<form:select path="mutilType" id="mutilType"
-												name="mutilType" cssClass="form-control">
+											<form:select path="mutilType" id="mutilType" name="mutilType"
+												cssClass="form-control">
 												<form:option value="">Select Option</form:option>
 												<form:option value="FULL VALUE">FULL VALUE</form:option>
 												<form:option value="HALF VALUE">HALF VALUE</form:option>
 												<form:option value="ZERO VALUE">ZERO VALUE</form:option>
 											</form:select>
 										</div>
-										
+
 										<div class="col-lg-4 form-group">
 											<label>Note Serial Number</label>
 											<form:input path="noteSerialNumber" id="noteSerialNumber"
@@ -219,8 +222,8 @@ function doAjaxPost() {
 											<label>Discrepancy Value</label>
 											<form:input path="value" id="value" cssClass="form-control" />
 										</div>
-                                         
-                                         <div class="col-lg-4 form-group">
+
+										<div class="col-lg-4 form-group">
 											<label>Print year</label>
 											<form:input path="printYear" id="printYear" name="printYear"
 												cssClass="form-control" />
@@ -231,9 +234,9 @@ function doAjaxPost() {
 											<form:input path="remarks" id="remarks" name="remarks"
 												cssClass="form-control" />
 										</div>
-										
-                                       <button type="submit" class="btn btn-lg btn-success btn-block"
-											value="Details">Update</button>											
+
+										<button type="submit" class="btn btn-lg btn-success btn-block"
+											value="Details">Update</button>
 									</form:form>
 								</div>
 								<!-- /.col-lg-6 (nested) -->
@@ -254,7 +257,7 @@ function doAjaxPost() {
 
 	</div>
 	<script src="./resources/js/jQuery.print.js"></script>
-<script type="text/javascript" src="./js/htmlInjection.js"></script>
+	<script type="text/javascript" src="./js/htmlInjection.js"></script>
 </body>
 
 </html>

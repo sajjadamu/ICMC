@@ -1,10 +1,12 @@
 <!DOCTYPE html>
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+	pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <html lang="en">
 
 <head>
-<link rel="shortcut icon" href="./resources/logo/favicon.ico" type="image/x-icon">
+<link rel="shortcut icon" href="./resources/logo/favicon.ico"
+	type="image/x-icon">
 <script type="text/javascript" src="./js/jquery-1.12.0.min.js"></script>
 <script src="./js/unprocess.js"></script>
 <meta charset="utf-8">
@@ -75,14 +77,16 @@
 								<!--<form role="form">-->
 								<form:form id="cash" action="uploadSAS" method="post"
 									enctype="multipart/form-data" modelAttribute="user">
-									
-									<div align="center" style="color: red"><b>${duplicateFile}</b></div>
-									
+
+									<div align="center" style="color: red">
+										<b>${duplicateFile}</b>
+									</div>
+
 									<div class="col-lg-6 form-group">
 										<label>Choose SAS File</label> <input type="file" name="file"
-											Class="form-control" />
-											
-											<a href="${documentFilePath}/sas.csv" download>Download CSV Format</a>
+											Class="form-control" /> <a
+											href="${documentFilePath}/sas.csv" download>Download CSV
+											Format</a>
 									</div>
 									<div class="col-lg-12">
 										<button style="width: 99px;" value="Details"
@@ -122,7 +126,7 @@
 	<script src="./resources/dist/js/sb-admin-2.js"></script>
 
 	<script src="./resources/js/jQuery.print.js"></script>
-<script type="text/javascript" src="./js/htmlInjection.js"></script>
+	<script type="text/javascript" src="./js/htmlInjection.js"></script>
 </body>
 
 </html>

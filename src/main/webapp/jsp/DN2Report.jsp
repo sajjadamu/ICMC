@@ -112,17 +112,19 @@
 			<div class="row">
 				<div class="col-lg-12">
 					<div class="panel panel-default">
-<div class="panel-heading">DN2 Register</div>
-					<div><input type="button" class="btn btn-default qr-button" onclick="printDiv('printableArea')" value="Print" />
-					<button id="btnExport" class="btn btn-default qr-button">Export to xls</button>
-					</div>
+						<div class="panel-heading">DN2 Register</div>
+						<div>
+							<input type="button" class="btn btn-default qr-button"
+								onclick="printDiv('printableArea')" value="Print" />
+							<button id="btnExport" class="btn btn-default qr-button">Export
+								to xls</button>
+						</div>
 						<!-- /.panel-heading -->
 						<div class="panel-body">
-						
-						<div class="region-con">
-								<form:form id="userPage" name="userPage"
-									action="DN2Report" method="post"
-									modelAttribute="reportDate" autocomplete="off">
+
+							<div class="region-con">
+								<form:form id="userPage" name="userPage" action="DN2Report"
+									method="post" modelAttribute="reportDate" autocomplete="off">
 									<div class="region-con-sec">
 										<ul class="region-drop">
 											<li>
@@ -144,49 +146,50 @@
 									</div>
 								</form:form>
 							</div>
-						<jsp:useBean id="date" class="java.util.Date" />
+							<jsp:useBean id="date" class="java.util.Date" />
 							<!-- <div class="dataTable_wrapper"> -->
 							<div>
 								<form id="showAll">
 									<!-- <table class="table table-striped table-bordered table-hover" id="dataTables-example"> -->
 									<div class="containerr" id="printableArea">
-									<div id="table_wrapper">
-									<table width="100%" border="1">
-											<tr>
-												<td align="center">Date</td>
-												<td align="center">1</td>
-												<td align="center">2</td>
-												<td align="center">5</td>
-												<td align="center">10</td>
-												<td align="center">20</td>
-												<td align="center">50</td>
-												<td align="center">100</td>
-												<td align="center">200</td>
-												<td align="center">500</td>
-												<td align="center">1000</td>
-												<td align="center">2000</td>
-												<td align="center">Total pieces</td>
-												<td align="center">Value</td>
-											</tr>
-										<tbody>
+										<div id="table_wrapper">
+											<table width="100%" border="1">
 												<tr>
-													<td align="center">${currentDate}</td> 													<td align="center">${denom1Pieces}</td>
-													<td align="center">${denom2Pieces}</td>
-													<td align="center">${denom5Pieces}</td>
-													<td align="center">${denom10Pieces}</td>
-													<td align="center">${denom20Pieces}</td>
-													<td align="center">${denom50Pieces}</td>
-													<td align="center">${denom100Pieces}</td>
-													<td align="center">${denom200Pieces}</td>
-													<td align="center">${denom500Pieces}</td>
-													<td align="center">${denom1000Pieces}</td>
-													<td align="center">${denom2000Pieces}</td>
-													<td align="center">${totalInPieces}</td>
-													<td align="center">${totalValues}</td>
+													<td align="center">Date</td>
+													<td align="center">1</td>
+													<td align="center">2</td>
+													<td align="center">5</td>
+													<td align="center">10</td>
+													<td align="center">20</td>
+													<td align="center">50</td>
+													<td align="center">100</td>
+													<td align="center">200</td>
+													<td align="center">500</td>
+													<td align="center">1000</td>
+													<td align="center">2000</td>
+													<td align="center">Total pieces</td>
+													<td align="center">Value</td>
 												</tr>
+												<tbody>
+													<tr>
+														<td align="center">${currentDate}</td>
+														<td align="center">${denom1Pieces}</td>
+														<td align="center">${denom2Pieces}</td>
+														<td align="center">${denom5Pieces}</td>
+														<td align="center">${denom10Pieces}</td>
+														<td align="center">${denom20Pieces}</td>
+														<td align="center">${denom50Pieces}</td>
+														<td align="center">${denom100Pieces}</td>
+														<td align="center">${denom200Pieces}</td>
+														<td align="center">${denom500Pieces}</td>
+														<td align="center">${denom1000Pieces}</td>
+														<td align="center">${denom2000Pieces}</td>
+														<td align="center">${totalInPieces}</td>
+														<td align="center">${totalValues}</td>
+													</tr>
 
-											<%-- </c:forEach> --%>
-											<%-- <Tr>
+													<%-- </c:forEach> --%>
+													<%-- <Tr>
 												<td align="center">Total</td>
 												<td align="center"><c:set var="totalValue" value="${0}" /> <c:forEach
 														begin="0" end="9" step="1" var="summaryRecord"
@@ -274,8 +277,10 @@
 															value="${totalValue + summaryRecord.value.totalInPieces}" />
 													</c:forEach> <c:out value="${totalValue}" /></td>
 											</Tr> --%>
-										</tbody>
-									</table></div></div>
+												</tbody>
+											</table>
+										</div>
+									</div>
 								</form>
 							</div>
 
@@ -314,7 +319,7 @@
 	<script src="./resources/dist/js/sb-admin-2.js"></script>
 
 	<!-- Page-Level Demo Scripts - Tables - Use for reference -->
-<script type="text/javascript">
+	<script type="text/javascript">
 $(document).ready(function() {
 	  $("#btnExport").click(function(e) {
 	    e.preventDefault();
@@ -340,8 +345,8 @@ $(document).ready(function() {
 			});
 		});
 	</script>
-<script type="text/javascript" src="./js/print.js"></script>
-<script src="./resources/js/jquery.datetimepicker.js"></script>
+	<script type="text/javascript" src="./js/print.js"></script>
+	<script src="./resources/js/jquery.datetimepicker.js"></script>
 	<script>
 		$('#fromDate').datetimepicker({
 			format : 'Y-m-d',

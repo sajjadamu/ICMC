@@ -67,15 +67,14 @@
 			<div class="row">
 				<div class="col-lg-12">
 					<div class="panel panel-default">
-					
-					<div class="panel-heading">
-                        	<ul>
-                          		<li>
-                          			<a href="././viewMachineMaintenance"><i class="fa fa-table fa-fw"></i> View Machine Maintenance</a>
-                          		</li>
-                          		</ul>
-                        </div>
-					
+
+						<div class="panel-heading">
+							<ul>
+								<li><a href="././viewMachineMaintenance"><i
+										class="fa fa-table fa-fw"></i> View Machine Maintenance</a></li>
+							</ul>
+						</div>
+
 						<div class="panel-body">
 							<div class="row">
 								<div class="col-lg-6">
@@ -83,11 +82,11 @@
 									<form:form id="userPage" name="userPage"
 										action="updateMachineMaintenance" method="post"
 										modelAttribute="user" autocomplete="off">
-                                        <form:hidden path="id"/>
+										<form:hidden path="id" />
 										<div class="form-group">
 											<label>Machine No</label>
-											<form:input path="machineNumber" id="machineNumber" name="machineNumber"
-												cssClass="form-control" />
+											<form:input path="machineNumber" id="machineNumber"
+												name="machineNumber" cssClass="form-control" />
 										</div>
 
 										<div class="form-group">
@@ -96,9 +95,10 @@
 												path="nextMaintainanceDate" id="nextMaintainanceDate"
 												name="nextMaintainanceDate" cssClass="form-control" />
 										</div>
-                                        <div class="form-group">
+										<div class="form-group">
 											<label>Status</label>
-											<form:select path="status" id="status" name="status" cssClass="form-control">
+											<form:select path="status" id="status" name="status"
+												cssClass="form-control">
 												<form:options items="${statusList}" />
 											</form:select>
 										</div>

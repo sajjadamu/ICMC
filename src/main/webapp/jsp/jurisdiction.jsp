@@ -12,7 +12,8 @@
 <link rel="shortcut icon" href="./resources/logo/favicon.ico"
 	type="image/x-icon">
 
-<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script type="text/javascript"
+	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script type="text/javascript" src="./js/jquery.validate.min.js"></script>
 
 <title>ICICI : Add Jurisdiction</title>
@@ -63,57 +64,61 @@
 					<div class="panel panel-default">
 						<div class="panel-heading">
 							<ul>
-								<li><a href="././viewJurisdiction"><i class="fa fa-table fa-fw"></i> Jurisdiction Records</a></li>
-							</ul>Add/Upload Jurisdiction
+								<li><a href="././viewJurisdiction"><i
+										class="fa fa-table fa-fw"></i> Jurisdiction Records</a></li>
+							</ul>
+							Add/Upload Jurisdiction
 						</div>
-						
+
 						<div class="panel-body">
 							<div class="row">
 								<div class="col-lg-6">
 									<!--<form role="form">-->
-									<form:form id="userPage" name="userPage" action="saveJurisdiction" method="post"
-										modelAttribute="user" enctype="multipart/form-data" autocomplete="off">
-										
+									<form:form id="userPage" name="userPage"
+										action="saveJurisdiction" method="post" modelAttribute="user"
+										enctype="multipart/form-data" autocomplete="off">
+
 										<div class="form-group">
 											<label>Sol ID</label>
 											<form:input path="SolId" id="SolId" name="SolId"
 												minlength="4" maxlength="4" cssClass="form-control" />
 										</div>
-										
+
 										<div class="form-group">
 											<label>Branch Name</label>
-											<form:input path="branchName" id="branchName" name="branchName"
-												maxlength="45" cssClass="form-control" />
+											<form:input path="branchName" id="branchName"
+												name="branchName" maxlength="45" cssClass="form-control" />
 										</div>
-										
+
 										<div class="form-group">
 											<label>ICMC Name</label>
 											<form:input path="icmcName" id="icmcName" name="icmcName"
 												maxlength="45" cssClass="form-control" />
 										</div>
-										
+
 										<div class="form-group">
 											<label>Jurisdiction</label>
-											<form:input path="jurisdiction" id="jurisdiction" name="jurisdiction"
-												maxlength="45" cssClass="form-control" />
+											<form:input path="jurisdiction" id="jurisdiction"
+												name="jurisdiction" maxlength="45" cssClass="form-control" />
 										</div>
-										
+
 										<div class="form-group">
 											<label>City</label>
-											<form:input path="city" id="city" name="city"
-												maxlength="45" cssClass="form-control" />
+											<form:input path="city" id="city" name="city" maxlength="45"
+												cssClass="form-control" />
 										</div>
-										
+
 										<div class="form-group">
 											<label>Pin Code</label>
-											<form:input path="pincode" id="pincode" name="pincode" minlength="6" 
-												maxlength="6" cssClass="form-control" />
+											<form:input path="pincode" id="pincode" name="pincode"
+												minlength="6" maxlength="6" cssClass="form-control" />
 										</div>
 										<div class="col-lg-6 form-group">
-										<label>Choose File</label> <input type="file" id="file" name="file"
-											Class="form-control" />
-											<a href="${documentFilePath}/jurisdiction.csv" download>Download CSV Format</a>
-									</div>
+											<label>Choose File</label> <input type="file" id="file"
+												name="file" Class="form-control" /> <a
+												href="${documentFilePath}/jurisdiction.csv" download>Download
+												CSV Format</a>
+										</div>
 										<button type="submit" class="btn btn-lg btn-success btn-block"
 											value="Details">Save</button>
 									</form:form>
@@ -150,7 +155,7 @@
 
 	<!-- Custom Theme JavaScript -->
 	<script src="./resources/dist/js/sb-admin-2.js"></script>
-	
+
 	<script type="text/javascript">
 	$.validator.addMethod("loginRegexCity", function(value, element) {
 	    return this.optional(element) || /^[A-Za-z\s]+$/i.test(value);
@@ -281,7 +286,7 @@
 	  });
 	});
 	</script>
-<script type="text/javascript" src="./js/htmlInjection.js"></script>
+	<script type="text/javascript" src="./js/htmlInjection.js"></script>
 </body>
 
 </html>

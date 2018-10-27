@@ -13,7 +13,8 @@
 <link rel="shortcut icon" href="./resources/logo/favicon.ico"
 	type="image/x-icon">
 
-<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script type="text/javascript"
+	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script type="text/javascript" src="./js/jquery.validate.min.js"></script>
 
 <title>ICICI : Add Account Detail</title>
@@ -51,7 +52,7 @@
 <body oncontextmenu="return false;">
 	<div id="wrapper">
 		<!-- Navigation -->
-		<jsp:include page="common.jsp" /> 
+		<jsp:include page="common.jsp" />
 
 		<div id="page-wrapper">
 			<!--  <div class="row">
@@ -69,43 +70,45 @@
 							<div class="row">
 								<div class="col-lg-6">
 									<!--<form role="form">-->
-									
-									<form:form id="userPage" name="userPage" action="saveAccountDetails" method="post"
+
+									<form:form id="userPage" name="userPage"
+										action="saveAccountDetails" method="post"
 										modelAttribute="user" autocomplete="off">
-                                      
-                                      	<div class="form-group">
+
+										<div class="form-group">
 											<label>Activity</label>
-											<form:input path="activity" id="activity" name="activity" maxlength="45"
-												cssClass="form-control" />
+											<form:input path="activity" id="activity" name="activity"
+												maxlength="45" cssClass="form-control" />
 										</div>
-										
+
 										<div class="form-group">
 											<label>Usage</label>
-											<form:input path="usage" id="usage" name="usage" maxlength="45"
-												cssClass="form-control" />
+											<form:input path="usage" id="usage" name="usage"
+												maxlength="45" cssClass="form-control" />
 										</div>
-										
-                                      	<div class="form-group">
+
+										<div class="form-group">
 											<label>Dr/Cr</label>
-											<form:select path="debitOrCredit" id="debitOrCredit" name="debitOrCredit" cssClass="form-control">
+											<form:select path="debitOrCredit" id="debitOrCredit"
+												name="debitOrCredit" cssClass="form-control">
 												<form:option value="error">Select Dr/Cr</form:option>
 												<form:option value="Dr">Dr</form:option>
 												<form:option value="Cr">Cr</form:option>
 											</form:select>
 										</div>
-										
+
 										<div class="form-group">
 											<label>Account Details</label>
-											<form:input path="accountDetails" id="accountDetails" name="accountDetails" maxlength="45"
-												cssClass="form-control" />
+											<form:input path="accountDetails" id="accountDetails"
+												name="accountDetails" maxlength="45" cssClass="form-control" />
 										</div>
-										
+
 										<div class="form-group">
 											<label>Branch Details</label>
-											<form:input path="branchDetails" id="branchDetails" name="branchDetails" maxlength="45"
-												cssClass="form-control" />
+											<form:input path="branchDetails" id="branchDetails"
+												name="branchDetails" maxlength="45" cssClass="form-control" />
 										</div>
-										
+
 										<button type="submit" class="btn btn-lg btn-success btn-block"
 											value="Details">Save</button>
 									</form:form>
@@ -142,7 +145,7 @@
 
 	<!-- Custom Theme JavaScript -->
 	<script src="./resources/dist/js/sb-admin-2.js"></script>
-	
+
 	<!-- <script type="text/javascript">
 	$(function() {
 	  $("form[name='userPage']").validate({
@@ -192,7 +195,7 @@
 	  });
 	});
 	</script> -->
-<script type="text/javascript" src="./js/htmlInjection.js"></script>
+	<script type="text/javascript" src="./js/htmlInjection.js"></script>
 </body>
 
 </html>

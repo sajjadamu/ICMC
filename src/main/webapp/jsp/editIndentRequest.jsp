@@ -5,7 +5,8 @@
 <html lang="en">
 
 <head>
-<link rel="shortcut icon" href="./resources/logo/favicon.ico" type="image/x-icon">
+<link rel="shortcut icon" href="./resources/logo/favicon.ico"
+	type="image/x-icon">
 <script src="./js/jquery-1.12.0.min.js"></script>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -60,25 +61,27 @@
 							<div class="row">
 								<div class="col-lg-8">
 									<!--<form role="form">-->
-									<form:form id="indent" action="updateIndentRequest" method="post"
-										modelAttribute="user">
+									<form:form id="indent" action="updateIndentRequest"
+										method="post" modelAttribute="user">
 										<table>
-			<tr>
-				<td style="visibility: hidden;">id</td>
-				<td style="visibility: hidden;"><form:input path="id"
-						id="id" /></td>
-			</tr></table>
-										
+											<tr>
+												<td style="visibility: hidden;">id</td>
+												<td style="visibility: hidden;"><form:input path="id"
+														id="id" /></td>
+											</tr>
+										</table>
+
 										<div class="form-group">
 											<label>Denomination</label>
-											<form:input path="denomination" id="denomination" cssClass="form-control"/>
+											<form:input path="denomination" id="denomination"
+												cssClass="form-control" />
 											<label>Bundle</label>
-											<form:input path="bundle" id="bundle"  cssClass="form-control" />
+											<form:input path="bundle" id="bundle" cssClass="form-control" />
 											<label>Bin</label>
-											<form:input path="bin" id="bin" cssClass="form-control"/>
+											<form:input path="bin" id="bin" cssClass="form-control" />
 										</div>
 										<button type="submit" class="btn btn-default" value="Details"
-											style="width: 99px;" >Update</button>
+											style="width: 99px;">Update</button>
 									</form:form>
 								</div>
 								<!-- <div id="printSection" style="display: none;"></div> -->
@@ -113,7 +116,7 @@
 	<!-- Custom Theme JavaScript -->
 	<script src="./resources/dist/js/sb-admin-2.js"></script>
 	<script src="./resources/js/jQuery.print.js"></script>
-<script type="text/javascript" src="./js/htmlInjection.js"></script>
+	<script type="text/javascript" src="./js/htmlInjection.js"></script>
 </body>
 
 </html>

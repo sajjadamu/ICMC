@@ -12,7 +12,8 @@
 <link rel="shortcut icon" href="./resources/logo/favicon.ico"
 	type="image/x-icon">
 
-<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script type="text/javascript"
+	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script type="text/javascript" src="./js/jquery.validate.min.js"></script>
 
 <title>ICICI : Edit Servicing Branch</title>
@@ -62,22 +63,23 @@
 				<div class="col-lg-12">
 					<div class="panel panel-default">
 						<!-- <div class="panel-heading"> Update Servicing Branch</div> -->
-						
+
 						<div class="panel-heading">
 							<ul>
-								<li>
-									<a href="././viewServicingBranch"><i class="fa fa-table fa-fw"></i> Servicing Branch List</a>
-								</li>
-							</ul>Update Servicing Branch
+								<li><a href="././viewServicingBranch"><i
+										class="fa fa-table fa-fw"></i> Servicing Branch List</a></li>
+							</ul>
+							Update Servicing Branch
 						</div>
-						
+
 						<div class="panel-body">
 							<div class="row">
 								<div class="col-lg-6">
 									<!--<form role="form">-->
-									<form:form id="userPage" name="userPage" action="updateServicingBranch" method="post"
+									<form:form id="userPage" name="userPage"
+										action="updateServicingBranch" method="post"
 										modelAttribute="user" autocomplete="off">
-										
+
 										<table>
 											<tr>
 												<td style="visibility: hidden;">id</td>
@@ -85,49 +87,49 @@
 														id="id" /></td>
 											</tr>
 										</table>
-										
+
 										<div class="form-group">
 											<label>Sol ID</label>
 											<form:input path="SolId" id="SolId" name="SolId"
 												minlength="4" maxlength="4" cssClass="form-control" />
 										</div>
-										
+
 										<div class="form-group">
 											<label>ICMC Name</label>
 											<form:input path="icmcName" id="icmcName" name="icmcName"
 												maxlength="45" cssClass="form-control" />
 										</div>
-										
+
 										<div class="form-group">
 											<label>Branch Name</label>
-											<form:input path="branchName" id="branchName" name="branchName"
-												maxlength="45" cssClass="form-control" />
+											<form:input path="branchName" id="branchName"
+												name="branchName" maxlength="45" cssClass="form-control" />
 										</div>
-										
+
 										<div class="form-group">
 											<label>RBI JI</label>
 											<form:input path="rbiJI" id="rbiJI" name="rbiJI"
 												maxlength="45" cssClass="form-control" />
 										</div>
-										
+
 										<div class="form-group">
 											<label>RBI SI</label>
 											<form:input path="rbiSI" id="rbiSI" name="rbiSI"
 												maxlength="45" cssClass="form-control" />
 										</div>
-										
+
 										<div class="form-group">
 											<label>Category</label>
 											<form:input path="Category" id="Category" name="Category"
 												maxlength="45" cssClass="form-control" />
 										</div>
-										
+
 										<div class="form-group">
 											<label>RBI ICMC</label>
 											<form:input path="rbiICMC" id="rbiICMC" name="rbiICMC"
 												maxlength="45" cssClass="form-control" />
 										</div>
-										
+
 										<button type="submit" class="btn btn-lg btn-success btn-block"
 											value="Details">Save</button>
 									</form:form>
@@ -164,7 +166,7 @@
 
 	<!-- Custom Theme JavaScript -->
 	<script src="./resources/dist/js/sb-admin-2.js"></script>
-	
+
 	<script type="text/javascript">
 	$(function() {
 	  $("form[name='userPage']").validate({
@@ -240,8 +242,8 @@
 	  });
 	});
 	</script>
-	
-<script type="text/javascript" src="./js/htmlInjection.js"></script>
+
+	<script type="text/javascript" src="./js/htmlInjection.js"></script>
 </body>
 
 </html>

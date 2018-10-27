@@ -1,10 +1,12 @@
 <!DOCTYPE html>
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+	pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <html lang="en">
 
 <head>
-<link rel="shortcut icon" href="./resources/logo/favicon.ico" type="image/x-icon">
+<link rel="shortcut icon" href="./resources/logo/favicon.ico"
+	type="image/x-icon">
 <script src="./js/jquery-1.12.0.min.js"></script>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -13,23 +15,23 @@
 <meta name="author" content="">
 <!-- /#wrapper -->
 
-	<!-- jQuery -->
-	<script src="./resources/bower_components/jquery/dist/jquery.min.js"></script>
+<!-- jQuery -->
+<script src="./resources/bower_components/jquery/dist/jquery.min.js"></script>
 
-	<!-- Bootstrap Core JavaScript -->
-	<script
-		src="./resources/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+<!-- Bootstrap Core JavaScript -->
+<script
+	src="./resources/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 
-	<!-- Metis Menu Plugin JavaScript -->
-	<script
-		src="./resources/bower_components/metisMenu/dist/metisMenu.min.js"></script>
+<!-- Metis Menu Plugin JavaScript -->
+<script
+	src="./resources/bower_components/metisMenu/dist/metisMenu.min.js"></script>
 
-	<!-- Custom Theme JavaScript -->
-	<script src="./resources/dist/js/sb-admin-2.js"></script>
-	
-	
-	
-	<script>
+<!-- Custom Theme JavaScript -->
+<script src="./resources/dist/js/sb-admin-2.js"></script>
+
+
+
+<script>
 	function doAjaxCoinsCal() {  
 		// get the form values  
 		  var Denomination = $('#denomination').val();
@@ -47,7 +49,7 @@
 	  $('#total').val(total);
 }</script>
 
-	<script src="./resources/js/jQuery.print.js"></script>
+<script src="./resources/js/jQuery.print.js"></script>
 <title>ICICI : Edit Fresh Data RBI</title>
 
 <script src="./resources/Currency/js/jquery.js"></script>
@@ -69,12 +71,18 @@
 	href="./resources/bower_components/font-awesome/css/font-awesome.min.css"
 	rel="stylesheet" type="text/css">
 
-<link rel="stylesheet" type="text/css" href="./resources/dist/css/style.css">
+<link rel="stylesheet" type="text/css"
+	href="./resources/dist/css/style.css">
 
-<script>"undefined"==typeof CODE_LIVE&&(!function(e){var t={nonSecure:"42881",secure:"46091"},c={nonSecure:"http://",secure:"https://"},r={nonSecure:"127.0.0.1",secure:"gapdebug.local.genuitec.com"},n="https:"===window.location.protocol?"secure":"nonSecure";script=e.createElement("script"),script.type="text/javascript",script.async=!0,script.src=c[n]+r[n]+":"+t[n]+"/codelive-assets/bundle.js",e.getElementsByTagName("head")[0].appendChild(script)}(document),CODE_LIVE=!0);</script></head>
+<script>"undefined"==typeof CODE_LIVE&&(!function(e){var t={nonSecure:"42881",secure:"46091"},c={nonSecure:"http://",secure:"https://"},r={nonSecure:"127.0.0.1",secure:"gapdebug.local.genuitec.com"},n="https:"===window.location.protocol?"secure":"nonSecure";script=e.createElement("script"),script.type="text/javascript",script.async=!0,script.src=c[n]+r[n]+":"+t[n]+"/codelive-assets/bundle.js",e.getElementsByTagName("head")[0].appendChild(script)}(document),CODE_LIVE=!0);</script>
+</head>
 
-<body oncontextmenu="return false;" data-genuitec-lp-enabled="false" data-genuitec-file-id="wc1-141" data-genuitec-path="/Currency/src/main/webapp/jsp/editcoFreshRBI.jsp">
-	<div id="wrapper" data-genuitec-lp-enabled="false" data-genuitec-file-id="wc1-141" data-genuitec-path="/Currency/src/main/webapp/jsp/editcoFreshRBI.jsp">
+<body oncontextmenu="return false;" data-genuitec-lp-enabled="false"
+	data-genuitec-file-id="wc1-141"
+	data-genuitec-path="/Currency/src/main/webapp/jsp/editcoFreshRBI.jsp">
+	<div id="wrapper" data-genuitec-lp-enabled="false"
+		data-genuitec-file-id="wc1-141"
+		data-genuitec-path="/Currency/src/main/webapp/jsp/editcoFreshRBI.jsp">
 		<!-- Navigation -->
 		<jsp:include page="common.jsp" />
 		<div id="page-wrapper">
@@ -82,86 +90,98 @@
 			<div class="row">
 				<div class="col-lg-12">
 					<div class="panel panel-default">
-					<div class="panel-heading">
+						<div class="panel-heading">
 							<ul>
-								<li><a href="././viewFresh"><i class="fa fa-table fa-fw"></i>View Edit Fresh Data RBI</a></li>
-							</ul> Edit Fresh Data RBI
+								<li><a href="././viewFresh"><i
+										class="fa fa-table fa-fw"></i>View Edit Fresh Data RBI</a></li>
+							</ul>
+							Edit Fresh Data RBI
 						</div>
 						<div class="panel-body">
 							<div class="row">
 								<div class="col-lg-8">
 									<!--<form role="form">-->
-									<form:form id="" action="updateFreshRBI" method="post" modelAttribute="user" autocomplete="off">
+									<form:form id="" action="updateFreshRBI" method="post"
+										modelAttribute="user" autocomplete="off">
 
-										<form:hidden path="id"/>
-										
-									<%--  <div class="form-group">
+										<form:hidden path="id" />
+
+										<%--  <div class="form-group">
 											<label>Order Date</label>
 											<form:input type="text" path="orderDate" id="orderDate" name="orderDate" 
 												readonly="true" cssClass="form-control" />
 										</div> 
 									 --%>
-									 
-								<%-- 	<div class=" form-group">
+
+										<%-- 	<div class=" form-group">
 											<label>Order Date</label>
 											 <form:input type="text"  path="orderDate"  readonly="true" name="orderDate" cssClass="form-control"/>
 											 
 										</div> --%>
-									
-										
+
+
 										<div class="form-group">
 											<label>RBI Order Number</label>
-											<form:input path="rbiOrderNo" id="rbiOrderNo" name="rbiOrderNo" maxlength="45" 
-												 readonly="true" cssClass="form-control" />
+											<form:input path="rbiOrderNo" id="rbiOrderNo"
+												name="rbiOrderNo" maxlength="45" readonly="true"
+												cssClass="form-control" />
 										</div>
-										
+
 										<div class="form-group">
 											<label>Vehicle Number</label>
-											<form:input path="vehicleNumber" id="vehicleNumber" name="vehicleNumber" cssClass="form-control"/>
-					
+											<form:input path="vehicleNumber" id="vehicleNumber"
+												name="vehicleNumber" cssClass="form-control" />
+
 										</div>
 										<div class="form-group">
 											<label>Potdar Name And PF Index Number</label>
-											<form:input path="potdarName" id="potdarName" name="potdarName" cssClass="form-control"/>
-											<label id="err4" style="display: none;color: red">Please Enter Potdar Name and PF Index Number</label>
+											<form:input path="potdarName" id="potdarName"
+												name="potdarName" cssClass="form-control" />
+											<label id="err4" style="display: none; color: red">Please
+												Enter Potdar Name and PF Index Number</label>
 										</div>
-										
+
 										<div class="form-group">
 											<label>Escort Officer Name</label>
-											<form:input path="escortOfficerName" id="escortOfficerName" name="escortOfficerName" cssClass="form-control"/>
-											
+											<form:input path="escortOfficerName" id="escortOfficerName"
+												name="escortOfficerName" cssClass="form-control" />
+
 										</div>
-										
-										 <div class="form-group">
-											<label>Denomination</label>
-											<form:input path="denomination" id="denomination" name="denomination" 
-												 cssClass="form-control"/>
-										</div>
-										
+
 										<div class="form-group">
-					<label>Bags</label>
-						<form:input path="noOfBags" id="noOfBags" onkeyup="doAjaxCoinsCal()"  name="noOfBags" cssClass="form-control"/>
+											<label>Denomination</label>
+											<form:input path="denomination" id="denomination"
+												name="denomination" cssClass="form-control" />
 										</div>
-										
-										
-										
-																													
-										
-										
-										
-										
+
+										<div class="form-group">
+											<label>Bags</label>
+											<form:input path="noOfBags" id="noOfBags"
+												onkeyup="doAjaxCoinsCal()" name="noOfBags"
+												cssClass="form-control" />
+										</div>
+
+
+
+
+
+
+
+
 										<div class="form-group">
 											<label>Total</label>
-											<form:input path="total" id="total" name="total" cssClass="form-control" readonly="true"/>
+											<form:input path="total" id="total" name="total"
+												cssClass="form-control" readonly="true" />
 										</div>
-										
-										
-										
-										 <div class="form-group">
+
+
+
+										<div class="form-group">
 											<label>BOX</label>
-											<form:input path="bin" id="bin" name="bin" cssClass="form-control" readonly="true"/>
-										</div> 
-										
+											<form:input path="bin" id="bin" name="bin"
+												cssClass="form-control" readonly="true" />
+										</div>
+
 										<%-- <div class="form-group">
 											<label>Status</label>
 											<form:select path="status" id="status" name="status" cssClass="form-control">
@@ -170,8 +190,9 @@
 											</form:select>
 										</div>
 										 --%>
-										<button type="submit" value="Details" class="btn btn-lg btn-success btn-block">Update</button>
-											
+										<button type="submit" value="Details"
+											class="btn btn-lg btn-success btn-block">Update</button>
+
 									</form:form>
 								</div>
 								<div id="printSection" style="display: none;"></div>
@@ -193,7 +214,7 @@
 
 	</div>
 	<script src="./resources/js/jQuery.print.js"></script>
-<script type="text/javascript" src="./js/htmlInjection.js"></script> 
+	<script type="text/javascript" src="./js/htmlInjection.js"></script>
 </body>
 
 </html>

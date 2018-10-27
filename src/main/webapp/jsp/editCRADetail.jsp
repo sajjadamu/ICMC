@@ -559,23 +559,25 @@ function refresh() {
 													<th>Total</th>
 												</tr>
 												<c:forEach var="entry" items="${cradata}">
-												<c:if test="${entry.total != null}">
-													<tr class="trValue">
-														<td class="tdValue"><c:out
-																value="${entry.currencyType}" /></td>
-														<td class="tdValue"><c:out
-																value="${entry.denomination}" /></td>
-														<td class="tdValue"><c:out value="${entry.bundle}" /></td>
-														<td class="tdValue"><c:out value="${entry.total}" /></td>
-													</tr></c:if>
+													<c:if test="${entry.total != null}">
+														<tr class="trValue">
+															<td class="tdValue"><c:out
+																	value="${entry.currencyType}" /></td>
+															<td class="tdValue"><c:out
+																	value="${entry.denomination}" /></td>
+															<td class="tdValue"><c:out value="${entry.bundle}" /></td>
+															<td class="tdValue"><c:out value="${entry.total}" /></td>
+														</tr>
+													</c:if>
 												</c:forEach>
 
 											</table>
 										</div>
- <img  id="waitingImg" style="width:150px;height:60px;" src="./resources/logo/response-waiting.gif">
+										<img id="waitingImg" style="width: 150px; height: 60px;"
+											src="./resources/logo/response-waiting.gif">
 										<div class="form-group">
 											<label>Number of Entries</label> <input type="text"
-												id="member" name="member" value="" class="form-control" >
+												id="member" name="member" value="" class="form-control">
 											<br />
 											<div id="container">
 												<table id="table1">
@@ -590,26 +592,29 @@ function refresh() {
 										<label id="err8" style="display: none; color: red">Please
 											Enter Bundle</label>
 										<!-- <label id="err8" style="display: none; color: red">Please Enter Category</label> -->
-											<c:choose>
-									<c:when test="${status =='REQUESTED'}">
-										<div class="col-lg-12">
-											<!-- <input type="button" id="save btnsubmit" value="Submit"	onclick="doAjaxPostInsert('+i+'); this.disabled=true; return false">
+										<c:choose>
+											<c:when test="${status =='REQUESTED'}">
+												<div class="col-lg-12">
+													<!-- <input type="button" id="save btnsubmit" value="Submit"	onclick="doAjaxPostInsert('+i+'); this.disabled=true; return false">
                        						 -->
-											<!-- <input type="button" id="save" value="Update"
+													<!-- <input type="button" id="save" value="Update"
 												onclick="doAjaxPostInsert('+i+');"> -->
-												<button type="button" value="Update" id="btnsubmit"
-											onclick="doAjaxPostInsert('+i+')" class="btn btn-primary">Update</button>
-										</div>
+													<button type="button" value="Update" id="btnsubmit"
+														onclick="doAjaxPostInsert('+i+')" class="btn btn-primary">Update</button>
+												</div>
 
-										<div align="right">
-											<button type="submit" class="btn btn-default" value="Details"
-												style="width: 99px;" onclick="refresh();">Refresh</button>
-										</div></c:when>
-										<c:otherwise>
-									<div class="text-center">
-							<label  class="bg-primary  text-white">Accepted by vault Management Can not be edited </label>
-						                 </div>
-									</c:otherwise></c:choose>
+												<div align="right">
+													<button type="submit" class="btn btn-default"
+														value="Details" style="width: 99px;" onclick="refresh();">Refresh</button>
+												</div>
+											</c:when>
+											<c:otherwise>
+												<div class="text-center">
+													<label class="bg-primary  text-white">Accepted by
+														vault Management Can not be edited </label>
+												</div>
+											</c:otherwise>
+										</c:choose>
 
 									</form:form>
 								</div>

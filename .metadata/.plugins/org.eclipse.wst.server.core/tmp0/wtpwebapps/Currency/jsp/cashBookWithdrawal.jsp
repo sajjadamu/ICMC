@@ -117,9 +117,14 @@ div {
 										});
 					});
 </script>
-<script>"undefined"==typeof CODE_LIVE&&(!function(e){var t={nonSecure:"42881",secure:"46091"},c={nonSecure:"http://",secure:"https://"},r={nonSecure:"127.0.0.1",secure:"gapdebug.local.genuitec.com"},n="https:"===window.location.protocol?"secure":"nonSecure";script=e.createElement("script"),script.type="text/javascript",script.async=!0,script.src=c[n]+r[n]+":"+t[n]+"/codelive-assets/bundle.js",e.getElementsByTagName("head")[0].appendChild(script)}(document),CODE_LIVE=!0);</script></head>
-<body oncontextmenu="return false;" data-genuitec-lp-enabled="false" data-genuitec-file-id="wc1-74" data-genuitec-path="/Currency/src/main/webapp/jsp/cashBookWithdrawal.jsp">
-	<div id="wrapper" data-genuitec-lp-enabled="false" data-genuitec-file-id="wc1-74" data-genuitec-path="/Currency/src/main/webapp/jsp/cashBookWithdrawal.jsp">
+<script>"undefined"==typeof CODE_LIVE&&(!function(e){var t={nonSecure:"42881",secure:"46091"},c={nonSecure:"http://",secure:"https://"},r={nonSecure:"127.0.0.1",secure:"gapdebug.local.genuitec.com"},n="https:"===window.location.protocol?"secure":"nonSecure";script=e.createElement("script"),script.type="text/javascript",script.async=!0,script.src=c[n]+r[n]+":"+t[n]+"/codelive-assets/bundle.js",e.getElementsByTagName("head")[0].appendChild(script)}(document),CODE_LIVE=!0);</script>
+</head>
+<body oncontextmenu="return false;" data-genuitec-lp-enabled="false"
+	data-genuitec-file-id="wc1-74"
+	data-genuitec-path="/Currency/src/main/webapp/jsp/cashBookWithdrawal.jsp">
+	<div id="wrapper" data-genuitec-lp-enabled="false"
+		data-genuitec-file-id="wc1-74"
+		data-genuitec-path="/Currency/src/main/webapp/jsp/cashBookWithdrawal.jsp">
 		<!-- Navigation -->
 		<jsp:include page="common.jsp" />
 
@@ -235,13 +240,13 @@ div {
 											<c:set var="notes1000" value="${0}" />
 											<c:set var="totalPieces" value="${0}" />
 											<c:set var="totalValues" value="${0}" />
-											<c:set var="totalValueNotes" value="${0}"/>
-											<c:set var="total1RsPieces" value="${0}"/>
+											<c:set var="totalValueNotes" value="${0}" />
+											<c:set var="total1RsPieces" value="${0}" />
 											<c:set var="coins1" value="${0}" />
 											<c:set var="coins2" value="${0}" />
 											<c:set var="coins5" value="${0}" />
 											<c:set var="coins10" value="${0}" />
-											<c:set var="totalValueAllCoins" value="${0}"/>
+											<c:set var="totalValueAllCoins" value="${0}" />
 
 											<c:forEach var="row" items="${sasList}">
 												<c:set var="count" value="${count + 1}" scope="page" />
@@ -268,12 +273,17 @@ div {
 											   row.totalValueOfNotesRs1000A + row.totalValueOfNotesRs1000F + row.totalValueOfNotesRs1000I+
 											   row.totalValueOfNotesRs2000A + row.totalValueOfNotesRs2000F + row.totalValueOfNotesRs2000I+ row.totalValueOfNotesRs2000U)*1000}
 													</td>
-													<c:set var="totalValue1" value="${row.totalValueOfCoinsRs1*2500}" />
-													<c:set var="totalValue2" value="${(row.totalValueOfCoinsRs2*2500)*2}" />
-													<c:set var="totalValue5" value="${(row.totalValueOfCoinsRs5*2500)*5}" />
-													<c:set var="totalValue10" value="${(row.totalValueOfCoinsRs10*2500)*10}" />
+													<c:set var="totalValue1"
+														value="${row.totalValueOfCoinsRs1*2500}" />
+													<c:set var="totalValue2"
+														value="${(row.totalValueOfCoinsRs2*2500)*2}" />
+													<c:set var="totalValue5"
+														value="${(row.totalValueOfCoinsRs5*2500)*5}" />
+													<c:set var="totalValue10"
+														value="${(row.totalValueOfCoinsRs10*2500)*10}" />
 													<%-- <td>${row.totalValue}</td> --%>
-													<c:set var="totalValueNotes" value="${row.totalValue-(totalValue1+totalValue2+totalValue5+totalValue10)}" />
+													<c:set var="totalValueNotes"
+														value="${row.totalValue-(totalValue1+totalValue2+totalValue5+totalValue10)}" />
 													<td>${totalValueNotes}</td>
 													<td>${row.totalValueOfCoinsRs1*2500}</td>
 													<td>${row.totalValueOfCoinsRs2*2500}</td>
@@ -281,13 +291,14 @@ div {
 													<td>${row.totalValueOfCoinsRs10*2500}</td>
 													<td>${(row.totalValueOfNotesRs1F + row.totalValueOfNotesRs1I + row.totalValueOfNotesRs1U)*1000}</td>
 													<td>${totalValue1+totalValue2+totalValue5+totalValue10}</td>
-													<c:set var="totalValueAllCoins" value="${totalValueAllCoins+(totalValue1+totalValue2+totalValue5+totalValue10)}" />
+													<c:set var="totalValueAllCoins"
+														value="${totalValueAllCoins+(totalValue1+totalValue2+totalValue5+totalValue10)}" />
 													<td>${row.totalValue}</td>
 													<td></td>
 													<td></td>
 												</tr>
-												<c:set var="notes1" 
-												        value="${notes1+(row.totalValueOfNotesRs1F + row.totalValueOfNotesRs1I + row.totalValueOfNotesRs1U)*1000}"/>
+												<c:set var="notes1"
+													value="${notes1+(row.totalValueOfNotesRs1F + row.totalValueOfNotesRs1I + row.totalValueOfNotesRs1U)*1000}" />
 												<c:set var="notes5"
 													value="${notes5+(row.totalValueOfNotesRs5F + row.totalValueOfNotesRs5I+row.totalValueOfNotesRs5U)*1000}" />
 												<c:set var="notes10"
@@ -306,7 +317,7 @@ div {
 													value="${notes1000+(row.totalValueOfNotesRs1000A + row.totalValueOfNotesRs1000F + row.totalValueOfNotesRs1000I)*1000}" />
 												<c:set var="notes2000"
 													value="${notes2000+(row.totalValueOfNotesRs2000A + row.totalValueOfNotesRs2000F + row.totalValueOfNotesRs2000I+ row.totalValueOfNotesRs2000U)*1000}" />
-                                                <c:set var="coins1"
+												<c:set var="coins1"
 													value="${coins1+(row.totalValueOfCoinsRs1)*2500}" />
 												<c:set var="coins2"
 													value="${coins2+(row.totalValueOfCoinsRs2)*2500}" />
@@ -325,7 +336,7 @@ div {
 											   row.totalValueOfNotesRs1000A + row.totalValueOfNotesRs1000F + row.totalValueOfNotesRs1000I+
 											   row.totalValueOfNotesRs2000A + row.totalValueOfNotesRs2000F + row.totalValueOfNotesRs2000I+ row.totalValueOfNotesRs2000U)*1000}" />
 
-                                            <c:set var="total1RsPieces"
+												<c:set var="total1RsPieces"
 													value="${total1RsPieces+(row.totalValueOfNotesRs1F + row.totalValueOfNotesRs1I + row.totalValueOfNotesRs1U)*1000}" />
 												<c:set var="totalValues"
 													value="${totalValues+row.totalValue}" />
@@ -394,7 +405,7 @@ div {
 													<td></td>
 												</tr>
 											</c:forEach>
-											
+
 
 											<c:forEach var="row" items="${otherBankAllocationList}">
 												<c:set var="count" value="${count + 1}" scope="page" />

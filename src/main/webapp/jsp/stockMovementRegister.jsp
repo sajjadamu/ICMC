@@ -285,8 +285,8 @@
 															</tr>
 														</table>
 													</td>
-                                                               
-                                                               <td class="reportpad">
+
+													<td class="reportpad">
 														<table class="reportinnbox" cellpadding="0"
 															cellspacing="0;">
 
@@ -333,8 +333,8 @@
 
 														</table>
 													</td>
-													
-																																					<td class="reportpad">
+
+													<td class="reportpad">
 														<table class="reportinnbox" cellpadding="0"
 															cellspacing="0;">
 
@@ -389,7 +389,7 @@
 
 														</table>
 													</td>
-													
+
 													<td class="reportpad">
 														<table class="reportinnbox" cellpadding="0"
 															cellspacing="0;">
@@ -427,11 +427,11 @@
 
 														</table>
 													</td>
-													
 
-													
-                                                               <!-- shahabuddin -->
-                                                               
+
+
+													<!-- shahabuddin -->
+
 													<td class="reportpad">
 														<table class="reportinnbox" cellpadding="0"
 															cellspacing="0;">
@@ -529,7 +529,7 @@
 														</table>
 													</td>
 
-													
+
 													<td class="reportpad">
 														<table class="reportinnbox" cellpadding="0"
 															cellspacing="0;">
@@ -567,9 +567,9 @@
 
 														</table>
 													</td>
-															
-                                                                   
-                                                                   <td class="reportpad">
+
+
+													<td class="reportpad">
 														<table class="reportinnbox" cellpadding="0"
 															cellspacing="0;">
 															<tr>

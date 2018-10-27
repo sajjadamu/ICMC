@@ -287,7 +287,10 @@ td.eqquall {
 								onclick="printDiv('printableArea')" value="Print" />
 							<button id="btnExport" class="btn btn-default qr-button">Export
 								to xls</button>
-						</div><div align="center" style="color:white; background:green;"><b>${successMsgForEOD}</b></div>
+						</div>
+						<div align="center" style="color: white; background: green;">
+							<b>${successMsgForEOD}</b>
+						</div>
 						<!-- /.panel-heading -->
 						<div class="panel-body">
 

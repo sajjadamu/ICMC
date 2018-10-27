@@ -10,7 +10,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="">
 <meta name="author" content="">
-<link rel="shortcut icon" href="./resources/logo/favicon.ico" type="image/x-icon">
+<link rel="shortcut icon" href="./resources/logo/favicon.ico"
+	type="image/x-icon">
 <title>ICICI : Edit Bin Master</title>
 
 <!-- Bootstrap Core CSS -->
@@ -41,10 +42,15 @@
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 
-<script>"undefined"==typeof CODE_LIVE&&(!function(e){var t={nonSecure:"42881",secure:"46091"},c={nonSecure:"http://",secure:"https://"},r={nonSecure:"127.0.0.1",secure:"gapdebug.local.genuitec.com"},n="https:"===window.location.protocol?"secure":"nonSecure";script=e.createElement("script"),script.type="text/javascript",script.async=!0,script.src=c[n]+r[n]+":"+t[n]+"/codelive-assets/bundle.js",e.getElementsByTagName("head")[0].appendChild(script)}(document),CODE_LIVE=!0);</script></head>
+<script>"undefined"==typeof CODE_LIVE&&(!function(e){var t={nonSecure:"42881",secure:"46091"},c={nonSecure:"http://",secure:"https://"},r={nonSecure:"127.0.0.1",secure:"gapdebug.local.genuitec.com"},n="https:"===window.location.protocol?"secure":"nonSecure";script=e.createElement("script"),script.type="text/javascript",script.async=!0,script.src=c[n]+r[n]+":"+t[n]+"/codelive-assets/bundle.js",e.getElementsByTagName("head")[0].appendChild(script)}(document),CODE_LIVE=!0);</script>
+</head>
 
-<body oncontextmenu="return false;" data-genuitec-lp-enabled="false" data-genuitec-file-id="wc1-97" data-genuitec-path="/Currency/src/main/webapp/jsp/editBinMaster.jsp">
-	<div id="wrapper" data-genuitec-lp-enabled="false" data-genuitec-file-id="wc1-97" data-genuitec-path="/Currency/src/main/webapp/jsp/editBinMaster.jsp">
+<body oncontextmenu="return false;" data-genuitec-lp-enabled="false"
+	data-genuitec-file-id="wc1-97"
+	data-genuitec-path="/Currency/src/main/webapp/jsp/editBinMaster.jsp">
+	<div id="wrapper" data-genuitec-lp-enabled="false"
+		data-genuitec-file-id="wc1-97"
+		data-genuitec-path="/Currency/src/main/webapp/jsp/editBinMaster.jsp">
 		<!-- Navigation -->
 		<jsp:include page="common.jsp" />
 
@@ -64,31 +70,37 @@
 							<div class="row">
 								<div class="col-lg-6">
 									<!--<form role="form">-->
-									<form:form id="editBinMaster" action="updateBinMaster" method="post" modelAttribute="user">
-<table>
-			<tr>
-				<td style="visibility: hidden;">id</td>
-				<td style="visibility: hidden;"><form:input path="id"
-						id="userId" /></td>
-			</tr></table>
+									<form:form id="editBinMaster" action="updateBinMaster"
+										method="post" modelAttribute="user">
+										<table>
+											<tr>
+												<td style="visibility: hidden;">id</td>
+												<td style="visibility: hidden;"><form:input path="id"
+														id="userId" /></td>
+											</tr>
+										</table>
 										<div class="form-group">
 											<label>Bin Number</label>
 
-											 <form:input path="binNumber" id="binNumber" cssClass="form-control" />
+											<form:input path="binNumber" id="binNumber"
+												cssClass="form-control" />
 										</div>
 										<div class="form-group">
 											<label>Capacity</label>
-											<form:input path="capacity" id="capacity" cssClass="form-control" />
+											<form:input path="capacity" id="capacity"
+												cssClass="form-control" />
 										</div>
-										
+
 										<div class="form-group">
 											<label>Denomination</label>
-											<form:input path="denomination" id="denomination" cssClass="form-control" />
+											<form:input path="denomination" id="denomination"
+												cssClass="form-control" />
 										</div>
-										
+
 										<div class="form-group">
 											<label>Bin Type</label>
-											<form:input path="binType" id="binType" cssClass="form-control" />
+											<form:input path="binType" id="binType"
+												cssClass="form-control" />
 										</div>
 
 										<button type="submit" class="btn btn-lg btn-success btn-block"
@@ -127,7 +139,7 @@
 
 	<!-- Custom Theme JavaScript -->
 	<script src="./resources/dist/js/sb-admin-2.js"></script>
-<script type="text/javascript" src="./js/htmlInjection.js"></script>
+	<script type="text/javascript" src="./js/htmlInjection.js"></script>
 </body>
 
 </html>

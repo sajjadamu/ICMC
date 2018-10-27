@@ -243,19 +243,19 @@
 														balance = balance.add(tuple.get(1, BigDecimal.class).subtract(tuple.get(2, BigDecimal.class)));
 												%>
 
-												<tr>
-													<td><fmt:formatDate pattern="yyyy-MM-dd"
-															value="<%=tuple.get(3, Calendar.class).getTime()%>" /></td>
-													<td><%=tuple.get(0, Integer.class)%></td>
-													<td><%=tuple.get(1, BigDecimal.class)%></td>
-													<td><%=tuple.get(2, BigDecimal.class)%> 
-													<td><%=balance%></td>
-													<td><%=balance.multiply(new BigDecimal(tuple.get(0, Integer.class)).multiply(new BigDecimal(1000)))%></td>
-													<td></td>
-													<td></td>
-													<td></td>
-												</tr>
-												<%
+														<tr>
+															<td><fmt:formatDate pattern="yyyy-MM-dd"
+																	value="<%=tuple.get(3, Calendar.class).getTime()%>" /></td>
+															<td><%=tuple.get(0, Integer.class)%></td>
+															<td><%=tuple.get(1, BigDecimal.class)%></td>
+															<td><%=tuple.get(2, BigDecimal.class)%>
+															<td><%=balance%></td>
+															<td><%=balance.multiply(new BigDecimal(tuple.get(0, Integer.class)).multiply(new BigDecimal(1000)))%></td>
+															<td></td>
+															<td></td>
+															<td></td>
+														</tr>
+														<%
 													}
 												%>
 													</table>

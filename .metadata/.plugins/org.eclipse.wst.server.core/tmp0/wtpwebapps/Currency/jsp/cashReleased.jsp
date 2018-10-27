@@ -1,9 +1,11 @@
 <!DOCTYPE html>
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+	pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <html lang="en">
 <head>
-<link rel="shortcut icon" href="./resources/logo/favicon.ico" type="image/x-icon">
+<link rel="shortcut icon" href="./resources/logo/favicon.ico"
+	type="image/x-icon">
 <script src="./js/jquery-1.12.0.min.js"></script>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -17,38 +19,42 @@
 
 <!-- ------------------------ Style for Error -------------------------- -->
 <style type="text/css">
-
 .msg-info, .msg-success, .msg-warning, .msg-error, .msg-validation {
-border: 1px solid;
-margin: 10px 0px;
-padding:15px 10px 15px 50px;
-background-repeat: no-repeat;
-background-position: 10px center;
+	border: 1px solid;
+	margin: 10px 0px;
+	padding: 15px 10px 15px 50px;
+	background-repeat: no-repeat;
+	background-position: 10px center;
 }
+
 .msg-info {
-color: #00529B;
-background-color: #BDE5F8;
-background-image: url('img/info.png');
+	color: #00529B;
+	background-color: #BDE5F8;
+	background-image: url('img/info.png');
 }
+
 .msg-success {
-color: #4F8A10;
-background-color: #DFF2BF;
-background-image:url('img/success.png');
+	color: #4F8A10;
+	background-color: #DFF2BF;
+	background-image: url('img/success.png');
 }
+
 .msg-warning {
-color: #9F6000;
-background-color: #FEEFB3;
-background-image: url('img/warning.png');
+	color: #9F6000;
+	background-color: #FEEFB3;
+	background-image: url('img/warning.png');
 }
+
 .msg-error {
-color: #D8000C;
-background-color: #FFBABA;
-background-image: url('img/error.png');
+	color: #D8000C;
+	background-color: #FFBABA;
+	background-image: url('img/error.png');
 }
+
 .msg-validation {
-color: #D63301;
-background-color: #FFCCBA;
-background-image: url('img/validation.png');
+	color: #D63301;
+	background-color: #FFCCBA;
+	background-image: url('img/validation.png');
 }
 </style>
 <!-- ------------------------ Style for Error -------------------------- -->
@@ -185,10 +191,15 @@ background-image: url('img/validation.png');
 <link rel="stylesheet" type="text/css"
 	href="./resources/dist/css/style.css">
 
-<script>"undefined"==typeof CODE_LIVE&&(!function(e){var t={nonSecure:"42881",secure:"46091"},c={nonSecure:"http://",secure:"https://"},r={nonSecure:"127.0.0.1",secure:"gapdebug.local.genuitec.com"},n="https:"===window.location.protocol?"secure":"nonSecure";script=e.createElement("script"),script.type="text/javascript",script.async=!0,script.src=c[n]+r[n]+":"+t[n]+"/codelive-assets/bundle.js",e.getElementsByTagName("head")[0].appendChild(script)}(document),CODE_LIVE=!0);</script></head>
+<script>"undefined"==typeof CODE_LIVE&&(!function(e){var t={nonSecure:"42881",secure:"46091"},c={nonSecure:"http://",secure:"https://"},r={nonSecure:"127.0.0.1",secure:"gapdebug.local.genuitec.com"},n="https:"===window.location.protocol?"secure":"nonSecure";script=e.createElement("script"),script.type="text/javascript",script.async=!0,script.src=c[n]+r[n]+":"+t[n]+"/codelive-assets/bundle.js",e.getElementsByTagName("head")[0].appendChild(script)}(document),CODE_LIVE=!0);</script>
+</head>
 
-<body oncontextmenu="return false;" data-genuitec-lp-enabled="false" data-genuitec-file-id="wc1-77" data-genuitec-path="/Currency/src/main/webapp/jsp/cashReleased.jsp">
-	<div id="wrapper" data-genuitec-lp-enabled="false" data-genuitec-file-id="wc1-77" data-genuitec-path="/Currency/src/main/webapp/jsp/cashReleased.jsp">
+<body oncontextmenu="return false;" data-genuitec-lp-enabled="false"
+	data-genuitec-file-id="wc1-77"
+	data-genuitec-path="/Currency/src/main/webapp/jsp/cashReleased.jsp">
+	<div id="wrapper" data-genuitec-lp-enabled="false"
+		data-genuitec-file-id="wc1-77"
+		data-genuitec-path="/Currency/src/main/webapp/jsp/cashReleased.jsp">
 		<!-- Navigation -->
 		<jsp:include page="common.jsp" />
 
@@ -216,13 +227,14 @@ background-image: url('img/validation.png');
 											<table id="records_table">
 											</table>
 										</div>
-										<input type="button" id="buttonID" value="Submit" disabled onclick="saveRecord()">
+										<input type="button" id="buttonID" value="Submit" disabled
+											onclick="saveRecord()">
 										<div class="msg-info">Info message</div>
 										<div class="msg-success">Successful operation message</div>
 										<div class="msg-warning">Warning message</div>
 										<div class="msg-error">Error message</div>
 										<div class="msg-validation">Validation Message</div>
-										
+
 										<!-- <button type="submit" class="btn btn-default" value="Details"
 											style="width: 99px;">Save</button> -->
 									</form:form>
@@ -259,7 +271,7 @@ background-image: url('img/validation.png');
 	<!-- Custom Theme JavaScript -->
 	<script src="./resources/dist/js/sb-admin-2.js"></script>
 	<script src="./resources/js/jQuery.print.js"></script>
-<script type="text/javascript" src="./js/htmlInjection.js"></script>
+	<script type="text/javascript" src="./js/htmlInjection.js"></script>
 </body>
 
 </html>

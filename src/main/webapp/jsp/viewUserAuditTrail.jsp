@@ -14,7 +14,8 @@
 <link rel="shortcut icon" href="./resources/logo/favicon.ico"
 	type="image/x-icon">
 
-<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script type="text/javascript"
+	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script type="text/javascript" src="./js/jquery.validate.min.js"></script>
 
 <title>ICICI : User Audit Trail</title>
@@ -75,24 +76,24 @@
 									<!--<form role="form">-->
 									<form:form id="userPage" action="#" method="post"
 										modelAttribute="user">
-										
+
 										<div class="form-group">
 											<label>ICMC Name</label><br>
 											<form:select path="icmcName" id="icmcName" name="icmcName"
-												cssClass="form-control" >
+												cssClass="form-control">
 												<form:option value="">Select ICMC Name</form:option>
 												<form:option value="Hauzkhas">Hauzkhas</form:option>
 												<form:option value="Kochi">Kochi</form:option>
 												<form:option value="Agra">Agra</form:option>
 											</form:select>
 										</div>
-										
+
 										<div class="form-group">
 											<label>Enter User ID</label>
 											<form:input path="userId" id="userId" name="userId"
 												cssClass="form-control" />
 										</div>
-										
+
 										<button type="submit" class="btn btn-lg btn-success btn-block"
 											value="Details">Generate</button>
 									</form:form>
@@ -100,19 +101,19 @@
 								<!-- /.col-lg-6 (nested) -->
 								<div class="col-lg-6"></div>
 								<!-- /.col-lg-6 (nested) -->
-								
-								
+
+
 							</div>
 							<!-- /.row (nested) -->
 						</div>
 						<!-- /.panel-body -->
-						
+
 						<div class="col-sm-2 no-margin">
-												<div class="button">
-													<a style="width: 150px;" 
-											class="btn btn-default" href="deleteBinMasterByIcmcId" >Delete For Migration</a>
-												</div>
-											</div>
+							<div class="button">
+								<a style="width: 150px;" class="btn btn-default"
+									href="deleteBinMasterByIcmcId">Delete For Migration</a>
+							</div>
+						</div>
 					</div>
 					<!-- /.panel -->
 				</div>
@@ -138,7 +139,7 @@
 
 	<!-- Custom Theme JavaScript -->
 	<script src="./resources/dist/js/sb-admin-2.js"></script>
-<script type="text/javascript" src="./js/htmlInjection.js"></script>	
+	<script type="text/javascript" src="./js/htmlInjection.js"></script>
 </body>
 
 </html>

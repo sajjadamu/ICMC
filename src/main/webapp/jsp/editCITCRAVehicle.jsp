@@ -12,12 +12,14 @@
 <link rel="shortcut icon" href="./resources/logo/favicon.ico"
 	type="image/x-icon">
 
-<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script type="text/javascript"
+	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script type="text/javascript" src="./js/jquery.validate.min.js"></script>
 
 <title>ICICI : Edit Vehicle</title>
 
-<link href="./resources/css/calendar.css" rel="stylesheet" type="text/css" />
+<link href="./resources/css/calendar.css" rel="stylesheet"
+	type="text/css" />
 <link rel="stylesheet" type="text/css"
 	href="./resources/css/jquery.datetimepicker.css" />
 
@@ -70,56 +72,62 @@
 							<div class="row">
 								<div class="col-lg-6">
 									<!--<form role="form">-->
-									<form:form id="userPage" name="userPage" action="updateCITCRAVehicle" method="post"
+									<form:form id="userPage" name="userPage"
+										action="updateCITCRAVehicle" method="post"
 										modelAttribute="user" autocomplete="off">
-										
-										<form:hidden path="id"/>
+
+										<form:hidden path="id" />
 										<div class="form-group">
 											<label>Vendor Name</label>
-											<form:select id="name" name="name"
-												path="name" cssClass="form-control">
+											<form:select id="name" name="name" path="name"
+												cssClass="form-control">
 												<form:option value="">Select Vendor Name</form:option>
 												<form:options items="${vendorList}" itemValue="name"
 													itemLabel="name" />
 											</form:select>
 										</div>
-										
+
 										<div class="form-group">
 											<label>Vehicle Number</label>
 											<form:input path="number" id="number" name="number"
 												maxlength="45" cssClass="form-control" />
 										</div>
-										
+
 										<div class="form-group">
-											<label>Bought Date</label>  <form:input path="boughtDate" id="boughtDate" name="boughtDate"
-												cssClass="form-control" />
+											<label>Bought Date</label>
+											<form:input path="boughtDate" id="boughtDate"
+												name="boughtDate" cssClass="form-control" />
 										</div>
-										
+
 										<div class="form-group">
 											<label>Registration City</label>
-											<form:input path="regCityName" id="regCityName" name="regCityName"
-												maxlength="45" cssClass="form-control" />
+											<form:input path="regCityName" id="regCityName"
+												name="regCityName" maxlength="45" cssClass="form-control" />
 										</div>
-										
+
 										<div class="form-group">
 											<label>Vehicle Insurance</label>
 											<form:input path="insurance" id="insurance" name="insurance"
 												maxlength="45" cssClass="form-control" />
 										</div>
-										
+
 										<div class="form-group">
-											<label>Fitness Expiry Date</label>  <form:input path="fitnessExpiryDate" id="fitnessExpiryDate" name="fitnessExpiryDate"
+											<label>Fitness Expiry Date</label>
+											<form:input path="fitnessExpiryDate" id="fitnessExpiryDate"
+												name="fitnessExpiryDate" cssClass="form-control" />
+										</div>
+
+										<div class="form-group">
+											<label>Pollution Expiry Date</label>
+											<form:input path="pollutionExpiryDate"
+												id="pollutionExpiryDate" name="pollutionExpiryDate"
 												cssClass="form-control" />
 										</div>
-										
+
 										<div class="form-group">
-											<label>Pollution Expiry Date</label>  <form:input path="pollutionExpiryDate" id="pollutionExpiryDate" name="pollutionExpiryDate"
-												cssClass="form-control" />
-										</div>
-										
-										<div class="form-group">
-											<label>Permit Date</label>  <form:input path="permitDate" id="permitDate" name="permitDate"
-												cssClass="form-control" />
+											<label>Permit Date</label>
+											<form:input path="permitDate" id="permitDate"
+												name="permitDate" cssClass="form-control" />
 										</div>
 										<button type="submit" class="btn btn-lg btn-success btn-block"
 											value="Details">Submit</button>
@@ -157,7 +165,7 @@
 
 	<!-- Custom Theme JavaScript -->
 	<script src="./resources/dist/js/sb-admin-2.js"></script>
-	
+
 	<script src="./resources/js/jquery.datetimepicker.js"></script>
 	<script>
 		$('#pollutionExpiryDate').datetimepicker({
@@ -178,8 +186,8 @@
 		});
 		
 	</script>
-	
-	
+
+
 	<script type="text/javascript">
 	$(function() {
 	  $("form[name='userPage']").validate({
@@ -228,7 +236,7 @@
 	  });
 	});
 	</script>
-<script type="text/javascript" src="./js/htmlInjection.js"></script>
+	<script type="text/javascript" src="./js/htmlInjection.js"></script>
 </body>
 
 </html>

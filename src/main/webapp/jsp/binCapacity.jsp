@@ -12,7 +12,8 @@
 <link rel="shortcut icon" href="./resources/logo/favicon.ico"
 	type="image/x-icon">
 
-<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script type="text/javascript"
+	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script type="text/javascript" src="./js/jquery.validate.min.js"></script>
 
 <title>ICICI : BIN CAPACITY</title>
@@ -48,7 +49,7 @@
 <body oncontextmenu="return false;">
 	<div id="wrapper">
 		<!-- Navigation -->
-		<jsp:include page="common.jsp" /> 
+		<jsp:include page="common.jsp" />
 
 		<div id="page-wrapper">
 			<!--  <div class="row">
@@ -61,56 +62,63 @@
 			<div class="row">
 				<div class="col-lg-12">
 					<div class="panel panel-default">
-						
+
 						<div class="panel-heading">
-                        	<ul>
-                        		<li>
-                        			<a href="././viewBinCapacity"><i class="fa fa-table fa-fw"></i> Bin Capacity List</a>
-                        		</li>
-                        	</ul>Add Bin Capacity
-                        </div>
-						
+							<ul>
+								<li><a href="././viewBinCapacity"><i
+										class="fa fa-table fa-fw"></i> Bin Capacity List</a></li>
+							</ul>
+							Add Bin Capacity
+						</div>
+
 						<div class="panel-body">
 							<div class="row">
 								<div class="col-lg-6">
 									<!--<form role="form">-->
-									<form:form id="userPage" name="userPage" action="saveBinCapacity" method="post" 
-										autocomplete="off" modelAttribute="user">
-										
-										<div align="center" style="color: red"><b>${duplicateMsg}</b></div><br>
-										
-										
+									<form:form id="userPage" name="userPage"
+										action="saveBinCapacity" method="post" autocomplete="off"
+										modelAttribute="user">
+
+										<div align="center" style="color: red">
+											<b>${duplicateMsg}</b>
+										</div>
+										<br>
+
+
 										<div class="form-group">
 											<label>Bin Size</label>
 											<form:select path="vaultSize" cssClass="form-control">
-													<option>Select Bin Size</option>
-													<form:options items="${vaultSizeList}" />
+												<option>Select Bin Size</option>
+												<form:options items="${vaultSizeList}" />
 											</form:select>
 										</div>
-										
+
 										<div class="form-group">
 											<label>Denomination</label>
 											<form:select path="denomination" cssClass="form-control">
-													<option>Select Denomination</option>
-													<form:options items="${denominationList}" itemValue="denomination" itemLabel="denomination" name="denomination" />
+												<option>Select Denomination</option>
+												<form:options items="${denominationList}"
+													itemValue="denomination" itemLabel="denomination"
+													name="denomination" />
 											</form:select>
 										</div>
-										
+
 										<div class="form-group">
 											<label>Currency Type</label>
 											<form:select path="currencyType" cssClass="form-control">
-													<option>Select Currency Type</option>
-													<form:options items="${currencyTypeList}" />
+												<option>Select Currency Type</option>
+												<form:options items="${currencyTypeList}" />
 											</form:select>
 										</div>
-										
-										
+
+
 										<div class="form-group">
 											<label>Maximum BIN Capacity</label>
-											<form:input path="maxBundleCapacity" id="maxBundleCapacity" name="maxBundleCapacity"
-												maxlength="10" cssClass="form-control" />
+											<form:input path="maxBundleCapacity" id="maxBundleCapacity"
+												name="maxBundleCapacity" maxlength="10"
+												cssClass="form-control" />
 										</div>
-										
+
 										<%-- <div class="form-group">
 											<label>Denomination</label>
 											<form:select path="denomination" cssClass="form-control">
@@ -118,7 +126,7 @@
 													<form:options items="${denominationList}" itemValue="denomination" itemLabel="denomination" name="denomination" />
 											</form:select>
 										</div> --%>
-										
+
 										<button type="submit" class="btn btn-lg btn-success btn-block"
 											value="Details">Save</button>
 									</form:form>
@@ -155,7 +163,7 @@
 
 	<!-- Custom Theme JavaScript -->
 	<script src="./resources/dist/js/sb-admin-2.js"></script>
-	
+
 	<script type="text/javascript">
 	
 	$.validator.addMethod("loginRegex", function(value, element) {
@@ -194,7 +202,7 @@
 	  });
 	});
 	</script>
-<script type="text/javascript" src="./js/htmlInjection.js"></script>	
+	<script type="text/javascript" src="./js/htmlInjection.js"></script>
 </body>
 
 </html>

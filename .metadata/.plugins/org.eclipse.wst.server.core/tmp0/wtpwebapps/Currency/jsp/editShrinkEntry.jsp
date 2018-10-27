@@ -5,7 +5,8 @@
 <html lang="en">
 
 <head>
-<link rel="shortcut icon" href="./resources/logo/favicon.ico" type="image/x-icon">
+<link rel="shortcut icon" href="./resources/logo/favicon.ico"
+	type="image/x-icon">
 <script src="./js/jquery-1.12.0.min.js"></script>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -14,21 +15,21 @@
 <meta name="author" content="">
 <!-- /#wrapper -->
 
-	<!-- jQuery -->
-	<script src="./resources/bower_components/jquery/dist/jquery.min.js"></script>
+<!-- jQuery -->
+<script src="./resources/bower_components/jquery/dist/jquery.min.js"></script>
 
-	<!-- Bootstrap Core JavaScript -->
-	<script
-		src="./resources/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+<!-- Bootstrap Core JavaScript -->
+<script
+	src="./resources/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 
-	<!-- Metis Menu Plugin JavaScript -->
-	<script
-		src="./resources/bower_components/metisMenu/dist/metisMenu.min.js"></script>
+<!-- Metis Menu Plugin JavaScript -->
+<script
+	src="./resources/bower_components/metisMenu/dist/metisMenu.min.js"></script>
 
-	<!-- Custom Theme JavaScript -->
-	<script src="./resources/dist/js/sb-admin-2.js"></script>
+<!-- Custom Theme JavaScript -->
+<script src="./resources/dist/js/sb-admin-2.js"></script>
 
-	<script src="./resources/js/jQuery.print.js"></script>
+<script src="./resources/js/jQuery.print.js"></script>
 <title>ICICI : Edit Branch Receipt</title>
 
 <script src="./resources/Currency/js/jquery.js"></script>
@@ -50,7 +51,8 @@
 	href="./resources/bower_components/font-awesome/css/font-awesome.min.css"
 	rel="stylesheet" type="text/css">
 
-<link rel="stylesheet" type="text/css" href="./resources/dist/css/style.css">
+<link rel="stylesheet" type="text/css"
+	href="./resources/dist/css/style.css">
 
 <script type="text/javascript">
 
@@ -177,10 +179,15 @@ function SavePrint() {
 }
 </script>
 
-<script>"undefined"==typeof CODE_LIVE&&(!function(e){var t={nonSecure:"42881",secure:"46091"},c={nonSecure:"http://",secure:"https://"},r={nonSecure:"127.0.0.1",secure:"gapdebug.local.genuitec.com"},n="https:"===window.location.protocol?"secure":"nonSecure";script=e.createElement("script"),script.type="text/javascript",script.async=!0,script.src=c[n]+r[n]+":"+t[n]+"/codelive-assets/bundle.js",e.getElementsByTagName("head")[0].appendChild(script)}(document),CODE_LIVE=!0);</script></head>
+<script>"undefined"==typeof CODE_LIVE&&(!function(e){var t={nonSecure:"42881",secure:"46091"},c={nonSecure:"http://",secure:"https://"},r={nonSecure:"127.0.0.1",secure:"gapdebug.local.genuitec.com"},n="https:"===window.location.protocol?"secure":"nonSecure";script=e.createElement("script"),script.type="text/javascript",script.async=!0,script.src=c[n]+r[n]+":"+t[n]+"/codelive-assets/bundle.js",e.getElementsByTagName("head")[0].appendChild(script)}(document),CODE_LIVE=!0);</script>
+</head>
 
-<body oncontextmenu="return false;" data-genuitec-lp-enabled="false" data-genuitec-file-id="wc1-133" data-genuitec-path="/Currency/src/main/webapp/jsp/editShrinkEntry.jsp">
-	<div id="wrapper" data-genuitec-lp-enabled="false" data-genuitec-file-id="wc1-133" data-genuitec-path="/Currency/src/main/webapp/jsp/editShrinkEntry.jsp">
+<body oncontextmenu="return false;" data-genuitec-lp-enabled="false"
+	data-genuitec-file-id="wc1-133"
+	data-genuitec-path="/Currency/src/main/webapp/jsp/editShrinkEntry.jsp">
+	<div id="wrapper" data-genuitec-lp-enabled="false"
+		data-genuitec-file-id="wc1-133"
+		data-genuitec-path="/Currency/src/main/webapp/jsp/editShrinkEntry.jsp">
 		<!-- Navigation -->
 		<jsp:include page="common.jsp" />
 		<div id="page-wrapper">
@@ -188,75 +195,92 @@ function SavePrint() {
 			<div class="row">
 				<div class="col-lg-12">
 					<div class="panel panel-default">
-					<div class="panel-heading">
+						<div class="panel-heading">
 							<ul>
-								<li><a href="././viewShrink"><i class="fa fa-table fa-fw"></i>View Branch Receipt</a></li>
-							</ul>Edit Branch Receipt
+								<li><a href="././viewShrink"><i
+										class="fa fa-table fa-fw"></i>View Branch Receipt</a></li>
+							</ul>
+							Edit Branch Receipt
 						</div>
 						<div class="panel-body">
 							<div class="row">
 								<div class="col-lg-8">
 									<!--<form role="form">-->
-									<form:form id="" action="" method="post" modelAttribute="user" autocomplete="off">
+									<form:form id="" action="" method="post" modelAttribute="user"
+										autocomplete="off">
 
-										<form:hidden path="id"/>
-										
+										<form:hidden path="id" />
+
 										<div class="form-group">
-											<label id="err1" style="display: none;color: red">Please Enter solId</label>
-											<label id="err11" style="display: none;color: red">Please Enter 4 Digit Sol Id</label>
-											<label>Sol ID</label>
-											<form:input path="solId" name="solId" minlenght="4" maxlength="4" id="solId" cssClass="form-control"
+											<label id="err1" style="display: none; color: red">Please
+												Enter solId</label> <label id="err11"
+												style="display: none; color: red">Please Enter 4
+												Digit Sol Id</label> <label>Sol ID</label>
+											<form:input path="solId" name="solId" minlenght="4"
+												maxlength="4" id="solId" cssClass="form-control"
 												onkeyup="doAjaxPostForBranch()" />
-												
+
 											<label>Branch</label>
-											<form:input path="branch" id="branch" cssClass="form-control" readonly="true" />
-											<label id="err4" style="display: none;color: red">Please Enter Any valid Sol Id</label>
+											<form:input path="branch" id="branch" cssClass="form-control"
+												readonly="true" />
+											<label id="err4" style="display: none; color: red">Please
+												Enter Any valid Sol Id</label>
 										</div>
-										
+
 										<div class="form-group">
 											<label>SR Number</label>
-											<form:input path="srNumber" id="srNumber" minlenght="11" maxlength="11" cssClass="form-control"/>
-											<label id="err5" style="display:none; color:red">Please Enter SR Number</label>
-											<label id="err6" style="display:none; color:red">SR Number should have 11 digits</label>
+											<form:input path="srNumber" id="srNumber" minlenght="11"
+												maxlength="11" cssClass="form-control" />
+											<label id="err5" style="display: none; color: red">Please
+												Enter SR Number</label> <label id="err6"
+												style="display: none; color: red">SR Number should
+												have 11 digits</label>
 										</div>
 
-										<label id="err2" style="display: none; color: red">Please Enter Valid Denomination</label>
-										<label id="err3" style="display: none; color: red">Please Enter Packets</label>
-										
+										<label id="err2" style="display: none; color: red">Please
+											Enter Valid Denomination</label>
+										<label id="err3" style="display: none; color: red">Please
+											Enter Packets</label>
+
 										<div class="form-group">
 											<label>Denomination</label>
-											<form:input path="denomination" id="denomination" name="denomination" cssClass="form-control"/>
+											<form:input path="denomination" id="denomination"
+												name="denomination" cssClass="form-control" />
 										</div>
-										
+
 										<div class="form-group">
-										
+
 											<label>Bundel</label>
-											<form:input path="bundle" value="${bundle}" id="bundle" name="bundle" cssClass="form-control"
-												onkeyup="doAjaxPost()"/>
+											<form:input path="bundle" value="${bundle}" id="bundle"
+												name="bundle" cssClass="form-control" onkeyup="doAjaxPost()" />
 										</div>
-										
-										
-										
-										
+
+
+
+
 										<div class="form-group">
 											<label>Total</label>
-											<form:input path="total" id="total" name="total" cssClass="form-control" readonly="true"/>
+											<form:input path="total" id="total" name="total"
+												cssClass="form-control" readonly="true" />
 										</div>
-										
+
 										<div class="form-group">
 											<label>Bin</label>
-											<form:input path="bin" id="bin" name="bin" cssClass="form-control" readonly="true"/>
+											<form:input path="bin" id="bin" name="bin"
+												cssClass="form-control" readonly="true" />
 										</div>
-										
+
 										<%-- <div class="form-group">
 											<label>Bin Category Type</label>
 											<form:radiobutton path="binCategoryType" id="binCategoryType" name="binCategoryType"/>BIN
 											<form:radiobutton path="binCategoryType" id="binCategoryType" name="binCategoryType"/>BOX
 										</div> --%>
-										
-										<button type="button" name="print" class="btn btn-lg btn-success btn-block"
-											onclick="SavePrint(); this.disabled=true" >Update AND Print QR</button>
-											
+
+										<button type="button" name="print"
+											class="btn btn-lg btn-success btn-block"
+											onclick="SavePrint(); this.disabled=true">Update
+											AND Print QR</button>
+
 									</form:form>
 								</div>
 								<div id="printSection" style="display: none;"></div>
@@ -278,7 +302,7 @@ function SavePrint() {
 
 	</div>
 	<script src="./resources/js/jQuery.print.js"></script>
-<script type="text/javascript" src="./js/htmlInjection.js"></script>
+	<script type="text/javascript" src="./js/htmlInjection.js"></script>
 </body>
 
 </html>

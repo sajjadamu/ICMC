@@ -44,8 +44,8 @@
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
-    
-    <script type="text/javascript">
+
+<script type="text/javascript">
     function submitChecking(){
     	var denomination = $('input[name=denomination]:checked').val();
 		var currencyType = $('#currencyType').val();
@@ -101,13 +101,13 @@
     
     
     </script>
-    
+
 </head>
 
 <body oncontextmenu="return false;">
 	<div id="wrapper">
 		<!-- Navigation -->
-		<jsp:include page="common.jsp" /> 
+		<jsp:include page="common.jsp" />
 
 		<div id="page-wrapper">
 			<!--  <div class="row">
@@ -122,55 +122,60 @@
 					<div class="panel panel-default">
 						<!-- <div class="panel-heading">Add/Upload Branch</div> -->
 						<div class="panel-heading">
-                        	<ul>
-                          		<li>
-                          			<a href="././viewAuditorIndent"><i class="fa fa-table fa-fw"></i> View Indent List</a>
-                          		</li>
-							</ul>Indent Request
-                        </div>
-						
+							<ul>
+								<li><a href="././viewAuditorIndent"><i
+										class="fa fa-table fa-fw"></i> View Indent List</a></li>
+							</ul>
+							Indent Request
+						</div>
+
 						<div class="panel-body">
 							<div class="row">
 								<div class="col-lg-6">
 									<!--<form role="form">-->
-									<form:form id="userPage" name="userPage" action="saveAuditorIndent" method="post"
-										modelAttribute="user" autocomplete="off">
+									<form:form id="userPage" name="userPage"
+										action="saveAuditorIndent" method="post" modelAttribute="user"
+										autocomplete="off">
 
 										<div class="form-group">
 											<label>Denomination</label><br>
-											<form:radiobuttons items="${denominationList}" itemLabel="denomination"  itemValue="denomination" 
-												path="denomination" id="denomination" name="denomination" onclick="binData()"/>
-										</div> 
-										
+											<form:radiobuttons items="${denominationList}"
+												itemLabel="denomination" itemValue="denomination"
+												path="denomination" id="denomination" name="denomination"
+												onclick="binData()" />
+										</div>
+
 										<div class="form-group">
 											<label>Currency Type</label>
-											<form:select path="binType" id="currencyType" cssClass="form-control" onchange="binData()">
-													<option value="0">Select Currency Type</option>
-													<form:options items="${currencyTypeList}" />
+											<form:select path="binType" id="currencyType"
+												cssClass="form-control" onchange="binData()">
+												<option value="0">Select Currency Type</option>
+												<form:options items="${currencyTypeList}" />
 											</form:select>
 										</div>
-										
+
 										<%-- <div class="form-group">
 											<label>Bin Number</label>
 											<form:input path="binNumber" id="binNumber" name="binNumber"
 												maxlength="45" cssClass="form-control" />
 										</div> --%>
-										
+
 										<div class="form-group">
 											<label>Bin Number</label>
-											<form:select path="binNumber" id="binNumber" cssClass="form-control">
-													<option>Select Bin</option>
+											<form:select path="binNumber" id="binNumber"
+												cssClass="form-control">
+												<option>Select Bin</option>
 											</form:select>
 										</div>
-										
+
 										<div class="form-group">
 											<label>Bundle</label>
 											<form:input path="bundle" id="bundle" name="bundle"
 												maxlength="45" cssClass="form-control" />
 										</div>
-										
-										<button type="submit" 
-											class="btn btn-lg btn-success btn-block" onclick="return submitChecking()" value="Details">Submit</button>
+
+										<button type="submit" class="btn btn-lg btn-success btn-block"
+											onclick="return submitChecking()" value="Details">Submit</button>
 									</form:form>
 								</div>
 								<!-- /.col-lg-6 (nested) -->
@@ -205,8 +210,8 @@
 
 	<!-- Custom Theme JavaScript -->
 	<script src="./resources/dist/js/sb-admin-2.js"></script>
-	
-<script type="text/javascript" src="./js/htmlInjection.js"></script>
+
+	<script type="text/javascript" src="./js/htmlInjection.js"></script>
 </body>
 
 </html>

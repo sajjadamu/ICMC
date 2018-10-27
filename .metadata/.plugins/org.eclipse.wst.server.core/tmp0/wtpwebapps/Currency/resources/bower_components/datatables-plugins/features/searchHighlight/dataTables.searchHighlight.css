@@ -1,10 +1,9 @@
-[genuitec-file-id="wc1-285"],[genuitec-lp-path="/Currency/src/main/webapp/resources/bower_components/datatables-plugins/features/searchHighlight/dataTables.searchHighlight.css"],[genuitec-lp-enabled=false]{
-  /* for codelive */
+[genuitec-file-id="wc1-285"], [genuitec-lp-path="/Currency/src/main/webapp/resources/bower_components/datatables-plugins/features/searchHighlight/dataTables.searchHighlight.css"],
+	[genuitec-lp-enabled=false] {
+	/* for codelive */
+	
 }
-
-
 
 table.dataTable span.highlight {
-  background-color: #FFFF88;
+	background-color: #FFFF88;
 }
-

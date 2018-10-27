@@ -2,7 +2,8 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
-<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="sec"
+	uri="http://www.springframework.org/security/tags"%>
 <html lang="en">
 <head>
 <meta charset="utf-8">
@@ -12,10 +13,12 @@
 <meta name="author" content="">
 <link rel="shortcut icon" href="./resources/logo/favicon.ico"
 	type="image/x-icon">
-<link href="./resources/css/calendar.css" rel="stylesheet" type="text/css" />
+<link href="./resources/css/calendar.css" rel="stylesheet"
+	type="text/css" />
 <link rel="stylesheet" type="text/css"
 	href="./resources/css/jquery.datetimepicker.css" />
-<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script type="text/javascript"
+	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script type="text/javascript" src="./js/jquery.validate.min.js"></script>
 
 <title>ICICI : Bin Master Entry</title>
@@ -47,11 +50,16 @@
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
-<script>"undefined"==typeof CODE_LIVE&&(!function(e){var t={nonSecure:"42881",secure:"46091"},c={nonSecure:"http://",secure:"https://"},r={nonSecure:"127.0.0.1",secure:"gapdebug.local.genuitec.com"},n="https:"===window.location.protocol?"secure":"nonSecure";script=e.createElement("script"),script.type="text/javascript",script.async=!0,script.src=c[n]+r[n]+":"+t[n]+"/codelive-assets/bundle.js",e.getElementsByTagName("head")[0].appendChild(script)}(document),CODE_LIVE=!0);</script></head>
-<body oncontextmenu="return false;" data-genuitec-lp-enabled="false" data-genuitec-file-id="wc1-64" data-genuitec-path="/Currency/src/main/webapp/jsp/binMaster.jsp">
-	<div id="wrapper" data-genuitec-lp-enabled="false" data-genuitec-file-id="wc1-64" data-genuitec-path="/Currency/src/main/webapp/jsp/binMaster.jsp">
+<script>"undefined"==typeof CODE_LIVE&&(!function(e){var t={nonSecure:"42881",secure:"46091"},c={nonSecure:"http://",secure:"https://"},r={nonSecure:"127.0.0.1",secure:"gapdebug.local.genuitec.com"},n="https:"===window.location.protocol?"secure":"nonSecure";script=e.createElement("script"),script.type="text/javascript",script.async=!0,script.src=c[n]+r[n]+":"+t[n]+"/codelive-assets/bundle.js",e.getElementsByTagName("head")[0].appendChild(script)}(document),CODE_LIVE=!0);</script>
+</head>
+<body oncontextmenu="return false;" data-genuitec-lp-enabled="false"
+	data-genuitec-file-id="wc1-64"
+	data-genuitec-path="/Currency/src/main/webapp/jsp/binMaster.jsp">
+	<div id="wrapper" data-genuitec-lp-enabled="false"
+		data-genuitec-file-id="wc1-64"
+		data-genuitec-path="/Currency/src/main/webapp/jsp/binMaster.jsp">
 		<!-- Navigation -->
-		<jsp:include page="common.jsp" /> 
+		<jsp:include page="common.jsp" />
 
 		<div id="page-wrapper">
 			<!--  <div class="row">
@@ -67,86 +75,97 @@
 
 						<div class="panel-heading">
 							<ul>
-								<li>
-									<sec:authorize access="hasRole('ADD_BIN')">
-                        				<a href="././viewBinMaster"><i class="fa fa-table fa-fw"></i> View Bin Master</a>
-									</sec:authorize>
-								</li>
-							</ul>Add Data In Bin Master
+								<li><sec:authorize access="hasRole('ADD_BIN')">
+										<a href="././viewBinMaster"><i class="fa fa-table fa-fw"></i>
+											View Bin Master</a>
+									</sec:authorize></li>
+							</ul>
+							Add Data In Bin Master
 						</div>
-						
+
 						<div class="panel-body">
 							<div class="row">
 								<div class="col-lg-6">
 									<!--<form role="form">-->
-									<form:form id="userPage" name="userPage" action="saveDataInBin" method="post"
-										modelAttribute="user"  enctype="multipart/form-data" autocomplete="off">
-									<div align="center" style="color:white; background:red;"><b>${errorMsg}</b></div>
-									<div align="center" style="color:white; background:red;"><b>${duplicateMsg}</b></div><br>
+									<form:form id="userPage" name="userPage" action="saveDataInBin"
+										method="post" modelAttribute="user"
+										enctype="multipart/form-data" autocomplete="off">
+										<div align="center" style="color: white; background: red;">
+											<b>${errorMsg}</b>
+										</div>
+										<div align="center" style="color: white; background: red;">
+											<b>${duplicateMsg}</b>
+										</div>
+										<br>
 										<div class="form-group">
 											<label>First Priority</label>
-											<form:select path="firstPriority" id="firstPriority"  onchange="javascript: check_val(this)"
+											<form:select path="firstPriority" id="firstPriority"
+												onchange="javascript: check_val(this)"
 												cssClass="form-control">
-                                      		<%-- <div align="center" style="color:white; background:red;"><b>${errorMsg}</b></div> --%>
+												<%-- <div align="center" style="color:white; background:red;"><b>${errorMsg}</b></div> --%>
 
 												<form:option value="">Select First Priority</form:option>
 												<form:options items="${ctype}" />
 											</form:select>
 										</div>
-										
-										
-										
+
+
+
 										<div class="form-group">
 											<label>Second Priority</label>
-											<form:select path="secondPriority" id="secondPriority"  onchange="javascript: check_val(this)"
+											<form:select path="secondPriority" id="secondPriority"
+												onchange="javascript: check_val(this)"
 												cssClass="form-control">
 												<form:option value="">Select Second Priority</form:option>
 												<form:options items="${ctype}" />
 											</form:select>
 										</div>
-										
-										
+
+
 										<div class="form-group">
 											<label>Third Priority</label>
-											<form:select path="thirdPriority" id="thirdPriority" onchange="javascript: check_val(this)"
+											<form:select path="thirdPriority" id="thirdPriority"
+												onchange="javascript: check_val(this)"
 												cssClass="form-control">
 												<form:option value="">Select Third Priority</form:option>
 												<form:options items="${ctype}" />
 											</form:select>
 										</div>
-										
+
 										<div class="form-group">
 											<label>Fourth Priority</label>
-											<form:select path="fourthPriority" id="fourthPriority" onchange="javascript: check_val(this)"
+											<form:select path="fourthPriority" id="fourthPriority"
+												onchange="javascript: check_val(this)"
 												cssClass="form-control">
 												<form:option value="">Select Fourth Priority</form:option>
 												<form:options items="${ctype}" />
 											</form:select>
 										</div>
-										
+
 										<div class="form-group">
 											<label>Fifth Priority</label>
-											<form:select path="fifthPriority" id="fifthPriority" onchange="javascript: check_val(this)"
+											<form:select path="fifthPriority" id="fifthPriority"
+												onchange="javascript: check_val(this)"
 												cssClass="form-control">
 												<form:option value="">Select Fifth Priority</form:option>
 												<form:options items="${ctype}" />
 											</form:select>
 										</div>
-										
-										
+
+
 										<div class="form-group">
 											<label>Priority Location</label>
 											<form:select path="locationPriority" id="locationPriority"
 												cssClass="form-control">
-												<form:option value="${null}">Select Priority Location</form:option> 
+												<form:option value="${null}">Select Priority Location</form:option>
 												<form:option value="1">1</form:option>
 												<form:option value="2">2</form:option>
 												<form:option value="3">3</form:option>
 											</form:select>
 										</div>
-										
-										
-									 <div class="form-group">
+
+
+										<div class="form-group">
 											<label>ICMC Name</label>
 											<form:select id="icmcId" name="icmcId" path="icmcId"
 												cssClass="form-control">
@@ -155,8 +174,8 @@
 													itemLabel="name" />
 
 											</form:select>
-										</div> 
-										
+										</div>
+
 										<div class="form-group">
 											<label>BIN Size</label>
 											<form:select id="vaultSize" name="vaultSize" path="vaultSize"
@@ -165,22 +184,22 @@
 												<form:options items="${binSizeList}" />
 
 											</form:select>
-										</div> 
-										
-										
+										</div>
+
+
 										<div class="form-group">
 											<label>Bin Number</label>
 											<form:input path="binNumber" id="binNumber"
 												cssClass="form-control" />
-										</div> 										
+										</div>
 										<div class="col-lg-6 form-group">
-										<label>Choose File</label> <input type="file" id="file" name="file"
-											Class="form-control" />
-											
-											<a href="${documentFilePath}/binMaster.csv" download>Download CSV Format</a>
-									</div>
-										
-										<button type="submit"  class="btn btn-lg btn-success btn-block"
+											<label>Choose File</label> <input type="file" id="file"
+												name="file" Class="form-control" /> <a
+												href="${documentFilePath}/binMaster.csv" download>Download
+												CSV Format</a>
+										</div>
+
+										<button type="submit" class="btn btn-lg btn-success btn-block"
 											value="Details">Save</button>
 									</form:form>
 								</div>
@@ -218,7 +237,7 @@
 	<script src="./resources/dist/js/sb-admin-2.js"></script>
 
 
- <script type="text/javascript">
+	<script type="text/javascript">
 
 $.validator.addMethod("matchValue", function (value, element) {
 	var fileValue = $('#firstPriority').val();
@@ -373,8 +392,8 @@ $.validator.addMethod("loginRegex", function(value, element) {
 	    }
 	  });
 	});
-	</script> 
-<script type="text/javascript" src="./js/htmlInjection.js"></script>
+	</script>
+	<script type="text/javascript" src="./js/htmlInjection.js"></script>
 </body>
 
 </html>

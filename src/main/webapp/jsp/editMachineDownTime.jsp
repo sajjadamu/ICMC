@@ -2,7 +2,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <html lang="en">
 <head>
@@ -14,12 +14,14 @@
 <link rel="shortcut icon" href="./resources/logo/favicon.ico"
 	type="image/x-icon">
 
-<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script type="text/javascript"
+	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script type="text/javascript" src="./js/jquery.validate.min.js"></script>
 
 <title>ICICI : Machine DownTime</title>
 
-<link href="./resources/css/calendar.css" rel="stylesheet" type="text/css" />
+<link href="./resources/css/calendar.css" rel="stylesheet"
+	type="text/css" />
 <link rel="stylesheet" type="text/css"
 	href="./resources/css/jquery.datetimepicker.css" />
 <!-- Bootstrap Core CSS -->
@@ -71,63 +73,72 @@
 							<div class="row">
 								<div class="col-lg-6">
 									<!--<form role="form">-->
-									
-									<form:form id="userPage" name="userPage" action="updateMachineDownTime" method="post"
+
+									<form:form id="userPage" name="userPage"
+										action="updateMachineDownTime" method="post"
 										modelAttribute="user" autocomplete="off">
-									<div align="center" style="color:red"><b>${successMsg}</b></div>
-										
-										<form:hidden path="id"/>
+										<div align="center" style="color: red">
+											<b>${successMsg}</b>
+										</div>
+
+										<form:hidden path="id" />
 										<div class="form-group">
 											<label>Date From</label>
-												  <form:input path="machineDownDateFrom"  id="machineDownDateFrom"  name="machineDownDateFrom"
+											<form:input path="machineDownDateFrom"
+												id="machineDownDateFrom" name="machineDownDateFrom"
 												cssClass="form-control" />
-											
+
 										</div>
-										
+
 										<div class="form-group">
 											<label>Date To</label>
-												  <form:input path="machineDownDateTo"  id="machineDownDateTo"  name="machineDownDateTo"
-												cssClass="form-control" />
-											
+											<form:input path="machineDownDateTo" id="machineDownDateTo"
+												name="machineDownDateTo" cssClass="form-control" />
+
 										</div>
-										
+
 										<div class="form-group">
 											<label>Engineer Attended Call</label>
-											<form:input path="engineerAttendedCall" id="engineerAttendedCall" name="engineerAttendedCall"
+											<form:input path="engineerAttendedCall"
+												id="engineerAttendedCall" name="engineerAttendedCall"
 												cssClass="form-control" />
 										</div>
-										
+
 										<div class="form-group">
 											<label>Machine No.</label>
-											<form:input path="machineNo" readonly="true" id="machineNo" name="machineNo" maxlength="45"
-												cssClass="form-control" />
+											<form:input path="machineNo" readonly="true" id="machineNo"
+												name="machineNo" maxlength="45" cssClass="form-control" />
 										</div>
-										
+
 										<div class="form-group">
 											<label>Downtime Reason</label>
-											<form:select path="downtimeReason" id="downtimeReason" name="downtimeReason" cssClass="form-control" onchange="doAjaxForRegion()">
+											<form:select path="downtimeReason" id="downtimeReason"
+												name="downtimeReason" cssClass="form-control"
+												onchange="doAjaxForRegion()">
 												<option value="" label="Select Downtime Reason"></option>
-    											<form:options items="${reasonList}" />
+												<form:options items="${reasonList}" />
 											</form:select>
 										</div>
-										
+
 										<div class="form-group">
 											<label>Machine Type</label>
-											<form:select path="machineType" id="machineType" name="machineType" cssClass="form-control" onchange="doAjaxForRegion()">
+											<form:select path="machineType" id="machineType"
+												name="machineType" cssClass="form-control"
+												onchange="doAjaxForRegion()">
 												<option value="" label="Select Machine Type"></option>
-    											<option value="BPS" label="BPS"></option>
-    											<option value="Glory" label="Glory"></option>
-    											<option value="Numeron" label="Numeron"></option>
+												<option value="BPS" label="BPS"></option>
+												<option value="Glory" label="Glory"></option>
+												<option value="Numeron" label="Numeron"></option>
 											</form:select>
 										</div>
-										
+
 										<div class="form-group">
 											<label>Remarks</label>
-											<form:input path="remarks" id="remarks" name="remarks" 
+											<form:input path="remarks" id="remarks" name="remarks"
 												cssClass="form-control" />
 										</div>
-										
-										<button type="submit"  class="btn btn-lg btn-success btn-block"
+
+										<button type="submit" class="btn btn-lg btn-success btn-block"
 											value="Details">Update</button>
 									</form:form>
 								</div>
@@ -164,7 +175,7 @@
 	<!-- Custom Theme JavaScript -->
 	<script src="./resources/dist/js/sb-admin-2.js"></script>
 
-<script type="text/javascript">
+	<script type="text/javascript">
 
 $.validator.addMethod("loginRegex", function(value, element) {
     return this.optional(element) || /^[a-zA-Z\s\\-]+$/i.test(value);
@@ -217,8 +228,8 @@ $(function() {
 	});
 });
 	</script>
-	
-	
+
+
 	<script src="./resources/js/jquery.datetimepicker.js"></script>
 	<script>
 		
@@ -238,7 +249,7 @@ $(function() {
 		'17:00', '18:00', '19:00', '20:00', '21:00',
 		'22:00','23:00','00:00' ], */
 	</script>
-<script type="text/javascript" src="./js/htmlInjection.js"></script>
+	<script type="text/javascript" src="./js/htmlInjection.js"></script>
 </body>
 
 </html>

@@ -1,12 +1,16 @@
 <!DOCTYPE html>
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+	pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <html lang="en">
 
 <head>
-<link href="./resources/css/calendar.css" rel="stylesheet" type="text/css" />
-<link rel="stylesheet" type="text/css" href="./resources/css/jquery.datetimepicker.css" />
-<link rel="shortcut icon" href="./resources/logo/favicon.ico" type="image/x-icon">
+<link href="./resources/css/calendar.css" rel="stylesheet"
+	type="text/css" />
+<link rel="stylesheet" type="text/css"
+	href="./resources/css/jquery.datetimepicker.css" />
+<link rel="shortcut icon" href="./resources/logo/favicon.ico"
+	type="image/x-icon">
 <script type="text/javascript" src="./js/jquery-1.12.0.min.js"></script>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -18,17 +22,24 @@
 
 <script src="./resources/Currency/js/jquery.js"></script>
 <!-- Bootstrap Core CSS -->
-<link href="./resources/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+<link
+	href="./resources/bower_components/bootstrap/dist/css/bootstrap.min.css"
+	rel="stylesheet">
 
 <!-- MetisMenu CSS -->
-<link href="./resources/bower_components/metisMenu/dist/metisMenu.min.css" rel="stylesheet">
+<link
+	href="./resources/bower_components/metisMenu/dist/metisMenu.min.css"
+	rel="stylesheet">
 
 <!-- Custom CSS -->
 <link href="./resources/dist/css/sb-admin-2.css" rel="stylesheet">
 
 <!-- Custom Fonts -->
-<link href="./resources/bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-<link rel="stylesheet" type="text/css" href="./resources/dist/css/style.css">
+<link
+	href="./resources/bower_components/font-awesome/css/font-awesome.min.css"
+	rel="stylesheet" type="text/css">
+<link rel="stylesheet" type="text/css"
+	href="./resources/dist/css/style.css">
 <script>
     $(function()
 {
@@ -199,7 +210,7 @@ function doAjaxForTotal() {
 } 
   
 	
-</script> 
+</script>
 
 <script type="text/javascript">
 function doAjaxPostInsert(str) {
@@ -358,60 +369,74 @@ function refresh() {
 			<div class="row">
 				<div class="col-lg-12">
 					<div class="panel panel-default">
-						<div class="panel-heading"><ul>
-								<li><a href="././viewOtherBankPayment"><i class="fa fa-table fa-fw"></i>View Other Bank Payment</a></li>
-							</ul>Other Bank Payment</div>
+						<div class="panel-heading">
+							<ul>
+								<li><a href="././viewOtherBankPayment"><i
+										class="fa fa-table fa-fw"></i>View Other Bank Payment</a></li>
+							</ul>
+							Other Bank Payment
+						</div>
 						<div class="panel-body">
 							<div class="row">
 								<div class="col-lg-8">
 									<!--<form role="form">-->
-									<form:form id="" action="" method="post" modelAttribute="user" autocomplete="off">
+									<form:form id="" action="" method="post" modelAttribute="user"
+										autocomplete="off">
 										<div class="form-group"">
-										<label>Bank Name</label>
-										<form:input path="bankName" id="bankName" name="bankName"
-											cssClass="form-control" />
-										<label id="err1" style="display: none;color: red">Please Enter Bank Name</label>	
-									</div>
+											<label>Bank Name</label>
+											<form:input path="bankName" id="bankName" name="bankName"
+												cssClass="form-control" />
+											<label id="err1" style="display: none; color: red">Please
+												Enter Bank Name</label>
+										</div>
 										<div class="col-lg-6 form-group">
 											<label>SOL ID</label>
-											<form:input path="solId" maxlength="4" id="solId" cssClass="form-control" onkeyup="doAjaxPostForBranch()"/>
-											<label id="err2" style="display: none;color: red">Please Enter Sol Id</label>
-											<label id="err12" style="display: none;color: red">Please Enter Four Digit Sol Id</label>
+											<form:input path="solId" maxlength="4" id="solId"
+												cssClass="form-control" onkeyup="doAjaxPostForBranch()" />
+											<label id="err2" style="display: none; color: red">Please
+												Enter Sol Id</label> <label id="err12"
+												style="display: none; color: red">Please Enter Four
+												Digit Sol Id</label>
 										</div>
 										<div class="col-lg-6 form-group">
 											<label>Branch Name</label>
-											<form:input type="text" readonly="true"  path="branch" id="branch" name="branch" cssClass="form-control"/>
+											<form:input type="text" readonly="true" path="branch"
+												id="branch" name="branch" cssClass="form-control" />
 											<!-- <label id="err3" style="display: none;color: red">Please Enter Branch Name</label>  -->
 										</div>
 										<div class="form-group">
-										<label>RTGS UTR No.</label>
-										<form:input path="rtgsUTRNo" id="rtgsUTRNo" name="rtgsUTRNo"
-											cssClass="form-control" />
-											<label id="err4" style="display: none;color: red">Please Enter RTGS UTR No.</label>
-									</div>
+											<label>RTGS UTR No.</label>
+											<form:input path="rtgsUTRNo" id="rtgsUTRNo" name="rtgsUTRNo"
+												cssClass="form-control" />
+											<label id="err4" style="display: none; color: red">Please
+												Enter RTGS UTR No.</label>
+										</div>
 										<div class="form-group">
-                                        <label>Number of Entries</label>
-											<input type="text" id="member" name="member" value="" class="form-control"><br />
+											<label>Number of Entries</label> <input type="text"
+												id="member" name="member" value="" class="form-control"><br />
 											<div id="container">
 												<table id="table1">
 													<tr>
-														
+
 													</tr>
 												</table>
 											</div>
-										</div> 
-											<label id="err7" style="display: none; color: red">Please Enter Valid Denomination</label>
-											<label id="err8" style="display: none; color: red">Please Enter Valid Bundle</label>
-											<!-- <label id="err8" style="display: none; color: red">Please Enter Category</label> -->
+										</div>
+										<label id="err7" style="display: none; color: red">Please
+											Enter Valid Denomination</label>
+										<label id="err8" style="display: none; color: red">Please
+											Enter Valid Bundle</label>
+										<!-- <label id="err8" style="display: none; color: red">Please Enter Category</label> -->
 										<div class="col-lg-12">
-										<button type="button"
-											class="btn btn-primary" id="btnsubmit" onclick="doAjaxPostInsert('+i+');">Save</button>
+											<button type="button" class="btn btn-primary" id="btnsubmit"
+												onclick="doAjaxPostInsert('+i+');">Save</button>
 											<!-- <input type="button" id="btnSubmit" value="Submit" onclick="doAjaxPostInsert('+i+'); return false"> -->
 										</div>
-										
+
 										<div align="right">
-											<button type="submit" class="btn btn-default" value="Details" style="width: 99px;" onclick="refresh()">Refresh</button>
-										
+											<button type="submit" class="btn btn-default" value="Details"
+												style="width: 99px;" onclick="refresh()">Refresh</button>
+
 										</div>
 
 									</form:form>
@@ -440,16 +465,18 @@ function refresh() {
 	<script src="./resources/bower_components/jquery/dist/jquery.min.js"></script>
 
 	<!-- Bootstrap Core JavaScript -->
-	<script src="./resources/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+	<script
+		src="./resources/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 
 	<!-- Metis Menu Plugin JavaScript -->
-	<script src="./resources/bower_components/metisMenu/dist/metisMenu.min.js"></script>
+	<script
+		src="./resources/bower_components/metisMenu/dist/metisMenu.min.js"></script>
 
 	<!-- Custom Theme JavaScript -->
 	<script src="./resources/dist/js/sb-admin-2.js"></script>
 
 	<script src="./resources/js/jQuery.print.js"></script>
- <script src="./resources/js/jquery.datetimepicker.js"></script>
+	<script src="./resources/js/jquery.datetimepicker.js"></script>
 	<script>
 		$('#orderDate').datetimepicker({
 			format : 'Y-m-d',
@@ -460,8 +487,8 @@ function refresh() {
 
 		});
 	</script>
-	
-<script type="text/javascript" src="./js/htmlInjection.js"></script>
+
+	<script type="text/javascript" src="./js/htmlInjection.js"></script>
 </body>
 
 </html>

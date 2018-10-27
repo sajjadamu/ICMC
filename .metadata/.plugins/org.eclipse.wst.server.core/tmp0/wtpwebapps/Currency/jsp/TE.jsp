@@ -1,5 +1,7 @@
 
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" data-genuitec-lp-enabled="false" data-genuitec-file-id="wc1-39" data-genuitec-path="/Currency/src/main/webapp/jsp/TE.jsp">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"
+	data-genuitec-lp-enabled="false" data-genuitec-file-id="wc1-39"
+	data-genuitec-path="/Currency/src/main/webapp/jsp/TE.jsp">
 <link type="text/css" rel="stylesheet" href="resources/sheet.css">
 <style type="text/css">
 .ritz .waffle a {

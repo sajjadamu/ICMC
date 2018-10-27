@@ -13,7 +13,7 @@
 <meta name="author" content="">
 <link rel="shortcut icon" href="./resources/logo/favicon.ico"
 	type="image/x-icon">
-	<link rel="stylesheet" type="text/css"
+<link rel="stylesheet" type="text/css"
 	href="./resources/css/jquery.datetimepicker.css" />
 <title>ICICI : Training Report</title>
 
@@ -126,80 +126,82 @@ $(document).ready(function() {
 								<div>
 									<input type="button" class="btn btn-default qr-button"
 										onclick="printDiv('printableArea')" value="Print" />
-										<button id="btnExport" class="btn btn-default qr-button">Export to xls</button>
+									<button id="btnExport" class="btn btn-default qr-button">Export
+										to xls</button>
 								</div>
 								<!-- 							<div><input type="button" id="btnExport" value=" Export Table data into Excel " />
  -->
- 
- <div class="region-con">
-								<form:form id="userPage" name="userPage"
-									action="trainingRegisterReport" method="post"
-									modelAttribute="reportDate" autocomplete="off">
-									<div class="region-con-sec">
-										<ul class="region-drop">
-											<li>
-												<table>
-													<tr>
-														<td><B>Select From Date</B></td>
-														<td><form:input type="text" path="fromDate"
-																id="fromDate" name="fromDate" cssClass="form-control" />
-														</td>
-														<td><B>Select To Date</B></td>
-														<td><form:input type="text" path="toDate"
-																id="toDate" name="toDate" cssClass="form-control" />
-														</td>
-														<td><button type="submit" class="btn btn-default"
-																value="Details" style="width: 99px;">Search</button></td>
-													</tr>
-												</table>
-											</li>
-										</ul>
-									</div>
-								</form:form>
-							</div>
- 
+
+								<div class="region-con">
+									<form:form id="userPage" name="userPage"
+										action="trainingRegisterReport" method="post"
+										modelAttribute="reportDate" autocomplete="off">
+										<div class="region-con-sec">
+											<ul class="region-drop">
+												<li>
+													<table>
+														<tr>
+															<td><B>Select From Date</B></td>
+															<td><form:input type="text" path="fromDate"
+																	id="fromDate" name="fromDate" cssClass="form-control" />
+															</td>
+															<td><B>Select To Date</B></td>
+															<td><form:input type="text" path="toDate"
+																	id="toDate" name="toDate" cssClass="form-control" /></td>
+															<td><button type="submit" class="btn btn-default"
+																	value="Details" style="width: 99px;">Search</button></td>
+														</tr>
+													</table>
+												</li>
+											</ul>
+										</div>
+									</form:form>
+								</div>
+
 							</div>
 							<form id="showAll">
 								<!-- <table class="table table-striped table-bordered table-hover" id="dataTables-example"> -->
 								<div id="printableArea">
-								 <div id="table_wrapper">
-									<table class="table table-striped table-bordered table-hover" id="tableValue">
-                                    <thead>
-                                       <tr>
-											
-											<th>Location</th>
-											<th>Subject</th>
-											<th>Training Date</th>
-											<th>Employee Name</th>
-											<th>Employee Id</th>
-                                       <th>Trainer/Speaker</th>
-                                       <th>Start Time</th>
-							           <th>Duration</th>
-							        <th>Signature</th>
-							       
-										</tr>
-                                    </thead>
-                                    <tbody>
-									
-									 <c:forEach var="row" items="${records}">
-									 <tr>
-   
-  
-   <td>${row.location}</td>
-   <td>${row.subject}</td>
-   <td> ${(row.trainingDate).split("\\s+")[0]}</td>
-   <td>${row.employeeName}</td>
-   <th>${row.employeeId}</th>
-   <td>${row.nameOfTrainer}</td>
-   <th>${(row.trainingDate).split("\\s+")[1]}</th>
-   <td>${row.duration}</td>
-   <td></td>
+									<div id="table_wrapper">
+										<table class="table table-striped table-bordered table-hover"
+											id="tableValue">
+											<thead>
+												<tr>
 
-   </tr>
-   </c:forEach>
-   
-                                   </tbody>
-                                </table></div>
+													<th>Location</th>
+													<th>Subject</th>
+													<th>Training Date</th>
+													<th>Employee Name</th>
+													<th>Employee Id</th>
+													<th>Trainer/Speaker</th>
+													<th>Start Time</th>
+													<th>Duration</th>
+													<th>Signature</th>
+
+												</tr>
+											</thead>
+											<tbody>
+
+												<c:forEach var="row" items="${records}">
+													<tr>
+
+
+														<td>${row.location}</td>
+														<td>${row.subject}</td>
+														<td>${(row.trainingDate).split("\\s+")[0]}</td>
+														<td>${row.employeeName}</td>
+														<th>${row.employeeId}</th>
+														<td>${row.nameOfTrainer}</td>
+														<th>${(row.trainingDate).split("\\s+")[1]}</th>
+														<td>${row.duration}</td>
+														<td></td>
+
+													</tr>
+												</c:forEach>
+
+											</tbody>
+										</table>
+									</div>
 								</div>
 							</form>
 							<!-- </div> DataTable_wrapper bundle div close -->

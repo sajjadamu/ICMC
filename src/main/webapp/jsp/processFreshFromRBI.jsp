@@ -225,8 +225,13 @@ function SavePrint(str,source) {
 										<td id="pendingBundle<%=tuple.get(0, Integer.class)%>"><%=tuple.get(2, BigDecimal.class)%></td>
 										<td><input type="text"
 											id="requestBundle<%=tuple.get(0, Integer.class)%>"></td>
-											<td><input id="binCategoryType<%=tuple.get(0, Integer.class)%>" type="radio" checked="true" name="binCategoryType" value="BIN">BIN</td>
-											<td><input id="binCategoryType<%=tuple.get(0, Integer.class)%>" type="radio" name="binCategoryType" value="BOX">BOX</td>
+										<td><input
+											id="binCategoryType<%=tuple.get(0, Integer.class)%>"
+											type="radio" checked="true" name="binCategoryType"
+											value="BIN">BIN</td>
+										<td><input
+											id="binCategoryType<%=tuple.get(0, Integer.class)%>"
+											type="radio" name="binCategoryType" value="BOX">BOX</td>
 										<td><input type="button" value="Generate QR"
 											onclick="SavePrint('<%=tuple.get(0, Integer.class)%>','<%=CashSource.RBI%>');this.disabled=true"></td>
 									</tr>
@@ -236,7 +241,7 @@ function SavePrint(str,source) {
 								</tbody>
 							</table>
 						</div>
-<div id="printSection" style="display: none;"></div>
+						<div id="printSection" style="display: none;"></div>
 
 
 
@@ -273,7 +278,7 @@ function SavePrint(str,source) {
 
 	<!-- Custom Theme JavaScript -->
 	<script src="./resources/dist/js/sb-admin-2.js"></script>
-	
+
 	<script src="./resources/js/jQuery.print.js"></script>
 
 	<!-- Page-Level Demo Scripts - Tables - Use for reference -->
@@ -286,7 +291,7 @@ function SavePrint(str,source) {
 			});
 		});
 	</script>
-<script type="text/javascript" src="./js/htmlInjection.js"></script>
+	<script type="text/javascript" src="./js/htmlInjection.js"></script>
 </body>
 
 </html>

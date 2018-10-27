@@ -13,7 +13,8 @@
 <link rel="shortcut icon" href="./resources/logo/favicon.ico"
 	type="image/x-icon">
 
-<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script type="text/javascript"
+	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script type="text/javascript" src="./js/jquery.validate.min.js"></script>
 
 <title>ICICI : Remove Report</title>
@@ -52,7 +53,7 @@
 	<div id="wrapper">
 
 		<!-- Navigation -->
-		<jsp:include page="common.jsp" /> 
+		<jsp:include page="common.jsp" />
 
 		<div id="page-wrapper">
 			<!--  <div class="row">
@@ -70,39 +71,40 @@
 							<div class="row">
 								<div class="col-lg-6">
 									<!--<form role="form">-->
-									<form:form id="userPage" name="userPage" action="deleteReport" method="post"
-										modelAttribute="user" autocomplete="off">
-									
+									<form:form id="userPage" name="userPage" action="deleteReport"
+										method="post" modelAttribute="user" autocomplete="off">
+
 										<form:hidden path="id" />
 										<form:hidden path="insertBy" />
 										<form:hidden path="updateBy" />
 										<form:hidden path="insertTime" />
 										<form:hidden path="updateTime" />
-										
+
 										<div class="form-group">
 											<label>New Report Type</label>
-											<form:input path="newReportType" id="newReportType" readonly="true"
-												cssClass="form-control"/>
+											<form:input path="newReportType" id="newReportType"
+												readonly="true" cssClass="form-control" />
 										</div>
-										
+
 										<div class="form-group">
 											<label>Report Content</label>
 											<form:input path="reportType" id="reportType" readonly="true"
-												cssClass="form-control"/>
+												cssClass="form-control" />
 										</div>
-										
+
 										<div class="form-group">
 											<label>Reson for Deletion</label>
 											<form:input path="regionForDeletion" id="regionForDeletion"
 												maxlength="45" cssClass="form-control" />
 										</div>
-										
+
 										<div class="form-group">
 											<label>Approval for Deletion</label>
-											<form:input path="approvalForDeletion" id="approvalForDeletion"
-												maxlength="45" cssClass="form-control" />
+											<form:input path="approvalForDeletion"
+												id="approvalForDeletion" maxlength="45"
+												cssClass="form-control" />
 										</div>
-										
+
 										<button type="submit" class="btn btn-lg btn-success btn-block"
 											value="Details">Delete</button>
 									</form:form>
@@ -139,7 +141,7 @@
 
 	<!-- Custom Theme JavaScript -->
 	<script src="./resources/dist/js/sb-admin-2.js"></script>
-	
+
 	<script type="text/javascript">
 	
 	$.validator.addMethod("loginRegex", function(value, element) {
@@ -180,7 +182,7 @@
 	  });
 	});
 	</script>
-<script type="text/javascript" src="./js/htmlInjection.js"></script>
+	<script type="text/javascript" src="./js/htmlInjection.js"></script>
 </body>
 
 </html>

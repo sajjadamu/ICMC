@@ -1,151 +1,186 @@
 <!DOCTYPE html>
 <html lang="en">
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+	pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jstl/core_rt"%>
-<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="sec"
+	uri="http://www.springframework.org/security/tags"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
-	<link rel="shortcut icon" href="./resources/logo/favicon.ico" type="image/x-icon">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="">
+<meta name="author" content="">
+<link rel="shortcut icon" href="./resources/logo/favicon.ico"
+	type="image/x-icon">
 <title>ICICI : View Diversion</title>
 
-    <!-- Bootstrap Core CSS -->
-    <link href="./resources/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+<!-- Bootstrap Core CSS -->
+<link
+	href="./resources/bower_components/bootstrap/dist/css/bootstrap.min.css"
+	rel="stylesheet">
 
-    <!-- MetisMenu CSS -->
-    <link href="./resources/bower_components/metisMenu/dist/metisMenu.min.css" rel="stylesheet">
+<!-- MetisMenu CSS -->
+<link
+	href="./resources/bower_components/metisMenu/dist/metisMenu.min.css"
+	rel="stylesheet">
 
-    <!-- DataTables CSS -->
-    <link href="./resources/bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.css" rel="stylesheet">
+<!-- DataTables CSS -->
+<link
+	href="./resources/bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.css"
+	rel="stylesheet">
 
-    <!-- DataTables Responsive CSS -->
-    <link href="./resources/bower_components/datatables-responsive/css/responsive.dataTables.scss" rel="stylesheet">
+<!-- DataTables Responsive CSS -->
+<link
+	href="./resources/bower_components/datatables-responsive/css/responsive.dataTables.scss"
+	rel="stylesheet">
 
-    <!-- Custom CSS -->
-    <link href="./resources/dist/css/sb-admin-2.css" rel="stylesheet">
+<!-- Custom CSS -->
+<link href="./resources/dist/css/sb-admin-2.css" rel="stylesheet">
 
-    <!-- Custom Fonts -->
-    <link href="./resources/bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-    <link rel="./resources/stylesheet" type="text/css" href="dist/css/style.css">
-    
+<!-- Custom Fonts -->
+<link
+	href="./resources/bower_components/font-awesome/css/font-awesome.min.css"
+	rel="stylesheet" type="text/css">
+<link rel="./resources/stylesheet" type="text/css"
+	href="dist/css/style.css">
+
 <!-- DataTable -->
-	<script type="text/javascript"  src="./resources/dataTable/jquery.js"></script>
-	<script type="text/javascript" src="./resources/js/jquery.dataTables.min.js"></script>
-	<script type="text/javascript" src="./resources/js/dataTables.tableTools.min.js"></script>
-	<script type="text/javascript" src="./resources/js/sum().js"></script>
-	<link rel="stylesheet" type="text/css" href="./resources/css/jquery.dataTables.min.css">
-	<link rel="stylesheet" type="text/css" href='./resources/css/dataTables.tableTools.min.css'>
-	<link rel="stylesheet" type="text/css" href='./resources/css/dataTables.tableTools.css'>
+<script type="text/javascript" src="./resources/dataTable/jquery.js"></script>
+<script type="text/javascript"
+	src="./resources/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript"
+	src="./resources/js/dataTables.tableTools.min.js"></script>
+<script type="text/javascript" src="./resources/js/sum().js"></script>
+<link rel="stylesheet" type="text/css"
+	href="./resources/css/jquery.dataTables.min.css">
+<link rel="stylesheet" type="text/css"
+	href='./resources/css/dataTables.tableTools.min.css'>
+<link rel="stylesheet" type="text/css"
+	href='./resources/css/dataTables.tableTools.css'>
 <!-- DataTable -->
-	
-<script>"undefined"==typeof CODE_LIVE&&(!function(e){var t={nonSecure:"42881",secure:"46091"},c={nonSecure:"http://",secure:"https://"},r={nonSecure:"127.0.0.1",secure:"gapdebug.local.genuitec.com"},n="https:"===window.location.protocol?"secure":"nonSecure";script=e.createElement("script"),script.type="text/javascript",script.async=!0,script.src=c[n]+r[n]+":"+t[n]+"/codelive-assets/bundle.js",e.getElementsByTagName("head")[0].appendChild(script)}(document),CODE_LIVE=!0);</script></head>
 
-<body oncontextmenu="return false;" data-genuitec-lp-enabled="false" data-genuitec-file-id="wc1-222" data-genuitec-path="/Currency/src/main/webapp/jsp/viewDirv.jsp">
-    <div id="wrapper" data-genuitec-lp-enabled="false" data-genuitec-file-id="wc1-222" data-genuitec-path="/Currency/src/main/webapp/jsp/viewDirv.jsp">
-        <!-- Navigation -->
-        <jsp:include page="common.jsp" />
+<script>"undefined"==typeof CODE_LIVE&&(!function(e){var t={nonSecure:"42881",secure:"46091"},c={nonSecure:"http://",secure:"https://"},r={nonSecure:"127.0.0.1",secure:"gapdebug.local.genuitec.com"},n="https:"===window.location.protocol?"secure":"nonSecure";script=e.createElement("script"),script.type="text/javascript",script.async=!0,script.src=c[n]+r[n]+":"+t[n]+"/codelive-assets/bundle.js",e.getElementsByTagName("head")[0].appendChild(script)}(document),CODE_LIVE=!0);</script>
+</head>
 
-        <div id="page-wrapper">
-            <!-- /.row -->
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="panel panel-default">
-                        
-                        <div class="panel-heading">
-                        	<ul>
-                          		<li>
-                          			<sec:authorize access="hasRole('ADD_DIVERSION_PAYMENT')">
-                          				<a href="././Dirv"><i class="fa fa-table fa-fw"></i> Add Diversion IRV Data</a>
-                          			</sec:authorize>
-                          		</li>
-							</ul>Diversion IRV Data
-                        </div>
-                        
-                        <!-- /.panel-heading -->
-                        <div class="panel-body">
-                            <div class="dataTable_wrapper">
-                            <form id="showAll">
-                                <!-- <table class="table table-striped table-bordered table-hover" id="dataTables-example"> -->
-                                
-                                <div align="center" style="color:white; background:red;"><b>${errorMsg}</b></div><br>
-                                
-                                <table class="table table-striped table-bordered table-hover" id="tableValue">
-                                    <thead>
-                                       <tr>
-											<th>Order Date</th>
-											<th>Bank Name</th>
-											<th>Location</th>
-											<th>Denomination</th>
-											<th>Bundle</th>
-											<th>Total</th>
-											<th>Bin Number</th>
-											<th>Status</th>
-											<th>Edit</th>
-											<th>Re-Print QR</th>
-										</tr>
-                                    </thead>
-                                    <tfoot>
-							            <tr>
-								            <th style="text-align:right">Total:</th>
-							            </tr>
-							        </tfoot>
-                                    <tbody>
-                                      <c:forEach var="row" items="${records}">
-										<tr>
-											<td><fmt:formatDate pattern="dd-MMM-yy"  value="${row.orderDate}" /></td>
-											<td>${row.bankName}</td>
-											<td>${row.location}</td>
-											<td>${row.denomination}</td>
-											<td>${row.bundle}</td>
-											<td>${row.total}</td>
-											<td>${row.binNumber}</td>
-											<td>${row.status}</td>
-											<td><sec:authorize access="hasRole('UPDATE_DIVERSION_RECEIPT')">
-												<a href="editDirv?id=${row.id}">Edit</a></sec:authorize>
-											</td>
-											<td><a href="rePrintDirvQR?id=${row.id}">Re-print QR</a></td>
-										</tr>
-									  </c:forEach>
-                                    </tbody>
-                                </table>
-                                </form>
-                            </div>
-                            <!-- /.table-responsive -->
-                            
-                        </div>
-                        <!-- /.panel-body -->
-                    </div>
-                    <!-- /.panel -->
-                </div>
-                <!-- /.col-lg-12 -->
-            </div>
-           
-        </div>
-        <!-- /#page-wrapper -->
+<body oncontextmenu="return false;" data-genuitec-lp-enabled="false"
+	data-genuitec-file-id="wc1-222"
+	data-genuitec-path="/Currency/src/main/webapp/jsp/viewDirv.jsp">
+	<div id="wrapper" data-genuitec-lp-enabled="false"
+		data-genuitec-file-id="wc1-222"
+		data-genuitec-path="/Currency/src/main/webapp/jsp/viewDirv.jsp">
+		<!-- Navigation -->
+		<jsp:include page="common.jsp" />
 
-    </div>
-    <!-- /#wrapper -->
+		<div id="page-wrapper">
+			<!-- /.row -->
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="panel panel-default">
 
-    <!-- Bootstrap Core JavaScript -->
-    <script src="./resources/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+						<div class="panel-heading">
+							<ul>
+								<li><sec:authorize
+										access="hasRole('ADD_DIVERSION_PAYMENT')">
+										<a href="././Dirv"><i class="fa fa-table fa-fw"></i> Add
+											Diversion IRV Data</a>
+									</sec:authorize></li>
+							</ul>
+							Diversion IRV Data
+						</div>
 
-    <!-- Metis Menu Plugin JavaScript -->
-    <script src="./resources/bower_components/metisMenu/dist/metisMenu.min.js"></script>
+						<!-- /.panel-heading -->
+						<div class="panel-body">
+							<div class="dataTable_wrapper">
+								<form id="showAll">
+									<!-- <table class="table table-striped table-bordered table-hover" id="dataTables-example"> -->
 
-    <!-- DataTables JavaScript -->
-    <script src="./resources/bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.min.js"></script>
+									<div align="center" style="color: white; background: red;">
+										<b>${errorMsg}</b>
+									</div>
+									<br>
 
-    <!-- Custom Theme JavaScript -->
-    <script src="./resources/dist/js/sb-admin-2.js"></script>
+									<table class="table table-striped table-bordered table-hover"
+										id="tableValue">
+										<thead>
+											<tr>
+												<th>Order Date</th>
+												<th>Bank Name</th>
+												<th>Location</th>
+												<th>Denomination</th>
+												<th>Bundle</th>
+												<th>Total</th>
+												<th>Bin Number</th>
+												<th>Status</th>
+												<th>Edit</th>
+												<th>Re-Print QR</th>
+											</tr>
+										</thead>
+										<tfoot>
+											<tr>
+												<th style="text-align: right">Total:</th>
+											</tr>
+										</tfoot>
+										<tbody>
+											<c:forEach var="row" items="${records}">
+												<tr>
+													<td><fmt:formatDate pattern="dd-MMM-yy"
+															value="${row.orderDate}" /></td>
+													<td>${row.bankName}</td>
+													<td>${row.location}</td>
+													<td>${row.denomination}</td>
+													<td>${row.bundle}</td>
+													<td>${row.total}</td>
+													<td>${row.binNumber}</td>
+													<td>${row.status}</td>
+													<td><sec:authorize
+															access="hasRole('UPDATE_DIVERSION_RECEIPT')">
+															<a href="editDirv?id=${row.id}">Edit</a>
+														</sec:authorize></td>
+													<td><a href="rePrintDirvQR?id=${row.id}">Re-print
+															QR</a></td>
+												</tr>
+											</c:forEach>
+										</tbody>
+									</table>
+								</form>
+							</div>
+							<!-- /.table-responsive -->
 
-    <!-- Page-Level Demo Scripts - Tables - Use for reference -->
-    
-    <script>
+						</div>
+						<!-- /.panel-body -->
+					</div>
+					<!-- /.panel -->
+				</div>
+				<!-- /.col-lg-12 -->
+			</div>
+
+		</div>
+		<!-- /#page-wrapper -->
+
+	</div>
+	<!-- /#wrapper -->
+
+	<!-- Bootstrap Core JavaScript -->
+	<script
+		src="./resources/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+
+	<!-- Metis Menu Plugin JavaScript -->
+	<script
+		src="./resources/bower_components/metisMenu/dist/metisMenu.min.js"></script>
+
+	<!-- DataTables JavaScript -->
+	<script
+		src="./resources/bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.min.js"></script>
+
+	<!-- Custom Theme JavaScript -->
+	<script src="./resources/dist/js/sb-admin-2.js"></script>
+
+	<!-- Page-Level Demo Scripts - Tables - Use for reference -->
+
+	<script>
 	 $(document).ready(function () {
 	    	$('#tableValue').dataTable({
     		 "pagingType": "full_numbers",
@@ -159,7 +194,7 @@
 	    	});
 	    });
 	</script>
-<script type="text/javascript" src="./js/htmlInjection.js"></script>
+	<script type="text/javascript" src="./js/htmlInjection.js"></script>
 </body>
 
 </html>

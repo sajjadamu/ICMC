@@ -43,8 +43,8 @@
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
-    
-    
+
+
 <script type="text/javascript">    
 function doAjaxForBin() {  
 	addHeader();  
@@ -101,20 +101,20 @@ function doAjaxForBin() {
 									<!--<form role="form">-->
 									<%-- <form:form id="userPage" action="saveUser" method="post"
 										modelAttribute="user"> --%>
-										 <form id="showAll"> 
+									<form id="showAll">
 
 										<div class="form-group">
-											<label>Denomination</label>
-											<input type="text" name="denomination" id="denomination" onkeyup="doAjaxForBin()"/>
+											<label>Denomination</label> <input type="text"
+												name="denomination" id="denomination"
+												onkeyup="doAjaxForBin()" />
 										</div>
-										
-										<div class="form-group" id="bin">
-										</div>
-										
+
+										<div class="form-group" id="bin"></div>
+
 										<button type="submit" class="btn btn-lg btn-success btn-block"
 											value="Details">Search</button>
-									<%-- </form:form> --%>
-									 </form> 
+										<%-- </form:form> --%>
+									</form>
 								</div>
 								<!-- /.col-lg-6 (nested) -->
 								<div class="col-lg-6"></div>
@@ -148,7 +148,7 @@ function doAjaxForBin() {
 
 	<!-- Custom Theme JavaScript -->
 	<script src="./resources/dist/js/sb-admin-2.js"></script>
-<script type="text/javascript" src="./js/htmlInjection.js"></script>
+	<script type="text/javascript" src="./js/htmlInjection.js"></script>
 </body>
 
 </html>

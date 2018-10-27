@@ -191,63 +191,71 @@
 											</thead>
 											<tbody class="table table-striped table-bordered table-hover">
 												<c:forEach var="row" items="${records}">
-												<fmt:parseNumber var="parsedNumber" integerOnly="true" type="number" value="${row.totalValueOfCoinsRs1}" />
+													<fmt:parseNumber var="parsedNumber" integerOnly="true"
+														type="number" value="${row.totalValueOfCoinsRs1}" />
 													<c:if test="${parsedNumber ne 0}">
-													<tr>
-														<td><fmt:formatDate type="both"
-																value="${row.insertTime.time}" /></td>
-														<td>${row.branch}</td>
-														<td>${row.solID}</td>
-														<td>1</td>
-														<td>${row.totalValueOfCoinsRs1*2500}</td>
-														<td>${row.srNo}</td>
-													</tr>
+														<tr>
+															<td><fmt:formatDate type="both"
+																	value="${row.insertTime.time}" /></td>
+															<td>${row.branch}</td>
+															<td>${row.solID}</td>
+															<td>1</td>
+															<td>${row.totalValueOfCoinsRs1*2500}</td>
+															<td>${row.srNo}</td>
+														</tr>
 													</c:if>
 												</c:forEach>
 
 												<c:forEach var="row" items="${records}">
-												<fmt:parseNumber var="parsedNumber" integerOnly="true" type="number" value="${row.totalValueOfCoinsRs2}" />
+													<fmt:parseNumber var="parsedNumber" integerOnly="true"
+														type="number" value="${row.totalValueOfCoinsRs2}" />
 													<c:if test="${parsedNumber ne 0}">
-													<tr>
-														<td><fmt:formatDate type="both"
-																value="${row.insertTime.time}" /></td>
-														<td>${row.branch}</td>
-														<td>${row.solID}</td>
-														<td>2</td>
-														<td>${row.totalValueOfCoinsRs2*2500}</td>
-														<td>${row.srNo}</td>
-													</tr></c:if>
+														<tr>
+															<td><fmt:formatDate type="both"
+																	value="${row.insertTime.time}" /></td>
+															<td>${row.branch}</td>
+															<td>${row.solID}</td>
+															<td>2</td>
+															<td>${row.totalValueOfCoinsRs2*2500}</td>
+															<td>${row.srNo}</td>
+														</tr>
+													</c:if>
 												</c:forEach>
 
 
 												<c:forEach var="row" items="${records}">
-												<fmt:parseNumber var="parsedNumber" integerOnly="true" type="number" value="${row.totalValueOfCoinsRs5}" />
+													<fmt:parseNumber var="parsedNumber" integerOnly="true"
+														type="number" value="${row.totalValueOfCoinsRs5}" />
 													<c:if test="${parsedNumber ne 0}">
-													<tr>
-														<td><fmt:formatDate type="both"
-																value="${row.insertTime.time}" /></td>
-														<td>${row.branch}</td>
-														<td>${row.solID}</td>
-														<td>5</td>
-														<td>${row.totalValueOfCoinsRs5*2500}</td>
-														<td>${row.srNo}</td>
-													</tr></c:if>
+														<tr>
+															<td><fmt:formatDate type="both"
+																	value="${row.insertTime.time}" /></td>
+															<td>${row.branch}</td>
+															<td>${row.solID}</td>
+															<td>5</td>
+															<td>${row.totalValueOfCoinsRs5*2500}</td>
+															<td>${row.srNo}</td>
+														</tr>
+													</c:if>
 												</c:forEach>
 												<c:forEach var="row" items="${records}">
-												<fmt:parseNumber var="parsedNumber" integerOnly="true" type="number" value="${row.totalValueOfCoinsRs10}" />
+													<fmt:parseNumber var="parsedNumber" integerOnly="true"
+														type="number" value="${row.totalValueOfCoinsRs10}" />
 													<c:if test="${parsedNumber ne 0}">
-													<tr>
-														<td><fmt:formatDate type="both" value="${row.insertTime.time}" /></td>
-														<td>${row.branch}</td>
-														<td>${row.solID}</td>
-														<td>5</td>
-														<td>${row.totalValueOfCoinsRs10*2000}</td>
-														<td>${row.srNo}</td>
-													</tr></c:if>
+														<tr>
+															<td><fmt:formatDate type="both"
+																	value="${row.insertTime.time}" /></td>
+															<td>${row.branch}</td>
+															<td>${row.solID}</td>
+															<td>5</td>
+															<td>${row.totalValueOfCoinsRs10*2000}</td>
+															<td>${row.srNo}</td>
+														</tr>
+													</c:if>
 												</c:forEach>
-												
-												
-												
+
+
+
 											</tbody>
 										</table>
 									</div>

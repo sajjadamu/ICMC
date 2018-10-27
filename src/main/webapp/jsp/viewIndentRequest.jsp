@@ -12,7 +12,8 @@
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jstl/core_rt"%>
-<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="sec"
+	uri="http://www.springframework.org/security/tags"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <head>
 <meta charset="utf-8">
@@ -204,13 +205,18 @@ function doAjaxPostInsertForFresh(str,source) {
 
 <link rel="stylesheet" type="text/css"
 	href="./resources/dist/css/style.css">
-	
+
 <!-- DataTable -->
-  <script type="text/javascript" charset="utf8" src="./resources/js/jquery.dataTables.min.js"></script>
-  <link rel="stylesheet" href="https://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css">
-  <script type="text/javascript" charset="utf8" src="./resources/js/dataTables.jqueryui.js"></script>
-  <link rel="stylesheet" type="text/css" href="./resources/css/dataTables.jqueryui.css">
-  <link rel="stylesheet" type="text/css" href="./resources/css/jquery.dataTables.css">
+<script type="text/javascript" charset="utf8"
+	src="./resources/js/jquery.dataTables.min.js"></script>
+<link rel="stylesheet"
+	href="https://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css">
+<script type="text/javascript" charset="utf8"
+	src="./resources/js/dataTables.jqueryui.js"></script>
+<link rel="stylesheet" type="text/css"
+	href="./resources/css/dataTables.jqueryui.css">
+<link rel="stylesheet" type="text/css"
+	href="./resources/css/jquery.dataTables.css">
 <!-- DataTable -->
 
 </head>
@@ -231,7 +237,7 @@ function doAjaxPostInsertForFresh(str,source) {
 			<div class="row">
 				<div class="col-lg-12">
 					<div class="panel panel-default">
-						
+
 						<%-- <div class="panel-heading">
 							<ul>
 								<li>
@@ -241,249 +247,293 @@ function doAjaxPostInsertForFresh(str,source) {
 								</li>
 							</ul>Indent Request List
 						</div> --%>
-						
+
 						<!-- /.panel-heading -->
-						 <div class="panel-body">
-						
+						<div class="panel-body">
+
 							<Table align="center">
-		<Tr>
-			<th style="color: blue"><u>BRANCH INDENT SUMMARY</u></th>
-		</Tr>
-	</Table>
-	<BR>
-	<table class="table table-striped table-bordered table-hover">
+								<Tr>
+									<th style="color: blue"><u>BRANCH INDENT SUMMARY</u></th>
+								</Tr>
+							</Table>
+							<BR>
+							<table class="table table-striped table-bordered table-hover">
 
-		<thead>
-			<tr>
-				<th>Denomination</th>
-				<th>Category</th>
-				<th>Total Bundle</th>
-				<th>Pending Indented Bundle</th>
-				<th>Old Date</th>
-				<th>Ageing</th>
-				<th>Indent</th>
-				<th>Action</th>
-			</tr>
+								<thead>
+									<tr>
+										<th>Denomination</th>
+										<th>Category</th>
+										<th>Total Bundle</th>
+										<th>Pending Indented Bundle</th>
+										<th>Old Date</th>
+										<th>Ageing</th>
+										<th>Indent</th>
+										<th>Action</th>
+									</tr>
 
-		</thead>
-		
-		<tbody>
-		
-			<%
+								</thead>
+
+								<tbody>
+
+									<%
 				List<Tuple> listTuple = (List<Tuple>) request.getAttribute("summaryRecords");
 				for (Tuple tuple : listTuple) {
 			%>
-             
-			<tr>
-				<td id="denomination<%=tuple.get(0, Integer.class)%><%=tuple.get(4, BinCategoryType.class)%><%=CashSource.BRANCH%>"><%=tuple.get(0, Integer.class)%></td>
-				<td id="category<%=tuple.get(0, Integer.class)%><%=tuple.get(4, BinCategoryType.class)%><%=CashSource.BRANCH%>"><%=tuple.get(4, BinCategoryType.class)%></td>
-				<td id="bundle<%=tuple.get(0,Integer.class)%><%=tuple.get(4, BinCategoryType.class)%><%=CashSource.BRANCH%>"><%=tuple.get(2, BigDecimal.class)%></td>
-				<td id="pendingBundleRequest<%=tuple.get(0,Integer.class)%><%=tuple.get(4, BinCategoryType.class)%><%=CashSource.BRANCH%>"><%=tuple.get(3, BigDecimal.class)%></td>
-				<td><fmt:formatDate pattern="yyyy-MM-dd" value="<%=tuple.get(1, Calendar.class).getTime()%>" /></td>
-				<td></td>
-				<td><input type="text" name="bundle" id="requestBundle<%=tuple.get(0,Integer.class)%><%=tuple.get(4, BinCategoryType.class)%><%=CashSource.BRANCH%>"></td>
-	            <td><input type="button" value="Request" onclick="doAjaxPostInsert('<%=tuple.get(0, Integer.class)%><%=tuple.get(4, BinCategoryType.class)%><%=CashSource.BRANCH%>','<%=CashSource.BRANCH%>');this.disabled=true;"></td>
-			</tr>
-			<%
+
+									<tr>
+										<td
+											id="denomination<%=tuple.get(0, Integer.class)%><%=tuple.get(4, BinCategoryType.class)%><%=CashSource.BRANCH%>"><%=tuple.get(0, Integer.class)%></td>
+										<td
+											id="category<%=tuple.get(0, Integer.class)%><%=tuple.get(4, BinCategoryType.class)%><%=CashSource.BRANCH%>"><%=tuple.get(4, BinCategoryType.class)%></td>
+										<td
+											id="bundle<%=tuple.get(0,Integer.class)%><%=tuple.get(4, BinCategoryType.class)%><%=CashSource.BRANCH%>"><%=tuple.get(2, BigDecimal.class)%></td>
+										<td
+											id="pendingBundleRequest<%=tuple.get(0,Integer.class)%><%=tuple.get(4, BinCategoryType.class)%><%=CashSource.BRANCH%>"><%=tuple.get(3, BigDecimal.class)%></td>
+										<td><fmt:formatDate pattern="yyyy-MM-dd"
+												value="<%=tuple.get(1, Calendar.class).getTime()%>" /></td>
+										<td></td>
+										<td><input type="text" name="bundle"
+											id="requestBundle<%=tuple.get(0,Integer.class)%><%=tuple.get(4, BinCategoryType.class)%><%=CashSource.BRANCH%>"></td>
+										<td><input type="button" value="Request"
+											onclick="doAjaxPostInsert('<%=tuple.get(0, Integer.class)%><%=tuple.get(4, BinCategoryType.class)%><%=CashSource.BRANCH%>','<%=CashSource.BRANCH%>');this.disabled=true;"></td>
+									</tr>
+									<%
 				}
 			%>
-		</tbody>
-						
-						</table></div>
-						
-						
+								</tbody>
+
+							</table>
+						</div>
+
+
 						<div class="panel-body">
-						
+
 							<Table align="center">
-		<Tr>
-			<th style="color: blue"><u>DSB INDENT SUMMARY</u></th>
-		</Tr>
-	</Table>
-	<BR>
-	<table class="table table-striped table-bordered table-hover">
+								<Tr>
+									<th style="color: blue"><u>DSB INDENT SUMMARY</u></th>
+								</Tr>
+							</Table>
+							<BR>
+							<table class="table table-striped table-bordered table-hover">
 
-		<thead>
-			<tr>
-			<th>Category</th>
-				<th>Denomination</th>
-				<th>Total Bundle</th>
-				<th>Pending Indented Bundle</th>
-				<th>Old Date</th>
-				<th>Ageing</th>
-				<th>Indent</th>
-				<th>Action</th>
-			</tr>
+								<thead>
+									<tr>
+										<th>Category</th>
+										<th>Denomination</th>
+										<th>Total Bundle</th>
+										<th>Pending Indented Bundle</th>
+										<th>Old Date</th>
+										<th>Ageing</th>
+										<th>Indent</th>
+										<th>Action</th>
+									</tr>
 
-		</thead>
-		<tbody>
-			<%
+								</thead>
+								<tbody>
+									<%
 				List<Tuple> listTupleForDSB = (List<Tuple>) request.getAttribute("dsbRecords");
 				for (Tuple tuple : listTupleForDSB) {
 			%>
-             
-			<tr>
-			    <td id="category<%=tuple.get(0, Integer.class)%><%=tuple.get(4, BinCategoryType.class)%><%=CashSource.DSB%>"><%=tuple.get(4, BinCategoryType.class)%></td>
-				<td id="denomination<%=tuple.get(0, Integer.class)%><%=tuple.get(4, BinCategoryType.class)%><%=CashSource.DSB%>"><%=tuple.get(0, Integer.class)%></td>
-				<td id="bundle<%=tuple.get(0,Integer.class)%><%=tuple.get(4, BinCategoryType.class)%><%=CashSource.DSB%>"><%=tuple.get(2, BigDecimal.class)%></td>
-				<td id="pendingBundleRequest<%=tuple.get(0,Integer.class)%><%=tuple.get(4, BinCategoryType.class)%><%=CashSource.DSB%>"><%=tuple.get(3, BigDecimal.class)%></td>
-				<td><fmt:formatDate pattern="yyyy-MM-dd" value="<%=tuple.get(1, Calendar.class).getTime()%>" /></td>
-				<td></td>
-				<td><input type="text" name="bundle" id="requestBundle<%=tuple.get(0,Integer.class)%><%=tuple.get(4, BinCategoryType.class)%><%=CashSource.DSB%>"></td>
-				<td><input type="button" value="Request" onclick="doAjaxPostInsert('<%=tuple.get(0, Integer.class)%><%=tuple.get(4, BinCategoryType.class)%><%=CashSource.DSB%>','<%=CashSource.DSB%>');this.disabled=true;"></td>
-			</tr>
-			<%
+
+									<tr>
+										<td
+											id="category<%=tuple.get(0, Integer.class)%><%=tuple.get(4, BinCategoryType.class)%><%=CashSource.DSB%>"><%=tuple.get(4, BinCategoryType.class)%></td>
+										<td
+											id="denomination<%=tuple.get(0, Integer.class)%><%=tuple.get(4, BinCategoryType.class)%><%=CashSource.DSB%>"><%=tuple.get(0, Integer.class)%></td>
+										<td
+											id="bundle<%=tuple.get(0,Integer.class)%><%=tuple.get(4, BinCategoryType.class)%><%=CashSource.DSB%>"><%=tuple.get(2, BigDecimal.class)%></td>
+										<td
+											id="pendingBundleRequest<%=tuple.get(0,Integer.class)%><%=tuple.get(4, BinCategoryType.class)%><%=CashSource.DSB%>"><%=tuple.get(3, BigDecimal.class)%></td>
+										<td><fmt:formatDate pattern="yyyy-MM-dd"
+												value="<%=tuple.get(1, Calendar.class).getTime()%>" /></td>
+										<td></td>
+										<td><input type="text" name="bundle"
+											id="requestBundle<%=tuple.get(0,Integer.class)%><%=tuple.get(4, BinCategoryType.class)%><%=CashSource.DSB%>"></td>
+										<td><input type="button" value="Request"
+											onclick="doAjaxPostInsert('<%=tuple.get(0, Integer.class)%><%=tuple.get(4, BinCategoryType.class)%><%=CashSource.DSB%>','<%=CashSource.DSB%>');this.disabled=true;"></td>
+									</tr>
+									<%
 				}
 			%>
-                        
-						</tbody></table></div>
-						
+
+								</tbody>
+							</table>
+						</div>
+
 						<div class="panel-body">
-						
+
 							<Table align="center">
-		<Tr>
-			<th style="color: blue"><u>FRESH INDENT SUMMARY</u></th>
-		</Tr>
-	</Table>
-	<BR>
-	<table class="table table-striped table-bordered table-hover">
+								<Tr>
+									<th style="color: blue"><u>FRESH INDENT SUMMARY</u></th>
+								</Tr>
+							</Table>
+							<BR>
+							<table class="table table-striped table-bordered table-hover">
 
-		<thead>
-			<tr>
-				<th>RBI Order No</th>
-			    <th>Category</th>
-				<th>Denomination</th>
-				<th>Total Bundle</th>
-				<th>Pending Indented Bundle</th>
-				<th>Old Date</th>
-				<th>Ageing</th>
-				<th>Indent</th>
-				<th>Action</th>
-			</tr>
+								<thead>
+									<tr>
+										<th>RBI Order No</th>
+										<th>Category</th>
+										<th>Denomination</th>
+										<th>Total Bundle</th>
+										<th>Pending Indented Bundle</th>
+										<th>Old Date</th>
+										<th>Ageing</th>
+										<th>Indent</th>
+										<th>Action</th>
+									</tr>
 
-		</thead>
-		
-		<tbody>
-		
-			<%
+								</thead>
+
+								<tbody>
+
+									<%
 				List<Tuple> listTupleForFresh = (List<Tuple>) request.getAttribute("freshFromRBIRecords");
 				for (Tuple tuple : listTupleForFresh) {
 			%>
-             
-			<tr>
-				<td id="rbiOrderNo<%=tuple.get(2, Integer.class)%><%=tuple.get(0, String.class)%><%=tuple.get(1, BinCategoryType.class)%><%=CashSource.RBI%>"><%=tuple.get(0, String.class)%></td>
-			    <td id="category<%=tuple.get(2, Integer.class)%><%=tuple.get(0, String.class)%><%=tuple.get(1, BinCategoryType.class)%><%=CashSource.RBI%>"><%=tuple.get(1, BinCategoryType.class)%></td>
-				<td id="denomination<%=tuple.get(2, Integer.class)%><%=tuple.get(0, String.class)%><%=tuple.get(1, BinCategoryType.class)%><%=CashSource.RBI%>"><%=tuple.get(2, Integer.class)%></td>
-				<td id="bundle<%=tuple.get(2,Integer.class)%><%=tuple.get(0, String.class)%><%=tuple.get(1, BinCategoryType.class)%><%=CashSource.RBI%>"><%=tuple.get(3, BigDecimal.class)%></td>
-				<td id="pendingBundleRequest<%=tuple.get(2,Integer.class)%><%=tuple.get(0, String.class)%><%=tuple.get(1, BinCategoryType.class)%><%=CashSource.RBI%>"><%=tuple.get(4, BigDecimal.class)%></td>
-				<td><fmt:formatDate pattern="yyyy-MM-dd" value="<%=tuple.get(5, Calendar.class).getTime()%>" /></td>
-				<Td></td>
-				<td><input type="text" name="bundle" id="requestBundle<%=tuple.get(2,Integer.class)%><%=tuple.get(0, String.class)%><%=tuple.get(1, BinCategoryType.class)%><%=CashSource.RBI%>"></td>
-	            <td><input type="button" value="Request" onclick="doAjaxPostInsertForFresh('<%=tuple.get(2, Integer.class)%><%=tuple.get(0, String.class)%><%=tuple.get(1, BinCategoryType.class)%><%=CashSource.RBI%>','<%=CashSource.RBI%>');this.disabled=true;"></td>
-			</tr>
-			<%
+
+									<tr>
+										<td
+											id="rbiOrderNo<%=tuple.get(2, Integer.class)%><%=tuple.get(0, String.class)%><%=tuple.get(1, BinCategoryType.class)%><%=CashSource.RBI%>"><%=tuple.get(0, String.class)%></td>
+										<td
+											id="category<%=tuple.get(2, Integer.class)%><%=tuple.get(0, String.class)%><%=tuple.get(1, BinCategoryType.class)%><%=CashSource.RBI%>"><%=tuple.get(1, BinCategoryType.class)%></td>
+										<td
+											id="denomination<%=tuple.get(2, Integer.class)%><%=tuple.get(0, String.class)%><%=tuple.get(1, BinCategoryType.class)%><%=CashSource.RBI%>"><%=tuple.get(2, Integer.class)%></td>
+										<td
+											id="bundle<%=tuple.get(2,Integer.class)%><%=tuple.get(0, String.class)%><%=tuple.get(1, BinCategoryType.class)%><%=CashSource.RBI%>"><%=tuple.get(3, BigDecimal.class)%></td>
+										<td
+											id="pendingBundleRequest<%=tuple.get(2,Integer.class)%><%=tuple.get(0, String.class)%><%=tuple.get(1, BinCategoryType.class)%><%=CashSource.RBI%>"><%=tuple.get(4, BigDecimal.class)%></td>
+										<td><fmt:formatDate pattern="yyyy-MM-dd"
+												value="<%=tuple.get(5, Calendar.class).getTime()%>" /></td>
+										<Td></td>
+										<td><input type="text" name="bundle"
+											id="requestBundle<%=tuple.get(2,Integer.class)%><%=tuple.get(0, String.class)%><%=tuple.get(1, BinCategoryType.class)%><%=CashSource.RBI%>"></td>
+										<td><input type="button" value="Request"
+											onclick="doAjaxPostInsertForFresh('<%=tuple.get(2, Integer.class)%><%=tuple.get(0, String.class)%><%=tuple.get(1, BinCategoryType.class)%><%=CashSource.RBI%>','<%=CashSource.RBI%>');this.disabled=true;"></td>
+									</tr>
+									<%
 				}
 			%>
-		</tbody>
-						
-						</table></div>
-					
-						
- <div class="panel-body">
-						
+								</tbody>
+
+							</table>
+						</div>
+
+
+						<div class="panel-body">
+
 							<Table align="center">
-		<Tr>
-			<th style="color: blue"><u>DIVERSION INDENT SUMMARY</u></th>
-		</Tr>
-	</Table>
-	<BR>
-	<table class="table table-striped table-bordered table-hover">
+								<Tr>
+									<th style="color: blue"><u>DIVERSION INDENT SUMMARY</u></th>
+								</Tr>
+							</Table>
+							<BR>
+							<table class="table table-striped table-bordered table-hover">
 
-		<thead>
-			<tr>
-			<th>Category</th>
-				<th>Denomination</th>
-				<th>Total Bundle</th>
-				<th>Pending Indented Bundle</th>
-				<th>Old Date</th>
-				<th>Ageing</th>
-				<th>Indent</th>
-				<th>Action</th>
-			</tr>
+								<thead>
+									<tr>
+										<th>Category</th>
+										<th>Denomination</th>
+										<th>Total Bundle</th>
+										<th>Pending Indented Bundle</th>
+										<th>Old Date</th>
+										<th>Ageing</th>
+										<th>Indent</th>
+										<th>Action</th>
+									</tr>
 
-		</thead>
-		<tbody>
-			<%
+								</thead>
+								<tbody>
+									<%
 				List<Tuple> listTupleForDiversion = (List<Tuple>) request.getAttribute("diversionRecords");
 				for (Tuple tuple : listTupleForDiversion) {
 			%>
-             
-			<tr>
-			   <td id="category<%=tuple.get(0, Integer.class)%><%=tuple.get(4, BinCategoryType.class)%><%=CashSource.DIVERSION%>"><%=tuple.get(4, BinCategoryType.class)%></td>
-				<td id="denomination<%=tuple.get(0, Integer.class)%><%=tuple.get(4, BinCategoryType.class)%><%=CashSource.DIVERSION%>"><%=tuple.get(0, Integer.class)%></td>
-				<td id="bundle<%=tuple.get(0,Integer.class)%><%=tuple.get(4, BinCategoryType.class)%><%=CashSource.DIVERSION%>"><%=tuple.get(2, BigDecimal.class)%></td>
-				<td id="pendingBundleRequest<%=tuple.get(0,Integer.class)%><%=tuple.get(4, BinCategoryType.class)%><%=CashSource.DIVERSION%>"><%=tuple.get(3, BigDecimal.class)%></td>
-				<td><fmt:formatDate pattern="yyyy-MM-dd" value="<%=tuple.get(1, Calendar.class).getTime()%>" /></td>
-				<td></td>
-				<td><input type="text" name="bundle" id="requestBundle<%=tuple.get(0,Integer.class)%><%=tuple.get(4, BinCategoryType.class)%><%=CashSource.DIVERSION%>"></td>
-				<td><input type="button" value="Request" onclick="doAjaxPostInsert('<%=tuple.get(0, Integer.class)%><%=tuple.get(4, BinCategoryType.class)%><%=CashSource.DIVERSION%>','<%=CashSource.DIVERSION%>');this.disabled=true;"></td>
-			</tr>
-			<%
+
+									<tr>
+										<td
+											id="category<%=tuple.get(0, Integer.class)%><%=tuple.get(4, BinCategoryType.class)%><%=CashSource.DIVERSION%>"><%=tuple.get(4, BinCategoryType.class)%></td>
+										<td
+											id="denomination<%=tuple.get(0, Integer.class)%><%=tuple.get(4, BinCategoryType.class)%><%=CashSource.DIVERSION%>"><%=tuple.get(0, Integer.class)%></td>
+										<td
+											id="bundle<%=tuple.get(0,Integer.class)%><%=tuple.get(4, BinCategoryType.class)%><%=CashSource.DIVERSION%>"><%=tuple.get(2, BigDecimal.class)%></td>
+										<td
+											id="pendingBundleRequest<%=tuple.get(0,Integer.class)%><%=tuple.get(4, BinCategoryType.class)%><%=CashSource.DIVERSION%>"><%=tuple.get(3, BigDecimal.class)%></td>
+										<td><fmt:formatDate pattern="yyyy-MM-dd"
+												value="<%=tuple.get(1, Calendar.class).getTime()%>" /></td>
+										<td></td>
+										<td><input type="text" name="bundle"
+											id="requestBundle<%=tuple.get(0,Integer.class)%><%=tuple.get(4, BinCategoryType.class)%><%=CashSource.DIVERSION%>"></td>
+										<td><input type="button" value="Request"
+											onclick="doAjaxPostInsert('<%=tuple.get(0, Integer.class)%><%=tuple.get(4, BinCategoryType.class)%><%=CashSource.DIVERSION%>','<%=CashSource.DIVERSION%>');this.disabled=true;"></td>
+									</tr>
+									<%
 				}
 			%>
-                          
-						</tbody></table></div> 
-						
+
+								</tbody>
+							</table>
+						</div>
 
 
-<div class="panel-body">
-						
-		<Table align="center">
-		<Tr>
-			<th style="color: blue"><u>OTHER BANK INDENT SUMMARY</u></th>
-		</Tr>
-	</Table>
-	<BR>
-	<table class="table table-striped table-bordered table-hover">
 
-		<thead>
-			<tr>
-			<th>Category</th>
-				<th>Denomination</th>
-				<th>Total Bundle</th>
-				<th>Pending Indented Bundle</th>
-				<th>Old Date</th>
-				<th>Ageing</th>
-				<th>Indent</th>
-				<th>Action</th>
-			</tr>
+						<div class="panel-body">
 
-		</thead>
-		<tbody>
-			<%
+							<Table align="center">
+								<Tr>
+									<th style="color: blue"><u>OTHER BANK INDENT SUMMARY</u></th>
+								</Tr>
+							</Table>
+							<BR>
+							<table class="table table-striped table-bordered table-hover">
+
+								<thead>
+									<tr>
+										<th>Category</th>
+										<th>Denomination</th>
+										<th>Total Bundle</th>
+										<th>Pending Indented Bundle</th>
+										<th>Old Date</th>
+										<th>Ageing</th>
+										<th>Indent</th>
+										<th>Action</th>
+									</tr>
+
+								</thead>
+								<tbody>
+									<%
 				List<Tuple> listTupleForOtherBank = (List<Tuple>) request.getAttribute("otherBankRecords");
 				for (Tuple tuple : listTupleForOtherBank) {
 			%>
-             
-			<tr>
-			<td id="category<%=tuple.get(0, Integer.class)%><%=tuple.get(4, BinCategoryType.class)%><%=CashSource.OTHERBANK%>"><%=tuple.get(4, BinCategoryType.class)%></td>
-				<td id="denomination<%=tuple.get(0, Integer.class)%><%=tuple.get(4, BinCategoryType.class)%><%=CashSource.OTHERBANK%>"><%=tuple.get(0, Integer.class)%></td>
-				<td id="bundle<%=tuple.get(0,Integer.class)%><%=tuple.get(4, BinCategoryType.class)%><%=CashSource.OTHERBANK%>"><%=tuple.get(2, BigDecimal.class)%></td>
-				<td id="pendingBundleRequest<%=tuple.get(0,Integer.class)%><%=tuple.get(4, BinCategoryType.class)%><%=CashSource.OTHERBANK%>"><%=tuple.get(3, BigDecimal.class)%></td>
-				<td><fmt:formatDate pattern="yyyy-MM-dd" value="<%=tuple.get(1, Calendar.class).getTime()%>" /></td>
-				<td></td>
-				<td><input type="text" name="bundle" id="requestBundle<%=tuple.get(0,Integer.class)%><%=tuple.get(4, BinCategoryType.class)%><%=CashSource.OTHERBANK%>"></td>
-				<td><input type="button" value="Request" onclick="doAjaxPostInsert('<%=tuple.get(0, Integer.class)%><%=tuple.get(4, BinCategoryType.class)%><%=CashSource.OTHERBANK%>','<%=CashSource.OTHERBANK%>');this.disabled=true;"></td>
-			</tr>
-			<%
+
+									<tr>
+										<td
+											id="category<%=tuple.get(0, Integer.class)%><%=tuple.get(4, BinCategoryType.class)%><%=CashSource.OTHERBANK%>"><%=tuple.get(4, BinCategoryType.class)%></td>
+										<td
+											id="denomination<%=tuple.get(0, Integer.class)%><%=tuple.get(4, BinCategoryType.class)%><%=CashSource.OTHERBANK%>"><%=tuple.get(0, Integer.class)%></td>
+										<td
+											id="bundle<%=tuple.get(0,Integer.class)%><%=tuple.get(4, BinCategoryType.class)%><%=CashSource.OTHERBANK%>"><%=tuple.get(2, BigDecimal.class)%></td>
+										<td
+											id="pendingBundleRequest<%=tuple.get(0,Integer.class)%><%=tuple.get(4, BinCategoryType.class)%><%=CashSource.OTHERBANK%>"><%=tuple.get(3, BigDecimal.class)%></td>
+										<td><fmt:formatDate pattern="yyyy-MM-dd"
+												value="<%=tuple.get(1, Calendar.class).getTime()%>" /></td>
+										<td></td>
+										<td><input type="text" name="bundle"
+											id="requestBundle<%=tuple.get(0,Integer.class)%><%=tuple.get(4, BinCategoryType.class)%><%=CashSource.OTHERBANK%>"></td>
+										<td><input type="button" value="Request"
+											onclick="doAjaxPostInsert('<%=tuple.get(0, Integer.class)%><%=tuple.get(4, BinCategoryType.class)%><%=CashSource.OTHERBANK%>','<%=CashSource.OTHERBANK%>');this.disabled=true;"></td>
+									</tr>
+									<%
 				}
 			%>
-                          
-						</tbody></table></div> 
-						
-						
-						
-						
-									<%-- <div class="panel-body">
+
+								</tbody>
+							</table>
+						</div>
+
+
+
+
+						<%-- <div class="panel-body">
 							<div class="dataTable_wrapper">
 							
 							<table align="center"><tr><th style="color: blue"><u>MACHINE SOFTWARE UPDATION</u></th></tr></table>
@@ -578,7 +628,7 @@ function doAjaxPostInsertForFresh(str,source) {
         });
     });
     </script>
-<script type="text/javascript" src="./js/htmlInjection.js"></script>
+	<script type="text/javascript" src="./js/htmlInjection.js"></script>
 </body>
 
 </html>

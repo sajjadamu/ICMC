@@ -12,7 +12,8 @@
 <link rel="shortcut icon" href="./resources/logo/favicon.ico"
 	type="image/x-icon">
 
-<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script type="text/javascript"
+	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script type="text/javascript" src="./js/jquery.validate.min.js"></script>
 
 <title>ICICI : Remove Driver</title>
@@ -66,9 +67,9 @@
 							<div class="row">
 								<div class="col-lg-6">
 									<!--<form role="form">-->
-									<form:form id="userPage" name="userPage" action="removeDriver" method="post"
-										modelAttribute="user" autocomplete="off">
-										
+									<form:form id="userPage" name="userPage" action="removeDriver"
+										method="post" modelAttribute="user" autocomplete="off">
+
 										<form:hidden path="id" />
 										<form:hidden path="licenseIssuedState" />
 										<form:hidden path="licenseIssuedDated" />
@@ -77,41 +78,43 @@
 										<form:hidden path="updateBy" />
 										<form:hidden path="insertTime" />
 										<form:hidden path="updateTime" />
-										
+
 										<div class="form-group">
 											<label>Vendor Name</label>
-											<form:input path="vendorName" id="vendorName" name="vendorName" readonly="true"
-												cssClass="form-control" />
+											<form:input path="vendorName" id="vendorName"
+												name="vendorName" readonly="true" cssClass="form-control" />
 										</div>
-										
+
 										<div class="form-group">
 											<label>Vehicle Number</label>
-											<form:input path="vehicleNumber" id="vehicleNumber" name="vehicleNumber" readonly="true"
-												cssClass="form-control" />
+											<form:input path="vehicleNumber" id="vehicleNumber"
+												name="vehicleNumber" readonly="true" cssClass="form-control" />
 										</div>
-										
+
 										<div class="form-group">
 											<label>Vehicle Driver Name</label>
-											<form:input path="driverName"  id="driverName" name="driverName" readonly="true"
-												cssClass="form-control" />
+											<form:input path="driverName" id="driverName"
+												name="driverName" readonly="true" cssClass="form-control" />
 										</div>
-										
+
 										<div class="form-group">
 											<label>License Number</label>
-											<form:input path="licenseNumber" id="licenseNumber" name="licenseNumber" readonly="true"
-												cssClass="form-control" />
+											<form:input path="licenseNumber" id="licenseNumber"
+												name="licenseNumber" readonly="true" cssClass="form-control" />
 										</div>
 										<div class="form-group">
 											<label>Reason for Deletion</label>
-											<form:input path="reasonForDeletion" id="reasonForDeletion" name="reasonForDeletion"
-												maxlength="45" cssClass="form-control" />
+											<form:input path="reasonForDeletion" id="reasonForDeletion"
+												name="reasonForDeletion" maxlength="45"
+												cssClass="form-control" />
 										</div>
 										<div class="form-group">
 											<label>Approval For Deletion</label>
-											<form:input path="approvalForDeletion" id="approvalForDeletion" name="approvalForDeletion"
+											<form:input path="approvalForDeletion"
+												id="approvalForDeletion" name="approvalForDeletion"
 												maxlength="45" cssClass="form-control" />
 										</div>
-										
+
 										<button type="submit" class="btn btn-lg btn-success btn-block"
 											value="Details">Submit</button>
 									</form:form>
@@ -148,8 +151,8 @@
 
 	<!-- Custom Theme JavaScript -->
 	<script src="./resources/dist/js/sb-admin-2.js"></script>
-	
-<script type="text/javascript">
+
+	<script type="text/javascript">
 	$.validator.addMethod("loginRegex", function(value, element) {
 	    return this.optional(element) || /^[A-Za-z\s]+$/i.test(value);
 	}, "Software must contain only letters,Space , dashes.");
@@ -188,7 +191,7 @@
 	  });
 	});
 	</script>
-<script type="text/javascript" src="./js/htmlInjection.js"></script>
+	<script type="text/javascript" src="./js/htmlInjection.js"></script>
 </body>
 
 </html>

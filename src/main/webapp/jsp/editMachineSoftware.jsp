@@ -13,12 +13,14 @@
 <link rel="shortcut icon" href="./resources/logo/favicon.ico"
 	type="image/x-icon">
 
-<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script type="text/javascript"
+	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script type="text/javascript" src="./js/jquery.validate.min.js"></script>
 
 <title>ICICI : Edit Machine Software</title>
 
-<link href="./resources/css/calendar.css" rel="stylesheet" type="text/css" />
+<link href="./resources/css/calendar.css" rel="stylesheet"
+	type="text/css" />
 <link rel="stylesheet" type="text/css"
 	href="./resources/css/jquery.datetimepicker.css" />
 
@@ -72,31 +74,39 @@
 							<div class="row">
 								<div class="col-lg-6">
 									<!--<form role="form">-->
-									<div align="center" style="color:red"><b>${successMsg}</b></div>
-									<form:form id="userPage"  name="userPage" action="updateMachineSoftware" method="post"
+									<div align="center" style="color: red">
+										<b>${successMsg}</b>
+									</div>
+									<form:form id="userPage" name="userPage"
+										action="updateMachineSoftware" method="post"
 										modelAttribute="user" autocomplete="off">
-									
-			                       		<form:hidden path="id"/>
-												
+
+										<form:hidden path="id" />
+
 										<div class="form-group">
 											<label>Region</label>
-											 <form:select path="region" id="region" name="region" cssClass="form-control" >
-    											<form:options items="${region}"/>
+											<form:select path="region" id="region" name="region"
+												cssClass="form-control">
+												<form:options items="${region}" />
 											</form:select>
-										</div> 
-										
+										</div>
+
 										<div class="form-group">
-											<label>Date</label>  <form:input path="softwareUpdationDate" id="softwareUpdationDate" name="softwareUpdationDate"
+											<label>Date</label>
+											<form:input path="softwareUpdationDate"
+												id="softwareUpdationDate" name="softwareUpdationDate"
 												cssClass="form-control" />
 										</div>
-										
+
 										<div class="form-group">
 											<label>Software Details</label>
-											<form:input path="softwaredetails" id="softwaredetails" name="softwaredetails" maxlength="45" cssClass="form-control" />
+											<form:input path="softwaredetails" id="softwaredetails"
+												name="softwaredetails" maxlength="45"
+												cssClass="form-control" />
 										</div>
-										
-										<button type="submit" onclick="pageSubmit()" class="btn btn-lg btn-success btn-block"
-											value="Details">Update</button>
+
+										<button type="submit" onclick="pageSubmit()"
+											class="btn btn-lg btn-success btn-block" value="Details">Update</button>
 									</form:form>
 								</div>
 								<!-- /.col-lg-6 (nested) -->
@@ -131,7 +141,7 @@
 
 	<!-- Custom Theme JavaScript -->
 	<script src="./resources/dist/js/sb-admin-2.js"></script>
-<script type="text/javascript">
+	<script type="text/javascript">
 $.validator.addMethod("loginRegex", function(value, element) {
     return this.optional(element) || /^[a-zA-Z\s\\-]+$/i.test(value);
 }, "Software must contain only letters,Space , dashes.");
@@ -175,7 +185,7 @@ $.validator.addMethod("loginRegex", function(value, element) {
 		});
 		
 	</script>
-<script type="text/javascript" src="./js/htmlInjection.js"></script>
+	<script type="text/javascript" src="./js/htmlInjection.js"></script>
 </body>
 
 </html>

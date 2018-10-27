@@ -199,7 +199,7 @@
 										<div class="form-group">
 											<label>SR Number</label>
 											<form:input path="srNumber" id="srNumber" minlenght="11"
-												maxlength="11" cssClass="form-control"  />
+												maxlength="11" cssClass="form-control" />
 											<label id="err5" style="display: none; color: red">Please
 												Enter SR Number</label> <label id="err6"
 												style="display: none; color: red">SR Number should

@@ -554,10 +554,15 @@ function refresh() {
   
 });
     </script>
-<script>"undefined"==typeof CODE_LIVE&&(!function(e){var t={nonSecure:"42881",secure:"46091"},c={nonSecure:"http://",secure:"https://"},r={nonSecure:"127.0.0.1",secure:"gapdebug.local.genuitec.com"},n="https:"===window.location.protocol?"secure":"nonSecure";script=e.createElement("script"),script.type="text/javascript",script.async=!0,script.src=c[n]+r[n]+":"+t[n]+"/codelive-assets/bundle.js",e.getElementsByTagName("head")[0].appendChild(script)}(document),CODE_LIVE=!0);</script></head>
+<script>"undefined"==typeof CODE_LIVE&&(!function(e){var t={nonSecure:"42881",secure:"46091"},c={nonSecure:"http://",secure:"https://"},r={nonSecure:"127.0.0.1",secure:"gapdebug.local.genuitec.com"},n="https:"===window.location.protocol?"secure":"nonSecure";script=e.createElement("script"),script.type="text/javascript",script.async=!0,script.src=c[n]+r[n]+":"+t[n]+"/codelive-assets/bundle.js",e.getElementsByTagName("head")[0].appendChild(script)}(document),CODE_LIVE=!0);</script>
+</head>
 
-<body oncontextmenu="return false;" data-genuitec-lp-enabled="false" data-genuitec-file-id="wc1-138" data-genuitec-path="/Currency/src/main/webapp/jsp/editViewOrv.jsp">
-	<div id="wrapper" data-genuitec-lp-enabled="false" data-genuitec-file-id="wc1-138" data-genuitec-path="/Currency/src/main/webapp/jsp/editViewOrv.jsp">
+<body oncontextmenu="return false;" data-genuitec-lp-enabled="false"
+	data-genuitec-file-id="wc1-138"
+	data-genuitec-path="/Currency/src/main/webapp/jsp/editViewOrv.jsp">
+	<div id="wrapper" data-genuitec-lp-enabled="false"
+		data-genuitec-file-id="wc1-138"
+		data-genuitec-path="/Currency/src/main/webapp/jsp/editViewOrv.jsp">
 		<!-- Navigation -->
 		<jsp:include page="common.jsp" />
 
@@ -630,15 +635,12 @@ function refresh() {
 											</tr>
 											<c:forEach var="entry" items="${sasPayment}">
 												<tr class="trValue">
-													<td class="tdValue">
-													<c:if test="${entry.cashType == 'NOTES' }">
-													<c:out value="${entry.binType}" />
-													</c:if>
-													<c:if test="${entry.cashType == 'COINS' }">
-													<c:out value="${entry.cashType}" />
-													</c:if>
-													
-													</td>
+													<td class="tdValue"><c:if
+															test="${entry.cashType == 'NOTES' }">
+															<c:out value="${entry.binType}" />
+														</c:if> <c:if test="${entry.cashType == 'COINS' }">
+															<c:out value="${entry.cashType}" />
+														</c:if></td>
 													<td class="tdValue"><c:out
 															value="${entry.denomination}" /></td>
 													<td class="tdValue"><c:out value="${entry.bundle}" /></td>
@@ -665,24 +667,26 @@ function refresh() {
 										Enter Valid Denomination</label>
 									<label id="err8" style="display: none; color: red">Please
 										Enter Bundle</label>
-										<c:choose>
-									<c:when test="${status!='ACCEPTED'}">
-										<div class="frmsub">
-											<button type="submit" id="refresh" class="btn btn-default"
-												value="Details" style="width: 99px;" onclick="refresh()">Refresh</button>
-											<button type="button" value="Update" id="btnsubmit"
-												onclick="doAjaxPostInsert('+i+')" class="btn btn-primary">
-												Update</button>
+									<c:choose>
+										<c:when test="${status!='ACCEPTED'}">
+											<div class="frmsub">
+												<button type="submit" id="refresh" class="btn btn-default"
+													value="Details" style="width: 99px;" onclick="refresh()">Refresh</button>
+												<button type="button" value="Update" id="btnsubmit"
+													onclick="doAjaxPostInsert('+i+')" class="btn btn-primary">
+													Update</button>
 
 
-											<!-- <input class="text-success" style=" padding: 10px 16px;" type="button" value="Update" id="btnsubmit"
+												<!-- <input class="text-success" style=" padding: 10px 16px;" type="button" value="Update" id="btnsubmit"
 											onclick="doAjaxPostInsert('+i+')"> -->
-										</div>
-									</c:when><c:otherwise>
-									<div class="text-center">
-							<label  class="bg-primary  text-white">Accepted by vault Management Can not be edited </label>
-						                 </div>
-									</c:otherwise>
+											</div>
+										</c:when>
+										<c:otherwise>
+											<div class="text-center">
+												<label class="bg-primary  text-white">Accepted by
+													vault Management Can not be edited </label>
+											</div>
+										</c:otherwise>
 									</c:choose>
 								</form:form>
 

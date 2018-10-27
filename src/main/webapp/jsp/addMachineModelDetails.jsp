@@ -14,7 +14,8 @@
 <link rel="shortcut icon" href="./resources/logo/favicon.ico"
 	type="image/x-icon">
 
-<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script type="text/javascript"
+	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script type="text/javascript" src="./js/jquery.validate.min.js"></script>
 
 <title>ICICI : Add Machine Detail</title>
@@ -67,37 +68,42 @@
 			<div class="row">
 				<div class="col-lg-12">
 					<div class="panel panel-default">
-						
+
 						<div class="panel-heading">
-                        	<ul>
-                          		<li>
-                          			<a href="././viewMachineModelDetails"><i class="fa fa-table fa-fw"></i> View Machine Model Details</a>
-                          		</li>
-							</ul>Add Machine Model
-                        </div>
-						
+							<ul>
+								<li><a href="././viewMachineModelDetails"><i
+										class="fa fa-table fa-fw"></i> View Machine Model Details</a></li>
+							</ul>
+							Add Machine Model
+						</div>
+
 						<div class="panel-body">
 							<div class="row">
 								<div class="col-lg-6">
 									<!--<form role="form">-->
-									
-									<form:form id="userPage" name="userPage" action="saveMachineModelDetails" method="post"
+
+									<form:form id="userPage" name="userPage"
+										action="saveMachineModelDetails" method="post"
 										modelAttribute="user" autocomplete="off">
-                                      <div align="center" style="color: red"><b>${duplicateUser}</b></div>
-								     
-										
+										<div align="center" style="color: red">
+											<b>${duplicateUser}</b>
+										</div>
+
+
 										<div class="form-group">
 											<label>Machine Model/Type</label>
-											<form:input path="machineModelType" id="machineModelType" name="machineModelType" maxlength="45"
+											<form:input path="machineModelType" id="machineModelType"
+												name="machineModelType" maxlength="45"
 												cssClass="form-control" />
 										</div>
-										
+
 										<div class="form-group">
 											<label>Standard Productivity</label>
-											<form:input path="standardProductivity" id="standardProductivity" name="standardProductivity" maxlength="45"
-												cssClass="form-control" />
+											<form:input path="standardProductivity"
+												id="standardProductivity" name="standardProductivity"
+												maxlength="45" cssClass="form-control" />
 										</div>
-										
+
 										<button type="submit" class="btn btn-lg btn-success btn-block"
 											value="Details">Save</button>
 									</form:form>
@@ -134,7 +140,7 @@
 
 	<!-- Custom Theme JavaScript -->
 	<script src="./resources/dist/js/sb-admin-2.js"></script>
-	
+
 	<script type="text/javascript">
 	
 	$.validator.addMethod("loginRegex", function(value, element) {
@@ -174,8 +180,8 @@
 	    }
 	  });
 	});
-	</script> 
-<script type="text/javascript" src="./js/htmlInjection.js"></script>
+	</script>
+	<script type="text/javascript" src="./js/htmlInjection.js"></script>
 </body>
 
 </html>

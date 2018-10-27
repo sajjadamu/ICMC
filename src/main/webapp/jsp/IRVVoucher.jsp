@@ -77,7 +77,7 @@
 	<div id="wrapper">
 		<!-- Navigation -->
 		<jsp:include page="common.jsp" />
-		
+
 		<div id="page-wrapper">
 			<!-- /.row -->
 			<div class="row">
@@ -98,8 +98,8 @@
 														class="form-control deno-figure-select"
 														style="width: 140px;">
 														<form:option value="">Select Branch </form:option>
-														 <form:options items="${records}" itemValue="solId"
-															itemLabel="branch" /> 
+														<form:options items="${records}" itemValue="solId"
+															itemLabel="branch" />
 													</form:select>
 												</div>
 											</div>
@@ -160,7 +160,7 @@
 			});
 		});
 	</script>
-<script type="text/javascript" src="./js/htmlInjection.js"></script>
+	<script type="text/javascript" src="./js/htmlInjection.js"></script>
 </body>
 
 </html>

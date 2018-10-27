@@ -2,8 +2,9 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
-<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
-<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="sec"
+	uri="http://www.springframework.org/security/tags"%>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <spring:htmlEscape defaultHtmlEscape="true" />
 <html lang="en">
 
@@ -13,9 +14,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="">
 <meta name="author" content="">
-<link rel="shortcut icon" href="./resources/logo/favicon.ico" type="image/x-icon">
+<link rel="shortcut icon" href="./resources/logo/favicon.ico"
+	type="image/x-icon">
 
-<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script type="text/javascript"
+	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script type="text/javascript" src="./js/jquery.validate.min.js"></script>
 
 <script type="text/javascript" src="./js/crossSite.js"></script>
@@ -24,19 +27,21 @@
 
 <style type="text/css">
 .form-group.rolewrap {
-    padding: 10px;
+	padding: 10px;
 }
+
 .rolewrap span {
-    width: 30%;
-    display: inline-block;
-    vertical-align: top;
-    font-size: 12px;
+	width: 30%;
+	display: inline-block;
+	vertical-align: top;
+	font-size: 12px;
 }
-.panel-default > label {
-    padding: 10px;
-    border-bottom: #ccc 1px solid;
-    display: block;
-    background: #f1f1f1;
+
+.panel-default>label {
+	padding: 10px;
+	border-bottom: #ccc 1px solid;
+	display: block;
+	background: #f1f1f1;
 }
 </style>
 <!-- Bootstrap Core CSS -->
@@ -67,123 +72,139 @@
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 
-<script>"undefined"==typeof CODE_LIVE&&(!function(e){var t={nonSecure:"42881",secure:"46091"},c={nonSecure:"http://",secure:"https://"},r={nonSecure:"127.0.0.1",secure:"gapdebug.local.genuitec.com"},n="https:"===window.location.protocol?"secure":"nonSecure";script=e.createElement("script"),script.type="text/javascript",script.async=!0,script.src=c[n]+r[n]+":"+t[n]+"/codelive-assets/bundle.js",e.getElementsByTagName("head")[0].appendChild(script)}(document),CODE_LIVE=!0);</script></head>
+<script>"undefined"==typeof CODE_LIVE&&(!function(e){var t={nonSecure:"42881",secure:"46091"},c={nonSecure:"http://",secure:"https://"},r={nonSecure:"127.0.0.1",secure:"gapdebug.local.genuitec.com"},n="https:"===window.location.protocol?"secure":"nonSecure";script=e.createElement("script"),script.type="text/javascript",script.async=!0,script.src=c[n]+r[n]+":"+t[n]+"/codelive-assets/bundle.js",e.getElementsByTagName("head")[0].appendChild(script)}(document),CODE_LIVE=!0);</script>
+</head>
 
-<body oncontextmenu="return false;" data-genuitec-lp-enabled="false" data-genuitec-file-id="wc1-58" data-genuitec-path="/Currency/src/main/webapp/jsp/addRole.jsp">
-	<div id="wrapper" data-genuitec-lp-enabled="false" data-genuitec-file-id="wc1-58" data-genuitec-path="/Currency/src/main/webapp/jsp/addRole.jsp">
+<body oncontextmenu="return false;" data-genuitec-lp-enabled="false"
+	data-genuitec-file-id="wc1-58"
+	data-genuitec-path="/Currency/src/main/webapp/jsp/addRole.jsp">
+	<div id="wrapper" data-genuitec-lp-enabled="false"
+		data-genuitec-file-id="wc1-58"
+		data-genuitec-path="/Currency/src/main/webapp/jsp/addRole.jsp">
 		<!-- Navigation -->
-		<jsp:include page="common.jsp" /> 
+		<jsp:include page="common.jsp" />
 
 		<div id="page-wrapper">
 			<!-- /.row -->
 			<div class="row">
 				<div class="col-lg-12">
 					<div class="panel panel-default">
-						
+
 						<div class="panel-heading">
-                        	<ul>
-                        		<li>
-                        			<sec:authorize access="hasRole('VIEW_ROLE')">
-                        				<a href="././viewRole"><i class="fa fa-table fa-fw"></i> View Roles List</a>
-                        			</sec:authorize>
-                        		</li>
-							</ul>Add New Role
-                        </div>
+							<ul>
+								<li><sec:authorize access="hasRole('VIEW_ROLE')">
+										<a href="././viewRole"><i class="fa fa-table fa-fw"></i>
+											View Roles List</a>
+									</sec:authorize></li>
+							</ul>
+							Add New Role
+						</div>
 						<div class="panel-body">
 							<div class="row">
 								<div class="col-lg-12">
 									<!--<form role="form">-->
-									
-									<form:form id="userPage" name="userPage" action="saveRole" method="post"
-										modelAttribute="role" autocomplete="off">
-                                      
-                                      	<div align="center" style="color: red"><b>${duplicateRole}</b></div>
-                                      
-                                      	<div class="form-group">
+
+									<form:form id="userPage" name="userPage" action="saveRole"
+										method="post" modelAttribute="role" autocomplete="off">
+
+										<div align="center" style="color: red">
+											<b>${duplicateRole}</b>
+										</div>
+
+										<div class="form-group">
 											<label>New Role</label>
 											<form:input path="id" id="id" name="id" maxlength="32"
-												cssClass="form-control"/>
-									  	</div>
-									  	
-									  	<div class="form-group">
-											<label>ICMC Access</label><br>
-											<form:radiobuttons items="${icmcAccessList}" path="icmcAccess" />
+												cssClass="form-control" />
 										</div>
-									  
+
+										<div class="form-group">
+											<label>ICMC Access</label><br>
+											<form:radiobuttons items="${icmcAccessList}"
+												path="icmcAccess" />
+										</div>
+
 										<div class="form-group">
 											<label>Function Permissions</label><br>
 										</div>
-										
+
 										<div class="panel panel-default">
 											<label>Administration Module</label>
 											<div class="form-group rolewrap">
 												<form:checkboxes items="${ADMIN}" path="rolePermission" />
 											</div>
 										</div>
-										
+
 										<div class="panel panel-default">
 											<label>Bin DashBoard Module</label>
-											<div class="form-group rolewrap">	
-												<form:checkboxes items="${BIN_DASHBOARD}" path="rolePermission" />
+											<div class="form-group rolewrap">
+												<form:checkboxes items="${BIN_DASHBOARD}"
+													path="rolePermission" />
 											</div>
 										</div>
-										
+
 										<div class="panel panel-default">
 											<label>Vault Management Module</label>
-											<div class="form-group rolewrap">	
-												<form:checkboxes items="${VAULT_MANAGEMENT}" path="rolePermission" />
+											<div class="form-group rolewrap">
+												<form:checkboxes items="${VAULT_MANAGEMENT}"
+													path="rolePermission" />
 											</div>
 										</div>
-										
+
 										<div class="panel panel-default">
 											<label>CIT/CRA Details Module</label>
-											<div class="form-group rolewrap">	
-												<form:checkboxes items="${CIT_CRA_DETAILS}" path="rolePermission" />
+											<div class="form-group rolewrap">
+												<form:checkboxes items="${CIT_CRA_DETAILS}"
+													path="rolePermission" />
 											</div>
 										</div>
-										
+
 										<div class="panel panel-default">
 											<label>Cash Receipt Module</label>
-											<div class="form-group rolewrap">	
-												<form:checkboxes items="${CASH_RECEIPT}" path="rolePermission" />
+											<div class="form-group rolewrap">
+												<form:checkboxes items="${CASH_RECEIPT}"
+													path="rolePermission" />
 											</div>
 										</div>
-										
+
 										<div class="panel panel-default">
 											<label>Cash Payment Module</label>
-											<div class="form-group rolewrap">	
-												<form:checkboxes items="${CASH_PAYMENT}" path="rolePermission" />
+											<div class="form-group rolewrap">
+												<form:checkboxes items="${CASH_PAYMENT}"
+													path="rolePermission" />
 											</div>
 										</div>
-										
+
 										<div class="panel panel-default">
 											<label>Processing Room Module</label>
-											<div class="form-group rolewrap">	
-												<form:checkboxes items="${PROCESSING_ROOM}" path="rolePermission" />
+											<div class="form-group rolewrap">
+												<form:checkboxes items="${PROCESSING_ROOM}"
+													path="rolePermission" />
 											</div>
 										</div>
-										
+
 										<div class="panel panel-default">
 											<label>Fake Note Management Module</label>
-											<div class="form-group rolewrap">	
-												<form:checkboxes items="${FAKE_NOTE_MANAGEMENT}" path="rolePermission" />
+											<div class="form-group rolewrap">
+												<form:checkboxes items="${FAKE_NOTE_MANAGEMENT}"
+													path="rolePermission" />
 											</div>
 										</div>
-										
+
 										<div class="panel panel-default">
 											<label>Reports Module</label>
-											<div class="form-group rolewrap">	
+											<div class="form-group rolewrap">
 												<form:checkboxes items="${REPORTS}" path="rolePermission" />
 											</div>
 										</div>
-										
+
 										<div class="form-group">
 											<label>Status</label>
-											<form:select path="status" id="status" name="status" cssClass="form-control">
+											<form:select path="status" id="status" name="status"
+												cssClass="form-control">
 												<form:options items="${statusList}" />
 											</form:select>
 										</div>
-										
+
 										<button type="submit" class="btn btn-lg btn-success btn-block"
 											value="Details">Save</button>
 									</form:form>
@@ -262,7 +283,7 @@
 		});
 	
 	</script>
-<script type="text/javascript" src="./js/htmlInjection.js"></script>
+	<script type="text/javascript" src="./js/htmlInjection.js"></script>
 </body>
 
 </html>

@@ -16,49 +16,90 @@
 <meta name="author" content="">
 <link rel="shortcut icon" href="./resources/logo/favicon.ico"
 	type="image/x-icon">
-	
-	<link rel="shortcut icon" href="./resources/logo/favicon.ico" type="image/x-icon">
-<link href="./resources/css/calendar.css" rel="stylesheet" type="text/css" />
-<link rel="stylesheet" type="text/css" href="./resources/css/jquery.datetimepicker.css" />
+
+<link rel="shortcut icon" href="./resources/logo/favicon.ico"
+	type="image/x-icon">
+<link href="./resources/css/calendar.css" rel="stylesheet"
+	type="text/css" />
+<link rel="stylesheet" type="text/css"
+	href="./resources/css/jquery.datetimepicker.css" />
 
 <title>ICICI : View Discrepancy</title>
 
 
 <style type="text/css">
-	.region-con-sec { float: left; width: 100%; border-top: 1px solid #eee; border-bottom: 1px solid #eee; padding-top: 13px;}
-	.region-drop{width:100%; float:left;}
-	.region-drop li{  float:left;margin-right:20px;}
-	.region-drop li label {  float: left;  margin-right: 10px;  line-height: 34px;}
-	.region-drop span {  float: left;}
+.region-con-sec {
+	float: left;
+	width: 100%;
+	border-top: 1px solid #eee;
+	border-bottom: 1px solid #eee;
+	padding-top: 13px;
+}
+
+.region-drop {
+	width: 100%;
+	float: left;
+}
+
+.region-drop li {
+	float: left;
+	margin-right: 20px;
+}
+
+.region-drop li label {
+	float: left;
+	margin-right: 10px;
+	line-height: 34px;
+}
+
+.region-drop span {
+	float: left;
+}
 </style>
 
 <!-- Bootstrap Core CSS -->
-<link href="./resources/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+<link
+	href="./resources/bower_components/bootstrap/dist/css/bootstrap.min.css"
+	rel="stylesheet">
 
 <!-- MetisMenu CSS -->
-<link href="./resources/bower_components/metisMenu/dist/metisMenu.min.css" rel="stylesheet">
+<link
+	href="./resources/bower_components/metisMenu/dist/metisMenu.min.css"
+	rel="stylesheet">
 
 <!-- DataTables CSS -->
-<link href="./resources/bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.css" rel="stylesheet">
+<link
+	href="./resources/bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.css"
+	rel="stylesheet">
 
 <!-- DataTables Responsive CSS -->
-<link href="./resources/bower_components/datatables-responsive/css/responsive.dataTables.scss" rel="stylesheet">
+<link
+	href="./resources/bower_components/datatables-responsive/css/responsive.dataTables.scss"
+	rel="stylesheet">
 
 <!-- Custom CSS -->
 <link href="./resources/dist/css/sb-admin-2.css" rel="stylesheet">
 
 <!-- Custom Fonts -->
-<link href="./resources/bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-<link rel="./resources/stylesheet" type="text/css" href="./resources/dist/css/style.css">
+<link
+	href="./resources/bower_components/font-awesome/css/font-awesome.min.css"
+	rel="stylesheet" type="text/css">
+<link rel="./resources/stylesheet" type="text/css"
+	href="./resources/dist/css/style.css">
 
 <!-- DataTable -->
-<script type="text/javascript"  src="./resources/dataTable/jquery.js"></script>
-<script type="text/javascript" src="./resources/js/jquery.dataTables.min.js"></script>
-<script type="text/javascript" src="./resources/js/dataTables.tableTools.min.js"></script>
+<script type="text/javascript" src="./resources/dataTable/jquery.js"></script>
+<script type="text/javascript"
+	src="./resources/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript"
+	src="./resources/js/dataTables.tableTools.min.js"></script>
 <script type="text/javascript" src="./resources/js/sum().js"></script>
-<link rel="stylesheet" type="text/css" href="./resources/css/jquery.dataTables.min.css">
-<link rel="stylesheet" type="text/css" href='./resources/css/dataTables.tableTools.min.css'>
-<link rel="stylesheet" type="text/css" href='./resources/css/dataTables.tableTools.css'>
+<link rel="stylesheet" type="text/css"
+	href="./resources/css/jquery.dataTables.min.css">
+<link rel="stylesheet" type="text/css"
+	href='./resources/css/dataTables.tableTools.min.css'>
+<link rel="stylesheet" type="text/css"
+	href='./resources/css/dataTables.tableTools.css'>
 <!-- DataTable -->
 <!-- Bootstrap Core CSS -->
 <link
@@ -148,38 +189,33 @@ var id = id;
 							Discrepancy Data
 						</div>
 						<!-- /.panel-heading -->
-						
-						
-						      <br><div class="">
+
+
+						<br>
+						<div class="">
 							<form action="searchDiscrepancy" method="post">
-								
-									
-										
-										<label>Start Date</label>
-										<span>
-										<input type="text" name="fromDate" id="fromDate" cssClass="form-control">
-											
-										</span>
-									
-										<label>End Date</label>
-										<span>
-										<input type="text" name="toDate" id="toDate" cssClass="form-control">
-										</span>
-										
-										<label></label>
-										<span>
-											<button type="submit" class="btn btn-default" value="Details" style="width: 99px;" >Search</button>
-										</span>
-														
-								
-								
-							</form>	
+
+
+
+								<label>Start Date</label> <span> <input type="text"
+									name="fromDate" id="fromDate" cssClass="form-control">
+
+								</span> <label>End Date</label> <span> <input type="text"
+									name="toDate" id="toDate" cssClass="form-control">
+								</span> <label></label> <span>
+									<button type="submit" class="btn btn-default" value="Details"
+										style="width: 99px;">Search</button>
+								</span>
+
+
+
+							</form>
 						</div>
-						
-						
+
+
 						<div class="panel-body">
-						 
-					
+
+
 							<div class="dataTable_wrapper">
 								<form id="showAll">
 									<!-- <table class="table table-striped table-bordered table-hover" id="dataTables-example"> -->
@@ -293,20 +329,23 @@ var id = id;
         });
     });
     </script>
-    
-    	<!-- Bootstrap Core JavaScript -->
-	<script src="./resources/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+
+	<!-- Bootstrap Core JavaScript -->
+	<script
+		src="./resources/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 
 	<!-- Metis Menu Plugin JavaScript -->
-	<script src="./resources/bower_components/metisMenu/dist/metisMenu.min.js"></script>
-	<script src="./resources/bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.min.js"></script>
+	<script
+		src="./resources/bower_components/metisMenu/dist/metisMenu.min.js"></script>
+	<script
+		src="./resources/bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.min.js"></script>
 
 	<!-- Custom Theme JavaScript -->
 	<script src="./resources/dist/js/sb-admin-2.js"></script>
 	<script type="text/javascript" src="./js/htmlInjection.js"></script>
-	
-	 <script src="./resources/js/jquery.datetimepicker.js"></script>
-    <script>
+
+	<script src="./resources/js/jquery.datetimepicker.js"></script>
+	<script>
 		$('#fromDate').datetimepicker({
 			format : 'Y-m-d',
 		});
@@ -317,7 +356,7 @@ var id = id;
 	</script>
 
 
-<script src="./resources/bower_components/jquery/dist/jquery.min.js"></script>
+	<script src="./resources/bower_components/jquery/dist/jquery.min.js"></script>
 
 	<!-- Bootstrap Core JavaScript -->
 	<script

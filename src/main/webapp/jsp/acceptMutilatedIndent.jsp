@@ -40,8 +40,8 @@
 	}
 </script>
  -->
- 
- <script type="text/javascript">
+
+<script type="text/javascript">
 	function doAjaxPostUpdateStatus(str) {
 		addHeader();
 		
@@ -62,9 +62,9 @@
 		});
 	}
 </script>
- 
- 
- 
+
+
+
 <!-- Bootstrap Core CSS -->
 <link
 	href="./resources/bower_components/bootstrap/dist/css/bootstrap.min.css"
@@ -185,9 +185,9 @@
 														onclick="doAjaxPostUpdateStatus('${row.id}');this.disabled=true;"></td>
 												</tr>
 											</c:forEach> --%>
-											
+
 											<c:forEach var="row" items="${indentList}">
-											      
+
 												<tr>
 													<td>${row.denomination}</td>
 													<td>${row.bundle}</td>

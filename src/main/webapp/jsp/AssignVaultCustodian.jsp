@@ -127,19 +127,18 @@
 											<label>User ID Of Handing Over Charge</label>
 											<%-- <form:input path="handingOverCharge" maxlength="45"
 												id="handingOverCharge" name="handingOverCharge" cssClass="form-control" /> --%>
-										<form:select path="handingOverCharge" id="handingOverCharge" name="handingOverCharge"
-												cssClass="form-control"
+											<form:select path="handingOverCharge" id="handingOverCharge"
+												name="handingOverCharge" cssClass="form-control"
 												onchange="doAjaxForCoustodianHandover();">
 												<form:option value="">Select User ID </form:option>
 												<form:options items="${users}" itemValue="id"
-													 itemLabel="name"  />
+													itemLabel="name" />
 											</form:select>
 										</div>
 										<div class="form-group">
 											<label>User ID Of Taken Over Charge</label>
-											<form:input path="userId" maxlength="45"
-												id="userId" name="userId"
-												cssClass="form-control" readonly="true"/>
+											<form:input path="userId" maxlength="45" id="userId"
+												name="userId" cssClass="form-control" readonly="true" />
 										</div>
 										<%-- <div class="form-group">
 											<label>User ID Of Taking Over Charge</label>

@@ -80,54 +80,55 @@
 							<div class="row">
 								<div class="col-lg-6">
 									<!--<form role="form">-->
-									<form:form id="userPage" name="userPage" action="saveTrainingRegister"
-										method="post" modelAttribute="user" autocomplete="off">
-                                           
-                                           
-                                         
-                                                      <div class="form-group">
+									<form:form id="userPage" name="userPage"
+										action="saveTrainingRegister" method="post"
+										modelAttribute="user" autocomplete="off">
+
+
+
+										<div class="form-group">
 											<label>Employee Name</label>
-											<form:input path="EmployeeName" id="EmployeeName" name="EmployeeName"
-												cssClass="form-control" />
-										</div> 
-										
-										                <div class="form-group">
-											<label>Employee Id</label>
-											<form:input path="EmployeeId" id="EmployeeId" name="EmployeeId"
-												cssClass="form-control" />
+											<form:input path="EmployeeName" id="EmployeeName"
+												name="EmployeeName" cssClass="form-control" />
 										</div>
-                                               
-                                                 <div class="form-group">
+
+										<div class="form-group">
+											<label>Employee Id</label>
+											<form:input path="EmployeeId" id="EmployeeId"
+												name="EmployeeId" cssClass="form-control" />
+										</div>
+
+										<div class="form-group">
 											<label>Location</label>
 											<form:input path="Location" id="Location" name="Location"
 												cssClass="form-control" />
 										</div>
 
-                                         <div class="form-group">
+										<div class="form-group">
 											<label>Subject</label>
 											<form:input path="Subject" id="Subject" name="Subject"
 												cssClass="form-control" />
 										</div>
-                                         
+
 										<div class="form-group">
 											<label>Training Date</label>
 											<form:input path="trainingDate" id="trainingDate"
 												name="trainingDate" cssClass="form-control" />
 										</div>
-                                            
-                                          <%--   <div class="form-group">
+
+										<%--   <div class="form-group">
 											<label>Training Time</label>
 											<form:input path="trainingTime" id="trainingTime"
 												name="trainingTime" cssClass="form-control" />
 										</div> --%>
-                                            
-                                           
-                                            <div class="form-group">
+
+
+										<div class="form-group">
 											<label>Duration</label>
-											<form:input path="Duration" id="Duration"
-												name="Duration" cssClass="form-control" />
+											<form:input path="Duration" id="Duration" name="Duration"
+												cssClass="form-control" />
 										</div>
-										
+
 
 										<div class="form-group">
 											<label>Name of Trainer</label>

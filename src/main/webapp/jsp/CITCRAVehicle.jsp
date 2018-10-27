@@ -17,12 +17,14 @@ function pageSubmit(){
 	window.location='././viewCITCRAVehicle';
 } 
 </script>
-<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script type="text/javascript"
+	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script type="text/javascript" src="./js/jquery.validate.min.js"></script>
 
 <title>ICICI : CIT/CRA Vehicle</title>
 
-<link href="./resources/css/calendar.css" rel="stylesheet" type="text/css" />
+<link href="./resources/css/calendar.css" rel="stylesheet"
+	type="text/css" />
 <link rel="stylesheet" type="text/css"
 	href="./resources/css/jquery.datetimepicker.css" />
 
@@ -71,75 +73,84 @@ function pageSubmit(){
 				<div class="col-lg-12">
 					<div class="panel panel-default">
 						<!-- <div class="panel-heading">Add Vehicle</div> -->
-						
+
 						<div class="panel-heading">
-                        	<ul>
-                        		<li>
-                        			<a href="././viewCITCRAVehicle"><i class="fa fa-table fa-fw"></i> View List of CIT/CRA Vehicle's</a>
-                        		</li>
-							</ul>Add Vehicle
-                        </div>
-						
+							<ul>
+								<li><a href="././viewCITCRAVehicle"><i
+										class="fa fa-table fa-fw"></i> View List of CIT/CRA Vehicle's</a>
+								</li>
+							</ul>
+							Add Vehicle
+						</div>
+
 						<div class="panel-body">
 							<div class="row">
 								<div class="col-lg-6">
 									<!--<form role="form">-->
-									<form:form id="userPage" name="userPage" action="addCITCRAVehicle" method="post"
-										modelAttribute="user" enctype="multipart/form-data" autocomplete="off">
-										<div align="center" style="color: red"><b>${errorMsg}</b></div>
+									<form:form id="userPage" name="userPage"
+										action="addCITCRAVehicle" method="post" modelAttribute="user"
+										enctype="multipart/form-data" autocomplete="off">
+										<div align="center" style="color: red">
+											<b>${errorMsg}</b>
+										</div>
 										<div class="form-group">
 											<label>Vendor Name</label>
-											<form:select id="name" name="name"
-												path="name" cssClass="form-control">
+											<form:select id="name" name="name" path="name"
+												cssClass="form-control">
 												<form:option value="">Select Vendor Name</form:option>
 												<form:options items="${records}" itemValue="name"
 													itemLabel="name" />
 											</form:select>
 										</div>
-										
+
 										<div class="form-group">
 											<label>Vehicle Number</label>
 											<form:input path="number" id="number" name="number"
 												maxlength="45" cssClass="form-control" />
 										</div>
-										
+
 										<div class="form-group">
-											<label>Bought Date</label>  <form:input path="boughtDate" id="boughtDate" name="boughtDate"
-												cssClass="form-control" />
+											<label>Bought Date</label>
+											<form:input path="boughtDate" id="boughtDate"
+												name="boughtDate" cssClass="form-control" />
 										</div>
-										
+
 										<div class="form-group">
 											<label>Registration City</label>
-											<form:input path="regCityName" id="regCityName" name="regCityName"
-												maxlength="45" cssClass="form-control" />
+											<form:input path="regCityName" id="regCityName"
+												name="regCityName" maxlength="45" cssClass="form-control" />
 										</div>
-										
+
 										<div class="form-group">
 											<label>Vehicle Insurance</label>
 											<form:input path="insurance" id="insurance" name="insurance"
 												maxlength="45" cssClass="form-control" />
 										</div>
-										
+
 										<div class="form-group">
-											<label>Fitness Expiry Date</label>  <form:input path="fitnessExpiryDate" id="fitnessExpiryDate" name="fitnessExpiryDate"
+											<label>Fitness Expiry Date</label>
+											<form:input path="fitnessExpiryDate" id="fitnessExpiryDate"
+												name="fitnessExpiryDate" cssClass="form-control" />
+										</div>
+
+										<div class="form-group">
+											<label>Pollution Expiry Date</label>
+											<form:input path="pollutionExpiryDate"
+												id="pollutionExpiryDate" name="pollutionExpiryDate"
 												cssClass="form-control" />
 										</div>
-										
+
 										<div class="form-group">
-											<label>Pollution Expiry Date</label>  <form:input path="pollutionExpiryDate" id="pollutionExpiryDate" name="pollutionExpiryDate"
-												cssClass="form-control" />
+											<label>Permit Date</label>
+											<form:input path="permitDate" id="permitDate"
+												name="permitDate" cssClass="form-control" />
 										</div>
-										
-										<div class="form-group">
-											<label>Permit Date</label>  <form:input path="permitDate" id="permitDate" name="permitDate"
-												cssClass="form-control" />
-										</div>
-										
+
 										<div class="col-lg-6 form-group">
-											<label>Choose File</label> <input type="file" id="file" name="file"
-												Class="form-control" />
+											<label>Choose File</label> <input type="file" id="file"
+												name="file" Class="form-control" />
 										</div>
-										
+
 										<button type="submit" class="btn btn-lg btn-success btn-block"
 											value="Details">Submit</button>
 									</form:form>
@@ -176,7 +187,7 @@ function pageSubmit(){
 
 	<!-- Custom Theme JavaScript -->
 	<script src="./resources/dist/js/sb-admin-2.js"></script>
-	
+
 	<script src="./resources/js/jquery.datetimepicker.js"></script>
 	<script>
 		$('#pollutionExpiryDate').datetimepicker({
@@ -197,8 +208,8 @@ function pageSubmit(){
 		});
 		
 	</script>
-	
-	
+
+
 	<script type="text/javascript">
 	$.validator.addMethod("loginRegexVehNum", function(value, element) {
 	    return this.optional(element) || /^[A-Za-z0-9\s]+$/i.test(value);
@@ -326,7 +337,7 @@ function pageSubmit(){
 	  });
 	});
 	</script>
-<script type="text/javascript" src="./js/htmlInjection.js"></script>
+	<script type="text/javascript" src="./js/htmlInjection.js"></script>
 </body>
 
 </html>

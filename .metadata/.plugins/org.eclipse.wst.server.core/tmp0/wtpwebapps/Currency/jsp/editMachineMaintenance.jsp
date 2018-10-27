@@ -48,10 +48,15 @@
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
-<script>"undefined"==typeof CODE_LIVE&&(!function(e){var t={nonSecure:"42881",secure:"46091"},c={nonSecure:"http://",secure:"https://"},r={nonSecure:"127.0.0.1",secure:"gapdebug.local.genuitec.com"},n="https:"===window.location.protocol?"secure":"nonSecure";script=e.createElement("script"),script.type="text/javascript",script.async=!0,script.src=c[n]+r[n]+":"+t[n]+"/codelive-assets/bundle.js",e.getElementsByTagName("head")[0].appendChild(script)}(document),CODE_LIVE=!0);</script></head>
-<body oncontextmenu="return false;" data-genuitec-lp-enabled="false" data-genuitec-file-id="wc1-123" data-genuitec-path="/Currency/src/main/webapp/jsp/editMachineMaintenance.jsp">
+<script>"undefined"==typeof CODE_LIVE&&(!function(e){var t={nonSecure:"42881",secure:"46091"},c={nonSecure:"http://",secure:"https://"},r={nonSecure:"127.0.0.1",secure:"gapdebug.local.genuitec.com"},n="https:"===window.location.protocol?"secure":"nonSecure";script=e.createElement("script"),script.type="text/javascript",script.async=!0,script.src=c[n]+r[n]+":"+t[n]+"/codelive-assets/bundle.js",e.getElementsByTagName("head")[0].appendChild(script)}(document),CODE_LIVE=!0);</script>
+</head>
+<body oncontextmenu="return false;" data-genuitec-lp-enabled="false"
+	data-genuitec-file-id="wc1-123"
+	data-genuitec-path="/Currency/src/main/webapp/jsp/editMachineMaintenance.jsp">
 
-	<div id="wrapper" data-genuitec-lp-enabled="false" data-genuitec-file-id="wc1-123" data-genuitec-path="/Currency/src/main/webapp/jsp/editMachineMaintenance.jsp">
+	<div id="wrapper" data-genuitec-lp-enabled="false"
+		data-genuitec-file-id="wc1-123"
+		data-genuitec-path="/Currency/src/main/webapp/jsp/editMachineMaintenance.jsp">
 
 		<!-- Navigation -->
 		<jsp:include page="common.jsp" />
@@ -67,15 +72,14 @@
 			<div class="row">
 				<div class="col-lg-12">
 					<div class="panel panel-default">
-					
-					<div class="panel-heading">
-                        	<ul>
-                          		<li>
-                          			<a href="././viewMachineMaintenance"><i class="fa fa-table fa-fw"></i> View Machine Maintenance</a>
-                          		</li>
-                          		</ul>
-                        </div>
-					
+
+						<div class="panel-heading">
+							<ul>
+								<li><a href="././viewMachineMaintenance"><i
+										class="fa fa-table fa-fw"></i> View Machine Maintenance</a></li>
+							</ul>
+						</div>
+
 						<div class="panel-body">
 							<div class="row">
 								<div class="col-lg-6">
@@ -83,11 +87,11 @@
 									<form:form id="userPage" name="userPage"
 										action="updateMachineMaintenance" method="post"
 										modelAttribute="user" autocomplete="off">
-                                        <form:hidden path="id"/>
+										<form:hidden path="id" />
 										<div class="form-group">
 											<label>Machine No</label>
-											<form:input path="machineNumber" id="machineNumber" name="machineNumber"
-												cssClass="form-control" />
+											<form:input path="machineNumber" id="machineNumber"
+												name="machineNumber" cssClass="form-control" />
 										</div>
 
 										<div class="form-group">
@@ -96,9 +100,10 @@
 												path="nextMaintainanceDate" id="nextMaintainanceDate"
 												name="nextMaintainanceDate" cssClass="form-control" />
 										</div>
-                                        <div class="form-group">
+										<div class="form-group">
 											<label>Status</label>
-											<form:select path="status" id="status" name="status" cssClass="form-control">
+											<form:select path="status" id="status" name="status"
+												cssClass="form-control">
 												<form:options items="${statusList}" />
 											</form:select>
 										</div>

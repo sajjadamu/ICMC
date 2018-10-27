@@ -4,7 +4,8 @@
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <html lang="en">
 <head>
-<link rel="shortcut icon" href="./resources/logo/favicon.ico" type="image/x-icon">
+<link rel="shortcut icon" href="./resources/logo/favicon.ico"
+	type="image/x-icon">
 <script src="./js/jquery-1.12.0.min.js"></script>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -13,7 +14,8 @@
 <meta name="author" content="">
 <title>ICICI :Cash Processing</title>
 
-<script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
+<script type="text/javascript"
+	src="http://code.jquery.com/jquery.min.js"></script>
 <script type="text/javascript">
 $(document).ready(function(){
 	$("#member").keyup(function(){
@@ -83,7 +85,7 @@ $(document).ready(function() {
 <body oncontextmenu="return false;">
 	<div id="wrapper">
 		<!-- Navigation -->
-		<jsp:include page="common.jsp" /> 
+		<jsp:include page="common.jsp" />
 
 		<div id="page-wrapper">
 			<!--  <div class="row">
@@ -96,85 +98,103 @@ $(document).ready(function() {
 			<div class="row">
 				<div class="col-lg-12">
 					<div class="panel panel-default">
-						<div class="panel-heading">Discrepancy Processing </div>
+						<div class="panel-heading">Discrepancy Processing</div>
 						<div class="panel-body">
 							<div class="row">
-									<!--<form role="form">-->
-									<form:form id="cash" action="saveCashProcessing" method="post"
-										modelAttribute="user" enctype="multipart/form-data">
-										<div class="col-lg-6 form-group">
-											<label>Machine No</label>
-											<form:input path="machineNo" id="machineNo" cssClass="form-control" />
-										</div>
-										<div class="col-lg-6 form-group">
-											<label>Date</label>
-											<form:input path="date" id="date" cssClass="form-control"/>
-										</div>
-										<div class="col-lg-6 form-group">
-											<label>Sol ID</label>
-											<form:input path="solId" id="solId" cssClass="form-control"
-												onkeyup="doAjaxPostForBranch()" />
-										</div>
-                    					 <div class="col-lg-6 form-group">
-											<label>Branch</label>
-											<form:input path="branch" id="branch" cssClass="form-control"
-												readonly="true" />
-										</div>
-										
-										<div class="col-lg-6 form-group">
-											<label>Upload Photo</label>
-											<input type="file" name="file"/>
-										</div>
-										<div class="col-lg-6 form-group">
-										<label>Account/Teller/CAM</label>
-														<select name="account_teller_cam" id="account_teller_cam"
-															class="form-control deno-figure-select">
-															<option value="Account">Select Option</option>
-															<option value="Account">Account</option>
-															<option value="Teller">Teller</option>
-															<option value="CAM">CAM</option>
-														</select>
-													</div>
-													<div class="col-lg-6 form-group">
-											<label>Customer name OR Account number</label>
-											<form:input path="account_teller_cam_value" id="account_teller_cam_value" cssClass="form-control" />
-										</div>
-										<div class="col-lg-6 form-group" id="descrip">
-											<label>Discrepancy</label>
-											<form:radiobutton path="descripancy" id="descripancy" value="shortage"/><span class="deno-value">Shortage</span> 
-											<form:radiobutton path="descripancy" id="descripancy" value="excess"/><span class="deno-value">Excess</span>
-											<form:radiobutton path="descripancy" id="descripancy" value="fake"/><span class="deno-value">Fake</span>
-											<form:radiobutton path="descripancy" id="descripancy" value="mutilated" name="mutilated"/><span class="deno-value">Mutilated</span>
-										</div>
-										 <div class="desc" id="mutil" style="display: none;"> 
+								<!--<form role="form">-->
+								<form:form id="cash" action="saveCashProcessing" method="post"
+									modelAttribute="user" enctype="multipart/form-data">
+									<div class="col-lg-6 form-group">
+										<label>Machine No</label>
+										<form:input path="machineNo" id="machineNo"
+											cssClass="form-control" />
+									</div>
+									<div class="col-lg-6 form-group">
+										<label>Date</label>
+										<form:input path="date" id="date" cssClass="form-control" />
+									</div>
+									<div class="col-lg-6 form-group">
+										<label>Sol ID</label>
+										<form:input path="solId" id="solId" cssClass="form-control"
+											onkeyup="doAjaxPostForBranch()" />
+									</div>
+									<div class="col-lg-6 form-group">
+										<label>Branch</label>
+										<form:input path="branch" id="branch" cssClass="form-control"
+											readonly="true" />
+									</div>
+
+									<div class="col-lg-6 form-group">
+										<label>Upload Photo</label> <input type="file" name="file" />
+									</div>
+									<div class="col-lg-6 form-group">
+										<label>Account/Teller/CAM</label> <select
+											name="account_teller_cam" id="account_teller_cam"
+											class="form-control deno-figure-select">
+											<option value="Account">Select Option</option>
+											<option value="Account">Account</option>
+											<option value="Teller">Teller</option>
+											<option value="CAM">CAM</option>
+										</select>
+									</div>
+									<div class="col-lg-6 form-group">
+										<label>Customer name OR Account number</label>
+										<form:input path="account_teller_cam_value"
+											id="account_teller_cam_value" cssClass="form-control" />
+									</div>
+									<div class="col-lg-6 form-group" id="descrip">
+										<label>Discrepancy</label>
+										<form:radiobutton path="descripancy" id="descripancy"
+											value="shortage" />
+										<span class="deno-value">Shortage</span>
+										<form:radiobutton path="descripancy" id="descripancy"
+											value="excess" />
+										<span class="deno-value">Excess</span>
+										<form:radiobutton path="descripancy" id="descripancy"
+											value="fake" />
+										<span class="deno-value">Fake</span>
+										<form:radiobutton path="descripancy" id="descripancy"
+											value="mutilated" name="mutilated" />
+										<span class="deno-value">Mutilated</span>
+									</div>
+									<div class="desc" id="mutil" style="display: none;">
 										<!-- <div class="col-lg-6 form-group"> -->
-											<label>Discrepancy</label>
-											<form:radiobutton path="descripancy" id="descripancy" value="shortage"/><span class="deno-value">Full Value</span> 
-											<form:radiobutton path="descripancy" id="descripancy" value="excess"/><span class="deno-value">Half Value</span>
-											<form:radiobutton path="descripancy" id="descripancy" value="fake"/><span class="deno-value">Zero Value</span>
+										<label>Discrepancy</label>
+										<form:radiobutton path="descripancy" id="descripancy"
+											value="shortage" />
+										<span class="deno-value">Full Value</span>
+										<form:radiobutton path="descripancy" id="descripancy"
+											value="excess" />
+										<span class="deno-value">Half Value</span>
+										<form:radiobutton path="descripancy" id="descripancy"
+											value="fake" />
+										<span class="deno-value">Zero Value</span>
+									</div>
+
+									<div class="form-group">
+										<label>Number of Entries</label> <input type="text"
+											id="member" name="member" value="" class="form-control"><br />
+										<div id="container">
+											<table id="table1">
+												<tr>
+													<td><strong>Denomination</strong></td>
+													<td><strong>Note Serial Number</strong></td>
+													<td><strong>Value</strong></td>
+													<td><strong>SR Number</strong></td>
+												</tr>
+											</table>
 										</div>
-                    									
-										<div class="form-group">
-                                         <label>Number of Entries</label>
-											<input type="text" id="member" name="member" value="" class="form-control"><br />
-											<div id="container">
-												<table id="table1">
-													<tr>
-														<td><strong>Denomination</strong></td>
-														<td><strong>Note Serial Number</strong></td>
-														<td><strong>Value</strong></td>
-														<td><strong>SR Number</strong></td>
-													</tr>
-												</table>
-											</div>
-										</div> 
-										
-  <div class="col-lg-12"><button style="width: 99px;" value="Details" class="btn btn-default" type="submit">Save</button></div>
-</form:form>
+									</div>
+
+									<div class="col-lg-12">
+										<button style="width: 99px;" value="Details"
+											class="btn btn-default" type="submit">Save</button>
+									</div>
+								</form:form>
 								<!-- /.col-lg-6 (nested) -->
 								<!-- /.col-lg-6 (nested) -->
-</div>
-							
+							</div>
+
 							<!-- /.row (nested) -->
 						</div>
 						<!-- /.panel-body -->
@@ -205,7 +225,7 @@ $(document).ready(function() {
 	<script src="./resources/dist/js/sb-admin-2.js"></script>
 
 	<script src="./resources/js/jQuery.print.js"></script>
-<script type="text/javascript" src="./js/htmlInjection.js"></script>
+	<script type="text/javascript" src="./js/htmlInjection.js"></script>
 </body>
 
 </html>

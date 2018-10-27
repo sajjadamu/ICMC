@@ -11,11 +11,13 @@
 <meta name="author" content="">
 <link rel="shortcut icon" href="./resources/logo/favicon.ico"
 	type="image/x-icon">
-<link href="./resources/css/calendar.css" rel="stylesheet" type="text/css" />
+<link href="./resources/css/calendar.css" rel="stylesheet"
+	type="text/css" />
 <link rel="stylesheet" type="text/css"
 	href="./resources/css/jquery.datetimepicker.css" />
 
-<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script type="text/javascript"
+	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script type="text/javascript" src="./js/jquery.validate.min.js"></script>
 
 <title>ICICI : Edit Delegate Right</title>
@@ -48,9 +50,14 @@
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
-<script>"undefined"==typeof CODE_LIVE&&(!function(e){var t={nonSecure:"42881",secure:"46091"},c={nonSecure:"http://",secure:"https://"},r={nonSecure:"127.0.0.1",secure:"gapdebug.local.genuitec.com"},n="https:"===window.location.protocol?"secure":"nonSecure";script=e.createElement("script"),script.type="text/javascript",script.async=!0,script.src=c[n]+r[n]+":"+t[n]+"/codelive-assets/bundle.js",e.getElementsByTagName("head")[0].appendChild(script)}(document),CODE_LIVE=!0);</script></head>
-<body oncontextmenu="return false;" data-genuitec-lp-enabled="false" data-genuitec-file-id="wc1-109" data-genuitec-path="/Currency/src/main/webapp/jsp/editDelegateRight.jsp">
-	<div id="wrapper" data-genuitec-lp-enabled="false" data-genuitec-file-id="wc1-109" data-genuitec-path="/Currency/src/main/webapp/jsp/editDelegateRight.jsp">
+<script>"undefined"==typeof CODE_LIVE&&(!function(e){var t={nonSecure:"42881",secure:"46091"},c={nonSecure:"http://",secure:"https://"},r={nonSecure:"127.0.0.1",secure:"gapdebug.local.genuitec.com"},n="https:"===window.location.protocol?"secure":"nonSecure";script=e.createElement("script"),script.type="text/javascript",script.async=!0,script.src=c[n]+r[n]+":"+t[n]+"/codelive-assets/bundle.js",e.getElementsByTagName("head")[0].appendChild(script)}(document),CODE_LIVE=!0);</script>
+</head>
+<body oncontextmenu="return false;" data-genuitec-lp-enabled="false"
+	data-genuitec-file-id="wc1-109"
+	data-genuitec-path="/Currency/src/main/webapp/jsp/editDelegateRight.jsp">
+	<div id="wrapper" data-genuitec-lp-enabled="false"
+		data-genuitec-file-id="wc1-109"
+		data-genuitec-path="/Currency/src/main/webapp/jsp/editDelegateRight.jsp">
 		<!-- Navigation -->
 		<jsp:include page="common.jsp" />
 
@@ -70,43 +77,45 @@
 							<div class="row">
 								<div class="col-lg-6">
 									<!--<form role="form">-->
-									<form:form id="userPage" action="updateDelegateRight" method="post" name="userPage"
-										modelAttribute="user" >
-										
-										<form:hidden path="id"/>
+									<form:form id="userPage" action="updateDelegateRight"
+										method="post" name="userPage" modelAttribute="user">
+
+										<form:hidden path="id" />
 										<div class="form-group">
 											<label>User ID</label>
-											<form:input path="userId" id="userId" name="userId" maxlength="32"
-												readonly="true" cssClass="form-control" />
-										</div>	
-										
-										 <div class="form-group">
+											<form:input path="userId" id="userId" name="userId"
+												maxlength="32" readonly="true" cssClass="form-control" />
+										</div>
+
+										<div class="form-group">
 											<label>Roles</label><br>
-											<form:radiobuttons items="${rolesList}" itemValue="id" itemLabel="id" path="roleId" id="role" name="role" /> 
-										 </div>
-										
+											<form:radiobuttons items="${rolesList}" itemValue="id"
+												itemLabel="id" path="roleId" id="role" name="role" />
+										</div>
+
 										<div class="form-group">
 											<label>Period From</label>
-                                        	<form:input path="periodFrom" id="periodFrom" name="periodFrom"
-												cssClass="form-control" />
+											<form:input path="periodFrom" id="periodFrom"
+												name="periodFrom" cssClass="form-control" />
 										</div>
-										
+
 										<div class="form-group">
 											<label>Period To</label>
-    										<form:input path="periodTo" id="periodTo" name="periodTo"
+											<form:input path="periodTo" id="periodTo" name="periodTo"
 												cssClass="form-control" />
 										</div>
-										
+
 										<div class="form-group">
 											<label>Status</label>
-											 <form:select path="status" id="status" name="status" cssClass="form-control">
-											 	<form:option value="ENABLED">Enabled</form:option>
-											 	<form:option value="DISABLED">Disabled</form:option>
-											 	<form:option value="DELETED">Deleted</form:option>
-											 </form:select>
+											<form:select path="status" id="status" name="status"
+												cssClass="form-control">
+												<form:option value="ENABLED">Enabled</form:option>
+												<form:option value="DISABLED">Disabled</form:option>
+												<form:option value="DELETED">Deleted</form:option>
+											</form:select>
 										</div>
-										
-										<button type="submit"  class="btn btn-lg btn-success btn-block"
+
+										<button type="submit" class="btn btn-lg btn-success btn-block"
 											value="Details">Submit</button>
 									</form:form>
 								</div>
@@ -142,7 +151,7 @@
 
 	<!-- Custom Theme JavaScript -->
 	<script src="./resources/dist/js/sb-admin-2.js"></script>
-<script type="text/javascript">
+	<script type="text/javascript">
 $.validator.addMethod("loginRegex", function(value, element) {
     return this.optional(element) || /^[0-9]+$/i.test(value);
 }, "Software must contain only letters,Space , dashes.");
@@ -182,7 +191,7 @@ $.validator.addMethod("loginRegex", function(value, element) {
 	  });
 	});
 	</script>
-	
+
 	<script src="./resources/js/jquery.datetimepicker.js"></script>
 	<script>
 		
@@ -195,7 +204,7 @@ $.validator.addMethod("loginRegex", function(value, element) {
 
 		});
 	</script>
-<script type="text/javascript" src="./js/htmlInjection.js"></script>
+	<script type="text/javascript" src="./js/htmlInjection.js"></script>
 </body>
 
 </html>

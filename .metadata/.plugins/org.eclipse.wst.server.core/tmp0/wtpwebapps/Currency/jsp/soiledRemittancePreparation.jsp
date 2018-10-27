@@ -5,10 +5,12 @@
 <%@page import="java.util.List"%>
 <%@page import="com.mysema.query.Tuple"%>
 <%@page import="java.util.Date"%>
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+	pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jstl/core_rt"%>
-<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="sec"
+	uri="http://www.springframework.org/security/tags"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <html lang="en">
 <head>
@@ -17,7 +19,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="">
 <meta name="author" content="">
-<link rel="shortcut icon" href="./resources/logo/favicon.ico" type="image/x-icon">
+<link rel="shortcut icon" href="./resources/logo/favicon.ico"
+	type="image/x-icon">
 
 <script type="text/javascript" src="./js/jquery-1.11.1.min.js"></script>
 <script type="text/javascript" src="./js/jquery.validate.min.js"></script>
@@ -25,19 +28,26 @@
 <title>ICICI : Soiled Remittance Preparation</title>
 
 <!-- Bootstrap Core CSS -->
-<link href="./resources/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+<link
+	href="./resources/bower_components/bootstrap/dist/css/bootstrap.min.css"
+	rel="stylesheet">
 
 <!-- MetisMenu CSS -->
-<link href="./resources/bower_components/metisMenu/dist/metisMenu.min.css" rel="stylesheet">
+<link
+	href="./resources/bower_components/metisMenu/dist/metisMenu.min.css"
+	rel="stylesheet">
 
 <!-- Custom CSS -->
 <link href="./resources/dist/css/sb-admin-2.css" rel="stylesheet">
 
 <!-- Custom Fonts -->
-<link href="./resources/bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-<link rel="stylesheet" type="text/css" href="./resources/dist/css/style.css">
-	
-	
+<link
+	href="./resources/bower_components/font-awesome/css/font-awesome.min.css"
+	rel="stylesheet" type="text/css">
+<link rel="stylesheet" type="text/css"
+	href="./resources/dist/css/style.css">
+
+
 <script type="text/javascript">
 function doAjaxPostForDeduction(str) { 
 	addHeader();  
@@ -118,12 +128,17 @@ function doAjaxPostForDeduction(str) {
 	
 </script>
 
-<script>"undefined"==typeof CODE_LIVE&&(!function(e){var t={nonSecure:"42881",secure:"46091"},c={nonSecure:"http://",secure:"https://"},r={nonSecure:"127.0.0.1",secure:"gapdebug.local.genuitec.com"},n="https:"===window.location.protocol?"secure":"nonSecure";script=e.createElement("script"),script.type="text/javascript",script.async=!0,script.src=c[n]+r[n]+":"+t[n]+"/codelive-assets/bundle.js",e.getElementsByTagName("head")[0].appendChild(script)}(document),CODE_LIVE=!0);</script></head>
+<script>"undefined"==typeof CODE_LIVE&&(!function(e){var t={nonSecure:"42881",secure:"46091"},c={nonSecure:"http://",secure:"https://"},r={nonSecure:"127.0.0.1",secure:"gapdebug.local.genuitec.com"},n="https:"===window.location.protocol?"secure":"nonSecure";script=e.createElement("script"),script.type="text/javascript",script.async=!0,script.src=c[n]+r[n]+":"+t[n]+"/codelive-assets/bundle.js",e.getElementsByTagName("head")[0].appendChild(script)}(document),CODE_LIVE=!0);</script>
+</head>
 
-<body oncontextmenu="return false;" data-genuitec-lp-enabled="false" data-genuitec-file-id="wc1-191" data-genuitec-path="/Currency/src/main/webapp/jsp/soiledRemittancePreparation.jsp">
-	<div id="wrapper" data-genuitec-lp-enabled="false" data-genuitec-file-id="wc1-191" data-genuitec-path="/Currency/src/main/webapp/jsp/soiledRemittancePreparation.jsp">
+<body oncontextmenu="return false;" data-genuitec-lp-enabled="false"
+	data-genuitec-file-id="wc1-191"
+	data-genuitec-path="/Currency/src/main/webapp/jsp/soiledRemittancePreparation.jsp">
+	<div id="wrapper" data-genuitec-lp-enabled="false"
+		data-genuitec-file-id="wc1-191"
+		data-genuitec-path="/Currency/src/main/webapp/jsp/soiledRemittancePreparation.jsp">
 		<!-- Navigation -->
-		<jsp:include page="common.jsp" /> 
+		<jsp:include page="common.jsp" />
 
 		<div id="page-wrapper">
 			<!-- /.row -->
@@ -132,47 +147,53 @@ function doAjaxPostForDeduction(str) {
 					<div class="panel panel-default">
 						<div class="panel-heading">
 							<ul>
-                        		<li>
-                        			<a href="././viewPreparedSoiledBoxes"><i class="fa fa-table fa-fw"></i> View Prepared BOX's</a>
-                        		</li>
-                        	</ul>Preparation for Soiled Remittance
+								<li><a href="././viewPreparedSoiledBoxes"><i
+										class="fa fa-table fa-fw"></i> View Prepared BOX's</a></li>
+							</ul>
+							Preparation for Soiled Remittance
 						</div>
-						
-							<table class="table table-striped table-bordered table-hover">
-								<thead>
-									<tr>
-										<th>DENOMINATION</th>
-										<th>AVAILABLE BUNDLE</th>
-										<th>OLD DATE</th>
-										<th>EXTRACT BUNDLE</th>
-										<th>BIN/BUNDLE</th>
-										<th>ACTION</th>
-									</tr>
-								</thead>
-								<tbody>
-									<%
+
+						<table class="table table-striped table-bordered table-hover">
+							<thead>
+								<tr>
+									<th>DENOMINATION</th>
+									<th>AVAILABLE BUNDLE</th>
+									<th>OLD DATE</th>
+									<th>EXTRACT BUNDLE</th>
+									<th>BIN/BUNDLE</th>
+									<th>ACTION</th>
+								</tr>
+							</thead>
+							<tbody>
+								<%
 										List<Tuple> listTupleForSoiled = (List<Tuple>) request.getAttribute("soiledBinSummary");
 										for (Tuple tuple : listTupleForSoiled) {
 									%>
-									<tr>
-										<td id="denomination<%=tuple.get(0, Integer.class)%>"><%=tuple.get(0, Integer.class)%></td>
-										<td id="bundle<%=tuple.get(0,Integer.class)%>"><%=tuple.get(1, BigDecimal.class)%></td>
-										<td><fmt:formatDate pattern="dd-MMM-yy" value="<%=tuple.get(2, Calendar.class).getTime()%>" /></td>
-										<td><input type="text" name="bundle" id="requestBundle<%=tuple.get(0,Integer.class)%>"></td>
-										<td><input type="text" name="binBundle" id="binBundle<%=tuple.get(0, Integer.class)%>"></td>
-										<td><input type="button" id="buttonId<%=tuple.get(0, Integer.class)%>" value="Create BOX & Generate QR" onclick="doAjaxPostForDeduction(<%=tuple.get(0, Integer.class)%>)"></td>
-									</tr>
-									<%
+								<tr>
+									<td id="denomination<%=tuple.get(0, Integer.class)%>"><%=tuple.get(0, Integer.class)%></td>
+									<td id="bundle<%=tuple.get(0,Integer.class)%>"><%=tuple.get(1, BigDecimal.class)%></td>
+									<td><fmt:formatDate pattern="dd-MMM-yy"
+											value="<%=tuple.get(2, Calendar.class).getTime()%>" /></td>
+									<td><input type="text" name="bundle"
+										id="requestBundle<%=tuple.get(0,Integer.class)%>"></td>
+									<td><input type="text" name="binBundle"
+										id="binBundle<%=tuple.get(0, Integer.class)%>"></td>
+									<td><input type="button"
+										id="buttonId<%=tuple.get(0, Integer.class)%>"
+										value="Create BOX & Generate QR"
+										onclick="doAjaxPostForDeduction(<%=tuple.get(0, Integer.class)%>)"></td>
+								</tr>
+								<%
 										}
 									%>
-								</tbody>
-							</table>
-						
-							<div id="printSection" style="display: none;"></div>
-							
+							</tbody>
+						</table>
+
+						<div id="printSection" style="display: none;"></div>
+
 						<!-- /.panel-body -->
 					</div>
-					
+
 					<!-- /.panel -->
 				</div>
 				<!-- /.col-lg-12 -->
@@ -188,16 +209,18 @@ function doAjaxPostForDeduction(str) {
 	<!-- <script src="./resources/bower_components/jquery/dist/jquery.min.js"></script> -->
 
 	<!-- Bootstrap Core JavaScript -->
-	<script src="./resources/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+	<script
+		src="./resources/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 
 	<script src="./resources/js/jQuery.print.js"></script>
-	
+
 	<!-- Metis Menu Plugin JavaScript -->
-	<script src="./resources/bower_components/metisMenu/dist/metisMenu.min.js"></script>
+	<script
+		src="./resources/bower_components/metisMenu/dist/metisMenu.min.js"></script>
 
 	<!-- Custom Theme JavaScript -->
 	<script src="./resources/dist/js/sb-admin-2.js"></script>
-<script type="text/javascript" src="./js/htmlInjection.js"></script>	
+	<script type="text/javascript" src="./js/htmlInjection.js"></script>
 </body>
 
 </html>

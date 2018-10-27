@@ -4,10 +4,12 @@
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jstl/core_rt"%>
-<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>    
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="sec"
+	uri="http://www.springframework.org/security/tags"%>
 <head>
-<link href="./resources/css/calendar.css" rel="stylesheet" type="text/css" />
+<link href="./resources/css/calendar.css" rel="stylesheet"
+	type="text/css" />
 <link rel="stylesheet" type="text/css"
 	href="./resources/css/jquery.datetimepicker.css" />
 <script src="./resources/Currency/js/jquery.js"></script>
@@ -20,18 +22,18 @@
 	type="image/x-icon">
 <title>ICICI : Machine Software Updation</title>
 <style type="text/css">
-	
-			table.table-bordered.dataTable thead tr th {
-		    width: 50px;
-		}
-		table.table-bordered.dataTable tbody tr td {
-		    width: 50px;
-		}
-		table.table-bordered.dataTable tbody tr td input {
-		    width: 40px;
-		}
-	
-	</style>
+table.table-bordered.dataTable thead tr th {
+	width: 50px;
+}
+
+table.table-bordered.dataTable tbody tr td {
+	width: 50px;
+}
+
+table.table-bordered.dataTable tbody tr td input {
+	width: 40px;
+}
+</style>
 <!-- Bootstrap Core CSS -->
 <link
 	href="./resources/bower_components/bootstrap/dist/css/bootstrap.min.css"
@@ -88,15 +90,20 @@
 
 <link rel="stylesheet" type="text/css"
 	href="./resources/dist/css/style.css">
-	
+
 <!--    DataTable  -->
-  <script type="text/javascript" charset="utf8" src="./resources/js/jquery.dataTables.min.js"></script>
-  <link rel="stylesheet" href="https://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css">
-  <script type="text/javascript" charset="utf8" src="./resources/js/dataTables.jqueryui.js"></script>
-  <link rel="stylesheet" type="text/css" href="./resources/css/dataTables.jqueryui.css">
-  <link rel="stylesheet" type="text/css" href="./resources/css/jquery.dataTables.css">
+<script type="text/javascript" charset="utf8"
+	src="./resources/js/jquery.dataTables.min.js"></script>
+<link rel="stylesheet"
+	href="https://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css">
+<script type="text/javascript" charset="utf8"
+	src="./resources/js/dataTables.jqueryui.js"></script>
+<link rel="stylesheet" type="text/css"
+	href="./resources/css/dataTables.jqueryui.css">
+<link rel="stylesheet" type="text/css"
+	href="./resources/css/jquery.dataTables.css">
 <!--    DataTable  -->
-	
+
 </head>
 <script type="text/javascript">
 
@@ -153,16 +160,17 @@ function doAjaxPostInsert(str) {
 				<div class="col-lg-12">
 					<div class="panel panel-default">
 						<div class="panel-heading">Machine Software Updation</div>
-						
+
 						<!-- /.panel-heading -->
 						<div class="panel-body">
 							<div class="dataTable_wrapper">
 								<form id="showAll">
 									<!-- <table class="table table-striped table-bordered table-hover" id="dataTables-example"> -->
-									<table class="table table-striped table-bordered table-hover"  id="tableValue">
+									<table class="table table-striped table-bordered table-hover"
+										id="tableValue">
 										<thead>
 											<tr>
-											    <th>Sr.No</th>
+												<th>Sr.No</th>
 												<th>Machine No</th>
 												<th>Asset Code</th>
 												<th>Machine SI No</th>
@@ -178,26 +186,28 @@ function doAjaxPostInsert(str) {
 										</thead>
 										<tbody>
 											<c:forEach var="row" items="${records}">
-											<input type="hidden" value="${row.id}"
-														id="id${row.id}">
+												<input type="hidden" value="${row.id}" id="id${row.id}">
 												<tr>
-												    <td id="id${row.id}">${row.id}</td>
+													<td id="id${row.id}">${row.id}</td>
 													<td id="machineNo${row.id}">${row.machineNo}</td>
 													<td id="assetCode${row.id }">${row.assetCode}</td>
 													<td id="machineSINo${row.id }">${row.machineSINo}</td>
 													<td id="modelType${row.id }">${row.modelType}</td>
 													<td id="standardProductivity${row.id }">${row.standardProductivity}</td>
-													<td><input style="width:80px;" type="text" value="${row.pmDate}" name="pmDate" value="${fmtDate}"
+													<td><input style="width: 80px;" type="text"
+														value="${row.pmDate}" name="pmDate" value="${fmtDate}"
 														id="pmDate${row.id}" onclick="SaveDate(${row.id})"></td>
-														<td></td>
+													<td></td>
 													<td><input type="text" name="sap" value="${row.sap}"
 														id="sap${row.id}"></td>
-													<Td><input type="text" name="map${row.id}" value="${row.map}"
-														id="map${row.id}"></Td>
-														<Td><input type="text" name="osap${row.id}"
+													<Td><input type="text" name="map${row.id}"
+														value="${row.map}" id="map${row.id}"></Td>
+													<Td><input type="text" name="osap${row.id}"
 														id="osap${row.id}" value="${row.osap}"></Td>
-													<td><c:if test="${row.pmDate eq null}" ><input type="button" value="Save"
-														onclick="doAjaxPostInsert(${row.id})"></c:if></td>
+													<td><c:if test="${row.pmDate eq null}">
+															<input type="button" value="Save"
+																onclick="doAjaxPostInsert(${row.id})">
+														</c:if></td>
 												</tr>
 											</c:forEach>
 										</tbody>
@@ -249,7 +259,7 @@ function doAjaxPostInsert(str) {
         });
     });
     </script>
-<script src="./resources/js/jquery.datetimepicker.js"></script>
+	<script src="./resources/js/jquery.datetimepicker.js"></script>
 	<script>
 	function SaveDate(str)
 	{
@@ -259,7 +269,7 @@ function doAjaxPostInsert(str) {
 		});
 	}
 	</script>
-<script type="text/javascript" src="./js/htmlInjection.js"></script>
+	<script type="text/javascript" src="./js/htmlInjection.js"></script>
 </body>
 
 </html>

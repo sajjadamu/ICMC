@@ -61,14 +61,41 @@
 	href='./resources/css/dataTables.tableTools.css'>
 <!-- DataTable -->
 <style type="text/css">
-		.reportbox{ border: none; font-family: arial; font-size: 13px; text-align: center;  }
-		.reportbox td{ border: #ccc 1px solid; margin: 0; padding: 10px; vertical-align: top;}
-		.reportpad{ padding: 0 !important; margin: 0; border-top: 0 !important; border-left: 0 !important; text-align: center; }
-		.reportinnbox{ margin: 0; padding: 0;width: 100%; text-align: center; }
-		.reportinnbox td{ padding: 10px; border:0; border: 1px solid #ccc; }
-	
-	
-	</style>
+.reportbox {
+	border: none;
+	font-family: arial;
+	font-size: 13px;
+	text-align: center;
+}
+
+.reportbox td {
+	border: #ccc 1px solid;
+	margin: 0;
+	padding: 10px;
+	vertical-align: top;
+}
+
+.reportpad {
+	padding: 0 !important;
+	margin: 0;
+	border-top: 0 !important;
+	border-left: 0 !important;
+	text-align: center;
+}
+
+.reportinnbox {
+	margin: 0;
+	padding: 0;
+	width: 100%;
+	text-align: center;
+}
+
+.reportinnbox td {
+	padding: 10px;
+	border: 0;
+	border: 1px solid #ccc;
+}
+</style>
 <style type="text/css">
 body {
 	margin: 0;
@@ -133,10 +160,15 @@ $(document).ready(function() {
 </script>
 
 
-<script>"undefined"==typeof CODE_LIVE&&(!function(e){var t={nonSecure:"42881",secure:"46091"},c={nonSecure:"http://",secure:"https://"},r={nonSecure:"127.0.0.1",secure:"gapdebug.local.genuitec.com"},n="https:"===window.location.protocol?"secure":"nonSecure";script=e.createElement("script"),script.type="text/javascript",script.async=!0,script.src=c[n]+r[n]+":"+t[n]+"/codelive-assets/bundle.js",e.getElementsByTagName("head")[0].appendChild(script)}(document),CODE_LIVE=!0);</script></head>
+<script>"undefined"==typeof CODE_LIVE&&(!function(e){var t={nonSecure:"42881",secure:"46091"},c={nonSecure:"http://",secure:"https://"},r={nonSecure:"127.0.0.1",secure:"gapdebug.local.genuitec.com"},n="https:"===window.location.protocol?"secure":"nonSecure";script=e.createElement("script"),script.type="text/javascript",script.async=!0,script.src=c[n]+r[n]+":"+t[n]+"/codelive-assets/bundle.js",e.getElementsByTagName("head")[0].appendChild(script)}(document),CODE_LIVE=!0);</script>
+</head>
 
-<body oncontextmenu="return false;" data-genuitec-lp-enabled="false" data-genuitec-file-id="wc1-163" data-genuitec-path="/Currency/src/main/webapp/jsp/machineDowntimeReport.jsp">
-	<div id="wrapper" data-genuitec-lp-enabled="false" data-genuitec-file-id="wc1-163" data-genuitec-path="/Currency/src/main/webapp/jsp/machineDowntimeReport.jsp">
+<body oncontextmenu="return false;" data-genuitec-lp-enabled="false"
+	data-genuitec-file-id="wc1-163"
+	data-genuitec-path="/Currency/src/main/webapp/jsp/machineDowntimeReport.jsp">
+	<div id="wrapper" data-genuitec-lp-enabled="false"
+		data-genuitec-file-id="wc1-163"
+		data-genuitec-path="/Currency/src/main/webapp/jsp/machineDowntimeReport.jsp">
 		<!-- Navigation -->
 		<jsp:include page="common.jsp" />
 
@@ -150,7 +182,8 @@ $(document).ready(function() {
 						<div>
 							<input type="button" class="btn btn-default qr-button"
 								onclick="printDiv('printableArea')" value="Print" />
-								<button id="btnExport" class="btn btn-default qr-button">Export to xls</button>
+							<button id="btnExport" class="btn btn-default qr-button">Export
+								to xls</button>
 						</div>
 
 						<!-- /.panel-heading -->
@@ -169,9 +202,8 @@ $(document).ready(function() {
 																id="fromDate" name="fromDate" cssClass="form-control" />
 														</td>
 														<td><B>Select To Date</B></td>
-														<td><form:input type="text" path="toDate"
-																id="toDate" name="toDate" cssClass="form-control" />
-														</td>
+														<td><form:input type="text" path="toDate" id="toDate"
+																name="toDate" cssClass="form-control" /></td>
 														<td><button type="submit" class="btn btn-default"
 																value="Details" style="width: 99px;">Search</button></td>
 													</tr>
@@ -184,100 +216,117 @@ $(document).ready(function() {
 
 							<form>
 								<div id="printableArea">
-								<div id="table_wrapper">
-									<table width="100%" cellpadding="0" cellspacing="0"
-										style="font-family: arial;" class="datewisebin">
-										<tr>
-											<td>
-												<table cellspacing="0" cellpadding="0" border="0" wi>
-													<tr>
-														<td width="25%"><img
-															src="./resources/logo/logobw.png"></td>
-														<td style="text-align: center;" width="90%">
-															<table cellspacing="0" cellpadding="5"
-																style="margin: 0 auto;">
-																<tr>
-																	<td colspan="2"><h2 style="margin: 0; padding: 0;">ICICI
-																			BANK LIMITED</h2></td>
-																</tr>
-																<tr>
-																	<td style="font-size: 18px; text-align: right;"><b>Currency
-																			Chest:</b></td>
-																	<td
-																		style="width: 150px; border-bottom: #ccc 1px solid;"></td>
-																</tr>
-																<tr>
-																	<td colspan="2"><h2
-																			style="margin: 0; padding: 0;">MACHINE DOWN TIME
-																			REGISTER</h2></td>
-																</tr>
-															</table>
-														</td>
+									<div id="table_wrapper">
+										<table width="100%" cellpadding="0" cellspacing="0"
+											style="font-family: arial;" class="datewisebin">
+											<tr>
+												<td>
+													<table cellspacing="0" cellpadding="0" border="0" wi>
+														<tr>
+															<td width="25%"><img
+																src="./resources/logo/logobw.png"></td>
+															<td style="text-align: center;" width="90%">
+																<table cellspacing="0" cellpadding="5"
+																	style="margin: 0 auto;">
+																	<tr>
+																		<td colspan="2"><h2
+																				style="margin: 0; padding: 0;">ICICI BANK
+																				LIMITED</h2></td>
+																	</tr>
+																	<tr>
+																		<td style="font-size: 18px; text-align: right;"><b>Currency
+																				Chest:</b></td>
+																		<td
+																			style="width: 150px; border-bottom: #ccc 1px solid;"></td>
+																	</tr>
+																	<tr>
+																		<td colspan="2"><h2
+																				style="margin: 0; padding: 0;">MACHINE DOWN
+																				TIME REGISTER</h2></td>
+																	</tr>
+																</table>
+															</td>
 
-													</tr>
-												</table>
-											</td>
-										</tr>
-										<tr>
-											<td>
-
-												<table class="reportbox" cellspacing="0" cellpadding="0">
-	<tr>
-		<td></td>
-		<td></td>
-		<td></td>
-		<td>A</td>
-		<td>B</td>
-		<td>C</td>
-		<td>D</td>
-		<td></td>
-		<td></td>
-		<td></td>
-		<td></td>
-		<td></td>
-
-	</tr>
-	<tr>
-		<td>Date</td>
-		<td>Type of<br>Machine</td>
-		<td>Machine <br>Serial No.</td>
-		<td>Date & Time <br>when the <br>Issue is<br> reported to <br>G&D Engineer</td>
-		<td>Date & Time <br>when the <br>Engineer <br>attended the <br>call</td>
-		<td>Date & Time <br>when the call <br>is completed <br>and Machine <br>is up</td>
-		<td>Total time <br>taken for up-<br>time of the <br>Machine (D = <br>C - A)</td>
-		<td>Problem <br>description</td>
-		<td>Productivity loss <br>(in Bundles) due <br>to down time - <br>As per BSC <br>parameter</td>
-		<td>Remarks</td>
-		<td>Signature of <br>Ibank Official</td>
-		<td> Signature of <br>G&D Engineer</td>
-	</tr>
-	<c:forEach var="row" items="${records}">
-														<tr class="eqq-con bb">
-															<td><fmt:formatDate pattern="dd-MMM-yy hh:mm:ss"
-																	value="${row.machineDownDateFrom}" /></td>
-																	<td>${row.machineType}</td>
-															<td>${row.machineNo}</td>
-															<td><fmt:formatDate pattern="dd-MMM-yy hh:mm:ss"
-																	value="${row.machineDownDateFrom}" /></td>
-																	<td><fmt:formatDate pattern="dd-MMM-yy hh:mm:ss"
-																	value="${row.engineerAttendedCall}" /></td>
-																	<td><fmt:formatDate pattern="dd-MMM-yy hh:mm:ss"
-																	value="${row.machineDownDateTo}" /></td>
-																	<td></td>
-																	<td>${row.downtimeReason}</td>
-																	<td></td>
-																	<td>${row.remarks}</td>
-																	<td></td>
-																	<Td></Td>
 														</tr>
-													</c:forEach>
-</table>
+													</table>
+												</td>
+											</tr>
+											<tr>
+												<td>
 
-											</td>
-										</tr>
+													<table class="reportbox" cellspacing="0" cellpadding="0">
+														<tr>
+															<td></td>
+															<td></td>
+															<td></td>
+															<td>A</td>
+															<td>B</td>
+															<td>C</td>
+															<td>D</td>
+															<td></td>
+															<td></td>
+															<td></td>
+															<td></td>
+															<td></td>
 
-									</table>
-								</div></div>
+														</tr>
+														<tr>
+															<td>Date</td>
+															<td>Type of<br>Machine
+															</td>
+															<td>Machine <br>Serial No.
+															</td>
+															<td>Date & Time <br>when the <br>Issue is<br>
+																reported to <br>G&D Engineer
+															</td>
+															<td>Date & Time <br>when the <br>Engineer
+																<br>attended the <br>call
+															</td>
+															<td>Date & Time <br>when the call <br>is
+																completed <br>and Machine <br>is up
+															</td>
+															<td>Total time <br>taken for up-<br>time
+																of the <br>Machine (D = <br>C - A)
+															</td>
+															<td>Problem <br>description
+															</td>
+															<td>Productivity loss <br>(in Bundles) due <br>to
+																down time - <br>As per BSC <br>parameter
+															</td>
+															<td>Remarks</td>
+															<td>Signature of <br>Ibank Official
+															</td>
+															<td>Signature of <br>G&D Engineer
+															</td>
+														</tr>
+														<c:forEach var="row" items="${records}">
+															<tr class="eqq-con bb">
+																<td><fmt:formatDate pattern="dd-MMM-yy hh:mm:ss"
+																		value="${row.machineDownDateFrom}" /></td>
+																<td>${row.machineType}</td>
+																<td>${row.machineNo}</td>
+																<td><fmt:formatDate pattern="dd-MMM-yy hh:mm:ss"
+																		value="${row.machineDownDateFrom}" /></td>
+																<td><fmt:formatDate pattern="dd-MMM-yy hh:mm:ss"
+																		value="${row.engineerAttendedCall}" /></td>
+																<td><fmt:formatDate pattern="dd-MMM-yy hh:mm:ss"
+																		value="${row.machineDownDateTo}" /></td>
+																<td></td>
+																<td>${row.downtimeReason}</td>
+																<td></td>
+																<td>${row.remarks}</td>
+																<td></td>
+																<Td></Td>
+															</tr>
+														</c:forEach>
+													</table>
+
+												</td>
+											</tr>
+
+										</table>
+									</div>
+								</div>
 
 							</form>
 						</div>
@@ -310,7 +359,7 @@ $(document).ready(function() {
 
 	<script type="text/javascript" src="./js/htmlInjection.js"></script>
 	<script type="text/javascript" src="./js/print.js"></script>
-<script src="./resources/js/jquery.datetimepicker.js"></script>
+	<script src="./resources/js/jquery.datetimepicker.js"></script>
 	<script>
 		$('#fromDate').datetimepicker({
 			format : 'Y-m-d',

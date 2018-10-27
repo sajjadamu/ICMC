@@ -123,9 +123,11 @@
 										</div>
 
 										<div class="panel panel-default">
-											<label>Administration Module</label> Select All <input type="checkbox" id="checkAll" >
+											<label>Administration Module</label> Select All <input
+												type="checkbox" id="checkAll">
 											<div class="form-group rolewrap rolebox1">
-												<form:checkboxes class="checkItem" items="${ADMIN}" path="rolePermission" />
+												<form:checkboxes class="checkItem" items="${ADMIN}"
+													path="rolePermission" />
 											</div>
 										</div>
 
@@ -138,23 +140,26 @@
 										</div>
 
 										<div class="panel panel-default">
-											<label>Vault Management Module</label>Select All <input type="checkbox" id="checkAllVMM" >
+											<label>Vault Management Module</label>Select All <input
+												type="checkbox" id="checkAllVMM">
 											<div class="form-group rolewrap rolebox2">
-												<form:checkboxes class="checkItem" items="${VAULT_MANAGEMENT}"
-													path="rolePermission" />
+												<form:checkboxes class="checkItem"
+													items="${VAULT_MANAGEMENT}" path="rolePermission" />
 											</div>
 										</div>
 
 										<div class="panel panel-default">
-											<label>CIT/CRA Details Module</label>Select All <input type="checkbox" id="checkAllCCD" >
+											<label>CIT/CRA Details Module</label>Select All <input
+												type="checkbox" id="checkAllCCD">
 											<div class="form-group rolewrap rolebox3">
-												<form:checkboxes class="checkItem" items="${CIT_CRA_DETAILS}"
-													path="rolePermission" />
+												<form:checkboxes class="checkItem"
+													items="${CIT_CRA_DETAILS}" path="rolePermission" />
 											</div>
 										</div>
 
 										<div class="panel panel-default">
-											<label>Cash Receipt Module</label>Select All <input type="checkbox" id="checkAllCRM" >
+											<label>Cash Receipt Module</label>Select All <input
+												type="checkbox" id="checkAllCRM">
 											<div class="form-group rolewrap rolebox4">
 												<form:checkboxes class="checkItem" items="${CASH_RECEIPT}"
 													path="rolePermission" />
@@ -162,7 +167,8 @@
 										</div>
 
 										<div class="panel panel-default">
-											<label>Cash Payment Module</label>Select All <input type="checkbox" id="checkAllCPM" >
+											<label>Cash Payment Module</label>Select All <input
+												type="checkbox" id="checkAllCPM">
 											<div class="form-group rolewrap rolebox5">
 												<form:checkboxes class="checkItem" items="${CASH_PAYMENT}"
 													path="rolePermission" />
@@ -170,21 +176,23 @@
 										</div>
 
 										<div class="panel panel-default">
-											<label>Processing Room Module</label>Select All <input type="checkbox" id="checkAllPRM" >
+											<label>Processing Room Module</label>Select All <input
+												type="checkbox" id="checkAllPRM">
 											<div class="form-group rolewrap rolebox6">
-												<form:checkboxes class="checkItem" items="${PROCESSING_ROOM}"
-													path="rolePermission" />
+												<form:checkboxes class="checkItem"
+													items="${PROCESSING_ROOM}" path="rolePermission" />
 											</div>
 										</div>
 
 										<div class="panel panel-default">
-											<label>Fake Note Management Module</label>Select All <input type="checkbox" id="checkAllFMM" >
+											<label>Fake Note Management Module</label>Select All <input
+												type="checkbox" id="checkAllFMM">
 											<div class="form-group rolewrap rolebox7">
-												<form:checkboxes class="checkItem" items="${FAKE_NOTE_MANAGEMENT}"
-													path="rolePermission" />
+												<form:checkboxes class="checkItem"
+													items="${FAKE_NOTE_MANAGEMENT}" path="rolePermission" />
 											</div>
 										</div>
-										
+
 										<div class="panel panel-default">
 											<label>MIgrations</label>
 											<div class="form-group rolewrap">
@@ -198,7 +206,7 @@
 												<form:checkboxes items="${REPORTS}" path="rolePermission" />
 											</div>
 										</div>
-										
+
 
 										<div class="form-group">
 											<label>Status</label>

@@ -18,7 +18,8 @@
 
 <title>ICICI : CIT/CRA Driver</title>
 
-<link href="./resources/css/calendar.css" rel="stylesheet" type="text/css" />
+<link href="./resources/css/calendar.css" rel="stylesheet"
+	type="text/css" />
 <link rel="stylesheet" type="text/css"
 	href="./resources/css/jquery.datetimepicker.css" />
 
@@ -50,8 +51,8 @@
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
-    
-    <script type="text/javascript" charset="utf-8">
+
+<script type="text/javascript" charset="utf-8">
      function getVehicleNumber(){
         $.getJSON(
              "vehicleList.json",
@@ -68,10 +69,15 @@
  }
 
 </script>
-    
-<script>"undefined"==typeof CODE_LIVE&&(!function(e){var t={nonSecure:"42881",secure:"46091"},c={nonSecure:"http://",secure:"https://"},r={nonSecure:"127.0.0.1",secure:"gapdebug.local.genuitec.com"},n="https:"===window.location.protocol?"secure":"nonSecure";script=e.createElement("script"),script.type="text/javascript",script.async=!0,script.src=c[n]+r[n]+":"+t[n]+"/codelive-assets/bundle.js",e.getElementsByTagName("head")[0].appendChild(script)}(document),CODE_LIVE=!0);</script></head>
-<body oncontextmenu="return false;" data-genuitec-lp-enabled="false" data-genuitec-file-id="wc1-8" data-genuitec-path="/Currency/src/main/webapp/jsp/CITCRADriver.jsp">
-	<div id="wrapper" data-genuitec-lp-enabled="false" data-genuitec-file-id="wc1-8" data-genuitec-path="/Currency/src/main/webapp/jsp/CITCRADriver.jsp">
+
+<script>"undefined"==typeof CODE_LIVE&&(!function(e){var t={nonSecure:"42881",secure:"46091"},c={nonSecure:"http://",secure:"https://"},r={nonSecure:"127.0.0.1",secure:"gapdebug.local.genuitec.com"},n="https:"===window.location.protocol?"secure":"nonSecure";script=e.createElement("script"),script.type="text/javascript",script.async=!0,script.src=c[n]+r[n]+":"+t[n]+"/codelive-assets/bundle.js",e.getElementsByTagName("head")[0].appendChild(script)}(document),CODE_LIVE=!0);</script>
+</head>
+<body oncontextmenu="return false;" data-genuitec-lp-enabled="false"
+	data-genuitec-file-id="wc1-8"
+	data-genuitec-path="/Currency/src/main/webapp/jsp/CITCRADriver.jsp">
+	<div id="wrapper" data-genuitec-lp-enabled="false"
+		data-genuitec-file-id="wc1-8"
+		data-genuitec-path="/Currency/src/main/webapp/jsp/CITCRADriver.jsp">
 		<!-- Navigation -->
 		<jsp:include page="common.jsp" />
 
@@ -86,76 +92,84 @@
 			<div class="row">
 				<div class="col-lg-12">
 					<div class="panel panel-default">
-						
+
 						<div class="panel-heading">
-                        	<ul>
-                        		<li>
-                        			<a href="././viewCITCRADriver"><i class="fa fa-table fa-fw"></i> View List of CIT/CRA Driver's</a>
-                        		</li>
-							</ul>Add CIT/CRA Driver
-                        </div>
-						
+							<ul>
+								<li><a href="././viewCITCRADriver"><i
+										class="fa fa-table fa-fw"></i> View List of CIT/CRA Driver's</a></li>
+							</ul>
+							Add CIT/CRA Driver
+						</div>
+
 						<div class="panel-body">
 							<div class="row">
 								<div class="col-lg-6">
 									<!--<form role="form">-->
-									<form:form id="userPage" name="userPage" action="addCITCRADriver" method="post"
-										modelAttribute="user" enctype="multipart/form-data" autocomplete="off">
-				<div align="center" style="color: red"><b>${errorMsg}</b></div>
+									<form:form id="userPage" name="userPage"
+										action="addCITCRADriver" method="post" modelAttribute="user"
+										enctype="multipart/form-data" autocomplete="off">
+										<div align="center" style="color: red">
+											<b>${errorMsg}</b>
+										</div>
 										<div class="form-group">
 											<label>Vendor Name</label>
 											<form:select id="vendorName" name="vendorName"
-												path="vendorName" cssClass="form-control" onclick="getVehicleNumber()">
+												path="vendorName" cssClass="form-control"
+												onclick="getVehicleNumber()">
 												<form:option value="">Select</form:option>
 												<form:options items="${records}" itemValue="name"
 													itemLabel="name" />
 
 											</form:select>
 										</div>
-										
+
 										<div class="form-group">
 											<label>Vehicle Number</label>
-											<form:select path="vehicleNumber" id="vehicleNumber" name="vehicleNumber" cssClass="form-control">
+											<form:select path="vehicleNumber" id="vehicleNumber"
+												name="vehicleNumber" cssClass="form-control">
 												<form:option value="">Select Number</form:option>
 											</form:select>
 										</div>
 
 										<div class="form-group">
 											<label>Vehicle Driver Name</label>
-											<form:input path="driverName" id="driverName" name="driverName" 
-												maxlength="45" cssClass="form-control" />
+											<form:input path="driverName" id="driverName"
+												name="driverName" maxlength="45" cssClass="form-control" />
 										</div>
 
 										<div class="form-group">
 											<label>License Number</label>
-											<form:input path="licenseNumber" id="licenseNumber" name="licenseNumber" 
-												maxlength="45" cssClass="form-control" />
+											<form:input path="licenseNumber" id="licenseNumber"
+												name="licenseNumber" maxlength="45" cssClass="form-control" />
 										</div>
 
 										<div class="form-group">
 											<label>License Issued State</label>
-											<form:input path="licenseIssuedState" id="licenseIssuedState" name="licenseIssuedState" 
-												maxlength="45" cssClass="form-control" />
+											<form:input path="licenseIssuedState" id="licenseIssuedState"
+												name="licenseIssuedState" maxlength="45"
+												cssClass="form-control" />
 										</div>
 
-                                      	<div class="form-group">
-											<label>License Issued Date</label>  <form:input path="licenseIssuedDated" id="licenseIssuedDated" name="licenseIssuedDated"
-												cssClass="form-control" />
-										</div>
-										
 										<div class="form-group">
-											<label>License Expiry Date</label>  <form:input path="licenseExpiryDate" id="licenseExpiryDate" name="licenseExpiryDate"
-												cssClass="form-control" />
+											<label>License Issued Date</label>
+											<form:input path="licenseIssuedDated" id="licenseIssuedDated"
+												name="licenseIssuedDated" cssClass="form-control" />
+										</div>
+
+										<div class="form-group">
+											<label>License Expiry Date</label>
+											<form:input path="licenseExpiryDate" id="licenseExpiryDate"
+												name="licenseExpiryDate" cssClass="form-control" />
 										</div>
 
 										<div class="col-lg-6 form-group">
-											<label>Choose File</label> <input type="file" id="file" name="file"
-												Class="form-control" />
+											<label>Choose File</label> <input type="file" id="file"
+												name="file" Class="form-control" />
 										</div>
-										
-										<button type="submit" class="btn btn-lg btn-success btn-block" 
+
+										<button type="submit" class="btn btn-lg btn-success btn-block"
 											value="Details">Submit</button>
-                                             
+
 									</form:form>
 								</div>
 								<!-- /.col-lg-6 (nested) -->
@@ -190,8 +204,8 @@
 
 	<!-- Custom Theme JavaScript -->
 	<script src="./resources/dist/js/sb-admin-2.js"></script>
-	
-		<script src="./resources/js/jquery.datetimepicker.js"></script>
+
+	<script src="./resources/js/jquery.datetimepicker.js"></script>
 	<script>
 		$('#licenseIssuedDated').datetimepicker({
 			format : 'Y-m-d',
@@ -203,8 +217,8 @@
 		});
 		
 	</script>
-	
-	
+
+
 	<script type="text/javascript">
 	$.validator.addMethod("loginRegexName", function(value, element) {
 	    return this.optional(element) || /^[A-Za-z\s]+$/i.test(value);
@@ -324,7 +338,7 @@
 	  });
 	});
 	</script>
-<script type="text/javascript" src="./js/htmlInjection.js"></script>
+	<script type="text/javascript" src="./js/htmlInjection.js"></script>
 </body>
 
 </html>

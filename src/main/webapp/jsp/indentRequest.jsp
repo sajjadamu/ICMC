@@ -1,9 +1,11 @@
 <!DOCTYPE html>
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+	pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <html lang="en">
 <head>
-<link rel="shortcut icon" href="./resources/logo/favicon.ico" type="image/x-icon">
+<link rel="shortcut icon" href="./resources/logo/favicon.ico"
+	type="image/x-icon">
 <script type="text/javascript" src="./js/jquery-1.12.0.min.js"></script>
 <script type="text/javascript">
 function pageSubmit(){
@@ -65,14 +67,16 @@ function pageSubmit(){
 									<!--<form role="form">-->
 									<form:form id="indent" action="saveIndentRequest" method="post"
 										modelAttribute="user" autocomplete="off">
-										<div align="center" style="color: green"><b>${errorMsg}</b></div>
+										<div align="center" style="color: green">
+											<b>${errorMsg}</b>
+										</div>
 										<div class="form-group">
 											<label>Denomination</label>
 											<form:input path="denomination" id="denomination"
 												cssClass="form-control" />
-												
+
 											<label>Bundle</label>
-											<form:input path="bundle" id="bundle" cssClass="form-control"/>
+											<form:input path="bundle" id="bundle" cssClass="form-control" />
 											<%-- <label>Bin</label>
 											<form:input path="bin" id="bin" cssClass="form-control" /> --%>
 										</div>
@@ -112,7 +116,7 @@ function pageSubmit(){
 	<!-- Custom Theme JavaScript -->
 	<script src="./resources/dist/js/sb-admin-2.js"></script>
 	<script src="./resources/js/jQuery.print.js"></script>
-<script type="text/javascript" src="./js/htmlInjection.js"></script>
+	<script type="text/javascript" src="./js/htmlInjection.js"></script>
 </body>
 
 </html>

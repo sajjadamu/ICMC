@@ -1,12 +1,16 @@
 <!DOCTYPE html>
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+	pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <html lang="en">
 <head>
-<link rel="shortcut icon" href="./resources/logo/favicon.ico" type="image/x-icon">
-<link href="./resources/css/calendar.css" rel="stylesheet" type="text/css" />
-<link rel="stylesheet" type="text/css" href="./resources/css/jquery.datetimepicker.css" />
+<link rel="shortcut icon" href="./resources/logo/favicon.ico"
+	type="image/x-icon">
+<link href="./resources/css/calendar.css" rel="stylesheet"
+	type="text/css" />
+<link rel="stylesheet" type="text/css"
+	href="./resources/css/jquery.datetimepicker.css" />
 <script type="text/javascript" src="./js/jquery-1.12.0.min.js"></script>
 <script>
     $(function()
@@ -351,10 +355,15 @@ function refresh() {
 	window.location.reload(true);
 }
 </script>
-    
-<script>"undefined"==typeof CODE_LIVE&&(!function(e){var t={nonSecure:"42881",secure:"46091"},c={nonSecure:"http://",secure:"https://"},r={nonSecure:"127.0.0.1",secure:"gapdebug.local.genuitec.com"},n="https:"===window.location.protocol?"secure":"nonSecure";script=e.createElement("script"),script.type="text/javascript",script.async=!0,script.src=c[n]+r[n]+":"+t[n]+"/codelive-assets/bundle.js",e.getElementsByTagName("head")[0].appendChild(script)}(document),CODE_LIVE=!0);</script></head>
-<body oncontextmenu="return false;" data-genuitec-lp-enabled="false" data-genuitec-file-id="wc1-140" data-genuitec-path="/Currency/src/main/webapp/jsp/editViewSoiled.jsp">
-	<div id="wrapper" data-genuitec-lp-enabled="false" data-genuitec-file-id="wc1-140" data-genuitec-path="/Currency/src/main/webapp/jsp/editViewSoiled.jsp">
+
+<script>"undefined"==typeof CODE_LIVE&&(!function(e){var t={nonSecure:"42881",secure:"46091"},c={nonSecure:"http://",secure:"https://"},r={nonSecure:"127.0.0.1",secure:"gapdebug.local.genuitec.com"},n="https:"===window.location.protocol?"secure":"nonSecure";script=e.createElement("script"),script.type="text/javascript",script.async=!0,script.src=c[n]+r[n]+":"+t[n]+"/codelive-assets/bundle.js",e.getElementsByTagName("head")[0].appendChild(script)}(document),CODE_LIVE=!0);</script>
+</head>
+<body oncontextmenu="return false;" data-genuitec-lp-enabled="false"
+	data-genuitec-file-id="wc1-140"
+	data-genuitec-path="/Currency/src/main/webapp/jsp/editViewSoiled.jsp">
+	<div id="wrapper" data-genuitec-lp-enabled="false"
+		data-genuitec-file-id="wc1-140"
+		data-genuitec-path="/Currency/src/main/webapp/jsp/editViewSoiled.jsp">
 		<!-- Navigation -->
 		<jsp:include page="common.jsp" />
 
@@ -369,59 +378,83 @@ function refresh() {
 			<div class="row">
 				<div class="col-lg-12">
 					<div class="panel panel-default">
-						<div class="panel-heading"><ul>
-								<li><a href="././viewSoiled"><i class="fa fa-table fa-fw"></i>View Soiled</a></li>
-							</ul>Soiled</div>
+						<div class="panel-heading">
+							<ul>
+								<li><a href="././viewSoiled"><i
+										class="fa fa-table fa-fw"></i>View Soiled</a></li>
+							</ul>
+							Soiled
+						</div>
 						<div class="panel-body">
-							<div align="center" style="color:white; background:red;"><b>${errorMsg}</b></div>
+							<div align="center" style="color: white; background: red;">
+								<b>${errorMsg}</b>
+							</div>
 							<div class="row">
-									<!--<form role="form">-->
-									<form:form id="cash" action="" method="post" modelAttribute="user" autocomplete="off">
-									<form:hidden path="id"/>
-										<div class="col-lg-6 form-group">
-											<label>Order Date</label>
-											<form:input type="text" onkeypress="return false" path="orderDate" id="orderDate" cssClass="form-control"/>
-											<label id="err1" style="display: none;color: red">Enter Order Date</label>
-										</div>
-										
-										<div class="col-lg-6 form-group">
-											<label>Remittance Order Number</label>
-											<form:input path="remittanceOrderNo" id="remittanceOrderNo" cssClass="form-control"/>
-											<label id="err2" style="display: none;color: red">Enter Remittance Order Number</label>
-										</div>
-										
-										<div class="col-lg-6 form-group">
-											<label>Approved Remittance Date</label>
-											<form:input type="text" onkeypress="return false" path="approvedRemittanceDate" id="approvedRemittanceDate" cssClass="form-control"/>
-											<label id="err3" style="display: none;color: red">Enter Approved Remittance Date</label>
-										</div>
-										
-										 <div class="form-group">
-											 <form:checkbox path="notes" id="notes" name="notes" value="Notes"/>
-											<span class="deno-value">Notes </span>
-											<label id="err4" style="display: none;color: red"> Please Select Notes</label>
-											<!-- <input type="radio" id="notes"> -->
-										</div>
-										
-										<div class="form-group">
-											<form:radiobutton path="types" id="types" name="types" value="Normal" />
-											<span class="deno-value">Normal </span>
-											<form:radiobutton path="types" id="types" name="types" value="Full Value Mutilated" />
-											<span class="deno-value">Full Value Mutilated </span>
-											<label id="err5" style="display: none;color: red"> Please Select at least One Radio Button</label>
-										</div>
-										
-										<div class="col-lg-6 form-group">
-											<label>Vehicle Number</label>
-											<form:input path="vehicleNumber" id="vehicleNumber" cssClass="form-control"/></div>
-											<label id="err6" style="display: none;color: red"> Enter Vehicle Number</label>
-												 
-                    					<div class="col-lg-6 form-group">
-											<label>Location</label>
-											<form:input path="location" id="location" cssClass="form-control"/>
-											<label id="err7" style="display: none;color: red"> Enter Location</label>
-										</div>
-										<div class="form-group">
+								<!--<form role="form">-->
+								<form:form id="cash" action="" method="post"
+									modelAttribute="user" autocomplete="off">
+									<form:hidden path="id" />
+									<div class="col-lg-6 form-group">
+										<label>Order Date</label>
+										<form:input type="text" onkeypress="return false"
+											path="orderDate" id="orderDate" cssClass="form-control" />
+										<label id="err1" style="display: none; color: red">Enter
+											Order Date</label>
+									</div>
+
+									<div class="col-lg-6 form-group">
+										<label>Remittance Order Number</label>
+										<form:input path="remittanceOrderNo" id="remittanceOrderNo"
+											cssClass="form-control" />
+										<label id="err2" style="display: none; color: red">Enter
+											Remittance Order Number</label>
+									</div>
+
+									<div class="col-lg-6 form-group">
+										<label>Approved Remittance Date</label>
+										<form:input type="text" onkeypress="return false"
+											path="approvedRemittanceDate" id="approvedRemittanceDate"
+											cssClass="form-control" />
+										<label id="err3" style="display: none; color: red">Enter
+											Approved Remittance Date</label>
+									</div>
+
+									<div class="form-group">
+										<form:checkbox path="notes" id="notes" name="notes"
+											value="Notes" />
+										<span class="deno-value">Notes </span> <label id="err4"
+											style="display: none; color: red"> Please Select
+											Notes</label>
+										<!-- <input type="radio" id="notes"> -->
+									</div>
+
+									<div class="form-group">
+										<form:radiobutton path="types" id="types" name="types"
+											value="Normal" />
+										<span class="deno-value">Normal </span>
+										<form:radiobutton path="types" id="types" name="types"
+											value="Full Value Mutilated" />
+										<span class="deno-value">Full Value Mutilated </span> <label
+											id="err5" style="display: none; color: red"> Please
+											Select at least One Radio Button</label>
+									</div>
+
+									<div class="col-lg-6 form-group">
+										<label>Vehicle Number</label>
+										<form:input path="vehicleNumber" id="vehicleNumber"
+											cssClass="form-control" />
+									</div>
+									<label id="err6" style="display: none; color: red">
+										Enter Vehicle Number</label>
+
+									<div class="col-lg-6 form-group">
+										<label>Location</label>
+										<form:input path="location" id="location"
+											cssClass="form-control" />
+										<label id="err7" style="display: none; color: red">
+											Enter Location</label>
+									</div>
+									<div class="form-group">
 										<table id="hiddenTable" class="hidden">
 											<tr>
 												<th>Denomination</th>
@@ -430,27 +463,30 @@ function refresh() {
 											</tr>
 											<c:forEach var="entry" items="${soiledRemitationRecord}">
 												<tr class="trValue">
-													<td class="tdValue"><c:out value="${entry.denomination}" /></td>
-													<td class="tdValue"><c:out value="${entry.pendingBundle}" /></td>
+													<td class="tdValue"><c:out
+															value="${entry.denomination}" /></td>
+													<td class="tdValue"><c:out
+															value="${entry.pendingBundle}" /></td>
 												</tr>
 											</c:forEach>
 
 										</table>
 									</div>
-										
-										<div class="form-group">
-                                        	<label>Number of Entries</label>
-											<input type="text" id="member" name="member" value="" class="form-control"><br />
-											<label id="err8" style="display: none;color: red">Please  Enter  Valid Denomination</label>
-										    <label id="err9" style="display: none; color: red">Please Enter Bundle</label>
-											<div id="container">
-												<table id="table1">
-													<tr>
-													</tr>
-												</table>
-											</div>
+
+									<div class="form-group">
+										<label>Number of Entries</label> <input type="text"
+											id="member" name="member" value="" class="form-control"><br />
+										<label id="err8" style="display: none; color: red">Please
+											Enter Valid Denomination</label> <label id="err9"
+											style="display: none; color: red">Please Enter Bundle</label>
+										<div id="container">
+											<table id="table1">
+												<tr>
+												</tr>
+											</table>
 										</div>
-										
+									</div>
+
 									<!-- 	<div class="col-lg-12">
 											<input type="button" id="btnSubmit" value="UpdateAndInsert"	onclick="doAjaxPostInsert()">
 											
@@ -463,30 +499,32 @@ function refresh() {
 												style="width: 99px;" onclick="refresh();">Refresh</button> 
 										</div>
 										</div> -->
-										<c:choose>
-											<c:when test="${status=='REQUESTED'}">
-												<div class="col-lg-12">
-													
-													<button type="button" value="Update" id="btnsubmit"
-														onclick="doAjaxPostInsert('+i+')" class="btn btn-primary">
-														Update</button>
-												</div>
+									<c:choose>
+										<c:when test="${status=='REQUESTED'}">
+											<div class="col-lg-12">
 
-												<div align="right">
-													<button type="submit" class="btn btn-default"
-														value="Details" style="width: 99px;" onclick="refresh()">Refresh</button>
-												</div>
-											</c:when>
-											<c:otherwise>
-												<div class="text-center">
-													<label class="bg-primary  text-white">Accepted by
-														vault Management Can not be edited </label>
-												</div>
-											</c:otherwise>
-										</c:choose>
-										
-									</form:form><br><br>
-									
+												<button type="button" value="Update" id="btnsubmit"
+													onclick="doAjaxPostInsert('+i+')" class="btn btn-primary">
+													Update</button>
+											</div>
+
+											<div align="right">
+												<button type="submit" class="btn btn-default"
+													value="Details" style="width: 99px;" onclick="refresh()">Refresh</button>
+											</div>
+										</c:when>
+										<c:otherwise>
+											<div class="text-center">
+												<label class="bg-primary  text-white">Accepted by
+													vault Management Can not be edited </label>
+											</div>
+										</c:otherwise>
+									</c:choose>
+
+								</form:form>
+								<br>
+								<br>
+
 								<!-- /.col-lg-6 (nested) -->
 								<!-- /.col-lg-6 (nested) -->
 							</div>
@@ -518,7 +556,7 @@ function refresh() {
 	<script src="./resources/dist/js/sb-admin-2.js"></script>
 
 	<script src="./resources/js/jQuery.print.js"></script>
-<script src="./resources/js/jquery.datetimepicker.js"></script>
+	<script src="./resources/js/jquery.datetimepicker.js"></script>
 	<script>
 		$('#orderDate').datetimepicker({
 			format : 'Y-m-d',
@@ -529,7 +567,7 @@ function refresh() {
 
 		});
 	</script>
-<script type="text/javascript" src="./js/htmlInjection.js"></script>
+	<script type="text/javascript" src="./js/htmlInjection.js"></script>
 </body>
 
 </html>

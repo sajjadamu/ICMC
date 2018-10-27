@@ -1,10 +1,12 @@
 <!DOCTYPE html>
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+	pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <html lang="en">
 
 <head>
-<link rel="shortcut icon" href="./resources/logo/favicon.ico" type="image/x-icon">
+<link rel="shortcut icon" href="./resources/logo/favicon.ico"
+	type="image/x-icon">
 <script type="text/javascript" src="./js/jquery-1.12.0.min.js"></script>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -12,26 +14,42 @@
 <meta name="description" content="">
 <meta name="author" content="">
 <style>
-	form#ORV {width: 60%; }
-	.frmsub input[type="button"] {padding: 1px 15px; margin-bottom: 20px;}
-	.frmsub, .frmsubdel {margin-left: 16px;}
-</style>	
+form#ORV {
+	width: 60%;
+}
+
+.frmsub input[type="button"] {
+	padding: 1px 15px;
+	margin-bottom: 20px;
+}
+
+.frmsub, .frmsubdel {
+	margin-left: 16px;
+}
+</style>
 
 <title>ICICI : ORV Branch</title>
 
 <script src="./resources/Currency/js/jquery.js"></script>
 <!-- Bootstrap Core CSS -->
-<link href="./resources/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+<link
+	href="./resources/bower_components/bootstrap/dist/css/bootstrap.min.css"
+	rel="stylesheet">
 
 <!-- MetisMenu CSS -->
-<link href="./resources/bower_components/metisMenu/dist/metisMenu.min.css" rel="stylesheet">
+<link
+	href="./resources/bower_components/metisMenu/dist/metisMenu.min.css"
+	rel="stylesheet">
 
 <!-- Custom CSS -->
 <link href="./resources/dist/css/sb-admin-2.css" rel="stylesheet">
 
 <!-- Custom Fonts -->
-<link href="./resources/bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-<link rel="stylesheet" type="text/css" href="./resources/dist/css/style.css">
+<link
+	href="./resources/bower_components/font-awesome/css/font-awesome.min.css"
+	rel="stylesheet" type="text/css">
+<link rel="stylesheet" type="text/css"
+	href="./resources/dist/css/style.css">
 
 <script type="text/javascript">
 
@@ -527,10 +545,15 @@ $.ajax({
   });  
 }
 </script> -->
-<script>"undefined"==typeof CODE_LIVE&&(!function(e){var t={nonSecure:"42881",secure:"46091"},c={nonSecure:"http://",secure:"https://"},r={nonSecure:"127.0.0.1",secure:"gapdebug.local.genuitec.com"},n="https:"===window.location.protocol?"secure":"nonSecure";script=e.createElement("script"),script.type="text/javascript",script.async=!0,script.src=c[n]+r[n]+":"+t[n]+"/codelive-assets/bundle.js",e.getElementsByTagName("head")[0].appendChild(script)}(document),CODE_LIVE=!0);</script></head>
+<script>"undefined"==typeof CODE_LIVE&&(!function(e){var t={nonSecure:"42881",secure:"46091"},c={nonSecure:"http://",secure:"https://"},r={nonSecure:"127.0.0.1",secure:"gapdebug.local.genuitec.com"},n="https:"===window.location.protocol?"secure":"nonSecure";script=e.createElement("script"),script.type="text/javascript",script.async=!0,script.src=c[n]+r[n]+":"+t[n]+"/codelive-assets/bundle.js",e.getElementsByTagName("head")[0].appendChild(script)}(document),CODE_LIVE=!0);</script>
+</head>
 
-<body oncontextmenu="return false;" data-genuitec-lp-enabled="false" data-genuitec-file-id="wc1-31" data-genuitec-path="/Currency/src/main/webapp/jsp/ORVBranch.jsp">
-	<div id="wrapper" data-genuitec-lp-enabled="false" data-genuitec-file-id="wc1-31" data-genuitec-path="/Currency/src/main/webapp/jsp/ORVBranch.jsp">
+<body oncontextmenu="return false;" data-genuitec-lp-enabled="false"
+	data-genuitec-file-id="wc1-31"
+	data-genuitec-path="/Currency/src/main/webapp/jsp/ORVBranch.jsp">
+	<div id="wrapper" data-genuitec-lp-enabled="false"
+		data-genuitec-file-id="wc1-31"
+		data-genuitec-path="/Currency/src/main/webapp/jsp/ORVBranch.jsp">
 		<!-- Navigation -->
 		<jsp:include page="common.jsp" />
 
@@ -539,48 +562,63 @@ $.ajax({
 			<div class="row">
 				<div class="col-lg-12">
 					<div class="panel panel-default">
-						<div class="panel-heading"><ul>
-								<li><a href="././viewORV"><i class="fa fa-table fa-fw"></i>View Branch Payment</a></li>
-							</ul>Branch Payment</div>
+						<div class="panel-heading">
+							<ul>
+								<li><a href="././viewORV"><i class="fa fa-table fa-fw"></i>View
+										Branch Payment</a></li>
+							</ul>
+							Branch Payment
+						</div>
 						<div class="panel-body">
 							<div class="row">
 								<!--<form role="form">-->
-								<form:form id="ORV" action="saveORV" method="post" modelAttribute="user" autocomplete="off">
-									
+								<form:form id="ORV" action="saveORV" method="post"
+									modelAttribute="user" autocomplete="off">
+
 									<div class="col-lg-12 form-group">
 										<label>Sol ID</label>
-										<form:input path="solId" maxlength="4" id="solId" name="solId" cssClass="form-control"
-											onkeyup="doAjaxPostForBranch()" />
-											<label id="err4" style="display: none;color: red">Enter Sol ID</label>
-											<label id="err10" style="display: none;color: red">Sol ID must be of four digit</label>
+										<form:input path="solId" maxlength="4" id="solId" name="solId"
+											cssClass="form-control" onkeyup="doAjaxPostForBranch()" />
+										<label id="err4" style="display: none; color: red">Enter
+											Sol ID</label> <label id="err10" style="display: none; color: red">Sol
+											ID must be of four digit</label>
 									</div>
-									
+
 									<div class="col-lg-12 form-group">
 										<label>Branch</label>
-										<form:input path="branch" id="branch" cssClass="form-control" readonly="true" />
+										<form:input path="branch" id="branch" cssClass="form-control"
+											readonly="true" />
 									</div>
-									
+
 									<div class="col-lg-12 form-group">
 										<label>SR Number</label>
-										<form:input path="sr" id="sr" name="sr" value="SR" minlenght="11" maxlength="11" cssClass="form-control" />
-										<label id="err1" style="display: none;color: red">Please Enter SR Number</label>
-										<label id="err11" style="display: none;color: red">SR Number should be of 11 digits</label>
+										<form:input path="sr" id="sr" name="sr" value="SR"
+											minlenght="11" maxlength="11" cssClass="form-control" />
+										<label id="err1" style="display: none; color: red">Please
+											Enter SR Number</label> <label id="err11"
+											style="display: none; color: red">SR Number should be
+											of 11 digits</label>
 									</div>
-									
+
 									<div class="col-lg-12 form-group">
-											<label>Category</label><br>
-											<form:radiobutton path="processedOrUnprocessed" id="processedOrUnprocessed" name="processedOrUnprocessed" checked="true" value="PROCESSED" />
-											<span class="deno-value"><b>PROCESSED</b></span>
-										    <form:radiobutton path="processedOrUnprocessed" id="processedOrUnprocessed" name="processedOrUnprocessed" value="UNPROCESS" />
-											<span class="deno-value"><b>UNPROCESS</b></span>
-											
-										</div> 
-									
+										<label>Category</label><br>
+										<form:radiobutton path="processedOrUnprocessed"
+											id="processedOrUnprocessed" name="processedOrUnprocessed"
+											checked="true" value="PROCESSED" />
+										<span class="deno-value"><b>PROCESSED</b></span>
+										<form:radiobutton path="processedOrUnprocessed"
+											id="processedOrUnprocessed" name="processedOrUnprocessed"
+											value="UNPROCESS" />
+										<span class="deno-value"><b>UNPROCESS</b></span>
+
+									</div>
+
 									<div class="col-lg-12 form-group">
 										<label>Number of Entries</label> <input type="text"
 											id="member" name="member" value="" class="form-control"><br />
-											<label id="err6" style="display: none;color: red">Please Enter Valid Denomination</label>
-										    <label id="err7" style="display: none; color: red">Please Enter Bundle</label>
+										<label id="err6" style="display: none; color: red">Please
+											Enter Valid Denomination</label> <label id="err7"
+											style="display: none; color: red">Please Enter Bundle</label>
 										<div id="container">
 											<table id="table1">
 												<tr>
@@ -592,40 +630,44 @@ $.ajax({
 											</table>
 										</div>
 									</div>
-									<label id="err7" style="display: none; color: red">Please Enter Valid Denomination</label>
-									<label id="err8" style="display: none; color: red">Please Enter Bundle</label>
-									
+									<label id="err7" style="display: none; color: red">Please
+										Enter Valid Denomination</label>
+									<label id="err8" style="display: none; color: red">Please
+										Enter Bundle</label>
+
 									<div class="frmsub">
-										<input type="button" value="Submit"  id="btnsubmit" onclick="doAjaxPostInsert('+i+')">
+										<input type="button" value="Submit" id="btnsubmit"
+											onclick="doAjaxPostInsert('+i+')">
 									</div>
-								
+
 								</form:form>
-								
+
 								<div class="frmsubdel">
-									<button type="submit" class="btn btn-default" value="Details" style="width: 99px;" onclick="refresh()">Refresh</button>
-								<div>
+									<button type="submit" class="btn btn-default" value="Details"
+										style="width: 99px;" onclick="refresh()">Refresh</button>
+									<div>
 
-								<!-- /.col-lg-6 (nested) -->
+										<!-- /.col-lg-6 (nested) -->
 
-								<!-- /.col-lg-6 (nested) -->
+										<!-- /.col-lg-6 (nested) -->
 
+									</div>
+
+									<!-- /.row (nested) -->
+								</div>
+								<!-- /.panel-body -->
 							</div>
-
-							<!-- /.row (nested) -->
+							<!-- /.panel -->
 						</div>
-						<!-- /.panel-body -->
+						<!-- /.col-lg-12 -->
 					</div>
-					<!-- /.panel -->
+					<!-- /.row -->
 				</div>
-				<!-- /.col-lg-12 -->
-			</div>
-			<!-- /.row -->
-		</div>
-		<!-- /#page-wrapper -->
+				<!-- /#page-wrapper -->
 
-	</div>
-	<!-- /#wrapper -->
-	</div>
+			</div>
+			<!-- /#wrapper -->
+		</div>
 	</div>
 	<>
 
@@ -644,7 +686,7 @@ $.ajax({
 	<script src="./resources/dist/js/sb-admin-2.js"></script>
 
 	<script src="./resources/js/jQuery.print.js"></script>
-<script type="text/javascript" src="./js/htmlInjection.js"></script>
+	<script type="text/javascript" src="./js/htmlInjection.js"></script>
 </body>
 
 </html>

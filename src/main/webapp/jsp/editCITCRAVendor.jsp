@@ -12,7 +12,8 @@
 <link rel="shortcut icon" href="./resources/logo/favicon.ico"
 	type="image/x-icon">
 
-<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script type="text/javascript"
+	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script type="text/javascript" src="./js/jquery.validate.min.js"></script>
 
 <title>ICICI : Edit Vendor</title>
@@ -114,69 +115,74 @@ function getICMC(){
 							<div class="row">
 								<div class="col-lg-6">
 									<!--<form role="form">-->
-									<form:form id="userPage" name="userPage" action="updateCITCRAVendor" method="post"
+									<form:form id="userPage" name="userPage"
+										action="updateCITCRAVendor" method="post"
 										modelAttribute="user" autocomplete="off">
-									
-			                       		<div class="form-group">
+
+										<div class="form-group">
 											<label>Zone</label>
-											 <form:select path="zone" id="zone" name="zone" cssClass="form-control" onchange="doAjaxForRegion()">
-    											<option value="Select" label="Select Zone"></option>
-    											<form:options items="${zoneList}" />
-											</form:select>
-										</div> 
-										
-										<div class="form-group">
-											<label>Region</label>
-											 <form:select path="region" id="region" name="region" cssClass="form-control" onchange="getICMC()">
-    											<form:options items="${regionList}" itemLabel="region" />
-											</form:select>
-										</div> 
-										
-										<div class="form-group">
-											<label>ICMC</label>
-											<form:select path="icmcIds" id="icmcIds" name="icmcIds" cssClass="form-control"  >
-    											<form:options items="${icmcList}" itemValue="id" itemLabel="name"/>
+											<form:select path="zone" id="zone" name="zone"
+												cssClass="form-control" onchange="doAjaxForRegion()">
+												<option value="Select" label="Select Zone"></option>
+												<form:options items="${zoneList}" />
 											</form:select>
 										</div>
-										
+
+										<div class="form-group">
+											<label>Region</label>
+											<form:select path="region" id="region" name="region"
+												cssClass="form-control" onchange="getICMC()">
+												<form:options items="${regionList}" itemLabel="region" />
+											</form:select>
+										</div>
+
+										<div class="form-group">
+											<label>ICMC</label>
+											<form:select path="icmcIds" id="icmcIds" name="icmcIds"
+												cssClass="form-control">
+												<form:options items="${icmcList}" itemValue="id"
+													itemLabel="name" />
+											</form:select>
+										</div>
+
 										<div class="form-group">
 											<label>Name</label>
 											<form:input path="name" id="name" name="name" maxlength="45"
 												cssClass="form-control" />
 										</div>
-										
+
 										<div class="form-group">
 											<label>Type One</label>
-											<form:input path="typeOne" id="typeOne" name="typeOne" maxlength="45"
-												cssClass="form-control" />
+											<form:input path="typeOne" id="typeOne" name="typeOne"
+												maxlength="45" cssClass="form-control" />
 										</div>
-										
+
 										<div class="form-group">
 											<label>Type Two</label>
-											<form:input path="typeTwo" id="typeTwo" name="typeTwo" maxlength="45"
-												cssClass="form-control" />
+											<form:input path="typeTwo" id="typeTwo" name="typeTwo"
+												maxlength="45" cssClass="form-control" />
 										</div>
-										
+
 										<div class="form-group">
 											<label>Type Three</label>
-											<form:input path="typeThree" id="typeThree" name="typeThree" maxlength="45"
-												cssClass="form-control" />
+											<form:input path="typeThree" id="typeThree" name="typeThree"
+												maxlength="45" cssClass="form-control" />
 										</div>
-										
+
 										<div class="form-group">
 											<label>FPR Name</label>
-											<form:input path="FPRName" id="FPRName" name="FPRName" maxlength="45"
-												cssClass="form-control" readonly="true" />
+											<form:input path="FPRName" id="FPRName" name="FPRName"
+												maxlength="45" cssClass="form-control" readonly="true" />
 										</div>
-										
+
 										<div class="form-group">
 											<label>FPR Number</label>
-											<form:input path="FPRNumber" id="FPRNumber" name="FPRNumber" maxlength="11"
-												cssClass="form-control" readonly="true" />
+											<form:input path="FPRNumber" id="FPRNumber" name="FPRNumber"
+												maxlength="11" cssClass="form-control" readonly="true" />
 										</div>
 										<button type="submit" class="btn btn-lg btn-success btn-block"
 											value="Details">Update</button>
-											<form:hidden path="id"/>
+										<form:hidden path="id" />
 									</form:form>
 								</div>
 								<!-- /.col-lg-6 (nested) -->
@@ -211,7 +217,7 @@ function getICMC(){
 
 	<!-- Custom Theme JavaScript -->
 	<script src="./resources/dist/js/sb-admin-2.js"></script>
-	
+
 	<script type="text/javascript">
 	
 	$.validator.addMethod("loginRegexName", function(value, element) {
@@ -296,7 +302,7 @@ function getICMC(){
 	  });
 	});
 	</script>
-<script type="text/javascript" src="./js/htmlInjection.js"></script>
+	<script type="text/javascript" src="./js/htmlInjection.js"></script>
 </body>
 
 </html>

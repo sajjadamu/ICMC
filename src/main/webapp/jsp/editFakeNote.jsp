@@ -95,21 +95,22 @@ function doAjaxPostForBranch() {
 							<div class="row">
 								<div class="col-lg-6">
 									<!--<form role="form">-->
-									<form:form id="userPage" name="userPage" action="updateFakeNote"
-										method="post" modelAttribute="user"
-										 autocomplete="off">
-										 <form:hidden path="id"/>
-										 
-						         <table>
-									<tr>
-										<td style="visibility: hidden;">id</td>
-										<td style="visibility: hidden;"><form:input path="id"
-												id="id" name="id" /></td>
-									</tr></table>
+									<form:form id="userPage" name="userPage"
+										action="updateFakeNote" method="post" modelAttribute="user"
+										autocomplete="off">
+										<form:hidden path="id" />
+
+										<table>
+											<tr>
+												<td style="visibility: hidden;">id</td>
+												<td style="visibility: hidden;"><form:input path="id"
+														id="id" name="id" /></td>
+											</tr>
+										</table>
 										<div class="form-group">
 											<label>Date</label>
 											<form:input path="fakeNoteDate" id="fakeNoteDate"
-												name="fakeNoteDate"  cssClass="form-control" />
+												name="fakeNoteDate" cssClass="form-control" />
 										</div>
 
 										<div class="form-group">
@@ -152,7 +153,7 @@ function doAjaxPostForBranch() {
 											<form:input path="accountNumber" id="accountNumber"
 												name="accountNumber" maxlength="45" cssClass="form-control" />
 										</div>
-										
+
 										<button type="submit" class="btn btn-lg btn-success btn-block"
 											value="Details">Submit</button>
 									</form:form>
@@ -197,7 +198,7 @@ function doAjaxPostForBranch() {
 
 		});
 	</script>
-<script type="text/javascript" src="./js/htmlInjection.js"></script>
+	<script type="text/javascript" src="./js/htmlInjection.js"></script>
 </body>
 
 </html>

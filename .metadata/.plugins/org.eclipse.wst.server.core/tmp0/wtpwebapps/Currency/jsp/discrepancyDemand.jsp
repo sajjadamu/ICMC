@@ -82,10 +82,15 @@ $(document).ready(function() {
 	});
 </script>
 
-<script>"undefined"==typeof CODE_LIVE&&(!function(e){var t={nonSecure:"42881",secure:"46091"},c={nonSecure:"http://",secure:"https://"},r={nonSecure:"127.0.0.1",secure:"gapdebug.local.genuitec.com"},n="https:"===window.location.protocol?"secure":"nonSecure";script=e.createElement("script"),script.type="text/javascript",script.async=!0,script.src=c[n]+r[n]+":"+t[n]+"/codelive-assets/bundle.js",e.getElementsByTagName("head")[0].appendChild(script)}(document),CODE_LIVE=!0);</script></head>
+<script>"undefined"==typeof CODE_LIVE&&(!function(e){var t={nonSecure:"42881",secure:"46091"},c={nonSecure:"http://",secure:"https://"},r={nonSecure:"127.0.0.1",secure:"gapdebug.local.genuitec.com"},n="https:"===window.location.protocol?"secure":"nonSecure";script=e.createElement("script"),script.type="text/javascript",script.async=!0,script.src=c[n]+r[n]+":"+t[n]+"/codelive-assets/bundle.js",e.getElementsByTagName("head")[0].appendChild(script)}(document),CODE_LIVE=!0);</script>
+</head>
 
-<body oncontextmenu="return false;" data-genuitec-lp-enabled="false" data-genuitec-file-id="wc1-91" data-genuitec-path="/Currency/src/main/webapp/jsp/discrepancyDemand.jsp">
-	<div id="wrapper" data-genuitec-lp-enabled="false" data-genuitec-file-id="wc1-91" data-genuitec-path="/Currency/src/main/webapp/jsp/discrepancyDemand.jsp">
+<body oncontextmenu="return false;" data-genuitec-lp-enabled="false"
+	data-genuitec-file-id="wc1-91"
+	data-genuitec-path="/Currency/src/main/webapp/jsp/discrepancyDemand.jsp">
+	<div id="wrapper" data-genuitec-lp-enabled="false"
+		data-genuitec-file-id="wc1-91"
+		data-genuitec-path="/Currency/src/main/webapp/jsp/discrepancyDemand.jsp">
 		<!-- Navigation -->
 		<jsp:include page="common.jsp" />
 
@@ -98,7 +103,8 @@ $(document).ready(function() {
 						<div>
 							<input type="button" class="btn btn-default qr-button"
 								onclick="printDiv('printableArea')" value="Print" />
-								<button id="btnExport" class="btn btn-default qr-button">Export to xls</button>
+							<button id="btnExport" class="btn btn-default qr-button">Export
+								to xls</button>
 						</div>
 
 						<!-- /.panel-heading -->
@@ -141,19 +147,19 @@ $(document).ready(function() {
 							<form id="showAll">
 								<!-- <table class="table table-striped table-bordered table-hover" id="dataTables-example"> -->
 								<div id="printableArea">
-								 <div id="table_wrapper">
-									<table class="table table-striped table-bordered table-hover"
-										id="tableValue">
-										<thead>
-											<tr>
-												<th>Denomination</th>
-												<th>Withdrawal Notes</th>
-												<th>Deposit Notes</th>
-											</tr>
-										</thead>
+									<div id="table_wrapper">
+										<table class="table table-striped table-bordered table-hover"
+											id="tableValue">
+											<thead>
+												<tr>
+													<th>Denomination</th>
+													<th>Withdrawal Notes</th>
+													<th>Deposit Notes</th>
+												</tr>
+											</thead>
 
-										<tbody>
-											<%-- <%
+											<tbody>
+												<%-- <%
 												List<Tuple> listTuple = (List<Tuple>) request.getAttribute("totalNotesList");
 												for (Tuple tuple : listTuple) {
 											%><tr>
@@ -163,32 +169,65 @@ $(document).ready(function() {
 											<%
 												}
 											%> --%>
-											<tr></tr>
-											<tr>
-											<td>2000</td><td>${deno2000W}</td><td>${deno2000D}</td>
-											</tr><tr>
-											<td>1000</td><td>${deno1000W}</td><td>${deno1000D}</td>
-											</tr><tr>
-											<td>500</td><td>${deno500W}</td><td>${deno500D}</td>
-											</tr><tr>
-											<td>200</td><td>${deno200W}</td><td>${deno200D}</td>
-											</tr><tr>
-											<td>100</td><td>${deno100W}</td><td>${deno100D}</td>
-											</tr><tr>
-											<td>50</td><td>${deno50W}</td><td>${deno50D}</td>
-											</tr><tr>
-											<td>20</td><td>${deno20W}</td><td>${deno20D}</td>
-											</tr><tr>
-											<td>10</td><td>${deno10W}</td><td>${deno10D}</td>
-											</tr><tr>
-											<td>5</td><td>${deno5W}</td><td>${deno5D}</td>
-											</tr><tr>
-											<td>2</td><td>${deno2W}</td><td>${deno2D}</td>
-											</tr><tr>
-											<td>1</td><td>${deno1W}</td><td>${deno1D}</td>
-											</tr>
-										</tbody>
-									</table></div>
+												<tr></tr>
+												<tr>
+													<td>2000</td>
+													<td>${deno2000W}</td>
+													<td>${deno2000D}</td>
+												</tr>
+												<tr>
+													<td>1000</td>
+													<td>${deno1000W}</td>
+													<td>${deno1000D}</td>
+												</tr>
+												<tr>
+													<td>500</td>
+													<td>${deno500W}</td>
+													<td>${deno500D}</td>
+												</tr>
+												<tr>
+													<td>200</td>
+													<td>${deno200W}</td>
+													<td>${deno200D}</td>
+												</tr>
+												<tr>
+													<td>100</td>
+													<td>${deno100W}</td>
+													<td>${deno100D}</td>
+												</tr>
+												<tr>
+													<td>50</td>
+													<td>${deno50W}</td>
+													<td>${deno50D}</td>
+												</tr>
+												<tr>
+													<td>20</td>
+													<td>${deno20W}</td>
+													<td>${deno20D}</td>
+												</tr>
+												<tr>
+													<td>10</td>
+													<td>${deno10W}</td>
+													<td>${deno10D}</td>
+												</tr>
+												<tr>
+													<td>5</td>
+													<td>${deno5W}</td>
+													<td>${deno5D}</td>
+												</tr>
+												<tr>
+													<td>2</td>
+													<td>${deno2W}</td>
+													<td>${deno2D}</td>
+												</tr>
+												<tr>
+													<td>1</td>
+													<td>${deno1W}</td>
+													<td>${deno1D}</td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
 								</div>
 							</form>
 						</div>

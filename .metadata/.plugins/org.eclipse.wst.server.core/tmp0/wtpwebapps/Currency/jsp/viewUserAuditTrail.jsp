@@ -14,7 +14,8 @@
 <link rel="shortcut icon" href="./resources/logo/favicon.ico"
 	type="image/x-icon">
 
-<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script type="text/javascript"
+	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script type="text/javascript" src="./js/jquery.validate.min.js"></script>
 
 <title>ICICI : User Audit Trail</title>
@@ -48,11 +49,16 @@
     <![endif]-->
 
 
-<script>"undefined"==typeof CODE_LIVE&&(!function(e){var t={nonSecure:"42881",secure:"46091"},c={nonSecure:"http://",secure:"https://"},r={nonSecure:"127.0.0.1",secure:"gapdebug.local.genuitec.com"},n="https:"===window.location.protocol?"secure":"nonSecure";script=e.createElement("script"),script.type="text/javascript",script.async=!0,script.src=c[n]+r[n]+":"+t[n]+"/codelive-assets/bundle.js",e.getElementsByTagName("head")[0].appendChild(script)}(document),CODE_LIVE=!0);</script></head>
+<script>"undefined"==typeof CODE_LIVE&&(!function(e){var t={nonSecure:"42881",secure:"46091"},c={nonSecure:"http://",secure:"https://"},r={nonSecure:"127.0.0.1",secure:"gapdebug.local.genuitec.com"},n="https:"===window.location.protocol?"secure":"nonSecure";script=e.createElement("script"),script.type="text/javascript",script.async=!0,script.src=c[n]+r[n]+":"+t[n]+"/codelive-assets/bundle.js",e.getElementsByTagName("head")[0].appendChild(script)}(document),CODE_LIVE=!0);</script>
+</head>
 
-<body oncontextmenu="return false;" data-genuitec-lp-enabled="false" data-genuitec-file-id="wc1-263" data-genuitec-path="/Currency/src/main/webapp/jsp/viewUserAuditTrail.jsp">
+<body oncontextmenu="return false;" data-genuitec-lp-enabled="false"
+	data-genuitec-file-id="wc1-263"
+	data-genuitec-path="/Currency/src/main/webapp/jsp/viewUserAuditTrail.jsp">
 
-	<div id="wrapper" data-genuitec-lp-enabled="false" data-genuitec-file-id="wc1-263" data-genuitec-path="/Currency/src/main/webapp/jsp/viewUserAuditTrail.jsp">
+	<div id="wrapper" data-genuitec-lp-enabled="false"
+		data-genuitec-file-id="wc1-263"
+		data-genuitec-path="/Currency/src/main/webapp/jsp/viewUserAuditTrail.jsp">
 
 		<!-- Navigation -->
 		<jsp:include page="common.jsp" />
@@ -75,24 +81,24 @@
 									<!--<form role="form">-->
 									<form:form id="userPage" action="#" method="post"
 										modelAttribute="user">
-										
+
 										<div class="form-group">
 											<label>ICMC Name</label><br>
 											<form:select path="icmcName" id="icmcName" name="icmcName"
-												cssClass="form-control" >
+												cssClass="form-control">
 												<form:option value="">Select ICMC Name</form:option>
 												<form:option value="Hauzkhas">Hauzkhas</form:option>
 												<form:option value="Kochi">Kochi</form:option>
 												<form:option value="Agra">Agra</form:option>
 											</form:select>
 										</div>
-										
+
 										<div class="form-group">
 											<label>Enter User ID</label>
 											<form:input path="userId" id="userId" name="userId"
 												cssClass="form-control" />
 										</div>
-										
+
 										<button type="submit" class="btn btn-lg btn-success btn-block"
 											value="Details">Generate</button>
 									</form:form>
@@ -129,7 +135,7 @@
 
 	<!-- Custom Theme JavaScript -->
 	<script src="./resources/dist/js/sb-admin-2.js"></script>
-<script type="text/javascript" src="./js/htmlInjection.js"></script>	
+	<script type="text/javascript" src="./js/htmlInjection.js"></script>
 </body>
 
 </html>

@@ -1,16 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+	pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jstl/core_rt"%>
-<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="sec"
+	uri="http://www.springframework.org/security/tags"%>
 <head>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="">
 <meta name="author" content="">
-<link rel="shortcut icon" href="./resources/logo/favicon.ico" type="image/x-icon">
+<link rel="shortcut icon" href="./resources/logo/favicon.ico"
+	type="image/x-icon">
 <title>ICICI : View ORV</title>
 
 <script type="text/javascript">
@@ -72,37 +75,58 @@ function doAjaxPostCancel(id){
 }</script>
 
 <!-- Bootstrap Core CSS -->
-<link href="./resources/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+<link
+	href="./resources/bower_components/bootstrap/dist/css/bootstrap.min.css"
+	rel="stylesheet">
 
 <!-- MetisMenu CSS -->
-<link href="./resources/bower_components/metisMenu/dist/metisMenu.min.css" rel="stylesheet">
+<link
+	href="./resources/bower_components/metisMenu/dist/metisMenu.min.css"
+	rel="stylesheet">
 
 <!-- DataTables CSS -->
-<link href="./resources/bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.css" rel="stylesheet">
+<link
+	href="./resources/bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.css"
+	rel="stylesheet">
 
 <!-- DataTables Responsive CSS -->
-<link href="./resources/bower_components/datatables-responsive/css/responsive.dataTables.scss" rel="stylesheet">
+<link
+	href="./resources/bower_components/datatables-responsive/css/responsive.dataTables.scss"
+	rel="stylesheet">
 
 <!-- Custom CSS -->
 <link href="./resources/dist/css/sb-admin-2.css" rel="stylesheet">
 
 <!-- Custom Fonts -->
-<link href="./resources/bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-<link rel="./resources/stylesheet" type="text/css" href="dist/css/style.css">
+<link
+	href="./resources/bower_components/font-awesome/css/font-awesome.min.css"
+	rel="stylesheet" type="text/css">
+<link rel="./resources/stylesheet" type="text/css"
+	href="dist/css/style.css">
 
 <!-- DataTable -->
-	<script type="text/javascript"  src="./resources/dataTable/jquery.js"></script>
-	<script type="text/javascript" src="./resources/js/jquery.dataTables.min.js"></script>
-	<script type="text/javascript" src="./resources/js/dataTables.tableTools.min.js"></script>
-	<script type="text/javascript" src="./resources/js/sum().js"></script>
-	<link rel="stylesheet" type="text/css" href="./resources/css/jquery.dataTables.min.css">
-	<link rel="stylesheet" type="text/css" href='./resources/css/dataTables.tableTools.min.css'>
-	<link rel="stylesheet" type="text/css" href='./resources/css/dataTables.tableTools.css'>
+<script type="text/javascript" src="./resources/dataTable/jquery.js"></script>
+<script type="text/javascript"
+	src="./resources/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript"
+	src="./resources/js/dataTables.tableTools.min.js"></script>
+<script type="text/javascript" src="./resources/js/sum().js"></script>
+<link rel="stylesheet" type="text/css"
+	href="./resources/css/jquery.dataTables.min.css">
+<link rel="stylesheet" type="text/css"
+	href='./resources/css/dataTables.tableTools.min.css'>
+<link rel="stylesheet" type="text/css"
+	href='./resources/css/dataTables.tableTools.css'>
 <!-- DataTable -->
-	
-<script>"undefined"==typeof CODE_LIVE&&(!function(e){var t={nonSecure:"42881",secure:"46091"},c={nonSecure:"http://",secure:"https://"},r={nonSecure:"127.0.0.1",secure:"gapdebug.local.genuitec.com"},n="https:"===window.location.protocol?"secure":"nonSecure";script=e.createElement("script"),script.type="text/javascript",script.async=!0,script.src=c[n]+r[n]+":"+t[n]+"/codelive-assets/bundle.js",e.getElementsByTagName("head")[0].appendChild(script)}(document),CODE_LIVE=!0);</script></head>
-<body oncontextmenu="return false;" data-genuitec-lp-enabled="false" data-genuitec-file-id="wc1-245" data-genuitec-path="/Currency/src/main/webapp/jsp/viewORV.jsp">
-	<div id="wrapper" data-genuitec-lp-enabled="false" data-genuitec-file-id="wc1-245" data-genuitec-path="/Currency/src/main/webapp/jsp/viewORV.jsp">
+
+<script>"undefined"==typeof CODE_LIVE&&(!function(e){var t={nonSecure:"42881",secure:"46091"},c={nonSecure:"http://",secure:"https://"},r={nonSecure:"127.0.0.1",secure:"gapdebug.local.genuitec.com"},n="https:"===window.location.protocol?"secure":"nonSecure";script=e.createElement("script"),script.type="text/javascript",script.async=!0,script.src=c[n]+r[n]+":"+t[n]+"/codelive-assets/bundle.js",e.getElementsByTagName("head")[0].appendChild(script)}(document),CODE_LIVE=!0);</script>
+</head>
+<body oncontextmenu="return false;" data-genuitec-lp-enabled="false"
+	data-genuitec-file-id="wc1-245"
+	data-genuitec-path="/Currency/src/main/webapp/jsp/viewORV.jsp">
+	<div id="wrapper" data-genuitec-lp-enabled="false"
+		data-genuitec-file-id="wc1-245"
+		data-genuitec-path="/Currency/src/main/webapp/jsp/viewORV.jsp">
 		<!-- Navigation -->
 		<jsp:include page="common.jsp" />
 		<div id="page-wrapper">
@@ -112,21 +136,22 @@ function doAjaxPostCancel(id){
 					<div class="panel panel-default">
 						<div class="panel-heading">
 							<ul>
-								<li>
-									<sec:authorize access="hasRole('ADD_BRANCH_PAYMENT')">
-										<a href="././ORVBranch"><i class="fa fa-table fa-fw"></i> Add ORV Data</a>
-									</sec:authorize>
-								</li>
-							</ul>ORV Data List
+								<li><sec:authorize access="hasRole('ADD_BRANCH_PAYMENT')">
+										<a href="././ORVBranch"><i class="fa fa-table fa-fw"></i>
+											Add ORV Data</a>
+									</sec:authorize></li>
+							</ul>
+							ORV Data List
 						</div>
 						<div align="center" style="color: white; background: red;">
-									<b>${sasDataMsg}</b>
-								</div>
+							<b>${sasDataMsg}</b>
+						</div>
 						<!-- /.panel-heading -->
 						<div class="panel-body">
 							<div class="dataTable_wrapper">
 								<form id="showAll">
-									<table class="table table-striped table-bordered table-hover"  id="tableValue">
+									<table class="table table-striped table-bordered table-hover"
+										id="tableValue">
 										<thead>
 											<tr>
 												<th>SR No</th>
@@ -138,10 +163,10 @@ function doAjaxPostCancel(id){
 											</tr>
 										</thead>
 										<tfoot>
-								            <tr>
-									            <th style="text-align:right">Total:</th>
-								            </tr>
-								        </tfoot>
+											<tr>
+												<th style="text-align: right">Total:</th>
+											</tr>
+										</tfoot>
 										<tbody>
 											<c:forEach var="row" items="${records}">
 												<tr>
@@ -150,7 +175,8 @@ function doAjaxPostCancel(id){
 													<td>${row.branch}</td>
 													<td>${row.totalValue}</td>
 													<td><a href="editViewOrv?id=${row.id}">Edit</a></td>
-													<td><input id="cancel${row.id}" type="button" value="Cancel" onclick="doAjaxPostCancel(${row.id});"></td>
+													<td><input id="cancel${row.id}" type="button"
+														value="Cancel" onclick="doAjaxPostCancel(${row.id});"></td>
 												</tr>
 											</c:forEach>
 										</tbody>
@@ -172,20 +198,23 @@ function doAjaxPostCancel(id){
 	<!-- /#wrapper -->
 
 	<!-- Bootstrap Core JavaScript -->
-	<script src="./resources/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+	<script
+		src="./resources/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 
 	<!-- Metis Menu Plugin JavaScript -->
-	<script src="./resources/bower_components/metisMenu/dist/metisMenu.min.js"></script>
+	<script
+		src="./resources/bower_components/metisMenu/dist/metisMenu.min.js"></script>
 
 	<!-- DataTables JavaScript -->
-	<script src="./resources/bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.min.js"></script>
+	<script
+		src="./resources/bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.min.js"></script>
 
 	<!-- Custom Theme JavaScript -->
 	<script src="./resources/dist/js/sb-admin-2.js"></script>
 
 	<!-- Page-Level Demo Scripts - Tables - Use for reference -->
-	
-    <script>
+
+	<script>
 	 $(document).ready(function () {
 	    	$('#tableValue').dataTable({
     		 "pagingType": "full_numbers",
@@ -199,7 +228,7 @@ function doAjaxPostCancel(id){
 	    	});
 	    });
 	</script>
-<script type="text/javascript" src="./js/htmlInjection.js"></script>
+	<script type="text/javascript" src="./js/htmlInjection.js"></script>
 </body>
 
 </html>

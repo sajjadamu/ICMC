@@ -13,7 +13,8 @@
 <link rel="shortcut icon" href="./resources/logo/favicon.ico"
 	type="image/x-icon">
 
-<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script type="text/javascript"
+	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script type="text/javascript" src="./js/jquery.validate.min.js"></script>
 
 <title>ICICI : Add ICMC Report</title>
@@ -51,7 +52,7 @@
 <body oncontextmenu="return false;">
 	<div id="wrapper">
 		<!-- Navigation -->
-		<jsp:include page="common.jsp" /> 
+		<jsp:include page="common.jsp" />
 
 		<div id="page-wrapper">
 			<!--  <div class="row">
@@ -65,32 +66,39 @@
 				<div class="col-lg-12">
 					<div class="panel panel-default">
 						<div class="panel-heading">
-                          <ul><li><a href="././viewICMCReport"><i
-								class="fa fa-table fa-fw"></i> View List of ICMC Report's</a></li></ul>
-                          Add ICMC Report
-                        </div>
-						
+							<ul>
+								<li><a href="././viewICMCReport"><i
+										class="fa fa-table fa-fw"></i> View List of ICMC Report's</a></li>
+							</ul>
+							Add ICMC Report
+						</div>
+
 						<div class="panel-body">
 							<div class="row">
 								<div class="col-lg-6">
 									<!--<form role="form">-->
-									<form:form id="userPage" name="userPage" action="saveICMCReport" method="post"
-										modelAttribute="user" autocomplete="off">
-										
-										<div align="center" style="color: red"><b>${duplicateReport}</b></div><br>
-										
+									<form:form id="userPage" name="userPage"
+										action="saveICMCReport" method="post" modelAttribute="user"
+										autocomplete="off">
+
+										<div align="center" style="color: red">
+											<b>${duplicateReport}</b>
+										</div>
+										<br>
+
 										<div class="form-group">
 											<label>New Report Type</label>
-											<form:input path="newReportType" id="newReportType" name="newReportType"
-												maxlength="45" cssClass="form-control" />
+											<form:input path="newReportType" id="newReportType"
+												name="newReportType" maxlength="45" cssClass="form-control" />
 										</div>
 
 										<div class="form-group">
 											<label>Report Content</label><br>
-											<form:checkboxes items="${reportList}" path="reportType" id="reportType" name="reportType" />
+											<form:checkboxes items="${reportList}" path="reportType"
+												id="reportType" name="reportType" />
 										</div>
-										
-										
+
+
 										<button type="submit" class="btn btn-lg btn-success btn-block"
 											value="Details">Create</button>
 									</form:form>
@@ -173,7 +181,7 @@
 	  });
 	});
 	</script>
-<script type="text/javascript" src="./js/htmlInjection.js"></script>
+	<script type="text/javascript" src="./js/htmlInjection.js"></script>
 </body>
 
 </html>

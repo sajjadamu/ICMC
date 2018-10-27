@@ -128,24 +128,24 @@
 											<tr>
 												<th>Denomination</th>
 												<th>Pieces</th>
-											<!-- 	<th>Bin</th> -->
+												<!-- 	<th>Bin</th> -->
 												<th>Entry Date</th>
 												<!-- <th>Edit</th> -->
 											</tr>
 										</thead>
 										<tbody>
 											<c:forEach var="row" items="${records}">
-											       
-												    <tr id="xyz${row.id}">
+
+												<tr id="xyz${row.id}">
 													<td id="denomination${row.id}">${row.denomination}</td>
 													<td id="bundle${row.id}">${row.bundle}</td>
 													<%-- <td id="bin${row.id}">${row.binNumber}</td> --%>
 													<td id="insert${row.id}"><fmt:formatDate
 															pattern="yyyy-MM-dd" value="${row.insertTime.time}" /></td>
-															<%-- <td><a href="editMutilatedValue?id=${row.id}">Edit</a></td> --%>
-													
+													<%-- <td><a href="editMutilatedValue?id=${row.id}">Edit</a></td> --%>
+
 												</tr>
-												
+
 											</c:forEach>
 										</tbody>
 									</table>

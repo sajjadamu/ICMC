@@ -12,10 +12,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="">
 <meta name="author" content="">
-<link rel="shortcut icon" href="./resources/logo/favicon.ico" type="image/x-icon">
+<link rel="shortcut icon" href="./resources/logo/favicon.ico"
+	type="image/x-icon">
 <title>ICICI : Update ICMC</title>
 
-<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script type="text/javascript"
+	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script type="text/javascript" src="./js/jquery.validate.min.js"></script>
 
 <script type="text/javascript">
@@ -51,7 +53,7 @@ function doAjaxForRBINameZoneAndRegion() {
 	}
 	
 }
-</script> 
+</script>
 
 <script type="text/javascript">
 function doAjaxForZoneAndRegion() {
@@ -173,84 +175,92 @@ function doAjaxForRegion(region) {
 							<div class="row">
 								<div class="col-lg-6">
 									<!--<form role="form">-->
-									<form:form id="userPage" name="userPage" action="updateICMC" method="post" 
-										modelAttribute="user" autocomplete="off">
-										
-										<form:hidden path="id"/>
-										
+									<form:form id="userPage" name="userPage" action="updateICMC"
+										method="post" modelAttribute="user" autocomplete="off">
+
+										<form:hidden path="id" />
+
 										<div class="form-group">
 											<label>Name</label>
-											<form:input path="name" id="name" name="name" cssClass="form-control" 
-												readonly="true" maxlength="45" />
+											<form:input path="name" id="name" name="name"
+												cssClass="form-control" readonly="true" maxlength="45" />
 										</div>
-												
+
 										<div class="form-group">
 											<label>Link Branch Sol ID</label>
-											 <form:input path="linkBranchSolId" id="linkBranchSolId" name="linkBranchSolId" 
-											 	cssClass="form-control" maxlength="45" onkeyup="doAjaxForRBINameZoneAndRegion()"/>
+											<form:input path="linkBranchSolId" id="linkBranchSolId"
+												name="linkBranchSolId" cssClass="form-control"
+												maxlength="45" onkeyup="doAjaxForRBINameZoneAndRegion()" />
 										</div>
-										
-										<form:hidden path="zoneHidden" id="zoneHidden" name="zoneHidden"/>
-										<form:hidden path="rbiNameHidden" id="rbiNameHidden" name="rbiNameHidden"/>
-										<form:hidden path="regionHidden" id="regionHidden" name="regionHidden"/>
-										
+
+										<form:hidden path="zoneHidden" id="zoneHidden"
+											name="zoneHidden" />
+										<form:hidden path="rbiNameHidden" id="rbiNameHidden"
+											name="rbiNameHidden" />
+										<form:hidden path="regionHidden" id="regionHidden"
+											name="regionHidden" />
+
 										<div class="form-group js-rbi">
 											<label>RBI Name</label>
-											 <form:select path="rbiName" id="rbiName" name="rbiName" cssClass="form-control" maxlength="45"
-											 	disabled="true" onchange="doAjaxForZoneAndRegion()">
-											 	<form:option value="">Select RBI Name</form:option>
-											 	<form:options items="${rbiNameList}" />
-											 </form:select>
-										</div>
-										
-										<div class="form-group js-zone">
-											<label>Zone</label>
-											 <form:select path="zone" id="zone" name="zone" cssClass="form-control" 
-											 	disabled="true" onchange="doAjaxForRegion()">
-    											<option value="" label="Select Zone"></option>
-    											<form:options items="${zoneList}" />
+											<form:select path="rbiName" id="rbiName" name="rbiName"
+												cssClass="form-control" maxlength="45" disabled="true"
+												onchange="doAjaxForZoneAndRegion()">
+												<form:option value="">Select RBI Name</form:option>
+												<form:options items="${rbiNameList}" />
 											</form:select>
 										</div>
-										
+
+										<div class="form-group js-zone">
+											<label>Zone</label>
+											<form:select path="zone" id="zone" name="zone"
+												cssClass="form-control" disabled="true"
+												onchange="doAjaxForRegion()">
+												<option value="" label="Select Zone"></option>
+												<form:options items="${zoneList}" />
+											</form:select>
+										</div>
+
 										<div class="form-group js-region">
 											<label>Region</label>
-											 <form:select path="region" id="region" name="region" disabled="true" cssClass="form-control" >
+											<form:select path="region" id="region" name="region"
+												disabled="true" cssClass="form-control">
 												<form:option value="">Select Region</form:option>
 												<form:options items="${regionList}" />
-											 </form:select>
+											</form:select>
 										</div>
-										
+
 										<div class="form-group">
 											<label>Address</label>
-											<form:input path="address" id="address" name="address" maxlength="45"
-												cssClass="form-control" />
+											<form:input path="address" id="address" name="address"
+												maxlength="45" cssClass="form-control" />
 										</div>
-										
+
 										<div class="form-group">
 											<label>City</label>
 											<form:input path="city" id="city" name="city" maxlength="45"
 												cssClass="form-control" />
 										</div>
-										
+
 										<div class="form-group">
 											<label>Pin Code</label>
-											<form:input path="pincode" id="pincode" name="pincode" minlength="6" maxlength="6"
-												cssClass="form-control" />
+											<form:input path="pincode" id="pincode" name="pincode"
+												minlength="6" maxlength="6" cssClass="form-control" />
 										</div>
 										<div class="form-group">
 											<label>Chest Code</label>
-											<form:input path="chestCode" id="chestCode" name="chestCode"  maxlength="49"
-												cssClass="form-control" />
+											<form:input path="chestCode" id="chestCode" name="chestCode"
+												maxlength="49" cssClass="form-control" />
 										</div>
-										
-										
+
+
 										<div class="form-group">
 											<label>Status</label>
-											 <form:select path="status" id="status" name="status" cssClass="form-control">
-											 	<form:options items="${statusList}" />
-											 </form:select>
+											<form:select path="status" id="status" name="status"
+												cssClass="form-control">
+												<form:options items="${statusList}" />
+											</form:select>
 										</div>
-										
+
 										<button type="submit" class="btn btn-lg btn-success btn-block"
 											value="Details">Update</button>
 									</form:form>
@@ -287,8 +297,8 @@ function doAjaxForRegion(region) {
 
 	<!-- Custom Theme JavaScript -->
 	<script src="./resources/dist/js/sb-admin-2.js"></script>
-	
-<script type="text/javascript">
+
+	<script type="text/javascript">
 
 $.validator.addMethod("loginRegex", function(value, element) {
 		    return this.optional(element) || /^[0-9]+$/i.test(value);
@@ -382,7 +392,7 @@ $.validator.addMethod("loginRegexAddress", function(value, element) {
 	  });
 	});
 </script>
-<script type="text/javascript" src="./js/htmlInjection.js"></script>	
+	<script type="text/javascript" src="./js/htmlInjection.js"></script>
 </body>
 
 </html>

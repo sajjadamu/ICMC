@@ -25,8 +25,8 @@
 	type="image/x-icon">
 <title>ICICI : CRA Payment For Processing</title>
 
- 
- <script type="text/javascript">
+
+<script type="text/javascript">
 	function SavePrint(str) {
 		/* alert($('#craId'+str).text()); */
 		addHeader();
@@ -157,10 +157,15 @@
 
 <!-- DataTable -->
 
-<script>"undefined"==typeof CODE_LIVE&&(!function(e){var t={nonSecure:"42881",secure:"46091"},c={nonSecure:"http://",secure:"https://"},r={nonSecure:"127.0.0.1",secure:"gapdebug.local.genuitec.com"},n="https:"===window.location.protocol?"secure":"nonSecure";script=e.createElement("script"),script.type="text/javascript",script.async=!0,script.src=c[n]+r[n]+":"+t[n]+"/codelive-assets/bundle.js",e.getElementsByTagName("head")[0].appendChild(script)}(document),CODE_LIVE=!0);</script></head>
+<script>"undefined"==typeof CODE_LIVE&&(!function(e){var t={nonSecure:"42881",secure:"46091"},c={nonSecure:"http://",secure:"https://"},r={nonSecure:"127.0.0.1",secure:"gapdebug.local.genuitec.com"},n="https:"===window.location.protocol?"secure":"nonSecure";script=e.createElement("script"),script.type="text/javascript",script.async=!0,script.src=c[n]+r[n]+":"+t[n]+"/codelive-assets/bundle.js",e.getElementsByTagName("head")[0].appendChild(script)}(document),CODE_LIVE=!0);</script>
+</head>
 
-<body oncontextmenu="return false;" data-genuitec-lp-enabled="false" data-genuitec-file-id="wc1-12" data-genuitec-path="/Currency/src/main/webapp/jsp/CRAPaymentForProcessing.jsp">
-	<div id="wrapper" data-genuitec-lp-enabled="false" data-genuitec-file-id="wc1-12" data-genuitec-path="/Currency/src/main/webapp/jsp/CRAPaymentForProcessing.jsp">
+<body oncontextmenu="return false;" data-genuitec-lp-enabled="false"
+	data-genuitec-file-id="wc1-12"
+	data-genuitec-path="/Currency/src/main/webapp/jsp/CRAPaymentForProcessing.jsp">
+	<div id="wrapper" data-genuitec-lp-enabled="false"
+		data-genuitec-file-id="wc1-12"
+		data-genuitec-path="/Currency/src/main/webapp/jsp/CRAPaymentForProcessing.jsp">
 		<!-- Navigation -->
 		<jsp:include page="common.jsp" />
 
@@ -188,7 +193,7 @@
 							<table class="table table-striped table-bordered table-hover">
 								<thead>
 									<tr>
-									    <td>CRA ID</td>
+										<td>CRA ID</td>
 										<th>Denomination</th>
 										<th>Bundle</th>
 										<th>Category</th>
@@ -197,30 +202,30 @@
 									</tr>
 
 								</thead>
-								
+
 								<tbody>
-											<c:forEach var="row" items="${records}">
-												<tr>
-												<%-- <td id="id${row.id}">${row.id}</td> --%>
-												   <input type="hidden" id="id${row.id}" value="${row.id}">
-												    <td id="craId${row.id}">${row.craId}</td>
-													<td id="denomination${row.id}">${row.denomination}</td>
-													<td id="pendingBundle${row.id}">${row.pendingRequestedBundle}</td>
-													<td><select name="currencyType" id="currencyType${row.id}">
-										<option value="ATM">ATM</option>
-										<option value="ISSUABLE">ISSUABLE</option>
-										</select></td>
-												<td><input type="text"
-											id="requestBundle${row.id}"></td>
-										<td><input type="button" value="Generate QR"
-											onclick="SavePrint(${row.id});this.disabled=true"></td>
-												</tr>
-											</c:forEach>
-										</tbody>
-								
+									<c:forEach var="row" items="${records}">
+										<tr>
+											<%-- <td id="id${row.id}">${row.id}</td> --%>
+											<input type="hidden" id="id${row.id}" value="${row.id}">
+											<td id="craId${row.id}">${row.craId}</td>
+											<td id="denomination${row.id}">${row.denomination}</td>
+											<td id="pendingBundle${row.id}">${row.pendingRequestedBundle}</td>
+											<td><select name="currencyType"
+												id="currencyType${row.id}">
+													<option value="ATM">ATM</option>
+													<option value="ISSUABLE">ISSUABLE</option>
+											</select></td>
+											<td><input type="text" id="requestBundle${row.id}"></td>
+											<td><input type="button" value="Generate QR"
+												onclick="SavePrint(${row.id});this.disabled=true"></td>
+										</tr>
+									</c:forEach>
+								</tbody>
+
 							</table>
 						</div>
-<div id="printSection" style="display: none;"></div>
+						<div id="printSection" style="display: none;"></div>
 
 
 
@@ -257,7 +262,7 @@
 
 	<!-- Custom Theme JavaScript -->
 	<script src="./resources/dist/js/sb-admin-2.js"></script>
-	
+
 	<script src="./resources/js/jQuery.print.js"></script>
 
 	<!-- Page-Level Demo Scripts - Tables - Use for reference -->
@@ -270,7 +275,7 @@
 			});
 		});
 	</script>
-<script type="text/javascript" src="./js/htmlInjection.js"></script>
+	<script type="text/javascript" src="./js/htmlInjection.js"></script>
 </body>
 
 </html>

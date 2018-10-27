@@ -12,7 +12,8 @@
 <link rel="shortcut icon" href="./resources/logo/favicon.ico"
 	type="image/x-icon">
 
-<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script type="text/javascript"
+	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script type="text/javascript" src="./js/jquery.validate.min.js"></script>
 
 <script type="text/javascript">
@@ -36,9 +37,10 @@ function doAjaxForProductivity() {
 
 </script>
 
-<title>ICICI :Edit Machine </title>
+<title>ICICI :Edit Machine</title>
 
-<link href="./resources/css/calendar.css" rel="stylesheet" type="text/css" />
+<link href="./resources/css/calendar.css" rel="stylesheet"
+	type="text/css" />
 <link rel="stylesheet" type="text/css"
 	href="./resources/css/jquery.datetimepicker.css" />
 <!-- Bootstrap Core CSS -->
@@ -68,13 +70,18 @@ function doAjaxForProductivity() {
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
-<script>"undefined"==typeof CODE_LIVE&&(!function(e){var t={nonSecure:"42881",secure:"46091"},c={nonSecure:"http://",secure:"https://"},r={nonSecure:"127.0.0.1",secure:"gapdebug.local.genuitec.com"},n="https:"===window.location.protocol?"secure":"nonSecure";script=e.createElement("script"),script.type="text/javascript",script.async=!0,script.src=c[n]+r[n]+":"+t[n]+"/codelive-assets/bundle.js",e.getElementsByTagName("head")[0].appendChild(script)}(document),CODE_LIVE=!0);</script></head>
-<body oncontextmenu="return false;" data-genuitec-lp-enabled="false" data-genuitec-file-id="wc1-120" data-genuitec-path="/Currency/src/main/webapp/jsp/editMachine.jsp">
+<script>"undefined"==typeof CODE_LIVE&&(!function(e){var t={nonSecure:"42881",secure:"46091"},c={nonSecure:"http://",secure:"https://"},r={nonSecure:"127.0.0.1",secure:"gapdebug.local.genuitec.com"},n="https:"===window.location.protocol?"secure":"nonSecure";script=e.createElement("script"),script.type="text/javascript",script.async=!0,script.src=c[n]+r[n]+":"+t[n]+"/codelive-assets/bundle.js",e.getElementsByTagName("head")[0].appendChild(script)}(document),CODE_LIVE=!0);</script>
+</head>
+<body oncontextmenu="return false;" data-genuitec-lp-enabled="false"
+	data-genuitec-file-id="wc1-120"
+	data-genuitec-path="/Currency/src/main/webapp/jsp/editMachine.jsp">
 
-	<div id="wrapper" data-genuitec-lp-enabled="false" data-genuitec-file-id="wc1-120" data-genuitec-path="/Currency/src/main/webapp/jsp/editMachine.jsp">
+	<div id="wrapper" data-genuitec-lp-enabled="false"
+		data-genuitec-file-id="wc1-120"
+		data-genuitec-path="/Currency/src/main/webapp/jsp/editMachine.jsp">
 
 		<!-- Navigation -->
-		  <jsp:include page="common.jsp" />
+		<jsp:include page="common.jsp" />
 		<div id="page-wrapper">
 			<!--  <div class="row">
                 <div class="col-lg-12">
@@ -91,68 +98,75 @@ function doAjaxForProductivity() {
 							<div class="row">
 								<div class="col-lg-6">
 									<!--<form role="form">-->
-									<form:form id="userPage" name="userPage" action="updateMachine" method="post"
-										modelAttribute="user" autocomplete="off" >
-										 <form:hidden path="id"/>
-										
+									<form:form id="userPage" name="userPage" action="updateMachine"
+										method="post" modelAttribute="user" autocomplete="off">
+										<form:hidden path="id" />
+
 										<div class="form-group">
 											<label>Machine No</label>
-											<form:input path="machineNo" id="machineNo" name="machineNo" 
+											<form:input path="machineNo" id="machineNo" name="machineNo"
 												cssClass="form-control" />
 										</div>
-										
+
 										<div class="form-group">
 											<label>Asset Code</label>
-											<form:input path="assetCode" id="assetCode" name="assetCode" 
+											<form:input path="assetCode" id="assetCode" name="assetCode"
 												cssClass="form-control" />
 										</div>
-										
+
 										<div class="form-group">
 											<label>Machine Sr. No.</label>
-											<form:input path="machineSINo" id="machineSINo" name="machineSINo" 
+											<form:input path="machineSINo" id="machineSINo"
+												name="machineSINo" cssClass="form-control" />
+										</div>
+
+										<div class="form-group">
+											<label> Purchase Date</label>
+											<form:input path="purchasedate" id="purchasedate"
+												name="purchasedate" maxlength="32" onselect="ageingFind()"
 												cssClass="form-control" />
 										</div>
-										
-										 <div class="form-group">
-										<label> Purchase Date</label>		
-									 		<form:input path="purchasedate" id="purchasedate" name="purchasedate" maxlength="32" onselect="ageingFind()"
-												cssClass="form-control" />							
-										</div>
-									 
-										
+
+
 										<div class="form-group">
 											<label>Make Company </label>
-													<form:select path="companyname" id="companyname" name="companyname" cssClass="form-control"  >
-											 <form:option value="">Select Company </form:option>
-											 <form:options items="${machineCompanyNameList}" itemLabel="companyname" itemValue="companyname"/>
+											<form:select path="companyname" id="companyname"
+												name="companyname" cssClass="form-control">
+												<form:option value="">Select Company </form:option>
+												<form:options items="${machineCompanyNameList}"
+													itemLabel="companyname" itemValue="companyname" />
 											</form:select>
-												
-												
-									  	</div>
-										
-										
+
+
+										</div>
+
+
 										<div class="form-group">
 											<label>Model Type</label>
-											 <form:select path="modelType" id="modelType" name="modelType" cssClass="form-control" onchange="doAjaxForProductivity()" >
-											 <form:option value="">Select Model </form:option>
-											<form:options items="${modelTypeList}" itemLabel="machineModelType" itemValue="machineModelType"/>
+											<form:select path="modelType" id="modelType" name="modelType"
+												cssClass="form-control" onchange="doAjaxForProductivity()">
+												<form:option value="">Select Model </form:option>
+												<form:options items="${modelTypeList}"
+													itemLabel="machineModelType" itemValue="machineModelType" />
 											</form:select>
-										</div> 
-										
+										</div>
+
 										<div class="form-group">
 											<label>Standard Productivity</label>
-											<form:input path="standardProductivity" id="standardProductivity" name="standardProductivity" readonly="true"
-												cssClass="form-control" />
+											<form:input path="standardProductivity"
+												id="standardProductivity" name="standardProductivity"
+												readonly="true" cssClass="form-control" />
 										</div>
-										
+
 										<div class="form-group">
 											<label>Status</label>
-											 <form:select path="status" id="status" name="status" cssClass="form-control">
-											 	<form:options items="${statusList}"></form:options>
-											 </form:select>
+											<form:select path="status" id="status" name="status"
+												cssClass="form-control">
+												<form:options items="${statusList}"></form:options>
+											</form:select>
 										</div>
-										<button type="submit" onclick="pageSubmit()" class="btn btn-lg btn-success btn-block"
-											value="Details">Update</button>
+										<button type="submit" onclick="pageSubmit()"
+											class="btn btn-lg btn-success btn-block" value="Details">Update</button>
 									</form:form>
 								</div>
 								<!-- /.col-lg-6 (nested) -->
@@ -196,7 +210,7 @@ function doAjaxForProductivity() {
 		
 		
 	</script>
-	
+
 	<script type="text/javascript">
 
 	
@@ -279,7 +293,7 @@ function doAjaxForProductivity() {
 	  });
 	});
 	</script>
-		<script src="./resources/js/jquery.datetimepicker.js"></script>
+	<script src="./resources/js/jquery.datetimepicker.js"></script>
 	<script>
 		$('#softwareUpdationDate').datetimepicker({
 			format : 'Y-m-d',
@@ -287,7 +301,7 @@ function doAjaxForProductivity() {
 		});
 		
 	</script>
-<script type="text/javascript" src="./js/htmlInjection.js"></script>
+	<script type="text/javascript" src="./js/htmlInjection.js"></script>
 </body>
 
 </html>

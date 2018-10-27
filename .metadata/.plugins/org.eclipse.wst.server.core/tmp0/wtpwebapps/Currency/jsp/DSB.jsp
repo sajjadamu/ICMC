@@ -1,10 +1,12 @@
 <!DOCTYPE html>
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+	pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <html lang="en">
 
 <head>
-<link rel="shortcut icon" href="./resources/logo/favicon.ico" type="image/x-icon">
+<link rel="shortcut icon" href="./resources/logo/favicon.ico"
+	type="image/x-icon">
 <script src="./js/jquery-1.12.0.min.js"></script>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -69,22 +71,40 @@ function getReceiptSequence() {
 
 <script src="./resources/js/jquery.js"></script>
 <!-- Bootstrap Core CSS -->
-<link href="./resources/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+<link
+	href="./resources/bower_components/bootstrap/dist/css/bootstrap.min.css"
+	rel="stylesheet">
 
 <!-- MetisMenu CSS -->
-<link href="./resources/bower_components/metisMenu/dist/metisMenu.min.css" rel="stylesheet">
+<link
+	href="./resources/bower_components/metisMenu/dist/metisMenu.min.css"
+	rel="stylesheet">
 
 <!-- Custom CSS -->
 <link href="./resources/dist/css/sb-admin-2.css" rel="stylesheet">
 
 <!-- Custom Fonts -->
-<link href="./resources/bower_components/font-awesome/css/font-awesome.min.css"	rel="stylesheet" type="text/css">
-<link rel="stylesheet" type="text/css"	href="./resources/dist/css/style.css">
+<link
+	href="./resources/bower_components/font-awesome/css/font-awesome.min.css"
+	rel="stylesheet" type="text/css">
+<link rel="stylesheet" type="text/css"
+	href="./resources/dist/css/style.css">
 
 <style type="text/css">
-.form-control.input-margin {margin-bottom: 10px; width: 122px; margin: 2px;}
-input[type=checkbox], input[type=radio] {margin: 5px;}
-.form-group {margin-bottom: 15px; padding: 6px 12px;}
+.form-control.input-margin {
+	margin-bottom: 10px;
+	width: 122px;
+	margin: 2px;
+}
+
+input[type=checkbox], input[type=radio] {
+	margin: 5px;
+}
+
+.form-group {
+	margin-bottom: 15px;
+	padding: 6px 12px;
+}
 </style>
 
 <script type="text/javascript">
@@ -335,9 +355,13 @@ function refresh() {
 }
 </script>
 
-<script>"undefined"==typeof CODE_LIVE&&(!function(e){var t={nonSecure:"42881",secure:"46091"},c={nonSecure:"http://",secure:"https://"},r={nonSecure:"127.0.0.1",secure:"gapdebug.local.genuitec.com"},n="https:"===window.location.protocol?"secure":"nonSecure";script=e.createElement("script"),script.type="text/javascript",script.async=!0,script.src=c[n]+r[n]+":"+t[n]+"/codelive-assets/bundle.js",e.getElementsByTagName("head")[0].appendChild(script)}(document),CODE_LIVE=!0);</script></head>
-<body data-genuitec-lp-enabled="false" data-genuitec-file-id="wc1-16" data-genuitec-path="/Currency/src/main/webapp/jsp/DSB.jsp">
-	<div id="wrapper" data-genuitec-lp-enabled="false" data-genuitec-file-id="wc1-16" data-genuitec-path="/Currency/src/main/webapp/jsp/DSB.jsp">
+<script>"undefined"==typeof CODE_LIVE&&(!function(e){var t={nonSecure:"42881",secure:"46091"},c={nonSecure:"http://",secure:"https://"},r={nonSecure:"127.0.0.1",secure:"gapdebug.local.genuitec.com"},n="https:"===window.location.protocol?"secure":"nonSecure";script=e.createElement("script"),script.type="text/javascript",script.async=!0,script.src=c[n]+r[n]+":"+t[n]+"/codelive-assets/bundle.js",e.getElementsByTagName("head")[0].appendChild(script)}(document),CODE_LIVE=!0);</script>
+</head>
+<body data-genuitec-lp-enabled="false" data-genuitec-file-id="wc1-16"
+	data-genuitec-path="/Currency/src/main/webapp/jsp/DSB.jsp">
+	<div id="wrapper" data-genuitec-lp-enabled="false"
+		data-genuitec-file-id="wc1-16"
+		data-genuitec-path="/Currency/src/main/webapp/jsp/DSB.jsp">
 		<!-- Navigation -->
 		<jsp:include page="common.jsp" />
 
@@ -346,59 +370,74 @@ function refresh() {
 			<div class="row">
 				<div class="col-lg-12">
 					<div class="panel panel-default">
-						<div class="panel-heading"><ul>
-								<li><a href="././viewDSB"><i class="fa fa-table fa-fw"></i>View DSB</a></li>
-							</ul>DSB</div>
+						<div class="panel-heading">
+							<ul>
+								<li><a href="././viewDSB"><i class="fa fa-table fa-fw"></i>View
+										DSB</a></li>
+							</ul>
+							DSB
+						</div>
 						<div class="panel-body">
 							<div class="row">
 								<div class="col-lg-10">
 									<!--<form role="form">-->
-									<form:form id="" action="" method="post" modelAttribute="user" autocomplete="off">
-									 	
+									<form:form id="" action="" method="post" modelAttribute="user"
+										autocomplete="off">
+
 										<div class="form-group">
 											<label>Name</label>
-											 <form:select path="name" id="name" name="name" cssClass="form-control" onchange="doAjaxForAccountNumber(); getReceiptSequence()" >
-											 <form:option value="">Select Name </form:option>
-    											<form:options items="${dsbAccount}" itemValue="dsbVendorName"
-															itemLabel="dsbVendorName" />
+											<form:select path="name" id="name" name="name"
+												cssClass="form-control"
+												onchange="doAjaxForAccountNumber(); getReceiptSequence()">
+												<form:option value="">Select Name </form:option>
+												<form:options items="${dsbAccount}"
+													itemValue="dsbVendorName" itemLabel="dsbVendorName" />
 											</form:select>
-											<label id="err1" style="display: none;color: red">Please Select Name</label>
-										</div> 
-												
+											<label id="err1" style="display: none; color: red">Please
+												Select Name</label>
+										</div>
+
 										<div class="form-group">
 											<label>Account Number</label>
-											<form:input path="accountNumber" readonly="true" id="accountNumber" name="accountNumber" cssClass="form-control" />
+											<form:input path="accountNumber" readonly="true"
+												id="accountNumber" name="accountNumber"
+												cssClass="form-control" />
 										</div>
-										
+
 										<!-- <div class="form-group"> -->
-											<!-- <label>Receipt Sequence</label> -->
-											<form:hidden path="receiptSequence" readonly="true" id="receiptSequence" name="receiptSequence" cssClass="form-control"/>
+										<!-- <label>Receipt Sequence</label> -->
+										<form:hidden path="receiptSequence" readonly="true"
+											id="receiptSequence" name="receiptSequence"
+											cssClass="form-control" />
 										<!-- </div> -->
-											
+
 										<div class="form-group">
-										 <label>Number of Shrink Wraps</label>
-											<input type="text" id="member" name="member" value="" class="form-control"><br />
+											<label>Number of Shrink Wraps</label> <input type="text"
+												id="member" name="member" value="" class="form-control"><br />
 											<div id="container">
 												<table id="table1">
 												</table>
 											</div>
-										</div> 
-										
+										</div>
+
 										<!-- <button type="submit" class="btn btn-default" value="Details"
 											style="width: 99px;">Save All</button>
 											
 											<button type="submit" class="btn btn-default" value="Details"
 											style="width: 99px;">Print All</button> -->
-										
+
 										<div align="right">
 											<button type="submit" class="btn btn-default" value="Details"
-											style="width: 99px;" onclick="refresh()">Refresh</button>
+												style="width: 99px;" onclick="refresh()">Refresh</button>
 										</div>
-											
-											<label id="err2" style="display: none;color: red">Enter Valid Denomination</label>
-											<label id="err3" style="display: none;color: red">Enter Bundle</label>
-											<label id="err4" style="display: none;color: red">Select Option  Vault OR Processing</label>
-											<div id="prncode" style="display: none;"></div>
+
+										<label id="err2" style="display: none; color: red">Enter
+											Valid Denomination</label>
+										<label id="err3" style="display: none; color: red">Enter
+											Bundle</label>
+										<label id="err4" style="display: none; color: red">Select
+											Option Vault OR Processing</label>
+										<div id="prncode" style="display: none;"></div>
 									</form:form>
 								</div>
 								<div id="printSection" style="display: none;"></div>
@@ -425,16 +464,18 @@ function refresh() {
 	<script src="./resources/bower_components/jquery/dist/jquery.min.js"></script>
 
 	<!-- Bootstrap Core JavaScript -->
-	<script src="./resources/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+	<script
+		src="./resources/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 
 	<!-- Metis Menu Plugin JavaScript -->
-	<script src="./resources/bower_components/metisMenu/dist/metisMenu.min.js"></script>
+	<script
+		src="./resources/bower_components/metisMenu/dist/metisMenu.min.js"></script>
 
 	<!-- Custom Theme JavaScript -->
 	<script src="./resources/dist/js/sb-admin-2.js"></script>
 
 	<script src="./resources/js/jQuery.print.js"></script>
-<script type="text/javascript" src="./js/htmlInjection.js"></script>
+	<script type="text/javascript" src="./js/htmlInjection.js"></script>
 </body>
 
 </html>

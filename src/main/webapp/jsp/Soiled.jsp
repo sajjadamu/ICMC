@@ -488,7 +488,7 @@
 								</div>
 								<!-- /.table-responsive -->
 							</div>
-							
+
 							<!-- /.panel-body -->
 							<div class="col-lg-12">
 								<!-- <input type="button" id="btnSubmit" value="Submit"	onclick="doAjaxPostInsert()"> -->
@@ -496,8 +496,7 @@
 									onclick="doAjaxPostInsert();">Save</button>
 							</div>
 						</form:form>
-						<br>
-						<br>
+						<br> <br>
 					</div>
 
 					<!-- /.panel -->

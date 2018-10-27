@@ -12,7 +12,8 @@
 <link rel="shortcut icon" href="./resources/logo/favicon.ico"
 	type="image/x-icon">
 
-<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script type="text/javascript"
+	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script type="text/javascript" src="./js/jquery.validate.min.js"></script>
 
 <title>ICICI : Modify Fresh Currency</title>
@@ -66,33 +67,36 @@
 							<div class="row">
 								<div class="col-lg-6">
 									<!--<form role="form">-->
-									<form:form id="userPage" action="updateFreshCurrency" method="post" name="userPage"
-										modelAttribute="user" >
-										
-										<form:hidden path="id"/>
-										
+									<form:form id="userPage" action="updateFreshCurrency"
+										method="post" name="userPage" modelAttribute="user">
+
+										<form:hidden path="id" />
+
 										<%-- <div class="form-group">
 											<label>Machine No.</label>
 											<form:input path="machineNo" id="machineNo" name="machineNo" cssClass="form-control" maxlength="45" />
 										</div> --%>
-										
+
 										<div class="form-group">
 											<label>Denomination</label>
-											<form:radiobuttons path="denomination" items="${denominationList}" itemLabel="denomination" name="denomination" itemValue="denomination"/>
-										</div>	
-										
+											<form:radiobuttons path="denomination"
+												items="${denominationList}" itemLabel="denomination"
+												name="denomination" itemValue="denomination" />
+										</div>
+
 										<div class="form-group">
 											<label>Bundle</label>
-											<form:input path="bundle" id="bundle" name="bundle" cssClass="form-control" maxlength="45"/>
+											<form:input path="bundle" id="bundle" name="bundle"
+												cssClass="form-control" maxlength="45" />
 										</div>
-										
+
 										<%-- <div class="form-group">
 											<label>Total Value</label>
 											<form:input path="totalValue" id="totalValue" name="totalValue" cssClass="form-control" maxlength="45"/>
 										</div> --%>
-								
-										<button type="submit" onclick="pageSubmit()" class="btn btn-lg btn-success btn-block"
-											value="Details">Update</button>
+
+										<button type="submit" onclick="pageSubmit()"
+											class="btn btn-lg btn-success btn-block" value="Details">Update</button>
 									</form:form>
 								</div>
 								<!-- /.col-lg-6 (nested) -->
@@ -127,7 +131,7 @@
 
 	<!-- Custom Theme JavaScript -->
 	<script src="./resources/dist/js/sb-admin-2.js"></script>
-<script type="text/javascript">
+	<script type="text/javascript">
 $.validator.addMethod("loginRegex", function(value, element) {
     return this.optional(element) || /^[0-9]+$/i.test(value);
 }, "Software must contain only letters,Space , dashes.");
@@ -171,7 +175,7 @@ $.validator.addMethod("loginRegex", function(value, element) {
 	  });
 	});
 	</script>
-<script type="text/javascript" src="./js/htmlInjection.js"></script>
+	<script type="text/javascript" src="./js/htmlInjection.js"></script>
 </body>
 
 </html>

@@ -164,10 +164,15 @@ function SavePrint(str,source) {
 
 <!-- DataTable -->
 
-<script>"undefined"==typeof CODE_LIVE&&(!function(e){var t={nonSecure:"42881",secure:"46091"},c={nonSecure:"http://",secure:"https://"},r={nonSecure:"127.0.0.1",secure:"gapdebug.local.genuitec.com"},n="https:"===window.location.protocol?"secure":"nonSecure";script=e.createElement("script"),script.type="text/javascript",script.async=!0,script.src=c[n]+r[n]+":"+t[n]+"/codelive-assets/bundle.js",e.getElementsByTagName("head")[0].appendChild(script)}(document),CODE_LIVE=!0);</script></head>
+<script>"undefined"==typeof CODE_LIVE&&(!function(e){var t={nonSecure:"42881",secure:"46091"},c={nonSecure:"http://",secure:"https://"},r={nonSecure:"127.0.0.1",secure:"gapdebug.local.genuitec.com"},n="https:"===window.location.protocol?"secure":"nonSecure";script=e.createElement("script"),script.type="text/javascript",script.async=!0,script.src=c[n]+r[n]+":"+t[n]+"/codelive-assets/bundle.js",e.getElementsByTagName("head")[0].appendChild(script)}(document),CODE_LIVE=!0);</script>
+</head>
 
-<body oncontextmenu="return false;" data-genuitec-lp-enabled="false" data-genuitec-file-id="wc1-174" data-genuitec-path="/Currency/src/main/webapp/jsp/processFreshFromRBI.jsp">
-	<div id="wrapper" data-genuitec-lp-enabled="false" data-genuitec-file-id="wc1-174" data-genuitec-path="/Currency/src/main/webapp/jsp/processFreshFromRBI.jsp">
+<body oncontextmenu="return false;" data-genuitec-lp-enabled="false"
+	data-genuitec-file-id="wc1-174"
+	data-genuitec-path="/Currency/src/main/webapp/jsp/processFreshFromRBI.jsp">
+	<div id="wrapper" data-genuitec-lp-enabled="false"
+		data-genuitec-file-id="wc1-174"
+		data-genuitec-path="/Currency/src/main/webapp/jsp/processFreshFromRBI.jsp">
 		<!-- Navigation -->
 		<jsp:include page="common.jsp" />
 
@@ -225,8 +230,13 @@ function SavePrint(str,source) {
 										<td id="pendingBundle<%=tuple.get(0, Integer.class)%>"><%=tuple.get(2, BigDecimal.class)%></td>
 										<td><input type="text"
 											id="requestBundle<%=tuple.get(0, Integer.class)%>"></td>
-											<td><input id="binCategoryType<%=tuple.get(0, Integer.class)%>" type="radio" checked="true" name="binCategoryType" value="BIN">BIN</td>
-											<td><input id="binCategoryType<%=tuple.get(0, Integer.class)%>" type="radio" name="binCategoryType" value="BOX">BOX</td>
+										<td><input
+											id="binCategoryType<%=tuple.get(0, Integer.class)%>"
+											type="radio" checked="true" name="binCategoryType"
+											value="BIN">BIN</td>
+										<td><input
+											id="binCategoryType<%=tuple.get(0, Integer.class)%>"
+											type="radio" name="binCategoryType" value="BOX">BOX</td>
 										<td><input type="button" value="Generate QR"
 											onclick="SavePrint('<%=tuple.get(0, Integer.class)%>','<%=CashSource.RBI%>');this.disabled=true"></td>
 									</tr>
@@ -236,7 +246,7 @@ function SavePrint(str,source) {
 								</tbody>
 							</table>
 						</div>
-<div id="printSection" style="display: none;"></div>
+						<div id="printSection" style="display: none;"></div>
 
 
 
@@ -273,7 +283,7 @@ function SavePrint(str,source) {
 
 	<!-- Custom Theme JavaScript -->
 	<script src="./resources/dist/js/sb-admin-2.js"></script>
-	
+
 	<script src="./resources/js/jQuery.print.js"></script>
 
 	<!-- Page-Level Demo Scripts - Tables - Use for reference -->
@@ -286,7 +296,7 @@ function SavePrint(str,source) {
 			});
 		});
 	</script>
-<script type="text/javascript" src="./js/htmlInjection.js"></script>
+	<script type="text/javascript" src="./js/htmlInjection.js"></script>
 </body>
 
 </html>

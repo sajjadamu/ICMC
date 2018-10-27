@@ -3,7 +3,8 @@
 <%@page import="java.math.BigInteger"%>
 <%@page import="com.chest.currency.entity.model.User"%>
 <html lang="en">
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+	pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jstl/core_rt"%>
 <head>
@@ -12,34 +13,46 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="">
 <meta name="author" content="">
-<link rel="shortcut icon" href="./resources/logo/favicon.ico" type="image/x-icon">
+<link rel="shortcut icon" href="./resources/logo/favicon.ico"
+	type="image/x-icon">
 <title>ICICI : Bin Data</title>
 <style type="text/css">
 .titleheading {
-    font-size: 18px;
-    text-align: left;
-    border-bottom: #ccc 2px solid;
-    margin-bottom: 10px;
+	font-size: 18px;
+	text-align: left;
+	border-bottom: #ccc 2px solid;
+	margin-bottom: 10px;
 }
 </style>
 <!-- Bootstrap Core CSS -->
-<link href="./resources/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+<link
+	href="./resources/bower_components/bootstrap/dist/css/bootstrap.min.css"
+	rel="stylesheet">
 
 <!-- MetisMenu CSS -->
-<link href="./resources/bower_components/metisMenu/dist/metisMenu.min.css" rel="stylesheet">
+<link
+	href="./resources/bower_components/metisMenu/dist/metisMenu.min.css"
+	rel="stylesheet">
 
 <!-- DataTables CSS -->
-<link href="./resources/bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.css" rel="stylesheet">
+<link
+	href="./resources/bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.css"
+	rel="stylesheet">
 
 <!-- DataTables Responsive CSS -->
-<link href="./resources/bower_components/datatables-responsive/css/responsive.dataTables.scss" rel="stylesheet">
+<link
+	href="./resources/bower_components/datatables-responsive/css/responsive.dataTables.scss"
+	rel="stylesheet">
 
 <!-- Custom CSS -->
 <link href="./resources/dist/css/sb-admin-2.css" rel="stylesheet">
 
 <!-- Custom Fonts -->
-<link href="./resources/bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-<link rel="./resources/stylesheet" type="text/css" href="dist/css/style.css">
+<link
+	href="./resources/bower_components/font-awesome/css/font-awesome.min.css"
+	rel="stylesheet" type="text/css">
+<link rel="./resources/stylesheet" type="text/css"
+	href="dist/css/style.css">
 
 <script type="text/javascript">
 	function ajaxAvailableCapacity(str) {
@@ -129,7 +142,7 @@
 	<div id="wrapper">
 		<!-- Navigation -->
 		<jsp:include page="common.jsp" />
-		
+
 		<div id="page-wrapper">
 			<!-- /.row -->
 			<div class="row">
@@ -140,16 +153,23 @@
 						<div class="panel-body">
 							<div class="dataTable_wrapper">
 								<%-- <form id="showAll"> --%>
-								<form:form id="userPage" name="userPage" action="viewBinStatus" method="post" modelAttribute="user" onsubmit="return dropdownValidation()">
+								<form:form id="userPage" name="userPage" action="viewBinStatus"
+									method="post" modelAttribute="user"
+									onsubmit="return dropdownValidation()">
 									<div class="row">
 										<div class="col-sm-12">
 											<div class="col-sm-2 no-margin">
 												<div class="form-group">
 													<div class="col-sm-6 col-md-4">
-														<form:select path="denomination" id="denomination" name="denomination" class="form-control deno-figure-select" style="width: 140px;">
+														<form:select path="denomination" id="denomination"
+															name="denomination"
+															class="form-control deno-figure-select"
+															style="width: 140px;">
 															<option value="-1">Denomination</option>
 															<option value="0">ALL</option>
-															<form:options items="${denominationList}" itemValue="denomination" itemLabel="denomination" name="denomination" />
+															<form:options items="${denominationList}"
+																itemValue="denomination" itemLabel="denomination"
+																name="denomination" />
 														</form:select>
 													</div>
 												</div>
@@ -157,7 +177,9 @@
 											<div class="col-sm-2 no-margin">
 												<div class="form-group">
 													<div class="col-sm-6 col-md-4">
-														<form:select path="binType" id="binType" name="binType" class="form-control deno-figure-select" style="width: 140px;">
+														<form:select path="binType" id="binType" name="binType"
+															class="form-control deno-figure-select"
+															style="width: 140px;">
 															<option value="-1">Type</option>
 															<form:options items="${currencyProcessType}" />
 														</form:select>
@@ -166,7 +188,7 @@
 												</div>
 											</div>
 
-<%-- <% User user = (User) session.getAttribute("login"); 
+											<%-- <% User user = (User) session.getAttribute("login"); 
 //BigInteger icmcid = new BigInteger(0);
 
 //user.getIcmcId();
@@ -181,7 +203,7 @@ if(user.getIcmcId().equals(new Long(10))){
 %> --%>
 											<div class="col-sm-2 no-margin">
 												<div class="button">
-													<button type="submit"  class="btn btn-default">Search</button>
+													<button type="submit" class="btn btn-default">Search</button>
 												</div>
 											</div>
 											<!-- <div class="col-sm-2 no-margin">
@@ -189,7 +211,7 @@ if(user.getIcmcId().equals(new Long(10))){
 													<a href="deleteBinMasterByIcmcId" >Delete For Migration</a>
 												</div>
 											</div> -->
-										<!-- 	<div class="col-sm-2 no-margin">
+											<!-- 	<div class="col-sm-2 no-margin">
 												<div class="button">
 													<a href="deleteBinTransactionByIcmcId">Delete BinTransaction</a>
 												</div>
@@ -198,90 +220,94 @@ if(user.getIcmcId().equals(new Long(10))){
 												<div class="button">
 													<a href="deleteBranchReceiptByIcmcId" >Delete BranchReceipt</a>
 												</div> -->
-											</div>
-											
-											<div class="col-sm-2 no-margin"></div>
 										</div>
-										<div class="col-sm-12"></div>
-										<!-- /.row (nested) -->
-										<div class="row bins">
-											<div class="col-sm-12">
-												<table
-													class="table table-striped table-bordered table-hover">
 
-													<jsp:include page="binSummary.jsp" />
-													<jsp:include page="binSummaryForCoins.jsp" />
-												</table>
-												<div align="center" class="titleheading"><b>Boxes</b></div>
-												<table class="bundle-controling">
-												
-													<tr>
-														<c:forEach var="row" items="${recordsListBox}">
-															<td bgcolor="${row.color}">
-																<a href="#" onclick="ajaxAvailableCapacity('${row.binNumber}')"
-																	id="'${row.binNumber}'">${row.binNumber} </a>
-															</td>
-														</c:forEach>
-													</tr>
-												</table>
-												<div align="center" class="titleheading"><b>Bins</b></div>
-												<table class="bundle-controling">
-													<tr>
-														<c:forEach var="row" items="${recordsListBin}">
-															<td bgcolor="${row.color}">
-																<a href="#" onclick="ajaxAvailableCapacity('${row.binNumber}')"
-																	id="'${row.binNumber}'">${row.binNumber} </a>
-															</td>
-														</c:forEach>
-													</tr>
-													
-												</table>
-												<div align="center" class="titleheading"><b>Bags</b></div>
-												<table>
-													<tr>
-														<c:forEach var="row" items="${recordsListBag}">
-															<td bgcolor="${row.color}">
-																<a href="#" onclick="ajaxAvailableCapacity('${row.binNumber}')"
-																	id="'${row.binNumber}'">${row.binNumber} </a>
-															</td>
-														</c:forEach>
-													</tr>
-													
-												</table>
-												<div align="center" class="titleheading"><b>Record For Null</b></div>
-												<table>
-													
-													<tr>
-														<c:forEach var="row" items="${recordsForNull}">
-															<td bgcolor="${row.color}">
-															<td bgcolor="D0D3D4">&nbsp${row.binNumber}&nbsp</td>
-														</c:forEach>
-													</tr>
-												</table>
+										<div class="col-sm-2 no-margin"></div>
+									</div>
+									<div class="col-sm-12"></div>
+									<!-- /.row (nested) -->
+									<div class="row bins">
+										<div class="col-sm-12">
+											<table class="table table-striped table-bordered table-hover">
+
+												<jsp:include page="binSummary.jsp" />
+												<jsp:include page="binSummaryForCoins.jsp" />
+											</table>
+											<div align="center" class="titleheading">
+												<b>Boxes</b>
 											</div>
+											<table class="bundle-controling">
+
+												<tr>
+													<c:forEach var="row" items="${recordsListBox}">
+														<td bgcolor="${row.color}"><a href="#"
+															onclick="ajaxAvailableCapacity('${row.binNumber}')"
+															id="'${row.binNumber}'">${row.binNumber} </a></td>
+													</c:forEach>
+												</tr>
+											</table>
+											<div align="center" class="titleheading">
+												<b>Bins</b>
+											</div>
+											<table class="bundle-controling">
+												<tr>
+													<c:forEach var="row" items="${recordsListBin}">
+														<td bgcolor="${row.color}"><a href="#"
+															onclick="ajaxAvailableCapacity('${row.binNumber}')"
+															id="'${row.binNumber}'">${row.binNumber} </a></td>
+													</c:forEach>
+												</tr>
+
+											</table>
+											<div align="center" class="titleheading">
+												<b>Bags</b>
+											</div>
+											<table>
+												<tr>
+													<c:forEach var="row" items="${recordsListBag}">
+														<td bgcolor="${row.color}"><a href="#"
+															onclick="ajaxAvailableCapacity('${row.binNumber}')"
+															id="'${row.binNumber}'">${row.binNumber} </a></td>
+													</c:forEach>
+												</tr>
+
+											</table>
+											<div align="center" class="titleheading">
+												<b>Record For Null</b>
+											</div>
+											<table>
+
+												<tr>
+													<c:forEach var="row" items="${recordsForNull}">
+														<td bgcolor="${row.color}">
+														<td bgcolor="D0D3D4">&nbsp${row.binNumber}&nbsp</td>
+													</c:forEach>
+												</tr>
+											</table>
 										</div>
 									</div>
-								</form:form>
-								
-								<div>
-									<!-- <img src="./resources/logo/icici-Bin-Color.png"> -->
-									
-									<img src="./resources/logo/icmc-bin-color.png">
-									
-									<!-- <img src="./resources/logo/icici-color.png"> -->
-								</div>
 							</div>
+							</form:form>
 
+							<div>
+								<!-- <img src="./resources/logo/icici-Bin-Color.png"> -->
+
+								<img src="./resources/logo/icmc-bin-color.png">
+
+								<!-- <img src="./resources/logo/icici-color.png"> -->
+							</div>
 						</div>
-						<!-- /.panel-body -->
-					</div>
-					<!-- /.panel -->
-				</div>
-				<!-- /.col-lg-12 -->
-			</div>
 
+					</div>
+					<!-- /.panel-body -->
+				</div>
+				<!-- /.panel -->
+			</div>
+			<!-- /.col-lg-12 -->
 		</div>
-		<!-- /#page-wrapper -->
+
+	</div>
+	<!-- /#page-wrapper -->
 
 	</div>
 	<!-- /#wrapper -->
@@ -290,14 +316,18 @@ if(user.getIcmcId().equals(new Long(10))){
 	<script src="./resources/bower_components/jquery/dist/jquery.min.js"></script>
 
 	<!-- Bootstrap Core JavaScript -->
-	<script src="./resources/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+	<script
+		src="./resources/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 
 	<!-- Metis Menu Plugin JavaScript -->
-	<script src="./resources/bower_components/metisMenu/dist/metisMenu.min.js"></script>
+	<script
+		src="./resources/bower_components/metisMenu/dist/metisMenu.min.js"></script>
 
 	<!-- DataTables JavaScript -->
-	<script src="./resources/bower_components/datatables/media/js/jquery.dataTables.min.js"></script>
-	<script src="./resources/bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.min.js"></script>
+	<script
+		src="./resources/bower_components/datatables/media/js/jquery.dataTables.min.js"></script>
+	<script
+		src="./resources/bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.min.js"></script>
 
 	<!-- Custom Theme JavaScript -->
 	<script src="./resources/dist/js/sb-admin-2.js"></script>
@@ -310,8 +340,8 @@ if(user.getIcmcId().equals(new Long(10))){
 			});
 		});
 	</script>
-	
-<script type="text/javascript">
+
+	<script type="text/javascript">
 	$(function() {
 	  $("form[name='userPage']").validate({
 	    rules: {
@@ -339,7 +369,7 @@ if(user.getIcmcId().equals(new Long(10))){
 	  });
 	});
 	</script>
-<script type="text/javascript" src="./js/htmlInjection.js"></script>
+	<script type="text/javascript" src="./js/htmlInjection.js"></script>
 </body>
 
 </html>

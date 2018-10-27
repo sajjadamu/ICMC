@@ -19,7 +19,8 @@
 <title>ICICI : Edit CIT/CRA Driver</title>
 
 
-<link href="./resources/css/calendar.css" rel="stylesheet" type="text/css" />
+<link href="./resources/css/calendar.css" rel="stylesheet"
+	type="text/css" />
 <link rel="stylesheet" type="text/css"
 	href="./resources/css/jquery.datetimepicker.css" />
 
@@ -51,8 +52,8 @@
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
-    
-    <script type="text/javascript" charset="utf-8">
+
+<script type="text/javascript" charset="utf-8">
      function getVehicleNumber(){
         $.getJSON(
              "vehicleList.json",
@@ -68,7 +69,7 @@
           );
  }
 </script>
-    
+
 </head>
 <body oncontextmenu="return false;">
 	<div id="wrapper">
@@ -91,15 +92,17 @@
 							<div class="row">
 								<div class="col-lg-6">
 									<!--<form role="form">-->
-									<form:form id="userPage" name="userPage" action="updateCITCRADriver"
-										method="post" modelAttribute="user" autocomplete="off">
-										
-										<form:hidden path="id"/>
-										
+									<form:form id="userPage" name="userPage"
+										action="updateCITCRADriver" method="post"
+										modelAttribute="user" autocomplete="off">
+
+										<form:hidden path="id" />
+
 										<div class="form-group">
 											<label>Vendor Name</label>
 											<form:select id="vendorName" name="vendorName"
-												path="vendorName" cssClass="form-control" onclick="getVehicleNumber()">
+												path="vendorName" cssClass="form-control"
+												onclick="getVehicleNumber()">
 												<form:option value="">Select Vendor Name</form:option>
 												<form:options items="${vendorList}" itemValue="name"
 													itemLabel="name" />
@@ -108,22 +111,22 @@
 
 										<div class="form-group">
 											<label>Vehicle Number</label>
-											<form:select path="vehicleNumber" id="vehicleNumber" name="vehicleNumber"
-												cssClass="form-control">
-												<form:options items="${vehicleNumberList}"/>
+											<form:select path="vehicleNumber" id="vehicleNumber"
+												name="vehicleNumber" cssClass="form-control">
+												<form:options items="${vehicleNumberList}" />
 											</form:select>
 										</div>
 
 										<div class="form-group">
 											<label>Vehicle Driver Name</label>
-											<form:input path="driverName" id="driverName" name="driverName" 
-												maxlength="45" cssClass="form-control" />
+											<form:input path="driverName" id="driverName"
+												name="driverName" maxlength="45" cssClass="form-control" />
 										</div>
 
 										<div class="form-group">
 											<label>License Number</label>
-											<form:input path="licenseNumber" id="licenseNumber" name="licenseNumber" 
-												maxlength="45" cssClass="form-control" />
+											<form:input path="licenseNumber" id="licenseNumber"
+												name="licenseNumber" maxlength="45" cssClass="form-control" />
 										</div>
 
 										<div class="form-group">
@@ -132,18 +135,20 @@
 												name="licenseIssuedState" cssClass="form-control" />
 										</div>
 
-										 <div class="form-group">
-											<label>License Issued Date</label>  <form:input path="licenseIssuedDated" id="licenseIssuedDated" name="licenseIssuedDated"
-												cssClass="form-control" />
-											
+										<div class="form-group">
+											<label>License Issued Date</label>
+											<form:input path="licenseIssuedDated" id="licenseIssuedDated"
+												name="licenseIssuedDated" cssClass="form-control" />
+
 										</div>
-										
-										  <div class="form-group">
-											<label>License Expiry Date</label>  <form:input path="licenseExpiryDate" id="licenseExpiryDate" name="licenseExpiryDate"
-												cssClass="form-control" />
-											
+
+										<div class="form-group">
+											<label>License Expiry Date</label>
+											<form:input path="licenseExpiryDate" id="licenseExpiryDate"
+												name="licenseExpiryDate" cssClass="form-control" />
+
 										</div>
-										<button type="submit" class="btn btn-lg btn-success btn-block" 
+										<button type="submit" class="btn btn-lg btn-success btn-block"
 											value="Details">Submit</button>
 									</form:form>
 								</div>
@@ -179,8 +184,8 @@
 
 	<!-- Custom Theme JavaScript -->
 	<script src="./resources/dist/js/sb-admin-2.js"></script>
-	
-		<script src="./resources/js/jquery.datetimepicker.js"></script>
+
+	<script src="./resources/js/jquery.datetimepicker.js"></script>
 	<script>
 		$('#licenseIssuedDated').datetimepicker({
 			format : 'Y-m-d',
@@ -192,7 +197,7 @@
 		});
 		
 	</script>
-	
+
 	<script type="text/javascript">
 	$(function() {
 	  $("form[name='userPage']").validate({
@@ -239,7 +244,7 @@
 	  });
 	});
 	</script>
-<script type="text/javascript" src="./js/htmlInjection.js"></script>
+	<script type="text/javascript" src="./js/htmlInjection.js"></script>
 </body>
 
 </html>

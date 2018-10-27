@@ -13,7 +13,8 @@
 <link rel="shortcut icon" href="./resources/logo/favicon.ico"
 	type="image/x-icon">
 
-<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script type="text/javascript"
+	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script type="text/javascript" src="./js/jquery.validate.min.js"></script>
 
 <title>ICICI : Edit Assign Vault Custodian</title>
@@ -45,9 +46,14 @@
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
-<script>"undefined"==typeof CODE_LIVE&&(!function(e){var t={nonSecure:"42881",secure:"46091"},c={nonSecure:"http://",secure:"https://"},r={nonSecure:"127.0.0.1",secure:"gapdebug.local.genuitec.com"},n="https:"===window.location.protocol?"secure":"nonSecure";script=e.createElement("script"),script.type="text/javascript",script.async=!0,script.src=c[n]+r[n]+":"+t[n]+"/codelive-assets/bundle.js",e.getElementsByTagName("head")[0].appendChild(script)}(document),CODE_LIVE=!0);</script></head>
-<body oncontextmenu="return false;" data-genuitec-lp-enabled="false" data-genuitec-file-id="wc1-95" data-genuitec-path="/Currency/src/main/webapp/jsp/editAssignVaultCustodian.jsp">
-	<div id="wrapper" data-genuitec-lp-enabled="false" data-genuitec-file-id="wc1-95" data-genuitec-path="/Currency/src/main/webapp/jsp/editAssignVaultCustodian.jsp">
+<script>"undefined"==typeof CODE_LIVE&&(!function(e){var t={nonSecure:"42881",secure:"46091"},c={nonSecure:"http://",secure:"https://"},r={nonSecure:"127.0.0.1",secure:"gapdebug.local.genuitec.com"},n="https:"===window.location.protocol?"secure":"nonSecure";script=e.createElement("script"),script.type="text/javascript",script.async=!0,script.src=c[n]+r[n]+":"+t[n]+"/codelive-assets/bundle.js",e.getElementsByTagName("head")[0].appendChild(script)}(document),CODE_LIVE=!0);</script>
+</head>
+<body oncontextmenu="return false;" data-genuitec-lp-enabled="false"
+	data-genuitec-file-id="wc1-95"
+	data-genuitec-path="/Currency/src/main/webapp/jsp/editAssignVaultCustodian.jsp">
+	<div id="wrapper" data-genuitec-lp-enabled="false"
+		data-genuitec-file-id="wc1-95"
+		data-genuitec-path="/Currency/src/main/webapp/jsp/editAssignVaultCustodian.jsp">
 		<!-- Navigation -->
 		<jsp:include page="common.jsp" />
 
@@ -67,28 +73,33 @@
 							<div class="row">
 								<div class="col-lg-6">
 									<!--<form role="form">-->
-									<div align="center" style="color:red"><b>${successMsg}</b></div>
-									<form:form id="userPage"  name="userPage" action="updateAssignVaultCustodian" method="post"
+									<div align="center" style="color: red">
+										<b>${successMsg}</b>
+									</div>
+									<form:form id="userPage" name="userPage"
+										action="updateAssignVaultCustodian" method="post"
 										modelAttribute="user" autocomplete="off">
-									
-			                       		<form:hidden path="id"/>
-										
+
+										<form:hidden path="id" />
+
 										<div class="form-group">
 											<label>User Id</label>
-											<form:input path="userId" maxlength="45" id="userId" name="userId" cssClass="form-control" />
+											<form:input path="userId" maxlength="45" id="userId"
+												name="userId" cssClass="form-control" />
 										</div>
-								
+
 										<div class="form-group">
 											<label>Custodian</label>
-											<form:select path="custodian" id="custodian" name="custodian" cssClass="form-control">
+											<form:select path="custodian" id="custodian" name="custodian"
+												cssClass="form-control">
 												<form:option value="CUSTODIAN 1">CUSTODIAN 1</form:option>
 												<form:option value="CUSTODIAN 2">CUSTODIAN 2</form:option>
 											</form:select>
 											<%-- <form:input path="keySet" maxlength="45" id="keySet" name="keySet" cssClass="form-control" /> --%>
 										</div>
-										
-										<button type="submit" onclick="" class="btn btn-lg btn-success btn-block"
-											value="Details">Update</button>
+
+										<button type="submit" onclick=""
+											class="btn btn-lg btn-success btn-block" value="Details">Update</button>
 									</form:form>
 								</div>
 								<!-- /.col-lg-6 (nested) -->
@@ -123,7 +134,7 @@
 
 	<!-- Custom Theme JavaScript -->
 	<script src="./resources/dist/js/sb-admin-2.js"></script>
-<!-- <script type="text/javascript">
+	<!-- <script type="text/javascript">
 $.validator.addMethod("loginRegexlicNum", function(value, element) {
     return this.optional(element) || /^[0-9]+$/i.test(value);
 }, "Software must contain only letters,Space , dashes.");
@@ -161,7 +172,7 @@ $.validator.addMethod("loginRegexlicNum", function(value, element) {
 	  });
 	});
 	</script> -->
-<script type="text/javascript" src="./js/htmlInjection.js"></script>
+	<script type="text/javascript" src="./js/htmlInjection.js"></script>
 </body>
 
 </html>
