@@ -40,19 +40,6 @@ public final class RequestWrapper extends HttpServletRequestWrapper {
 
 	public String getHeader(String name) {
 
-		String ipAddress = super.getHeader("X-FORWARDED-FOR");
-		
-		logger.info("ipAddress .. ipAddress ......." + ipAddress);
-		
-		logger.info("Ineader .. parameter .......");
-		String remoteAddr = super.getRemoteAddr();
-		logger.info("getRemoteAddr .. Addr ......." + remoteAddr);
-		String host = super.getRemoteHost();
-		logger.info("getRemoteHost .. host ......." + host);
-		String serverName = super.getServerName();
-		logger.info("getServerName .. servername ......." + serverName);
-		int port = super.getServerPort();
-		logger.info("getServerPort .. port ......." + port);
 		String value = super.getHeader(name);
 		
 		if (value == null)
