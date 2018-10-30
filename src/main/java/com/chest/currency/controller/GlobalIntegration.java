@@ -39,7 +39,7 @@ public class GlobalIntegration {
 		return list;
 	}
 
-	@RequestMapping(value = "/user", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value = "/user", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_XML_VALUE)
 	@ResponseBody
 	public QueryRequestCo addUser(@RequestBody @Valid QueryRequestCo queryRequestCo, BindingResult bindingResult,
 			HttpServletRequest request) {
