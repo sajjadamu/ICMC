@@ -1403,6 +1403,7 @@ public class CashPaymentServiceImpl implements CashPaymentService {
 		return binFromTxnList;
 	}
 
+	@Transactional
 	@Override
 	public SoiledRemittanceAllocation processSoiledBoxPreparation(
 			List<SoiledRemittanceAllocation> eligibleIndentRequestList, SoiledRemittanceAllocation soiledData,
@@ -1424,16 +1425,18 @@ public class CashPaymentServiceImpl implements CashPaymentService {
 		}
 		if (isSaved) {
 			isSaved = this.insertSoiledBoxInBinTx(eligibleIndentRequestList, user,soiled.getBox());
+			soiled=this.getQRForSoiledBox(soiled);
 
 		} else if (!isSaved) {
 			throw new RuntimeException("you can not processing request");
 		}
 
-		SoiledRemittanceAllocation soiledQRPath = this.getQRForSoiledBox(soiled);
+		//SoiledRemittanceAllocation soiledQRPath = this.getQRForSoiledBox(soiled);
 
-		return soiledQRPath;
+		return soiled;
 	}
 
+	@Transactional
 	private SoiledRemittanceAllocation getQRForSoiledBox(SoiledRemittanceAllocation soiled) {
 		soiled.setFilepath(getQRForSoiled(soiled));
 		this.createSoiledAfterBoxCreation(soiled);
@@ -1483,6 +1486,7 @@ public class CashPaymentServiceImpl implements CashPaymentService {
 		return true;
 	}
 
+	@Transactional
 	private boolean insertSoiledBoxInBinTx(List<SoiledRemittanceAllocation> eligibleIndentRequestList, User user,String box) {
 		Calendar now = Calendar.getInstance();
 		BigDecimal receiveBundle = BigDecimal.ZERO;

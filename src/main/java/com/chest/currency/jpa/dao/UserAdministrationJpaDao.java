@@ -13,6 +13,7 @@ import com.chest.currency.entity.model.BinCapacityDenomination;
 import com.chest.currency.entity.model.DelegateRight;
 import com.chest.currency.entity.model.ICMC;
 import com.chest.currency.entity.model.IcmcPrinter;
+import com.chest.currency.entity.model.LamRequestLog;
 import com.chest.currency.entity.model.Machine;
 import com.chest.currency.entity.model.MachineCompany;
 import com.chest.currency.entity.model.MachineMaintenance;
@@ -27,11 +28,11 @@ public interface UserAdministrationJpaDao {
 	public boolean createUser(User user);
 
 	public User isValidUser(String username);
-	
-	public User isValidUser(String username,BigInteger icmcId);
+
+	public User isValidUser(String username, BigInteger icmcId);
 
 	public List<User> getUserList();
-	
+
 	public List<User> getUserListByICMC(BigInteger icmcId);
 
 	public User getUserById(String id);
@@ -39,6 +40,8 @@ public interface UserAdministrationJpaDao {
 	public DelegateRight getUserDelegatedRightById(User user);
 
 	public boolean updateUser(User user);
+	
+	public void deleteUser(User user);
 
 	public List<ICMC> getICMCName(String region);
 
@@ -93,8 +96,8 @@ public interface UserAdministrationJpaDao {
 	public Machine getMachineDetailsById(long id);
 
 	public boolean updateMachine(Machine machine);
-	
-	public Machine checkMachineIsExistOrNot(BigInteger icmcId,int machineNumber);
+
+	public Machine checkMachineIsExistOrNot(BigInteger icmcId, int machineNumber);
 
 	public boolean updateUserPassword(User user);
 
@@ -141,9 +144,9 @@ public interface UserAdministrationJpaDao {
 	public void updatePrinter(IcmcPrinter icmcPrinter);
 
 	public List<IcmcPrinter> printerList(BigInteger icmc);
-	
+
 	public List<MachineMaintenance> getMaintanenceData(BigInteger icmcId);
-	
+
 	public String getNotificationFromCRA(BigInteger icmcId);
 
 	public String getNotificationFromSASAllocation(BigInteger icmcId);
@@ -153,19 +156,23 @@ public interface UserAdministrationJpaDao {
 	public String getNotificationFromOtherBankAllocation(BigInteger icmcId);
 
 	public String getNotificationFromSoiledAllocation(BigInteger icmcId);
-   
+
 	public String getNotificationFromDiversion(BigInteger icmcId);
-	
+
 	public List<Machine> getMachineList();
-	
+
 	public Calendar getNotificationFromBinTransactionForEOD(BigInteger icmcId);
-	
-	public Calendar getNotificationFromBinTransactionBODForEOD(BigInteger icmcId,Calendar sDate,Calendar eDate);
-	
+
+	public Calendar getNotificationFromBinTransactionBODForEOD(BigInteger icmcId, Calendar sDate, Calendar eDate);
+
 	public String getNotificationForMachineAllocation(BigInteger icmcId);
-	
+
 	public String getNotificationForProcessingOutPut(BigInteger icmcId);
-	
+
 	public DelegateRight getRoleFromDelegatedRights(BigInteger icmcId);
+
+	public LamRequestLog createLamLog(LamRequestLog requestLog);
+	
+	public void updateLamLog(LamRequestLog requestLog);
 
 }

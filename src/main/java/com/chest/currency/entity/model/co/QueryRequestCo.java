@@ -3,69 +3,75 @@ package com.chest.currency.entity.model.co;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import javax.validation.constraints.NotNull;
-
-import org.hibernate.validator.constraints.NotBlank;
-
-import com.chest.currency.enums.Activity;
-
 public class QueryRequestCo {
 
-	private Activity activity;
+//	QueryRequestCo queryrequest;
 
-	@NotNull
-	@NotBlank
-	private String accessRequest;
+	private String Activity;
 
-	@NotNull
-	@NotBlank
-	private String roles;
+	private String AccessRequest;
 
-	@NotNull
-	@NotBlank
-	private String additionalDetail;
+	private String Roles;
 
-	public Activity getActivity() {
-		return activity;
+	private String AdditionalDetail;
+
+
+	public String getActivity() {
+		return Activity;
 	}
 
-	public void setActivity(Activity activity) {
-		this.activity = activity;
+	public void setActivity(String activity) {
+		Activity = activity;
 	}
 
 	public String getAccessRequest() {
-		return accessRequest;
+		return AccessRequest;
 	}
 
 	public void setAccessRequest(String accessRequest) {
-		this.accessRequest = accessRequest;
+		AccessRequest = accessRequest;
 	}
 
 	public String getRoles() {
-		return roles;
+		return Roles;
 	}
 
 	public void setRoles(String roles) {
-		this.roles = roles;
+		Roles = roles;
 	}
 
 	public String getAdditionalDetail() {
-		return additionalDetail;
+		return AdditionalDetail;
 	}
 
 	public void setAdditionalDetail(String additionalDetail) {
-		this.additionalDetail = additionalDetail;
+		AdditionalDetail = additionalDetail;
 	}
 
+	/*
+	 * public QueryRequestCo getQueryrequest() { return queryrequest; }
+	 * 
+	 * public void setQueryrequest(QueryRequestCo queryrequest) { this.queryrequest
+	 * = queryrequest; }
+	 */
 	public Map<String, ?> getQueryRequest() {
 		Map<String, Object> params = new LinkedHashMap<>();
 
-		params.put("activity", this.activity);
-		params.put("accessRequest", this.accessRequest);
-		params.put("roles", this.roles);
-		params.put("additionalDetail", this.additionalDetail);
+		params.put("activity", this.Activity);
+		params.put("accessRequest", this.AccessRequest);
+		params.put("roles", this.Roles);
+		params.put("additionalDetail", this.AdditionalDetail);
 
 		return params;
 	}
+
+	/*
+	 * public Map<String, ?> getQueryRequest() { Map<String, Object> params = new
+	 * LinkedHashMap<>();
+	 * 
+	 * params.put("queryrequest", this.getQueryrequest().getRequest());
+	 * 
+	 * return params; }
+	 */
 
 }

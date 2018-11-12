@@ -115,7 +115,7 @@ function doAjaxPostForBinRecon(str) {
 	    		 if(OK == 1){
 	    			 $("#eod").prop("disabled",true); 
 	    		 }else{
-	    			 if($('.pending').text()==null || $('.pending').text()==""){
+	    			 if($('.pending').text()!=null || $('.pending').text()!=""){
 	    				 $("#eod").prop("disabled",false);
 	    				}else{
 	    					 $("#eod").prop("disabled",true);

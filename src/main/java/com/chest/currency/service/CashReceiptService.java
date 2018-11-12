@@ -197,5 +197,7 @@ public interface CashReceiptService {
 			BankReceipt otherBankReceiptdb, Indent indentdb, User user);
 
 	boolean saveDSB(List<DSB> dsb);
+	
+	public ICMC getICMCBySolId(String solId);
 
 }

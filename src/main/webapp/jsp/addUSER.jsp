@@ -21,136 +21,131 @@
 <title>ICICI : Add User</title>
 
 <script type="text/javascript">
-function doAjaxForRegion() {
-	addHeader();
-	var zone = $('#zoneId').val();
-	if(zone != ''){
-	$.ajax({
-		type : "POST",
-		url : "././getRegion",
-		data : "zone=" + zone,
-		success : function(response) {
-			var newStr = response.toString();
-	        var data = newStr.split(",");
-			var option = '<option value="">Select Region</option>';
-			for(i=0;i<data.length;i++)
-				{
-				option+='<option value="'+data[i].trim()+'">'+data[i].trim()+'</option>';
+	function doAjaxForRegion() {
+		addHeaderJson();
+		var zone = $('#zoneId').val();
+		if (zone != '') {
+			$.ajax({
+				type : "POST",
+				url : "././getRegion",
+				data : "zone=" + zone,
+				success : function(response) {
+					//var json = JSON.stringify(response);
+					//alert(json);
+					var newStr = response.toString();
+					var data = newStr.split(",");
+					var option = '<option value="">Select Region</option>';
+					for (i = 0; i < data.length; i++) {
+						option += '<option value="' + data[i].trim() + '">'
+								+ data[i].trim() + '</option>';
+					}
+					$('#regionId').html(option);
+				},
+				error : function(e) {
+					alert('Region Error: ' + e);
 				}
-			$('#regionId').html(option);
-		},
-		error : function(e) {
-			alert('Region Error: ' + e);
+			});
+		} else {
+			$('#regionId').html('<option value="">Select Region</option>');
+			$('#icmcId').html('<option value="">Select ICMC</option>');
 		}
-	});
- }else{
-	$('#regionId').html('<option value="">Select Region</option>');
-	$('#icmcId').html('<option value="">Select ICMC</option>');
-} 
-}
-
+	}
 </script>
 
 <script type="text/javascript" charset="utf-8">
-     function getICMC(){
-        $.getJSON(
-             "icmcListForUserAdministration.json",
-             {region: $('select#regionId').val()},
-             function(data) {
-                  var html = '';
-                  var len = data.length;
-                  var option = '<option value="">Select ICMC</option>';
-                  for(var i=0; i<len; i++){
-                	  option += '<option value="' + data[i].id + '">' + data[i].name + '</option>';
-                   }
-                  $('select#icmcId').empty();
-                  $('select#icmcId').append(option);
-             }
-          );
- 		}
- </script>
+	function getICMC() {
+		$.getJSON("icmcListForUserAdministration.json", {
+			region : $('select#regionId').val()
+		}, function(data) {
+			var html = '';
+			var len = data.length;
+			var option = '<option value="">Select ICMC</option>';
+			for (var i = 0; i < len; i++) {
+				option += '<option value="' + data[i].id + '">' + data[i].name
+						+ '</option>';
+			}
+			$('select#icmcId').empty();
+			$('select#icmcId').append(option);
+		});
+	}
+</script>
 
-<script type="text/javascript" charset="utf-8"> 
-   		function getPrinter(){
-   			$.getJSON(
-   	             "icmcPrinterList.json",
-   	             {icmc: $('select#icmcId').val()},
-   	             function(data) {
-   	                  var html = '';
-   	                  var len = data.length;
-   	                  var option = '<option value="">Select Printer</option>';
-   	                  for(var i=0; i<len; i++){
-   	                	  option += '<option value="' + data[i].id + '">' + data[i].printerName +" : "+ data[i].printerIP +" : "+ data[i].port + '</option>';
-   	                   }
-   	                  $('select#icmcPrinterId').empty();
-   	                  $('select#icmcPrinterId').append(option);
-   	             }
-   	          );
-     	}
- </script>
+<script type="text/javascript" charset="utf-8">
+	function getPrinter() {
+		$.getJSON("icmcPrinterList.json", {
+			icmc : $('select#icmcId').val()
+		}, function(data) {
+			var html = '';
+			var len = data.length;
+			var option = '<option value="">Select Printer</option>';
+			for (var i = 0; i < len; i++) {
+				option += '<option value="' + data[i].id + '">'
+						+ data[i].printerName + " : " + data[i].printerIP
+						+ " : " + data[i].port + '</option>';
+			}
+			$('select#icmcPrinterId').empty();
+			$('select#icmcPrinterId').append(option);
+		});
+	}
+</script>
 
-<script type="text/javascript" charset="utf-8">    
-     function vailidRegionZoneIcmc(){
-    	 addHeader();
-    	// alert("vailidRegionZoneIcmc   :"+$("input[name=roleId]:checked").val())
-         var roleType= $("input[name=roleId]:checked").val();
-    	 $.ajax({
-    		 type:"POST",
-    		 url:"././getRoleType",
-    		 data:"roleType="+roleType,
-    		 success:function(response){
-    			
-    			   var newStr = response.toString();
-    		       var data = newStr.split(",");
-    		       var roleCheck=data[0];
-				if(roleCheck=='ALL'){
-					 $("#zoneId").attr("disabled", "disabled");
-				     $("#regionId").attr("disabled", "disabled");  
-				     $("#icmcId").attr("disabled", "disabled");
-				     $("#icmcPrinterId").attr("disabled", "disabled");
-				}
-				else if(roleCheck=='ICMC'){
-					 $("#zoneId").removeAttr("disabled"); 
-					 $("#regionId").removeAttr("disabled");  
-					 $("#icmcId").removeAttr("disabled");
-					 $("#icmcPrinterId").removeAttr("disabled");
-				}
-				else if(roleCheck=='REGION'){
-					 $("#zoneId").removeAttr("disabled"); 
-					 $("#regionId").removeAttr("disabled");  
-					 $("#icmcId").removeAttr("disabled");
-					 $("#icmcPrinterId").removeAttr("disabled");
-				     $("#icmcId").attr("disabled", "disabled"); 
-				     $("#icmcPrinterId").attr("disabled", "disabled"); 
-				}
-				else if(roleCheck=='ZONE'){
-					$("#zoneId").removeAttr("disabled"); 
-					$("#regionId").removeAttr("disabled");  
+<script type="text/javascript" charset="utf-8">
+	function vailidRegionZoneIcmc() {
+		addHeader();
+		// alert("vailidRegionZoneIcmc   :"+$("input[name=roleId]:checked").val())
+		var roleType = $("input[name=roleId]:checked").val();
+		$.ajax({
+			type : "POST",
+			url : "././getRoleType",
+			data : "roleType=" + roleType,
+			success : function(response) {
+
+				var newStr = response.toString();
+				var data = newStr.split(",");
+				var roleCheck = data[0];
+				if (roleCheck == 'ALL') {
+					$("#zoneId").attr("disabled", "disabled");
+					$("#regionId").attr("disabled", "disabled");
+					$("#icmcId").attr("disabled", "disabled");
+					$("#icmcPrinterId").attr("disabled", "disabled");
+				} else if (roleCheck == 'ICMC') {
+					$("#zoneId").removeAttr("disabled");
+					$("#regionId").removeAttr("disabled");
 					$("#icmcId").removeAttr("disabled");
 					$("#icmcPrinterId").removeAttr("disabled");
-				    $("#regionId").attr("disabled", "disabled");  
-				    $("#icmcId").attr("disabled", "disabled");
-				    $("#icmcPrinterId").attr("disabled", "disabled"); 
+				} else if (roleCheck == 'REGION') {
+					$("#zoneId").removeAttr("disabled");
+					$("#regionId").removeAttr("disabled");
+					$("#icmcId").removeAttr("disabled");
+					$("#icmcPrinterId").removeAttr("disabled");
+					$("#icmcId").attr("disabled", "disabled");
+					$("#icmcPrinterId").attr("disabled", "disabled");
+				} else if (roleCheck == 'ZONE') {
+					$("#zoneId").removeAttr("disabled");
+					$("#regionId").removeAttr("disabled");
+					$("#icmcId").removeAttr("disabled");
+					$("#icmcPrinterId").removeAttr("disabled");
+					$("#regionId").attr("disabled", "disabled");
+					$("#icmcId").attr("disabled", "disabled");
+					$("#icmcPrinterId").attr("disabled", "disabled");
+				} else if (roleCheck == 'IT_ADMIN') {
+					$("#zoneId").attr("disabled", "disabled");
+					$("#regionId").attr("disabled", "disabled");
+					$("#icmcId").attr("disabled", "disabled");
+					$("#icmcPrinterId").removeAttr("disabled");
+				} else {
+					$("#zoneId").removeAttr("disabled");
+					$("#regionId").removeAttr("disabled");
+					$("#icmcId").removeAttr("disabled");
+					$("#icmcPrinterId").removeAttr("disabled");
 				}
-				else if(roleCheck=='IT_ADMIN'){
-					 $("#zoneId").attr("disabled", "disabled");
-				     $("#regionId").attr("disabled", "disabled");  
-				     $("#icmcId").attr("disabled", "disabled");
-				     $("#icmcPrinterId").removeAttr("disabled");
-				}else {
-					 $("#zoneId").removeAttr("disabled"); 
-					 $("#regionId").removeAttr("disabled");  
-					 $("#icmcId").removeAttr("disabled");
-					 $("#icmcPrinterId").removeAttr("disabled");
-				}
-					  
-    		 },
-    		 error: function(e) {
-    				alert('RegionZoneIcmc Error: ' + e);
-    			}
-    	 });
-     }
 
+			},
+			error : function(e) {
+				alert('RegionZoneIcmc Error: ' + e);
+			}
+		});
+	}
 </script>
 
 <!-- Bootstrap Core CSS -->
@@ -313,101 +308,103 @@ function doAjaxForRegion() {
 	<script src="./resources/dist/js/sb-admin-2.js"></script>
 
 	<script type="text/javascript">
-	
-	$.validator.addMethod("loginRegex", function(value, element) {
-			    return this.optional(element) || /^[a-zA-Z0-9._-]+$/i.test(value);
-			}, "Software must contain only letters,Space , dashes.");
-	
-	$.validator.addMethod("nameRegex", function(value, element) {
-	    return this.optional(element) || /^[A-Za-z\s]+$/i.test(value);
-	}, "Software must contain only letters,Space , dashes.");
+		$.validator.addMethod("loginRegex", function(value, element) {
+			return this.optional(element) || /^[a-zA-Z0-9._-]+$/i.test(value);
+		}, "Software must contain only letters,Space , dashes.");
 
-	$.validator.addMethod("mailRegex", function(value, element) {
-	    return this.optional(element) || /^[a-zA-Z0-9._-]+@icicibank.com+$/i.test(value);
-	}, "Software must contain only letters,Space , dashes.");
+		$.validator.addMethod("nameRegex", function(value, element) {
+			return this.optional(element) || /^[A-Za-z\s]+$/i.test(value);
+		}, "Software must contain only letters,Space , dashes.");
 
-	
-	$(function() {
-	  $("form[name='userPage']").validate({
-	    rules: {
-	    	id: {
-            	required:true,
-            	maxlength:31,
-            	loginRegex:true,
-            },
-            name: {
-            	nameRegex:true,
-            	required:true,
-            	maxlength:44,
-            },
-            email: {
-            	//mailRegex:true,
-         		required:true,
-            	maxlength:44,
-            	email:true,
-            },
-            roleId: {
-                required: true,
-               
-            },
-            zoneId:{
-            	 required: true,
-            },
-            regionId:{
-           	 required: true,
-           },
-           icmcId:{
-          	 required: true,
-          },
-          icmcPrinterId:{
-           	 required: true,
-           },
-            status: "required",
-	    },
-	    // Specify validation error messages 
-	    messages: {
-	    	 id: {
-	    		required:"Please Enter User ID",
-	    		maxlength:"User ID can't have more than 32 characters",
-	    		loginRegex:"Please Enter only Numeric Value",
-	    	},
-             name: {
-            	 nameRegex:"Special and Numeric characters are not allowed",
-	    		required:"Please Enter User Name",
-	    		maxlength:"User Name can't have more than 45 characters",
-	    	},
-             email: {
-            	 //mailRegex:"Not a Valid Email ID, Only Accepts the type xxxxxx@icicibank.com",
-            	 required:"Please Enter Email",
-            	 maxlength:"Email can't have more than 45 characters",
-            	 email:"Please enter a valid Email-ID",
-             },
-             roleId: {
-     	        required: "You must select Role",
-     	     },
-     	    zoneId:{
-           	 required: "Please Select Zone",
-           },
-           regionId:{
-          	 required: "Please Select Region",
-          },
-          icmcId:{
-         	 required: "Please Select Icmc",
-         },
-         icmcPrinterId:{
-         	 required: "Please Select Printer",
-         },
-             status: "Please Select Status",
-	    },
-	    submitHandler: function(form) {
-	    	var isValid = $("form[name='userPage']").validate().form();
-	    	//alert(isValid);
-	    	if(isValid){
-	      		form.submit();
-	    	}
-	    }
-	  });
-	});
+		$.validator.addMethod("mailRegex", function(value, element) {
+			return this.optional(element)
+					|| /^[a-zA-Z0-9._-]+@icicibank.com+$/i.test(value);
+		}, "Software must contain only letters,Space , dashes.");
+
+		$(function() {
+			$("form[name='userPage']")
+					.validate(
+							{
+								rules : {
+									id : {
+										required : true,
+										maxlength : 31,
+										loginRegex : true,
+									},
+									name : {
+										nameRegex : true,
+										required : true,
+										maxlength : 44,
+									},
+									email : {
+										//mailRegex:true,
+										required : true,
+										maxlength : 44,
+										email : true,
+									},
+									roleId : {
+										required : true,
+
+									},
+									zoneId : {
+										required : true,
+									},
+									regionId : {
+										required : true,
+									},
+									icmcId : {
+										required : true,
+									},
+									icmcPrinterId : {
+										required : true,
+									},
+									status : "required",
+								},
+								// Specify validation error messages 
+								messages : {
+									id : {
+										required : "Please Enter User ID",
+										maxlength : "User ID can't have more than 32 characters",
+										loginRegex : "Please Enter only Numeric Value",
+									},
+									name : {
+										nameRegex : "Special and Numeric characters are not allowed",
+										required : "Please Enter User Name",
+										maxlength : "User Name can't have more than 45 characters",
+									},
+									email : {
+										//mailRegex:"Not a Valid Email ID, Only Accepts the type xxxxxx@icicibank.com",
+										required : "Please Enter Email",
+										maxlength : "Email can't have more than 45 characters",
+										email : "Please enter a valid Email-ID",
+									},
+									roleId : {
+										required : "You must select Role",
+									},
+									zoneId : {
+										required : "Please Select Zone",
+									},
+									regionId : {
+										required : "Please Select Region",
+									},
+									icmcId : {
+										required : "Please Select Icmc",
+									},
+									icmcPrinterId : {
+										required : "Please Select Printer",
+									},
+									status : "Please Select Status",
+								},
+								submitHandler : function(form) {
+									var isValid = $("form[name='userPage']")
+											.validate().form();
+									//alert(isValid);
+									if (isValid) {
+										form.submit();
+									}
+								}
+							});
+		});
 	</script>
 	<script type="text/javascript" src="./js/htmlInjection.js"></script>
 </body>

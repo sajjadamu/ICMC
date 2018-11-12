@@ -3,14 +3,23 @@
 </head>
 
 <script type="text/javascript">
-function addHeader(){
-	$.ajaxSetup({
-	    beforeSend: function (xhr)
-	    {
-	       xhr.setRequestHeader("X-CSRF-TOKEN",$('meta[name="_csrf"]').attr('content'));        
-	    }
-	});
-}
+	function addHeader() {
+		$.ajaxSetup({
+			beforeSend : function(xhr) {
+				xhr.setRequestHeader("X-CSRF-TOKEN", $('meta[name="_csrf"]')
+						.attr('content'));
+			}
+		});
+	}
+ 	function addHeaderJson() {
+		$.ajaxSetup({
+			beforeSend : function(xhr) {
+				xhr.setRequestHeader("X-CSRF-TOKEN", $('meta[name="_csrf"]')
+						.attr('content'));
+				xhr.setRequestHeader("Accept", "application/json; charset=utf-8" );
+			}
+		});
+	} 
 </script>
 
 <nav class="navbar navbar-default navbar-static-top" role="navigation"

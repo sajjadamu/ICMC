@@ -52,9 +52,8 @@ public class CustomDriverManagerDataSource extends DriverManagerDataSource {
 //Utility to encrypt db userid/pass
 	public static void main(String args[]) {
 
-		System.out.println("Encrypted username :- " + base64Encode("casavup"));
-		System.out.println("Encrypted password :- " + base64Encode("casavup_123"));
+		System.out.println("Encrypted username :- " + base64Encode("ivault_live"));
+		System.out.println("Encrypted password :- " + base64Encode("ivault_live_123"));
 
 	}
 }
-

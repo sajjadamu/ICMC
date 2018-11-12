@@ -16,14 +16,22 @@
 		name="url" value="${url}" /> <property name="username" value="${dbusername}" 
 		/> <property name="password" value="${password}" /> </bean> -->
 
-	<bean id="dataSource"
+	<!-- <bean id="dataSource"
 		class="com.chest.currency.security.datasource.config.CustomDriverManagerDataSource">
 		<property name="driverClassName" value="${driverClassName}" />
 		<property name="url" value="${url}" />
 		<property name="username" value="${dbusername}" />
 		<property name="password" value="${password}" />
+	</bean> -->
+	
+	<bean id="dataSource"
+		class="com.chest.currency.security.datasource.config.AESEncryptionDecryption">
+		<property name="driverClassName" value="${driverClassName}" />
+		<property name="url" value="${url}" />
+		<property name="username" value="${dbusername}" />
+		<property name="password" value="${password}" />
 	</bean>
-
+	
 	<bean id="documentFilePath" class="java.lang.String">
 		<constructor-arg value="${documentFilePath}" />
 	</bean>

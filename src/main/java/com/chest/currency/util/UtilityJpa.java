@@ -2998,25 +2998,23 @@ public class UtilityJpa {
 			LOG.info("PrintToPrinter user id " + user.getId());
 			int port = user.getIcmcPrinter().getPort().intValue();
 			LOG.info("PrintToPrinter port " + port);
-			// clientSocket = new Socket("10.64.50.173", 9100); // ICICI
-			clientSocket = new Socket(ip, port); // ICICI pushpanjali LAN
-			// clientSocket.setSoTimeout(10000);
+			clientSocket = new Socket(ip, port);
 			LOG.info("PrintToPrinter clientSocket " + clientSocket);
 			DataOutputStream outToServer = new DataOutputStream(clientSocket.getOutputStream());
 			outToServer.writeBytes(sb.toString());
-			clientSocket.close();
-		} catch (IOException ioe) {
 
+		} catch (IOException ioe) {
 			LOG.info("PrintToPrinter METHOD IN CATCH IOException Printer is not able to connect " + ioe);
-			// clientSocket.close();
 			ioe.printStackTrace();
-			// throw new BaseGuiException("Printer is not able to connect " + ioe);
+
 		} catch (Exception e) {
 			LOG.info("PrintToPrinter METHOD IN CATCH Exception Printer is not able to connect " + e);
 			e.printStackTrace();
+
 		} finally {
 			LOG.info("PrintToPrinter METHOD IN finally clientSocket " + clientSocket);
-			clientSocket.close();
+			if (clientSocket != null)
+				clientSocket.close();
 		}
 	}
 

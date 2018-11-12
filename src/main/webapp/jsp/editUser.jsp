@@ -16,13 +16,12 @@
 	type="image/x-icon">
 <title>ICICI : Update User</title>
 
-<script type="text/javascript"
-	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script src="./resources/bower_components/jquery/dist/jquery.min.js"></script>
 <script type="text/javascript" src="./js/jquery.validate.min.js"></script>
 
 <script type="text/javascript">
 function doAjaxForRegion() {
-	addHeader();
+	addHeaderJson();
 	var zone = $('#zoneId').val();
 	if(zone != ''){
 	$.ajax({

@@ -2,13 +2,11 @@ package com.chest.currency.message;
 
 import java.io.Serializable;
 
-import com.chest.currency.enums.ServiceStatus;
+import com.chest.currency.enums.LamStatus;
+
 
 public class Error implements Serializable {
 	
-	 /**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	public int errorCode;
 	    public String errorMessage = "";
@@ -36,12 +34,12 @@ public class Error implements Serializable {
 	        return error;
 	    }
 
-	    public static Response<?> setErrorResponse(ServiceStatus status, String tokenId, int errorCode, String message) {
+	    public static Response setErrorResponse(LamStatus status, String tokenId, int errorCode, String message) {
 	        Response response = new Response();
 	        return response;
 	    }
 
-	    public static Response<?> setErrorResponse(String tokenId, int errorCode, String message) {
+	    public static Response setErrorResponse(String tokenId, int errorCode, String message) {
 	        Response response = new Response();
 	        return response;
 	    }

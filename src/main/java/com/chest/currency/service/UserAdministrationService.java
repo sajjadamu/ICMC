@@ -13,6 +13,7 @@ import com.chest.currency.entity.model.BinCapacityDenomination;
 import com.chest.currency.entity.model.DelegateRight;
 import com.chest.currency.entity.model.ICMC;
 import com.chest.currency.entity.model.IcmcPrinter;
+import com.chest.currency.entity.model.LamRequestLog;
 import com.chest.currency.entity.model.Machine;
 import com.chest.currency.entity.model.MachineCompany;
 import com.chest.currency.entity.model.MachineMaintenance;
@@ -37,6 +38,8 @@ public interface UserAdministrationService {
 	public User getUserById(String id);
 	
 	public void updateUser(User bean);
+	
+	public void deleteUser(User user);
 	
 	public List<ICMC> getICMCName(String region);
 
@@ -163,5 +166,9 @@ public interface UserAdministrationService {
 	public String getNotificationForProcessingOutPut(BigInteger icmcId);
 	
 	public DelegateRight getRoleFromDelegatedRights(BigInteger icmcId);
+	
+	public LamRequestLog createLamLog(LamRequestLog requestLog);
+	
+	public void updateLamLog(LamRequestLog requestLog);
 	
 }

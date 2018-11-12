@@ -177,4 +177,6 @@ public interface CashReceiptJpaDao {
 	boolean updateOtherBank(BankReceipt otherBankReceit);
 
 	boolean saveDSB(List<DSB> dsb);
+	
+	public ICMC getICMCBySolId(String solId);
 }

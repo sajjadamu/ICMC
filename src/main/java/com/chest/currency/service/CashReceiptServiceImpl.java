@@ -13,11 +13,11 @@ import java.util.Date;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
-import org.springframework.transaction.annotation.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.chest.currency.dao.CashReceiptDaoImpl;
 import com.chest.currency.entity.model.BankReceipt;
@@ -138,13 +138,14 @@ public class CashReceiptServiceImpl implements CashReceiptService {
 
 		return isSaved;
 	}
-     
+
 	@Transactional
 	public boolean updateInBinTxn(BinTransaction binTransaction) {
 		boolean isSaved = cashReceiptJpaDao.updateInBinTxn(binTransaction);
 		return isSaved;
 	}
 
+	@Transactional
 	public boolean createBranchReceipt(List<BranchReceipt> branchReceipt) {
 		boolean isSaved = cashReceiptJpaDao.createBranchReceipt(branchReceipt);
 		return isSaved;
@@ -271,7 +272,9 @@ public class CashReceiptServiceImpl implements CashReceiptService {
 			}
 		}
 
-		addBranchReciept(branchRecieptList);
+		Boolean isAdd = addBranchReciept(branchRecieptList);
+		if (!isAdd)
+			throw new BaseGuiException("Please Try again");
 
 		// History Code
 		List<History> historyList = new ArrayList<History>();
@@ -517,8 +520,8 @@ public class CashReceiptServiceImpl implements CashReceiptService {
 			freshFromRBIList = UtilityJpa.getFreshFromRBIForCoins(fresh, user);
 			CoinsSequence coinsSequence = new CoinsSequence();
 			coinsSequence = this.getSequence(user.getIcmcId(), fresh.getDenomination());
-			LOG.info("coinsSequence "+ coinsSequence);
-			LOG.info("INSERT fresh  "+ fresh);
+			LOG.info("coinsSequence " + coinsSequence);
+			LOG.info("INSERT fresh  " + fresh);
 			if (coinsSequence == null) {
 				coinsSequence = new CoinsSequence();
 				int finalSequence = fresh.getNoOfBags();
@@ -951,14 +954,16 @@ public class CashReceiptServiceImpl implements CashReceiptService {
 			} else {
 				masterTemp.setBoxName(binTx.getBinNumber());
 				cashReceiptJpaDao.updateBoxMaster(masterTemp);
-			//	cashPaymentService.deleteEmptyBinFromBinTransaction(binTx.getIcmcId(), binTx.getBinNumber());
+				// cashPaymentService.deleteEmptyBinFromBinTransaction(binTx.getIcmcId(),
+				// binTx.getBinNumber());
 				this.insertInBinTxn(binTx);
 			}
 		}
 	}
 
 	private void addInTransactionsForBox(User user, BinTransaction binTxs) {
-		//cashPaymentService.deleteEmptyBinFromBinTransaction(binTxs.getIcmcId(), binTxs.getBinNumber());
+		// cashPaymentService.deleteEmptyBinFromBinTransaction(binTxs.getIcmcId(),
+		// binTxs.getBinNumber());
 		this.insertInBinTxn(binTxs);
 	}
 
@@ -1048,11 +1053,14 @@ public class CashReceiptServiceImpl implements CashReceiptService {
 		return binMasterList;
 	}
 
-	private void addBranchReciept(List<BranchReceipt> branchRecieptList) {
+	@Transactional
+	private Boolean addBranchReciept(List<BranchReceipt> branchRecieptList) {
 		for (BranchReceipt br : branchRecieptList) {
 			br.setFilepath(getQrCode(br));
 		}
-		this.createBranchReceipt(branchRecieptList);
+		Boolean isSave = this.createBranchReceipt(branchRecieptList);
+
+		return isSave;
 	}
 
 	private void addDSBForSave(List<DSB> dsbList) {
@@ -1280,6 +1288,12 @@ public class CashReceiptServiceImpl implements CashReceiptService {
 	public String getBranchNameBySolId(String solId) {
 		String branch = cashReceiptJpaDao.getBranchBySolId(solId);
 		return branch;
+	}
+
+	@Override
+	public ICMC getICMCBySolId(String solId) {
+		ICMC icmc = cashReceiptJpaDao.getICMCBySolId(solId);
+		return icmc;
 	}
 
 	@Override
@@ -1692,11 +1706,11 @@ public class CashReceiptServiceImpl implements CashReceiptService {
 
 		/*
 		 * binTxn.setReceiveBundle(binTxn.getReceiveBundle().subtract(dsb.
-		 * getBundle())); if (binTxn.getReceiveBundle().equals(BigDecimal.ZERO))
-		 * { binTxn.setStatus(BinStatus.EMPTY); } isAllSuccess =
+		 * getBundle())); if (binTxn.getReceiveBundle().equals(BigDecimal.ZERO)) {
+		 * binTxn.setStatus(BinStatus.EMPTY); } isAllSuccess =
 		 * this.updateInBinTxn(binTxn); if (isAllSuccess) {
-		 * dsb.setStatus(OtherStatus.CANCELLED);
-		 * cashReceiptJpaDao.updateDSB(dsb); } return isAllSuccess;
+		 * dsb.setStatus(OtherStatus.CANCELLED); cashReceiptJpaDao.updateDSB(dsb); }
+		 * return isAllSuccess;
 		 */
 		return dsbReceiptList;
 	}

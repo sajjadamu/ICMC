@@ -824,7 +824,6 @@ $.ajax({
 			<!-- /#wrapper -->
 		</div>
 	</div>
-	<>
 
 	<!-- jQuery -->
 	<script src="./resources/bower_components/jquery/dist/jquery.min.js"></script>

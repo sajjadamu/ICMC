@@ -22,6 +22,7 @@ import com.chest.currency.entity.model.BinCapacityDenomination;
 import com.chest.currency.entity.model.DelegateRight;
 import com.chest.currency.entity.model.ICMC;
 import com.chest.currency.entity.model.IcmcPrinter;
+import com.chest.currency.entity.model.LamRequestLog;
 import com.chest.currency.entity.model.Machine;
 import com.chest.currency.entity.model.MachineCompany;
 import com.chest.currency.entity.model.MachineMaintenance;
@@ -55,6 +56,7 @@ import com.chest.currency.entity.model.User;
 import com.chest.currency.entity.model.ZoneMaster;
 import com.chest.currency.enums.OtherStatus;
 import com.chest.currency.enums.Status;
+import com.mysema.query.jpa.impl.JPADeleteClause;
 import com.mysema.query.jpa.impl.JPAQuery;
 import com.mysema.query.jpa.impl.JPAUpdateClause;
 
@@ -115,6 +117,11 @@ public class UserAdministrationJpaDaoImpl implements UserAdministrationJpaDao {
 	public boolean updateUser(User user) {
 		em.merge(user);
 		return true;
+	}
+
+	@Override
+	public void deleteUser(User user) {
+		new JPADeleteClause(em, QUser.user).where(QUser.user.id.eq(user.getId())).execute();
 	}
 
 	@Override
@@ -230,10 +237,10 @@ public class UserAdministrationJpaDaoImpl implements UserAdministrationJpaDao {
 		jpaQuery.where(QBinCapacityDenomination.binCapacityDenomination.denomination.eq(binCapacity.getDenomination())
 				.and(QBinCapacityDenomination.binCapacityDenomination.vaultSize.eq(binCapacity.getVaultSize()).and(
 						QBinCapacityDenomination.binCapacityDenomination.currencyType.eq(binCapacity.getCurrencyType())
-		/*
-		 * .and(QBinCapacityDenomination.binCapacityDenomination.icmcId.eq(
-		 * binCapacity.getIcmcId()))
-		 */)));
+				/*
+				 * .and(QBinCapacityDenomination.binCapacityDenomination.icmcId.eq(
+				 * binCapacity.getIcmcId()))
+				 */)));
 		BinCapacityDenomination bcd = jpaQuery.singleResult(QBinCapacityDenomination.binCapacityDenomination);
 		return bcd;
 	}
@@ -777,7 +784,7 @@ public class UserAdministrationJpaDaoImpl implements UserAdministrationJpaDao {
 	@Override
 	public List<User> getUserListByICMC(BigInteger icmcId) {
 		LOG.info("Going to fetch Users: by icmc");
-		
+
 		JPAQuery jpaQuery = getFromQueryForUser();
 		jpaQuery.where(QUser.user.status.eq(Status.ENABLED).and(QUser.user.icmcId.eq(icmcId)));
 		List<User> users = jpaQuery.list(QUser.user);
@@ -785,4 +792,14 @@ public class UserAdministrationJpaDaoImpl implements UserAdministrationJpaDao {
 		return users;
 	}
 
+	@Override
+	public LamRequestLog createLamLog(LamRequestLog requestLog) {
+		em.persist(requestLog);
+		return requestLog;
+	}
+
+	@Override
+	public void updateLamLog(LamRequestLog requestLog) {
+		em.merge(requestLog);
+	}
 }

@@ -7,8 +7,8 @@
 <head>
 <link href="./resources/css/calendar.css" rel="stylesheet"
 	type="text/css" />
-<link rel="stylesheet" type="text/css"
-	href="./resources/css/jquery.datetimepicker.css" />
+<!-- <link rel="stylesheet" type="text/css"
+	href="./resources/css/jquery.datetimepicker.css" /> -->
 <link rel="shortcut icon" href="./resources/logo/favicon.ico"
 	type="image/x-icon">
 <script src="./js/jquery-1.12.0.min.js"></script>
@@ -51,12 +51,9 @@
 <link rel="stylesheet" type="text/css"
 	href="./resources/dist/css/style.css">
 
-<link
-	href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.css"
+<link href="./resources/css/bootstrap-datetimepicker.css"
 	rel="stylesheet" />
-<link
-	href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.css"
-	rel="stylesheet" />
+
 
 <style type="text/css">
 .form-control.input-margin {
@@ -152,12 +149,12 @@
 															+ '<td width="22%"><input type="text" id="printYear'+i+'" disabled="disabled" class="form-control input-margin" name="printYear" value="" ></td>'
 															+ '<td width="22%"><input type="text" id="dateOnShrinkWrap'
 															+ i
-															+ '"  class="form-control input-margin" name="dateOnShrinkWrap" value="" onmouseover="doAjaxForDate('
+															+ '"  class="form-control input-margin" name="dateOnShrinkWrap" value="" onmousemove="doAjaxForDate('
 															+ i
 															+ ')" ></td>'
 															+ '<td width="22%"><input type="text" id="timeOfShrinkWrap'
 															+ i
-															+ '"  class="form-control input-margin droptimebox" name="timeOfShrinkWrap" value="" onmouseover="doAjaxForDate('
+															+ '"  class="form-control input-margin droptimebox" name="timeOfShrinkWrap" value="" onmousemove="doAjaxForDate('
 															+ i
 															+ ')" ></td>'
 															+ '<td width="22%"><input type="text" id="remarks'+i+'"  class="form-control input-margin" name="remarks" value="" ></td>'
@@ -368,29 +365,6 @@
 
 	};
 </script>
-
-<!-- code for the image uploading -->
-
-<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script>
- var tmppath1 =null;
- var tmppath = null;
-$(document).ready(function(){
-    
-   
-    $('#filepath').change( function(event) {
-    tmppath1 = URL.createObjectURL(event.target.files[0]);
-        tmppath = tmppath1.replace("blob:","");
-     });
-
-
-    
-    $("#save").click(function()
-    {
-       alert("go     "+tmppath)
-    });
-});
-</script> -->
 
 <!-- end code for the image uploading -->
 
@@ -837,31 +811,34 @@ $(document).ready(function(){
 	<!-- jQuery -->
 	<script src="./resources/bower_components/jquery/dist/jquery.min.js"></script>
 
-	<!-- Bootstrap Core JavaScript -->
+	<script src="./resources/js/jQuery.print.js"></script>
+
 	<script
 		src="./resources/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+
+	<script src="./resources/js/moment.js" type="text/javascript"></script>
+
+	<script src="./resources/js/bootstrap-datetimepicker.min.js"></script>
+
+
+	<!-- end time picker -->
+
+	<script type="text/javascript" src="./js/htmlInjection.js"></script>
+	<script type="text/javascript" src="./js/print.js"></script>
+
+	<!-- Bootstrap Core JavaScript -->
+
 
 	<!-- Metis Menu Plugin JavaScript -->
 	<script
 		src="./resources/bower_components/metisMenu/dist/metisMenu.min.js"></script>
 
 	<!-- Custom Theme JavaScript -->
+	<script src="./resources/dist/js/sb-admin-2.js"></script>
 
-	<script src="./resources/js/jQuery.print.js"></script>
-	<script src="./resources/js/jquery.datetimepicker.js"></script>
-	<!-- time picker -->
 
-	<script
-		src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
-	<script
-		src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-	<script
-		src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.js"
-		type="text/javascript"></script>
-	<script
-		src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
+	<script type="text/javascript" src="./js/htmlInjection.js"></script>
 
-	<!-- end time picker -->
 	<script>
 		$('#discrepancyDate').datetimepicker({
 			//format : 'Y-m-d',
@@ -881,23 +858,6 @@ $(document).ready(function(){
 			});
 		}
 	</script>
-
-	<script type="text/javascript" src="./js/htmlInjection.js"></script>
-	<script type="text/javascript" src="./js/print.js"></script>
-
-	<!-- Bootstrap Core JavaScript -->
-	<script
-		src="./resources/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-
-	<!-- Metis Menu Plugin JavaScript -->
-	<script
-		src="./resources/bower_components/metisMenu/dist/metisMenu.min.js"></script>
-
-	<!-- Custom Theme JavaScript -->
-	<script src="./resources/dist/js/sb-admin-2.js"></script>
-
-
-	<script type="text/javascript" src="./js/htmlInjection.js"></script>
 
 </body>
 

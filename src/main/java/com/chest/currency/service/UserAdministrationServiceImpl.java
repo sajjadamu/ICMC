@@ -18,6 +18,7 @@ import com.chest.currency.entity.model.BinCapacityDenomination;
 import com.chest.currency.entity.model.DelegateRight;
 import com.chest.currency.entity.model.ICMC;
 import com.chest.currency.entity.model.IcmcPrinter;
+import com.chest.currency.entity.model.LamRequestLog;
 import com.chest.currency.entity.model.Machine;
 import com.chest.currency.entity.model.MachineCompany;
 import com.chest.currency.entity.model.MachineMaintenance;
@@ -76,7 +77,7 @@ public class UserAdministrationServiceImpl implements UserAdministrationService 
 		List<User> userList = userAdministrationJpaDao.getUserList();
 		return userList;
 	}
-	
+
 	@Override
 	public List<User> getUserListByICMC(BigInteger icmcId) {
 		List<User> userList = userAdministrationJpaDao.getUserListByICMC(icmcId);
@@ -91,6 +92,12 @@ public class UserAdministrationServiceImpl implements UserAdministrationService 
 	public void updateUser(User user) {
 
 		userAdministrationJpaDao.updateUser(user);
+	}
+	
+	@Override
+	public void deleteUser(User user) {
+
+		userAdministrationJpaDao.deleteUser(user);
 	}
 
 	@Override
@@ -142,8 +149,7 @@ public class UserAdministrationServiceImpl implements UserAdministrationService 
 	/*
 	 * @Override public List<BinCapacityDenomination> getBinCapacity(BigInteger
 	 * icmcId) { List<BinCapacityDenomination> binCapacityList =
-	 * userAdministrationJpaDao.getBinCapacity(icmcId); return binCapacityList;
-	 * }
+	 * userAdministrationJpaDao.getBinCapacity(icmcId); return binCapacityList; }
 	 */
 
 	@Override
@@ -523,6 +529,17 @@ public class UserAdministrationServiceImpl implements UserAdministrationService 
 	public DelegateRight getRoleFromDelegatedRights(BigInteger icmcId) {
 		DelegateRight delegateRight = userAdministrationJpaDao.getRoleFromDelegatedRights(icmcId);
 		return delegateRight;
+	}
+
+	@Override
+	public LamRequestLog createLamLog(LamRequestLog requestLog) {
+		LamRequestLog lamRequestLog = userAdministrationJpaDao.createLamLog(requestLog);
+		return lamRequestLog;
+	}
+
+	@Override
+	public void updateLamLog(LamRequestLog requestLog) {
+		userAdministrationJpaDao.updateLamLog(requestLog);
 	}
 
 }

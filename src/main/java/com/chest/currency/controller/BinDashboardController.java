@@ -193,11 +193,12 @@ public class BinDashboardController {
 	}
 
 	@RequestMapping("/viewBin")
-	public ModelAndView binList(HttpSession session, ZoneMaster zm) {
+	public ModelAndView binList(HttpSession session, ZoneMaster zm, HttpServletRequest request) {
 		User user = (User) session.getAttribute("login");
 		ModelMap map = new ModelMap();
 		IcmcAccess access = user.getRole().getIcmcAccess();
 
+		
 		if (access == IcmcAccess.ICMC) {
 
 			/*
@@ -897,21 +898,21 @@ public class BinDashboardController {
 		binTransactionBODForCoins.setInsertTime(sDate);
 		binTransactionBODForCoins.setUpdateTime(sDate);
 
-		LOG.info("binTransactionBOD.getInsertTime() " + binTransactionBOD.getInsertTime());
-		LOG.info("binTransactionBOD.getUpdateTime()" + binTransactionBOD.getUpdateTime());
-		LOG.info("binTransactionBODForCoins.getInsertTime()" + binTransactionBODForCoins.getInsertTime());
-		LOG.info("binTransactionBODForCoins.getUpdateTime()" + binTransactionBODForCoins.getUpdateTime());
+		LOG.info("binTransactionBOD.getInsertTime().getTime() " + binTransactionBOD.getInsertTime().getTime());
+		LOG.info("eDate.getTime " + eDate);
+		
 
 		List<Tuple> summaryListForOpeningBalance = binDashboardService.getOpeningBalanceForIO2Report(user.getIcmcId(),
 				sDate, eDate, CashType.NOTES);
-
+		LOG.info("summaryListForOpeningBalance " + summaryListForOpeningBalance);
 		List<Tuple> summaryListForOpeningBalanceFromIndent = binDashboardService
 				.getOpeningBalanceForIO2ReportFromIndent(user.getIcmcId(), sDate, eDate, CashType.NOTES);
-
+		LOG.info("summaryListForOpeningBalanceFromIndent " + summaryListForOpeningBalanceFromIndent);
+		LOG.info("binTransactionBOD " + binTransactionBOD);
+		
 		mapTupleToBinTransactionBOD(binTransactionBOD, summaryListForOpeningBalance,
 				summaryListForOpeningBalanceFromIndent);
-		LOG.info("summaryListForOpeningBalance " + summaryListForOpeningBalance);
-		LOG.info("summaryListForOpeningBalanceFromIndent " + summaryListForOpeningBalanceFromIndent);
+		
 
 		binDashboardService.updateCurrentVersionStatus(binTransactionBOD);
 
@@ -2161,6 +2162,7 @@ public class BinDashboardController {
 		}
 		reader.close();
 		return oldtext;
+
 	}
 
 	@RequestMapping(value = "/transferCash")

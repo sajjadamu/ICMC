@@ -69,20 +69,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	 *                   .contextSource().ldif("classpath:testldif/test-server.ldif");
 	 */
 
-	/*
-	 * @Autowired public void configureGlobal(AuthenticationManagerBuilder auth)
-	 * throws Exception {
-	 * 
-	 * auth.authenticationProvider(aDLoginAuthenticationProvider);
-	 * 
-	 * auth.ldapAuthentication() .contextSource().url(ldapURL+"/dc="+ldapDomain)
-	 * .and() .userSearchBase("ou=people") .userSearchFilter("(uid={0})")
-	 * .ldapAuthoritiesPopulator(userAuthoritiesPopulator); }
-	 */
+/*	@Autowired
+	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+
+		auth.authenticationProvider(aDLoginAuthenticationProvider);
+
+		auth.ldapAuthentication().contextSource().url(ldapURL + "/dc=" + ldapDomain).and().userSearchBase("ou=people")
+				.userSearchFilter("(uid={0})").ldapAuthoritiesPopulator(userAuthoritiesPopulator);
+	}*/
 
 	@Override
 	public void configure(WebSecurity web) throws Exception {
-		web.ignoring().antMatchers("/app/resources/**", "/app/js/**");
+		web.ignoring().antMatchers("/app/resources/**", "/app/js/**", "/app/api/lam/user/**");
 	}
 
 	@Override
@@ -378,7 +376,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers("/app/viewOtherBankPayment/**").hasRole(PermissionName.VIEW_OTHER_BANK_PAYMENT.val)
 
 				// Similarly all URL should be added here for respective ROLE
-				.anyRequest().authenticated().and().authorizeRequests().antMatchers("/app/api/Lam/user/**").permitAll()
+				/*
+				 * .anyRequest().authenticated().and().authorizeRequests().antMatchers(
+				 * "/app/api/lam/user/**").permitAll()
+				 */
+
 				.anyRequest().authenticated().and().formLogin().loginPage("/app/login")
 				.successForwardUrl("/app/welcome")
 

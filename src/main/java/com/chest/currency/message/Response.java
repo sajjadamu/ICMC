@@ -1,37 +1,57 @@
 package com.chest.currency.message;
 
 import java.io.Serializable;
-import java.util.List;
 
-import com.chest.currency.enums.ServiceStatus;
+import com.chest.currency.enums.LamStatus;
 
-public class Response<T> implements Serializable {
+public class Response implements Serializable {
 
-	private ServiceStatus StatusMessage;
+	private static final long serialVersionUID = 1L;
 
-	private int StatusCode;
+	private LamStatus status;
 
-	public static Response setSuccessResponse(ServiceStatus status, int code) {
-		Response<List<?>> response = new Response<>();
-		response.setStatusMessage(status);
-		response.setStatusCode(code);
+	private int code;
+	
+	private String message;
+
+	public static Response setSuccessResponse(LamStatus status, int code) {
+		Response response = new Response();
+		response.setStatus(status);
+		response.setCode(code);
+		return response;
+	}
+	public static Response setSuccessResponse(LamStatus status, int code,String message) {
+		Response response = new Response();
+		response.setStatus(status);
+		response.setCode(code);
+		response.setMessage(message);
 		return response;
 	}
 
-	public ServiceStatus getStatusMessage() {
-		return StatusMessage;
+	public LamStatus getStatus() {
+		return status;
 	}
 
-	public void setStatusMessage(ServiceStatus statusMessage) {
-		StatusMessage = statusMessage;
+	public void setStatus(LamStatus status) {
+		this.status = status;
 	}
 
-	public int getStatusCode() {
-		return StatusCode;
+	public int getCode() {
+		return code;
 	}
 
-	public void setStatusCode(int statusCode) {
-		StatusCode = statusCode;
+	public void setCode(int code) {
+		this.code = code;
 	}
+
+	public String getMessage() {
+		return message;
+	}
+
+	public void setMessage(String message) {
+		this.message = message;
+	}
+
+	
 
 }

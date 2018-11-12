@@ -252,9 +252,14 @@ public class CashReceiptJpaDaoImpl implements CashReceiptJpaDao {
 	public boolean createBranchReceipt(List<BranchReceipt> branchReceiptList) {
 		for (BranchReceipt branchReceipt : branchReceiptList) {
 			LOG.info("createBranchReceipt jpaDaoImpl" + branchReceipt);
-			em.persist(branchReceipt);
+			try {
+				em.persist(branchReceipt);
+				return true;
+			} catch (Exception e) {
+				return false;
+			}
 		}
-		return true;
+		return false;
 	}
 
 	@Override
@@ -390,6 +395,14 @@ public class CashReceiptJpaDaoImpl implements CashReceiptJpaDao {
 		jpaQuery.where(QBranch.branch1.solId.eq(solId));
 		String branch = jpaQuery.singleResult(QBranch.branch1.branch);
 		return branch;
+	}
+
+	@Override
+	public ICMC getICMCBySolId(String solId) {
+		JPAQuery jpaQuery = new JPAQuery(em);
+		jpaQuery.from(QICMC.iCMC);
+		jpaQuery.where(QICMC.iCMC.linkBranchSolId.eq(solId));
+		return jpaQuery.singleResult(QICMC.iCMC);
 	}
 
 	private JPAQuery getFromQueryForBranchFromBranchReceipt() {
@@ -819,12 +832,10 @@ public class CashReceiptJpaDaoImpl implements CashReceiptJpaDao {
 	public List<Tuple> getIBITForIRV(BigInteger icmcId, Calendar sDate, Calendar eDate) {
 		JPAQuery jpaQuery = new JPAQuery(em);
 		jpaQuery.from(QIndent.indent);
-		jpaQuery.where(
-				QIndent.indent.icmcId.eq(icmcId)
-						.and(QIndent.indent.status.eq(OtherStatus.ACCEPTED)
-								.or(QIndent.indent.status.eq(OtherStatus.PROCESSED)))
-						.and(QIndent.indent.cashSource.ne(CashSource.RBI)).and(QIndent.indent.bin.ne("NULL"))
-						.and(QIndent.indent.insertTime.between(sDate, eDate)));
+		jpaQuery.where(QIndent.indent.icmcId.eq(icmcId)
+				.and(QIndent.indent.status.eq(OtherStatus.ACCEPTED).or(QIndent.indent.status.eq(OtherStatus.PROCESSED)))
+				.and(QIndent.indent.cashSource.ne(CashSource.RBI)).and(QIndent.indent.bin.ne("NULL"))
+				.and(QIndent.indent.insertTime.between(sDate, eDate)));
 		jpaQuery.groupBy(QIndent.indent.denomination);
 		List<Tuple> ibitList = jpaQuery.list(QIndent.indent.denomination, QIndent.indent.bundle.sum().multiply(1000));
 		return ibitList;
