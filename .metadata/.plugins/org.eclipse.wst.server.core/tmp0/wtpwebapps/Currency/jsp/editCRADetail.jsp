@@ -239,7 +239,7 @@ function doAjaxForTotal() {
 
 <script type="text/javascript">
 function doAjaxPostInsert(str) {
-	addHeader();
+	addHeaderJson();
 	var craAllocations = [];
 	var val = $("#member").val();
 	var isValid = true;
@@ -367,7 +367,7 @@ function doAjaxPost(str) {
 
 
 function doAjaxPostForBranch() {  
-	addHeader();  
+	addHeaderJson();  
 	// get the form values  
 	  var solid = $('#solId').val();
 	  if(solid.length==4)
@@ -408,7 +408,7 @@ function doAjaxPostForBranch() {
 
 <script type="text/javascript">
 function doAjaxForAccountNumber() {
-	addHeader();
+	addHeaderJson();
 	var vendor = $('#vendor').val();
 	var mspName = $('#mspName').val();
 	$.ajax({

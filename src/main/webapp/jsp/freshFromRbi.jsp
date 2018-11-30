@@ -357,7 +357,7 @@ function deleteCoinRow(i){
 	
 
 function SavePrint(str) {
-	addHeader();
+	addHeaderJson();
 	var fresh={
 			"orderDate":$('#orderDate').val(),
 			"rbiOrderNo":$('#rbiOrderNo').val(),

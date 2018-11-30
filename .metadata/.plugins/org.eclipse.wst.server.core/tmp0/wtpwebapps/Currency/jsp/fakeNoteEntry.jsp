@@ -51,7 +51,7 @@
 
 <script type="text/javascript">
 function doAjaxPostForBranch() {
-		addHeader();
+		addHeaderJson();
 		// get the form values  
 		var solid = $('#solId').val();
 		//alert($('#solId').val())

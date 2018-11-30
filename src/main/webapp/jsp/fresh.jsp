@@ -43,7 +43,7 @@
 
 <script type="text/javascript">
     function ajaxBinForFresh() {  
-    	addHeader();  
+    	addHeaderJson();  
     	// get the form values  
 		  var bundle = $('#bundle').val();
 		  var denomination = $('input[name=denomination]:checked').val();

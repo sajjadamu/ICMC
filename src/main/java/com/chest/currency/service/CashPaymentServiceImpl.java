@@ -185,9 +185,10 @@ public class CashPaymentServiceImpl implements CashPaymentService {
 						+ sasAllocation.getDenomination() + " and Category : " + sasAllocation.getBinType());
 			}
 			cashPaymentJpaDao.insertInSASAllocation(eligibleSASRequestList);
-			/*for (SASAllocation allocation : eligibleSASRequestList) {
-				cashPaymentJpaDao.updateBranchReceiptForPayment(user, allocation);
-			}*/
+			/*
+			 * for (SASAllocation allocation : eligibleSASRequestList) {
+			 * cashPaymentJpaDao.updateBranchReceiptForPayment(user, allocation); }
+			 */
 			if (!sasAllocationParent.getProcessedOrUnprocessed().equalsIgnoreCase("UNPROCESS")) {
 				for (BinTransaction btx : txnList) {
 					LOG.info("binTransaction updation except Unprocess  " + btx);
@@ -233,8 +234,8 @@ public class CashPaymentServiceImpl implements CashPaymentService {
 				.add(sas.getTotalValueOfCoinsRs2().multiply(BigDecimal.valueOf(2).multiply(BigDecimal.valueOf(2500))))
 				.add(sas.getTotalValueOfCoinsRs5().multiply(BigDecimal.valueOf(5).multiply(BigDecimal.valueOf(2500))))
 				.add(sas.getTotalValueOfNotesRs2000A()
-						.add(sas.getTotalValueOfNotesRs2000F().add(sas.getTotalValueOfNotesRs2000I())).multiply(
-								BigDecimal.valueOf(2000).multiply(BigDecimal.valueOf(1000))))
+						.add(sas.getTotalValueOfNotesRs2000F().add(sas.getTotalValueOfNotesRs2000I()))
+						.multiply(BigDecimal.valueOf(2000).multiply(BigDecimal.valueOf(1000))))
 				.add(sas.getTotalValueOfNotesRs1000A()
 						.add(sas.getTotalValueOfNotesRs1000F().add(sas.getTotalValueOfNotesRs1000I()))
 						.multiply(BigDecimal.valueOf(1000).multiply(BigDecimal.valueOf(1000))))
@@ -296,8 +297,14 @@ public class CashPaymentServiceImpl implements CashPaymentService {
 	}
 
 	@Override
-	public List<SASAllocation> getSasAllocationByBinNumber(String binNumber) {
-		List<SASAllocation> sasAllocationList = cashPaymentJpaDao.getSasAllocationByBinNumber(binNumber);
+	public List<SASAllocation> getSasAllocationByBinNumberBundle(SASAllocation sasAlo) {
+		List<SASAllocation> sasAllocationList = cashPaymentJpaDao.getSasAllocationByBinNumberBundle(sasAlo);
+		return sasAllocationList;
+	}
+
+	@Override
+	public List<SASAllocation> getSasAllocationByBinNumber(SASAllocation sasAlo) {
+		List<SASAllocation> sasAllocationList = cashPaymentJpaDao.getSasAllocationByBinNumber(sasAlo);
 		return sasAllocationList;
 	}
 
@@ -1097,8 +1104,7 @@ public class CashPaymentServiceImpl implements CashPaymentService {
 			BigDecimal multiplyValue = new BigDecimal(1000);
 			/*
 			 * List<ProcessBundleForCRAPayment>
-			 * procesBundleCra=cashPaymentJpaDao.getProcessBundleCRARecord(cra.
-			 * getId());
+			 * procesBundleCra=cashPaymentJpaDao.getProcessBundleCRARecord(cra. getId());
 			 */
 			int craIdCount = 0;
 			for (CRAAllocation craAllocation : cra.getCraAllocations()) {
@@ -1111,10 +1117,9 @@ public class CashPaymentServiceImpl implements CashPaymentService {
 				}
 				if (craAllocation.getStatus().equals(OtherStatus.RELEASED)) {
 					/*
-					 * acceptTotalValue =
-					 * totalValue.subtract(multiplyValue.multiply(denomination).
-					 * multiply(craAllocation.getPendingRequestedBundle()));
-					 * totalValue = totalValue.add(acceptTotalValue);
+					 * acceptTotalValue = totalValue.subtract(multiplyValue.multiply(denomination).
+					 * multiply(craAllocation.getPendingRequestedBundle())); totalValue =
+					 * totalValue.add(acceptTotalValue);
 					 */
 					List<ProcessBundleForCRAPayment> procesBundleCra = cashPaymentJpaDao
 							.getProcessBundleCRARecord(cra.getId());
@@ -1218,7 +1223,7 @@ public class CashPaymentServiceImpl implements CashPaymentService {
 		List<Sas> solIdList = cashPaymentJpaDao.getSolId(icmcId, sDate, eDate);
 		return solIdList;
 	}
-	
+
 	@Override
 	public List<Sas> getSasRecordById(BigInteger icmcId, Long[] sasId) {
 		List<Sas> solIdList = cashPaymentJpaDao.getSasRecordById(icmcId, sasId);
@@ -1424,14 +1429,14 @@ public class CashPaymentServiceImpl implements CashPaymentService {
 					user);
 		}
 		if (isSaved) {
-			isSaved = this.insertSoiledBoxInBinTx(eligibleIndentRequestList, user,soiled.getBox());
-			soiled=this.getQRForSoiledBox(soiled);
+			isSaved = this.insertSoiledBoxInBinTx(eligibleIndentRequestList, user, soiled.getBox());
+			soiled = this.getQRForSoiledBox(soiled);
 
 		} else if (!isSaved) {
 			throw new RuntimeException("you can not processing request");
 		}
 
-		//SoiledRemittanceAllocation soiledQRPath = this.getQRForSoiledBox(soiled);
+		// SoiledRemittanceAllocation soiledQRPath = this.getQRForSoiledBox(soiled);
 
 		return soiled;
 	}
@@ -1487,7 +1492,8 @@ public class CashPaymentServiceImpl implements CashPaymentService {
 	}
 
 	@Transactional
-	private boolean insertSoiledBoxInBinTx(List<SoiledRemittanceAllocation> eligibleIndentRequestList, User user,String box) {
+	private boolean insertSoiledBoxInBinTx(List<SoiledRemittanceAllocation> eligibleIndentRequestList, User user,
+			String box) {
 		Calendar now = Calendar.getInstance();
 		BigDecimal receiveBundle = BigDecimal.ZERO;
 
@@ -1797,11 +1803,12 @@ public class CashPaymentServiceImpl implements CashPaymentService {
 				sDate, eDate);
 		return statusListForAccepted;
 	}
-	
+
 	@Override
-	public SASAllocation getRequestedFromSASAllocation(BigInteger icmcId, Calendar sDate, Calendar eDate,Long parentId) {
-		SASAllocation requestedSasAllocation = cashPaymentJpaDao.getRequestedFromSASAllocation(icmcId,
-				sDate, eDate, parentId);
+	public SASAllocation getRequestedFromSASAllocation(BigInteger icmcId, Calendar sDate, Calendar eDate,
+			Long parentId) {
+		SASAllocation requestedSasAllocation = cashPaymentJpaDao.getRequestedFromSASAllocation(icmcId, sDate, eDate,
+				parentId);
 		return requestedSasAllocation;
 	}
 
@@ -2149,8 +2156,12 @@ public class CashPaymentServiceImpl implements CashPaymentService {
 	@Override
 	@Transactional
 	public SASAllocation updateSasIndent(SASAllocation sasAccept, User user) {
-		List<SASAllocation> sasList = this.getSasAllocationByBinNumber(sasAccept.getBinNumber());
+		List<SASAllocation> sasList = this.getSasAllocationByBinNumberBundle(sasAccept);
+		if (sasList.isEmpty()) {
+			sasList = this.getSasAllocationByBinNumber(sasAccept);
+		}
 		// sasAccept.setUpdateTime(Calendar.getInstance());
+		LOG.info("sasList  " + sasList);
 		LOG.info("sasAccept  " + sasAccept);
 		boolean count = false;
 		int countDelete = 0;

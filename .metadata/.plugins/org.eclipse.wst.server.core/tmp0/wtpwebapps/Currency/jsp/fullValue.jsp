@@ -37,7 +37,7 @@
 
 <script type="text/javascript">
 	function SaveMutilated() {
-		addHeader();
+		addHeaderJson();
 		var machine = {
 			"binCategoryType" : $('input[name=binCategoryType]:checked').val(),
 			"denomination" : $('input[name=denomination]:checked').val(),

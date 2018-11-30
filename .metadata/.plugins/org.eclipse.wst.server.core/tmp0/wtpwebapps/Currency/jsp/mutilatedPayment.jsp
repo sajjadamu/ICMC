@@ -30,7 +30,7 @@
 <script type="text/javascript">
 
 function doAjaxPostRequestBundleForMutilatedPayment(str) {
-	addHeader();
+	addHeaderJson();
 	var indent={
 			  "denomination":$('#denomination'+str).text(),
 			  "bundle":$('#bundle'+str).text(),

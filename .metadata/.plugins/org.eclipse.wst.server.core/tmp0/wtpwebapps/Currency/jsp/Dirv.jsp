@@ -217,7 +217,7 @@ function deleteRow(i){
 
 function SavePrint(str) {
     
-    addHeader();
+	addHeaderJson();
     var dirv={
         "orderDate":$('#orderDate').val(),
         "rbiOrderNo":$('#rbiOrderNo').val(),

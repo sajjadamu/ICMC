@@ -65,7 +65,7 @@ function doAjaxPost() {
 }
 
 function doAjaxPostForBranch() {  
-	addHeader();  
+	addHeaderJson();  
 	var solid = $('#solId').val();
 	  if(solid.length==4)
 	  {
@@ -88,7 +88,7 @@ function doAjaxPostForBranch() {
 	} 
 
 function SavePrint() {
-	addHeader();
+	addHeaderJson();
 	var isValid = true;
 	var branchReceipt = {
 			"id":$('#id').val(),

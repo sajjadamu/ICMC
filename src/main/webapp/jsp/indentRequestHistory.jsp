@@ -135,7 +135,7 @@ form#ORV {
 
 <script type="text/javascript">
 	function bundleDetails(str) {
-		addHeader();
+		addHeaderJson();
 		var srNumber = str;
 		$.ajax({
 			type : "POST",
@@ -277,7 +277,7 @@ form#ORV {
 	
 	
 	function approvedBundleDetails(str) {
-		addHeader();
+		addHeaderJson();
 		var srNumber = str;
 		$.ajax({
 			type : "POST",
@@ -414,7 +414,7 @@ form#ORV {
 	
 	
 	function requestApproveDetails(str) {
-		addHeader();
+		addHeaderJson();
 		var srNumber = str;
 		$.ajax({
 			type : "POST",

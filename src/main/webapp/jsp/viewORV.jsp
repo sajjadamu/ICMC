@@ -18,7 +18,7 @@
 
 <script type="text/javascript">
 	function doAjaxPostUpdateStatus(str) {
-		addHeader();
+		addHeaderJson();
 		// get the form values  
 		var id = $('#id' + str).text();
 		//alert("id=="+id)
@@ -47,7 +47,7 @@
 <script type="text/javascript">
 
 function doAjaxPostCancel(id){
-	addHeader();
+	addHeaderJson();
 	var idFromUI = id;
 
 	if (confirm('Are you sure you want to cancel this Branch Payment request?')) {

@@ -64,7 +64,7 @@
 
 	}
 	function doAjaxPostInsert() {
-		addHeader();
+		addHeaderJson();
 		var remittanceAllocations = [];
 		var val = $("#member").val();
 		var isValid = true;

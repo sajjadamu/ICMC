@@ -20,7 +20,7 @@
 
 <script type="text/javascript">
 	function doAjaxForMachineSerialNo() {
-		addHeader();
+		addHeaderJson();
 		var machineNo = $('#machineNo').val();
 		$.ajax({
 			type : "POST",

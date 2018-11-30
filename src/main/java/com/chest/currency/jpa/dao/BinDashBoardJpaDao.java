@@ -375,4 +375,8 @@ public interface BinDashBoardJpaDao {
 	List<BranchReceipt> getBranchReceiptValue(BigInteger IcmcId, Calendar sDate, Calendar eDate);
 
 	List<DiversionIRV> getDiversionIRV(BigInteger IcmcId, Calendar sDate, Calendar eDate);
+
+	List<Tuple> getProcessFromProcessingOutPut(BigInteger icmcId, Calendar sDate, Calendar eDate);
+
+	List<Tuple> getProcessBundleProcessingOutPut(BigInteger icmcId, Calendar sDate, Calendar eDate);
 }

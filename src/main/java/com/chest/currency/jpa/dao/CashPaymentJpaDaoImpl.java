@@ -2347,8 +2347,16 @@ public class CashPaymentJpaDaoImpl implements CashPaymentJpaDao {
 	}
 
 	@Override
-	public List<SASAllocation> getSasAllocationByBinNumber(String binNumber) {
-		JPAQuery jpaQuery = getFromQueryForSASAllocation().where(QSASAllocation.sASAllocation.binNumber.eq(binNumber)
+	public List<SASAllocation> getSasAllocationByBinNumberBundle(SASAllocation sasAlo) {
+		JPAQuery jpaQuery = getFromQueryForSASAllocation().where(QSASAllocation.sASAllocation.binNumber.eq(sasAlo.getBinNumber())
+				.and(QSASAllocation.sASAllocation.status.eq(OtherStatus.REQUESTED))
+				.and(QSASAllocation.sASAllocation.bundle.eq(sasAlo.getBundle())));
+		List<SASAllocation> sasAllocation = jpaQuery.list(QSASAllocation.sASAllocation);
+		return sasAllocation;
+	}
+	@Override
+	public List<SASAllocation> getSasAllocationByBinNumber(SASAllocation sasAlo) {
+		JPAQuery jpaQuery = getFromQueryForSASAllocation().where(QSASAllocation.sASAllocation.binNumber.eq(sasAlo.getBinNumber())
 				.and(QSASAllocation.sASAllocation.status.eq(OtherStatus.REQUESTED)));
 		List<SASAllocation> sasAllocation = jpaQuery.list(QSASAllocation.sASAllocation);
 		return sasAllocation;

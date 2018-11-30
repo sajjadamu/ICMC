@@ -47,7 +47,7 @@
 
 <script type="text/javascript">    
 function doAjaxForBin() {  
-	addHeader();  
+	addHeaderJson();  
 	// get the form values  
   	  var denomination = $('#denomination').val();
   	  $.ajax({  

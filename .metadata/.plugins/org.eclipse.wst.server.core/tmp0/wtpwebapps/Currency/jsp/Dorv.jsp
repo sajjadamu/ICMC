@@ -216,7 +216,7 @@ function doAjaxForTotal() {
 
 <script type="text/javascript">
 function doAjaxPostInsert(str) {
-	addHeader();
+	addHeaderJson();
 	var diversionAllocations = [];
 	var val = $("#member").val();
 	var isValid = true;

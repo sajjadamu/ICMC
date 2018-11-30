@@ -214,7 +214,7 @@ function doAjaxForTotal() {
 
 <script type="text/javascript">
 function doAjaxPostInsert(str) {
-	addHeader();
+	addHeaderJson();
 	var otherBankAllocations = [];
 	var val = $("#member").val();
 	var isValid = true;
@@ -333,7 +333,7 @@ function doAjaxPostForBranch() {
 
 <script type="text/javascript">
 function doAjaxForAccountNumber() {
-	addHeader();
+	addHeaderJson();
 	var mspName = $('#mspName').val();
 	$.ajax({
 		type : "POST",

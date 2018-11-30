@@ -73,7 +73,7 @@ public interface CashPaymentJpaDao {
 
 	public List<Sas> getRequestAcceptORVRecords(BigInteger icmcId, Calendar sDate, Calendar eDate);
 
-	public List<SASAllocation> getSasAllocationByBinNumber(String binNumber);
+	public List<SASAllocation> getSasAllocationByBinNumber(SASAllocation binNumber);
 
 	public boolean sasUpload(List<Sas> sasList, Sas sas);
 
@@ -462,5 +462,7 @@ public interface CashPaymentJpaDao {
 	public List<Tuple> getSoiledSummary(BigInteger icmcId, CurrencyType currencyType);
 
 	public List<SoiledRemittanceAllocation> getSoiledForAccept(BigInteger icmcId, Calendar sDate, Calendar eDate);
+
+	List<SASAllocation> getSasAllocationByBinNumberBundle(SASAllocation sasAlo);
 
 }

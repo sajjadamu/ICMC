@@ -405,6 +405,14 @@ public class CashReceiptJpaDaoImpl implements CashReceiptJpaDao {
 		return jpaQuery.singleResult(QICMC.iCMC);
 	}
 
+	@Override
+	public ICMC getICMCByName(String name) {
+		JPAQuery jpaQuery = new JPAQuery(em);
+		jpaQuery.from(QICMC.iCMC);
+		jpaQuery.where(QICMC.iCMC.name.equalsIgnoreCase(name));
+		return jpaQuery.singleResult(QICMC.iCMC);
+	}
+
 	private JPAQuery getFromQueryForBranchFromBranchReceipt() {
 		JPAQuery jpaQuery = new JPAQuery(em);
 		jpaQuery.from(QBranchReceipt.branchReceipt);

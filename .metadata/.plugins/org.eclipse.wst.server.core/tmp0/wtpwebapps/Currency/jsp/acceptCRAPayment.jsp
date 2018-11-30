@@ -37,7 +37,7 @@
 <script type="text/javascript">
 
 function doAjaxPostCancel(id){
-	addHeader();
+	addHeaderJson();
 	var idFromUI = id;
 	if (confirm('Are you sure you want to cancel this CRA Payment request?')) {
 		$.ajax({
@@ -61,7 +61,7 @@ function doAjaxPostCancel(id){
 }
 	
 	function doAjaxPostInsert(id,count) {
-		addHeader();
+		addHeaderJson();
 		var craAllocations = [];
 		var CRAPaymentWrapper = {
 				"craAllocations" : craAllocations
@@ -110,7 +110,7 @@ function doAjaxPostCancel(id){
 
 <script type="text/javascript">
 function doAjaxPostUpdateStatus(str) {  
-	  addHeader();  
+	  addHeaderJson();  
 	// get the form values  
 	  var id = $('#id'+str).val();
 	  var craId = $('#craId'+str).val();

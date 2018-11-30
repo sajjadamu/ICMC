@@ -198,12 +198,12 @@ public class BinDashboardController {
 		ModelMap map = new ModelMap();
 		IcmcAccess access = user.getRole().getIcmcAccess();
 
-		
 		if (access == IcmcAccess.ICMC) {
 
 			/*
 			 * List<BinTransaction> list = binDashboardService
-			 * .getBinNumAndTypeFromBinTransactionForVefiedYes(user.getIcmcId()) ;
+			 * .getBinNumAndTypeFromBinTransactionForVefiedYes(user.getIcmcId())
+			 * ;
 			 */
 
 			List<BinTransaction> listBox = binDashboardService
@@ -900,7 +900,6 @@ public class BinDashboardController {
 
 		LOG.info("binTransactionBOD.getInsertTime().getTime() " + binTransactionBOD.getInsertTime().getTime());
 		LOG.info("eDate.getTime " + eDate);
-		
 
 		List<Tuple> summaryListForOpeningBalance = binDashboardService.getOpeningBalanceForIO2Report(user.getIcmcId(),
 				sDate, eDate, CashType.NOTES);
@@ -909,10 +908,9 @@ public class BinDashboardController {
 				.getOpeningBalanceForIO2ReportFromIndent(user.getIcmcId(), sDate, eDate, CashType.NOTES);
 		LOG.info("summaryListForOpeningBalanceFromIndent " + summaryListForOpeningBalanceFromIndent);
 		LOG.info("binTransactionBOD " + binTransactionBOD);
-		
+
 		mapTupleToBinTransactionBOD(binTransactionBOD, summaryListForOpeningBalance,
 				summaryListForOpeningBalanceFromIndent);
-		
 
 		binDashboardService.updateCurrentVersionStatus(binTransactionBOD);
 
@@ -1111,17 +1109,12 @@ public class BinDashboardController {
 	public ModelAndView icmcSummary(HttpSession session, ZoneMaster zm) {
 		User user = (User) session.getAttribute("login");
 		BigInteger icmcId = null;
-		if (zm.getIcmcName() != null && user.getIcmcId() == null) { // zm.getIcmcName().length()
-																	// > 0 &&
-																	// (Check
-																	// validation)
+		if (zm.getIcmcName() != null && user.getIcmcId() == null) {
 			icmcId = new BigInteger(zm.getIcmcName());
 		} else {
 			icmcId = user.getIcmcId();
 		}
-		/*
-		 * if(icmcId == null){ return new ModelAndView("redirect:./viewBin"); }
-		 */
+
 		BinTransaction obj = new BinTransaction();
 		ModelMap map = new ModelMap();
 		// Bin Summary Code Start
@@ -1162,20 +1155,10 @@ public class BinDashboardController {
 			}
 		}
 		// Bin Summary Code End
-		Calendar sDate = Calendar.getInstance();
-		Calendar eDate = Calendar.getInstance();
-
-		sDate.set(Calendar.HOUR, 0);
-		sDate.set(Calendar.HOUR_OF_DAY, 0);
-		sDate.set(Calendar.MINUTE, 0);
-		sDate.set(Calendar.SECOND, 0);
-		sDate.set(Calendar.MILLISECOND, 0);
-
-		eDate.set(Calendar.HOUR, 24);
-		eDate.set(Calendar.HOUR_OF_DAY, 23);
-		eDate.set(Calendar.MINUTE, 59);
-		eDate.set(Calendar.SECOND, 59);
-		eDate.set(Calendar.MILLISECOND, 999);
+		Calendar sDate = UtilityJpa.getStartDate();
+		Calendar eDate = UtilityJpa.getEndDate();
+		UtilityJpa.setStartDate(sDate);
+		UtilityJpa.setEndDate(eDate);
 
 		List<Tuple> summaryListForCoins = binDashboardService.getRecordCoinsForSummary(icmcId);
 
@@ -1195,6 +1178,59 @@ public class BinDashboardController {
 		map.put("processingRoom", pendingBundleFromMachineAllocation);
 		map.put("totalICMCBalance", totalICMCBalance);
 		return new ModelAndView("icmcSummary", map);
+	}
+
+	@RequestMapping("/chargeReport")
+	public ModelAndView chargeReport(HttpSession session, ZoneMaster zm) {
+		User user = (User) session.getAttribute("login");
+		BigInteger icmcId = null;
+		if (zm.getIcmcName() != null && user.getIcmcId() == null) {
+			icmcId = new BigInteger(zm.getIcmcName());
+		} else {
+			icmcId = user.getIcmcId();
+		}
+		BinTransaction obj = new BinTransaction();
+		ModelMap map = new ModelMap();
+		// Bin Summary Code Start
+		List<Tuple> summaryList = binDashboardService.getRecordForSummary(icmcId);
+		Map<Integer, BinTransaction> mapList = new LinkedHashMap<>();
+
+		for (DenominationType denom : DenominationType.values()) {
+			mapList.put(denom.getDenomination(), new BinTransaction());
+		}
+		for (Tuple bin : summaryList) {
+			BinTransaction binTransactionSummary = mapList.get(bin.get(1, Integer.class));
+			BigDecimal total = bin.get(2, BigDecimal.class);
+			if (bin.get(0, CurrencyType.class).equals(CurrencyType.SOILED)
+					|| bin.get(0, CurrencyType.class).equals(CurrencyType.MUTILATED)) {
+				binTransactionSummary.setSoiled(bin.get(2, BigDecimal.class));
+			} else {
+				if (binTransactionSummary.getIssuable() != null)
+					binTransactionSummary
+							.setIssuable(binTransactionSummary.getIssuable().add(bin.get(2, BigDecimal.class)));
+				else
+					binTransactionSummary.setIssuable(bin.get(2, BigDecimal.class));
+			}
+			if (binTransactionSummary.getTotal() != null) {
+				binTransactionSummary.setTotal(binTransactionSummary.getTotal().add(total));
+			} else {
+				binTransactionSummary.setTotal(total);
+			}
+		}
+
+		List<Tuple> summaryListForCoins = binDashboardService.getRecordCoinsForSummary(icmcId);
+
+		BigDecimal totalICMCBalance = binDashboardService.getTotalICMCBalance(icmcId);
+
+		map.put("summaryListForCoins", summaryListForCoins);
+		// map.put("denominationList", DenominationType.values());
+		// map.put("currencyProcessType", CurrencyType.values());
+		// map.put("user", obj);
+		map.put("summaryRecords", mapList);
+		// map.put("processingRoom", pendingBundleFromMachineAllocation);
+		map.put("totalICMCBalance", totalICMCBalance);
+		// map.put("chargeReport", "chargeReport");
+		return new ModelAndView("chargeReport", map);
 	}
 
 	@RequestMapping(value = "/getRegionWiseSummary")
@@ -1794,8 +1830,8 @@ public class BinDashboardController {
 
 	/*
 	 * @RequestMapping("/trainingRegister") public ModelAndView
-	 * trainingRegister(HttpSession session) { ModelMap map = new ModelMap(); return
-	 * new ModelAndView("/trainingRegister", map); }
+	 * trainingRegister(HttpSession session) { ModelMap map = new ModelMap();
+	 * return new ModelAndView("/trainingRegister", map); }
 	 */
 
 	@RequestMapping("/currencyChestBook")
@@ -1847,7 +1883,7 @@ public class BinDashboardController {
 	@RequestMapping("/discrepancyDemand")
 	public ModelAndView discrepancyDemand(@ModelAttribute("reportDate") DateRange dateRange, HttpSession session) {
 		User user = (User) session.getAttribute("login");
-		Calendar sDate = Calendar.getInstance();
+		Calendar sDate = UtilityJpa.getStartDate();
 		Calendar eDate = Calendar.getInstance();
 
 		if (dateRange.getFromDate() != null) {
@@ -2815,8 +2851,6 @@ public class BinDashboardController {
 		if (dateRange.getFromDate() != null) {
 			sDate = dateRange.getFromDate();
 			eDate = (Calendar) dateRange.getFromDate().clone();
-
-			sDate.getTime();// For date
 		}
 
 		UtilityJpa.setStartDate(sDate);
@@ -2832,8 +2866,39 @@ public class BinDashboardController {
 		BigDecimal BundleDenomination10 = BigDecimal.ZERO;
 		BigDecimal BundleDenomination5 = BigDecimal.ZERO;
 
+		BigDecimal BundleDenomination2000Atm = BigDecimal.ZERO;
+		BigDecimal BundleDenomination1000Atm = BigDecimal.ZERO;
+		BigDecimal BundleDenomination500Atm = BigDecimal.ZERO;
+		BigDecimal BundleDenomination200Atm = BigDecimal.ZERO;
+		BigDecimal BundleDenomination100Atm = BigDecimal.ZERO;
+		BigDecimal BundleDenomination50Atm = BigDecimal.ZERO;
+		BigDecimal BundleDenomination20Atm = BigDecimal.ZERO;
+		BigDecimal BundleDenomination10Atm = BigDecimal.ZERO;
+		BigDecimal BundleDenomination5Atm = BigDecimal.ZERO;
+
+		BigDecimal BundleDenomination2000Issuable = BigDecimal.ZERO;
+		BigDecimal BundleDenomination1000Issuable = BigDecimal.ZERO;
+		BigDecimal BundleDenomination500Issuable = BigDecimal.ZERO;
+		BigDecimal BundleDenomination200Issuable = BigDecimal.ZERO;
+		BigDecimal BundleDenomination100Issuable = BigDecimal.ZERO;
+		BigDecimal BundleDenomination50Issuable = BigDecimal.ZERO;
+		BigDecimal BundleDenomination20Issuable = BigDecimal.ZERO;
+		BigDecimal BundleDenomination10Issuable = BigDecimal.ZERO;
+		BigDecimal BundleDenomination5Issuable = BigDecimal.ZERO;
+
+		BigDecimal BundleDenomination2000Soiled = BigDecimal.ZERO;
+		BigDecimal BundleDenomination1000Soiled = BigDecimal.ZERO;
+		BigDecimal BundleDenomination500Soiled = BigDecimal.ZERO;
+		BigDecimal BundleDenomination200Soiled = BigDecimal.ZERO;
+		BigDecimal BundleDenomination100Soiled = BigDecimal.ZERO;
+		BigDecimal BundleDenomination50Soiled = BigDecimal.ZERO;
+		BigDecimal BundleDenomination20Soiled = BigDecimal.ZERO;
+		BigDecimal BundleDenomination10Soiled = BigDecimal.ZERO;
+		BigDecimal BundleDenomination5Soiled = BigDecimal.ZERO;
+
 		List<Indent> indent = binDashboardService.getIndentCash(user.getIcmcId(), sDate, eDate);
-		List<SASAllocation> sasAllocation = binDashboardService.getsasAllocation(user.getIcmcId(), sDate, eDate);
+		// List<SASAllocation> sasAllocation =
+		// binDashboardService.getsasAllocation(user.getIcmcId(), sDate, eDate);
 
 		// getting the bundle from indent
 
@@ -2867,240 +2932,289 @@ public class BinDashboardController {
 			}
 		}
 		// getting bundle from sasAllocation
-		for (SASAllocation sasAll : sasAllocation) {
-			if (sasAll.getDenomination() == 2000) {
-				BundleDenomination2000 = BundleDenomination2000.add(sasAll.getBundle());
-			}
-			if (sasAll.getDenomination() == 1000) {
-				BundleDenomination1000 = BundleDenomination1000.add(sasAll.getBundle());
-			}
-			if (sasAll.getDenomination() == 500) {
-				BundleDenomination500 = BundleDenomination500.add(sasAll.getBundle());
-			}
-			if (sasAll.getDenomination() == 200) {
-				BundleDenomination200 = BundleDenomination200.add(sasAll.getBundle());
-			}
-			if (sasAll.getDenomination() == 100) {
-				BundleDenomination100 = BundleDenomination100.add(sasAll.getBundle());
-			}
-			if (sasAll.getDenomination() == 50) {
-				BundleDenomination50 = BundleDenomination50.add(sasAll.getBundle());
-			}
-			if (sasAll.getDenomination() == 20) {
-				BundleDenomination20 = BundleDenomination20.add(sasAll.getBundle());
-			}
-			if (sasAll.getDenomination() == 10) {
-				BundleDenomination10 = BundleDenomination10.add(sasAll.getBundle());
-			}
-			if (sasAll.getDenomination() == 5) {
-				BundleDenomination5 = BundleDenomination5.add(sasAll.getBundle());
-			}
-		}
 
-		// code for processed cash(Cash remitted for vault)
-		BigDecimal BundleDenomination2000Atm = BigDecimal.ZERO;
-		BigDecimal BundleDenomination1000Atm = BigDecimal.ZERO;
-		BigDecimal BundleDenomination500Atm = BigDecimal.ZERO;
-		BigDecimal BundleDenomination200Atm = BigDecimal.ZERO;
-		BigDecimal BundleDenomination100Atm = BigDecimal.ZERO;
-		BigDecimal BundleDenomination50Atm = BigDecimal.ZERO;
-		BigDecimal BundleDenomination20Atm = BigDecimal.ZERO;
-		BigDecimal BundleDenomination10Atm = BigDecimal.ZERO;
-		BigDecimal BundleDenomination5Atm = BigDecimal.ZERO;
+		/*
+		 * for (SASAllocation sasAll : sasAllocation) { if
+		 * (sasAll.getDenomination() == 2000) { BundleDenomination2000 =
+		 * BundleDenomination2000.add(sasAll.getBundle()); } if
+		 * (sasAll.getDenomination() == 1000) { BundleDenomination1000 =
+		 * BundleDenomination1000.add(sasAll.getBundle()); } if
+		 * (sasAll.getDenomination() == 500) { BundleDenomination500 =
+		 * BundleDenomination500.add(sasAll.getBundle()); } if
+		 * (sasAll.getDenomination() == 200) { BundleDenomination200 =
+		 * BundleDenomination200.add(sasAll.getBundle()); } if
+		 * (sasAll.getDenomination() == 100) { BundleDenomination100 =
+		 * BundleDenomination100.add(sasAll.getBundle()); } if
+		 * (sasAll.getDenomination() == 50) { BundleDenomination50 =
+		 * BundleDenomination50.add(sasAll.getBundle()); } if
+		 * (sasAll.getDenomination() == 20) { BundleDenomination20 =
+		 * BundleDenomination20.add(sasAll.getBundle()); } if
+		 * (sasAll.getDenomination() == 10) { BundleDenomination10 =
+		 * BundleDenomination10.add(sasAll.getBundle()); } if
+		 * (sasAll.getDenomination() == 5) { BundleDenomination5 =
+		 * BundleDenomination5.add(sasAll.getBundle()); } }
+		 */
 
-		BigDecimal BundleDenomination2000Issuable = BigDecimal.ZERO;
-		BigDecimal BundleDenomination1000Issuable = BigDecimal.ZERO;
-		BigDecimal BundleDenomination500Issuable = BigDecimal.ZERO;
-		BigDecimal BundleDenomination200Issuable = BigDecimal.ZERO;
-		BigDecimal BundleDenomination100Issuable = BigDecimal.ZERO;
-		BigDecimal BundleDenomination50Issuable = BigDecimal.ZERO;
-		BigDecimal BundleDenomination20Issuable = BigDecimal.ZERO;
-		BigDecimal BundleDenomination10Issuable = BigDecimal.ZERO;
-		BigDecimal BundleDenomination5Issuable = BigDecimal.ZERO;
-
-		BigDecimal BundleDenomination2000Soiled = BigDecimal.ZERO;
-		BigDecimal BundleDenomination1000Soiled = BigDecimal.ZERO;
-		BigDecimal BundleDenomination500Soiled = BigDecimal.ZERO;
-		BigDecimal BundleDenomination200Soiled = BigDecimal.ZERO;
-		BigDecimal BundleDenomination100Soiled = BigDecimal.ZERO;
-		BigDecimal BundleDenomination50Soiled = BigDecimal.ZERO;
-		BigDecimal BundleDenomination20Soiled = BigDecimal.ZERO;
-		BigDecimal BundleDenomination10Soiled = BigDecimal.ZERO;
-		BigDecimal BundleDenomination5Soiled = BigDecimal.ZERO;
-
-		List<BranchReceipt> branchReceipt = binDashboardService.getBranchReceiptValue(user.getIcmcId(), sDate, eDate);
-		List<DiversionIRV> diversionIRV = binDashboardService.getDiversionIRV(user.getIcmcId(), sDate, eDate);
-
-		for (DiversionIRV diversionIRVCon : diversionIRV) {
-			if (diversionIRVCon.getDenomination() == 2000) {
-				if (diversionIRVCon.getCurrencyType() == CurrencyType.ATM) {
-					BundleDenomination2000Atm = BundleDenomination2000Atm.add(diversionIRVCon.getBundle());
-				} else if (diversionIRVCon.getCurrencyType() == CurrencyType.ISSUABLE) {
-					BundleDenomination2000Issuable = BundleDenomination2000Issuable.add(diversionIRVCon.getBundle());
+		List<Tuple> process = binDashboardService.getProcessBundleProcessingOutPut(user.getIcmcId(), sDate, eDate);
+		for (Tuple tuple : process) {
+			if (tuple.get(0, Integer.class).equals(2000)) {
+				if (tuple.get(1, Enum.class).equals(CurrencyType.ATM)) {
+					BundleDenomination2000Atm = BundleDenomination2000Atm.add(tuple.get(2, BigDecimal.class));
+				} else if (tuple.get(1, Enum.class).equals(CurrencyType.ISSUABLE)) {
+					BundleDenomination2000Issuable = BundleDenomination2000Issuable.add(tuple.get(2, BigDecimal.class));
 				} else {
-					BundleDenomination2000Soiled = BundleDenomination2000Soiled.add(diversionIRVCon.getBundle());
+					BundleDenomination2000Soiled = BundleDenomination2000Soiled.add(tuple.get(2, BigDecimal.class));
 				}
 			}
-			if (diversionIRVCon.getDenomination() == 1000) {
-				if (diversionIRVCon.getCurrencyType() == CurrencyType.ATM) {
-					BundleDenomination1000Atm = BundleDenomination1000Atm.add(diversionIRVCon.getBundle());
-				} else if (diversionIRVCon.getCurrencyType() == CurrencyType.ISSUABLE) {
-					BundleDenomination1000Issuable = BundleDenomination1000Issuable.add(diversionIRVCon.getBundle());
+			if (tuple.get(0, Integer.class).equals(1000)) {
+				if (tuple.get(1, Enum.class).equals(CurrencyType.ATM)) {
+					BundleDenomination1000Atm = BundleDenomination1000Atm.add(tuple.get(2, BigDecimal.class));
+				} else if (tuple.get(1, Enum.class).equals(CurrencyType.ISSUABLE)) {
+					BundleDenomination1000Issuable = BundleDenomination1000Issuable.add(tuple.get(2, BigDecimal.class));
 				} else {
-					BundleDenomination1000Soiled = BundleDenomination1000Soiled.add(diversionIRVCon.getBundle());
+					BundleDenomination1000Soiled = BundleDenomination1000Soiled.add(tuple.get(2, BigDecimal.class));
 				}
 			}
-			if (diversionIRVCon.getDenomination() == 500) {
-				if (diversionIRVCon.getCurrencyType() == CurrencyType.ATM) {
-					BundleDenomination500Atm = BundleDenomination500Atm.add(diversionIRVCon.getBundle());
-				} else if (diversionIRVCon.getCurrencyType() == CurrencyType.ISSUABLE) {
-					BundleDenomination500Issuable = BundleDenomination500Issuable.add(diversionIRVCon.getBundle());
+			if (tuple.get(0, Integer.class).equals(500)) {
+				if (tuple.get(1, Enum.class).equals(CurrencyType.ATM)) {
+					BundleDenomination500Atm = BundleDenomination500Atm.add(tuple.get(2, BigDecimal.class));
+				} else if (tuple.get(1, Enum.class).equals(CurrencyType.ISSUABLE)) {
+					BundleDenomination500Issuable = BundleDenomination500Issuable.add(tuple.get(2, BigDecimal.class));
 				} else {
-					BundleDenomination500Soiled = BundleDenomination500Soiled.add(diversionIRVCon.getBundle());
+					BundleDenomination500Soiled = BundleDenomination500Soiled.add(tuple.get(2, BigDecimal.class));
 				}
 			}
-			if (diversionIRVCon.getDenomination() == 200) {
-				if (diversionIRVCon.getCurrencyType() == CurrencyType.ATM) {
-					BundleDenomination200Atm = BundleDenomination200Atm.add(diversionIRVCon.getBundle());
-				} else if (diversionIRVCon.getCurrencyType() == CurrencyType.ISSUABLE) {
-					BundleDenomination200Issuable = BundleDenomination200Issuable.add(diversionIRVCon.getBundle());
+			if (tuple.get(0, Integer.class).equals(200)) {
+				if (tuple.get(1, Enum.class).equals(CurrencyType.ATM)) {
+					BundleDenomination200Atm = BundleDenomination200Atm.add(tuple.get(2, BigDecimal.class));
+				} else if (tuple.get(1, Enum.class).equals(CurrencyType.ISSUABLE)) {
+					BundleDenomination200Issuable = BundleDenomination200Issuable.add(tuple.get(2, BigDecimal.class));
 				} else {
-					BundleDenomination200Soiled = BundleDenomination200Soiled.add(diversionIRVCon.getBundle());
+					BundleDenomination200Soiled = BundleDenomination200Soiled.add(tuple.get(2, BigDecimal.class));
 				}
 			}
-			if (diversionIRVCon.getDenomination() == 100) {
-				if (diversionIRVCon.getCurrencyType() == CurrencyType.ATM) {
-					BundleDenomination100Atm = BundleDenomination100Atm.add(diversionIRVCon.getBundle());
-				} else if (diversionIRVCon.getCurrencyType() == CurrencyType.ISSUABLE) {
-					BundleDenomination100Issuable = BundleDenomination100Issuable.add(diversionIRVCon.getBundle());
+			if (tuple.get(0, Integer.class).equals(100)) {
+				if (tuple.get(1, Enum.class).equals(CurrencyType.ATM)) {
+					BundleDenomination100Atm = BundleDenomination100Atm.add(tuple.get(2, BigDecimal.class));
+				} else if (tuple.get(1, Enum.class).equals(CurrencyType.ISSUABLE)) {
+					BundleDenomination100Issuable = BundleDenomination100Issuable.add(tuple.get(2, BigDecimal.class));
 				} else {
-					BundleDenomination100Soiled = BundleDenomination100Soiled.add(diversionIRVCon.getBundle());
+					BundleDenomination100Soiled = BundleDenomination100Soiled.add(tuple.get(2, BigDecimal.class));
 				}
 			}
-			if (diversionIRVCon.getDenomination() == 50) {
-				if (diversionIRVCon.getCurrencyType() == CurrencyType.ATM) {
-					BundleDenomination50Atm = BundleDenomination50Atm.add(diversionIRVCon.getBundle());
-				} else if (diversionIRVCon.getCurrencyType() == CurrencyType.ISSUABLE) {
-					BundleDenomination50Issuable = BundleDenomination50Issuable.add(diversionIRVCon.getBundle());
+			if (tuple.get(0, Integer.class).equals(50)) {
+				if (tuple.get(1, Enum.class).equals(CurrencyType.ATM)) {
+					BundleDenomination50Atm = BundleDenomination50Atm.add(tuple.get(2, BigDecimal.class));
+				} else if (tuple.get(1, Enum.class).equals(CurrencyType.ISSUABLE)) {
+					BundleDenomination50Issuable = BundleDenomination50Issuable.add(tuple.get(2, BigDecimal.class));
 				} else {
-					BundleDenomination50Soiled = BundleDenomination50Soiled.add(diversionIRVCon.getBundle());
+					BundleDenomination50Soiled = BundleDenomination50Soiled.add(tuple.get(2, BigDecimal.class));
 				}
 			}
-			if (diversionIRVCon.getDenomination() == 20) {
-				if (diversionIRVCon.getCurrencyType() == CurrencyType.ATM) {
-					BundleDenomination20Atm = BundleDenomination20Atm.add(diversionIRVCon.getBundle());
-				} else if (diversionIRVCon.getCurrencyType() == CurrencyType.ISSUABLE) {
-					BundleDenomination20Issuable = BundleDenomination20Issuable.add(diversionIRVCon.getBundle());
+			if (tuple.get(0, Integer.class).equals(20)) {
+				if (tuple.get(1, Enum.class).equals(CurrencyType.ATM)) {
+					BundleDenomination20Atm = BundleDenomination20Atm.add(tuple.get(2, BigDecimal.class));
+				} else if (tuple.get(1, Enum.class).equals(CurrencyType.ISSUABLE)) {
+					BundleDenomination20Issuable = BundleDenomination20Issuable.add(tuple.get(2, BigDecimal.class));
 				} else {
-					BundleDenomination20Soiled = BundleDenomination20Soiled.add(diversionIRVCon.getBundle());
+					BundleDenomination20Soiled = BundleDenomination20Soiled.add(tuple.get(2, BigDecimal.class));
 				}
 			}
-			if (diversionIRVCon.getDenomination() == 10) {
-				if (diversionIRVCon.getCurrencyType() == CurrencyType.ATM) {
-					BundleDenomination10Atm = BundleDenomination10Atm.add(diversionIRVCon.getBundle());
-				} else if (diversionIRVCon.getCurrencyType() == CurrencyType.ISSUABLE) {
-					BundleDenomination10Issuable = BundleDenomination10Issuable.add(diversionIRVCon.getBundle());
+			if (tuple.get(0, Integer.class).equals(10)) {
+				if (tuple.get(1, Enum.class).equals(CurrencyType.ATM)) {
+					BundleDenomination10Atm = BundleDenomination10Atm.add(tuple.get(2, BigDecimal.class));
+				} else if (tuple.get(1, Enum.class).equals(CurrencyType.ISSUABLE)) {
+					BundleDenomination10Issuable = BundleDenomination10Issuable.add(tuple.get(2, BigDecimal.class));
 				} else {
-					BundleDenomination10Soiled = BundleDenomination10Soiled.add(diversionIRVCon.getBundle());
+					BundleDenomination10Soiled = BundleDenomination10Soiled.add(tuple.get(2, BigDecimal.class));
 				}
 			}
-			if (diversionIRVCon.getDenomination() == 5) {
-				if (diversionIRVCon.getCurrencyType() == CurrencyType.ATM) {
-					BundleDenomination5Atm = BundleDenomination5Atm.add(diversionIRVCon.getBundle());
-				} else if (diversionIRVCon.getCurrencyType() == CurrencyType.ISSUABLE) {
-					BundleDenomination5Issuable = BundleDenomination5Issuable.add(diversionIRVCon.getBundle());
+			if (tuple.get(0, Integer.class).equals(5)) {
+				if (tuple.get(1, Enum.class).equals(CurrencyType.ATM)) {
+					BundleDenomination5Atm = BundleDenomination5Atm.add(tuple.get(2, BigDecimal.class));
+				} else if (tuple.get(1, Enum.class).equals(CurrencyType.ISSUABLE)) {
+					BundleDenomination5Issuable = BundleDenomination5Issuable.add(tuple.get(2, BigDecimal.class));
 				} else {
-					BundleDenomination5Soiled = BundleDenomination5Soiled.add(diversionIRVCon.getBundle());
+					BundleDenomination5Soiled = BundleDenomination5Soiled.add(tuple.get(2, BigDecimal.class));
 				}
 			}
 		}
 
-		for (BranchReceipt branchValue : branchReceipt) {
-			if (branchValue.getDenomination() == 2000) {
-				if (branchValue.getCurrencyType() == CurrencyType.ATM) {
-					BundleDenomination2000Atm = BundleDenomination2000Atm.add(branchValue.getBundle());
-				} else if (branchValue.getCurrencyType() == CurrencyType.ISSUABLE) {
-					BundleDenomination2000Issuable = BundleDenomination2000Issuable.add(branchValue.getBundle());
-				} else {
-					BundleDenomination2000Soiled = BundleDenomination2000Soiled.add(branchValue.getBundle());
-				}
-			}
-			if (branchValue.getDenomination() == 1000) {
-				if (branchValue.getCurrencyType() == CurrencyType.ATM) {
-					BundleDenomination1000Atm = BundleDenomination1000Atm.add(branchValue.getBundle());
-				} else if (branchValue.getCurrencyType() == CurrencyType.ISSUABLE) {
-					BundleDenomination1000Issuable = BundleDenomination1000Issuable.add(branchValue.getBundle());
-				} else {
-					BundleDenomination1000Soiled = BundleDenomination1000Soiled.add(branchValue.getBundle());
-				}
-			}
-			if (branchValue.getDenomination() == 500) {
-				if (branchValue.getCurrencyType() == CurrencyType.ATM) {
-					BundleDenomination500Atm = BundleDenomination500Atm.add(branchValue.getBundle());
-				} else if (branchValue.getCurrencyType() == CurrencyType.ISSUABLE) {
-					BundleDenomination500Issuable = BundleDenomination500Issuable.add(branchValue.getBundle());
-				} else {
-					BundleDenomination500Soiled = BundleDenomination500Soiled.add(branchValue.getBundle());
-				}
-			}
-			if (branchValue.getDenomination() == 200) {
-				if (branchValue.getCurrencyType() == CurrencyType.ATM) {
-					BundleDenomination200Atm = BundleDenomination200Atm.add(branchValue.getBundle());
-				} else if (branchValue.getCurrencyType() == CurrencyType.ISSUABLE) {
-					BundleDenomination200Issuable = BundleDenomination200Issuable.add(branchValue.getBundle());
-				} else {
-					BundleDenomination200Soiled = BundleDenomination200Soiled.add(branchValue.getBundle());
-				}
-			}
-			if (branchValue.getDenomination() == 100) {
-				if (branchValue.getCurrencyType() == CurrencyType.ATM) {
-					BundleDenomination100Atm = BundleDenomination100Atm.add(branchValue.getBundle());
-				} else if (branchValue.getCurrencyType() == CurrencyType.ISSUABLE) {
-					BundleDenomination100Issuable = BundleDenomination100Issuable.add(branchValue.getBundle());
-				} else {
-					BundleDenomination100Soiled = BundleDenomination100Soiled.add(branchValue.getBundle());
-				}
-			}
-			if (branchValue.getDenomination() == 50) {
-				if (branchValue.getCurrencyType() == CurrencyType.ATM) {
-					BundleDenomination50Atm = BundleDenomination50Atm.add(branchValue.getBundle());
-				} else if (branchValue.getCurrencyType() == CurrencyType.ISSUABLE) {
-					BundleDenomination50Issuable = BundleDenomination50Issuable.add(branchValue.getBundle());
-				} else {
-					BundleDenomination50Soiled = BundleDenomination50Soiled.add(branchValue.getBundle());
-				}
-			}
-			if (branchValue.getDenomination() == 20) {
-				if (branchValue.getCurrencyType() == CurrencyType.ATM) {
-					BundleDenomination20Atm = BundleDenomination20Atm.add(branchValue.getBundle());
-				} else if (branchValue.getCurrencyType() == CurrencyType.ISSUABLE) {
-					BundleDenomination20Issuable = BundleDenomination20Issuable.add(branchValue.getBundle());
-				} else {
-					BundleDenomination20Soiled = BundleDenomination20Soiled.add(branchValue.getBundle());
-				}
-			}
-			if (branchValue.getDenomination() == 10) {
-				if (branchValue.getCurrencyType() == CurrencyType.ATM) {
-					BundleDenomination10Atm = BundleDenomination10Atm.add(branchValue.getBundle());
-				} else if (branchValue.getCurrencyType() == CurrencyType.ISSUABLE) {
-					BundleDenomination10Issuable = BundleDenomination10Issuable.add(branchValue.getBundle());
-				} else {
-					BundleDenomination10Soiled = BundleDenomination10Soiled.add(branchValue.getBundle());
-				}
-			}
-			if (branchValue.getDenomination() == 5) {
-				if (branchValue.getCurrencyType() == CurrencyType.ATM) {
-					BundleDenomination5Atm = BundleDenomination5Atm.add(branchValue.getBundle());
-				} else if (branchValue.getCurrencyType() == CurrencyType.ISSUABLE) {
-					BundleDenomination5Issuable = BundleDenomination5Issuable.add(branchValue.getBundle());
-				} else {
-					BundleDenomination5Soiled = BundleDenomination5Soiled.add(branchValue.getBundle());
-				}
-			}
-		}
+		/*
+		 * List<BranchReceipt> branchReceipt =
+		 * binDashboardService.getBranchReceiptValue(user.getIcmcId(), sDate,
+		 * eDate); List<DiversionIRV> diversionIRV =
+		 * binDashboardService.getDiversionIRV(user.getIcmcId(), sDate, eDate);
+		 * 
+		 * for (DiversionIRV diversionIRVCon : diversionIRV) { if
+		 * (diversionIRVCon.getDenomination() == 2000) { if
+		 * (diversionIRVCon.getCurrencyType() == CurrencyType.ATM) {
+		 * BundleDenomination2000Atm =
+		 * BundleDenomination2000Atm.add(diversionIRVCon.getBundle()); } else if
+		 * (diversionIRVCon.getCurrencyType() == CurrencyType.ISSUABLE) {
+		 * BundleDenomination2000Issuable =
+		 * BundleDenomination2000Issuable.add(diversionIRVCon.getBundle()); }
+		 * else { BundleDenomination2000Soiled =
+		 * BundleDenomination2000Soiled.add(diversionIRVCon.getBundle()); } } if
+		 * (diversionIRVCon.getDenomination() == 1000) { if
+		 * (diversionIRVCon.getCurrencyType() == CurrencyType.ATM) {
+		 * BundleDenomination1000Atm =
+		 * BundleDenomination1000Atm.add(diversionIRVCon.getBundle()); } else if
+		 * (diversionIRVCon.getCurrencyType() == CurrencyType.ISSUABLE) {
+		 * BundleDenomination1000Issuable =
+		 * BundleDenomination1000Issuable.add(diversionIRVCon.getBundle()); }
+		 * else { BundleDenomination1000Soiled =
+		 * BundleDenomination1000Soiled.add(diversionIRVCon.getBundle()); } } if
+		 * (diversionIRVCon.getDenomination() == 500) { if
+		 * (diversionIRVCon.getCurrencyType() == CurrencyType.ATM) {
+		 * BundleDenomination500Atm =
+		 * BundleDenomination500Atm.add(diversionIRVCon.getBundle()); } else if
+		 * (diversionIRVCon.getCurrencyType() == CurrencyType.ISSUABLE) {
+		 * BundleDenomination500Issuable =
+		 * BundleDenomination500Issuable.add(diversionIRVCon.getBundle()); }
+		 * else { BundleDenomination500Soiled =
+		 * BundleDenomination500Soiled.add(diversionIRVCon.getBundle()); } } if
+		 * (diversionIRVCon.getDenomination() == 200) { if
+		 * (diversionIRVCon.getCurrencyType() == CurrencyType.ATM) {
+		 * BundleDenomination200Atm =
+		 * BundleDenomination200Atm.add(diversionIRVCon.getBundle()); } else if
+		 * (diversionIRVCon.getCurrencyType() == CurrencyType.ISSUABLE) {
+		 * BundleDenomination200Issuable =
+		 * BundleDenomination200Issuable.add(diversionIRVCon.getBundle()); }
+		 * else { BundleDenomination200Soiled =
+		 * BundleDenomination200Soiled.add(diversionIRVCon.getBundle()); } } if
+		 * (diversionIRVCon.getDenomination() == 100) { if
+		 * (diversionIRVCon.getCurrencyType() == CurrencyType.ATM) {
+		 * BundleDenomination100Atm =
+		 * BundleDenomination100Atm.add(diversionIRVCon.getBundle()); } else if
+		 * (diversionIRVCon.getCurrencyType() == CurrencyType.ISSUABLE) {
+		 * BundleDenomination100Issuable =
+		 * BundleDenomination100Issuable.add(diversionIRVCon.getBundle()); }
+		 * else { BundleDenomination100Soiled =
+		 * BundleDenomination100Soiled.add(diversionIRVCon.getBundle()); } } if
+		 * (diversionIRVCon.getDenomination() == 50) { if
+		 * (diversionIRVCon.getCurrencyType() == CurrencyType.ATM) {
+		 * BundleDenomination50Atm =
+		 * BundleDenomination50Atm.add(diversionIRVCon.getBundle()); } else if
+		 * (diversionIRVCon.getCurrencyType() == CurrencyType.ISSUABLE) {
+		 * BundleDenomination50Issuable =
+		 * BundleDenomination50Issuable.add(diversionIRVCon.getBundle()); } else
+		 * { BundleDenomination50Soiled =
+		 * BundleDenomination50Soiled.add(diversionIRVCon.getBundle()); } } if
+		 * (diversionIRVCon.getDenomination() == 20) { if
+		 * (diversionIRVCon.getCurrencyType() == CurrencyType.ATM) {
+		 * BundleDenomination20Atm =
+		 * BundleDenomination20Atm.add(diversionIRVCon.getBundle()); } else if
+		 * (diversionIRVCon.getCurrencyType() == CurrencyType.ISSUABLE) {
+		 * BundleDenomination20Issuable =
+		 * BundleDenomination20Issuable.add(diversionIRVCon.getBundle()); } else
+		 * { BundleDenomination20Soiled =
+		 * BundleDenomination20Soiled.add(diversionIRVCon.getBundle()); } } if
+		 * (diversionIRVCon.getDenomination() == 10) { if
+		 * (diversionIRVCon.getCurrencyType() == CurrencyType.ATM) {
+		 * BundleDenomination10Atm =
+		 * BundleDenomination10Atm.add(diversionIRVCon.getBundle()); } else if
+		 * (diversionIRVCon.getCurrencyType() == CurrencyType.ISSUABLE) {
+		 * BundleDenomination10Issuable =
+		 * BundleDenomination10Issuable.add(diversionIRVCon.getBundle()); } else
+		 * { BundleDenomination10Soiled =
+		 * BundleDenomination10Soiled.add(diversionIRVCon.getBundle()); } } if
+		 * (diversionIRVCon.getDenomination() == 5) { if
+		 * (diversionIRVCon.getCurrencyType() == CurrencyType.ATM) {
+		 * BundleDenomination5Atm =
+		 * BundleDenomination5Atm.add(diversionIRVCon.getBundle()); } else if
+		 * (diversionIRVCon.getCurrencyType() == CurrencyType.ISSUABLE) {
+		 * BundleDenomination5Issuable =
+		 * BundleDenomination5Issuable.add(diversionIRVCon.getBundle()); } else
+		 * { BundleDenomination5Soiled =
+		 * BundleDenomination5Soiled.add(diversionIRVCon.getBundle()); } } }
+		 * 
+		 * for (BranchReceipt branchValue : branchReceipt) { if
+		 * (branchValue.getDenomination() == 2000) { if
+		 * (branchValue.getCurrencyType() == CurrencyType.ATM) {
+		 * BundleDenomination2000Atm =
+		 * BundleDenomination2000Atm.add(branchValue.getBundle()); } else if
+		 * (branchValue.getCurrencyType() == CurrencyType.ISSUABLE) {
+		 * BundleDenomination2000Issuable =
+		 * BundleDenomination2000Issuable.add(branchValue.getBundle()); } else {
+		 * BundleDenomination2000Soiled =
+		 * BundleDenomination2000Soiled.add(branchValue.getBundle()); } } if
+		 * (branchValue.getDenomination() == 1000) { if
+		 * (branchValue.getCurrencyType() == CurrencyType.ATM) {
+		 * BundleDenomination1000Atm =
+		 * BundleDenomination1000Atm.add(branchValue.getBundle()); } else if
+		 * (branchValue.getCurrencyType() == CurrencyType.ISSUABLE) {
+		 * BundleDenomination1000Issuable =
+		 * BundleDenomination1000Issuable.add(branchValue.getBundle()); } else {
+		 * BundleDenomination1000Soiled =
+		 * BundleDenomination1000Soiled.add(branchValue.getBundle()); } } if
+		 * (branchValue.getDenomination() == 500) { if
+		 * (branchValue.getCurrencyType() == CurrencyType.ATM) {
+		 * BundleDenomination500Atm =
+		 * BundleDenomination500Atm.add(branchValue.getBundle()); } else if
+		 * (branchValue.getCurrencyType() == CurrencyType.ISSUABLE) {
+		 * BundleDenomination500Issuable =
+		 * BundleDenomination500Issuable.add(branchValue.getBundle()); } else {
+		 * BundleDenomination500Soiled =
+		 * BundleDenomination500Soiled.add(branchValue.getBundle()); } } if
+		 * (branchValue.getDenomination() == 200) { if
+		 * (branchValue.getCurrencyType() == CurrencyType.ATM) {
+		 * BundleDenomination200Atm =
+		 * BundleDenomination200Atm.add(branchValue.getBundle()); } else if
+		 * (branchValue.getCurrencyType() == CurrencyType.ISSUABLE) {
+		 * BundleDenomination200Issuable =
+		 * BundleDenomination200Issuable.add(branchValue.getBundle()); } else {
+		 * BundleDenomination200Soiled =
+		 * BundleDenomination200Soiled.add(branchValue.getBundle()); } } if
+		 * (branchValue.getDenomination() == 100) { if
+		 * (branchValue.getCurrencyType() == CurrencyType.ATM) {
+		 * BundleDenomination100Atm =
+		 * BundleDenomination100Atm.add(branchValue.getBundle()); } else if
+		 * (branchValue.getCurrencyType() == CurrencyType.ISSUABLE) {
+		 * BundleDenomination100Issuable =
+		 * BundleDenomination100Issuable.add(branchValue.getBundle()); } else {
+		 * BundleDenomination100Soiled =
+		 * BundleDenomination100Soiled.add(branchValue.getBundle()); } } if
+		 * (branchValue.getDenomination() == 50) { if
+		 * (branchValue.getCurrencyType() == CurrencyType.ATM) {
+		 * BundleDenomination50Atm =
+		 * BundleDenomination50Atm.add(branchValue.getBundle()); } else if
+		 * (branchValue.getCurrencyType() == CurrencyType.ISSUABLE) {
+		 * BundleDenomination50Issuable =
+		 * BundleDenomination50Issuable.add(branchValue.getBundle()); } else {
+		 * BundleDenomination50Soiled =
+		 * BundleDenomination50Soiled.add(branchValue.getBundle()); } } if
+		 * (branchValue.getDenomination() == 20) { if
+		 * (branchValue.getCurrencyType() == CurrencyType.ATM) {
+		 * BundleDenomination20Atm =
+		 * BundleDenomination20Atm.add(branchValue.getBundle()); } else if
+		 * (branchValue.getCurrencyType() == CurrencyType.ISSUABLE) {
+		 * BundleDenomination20Issuable =
+		 * BundleDenomination20Issuable.add(branchValue.getBundle()); } else {
+		 * BundleDenomination20Soiled =
+		 * BundleDenomination20Soiled.add(branchValue.getBundle()); } } if
+		 * (branchValue.getDenomination() == 10) { if
+		 * (branchValue.getCurrencyType() == CurrencyType.ATM) {
+		 * BundleDenomination10Atm =
+		 * BundleDenomination10Atm.add(branchValue.getBundle()); } else if
+		 * (branchValue.getCurrencyType() == CurrencyType.ISSUABLE) {
+		 * BundleDenomination10Issuable =
+		 * BundleDenomination10Issuable.add(branchValue.getBundle()); } else {
+		 * BundleDenomination10Soiled =
+		 * BundleDenomination10Soiled.add(branchValue.getBundle()); } } if
+		 * (branchValue.getDenomination() == 5) { if
+		 * (branchValue.getCurrencyType() == CurrencyType.ATM) {
+		 * BundleDenomination5Atm =
+		 * BundleDenomination5Atm.add(branchValue.getBundle()); } else if
+		 * (branchValue.getCurrencyType() == CurrencyType.ISSUABLE) {
+		 * BundleDenomination5Issuable =
+		 * BundleDenomination5Issuable.add(branchValue.getBundle()); } else {
+		 * BundleDenomination5Soiled =
+		 * BundleDenomination5Soiled.add(branchValue.getBundle()); } } }
+		 */
 
 		map.put("BundleDenomination2000Atm", BundleDenomination2000Atm);
-		map.put("BundleDenomination1000Atm", BundleDenomination100Atm);
+		map.put("BundleDenomination1000Atm", BundleDenomination1000Atm);
 		map.put("BundleDenomination500Atm", BundleDenomination500Atm);
 		map.put("BundleDenomination200Atm", BundleDenomination200Atm);
 		map.put("BundleDenomination100Atm", BundleDenomination100Atm);

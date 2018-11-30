@@ -60,7 +60,7 @@
 
 <script type="text/javascript">
     function ajaxCustodianName() {  
-    	addHeader();  
+    	addHeaderJson();  
     	var vendor = $('#vendor').val();
 		  var radio;
 		  $.ajax({  
@@ -88,7 +88,7 @@
 
 <script type="text/javascript">
     function ajaxvehicle() {  
-    	addHeader();  
+    	addHeaderJson();  
     	var vendor = $('#vendor').val();
 		  var radio;
 		  $.ajax({  

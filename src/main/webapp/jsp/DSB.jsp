@@ -49,7 +49,7 @@
 	}
 
 	function getReceiptSequence() {
-		addHeader();
+		addHeaderJson();
 		var name = $('#name').val();
 		//var accountNumber = $('#accountNumber').val();
 		$.ajax({
@@ -309,7 +309,7 @@ input[type=checkbox], input[type=radio] {
 	};
 
 	function SavePrint(str) {
-		addHeader();
+		addHeaderJson();
 		var isValid = true;
 		var dsb = {
 			"name" : $('#name').val(),
@@ -320,7 +320,7 @@ input[type=checkbox], input[type=radio] {
 			"total" : $('#Total' + str).val(),
 			"processingOrVault" : $('#main' + str).find(
 					'input[type=radio]:checked').val(),
-			"receiptSequence" : $('#receiptSequence').val(),
+			"receiptSequence" : parseInt($('#receiptSequence').val())
 		}
 		if ($('#name').val() == "") {
 			//jQuery('#print'+str).attr("disabled", false);

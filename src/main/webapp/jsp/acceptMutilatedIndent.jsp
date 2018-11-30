@@ -19,7 +19,7 @@
 
 <!-- <script type="text/javascript">
 	function doAjaxPostUpdateStatus(str) {
-		addHeader();
+		addHeaderJson();
 		var bin = $('#bin' + str).text();
 		var bundle = $('#bundle' + str).text();
 		var id = str;
@@ -43,7 +43,7 @@
 
 <script type="text/javascript">
 	function doAjaxPostUpdateStatus(str) {
-		addHeader();
+		addHeaderJson();
 		
 		var id = str;
 		$.ajax({

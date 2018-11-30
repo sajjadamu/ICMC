@@ -93,7 +93,7 @@
 
 <script type="text/javascript">
 	function cancelProcessedRecord(str) {
-		addHeader();
+		addHeaderJson();
 		var id = $('#id' + str).text();
 		var type = $('#type' + str).text();
 		var bundle = $('#bundle' + str).text();

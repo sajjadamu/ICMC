@@ -40,20 +40,6 @@
 	rel="stylesheet" type="text/css">
 <link rel="stylesheet" type="text/css"
 	href="./resources/dist/css/style.css">
-<script>
- $(function()
-{
-  $('#btnsubmit').on('click',function()
-  {
-	  $('#btnsubmit').prop('disabled', true);
-	  /*  $(this).val('Submit')
-      .attr('disabled','disabled');
-   // $('#saveCRA').submit(); */
-  });
-  
-  
-});
-    </script>
 
 <script type="text/javascript">
 
@@ -217,7 +203,7 @@ function doAjaxForTotal() {
 
 <script type="text/javascript">
 function doAjaxPostInsert(str) {
-	addHeader();
+	addHeaderJson();
 	var diversionAllocations = [];
 	var val = $("#member").val();
 	var isValid = true;
@@ -279,6 +265,7 @@ function doAjaxPostInsert(str) {
 		}
 	
 	if(isValid){
+		$('#btnsubmit').prop('disabled', true);
 	$.ajax({  
 		type: "POST",
 	    contentType : 'application/json; charset=utf-8',
@@ -297,7 +284,9 @@ function doAjaxPostInsert(str) {
 	      alert('Error: ' + e.responseJSON.message); 
 	    }  
 	  });
-	} 
+	} else{
+		$('#btnsubmit').prop('disabled', false);
+	}
 }
 
 function doAjaxPost(str) {  

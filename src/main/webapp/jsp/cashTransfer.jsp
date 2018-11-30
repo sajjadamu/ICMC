@@ -50,7 +50,7 @@
 
 <script type="text/javascript">
 	function getRadioButtonValue() {
-		addHeader();
+		addHeaderJson();
 		
 		var radioButtonValue = $('input[name=cashTransfer]:checked').val();
 		//clear values after click on radio button
@@ -81,7 +81,7 @@
 	}
 	
 	function binOrBox() {
-		addHeader();
+		addHeaderJson();
 		var radioButtonValue = $('input[name=cashTransfer]:checked').val();
 		var binOrBox = $('#bin').val();
 		var bundle = $('#bundle').val();
@@ -109,7 +109,7 @@
 	
 	
 	function getBindetails() {
-		addHeader();
+		addHeaderJsonJson();
 		var binOrBox = $('#bin').val();
 		$.ajax({
 			type:"POST",
@@ -174,7 +174,7 @@
 	}
 	
 	function getbundle() {
-		addHeader();
+		addHeaderJson();
 		var binOrBox = $('#bin').val();
 		$.ajax({
 			type : "POST",
@@ -192,7 +192,7 @@
 	}
 
 	function cashTransferFromMasterToTransaction() {
-		addHeader();
+		addHeaderJson();
 		var binOrBox = $('#bin').val();
 		var bundle = $('#bundle').val();
 		var binFromMaster = $('#binFromMaster').val();

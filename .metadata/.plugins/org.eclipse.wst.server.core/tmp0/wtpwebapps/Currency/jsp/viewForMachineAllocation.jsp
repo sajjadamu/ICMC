@@ -66,7 +66,7 @@
 <script type="text/javascript">
 
 function doAjaxPostForMachineAllocation(str,source,denom) {  
-	addHeader();  
+	addHeaderJson();  
 	var machineAllocation={
 			  "denomination":$('#denomination'+str).text(),
 			  "bundle":$('#bundle'+str).text(),
@@ -115,7 +115,7 @@ function doAjaxPostForMachineAllocation(str,source,denom) {
 	
 	
 	function vailidFunctionalityForMachine(Str,value,branch){
-		addHeader();
+		addHeaderJson();
 		if(value=='Manual'){
 			$('#selectOption'+Str+branch).hide();
 			$('#machine'+Str).show();

@@ -19,27 +19,27 @@
 </style>
 
 <script type="text/javascript">
+	function converter_inNumeric(tdObj) {
+		var no = $(tdObj).text();
+		no = no.toString();
+		var actualNo = no.split(".")[0];
+		var decimalNo = "";
+		decimalNo = no.split(".")[1];
 
-function converter_inNumeric(tdObj){
-	var no = $(tdObj).text();
-	no = no.toString();
-	var actualNo = no.split(".")[0];
-	var decimalNo = "";
-	decimalNo = no.split(".")[1];
-	
-	var lastThree = actualNo.substring(actualNo.length-3);
-	var otherNumbers = actualNo.substring(0, actualNo.length-3);
-	if(otherNumbers != '')
-	    lastThree = ',' + lastThree;
-		var res = otherNumbers.replace(/\B(?=(\d{2})+(?!\d))/g, ",") + lastThree;
+		var lastThree = actualNo.substring(actualNo.length - 3);
+		var otherNumbers = actualNo.substring(0, actualNo.length - 3);
+		if (otherNumbers != '')
+			lastThree = ',' + lastThree;
+		var res = otherNumbers.replace(/\B(?=(\d{2})+(?!\d))/g, ",")
+				+ lastThree;
 		$(tdObj).text(res);
-}
+	}
 
-function allConverter(){
-	$('#converter table').find('tr').find('td:last').each(function(){ 
-		converter_inNumeric($(this));
-	});
-}
+	function allConverter() {
+		$('#converter table').find('tr').find('td:last').each(function() {
+			converter_inNumeric($(this));
+		});
+	}
 </script>
 
 <body oncontextmenu="return false;" onload="allConverter()">
@@ -60,35 +60,40 @@ function allConverter(){
 				</tr>
 			</thead>
 			<tbody>
-				<%!Integer denomination=0;
-										   BigDecimal numberOfBags= new BigDecimal(0);
-										   BigDecimal totalValueFor10 = new BigDecimal(0);
-										   BigDecimal totalValueForOthers = new BigDecimal(0);
-										%>
+				<%!Integer denomination = 0;
+	BigDecimal numberOfBags = new BigDecimal(0);
+	BigDecimal totalValueFor10 = new BigDecimal(0);
+	BigDecimal totalValueForOthers = new BigDecimal(0);%>
 
 				<%
-										List<Tuple> listTuple = (List<Tuple>) request.getAttribute("summaryListForCoins");
-										for (Tuple tuple : listTuple) {
-											denomination = tuple.get(1, Integer.class);
-											numberOfBags = tuple.get(2, BigDecimal.class);
-										%><tr>
+					List<Tuple> listTuple = (List<Tuple>) request.getAttribute("summaryListForCoins");
+					for (Tuple tuple : listTuple) {
+						denomination = tuple.get(1, Integer.class);
+						numberOfBags = tuple.get(2, BigDecimal.class);
+				%><tr>
 					<td><%=tuple.get(1, Integer.class)%></td>
 					<td><%=tuple.get(2, BigDecimal.class)%></td>
-					<%if(denomination == 10){ 
-												totalValueFor10 = numberOfBags.multiply(new BigDecimal(denomination).multiply(new BigDecimal(2000)));
-											%>
+					<%
+						if (denomination == 10) {
+								totalValueFor10 = numberOfBags
+										.multiply(new BigDecimal(denomination).multiply(new BigDecimal(2000)));
+					%>
 					<%-- <td class="tbl-txt"><%=denomination*2000*numberOfBags.intValue()%></td> --%>
 					<td class="tbl-txt"><%=totalValueFor10.setScale(3)%></td>
-					<%}else{ 
-												totalValueForOthers = numberOfBags.multiply(new BigDecimal(denomination).multiply(new BigDecimal(2500)));
-											%>
+					<%
+						} else {
+								totalValueForOthers = numberOfBags
+										.multiply(new BigDecimal(denomination).multiply(new BigDecimal(2500)));
+					%>
 					<%-- <td class="tbl-txt"><%=denomination*2500*numberOfBags.intValue()%></td> --%>
 					<td class="tbl-txt"><%=totalValueForOthers.setScale(3)%></td>
-					<%} %>
+					<%
+						}
+					%>
 				</tr>
 				<%
-												}
-											%>
+					}
+				%>
 
 			</tbody>
 		</table>

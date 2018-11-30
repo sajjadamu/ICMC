@@ -86,7 +86,7 @@
 	}
 
 	function SavePrint() {
-		addHeader();
+		addHeaderJson();
 		var isValid = true;
 		var branchReceipt = {
 			"id" : $('#id').val(),

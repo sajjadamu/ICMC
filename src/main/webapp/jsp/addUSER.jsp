@@ -91,7 +91,7 @@
 
 <script type="text/javascript" charset="utf-8">
 	function vailidRegionZoneIcmc() {
-		addHeader();
+		addHeaderJson();
 		// alert("vailidRegionZoneIcmc   :"+$("input[name=roleId]:checked").val())
 		var roleType = $("input[name=roleId]:checked").val();
 		$.ajax({

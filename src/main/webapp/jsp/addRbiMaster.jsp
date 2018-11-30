@@ -46,7 +46,7 @@
 <script type="text/javascript">
 
 function doAjaxForRegion() {
-	addHeader();
+	addHeaderJson();
 	var zone = $('#zone').val();
 	$.ajax({
 		type : "POST",

@@ -8,14 +8,19 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.math.BigDecimal;
+import java.net.MalformedURLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -23,9 +28,10 @@ import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Scope;
 import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -35,6 +41,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.supercsv.cellprocessor.constraint.NotNull;
@@ -56,6 +63,7 @@ import com.chest.currency.entity.model.DefineKeySet;
 import com.chest.currency.entity.model.Discrepancy;
 import com.chest.currency.entity.model.DiscrepancyAllocation;
 import com.chest.currency.entity.model.FreshCurrency;
+import com.chest.currency.entity.model.ICMC;
 import com.chest.currency.entity.model.Indent;
 import com.chest.currency.entity.model.Machine;
 import com.chest.currency.entity.model.MachineAllocation;
@@ -80,6 +88,7 @@ import com.chest.currency.enums.ProcessAction;
 import com.chest.currency.enums.Status;
 import com.chest.currency.exception.BaseGuiException;
 import com.chest.currency.jpa.persistence.converter.CurrencyFormatter;
+import com.chest.currency.service.BinDashboardService;
 import com.chest.currency.service.ICMCService;
 import com.chest.currency.service.MachineService;
 import com.chest.currency.service.ProcessingRoomService;
@@ -87,14 +96,16 @@ import com.chest.currency.service.UserAdministrationService;
 import com.chest.currency.util.UtilityJpa;
 import com.mysema.query.Tuple;
 
-@org.springframework.stereotype.Controller
-@Scope("session")
+@Controller
 public class ProcessingRoomController {
 
 	private static final Logger LOG = LoggerFactory.getLogger(ProcessingRoomController.class);
 
 	@Autowired
 	ProcessingRoomService processingRoomService;
+
+	@Autowired
+	BinDashboardService binDashboardService;
 
 	@Autowired
 	UserAdministrationService userAdministrationService;
@@ -110,6 +121,9 @@ public class ProcessingRoomController {
 
 	@Autowired
 	String documentFilePath;
+
+	@Autowired
+	ServletContext context;
 
 	@RequestMapping("/viewIndentRequest")
 	public ModelAndView viewIndentRequest(HttpSession session) {
@@ -209,9 +223,11 @@ public class ProcessingRoomController {
 						for (BranchReceipt br : branchReceiptList) {
 							message = message + br.getBundle().toPlainString() + ", ";
 							/*
-							 * if(br.getFilepath() !=null && br.getSasId() ==null){
-							 * returnBundle=returnBundle +br.getBundle().toString() + ","; }else { message =
-							 * message + br.getBundle().toPlainString() + ", " ; }
+							 * if(br.getFilepath() !=null && br.getSasId()
+							 * ==null){ returnBundle=returnBundle
+							 * +br.getBundle().toString() + ","; }else { message
+							 * = message + br.getBundle().toPlainString() + ", "
+							 * ; }
 							 */
 						}
 					}
@@ -342,13 +358,13 @@ public class ProcessingRoomController {
 		// then return and show total bundle also .
 
 		/*
-		 * ModelMap model = new ModelMap(); List<IndentWrapper> indentWrapperList = new
-		 * ArrayList<>(); BigDecimal totalBundle =
+		 * ModelMap model = new ModelMap(); List<IndentWrapper>
+		 * indentWrapperList = new ArrayList<>(); BigDecimal totalBundle =
 		 * processingRoomService.getTotalBundleInBin(denomination, bin,
 		 * user.getIcmcId()); indentWrapperList.add((IndentWrapper) indentList);
 		 * indentWrapperList.add(totalBundle); model.put("indentWrapperList",
-		 * indentWrapperList); return new ModelAndView("acceptIndent", "records",
-		 * model);
+		 * indentWrapperList); return new ModelAndView("acceptIndent",
+		 * "records", model);
 		 */
 
 		return indentList;
@@ -433,9 +449,7 @@ public class ProcessingRoomController {
 		User user = (User) session.getAttribute("login");
 		boolean isAllSuccess = false;
 		synchronized (icmcService.getSynchronizedIcmc(user)) {
-
 			isAllSuccess = processingRoomService.processIndentRequest(bin, bundle, user);
-
 			if (!isAllSuccess) {
 				throw new BaseGuiException("Error while process Indent Request");
 			}
@@ -637,7 +651,8 @@ public class ProcessingRoomController {
 	public ModelAndView viewMachineDownTime(/*
 											 * /
 											 * 
-											 * @ModelAttribute("user") MachineDowntimeUpdation machine
+											 * @ModelAttribute("user")
+											 * MachineDowntimeUpdation machine
 											 */
 			@RequestParam(name = "machineDownDateFrom", required = false) String machineDownDateFrom,
 			@RequestParam(name = "machineDownDateTo", required = false) String machineDownDateTo,
@@ -695,16 +710,17 @@ public class ProcessingRoomController {
 
 	/*
 	 * @RequestMapping("/AddMachineDowntimeUpdation") public ModelAndView
-	 * viewMachineDownTime(@ModelAttribute("user") MachineDowntimeUpdation machine,
-	 * HttpSession session, RedirectAttributes redirectAttributes) { User user =
-	 * (User) session.getAttribute("login"); Calendar now = Calendar.getInstance();
-	 * synchronized (icmcService.getSynchronizedIcmc(user)) {
+	 * viewMachineDownTime(@ModelAttribute("user") MachineDowntimeUpdation
+	 * machine, HttpSession session, RedirectAttributes redirectAttributes) {
+	 * User user = (User) session.getAttribute("login"); Calendar now =
+	 * Calendar.getInstance(); synchronized
+	 * (icmcService.getSynchronizedIcmc(user)) {
 	 * machine.setInsertBy(user.getId()); machine.setUpdateBy(user.getId());
 	 * machine.setInsertTime(now); machine.setUpdateTime(now);
 	 * machine.setIcmcId(user.getIcmcId());
 	 * 
-	 * //SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss" );
-	 * machine.setMachineDownDateFrom(machine.getMachineDownDateFrom());
+	 * //SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss"
+	 * ); machine.setMachineDownDateFrom(machine.getMachineDownDateFrom());
 	 * machine.setMachineDownDateTo(machine.getMachineDownDateTo());
 	 * machine.setEngineerAttendedCall(machine.getEngineerAttendedCall());
 	 * machine.setMachineType(machine.getMachineType());
@@ -753,8 +769,8 @@ public class ProcessingRoomController {
 			machine.setIcmcId(user.getIcmcId());
 			/*
 			 * machine.setDowntimeReason(machine.getDowntimeReason());
-			 * machine.setEngineerAttendedCall(machine.getEngineerAttendedCall() );
-			 * machine.setMachineType(machine.getMachineType());
+			 * machine.setEngineerAttendedCall(machine.getEngineerAttendedCall()
+			 * ); machine.setMachineType(machine.getMachineType());
 			 * machine.setMachineNo(machine.getMachineNo());
 			 */
 			machineService.updateMachineDownTime(machine);
@@ -1068,7 +1084,7 @@ public class ProcessingRoomController {
 			assignVaultCustodian.setInsertTime(now);
 			assignVaultCustodian.setUpdateTime(now);
 			assignVaultCustodian.setIcmcId(user.getIcmcId());
-			
+
 			AssignVaultCustodian vaultCustodian = processingRoomService.getHandoveredChargByHandOverId(user.getIcmcId(),
 					assignVaultCustodian.getHandingOverCharge());
 			if (vaultCustodian != null) {
@@ -1459,36 +1475,57 @@ public class ProcessingRoomController {
 			discrepancy.setUpdateTime(now);
 			discrepancy.setStatus(0);
 			discrepancy.setNormalOrSuspense("NORMAL");
-
 			// discrepancy.setFilepath(UtilityJpa.getImages(discrepancy.getFilepath()));
-
 			isAllSuccess = processingRoomService.saveDiscrepancy(discrepancy);
 			if (!isAllSuccess) {
 				throw new RuntimeException(
 						"Error while saving Discrepancy And Discrepancy Allocation, Please try again");
 			}
 		}
+		LOG.info("return discrepancy " + discrepancy);
 		return discrepancy;
 	}
 
-	@RequestMapping(value = "/insertImage")
+	@RequestMapping(value = "/fileUpload", method = RequestMethod.POST)
 	@ResponseBody
-	public long insertImage(@RequestParam long id, @RequestParam("file") MultipartFile file) throws IOException {
-		System.out.println("sajjad file " + file);
+	public Map<String, Object> fileUpload(MultipartHttpServletRequest request, HttpServletResponse response,
+			HttpSession session) throws MalformedURLException {
+		User user = (User) session.getAttribute("login");
 
-		if (!file.getOriginalFilename().isEmpty()) {
-			// Discrepancy discrepancy = null;
-			// discrepancy.setFilepath(UtilityJpa.getImages(file.getOriginalFilename()));
-			// System.out.println("discrepancy "+discrepancy.getFilepath());
-			BufferedOutputStream outputStream = new BufferedOutputStream(
-					new FileOutputStream(new File("/home/inayat/image/", file.getOriginalFilename())));
-			outputStream.write(file.getBytes());
-			outputStream.flush();
-			outputStream.close();
-		} else {
+		synchronized (icmcService.getSynchronizedIcmc(user)) {
+			ICMC icmc = binDashboardService.getICMCObj(user.getIcmcId());
+			Calendar sDate = UtilityJpa.getStartDate();
+			Calendar eDate = UtilityJpa.getEndDate();
+			Map<String, Object> map = new HashMap<>();
+			Iterator<String> itr = request.getFileNames();
+			MultipartFile mpf = null;
+			File file = UtilityJpa.createDiscrepancyImageDirectory(user, icmc, documentFilePath);
+			while (itr.hasNext()) {
+				mpf = request.getFile(itr.next());
+				Discrepancy discrepancy = processingRoomService.getDiscrepancyForUploadingImage(user, sDate, eDate);
+				LOG.info("mpf.getOriginalFilename() " + mpf.getOriginalFilename());
+				String discripencyImageName = UtilityJpa.setDiscrepancyImageName(
+						mpf.getOriginalFilename().replaceAll(" ", "-"), Calendar.getInstance(), user, discrepancy);
+				try {
+					FileCopyUtils.copy(mpf.getBytes(),
+							new FileOutputStream(file.getPath() + "/" + discripencyImageName));
+					discrepancy.setFilepath(file.getPath() + "/" + discripencyImageName);
+					for (DiscrepancyAllocation allocation : discrepancy.getDiscrepancyAllocations()) {
+						allocation.setFilepath(file.getPath() + "/" + discripencyImageName);
+					}
+					processingRoomService.uploadDiscrepancyImage(discrepancy);
+					map.put("status", 200);
+					break;
+				} catch (Exception e) {
+					LOG.error("Exception imageUpload " + e);
+					map.put("status", 400);
+					e.printStackTrace();
+				}
+			}
 
+			return map;
 		}
-		return id;
+
 	}
 
 	@RequestMapping(value = "/suspenseDiscrepancyAllocation")
@@ -1665,14 +1702,14 @@ public class ProcessingRoomController {
 	/*
 	 * @RequestMapping("/discrepancyRPCFormat") public ModelAndView
 	 * discrepancyRPCFormat(@ModelAttribute("reportDate") DateRange dateRange,
-	 * HttpSession session) { //User user = (User) session.getAttribute("login");
-	 * ModelMap map = new ModelMap();
+	 * HttpSession session) { //User user = (User)
+	 * session.getAttribute("login"); ModelMap map = new ModelMap();
 	 * 
 	 * Calendar sDate = Calendar.getInstance(); Calendar eDate =
 	 * Calendar.getInstance();
 	 * 
-	 * if(dateRange.getFromDate() != null && dateRange.getToDate() != null){ sDate =
-	 * dateRange.getFromDate(); eDate = dateRange.getToDate(); }
+	 * if(dateRange.getFromDate() != null && dateRange.getToDate() != null){
+	 * sDate = dateRange.getFromDate(); eDate = dateRange.getToDate(); }
 	 * sDate.set(Calendar.HOUR, 0); sDate.set(Calendar.HOUR_OF_DAY, 0);
 	 * sDate.set(Calendar.MINUTE, 0); sDate.set(Calendar.SECOND, 0);
 	 * sDate.set(Calendar.MILLISECOND, 0);
@@ -1767,9 +1804,9 @@ public class ProcessingRoomController {
 	 * @RequestMapping("/saveMutilatedFullValue") public ModelAndView
 	 * saveMutilatedFullValue(@ModelAttribute("user") Mutilated mutilated,
 	 * HttpSession session) { User user = (User) session.getAttribute("login");
-	 * Calendar now = Calendar.getInstance(); mutilated.setInsertBy(user.getId());
-	 * mutilated.setUpdateBy(user.getId()); mutilated.setInsertTime(now);
-	 * mutilated.setUpdateTime(now);
+	 * Calendar now = Calendar.getInstance();
+	 * mutilated.setInsertBy(user.getId()); mutilated.setUpdateBy(user.getId());
+	 * mutilated.setInsertTime(now); mutilated.setUpdateTime(now);
 	 * mutilated.setCurrencyType(CurrencyType.MUTILATED);
 	 * mutilated.setIcmcId(user.getIcmcId());
 	 * processingRoomService.insertFullValueMutilated(mutilated); return new
@@ -2620,9 +2657,12 @@ public class ProcessingRoomController {
 	@ResponseBody
 	public String deleteDiscrepancy(@RequestParam(value = "id", required = false) Integer id, HttpSession session) {
 		User user = (User) session.getAttribute("login");
-		processingRoomService.deleteDiscrepancy(id, user.getIcmcId());
-		processingRoomService.deleteDiscrepancywithooutallocation(id, user.getIcmcId());
-		return "SUCCESS";
+
+		synchronized (icmcService.getSynchronizedIcmc(user)) {
+			processingRoomService.deleteDiscrepancy(id, user.getIcmcId());
+			processingRoomService.deleteDiscrepancywithooutallocation(id, user.getIcmcId());
+			return "success";
+		}
 	}
 
 	@RequestMapping(value = "/suspenseCashFromLink", method = RequestMethod.POST)

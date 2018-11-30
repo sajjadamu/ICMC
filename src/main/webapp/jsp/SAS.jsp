@@ -21,7 +21,7 @@
 <title>ICICI : SAS</title>
 <script type="text/javascript">
 	function ajaxCustodianName() {
-		addHeader();
+		addHeaderJson();
 		var vendor = $('#vendor').val();
 		var radio;
 		$.ajax({
@@ -50,7 +50,7 @@
 
 <script type="text/javascript">
 	function ajaxvehicle() {
-		addHeader();
+		addHeaderJson();
 		var vendor = $('#vendor').val();
 		var radio;
 		$.ajax({
@@ -227,7 +227,7 @@ input[type="button"]:hover, .button-design a:hover {
 <script type="text/javascript">
 function doAjaxPostUpdateSAS(str) {
 	
-	addHeader();
+	addHeaderJson();
 	var newSumVal1=parseInt($('#notes1F'+str).val()|| 0)+parseInt($('#notes1I'+str).val()|| 0);
 	var oldSumVal1 = parseInt($('#hidden_notes1F'+str).val()|| 0)+parseInt($('#hidden_notes1I'+str).val()|| 0);
 	
@@ -389,7 +389,7 @@ function doAjaxPostRemoveBranch(str)
 
 <script type="text/javascript">
 function doAjaxPostInsert() {
-	addHeader();
+	addHeaderJson();
 	var sasWrapper = {
 			"totalFresh":$('#TotalFresh').text(),
 			"totalIssuable":$('#TotalIssuable').text(),

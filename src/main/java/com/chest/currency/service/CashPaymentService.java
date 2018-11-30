@@ -91,7 +91,7 @@ public interface CashPaymentService {
 
 	public List<SASAllocation> getSasAllocationBySasId(long icmcId);
 
-	public List<SASAllocation> getSasAllocationByBinNumber(String icmcId);
+	public List<SASAllocation> getSasAllocationByBinNumber(SASAllocation icmcId);
 
 	public SASAllocation updateSasIndent(SASAllocation sasAccept, User user);
 
@@ -396,5 +396,7 @@ public interface CashPaymentService {
 	public List<Tuple> getSoiledSummary(BigInteger icmcId, CurrencyType currencyType);
 
 	public List<SoiledRemittanceAllocation> getSoiledForAccept(BigInteger icmcId, Calendar sDate, Calendar eDate);
+
+	List<SASAllocation> getSasAllocationByBinNumberBundle(SASAllocation sasAlo);
 
 }

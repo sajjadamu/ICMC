@@ -742,6 +742,7 @@
 				<sec:authorize access="hasRole('VIEW_REPORTS')">
 					<!-- <li><a href="././dailyRecon"> Daily Recon</a></li> -->
 					<li><a href="././icmcSummary"> ICMC Summary</a></li>
+					<li><a href="././chargeReport"> Charge Report</a></li>
 					<li><a href="././FIFO"> FIFO</a></li>
 					<!-- <li><a href="././TE"> IO2 Statement</a></li> -->
 					<li><a href="././IO2Reports"> IO2Reports</a></li>

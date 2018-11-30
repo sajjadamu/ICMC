@@ -52,7 +52,7 @@ function pageSubmit(){
 
 <script type="text/javascript">
 function doAjaxForRBINameZoneAndRegion() {
-	addHeader();
+	addHeaderJson();
 	var linkBranchSolId = $('#linkBranchSolId').val();
 	if(linkBranchSolId.length == 4)
 	{
@@ -87,7 +87,7 @@ function doAjaxForRBINameZoneAndRegion() {
 
 <script type="text/javascript">
 function doAjaxForZoneAndRegion() {
-	addHeader();
+	addHeaderJson();
 	var rbiName = $('#rbiName').val();
 	$.ajax({
 		type : "POST",
@@ -126,7 +126,7 @@ function doAjaxForZoneAndRegion() {
 
 <script type="text/javascript">
 function doAjaxForRegion(region) {
-	addHeader();
+	addHeaderJson();
 	var zone = $('#zoneHidden').val();
 	
 	$.ajax({

@@ -620,7 +620,28 @@ public class BinDashBoardJpaDaoImpl implements BinDashBoardJpaDao {
 				QProcess.process.bundle.sum().multiply(1000));
 		return summaryList;
 	}
-
+	@Override
+	public List<Tuple> getProcessFromProcessingOutPut(BigInteger icmcId, Calendar sDate, Calendar eDate) {
+		JPAQuery jpaQuery = getFromQueryForProcessList();
+		jpaQuery.where(QProcess.process.icmcId.eq(icmcId)
+				.and(QProcess.process.insertTime.between(sDate, eDate)));
+		jpaQuery.groupBy(QProcess.process.denomination);
+		jpaQuery.orderBy(QProcess.process.denomination.asc());
+		List<Tuple> summaryList = jpaQuery.list(QProcess.process.denomination,
+				QProcess.process.bundle.sum().multiply(1000));
+		return summaryList;
+	}
+	@Override
+	public List<Tuple> getProcessBundleProcessingOutPut(BigInteger icmcId, Calendar sDate, Calendar eDate) {
+		JPAQuery jpaQuery = getFromQueryForProcessList();
+		jpaQuery.where(QProcess.process.icmcId.eq(icmcId)
+				.and(QProcess.process.insertTime.between(sDate, eDate)));
+		jpaQuery.groupBy(QProcess.process.denomination,QProcess.process.currencyType);
+		jpaQuery.orderBy(QProcess.process.denomination.asc());
+		List<Tuple> summaryList = jpaQuery.list(QProcess.process.denomination,QProcess.process.currencyType,
+				QProcess.process.bundle.sum());
+		return summaryList;
+	}
 	@Override
 	public List<Tuple> getDepositForDSB(BigInteger icmcId, Calendar sDate, Calendar eDate) {
 		JPAQuery jpaQuery = getFromQueryForDSB();
@@ -2088,7 +2109,8 @@ public class BinDashBoardJpaDaoImpl implements BinDashBoardJpaDao {
 	public List<Indent> getIndentCash(BigInteger IcmcId, Calendar sDate, Calendar eDate) {
 		JPAQuery jpaQuery = getIndentCash();
 		jpaQuery.where(QIndent.indent.icmcId.eq(IcmcId).and(QIndent.indent.cashSource.ne(CashSource.RBI))
-				.and(QIndent.indent.status.eq(OtherStatus.ACCEPTED))
+				.and(QIndent.indent.status.eq(OtherStatus.ACCEPTED)
+				.or(QIndent.indent.status.eq(OtherStatus.PROCESSED)))
 				.and(QIndent.indent.insertTime.between(sDate, eDate)));
 		List<Indent> indentList = jpaQuery.list(QIndent.indent);
 		return indentList;

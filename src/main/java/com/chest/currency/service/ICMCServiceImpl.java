@@ -1,7 +1,3 @@
-/*******************************************************************************
- * /* Copyright (C) Indicsoft Technologies Pvt Ltd
- * * All Rights Reserved.
- *******************************************************************************/
 package com.chest.currency.service;
 
 import java.util.List;
@@ -22,7 +18,7 @@ import com.chest.currency.jpa.dao.ICMCJpaDao;
 @Transactional
 public class ICMCServiceImpl implements ICMCService {
 
-	private static final Logger LOG = LoggerFactory.getLogger(UserAdministrationServiceImpl.class);
+	private static final Logger LOG = LoggerFactory.getLogger(ICMCServiceImpl.class);
 
 	@Autowired
 	protected ICMCJpaDao icmcJpaDao;

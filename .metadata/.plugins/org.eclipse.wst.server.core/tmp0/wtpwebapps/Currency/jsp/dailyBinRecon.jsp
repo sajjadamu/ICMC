@@ -76,7 +76,7 @@
 <script type="text/javascript">
 
 function doAjaxPostForBinRecon(str) {  
-	addHeader();  
+	addHeaderJson();  
 	var binTransaction={
 			  "id":$('#id'+str).text()
 	  }

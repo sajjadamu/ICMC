@@ -11,7 +11,7 @@
 
 <script type="text/javascript">
 	function ajaxBundleDetails() {
-		addHeader();
+		addHeaderJson();
 		var id = $('input[name=solId]:checked').val()
 		$
 				.ajax({
@@ -54,7 +54,7 @@
 	}
 
 	function saveRecord() {
-		addHeader();
+		addHeaderJson();
 		var rowCount = $('table#records_table tr:last').index() + 1;
 		var SASReleasedList = [];
 		for (var i = 1; i < rowCount; i++) {
@@ -168,7 +168,7 @@
 
 <script type="text/javascript">
 	function ajaxBundleDetailsForSAS() {
-		addHeader();
+		addHeaderJson();
 		var id = $('input[name=solId]:checked').val()
 		$
 				.ajax({
@@ -282,7 +282,7 @@
 
 <script type="text/javascript">
 	function ajaxBundleDetailsForCRA() {
-		addHeader();
+		addHeaderJson();
 		var id = $('input[name=mspName]:checked').val()
 		$
 				.ajax({
@@ -316,7 +316,7 @@
 
 <script type="text/javascript">
 	function ajaxBundleDetailsForForwardedCRA() {
-		addHeader();
+		addHeaderJson();
 		var id = $('input[name=mspName]:checked').val()
 		$
 				.ajax({
@@ -345,7 +345,7 @@
 
 <script type="text/javascript">
 	function ajaxBundleDetailsForDiversion() {
-		addHeader();
+		addHeaderJson();
 		var id = $('input[name=bankName]:checked').val()
 		$
 				.ajax({
@@ -377,7 +377,7 @@
 
 <script type="text/javascript">
 	function ajaxBundleDetailsForSoiled() {
-		addHeader();
+		addHeaderJson();
 		var id = $('input[name=remittanceOrderNo]:checked').val()
 		$
 				.ajax({
@@ -408,7 +408,7 @@
 
 <script type="text/javascript">
 	function ajaxBundleDetailsForOtherBank() {
-		addHeader();
+		addHeaderJson();
 		var id = $('input[name=bankName]:checked').val()
 		$
 				.ajax({
@@ -440,7 +440,7 @@
 
 <script type="text/javascript">
 	function doAjaxPostUpdateStatusForOtherBank() {
-		addHeader();
+		addHeaderJson();
 		var id = $('input[name=bankName]:checked').val()
 		$.ajax({
 			type : "POST",
@@ -460,7 +460,7 @@
 
 <script type="text/javascript">
 	function doAjaxPostUpdateStatusForCraForward() {
-		addHeader();
+		addHeaderJson();
 		//var id = $('input[name=currencyType]:checked').val()
 		var id = $('input[name=mspName]:checked').val()
 		/* alert("iii"+id); */
@@ -482,7 +482,7 @@
 
 <script type="text/javascript">
 	function doAjaxPostSASStatus(str) {
-		addHeader();
+		addHeaderJson();
 		// get the form values  
 		var id = $('input[name=solId]:checked').val()
 		$.ajax({
@@ -503,7 +503,7 @@
 
 <script type="text/javascript">
 	function doAjaxPostUpdateStatusForCRA(str) {
-		addHeader();
+		addHeaderJson();
 		// get the form values  
 		var id = $('input[name=mspName]:checked').val()
 		$.ajax({
@@ -524,7 +524,7 @@
 
 <script type="text/javascript">
 	function doAjaxPostUpdateStatusForDiversion() {
-		addHeader();
+		addHeaderJson();
 		// get the form values  
 		var id = $('input[name=bankName]:checked').val()
 
@@ -546,7 +546,7 @@
 
 <script type="text/javascript">
 	function doAjaxPostUpdateStatusForSoiled() {
-		addHeader();
+		addHeaderJson();
 		// get the form values  
 		var id = $('input[name=remittanceOrderNo]:checked').val()
 

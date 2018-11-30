@@ -39,9 +39,11 @@ public class Error implements Serializable {
 	        return response;
 	    }
 
-	    public static Response setErrorResponse(String tokenId, int errorCode, String message) {
+	    public static Response setErrorResponse(LamStatus status, int errorCode, String message) {
 	        Response response = new Response();
+	        response.setStatus(status);
+	        response.setCode(errorCode);
+	        response.setMessage(message);
 	        return response;
 	    }
-
 }

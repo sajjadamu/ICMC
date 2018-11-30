@@ -1,10 +1,3 @@
-/*******************************************************************************
- * /* Copyright (C) Indicsoft Technologies Pvt Ltd
- * * All Rights Reserved.
- *******************************************************************************/
-/**
- * 
- */
 package com.chest.currency.jpa.dao;
 
 import java.math.BigInteger;
@@ -31,10 +24,6 @@ import com.chest.currency.enums.CashSource;
 import com.chest.currency.enums.CurrencyType;
 import com.mysema.query.Tuple;
 
-/**
- * @author root
- *
- */
 public interface CashReceiptJpaDao {
 	
 	BinTransaction getBinTxnRecordForUpdateBox(BoxMaster boxmasterDb, BigInteger icmcId);
@@ -179,4 +168,6 @@ public interface CashReceiptJpaDao {
 	boolean saveDSB(List<DSB> dsb);
 	
 	public ICMC getICMCBySolId(String solId);
+
+	ICMC getICMCByName(String name);
 }

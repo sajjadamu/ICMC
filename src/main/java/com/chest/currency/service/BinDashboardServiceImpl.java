@@ -424,6 +424,18 @@ public class BinDashboardServiceImpl implements BinDashboardService {
 				eDate, currencyType);
 		return processFromProcessingOutPut;
 	}
+	@Override
+	public List<Tuple> getProcessFromProcessingOutPut(BigInteger icmcId, Calendar sDate, Calendar eDate) {
+		List<Tuple> processFromProcessingOutPut = binDashboardJpaDao.getProcessFromProcessingOutPut(icmcId, sDate,
+				eDate);
+		return processFromProcessingOutPut;
+	}
+	@Override
+	public List<Tuple> getProcessBundleProcessingOutPut(BigInteger icmcId, Calendar sDate, Calendar eDate) {
+		List<Tuple> processFromProcessingOutPut = binDashboardJpaDao.getProcessBundleProcessingOutPut(icmcId, sDate,
+				eDate);
+		return processFromProcessingOutPut;
+	}
 
 	@Override
 	public List<Tuple> getDepositForDSB(BigInteger icmcId, Calendar sDate, Calendar eDate) {

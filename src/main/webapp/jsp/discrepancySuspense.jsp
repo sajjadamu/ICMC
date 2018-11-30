@@ -231,7 +231,7 @@ function deleteRow(i){
 
 <script type="text/javascript">
 function doAjaxPostInsert(str) {
-	addHeader();
+	addHeaderJson();
 	var discrepancyAllocations = [];
 	//var val = $("#member").val();
 	var val = ($('#table1 tr').length)-2;

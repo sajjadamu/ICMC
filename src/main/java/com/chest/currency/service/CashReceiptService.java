@@ -1,7 +1,3 @@
-/*******************************************************************************
- * /* Copyright (C) Indicsoft Technologies Pvt Ltd
- * * All Rights Reserved.
- *******************************************************************************/
 package com.chest.currency.service;
 
 import java.math.BigInteger;
@@ -199,5 +195,7 @@ public interface CashReceiptService {
 	boolean saveDSB(List<DSB> dsb);
 	
 	public ICMC getICMCBySolId(String solId);
+
+	ICMC getICMCByName(String name);
 
 }

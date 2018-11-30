@@ -85,6 +85,13 @@ public class UserAdministrationJpaDaoImpl implements UserAdministrationJpaDao {
 	}
 
 	@Override
+	public User isUserExists(String userId) {
+		JPAQuery jpaQuery = getFromQueryForUser();
+		jpaQuery.where(QUser.user.id.equalsIgnoreCase(userId));
+		return jpaQuery.singleResult(QUser.user);
+	}
+	
+	@Override
 	public User isValidUser(String username, BigInteger icmcId) {
 		JPAQuery jpaQuery = getFromQueryForUser();
 		jpaQuery.where(QUser.user.id.equalsIgnoreCase(username)
@@ -237,10 +244,10 @@ public class UserAdministrationJpaDaoImpl implements UserAdministrationJpaDao {
 		jpaQuery.where(QBinCapacityDenomination.binCapacityDenomination.denomination.eq(binCapacity.getDenomination())
 				.and(QBinCapacityDenomination.binCapacityDenomination.vaultSize.eq(binCapacity.getVaultSize()).and(
 						QBinCapacityDenomination.binCapacityDenomination.currencyType.eq(binCapacity.getCurrencyType())
-				/*
-				 * .and(QBinCapacityDenomination.binCapacityDenomination.icmcId.eq(
-				 * binCapacity.getIcmcId()))
-				 */)));
+		/*
+		 * .and(QBinCapacityDenomination.binCapacityDenomination.icmcId.eq(
+		 * binCapacity.getIcmcId()))
+		 */)));
 		BinCapacityDenomination bcd = jpaQuery.singleResult(QBinCapacityDenomination.binCapacityDenomination);
 		return bcd;
 	}
@@ -606,6 +613,25 @@ public class UserAdministrationJpaDaoImpl implements UserAdministrationJpaDao {
 		return icmcPrinterList;
 	}
 
+	@Override
+	public IcmcPrinter getPrinter(User user) {
+		JPAQuery jpaQuery = getFromQueryForIcmcPrinter();
+		if ("Processing_Room_Live".equalsIgnoreCase(user.getRole().getId())) {
+			LOG.info("if getting printer by Role   " + user.getRole().getId());
+			LOG.info("icmc id   " + user.getIcmcId());
+			jpaQuery.where(QIcmcPrinter.icmcPrinter.icmcId.eq(user.getIcmcId())
+					.and(QIcmcPrinter.icmcPrinter.status.eq(Status.ENABLED))
+					.and(QIcmcPrinter.icmcPrinter.printerName.likeIgnoreCase("%Processing%")));
+		} else {
+			LOG.info("else getting printer by Role  " + user.getRole().getId());
+			LOG.info("icmc id   " + user.getIcmcId());
+			jpaQuery.where(QIcmcPrinter.icmcPrinter.icmcId.eq(user.getIcmcId())
+					.and(QIcmcPrinter.icmcPrinter.status.eq(Status.ENABLED))
+					.and(QIcmcPrinter.icmcPrinter.printerName.notLike("%Processing%")));
+		}
+		return jpaQuery.singleResult(QIcmcPrinter.icmcPrinter);
+	}
+
 	public JPAQuery getFromQueryForMutilatedFullValue() {
 		JPAQuery jpaQuery = new JPAQuery(em);
 		jpaQuery.from(QMutilatedIndent.mutilatedIndent);
@@ -646,7 +672,6 @@ public class UserAdministrationJpaDaoImpl implements UserAdministrationJpaDao {
 		JPAQuery jpaQuery = getFromQueryForCRA();
 		jpaQuery.where(QCRA.cRA.icmcId.eq(icmcId)
 				.and(QCRA.cRA.status.eq(OtherStatus.REQUESTED).or(QCRA.cRA.status.eq(OtherStatus.PROCESSED))));
-		;
 		String status = jpaQuery.singleResult(QCRA.cRA.insertBy);
 		return status;
 	}

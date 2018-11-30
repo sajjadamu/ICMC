@@ -29,7 +29,7 @@
 <script type="text/javascript">
 	function SavePrint(str) {
 		/* alert($('#craId'+str).text()); */
-		addHeader();
+		addHeaderJson();
 		var craPaymentForProcessing={
 				"id":$('#id'+str).val(),
 				"craId":$('#craId'+str).text(),

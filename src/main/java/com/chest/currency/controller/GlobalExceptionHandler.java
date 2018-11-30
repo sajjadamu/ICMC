@@ -14,9 +14,6 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.chest.currency.message.Response;
-import com.chest.currency.enums.LamStatus;
-
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
@@ -69,7 +66,7 @@ public class GlobalExceptionHandler {
 	}
 
 	@ExceptionHandler(value = Exception.class)
-	public Response handleException(Exception e, HttpServletRequest request) {
+	public ModelAndView handleException(Exception e, HttpServletRequest request) {
 		logger.error("INTERNAL_SERVER_ERROR msg " + e.getMessage());
 		logger.error("INTERNAL_SERVER_ERROR exception " + e);
 		logger.info("INTERNAL_SERVER_ERROR Occured:: URL= " + request.getRequestURL());
@@ -78,8 +75,7 @@ public class GlobalExceptionHandler {
 		map.put("message", e.getMessage());
 		map.put("GlobalExceptionMessage", "INTERNAL SERVER ERROR");
 		logger.error("INTERNAL_SERVER_ERROR");
-		// return new ModelAndView("GlobalExceptionHandler", map);
-		return Response.setSuccessResponse(LamStatus.EXCEPTION, LamStatus.EXCEPTION.getCode(), "User does not exist");
+		return new ModelAndView("GlobalExceptionHandler", map);
 	}
 
 	@ExceptionHandler(value = FileNotFoundException.class)

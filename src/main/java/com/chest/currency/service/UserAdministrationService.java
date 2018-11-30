@@ -170,5 +170,9 @@ public interface UserAdministrationService {
 	public LamRequestLog createLamLog(LamRequestLog requestLog);
 	
 	public void updateLamLog(LamRequestLog requestLog);
+
+	IcmcPrinter getPrinter(User user);
+
+	User isUserExists(String userId);
 	
 }

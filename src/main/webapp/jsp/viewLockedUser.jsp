@@ -93,7 +93,7 @@
 
 <script type="text/javascript">
 function doAjaxPostUnlockUser() {  
-	addHeader();  
+	addHeaderJson();  
 	// get the form values  
 	  var id = $('#userId').text();
 	  $.ajax({  

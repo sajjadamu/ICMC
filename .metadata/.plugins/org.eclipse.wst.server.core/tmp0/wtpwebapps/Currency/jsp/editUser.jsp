@@ -22,7 +22,7 @@
 
 <script type="text/javascript">
 function doAjaxForRegion() {
-	addHeader();
+	addHeaderJson();
 	var zone = $('#zoneId').val();
 	if(zone != ''){
 	$.ajax({

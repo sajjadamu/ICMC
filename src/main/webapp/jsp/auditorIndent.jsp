@@ -62,7 +62,7 @@
     
     function binData() {
     	//alert("hello");
-		addHeader();
+		addHeaderJson();
 		var denomination = $('input[name=denomination]:checked').val();
 		var currencyType = $('#currencyType').val();
 		if(denomination == undefined ||denomination==null){

@@ -68,6 +68,12 @@ public class UserAdministrationServiceImpl implements UserAdministrationService 
 	}
 
 	@Override
+	public User isUserExists(String userId) {
+		User userBean = userAdministrationJpaDao.isUserExists(userId);
+		return userBean;
+	}
+
+	@Override
 	public User isValidUser(String userId, BigInteger icmcId) {
 		User userBean = userAdministrationJpaDao.isValidUser(userId, icmcId);
 		return userBean;
@@ -93,7 +99,7 @@ public class UserAdministrationServiceImpl implements UserAdministrationService 
 
 		userAdministrationJpaDao.updateUser(user);
 	}
-	
+
 	@Override
 	public void deleteUser(User user) {
 
@@ -149,7 +155,8 @@ public class UserAdministrationServiceImpl implements UserAdministrationService 
 	/*
 	 * @Override public List<BinCapacityDenomination> getBinCapacity(BigInteger
 	 * icmcId) { List<BinCapacityDenomination> binCapacityList =
-	 * userAdministrationJpaDao.getBinCapacity(icmcId); return binCapacityList; }
+	 * userAdministrationJpaDao.getBinCapacity(icmcId); return binCapacityList;
+	 * }
 	 */
 
 	@Override
@@ -445,6 +452,11 @@ public class UserAdministrationServiceImpl implements UserAdministrationService 
 	public List<IcmcPrinter> printerList(BigInteger icmc) {
 		List<IcmcPrinter> icmcPrinterList = userAdministrationJpaDao.printerList(icmc);
 		return icmcPrinterList;
+	}
+
+	@Override
+	public IcmcPrinter getPrinter(User user) {
+		return userAdministrationJpaDao.getPrinter(user);
 	}
 
 	@Override

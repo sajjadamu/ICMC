@@ -36,51 +36,59 @@
 	href="./resources/dist/css/style.css">
 
 <script type="text/javascript">
- var cashSource=$('input[name=cashSource]:checked').val();
+	var cashSource = $('input[name=cashSource]:checked').val();
 
 	function SavePrint() {
-		addHeader();
-	var cashSource= $('input[name=cashSource]:checked').val();
-	if(cashSource==undefined || cashSource==null){
-		alert("Please Select Bundle");
-	}
-	else{
-		var machine={
-				"machineNo":$('input[name=machineNo]:checked').val(),
-				"processAction":$('input[name=processAction]:checked').val(),
-				"currencyType":$('input[name=currencyType]:checked').val(),
-				"denomination":$('input[name=denomination]:checked').val(),
-				"binCategoryType":$('input[name=binCategoryType]:checked').val(),
-				"bundle":$('#bundle').val(),
-				"bin":$('#bin').val(),
-				"total":$('#total').val(),
-				"cashSource":$('input[name=cashSource]:checked').val(),
+		$(':input[type="button"]').prop('disabled', true);
+		addHeaderJson();
+		var cashSource = $('input[name=cashSource]:checked').val();
+		var bundle = $('#bundle').val();
+		if (bundle == undefined || bundle == "") {
+			$(':input[type="button"]').prop('disabled', false);
+			alert("Please Inter Bundle");
+			return false;
+		}
+		if (cashSource == undefined || cashSource == null) {
+			$(':input[type="button"]').prop('disabled', false);
+			alert("Please Select Bundle");
+			return false;
+		} else {
+			var machine = {
+				"machineNo" : $('input[name=machineNo]:checked').val(),
+				"processAction" : $('input[name=processAction]:checked').val(),
+				"currencyType" : $('input[name=currencyType]:checked').val(),
+				"denomination" : $('input[name=denomination]:checked').val(),
+				"binCategoryType" : $('input[name=binCategoryType]:checked')
+						.val(),
+				"bundle" : $('#bundle').val(),
+				"bin" : $('#bin').val(),
+				"total" : $('#total').val(),
+				"cashSource" : $('input[name=cashSource]:checked').val(),
 			}
-		$.ajax({
+			$.ajax({
 				type : "POST",
-				 contentType : 'application/json; charset=utf-8',
-			      dataType : 'json',
-				 url : "././QRPathProcess", 
-				data: JSON.stringify(machine),
+				contentType : 'application/json; charset=utf-8',
+				dataType : 'json',
+				url : "././QRPathProcess",
+				data : JSON.stringify(machine),
 				success : function(response) {
 					console.log(machine);
 					alert("Success..");
-					window.location='././processEntry';
+					window.location = '././processEntry';
 				},
 				error : function(e) {
 					alert('Error: ' + e.responseJSON.message);
-					window.location='././processEntry';
+					window.location = '././processEntry';
 				}
 			});
+		}
 	}
+
+	function returnBackToVault() {
+		if (confirm('Are you sure you want to return unprocessed cash, back to vault?')) {
+			window.location = '././returnBackToVault';
+		}
 	}
-	
-function returnBackToVault(){
-	if (confirm('Are you sure you want to return unprocessed cash, back to vault?')) {
-		window.location='././returnBackToVault';
-	}
-}
-	
 </script>
 
 </head>
@@ -164,8 +172,8 @@ function returnBackToVault(){
 												cssClass="form-control" />
 										</div>
 
-										<input type="button" name="print" value="Save AND Print QR"
-											onclick="SavePrint();this.disabled=true"
+										<input type="button" id="print" name="print"
+											value="Save AND Print QR" onclick="SavePrint();"
 											class="btn btn-default qr-button">
 									</form:form>
 								</div>
@@ -203,30 +211,53 @@ function returnBackToVault(){
 	<script src="./resources/dist/js/sb-admin-2.js"></script>
 
 	<script type="text/javascript">
-	$(function() {
-	  $("form[name='processEntry']").validate({
-	    rules: {
-	    	processAction: "required",
-	    	binCategoryType: "required",
-	    	currencyType: "required",
-	    	denomination: "required",
-	    	bundle: "required",
-	    },
-	    messages: {
-	    	processAction: "Please Select Processed By",
-	    	binCategoryType: "Please Select BIN or BOX",
-	    	currencyType: "Please Select Currency Type",
-	    	denomination: "Please Select Denomination",
-	    	bundle: "Please Enter Bundle",
-	    },
-	    submitHandler: function(form) {
-	    	var isValid = $("form[name='processEntry']").validate().form();
-	    	if(isValid){
-	      		form.submit();
-	    	}
-	    }
-	  });
-	});
+		$(function() {
+			$("form[name='processEntry']").validate(
+					{
+						rules : {
+							processAction : {
+								required : true,
+							},
+							binCategoryType : {
+								required : true,
+							},
+							currencyType : {
+								required : true,
+							},
+							denomination : {
+								required : true,
+							},
+							bundle : {
+								required : true,
+							}
+						},
+
+						messages : {
+							processAction : {
+								required : "Please Select Processed By",
+							},
+							binCategoryType : {
+								required : "Please Select BIN or BOX",
+							},
+							currencyType : {
+								required : "Please Select Currency Type",
+							},
+							denomination : {
+								required : "Please Select Denomination",
+							},
+							bundle : {
+								required : "Please Enter Bundle",
+							}
+						},
+						submitHandler : function(form) {
+							var isValid = $("form[name='processEntry']")
+									.validate().form();
+							if (isValid) {
+								form.submit();
+							}
+						}
+					});
+		});
 	</script>
 	<script type="text/javascript" src="./js/htmlInjection.js"></script>
 </body>

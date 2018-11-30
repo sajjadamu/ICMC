@@ -22,7 +22,7 @@
 
 <script type="text/javascript">
 function doAjaxForRegion() {
-	addHeader();
+	addHeaderJson();
 	var zone = $('#zoneId').val();
 	if(zone != ''){
 	$.ajax({
@@ -91,7 +91,7 @@ function doAjaxForRegion() {
 
 <script type="text/javascript" charset="utf-8">    
      function vailidRegionZoneIcmc(){
-    	 addHeader();
+    	 addHeaderJson();
     	// alert("vailidRegionZoneIcmc   :"+$("input[name=roleId]:checked").val())
          var roleType= $("input[name=roleId]:checked").val();
     	 $.ajax({

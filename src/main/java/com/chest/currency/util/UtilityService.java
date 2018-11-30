@@ -83,8 +83,14 @@ public class UtilityService {
 		if (queryRequest.getRoles() != null) {
 			String roles = queryRequest.getRoles();
 			String[] roleName = roles.split(Pattern.quote("|"));
+			String getRole = null;
+			if (roleName.length == 2) {
+				getRole = roleName[1];
+			} else {
+				getRole = roleName[2];
+			}
 			Role role = new Role();
-			role.setId(roleName[0]);
+			role.setId(getRole);
 			user.setRole(role);
 		}
 		user.setPassword(psw.encode("null"));

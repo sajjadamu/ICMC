@@ -55,6 +55,10 @@
 .region-drop span {
 	float: left;
 }
+ .imageHover:hover img {
+        transform: scale(1.5);
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    }
 </style>
 
 <!-- Bootstrap Core CSS -->
@@ -225,9 +229,10 @@ var id = id;
 											<tr>
 												<!-- <th>Machine Number</th> -->
 												<th>Date</th>
-												<th>Sol ID</th>
+												<th>SolID</th>
 												<th>Branch</th>
 												<th>Account/Teller/Cam</th>
+												<th>Image</th>
 												<th>Customer Name</th>
 												<th>Account Number</th>
 												<th>Denomination</th>
@@ -267,6 +272,9 @@ var id = id;
 													<td>${row.solId}</td>
 													<td>${row.branch}</td>
 													<td>${row.accountTellerCam}</td>
+													<td>
+													<a href="#" class="imageHover"><img style="height: 5%;width: 80%" src="./files/${row.filepath}"></a>
+													<a href="./files/${row.filepath}" download>Download</a></td>
 													<td>${row.customerName}</td>
 													<td>${row.accountNumber}</td>
 													<td>${row.denomination}</td>

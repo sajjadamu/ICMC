@@ -17,7 +17,7 @@
 
 <script type="text/javascript">
 function doAjaxForProductivity() {
-	addHeader();
+	addHeaderJson();
 	var modelType = $('#modelType').val();
 	$.ajax({
 		type : "POST",

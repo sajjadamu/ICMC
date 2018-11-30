@@ -301,7 +301,7 @@ tr.ttlDiscBtm td:nth-child(2), tr.ttlDiscBtm td:nth-child(3) {
 
 <script type="text/javascript">
 	function EOD() {
-		addHeader();
+		addHeaderJson();
 		var suspenseOpeningBalance = {
 			"denomination5" : $("#deno5").text(),
 			"denomination10" : $("#deno10").text(),

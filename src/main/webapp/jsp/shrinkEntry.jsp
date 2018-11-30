@@ -422,7 +422,7 @@ function deleteRow(i){
 
 
 function SavePrint(str) {
-	addHeader();
+	addHeaderJson();
 	var isValid = true;
 	var branchReceipt={
 			"solId":$('#solId').val(),

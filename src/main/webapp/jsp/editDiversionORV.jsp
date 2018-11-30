@@ -317,7 +317,7 @@ function doAjaxPostInsert(str) {
   var lastDateOne11=lastDateone1[0];
      var orderDateActual = datelast + '-' + midleDate + '-' + lastDateOne1;
 
-	addHeader();
+	addHeaderJson();
 	var diversionAllocations = [];
 	var val = $("#member").val();
 	var isValid = true;

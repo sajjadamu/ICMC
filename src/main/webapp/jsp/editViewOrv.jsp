@@ -386,7 +386,7 @@ function replicateValue1(i){
 
 <script type="text/javascript">
 	function doAjaxPostInsert(str) {
-		addHeader();
+		addHeaderJson();
 		var orvAllocations = [];
 		var val = $("#member").val();
 		var isValid = true;

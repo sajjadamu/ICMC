@@ -68,6 +68,9 @@ import com.mysema.query.Tuple;
 public class CashReceiptController {
 
 	private static final Logger LOG = LoggerFactory.getLogger(CashReceiptController.class);
+	
+	@Autowired
+	String documentFilePath;
 
 	@Autowired
 	BinDashboardService binDashboardService;
@@ -162,7 +165,11 @@ public class CashReceiptController {
 						// UtilityJpa.PrintToPrinter(sb, user);
 
 					} catch (IOException ioe) {
+						LOG.info("Branch Receipt IOException: " + ioe);
 						ioe.printStackTrace();
+					} catch (Exception e) {
+						e.printStackTrace();
+						LOG.info("Branch Receipt Exception: " + e);
 					}
 				}
 			} else {
@@ -194,7 +201,7 @@ public class CashReceiptController {
 			fresh.setUpdateTime(now);
 			fresh.setCurrencyType(CurrencyType.FRESH);
 			fresh.setCashSource(CashSource.RBI);
-			
+
 			if (fresh.getNotesOrCoins().equalsIgnoreCase("NOTES")) {
 				if (fresh.getBinOrBox().equalsIgnoreCase("BOX")) {
 					fresh.setBinCategoryType(BinCategoryType.BOX);
@@ -225,7 +232,7 @@ public class CashReceiptController {
 							String oldtext = readPRNFileData();
 							String replacedtext = UtilityMapper.getPRNToPrintForFreshNotes(freshFromRBI, oldtext);
 							sb = new StringBuilder(replacedtext);
-							//prnList.add(sb.toString());
+							// prnList.add(sb.toString());
 
 							LOG.info("Fresh From Notes RBI PRN: " + sb);
 							UtilityJpa.PrintToPrinter(sb, user);
@@ -241,7 +248,7 @@ public class CashReceiptController {
 								String replacedtext = UtilityMapper.getPRNToPrintForFreshCoins(freshFromRBI, oldtext,
 										sequence);
 								sb = new StringBuilder(replacedtext);
-								//prnList.add(sb.toString());
+								// prnList.add(sb.toString());
 
 								LOG.info("Fresh Coins From RBI PRN: " + sb);
 								UtilityJpa.PrintToPrinter(sb, user);
@@ -424,13 +431,13 @@ public class CashReceiptController {
 
 	@RequestMapping("/viewShrink")
 	public ModelAndView branchReceiptList(HttpSession session) {
-	
+
 		User user = (User) session.getAttribute("login");
 		Calendar sDate = UtilityJpa.getStartDate();
-		Calendar eDate =UtilityJpa.getEndDate();
+		Calendar eDate = UtilityJpa.getEndDate();
 
 		List<BranchReceipt> list = cashReceiptService.getBrachReceiptRecord(user, sDate, eDate);
-		
+
 		return new ModelAndView("viewShrink", "records", list);
 	}
 
@@ -445,7 +452,7 @@ public class CashReceiptController {
 		User user = (User) session.getAttribute("login");
 
 		Calendar sDate = UtilityJpa.getStartDate();
-		Calendar eDate =UtilityJpa.getEndDate();
+		Calendar eDate = UtilityJpa.getEndDate();
 
 		List<FreshFromRBI> freshList = cashReceiptService.getFreshFromRBIRecord(user, sDate, eDate);
 		return new ModelAndView("viewFresh", "records", freshList);
@@ -569,7 +576,7 @@ public class CashReceiptController {
 		User user = (User) session.getAttribute("login");
 
 		Calendar sDate = UtilityJpa.getStartDate();
-		Calendar eDate =UtilityJpa.getEndDate();
+		Calendar eDate = UtilityJpa.getEndDate();
 
 		List<DiversionIRV> diversionIRVList = cashReceiptService.getDiversionIRVRecord(user, sDate, eDate);
 		return new ModelAndView("viewDirv", "records", diversionIRVList);
@@ -589,9 +596,9 @@ public class CashReceiptController {
 	@RequestMapping("/viewDSB")
 	public ModelAndView viewDSB(HttpSession session) {
 		User user = (User) session.getAttribute("login");
-		
+
 		Calendar sDate = UtilityJpa.getStartDate();
-		Calendar eDate =UtilityJpa.getEndDate();
+		Calendar eDate = UtilityJpa.getEndDate();
 
 		List<DSB> dsbList = cashReceiptService.getDSBRecord(user, sDate, eDate);
 		return new ModelAndView("viewDSB", "records", dsbList);
@@ -600,9 +607,9 @@ public class CashReceiptController {
 	@RequestMapping("/viewBankReceipt")
 	public ModelAndView viewOtherBankReceipt(HttpSession session) {
 		User user = (User) session.getAttribute("login");
-		
+
 		Calendar sDate = UtilityJpa.getStartDate();
-		Calendar eDate =UtilityJpa.getEndDate();
+		Calendar eDate = UtilityJpa.getEndDate();
 
 		List<BankReceipt> list = cashReceiptService.getBankReceiptRecord(user, sDate, eDate);
 		return new ModelAndView("viewBankReceipt", "records", list);
@@ -931,6 +938,7 @@ public class CashReceiptController {
 		map.put("cashSource", CashSource.values());
 		map.put("currencyTypeList", CurrencyType.values());
 		map.put("user", obj);
+		map.addAttribute("documentFilePath", "./files/" + documentFilePath);
 		return new ModelAndView("/createBox", map);
 	}
 

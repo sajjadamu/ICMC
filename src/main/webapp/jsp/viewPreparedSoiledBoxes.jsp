@@ -65,7 +65,7 @@
 <script type="text/javascript">
 
 function doAjaxPostCancel(id){
-	addHeader();
+	addHeaderJson();
 	var idFromUI = id;
 
 	if (confirm('Are you sure you want to cancel this prepered soiled box?')) {

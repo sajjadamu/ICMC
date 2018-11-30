@@ -210,7 +210,7 @@ function deleteRow(i){
 
 
 function SavePrint(str) {
-	addHeader();
+	addHeaderJson();
 	var dirv={
 		"bankName":$('#bankName').val(),
 		"solId":$('#solId').val(),
@@ -337,7 +337,7 @@ function doAjaxPost(str) {
 	
 	
 function doAjaxPostForBranch() {  
-	addHeader();  
+	addHeaderJson();  
 	// get the form values  
 	  var solid = $('#solId').val();
 	  if(solid.length==4)

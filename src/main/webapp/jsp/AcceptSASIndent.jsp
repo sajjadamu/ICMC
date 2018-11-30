@@ -74,7 +74,7 @@
 
 <script type="text/javascript">
     function doAjaxPostUpdateStatus(str) {  
-    	addHeader();
+    	addHeaderJson();
     	
   	  var sasAccept={
   	  //"id":$('#id'+str).val(),
@@ -94,7 +94,7 @@
   	    success: function(response){  
   	     // $('#info').html(response);
   	    // $("#xy"+str).hide();
-  	   alert('Success..');
+  	  alert('Success..');
   	   window.location='././AcceptSASIndent';
   	    }, 
   	    error: function(e){  
@@ -107,7 +107,7 @@
 
 <script type="text/javascript">
     function doAjaxCancelBranchPayment(str) {  
-    	addHeader();
+    	addHeaderJson();
 		// get the form values 
 		/* alert(str);
 		alert($('#binType'+str).text()) */

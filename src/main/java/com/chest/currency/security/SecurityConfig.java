@@ -14,6 +14,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.ldap.userdetails.LdapAuthoritiesPopulator;
+import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
 import com.chest.currency.enums.PermissionName;
 
@@ -62,25 +63,27 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	 * LDAP Authentication
 	 * 
 	 * @param auth
-	 * @throws Exception auth .ldapAuthentication()
-	 *                   .ldapAuthoritiesPopulator(userAuthoritiesPopulator)
-	 *                   .userDnPatterns("uid={0},ou=people")
-	 *                   .groupSearchBase("ou=groups")
-	 *                   .contextSource().ldif("classpath:testldif/test-server.ldif");
+	 * @throws Exception
+	 *             auth .ldapAuthentication()
+	 *             .ldapAuthoritiesPopulator(userAuthoritiesPopulator)
+	 *             .userDnPatterns("uid={0},ou=people")
+	 *             .groupSearchBase("ou=groups")
+	 *             .contextSource().ldif("classpath:testldif/test-server.ldif");
 	 */
 
-/*	@Autowired
+	/*@Autowired
 	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
 
 		auth.authenticationProvider(aDLoginAuthenticationProvider);
 
 		auth.ldapAuthentication().contextSource().url(ldapURL + "/dc=" + ldapDomain).and().userSearchBase("ou=people")
 				.userSearchFilter("(uid={0})").ldapAuthoritiesPopulator(userAuthoritiesPopulator);
+
 	}*/
 
 	@Override
 	public void configure(WebSecurity web) throws Exception {
-		web.ignoring().antMatchers("/app/resources/**", "/app/js/**", "/app/api/lam/user/**");
+		web.ignoring().antMatchers("/app/resources/**", "/app/js/**", "/app/api/lam/**");
 	}
 
 	@Override
@@ -377,8 +380,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 				// Similarly all URL should be added here for respective ROLE
 				/*
-				 * .anyRequest().authenticated().and().authorizeRequests().antMatchers(
-				 * "/app/api/lam/user/**").permitAll()
+				 * .anyRequest().authenticated().and().authorizeRequests().
+				 * antMatchers( "/app/api/lam/user/**").permitAll()
 				 */
 
 				.anyRequest().authenticated().and().formLogin().loginPage("/app/login")
@@ -391,6 +394,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	public PasswordEncoder passwordEncoder() {
 		PasswordEncoder encoder = new BCryptPasswordEncoder();
 		return encoder;
+	}
+
+	@Bean(name = "multipartResolver")
+	public CommonsMultipartResolver createMultipartResolver() {
+		CommonsMultipartResolver resolver = new CommonsMultipartResolver();
+		resolver.setDefaultEncoding("utf-8");
+		return resolver;
 	}
 
 }

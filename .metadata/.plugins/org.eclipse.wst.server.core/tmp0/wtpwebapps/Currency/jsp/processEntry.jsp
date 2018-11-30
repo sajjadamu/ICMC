@@ -37,7 +37,7 @@
 
 <script type="text/javascript">
 	function SavePrint() {
-		addHeader();
+		addHeaderJson();
 		var machine={
 				"machineNo":$('input[name=machineNo]:checked').val(),
 				"processAction":$('input[name=processAction]:checked').val(),

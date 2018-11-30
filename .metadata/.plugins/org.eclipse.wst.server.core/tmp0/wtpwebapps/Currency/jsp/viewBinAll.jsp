@@ -425,7 +425,7 @@ ul.countryy li:nth-child(4) {
 
 <script type="text/javascript">
 function doAjaxForRegion() {
-	addHeader();
+	addHeaderJson();
 	var zone = $('#Zone').val();
 	if(zone != ''){
 	$.ajax({
@@ -456,7 +456,7 @@ function doAjaxForRegion() {
 
 <script type="text/javascript">
 function getRegionSummary(){
-	addHeader();
+	addHeaderJson();
 	var region = $('#region').val();
 	if(region != ''){
 	$.ajax({

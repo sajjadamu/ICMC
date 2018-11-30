@@ -27,7 +27,7 @@ var dataId=0;
 function doAjaxForAccountNumber() {
 	//var token = $("meta[name='_csrf']").attr("content");
 	//var header = $("meta[name='_csrf_header']").attr("content");
-	addHeader();
+	addHeaderJson();
 	var name = $('#name').val();
 	$.ajax({
 		type : "POST",
@@ -50,7 +50,7 @@ function doAjaxForAccountNumber() {
 }
 
 function getReceiptSequence() {
-	addHeader();
+	addHeaderJson();
 	var name = $('#name').val();
 	//var accountNumber = $('#accountNumber').val();
 	$.ajax({
@@ -242,7 +242,7 @@ function deleteRow(i){
 
 
 function SavePrint(str) {
-	addHeader();
+	addHeaderJson();
 	var isValid = true;
 	var dsb={
 			"name":$('#name').val(),

@@ -95,7 +95,7 @@
 <script type="text/javascript">
 
 function doAjaxForBinInDropdown(str) {
-	addHeader();
+	addHeaderJson();
 	// get the form values  
 	var denomination = $('#denomination'+str).text();
 	$.ajax({
@@ -121,7 +121,7 @@ function doAjaxForBinInDropdown(str) {
 	
 	
 function doAjaxPostUpdateStatus(str) {  
-	addHeader();
+	addHeaderJson();
 	// get the form values  
 	//var id = $('#id'+str).text();
 	var bin = $('#bin'+str).text();
@@ -151,7 +151,7 @@ function doAjaxPostUpdateStatus(str) {
 
 <script type="text/javascript">
 	function ajaxViewBinDetail(denomination, bin) {
-		addHeader();
+		addHeaderJson();
 		var denomination = denomination;
 		var bin = bin;
 		  

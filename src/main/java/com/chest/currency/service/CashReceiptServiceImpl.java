@@ -1295,6 +1295,11 @@ public class CashReceiptServiceImpl implements CashReceiptService {
 		ICMC icmc = cashReceiptJpaDao.getICMCBySolId(solId);
 		return icmc;
 	}
+	@Override
+	public ICMC getICMCByName(String name) {
+		ICMC icmc = cashReceiptJpaDao.getICMCByName(name);
+		return icmc;
+	}
 
 	@Override
 	public List<BranchReceipt> getBrachFromBranchReceipt(BigInteger icmcId) {

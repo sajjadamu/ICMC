@@ -279,7 +279,7 @@
 	};
 
 	function SavePrint(str) {
-		addHeader();
+		addHeaderJson();
 		var dirv = {
 			"bankName" : $('#bankName').val(),
 			"solId" : $('#solId').val(),

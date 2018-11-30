@@ -91,7 +91,7 @@
 
 <script type="text/javascript">
 function doAjaxPostUpdateStatus(str) {  
-	addHeader();  
+	addHeaderJson();  
 	// get the form values  
 	var id = $('#id'+str).text();
 	var type=$('#type'+str).text();

@@ -273,7 +273,7 @@ var dataId=0;
 
 <script type="text/javascript">
 	function doAjaxPostInsert(str) {
-		addHeader();
+		addHeaderJson();
 		var orvAllocations = [];
 		var val = $("#member").val();
 		var isValid = true;
@@ -417,7 +417,7 @@ for (i = 0; i <= countrow; i++) {
 		}  
 	
 	function doAjaxPostForBranch() {  
-		addHeader();  
+		addHeaderJson();  
 		// get the form values  
 		  var solid = $('#solId').val();
 		  if(solid.length==4)

@@ -89,7 +89,7 @@
 
 <script type="text/javascript">
 	function bundleDetails(str) {
-		addHeader();
+		addHeaderJson();
 		var srNumber = str;
 		$.ajax({
 			type : "POST",

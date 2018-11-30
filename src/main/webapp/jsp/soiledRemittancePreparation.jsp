@@ -51,7 +51,7 @@
 
 <script type="text/javascript">
 function doAjaxPostForDeduction(str) { 
-	addHeader();  
+	addHeaderJson();  
 	var currencyType=null;
 	var type= $('input[name=soiledvalue]:checked').val()
 	  if(type=="mutilated"){
@@ -230,7 +230,7 @@ var getUrlParameter = function getUrlParameter(sParam) {
 									<td><input type="text" name="bundle"
 										id="requestBundle<%=tuple.get(0, Integer.class)%>"></td>
 									<%-- <td hidden id="currencyType<%=tuple.get(0,Integer.class)%>"><%=tuple.get(3,CurrencyType.class)%></td> --%>
-									<td><input type="text" name="binBundle"
+									<td><input type="text" name="binBundle" readonly="readonly"
 										id="binBundle<%=tuple.get(0, Integer.class)%>"></td>
 									<td><input type="button"
 										id="buttonId<%=tuple.get(0, Integer.class)%>"

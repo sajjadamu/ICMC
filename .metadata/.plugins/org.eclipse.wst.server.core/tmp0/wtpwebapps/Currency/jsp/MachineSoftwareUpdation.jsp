@@ -109,7 +109,7 @@ table.table-bordered.dataTable tbody tr td input {
 <script type="text/javascript">
 
 function doAjaxPostInsert(str) {  
-	addHeader();  
+	addHeaderJson();  
 	//alert(str)
 	var machineSoftwareUpdation={
 			  "machineNo":$('#machineNo'+str).text(),

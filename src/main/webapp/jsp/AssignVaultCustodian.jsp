@@ -52,7 +52,7 @@
 
 <script type="text/javascript">
 	function doAjaxForCoustodianHandover() {
-		addHeader();
+		addHeaderJson();
 		var custodian = $('#custodian').val();
 		$.ajax({
 			type : "POST",

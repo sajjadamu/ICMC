@@ -63,7 +63,7 @@
 
 <script type="text/javascript">
     function doAjaxPostUpdateStatus(str) {  
-    	addHeader();
+    	addHeaderJson();
     	// get the form values  
   	  var soiledAccept={
   	  "id":$('#id'+str).text(),

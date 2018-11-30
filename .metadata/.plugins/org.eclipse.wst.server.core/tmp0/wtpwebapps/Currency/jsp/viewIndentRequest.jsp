@@ -27,7 +27,7 @@
 
 <script type="text/javascript">
 function doAjaxPostUpdateStatus(str) {  
-	addHeader();  
+	addHeaderJson();  
 	// get the form values  
 	  var id = $('#id'+str).text();
 	  $.ajax({  
@@ -51,7 +51,7 @@ function doAjaxPostUpdateStatus(str) {
 <script type="text/javascript">
 
 function doAjaxPostInsert(str,source) { 
-	addHeader();  
+	addHeaderJson();  
 	var indent={
 			  "denomination":$('#denomination'+str).text(),
 			  "bundle":$('#bundle'+str).text(),
@@ -101,7 +101,7 @@ function doAjaxPostInsert(str,source) {
 <script type="text/javascript">
 
 function doAjaxPostInsertForFresh(str,source) { 
-	addHeader();   
+	addHeaderJson();   
 	var indent={
 			  "denomination":$('#denomination'+str).text(),
 			  "bundle":$('#bundle'+str).text(),

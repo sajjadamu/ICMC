@@ -56,7 +56,7 @@
 
 <script type="text/javascript">
 	function ajaxAvailableCapacity(str) {
-		addHeader();
+		addHeaderJson();
 		// get the form values  
 		var binNumber = str
 		$.ajax({

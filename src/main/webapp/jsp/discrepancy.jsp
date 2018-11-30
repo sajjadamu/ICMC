@@ -69,7 +69,6 @@
 	width: 40px !important;
 }
 </style>
-
 <script type="text/javascript">
 	var countrow = 0;
 
@@ -370,7 +369,7 @@
 
 <script type="text/javascript">
 	function doAjaxPostInsert(str) {
-		addHeader();
+		addHeaderJson();
 		var discrepancyAllocations = [];
 		//var val = $("#member").val();
 		var val = ($('#table1 tr').length) - 2;
@@ -444,7 +443,8 @@
 					"printYear" : $('#printYear' + i).val(),
 					"dateOnShrinkWrap" : $('#dateOnShrinkWrap' + i).val(),
 					"timeOfDetection" : $('#timeOfShrinkWrap' + i).val(),
-					"remarks" : $('#remarks' + i).val()
+					"remarks" : $('#remarks' + i).val(),
+					"filepath" : $('#file' + i).val()
 				});
 			}
 
@@ -466,7 +466,6 @@
 			"branch" : $('#branch').val(),
 			"srNo" : $('#srNo').val(),
 			"filepath" : $('#filepath').val(),
-			//"filepath":tmppath,
 			"accountTellerCam" : $('#accountTellerCam').val(),
 			"customerName" : $('#customerName').val(),
 			"accountNumber" : $('#accountNumber').val(),
@@ -520,12 +519,9 @@
 					var res = JSON.stringify(response);
 					var newStr = res.substring(1, res.length - 1);
 					var data = newStr.split(",");
-					console.log("response  =" + newStr);
-					console.log("response  =" + response.id);
-
-					//console.log("response  ="+res[0][id]);
-					alert('Record submit.');
-					window.location = '././viewDiscrepancy';
+					uploadFormData();
+					/* alert('Record submit.');
+					window.location = '././viewDiscrepancy'; */
 					//$('#print'+str).prop('disabled', true);
 				},
 				error : function(e) {
@@ -534,6 +530,30 @@
 				}
 			});
 		}
+	}
+	function uploadFormData() {
+		addHeaderJson();
+		var fileData = new FormData();
+		jQuery.each(jQuery('#filepath')[0].files, function(i, file) {
+			fileData.append("file" + i, file);
+		});
+		$.ajax({
+			url : "././fileUpload",
+			data : fileData,
+			contentType : false,
+			processData : false,
+			cache : false,
+			type : 'POST',
+			success : function(response) {
+				//alert('image uploaded ' + response.status);
+				alert('Record submit.' + response.status);
+				window.location = '././viewDiscrepancy';
+
+			},
+			error : function(e) {
+				alert('Error in fileUpload : ' + e);
+			}
+		});
 	}
 	function insertImage(id) {
 		alert("image" + id);
@@ -553,6 +573,9 @@
 			success : function(response) {
 
 				alert("response " + response);
+			},
+			error : function(e) {
+				alert(' Error: ' + e);
 			}
 		});
 	}
@@ -643,7 +666,11 @@
 		$('#totalValue').val(myTotalValue.toLocaleString('en-IN'));
 	}
 </script>
-
+<script type="text/javascript">
+	function refresh() {
+		window.location = '././addDiscrepancy';
+	}
+</script>
 </head>
 <body oncontextmenu="return false;">
 	<div id="wrapper">
@@ -707,12 +734,14 @@
 												cssClass="form-control" readonly="true" />
 										</div>
 
-										<%-- <div class="col-lg-6 form-group">
+										<div class="col-lg-6 form-group">
 											<label>Upload Photo</label>
 											<!-- <input class="form-control" type="file" name="file"> -->
-											<form:input path="filepath" id="filepath" name="filepath" type="file"/>
-											<label id="err4" style="display: none;color: red">Upload Photo</label>
-										</div> --%>
+											<form:input path="filepath" id="filepath" name="filepath"
+												type="file" multiple="multiple" />
+											<label id="err4" style="display: none; color: red">Upload
+												Photo</label>
+										</div>
 										<div class="col-lg-6 form-group">
 											<label>Sr No</label>
 											<form:input path="srNo" id="srNo" name="srNo"
@@ -744,6 +773,12 @@
 										</div>
 
 										<div class="col-lg-6 form-group">
+											<label id="err7" style="display: none; color: red">Please
+												Enter Account Number</label> <label
+												style="display: none; color: red"> Account Number
+												Must Be 12 Character</label>
+										</div>
+										<div class="col-lg-6 form-group">
 											<label>Account Number / Teller</label>
 											<form:input path="accountNumber" id="accountNumber"
 												cssClass="form-control" />
@@ -752,8 +787,7 @@
 												style="display: none; color: red"> Account Number
 												Must Be 12 Character</label>
 										</div>
-
-										<div class="form-group">
+										<div class="col-lg-6 form-group">
 											<label>Number of Entries</label> <input type="text"
 												id="member" name="member" value="" class="form-control"><br />
 											<div id="container">
@@ -781,12 +815,16 @@
 											</div>
 										</div>
 										<div class="col-lg-12">
+											<button type="submit" class="btn btn-default" value="Details"
+												style="width: 99px;" onclick="refresh()">Refresh</button>
 											<input type="button" id="save" value="Submit"
+												class="btn btn-default"
 												onclick="doAjaxPostInsert('+i+');return false">
 
 											<!-- <input type="button" id="save" value="Submit" onclick="insertImage(1);return false">
 										 -->
 										</div>
+
 									</form:form>
 								</div>
 								<div id="printSection" style="display: none;"></div>

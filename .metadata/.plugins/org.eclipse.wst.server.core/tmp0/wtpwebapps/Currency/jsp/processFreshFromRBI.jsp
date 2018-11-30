@@ -28,7 +28,7 @@
 <script type="text/javascript">
 
 function SavePrint(str,source) {
-	addHeader();
+	addHeaderJson();
 	var fresh={
 			"denomination" : $('#denomination' + str).text(),
 			"bundleFromDB" : $('#bundleFromDB' + str).text(),

@@ -201,7 +201,7 @@ function doAjaxForTotal() {
 
 <script type="text/javascript">
 function doAjaxPostInsert(str) {
-	addHeader();
+	addHeaderJson();
 	var craAllocations = [];
 	var val = $("#member").val();
 	var isValid = true;
@@ -282,7 +282,6 @@ for (i = 0; i < countrow; i++) {
 		//Close Denomination Validation
 		
 	if(isValid){
-		$('#waitingImg').show();
 		 $('#btnsubmit').prop("disabled",true);
 		
 		$.ajax({  
@@ -298,13 +297,10 @@ for (i = 0; i < countrow; i++) {
 	    	//window.location='././viewCRA';
 	    }, 
 	    complete: function() {
-            $("#waitingImg").hide();
-
              alert('record saved.');
         },
 	    error: function(e){  
-	    	$('#waitingImg').hide();
-	    	alert('Error: ' + e);  
+	    	 alert('Error: ' + e.responseJSON.message); 
 	      $('#btnsubmit').prop("disabled",false);
 	    }  
 	  });  }
@@ -378,7 +374,7 @@ $(function()
 
 <script type="text/javascript">
 function doAjaxForAccountNumber() {
-	addHeader();
+	addHeaderJson();
 	var vendor = $('#vendor').val();
 	var mspName = $('#mspName').val();
 	$.ajax({
@@ -516,8 +512,8 @@ function refresh() {
 											<label id="err6" style="display: none; color: red">Enter
 												Account Number</label>
 										</div>
-										<img id="waitingImg" style="width: 150px; height: 60px;"
-											src="./resources/logo/response-waiting.gif">
+										<!-- 	<img id="waitingImg" style="width: 150px; height: 60px;"
+											src="./resources/logo/response-waiting.gif"> -->
 										<div class="form-group">
 											<label>Number of Entries</label> <input type="text"
 												id="member" name="member" value="" class="form-control"><br />

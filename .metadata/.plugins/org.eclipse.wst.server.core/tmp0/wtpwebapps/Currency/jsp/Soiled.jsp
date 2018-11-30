@@ -48,7 +48,7 @@ $("input:checkbox[class=chkbx]:checked").each(function () {
  $('#totalValue').html("Selected Total Value:"+totalValue);
 }
 function doAjaxPostInsert() {
-	addHeader();
+	addHeaderJson();
 	var remittanceAllocations = [];
 	var val = $("#member").val();
 	var isValid = true;

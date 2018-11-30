@@ -169,9 +169,10 @@ public class ProcessingRoomServiceImpl implements ProcessingRoomService {
 	}
 
 	/*
-	 * @Override public List<Indent> getIndentRequestForMachineAllocation(BigInteger
-	 * icmcId, CashSource cashSource) { List<Indent> indentListForMachineAllocation
-	 * = processingRoomJpaDao.getIndentRequestForMachineAllocation(icmcId,
+	 * @Override public List<Indent>
+	 * getIndentRequestForMachineAllocation(BigInteger icmcId, CashSource
+	 * cashSource) { List<Indent> indentListForMachineAllocation =
+	 * processingRoomJpaDao.getIndentRequestForMachineAllocation(icmcId,
 	 * cashSource); return indentListForMachineAllocation; }
 	 */
 	@Override
@@ -388,7 +389,8 @@ public class ProcessingRoomServiceImpl implements ProcessingRoomService {
 
 		/*
 		 * List<MachineAllocation> pendingBundleListFromMachineAllocation =
-		 * processingRoomJpaDao .getPendingBundleFromMachineAllocation(user.getIcmcId(),
+		 * processingRoomJpaDao
+		 * .getPendingBundleFromMachineAllocation(user.getIcmcId(),
 		 * process.getDenomination(), machineOrManual);
 		 * 
 		 */
@@ -473,24 +475,25 @@ public class ProcessingRoomServiceImpl implements ProcessingRoomService {
 		/*
 		 * String machineOrManual = ""; if (process.getProcessAction() ==
 		 * ProcessAction.MACHINE) { machineOrManual = "NO"; } if
-		 * (process.getProcessAction() == ProcessAction.MANUAL) { machineOrManual =
-		 * "YES"; }
+		 * (process.getProcessAction() == ProcessAction.MANUAL) {
+		 * machineOrManual = "YES"; }
 		 * 
 		 * List<MachineAllocation> pendingBundleListFromMachineAllocation =
-		 * processingRoomJpaDao .getPendingBundleFromMachineAllocation(user.getIcmcId(),
+		 * processingRoomJpaDao
+		 * .getPendingBundleFromMachineAllocation(user.getIcmcId(),
 		 * process.getDenomination(), machineOrManual);
 		 * 
 		 * List<MachineAllocation> eligiblePendingBundleList =
 		 * UtilityJpa.getEligibleBundleListForMachineAllocation(
 		 * pendingBundleListFromMachineAllocation, process.getBundle(), user);
 		 * 
-		 * if (eligiblePendingBundleList == null || eligiblePendingBundleList.isEmpty())
-		 * { throw new BaseGuiException(
+		 * if (eligiblePendingBundleList == null ||
+		 * eligiblePendingBundleList.isEmpty()) { throw new BaseGuiException(
 		 * "Required Bundle is Not available for Denomination:" +
 		 * process.getDenomination()); }
 		 * 
-		 * for (MachineAllocation machineAllocation : eligiblePendingBundleList) {
-		 * updatePendingBundleInMachineAllocation(machineAllocation);
+		 * for (MachineAllocation machineAllocation : eligiblePendingBundleList)
+		 * { updatePendingBundleInMachineAllocation(machineAllocation);
 		 * process.setMachineId(machineAllocation.getId()); }
 		 */ addProcess(processList);
 
@@ -794,7 +797,7 @@ public class ProcessingRoomServiceImpl implements ProcessingRoomService {
 			da.setDiscrepancyDate(discrepancy.getDiscrepancyDate());
 			da.setSolId(discrepancy.getSolId());
 			da.setBranch(discrepancy.getBranch());
-			da.setFilepath(discrepancy.getFilepath());
+		//	da.setFilepath(discrepancy.getFilepath());
 			da.setAccountTellerCam(discrepancy.getAccountTellerCam());
 			da.setCustomerName(discrepancy.getCustomerName());
 			da.setAccountNumber(discrepancy.getAccountNumber());
@@ -1047,6 +1050,18 @@ public class ProcessingRoomServiceImpl implements ProcessingRoomService {
 	public List<Discrepancy> getDiscrepancyReports(BigInteger icmcId, Calendar sDate, Calendar eDate) {
 		List<Discrepancy> discrepancyReportList = processingRoomJpaDao.getDiscrepancyReports(icmcId, sDate, eDate);
 		return discrepancyReportList;
+	}
+
+	@Override
+	public Discrepancy getDiscrepancyForUploadingImage(User user, Calendar sDate, Calendar eDate) {
+		Discrepancy discrepancyReportList = processingRoomJpaDao.getDiscrepancyForUploadingImage(user, sDate, eDate);
+		return discrepancyReportList;
+	}
+
+	@Override
+	public void uploadDiscrepancyImage(Discrepancy discrepancy) {
+		processingRoomJpaDao.uploadDiscrepancyImage(discrepancy);
+
 	}
 
 	@Override

@@ -385,4 +385,8 @@ public interface ProcessingRoomJpaDao {
 
 	Boolean updateDiversionIRV(DiversionIRV diversionIRV);
 
+	Discrepancy getDiscrepancyForUploadingImage(User user, Calendar sDate, Calendar eDate);
+
+	void uploadDiscrepancyImage(Discrepancy discrepancy);
+
 }

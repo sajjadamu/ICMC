@@ -62,7 +62,7 @@
 
 	function load_BranchList_BundleDetails() {
 		hideAllMsgDiv();
-		addHeader();
+		addHeaderJson();
 		$("#temp").focus();
 		var id = $('input[name=solId]:checked').val()
 				$.ajax({
@@ -106,7 +106,7 @@
 	}
 	
 	function saveRecord() {
-		addHeader();
+		addHeaderJson();
 		var rowCount = $('table#records_table tr:last').index() + 1;
 		var SASReleasedList = [];
 		var id = $('input[name=solId]:checked').val();

@@ -89,7 +89,7 @@ function doAjaxPostForBranch() {
 	} 
 
 function SavePrint() {
-	addHeader();
+	addHeaderJson();
 	var isValid = true;
 	var otherBankReceipt = {
 			"id":$('#id').val(),

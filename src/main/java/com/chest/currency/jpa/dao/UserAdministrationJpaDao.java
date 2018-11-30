@@ -175,4 +175,8 @@ public interface UserAdministrationJpaDao {
 	
 	public void updateLamLog(LamRequestLog requestLog);
 
+	IcmcPrinter getPrinter(User user);
+
+	User isUserExists(String userId);
+
 }

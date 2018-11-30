@@ -37,7 +37,7 @@
 
 <script type="text/javascript">
 	function SavePrint() {
-		addHeader();
+		addHeaderJson();
 		var auditorIndentProcess={
 				"currencyType":$('input[name=currencyType]:checked').val(),
 				"denomination":$('input[name=denomination]:checked').val(),

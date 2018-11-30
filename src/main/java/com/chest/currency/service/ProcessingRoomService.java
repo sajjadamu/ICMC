@@ -404,4 +404,8 @@ public interface ProcessingRoomService {
 
 	public boolean updateCashReceiveForIndentRequest(List<Indent> indenrRequest);
 
+	Discrepancy getDiscrepancyForUploadingImage(User user, Calendar sDate, Calendar eDate);
+
+	void uploadDiscrepancyImage(Discrepancy discrepancy);
+
 }

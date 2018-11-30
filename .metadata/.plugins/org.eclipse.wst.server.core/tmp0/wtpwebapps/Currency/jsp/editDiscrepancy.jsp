@@ -86,7 +86,7 @@
     var countrow=0;
     
     function doAjaxPostForBranch() {  
-    	addHeader(); 
+    	addHeaderJson(); 
     	// get the form values  
 		  var solid = $('#solId').val();
 		  if(solid.length==4)

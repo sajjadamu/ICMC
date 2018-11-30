@@ -50,7 +50,7 @@
 
 <script type="text/javascript">
 function doAjaxPostForDeduction(str) { 
-	addHeader();  
+	addHeaderJson();  
 	var soiledIndent={
 	  "denomination":$('#denomination'+str).text(),
 	  "bundle":$('#bundle'+str).text(),

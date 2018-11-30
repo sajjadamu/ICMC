@@ -198,7 +198,7 @@ div#mainClasDiv {
 <script type="text/javascript">
 	
 	function regionDeatils(sta){
-		addHeader();
+		addHeaderJson();
 		/* $.ajax({
 			type : "POST",
 			url : "././getRegion",

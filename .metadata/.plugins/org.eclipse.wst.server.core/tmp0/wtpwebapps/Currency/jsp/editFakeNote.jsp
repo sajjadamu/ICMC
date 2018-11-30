@@ -17,7 +17,7 @@
 	href="./resources/css/jquery.datetimepicker.css" />
 <script type="text/javascript">
 function doAjaxPostForBranch() {
-	addHeader();
+	addHeaderJson();
 	var solid = $('#solId').val();
 	if(solid.length==4)
 	{

@@ -22,7 +22,7 @@
 
 <script type="text/javascript">
 function doAjaxForZoneAndRegion() {
-	addHeader();
+	addHeaderJson();
 	var rbiName = $('#rbiName').val();
 	$.ajax({
 		type : "POST",
@@ -45,7 +45,7 @@ function doAjaxForZoneAndRegion() {
 
 <script type="text/javascript">
 function doAjaxForRegion(region) {
-	addHeader();
+	addHeaderJson();
 	var zone = $('#zoneHidden').val();
 	if(zone != 'error'){
 	$.ajax({

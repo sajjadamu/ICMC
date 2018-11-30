@@ -54,7 +54,7 @@
     var countrow=0;
     
     function doAjaxPostForBranch() {  
-    	addHeader(); 
+    	addHeaderJson(); 
     	// get the form values  
 		  var solid = $('#solId').val();
 		  if(solid.length==4)
@@ -231,7 +231,7 @@ function deleteRow(i){
 
 <script type="text/javascript">
 function doAjaxPostInsert(str) {
-	addHeader();
+	addHeaderJson();
 	var discrepancyAllocations = [];
 	//var val = $("#member").val();
 	var val = ($('#table1 tr').length)-2;

@@ -105,7 +105,7 @@ $(document).ready(function(){
 
 });
 function doAjaxPostCancel(id){
-	addHeader();
+	addHeaderJson();
 	var idFromUI = id;
 	if (confirm('Are you sure you want to cancel this Soiled request?')) {
 		$.ajax({

@@ -1035,6 +1035,21 @@ public class ProcessingRoomJpaDaoImpl implements ProcessingRoomJpaDao {
 				.and(QDiscrepancy.discrepancy.insertTime.between(sDate, eDate)));
 		return jpaQuery.list(QDiscrepancy.discrepancy);
 	}
+	
+	@Override
+	public Discrepancy getDiscrepancyForUploadingImage(User user, Calendar sDate, Calendar eDate) {
+		JPAQuery jpaQuery = getFromQueryForDiscrepancy();
+		jpaQuery.where(QDiscrepancy.discrepancy.icmcId.eq(user.getIcmcId())
+				.and(QDiscrepancy.discrepancy.insertTime.between(sDate, eDate))
+				.and(QDiscrepancy.discrepancy.insertBy.eq(user.getId())));
+		jpaQuery.orderBy(QDiscrepancy.discrepancy.id.desc());
+		return jpaQuery.singleResult(QDiscrepancy.discrepancy);
+	}
+	
+	@Override
+	public void uploadDiscrepancyImage(Discrepancy discrepancy) {
+		em.merge(discrepancy);
+	}
 
 	@Override
 	public CRAAllocation getPendingBundleById(CRAAllocation craAllocation) {

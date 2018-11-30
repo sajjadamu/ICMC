@@ -54,7 +54,7 @@
 <script type="text/javascript">
 
 function doAjaxPostForSaveAndPrintBranch(str,source,denom) {  
-	addHeader();
+	addHeaderJson();
 	var fromProcessingRoom = true;  
 	var branchReceipt = {
 		"denomination":$('#denomination'+str).text(),
@@ -89,7 +89,7 @@ function doAjaxPostForSaveAndPrintBranch(str,source,denom) {
 } 
 
 function doAjaxPostForSaveAndPrintDSB(str,source,denom) {  
-	addHeader();  
+	addHeaderJson();  
 	var fromProcessingRoom = true;
 	  var dsb = {
 		"denomination":$('#denomination'+str).text(),
@@ -122,7 +122,7 @@ function doAjaxPostForSaveAndPrintDSB(str,source,denom) {
 } 
 
 function doAjaxPostForSaveAndPrintOtherBank(str,source,denom) {  
-	addHeader(); 
+	addHeaderJson(); 
 	var fromProcessingRoom = true;
 	var bankReceipt = {
 		"denomination":$('#denomination'+str).text(),
@@ -159,7 +159,7 @@ function doAjaxPostForSaveAndPrintOtherBank(str,source,denom) {
 } 
 
 function doAjaxPostForSaveAndPrintDiversion(str,source,denom) {  
-	addHeader();
+	addHeaderJson();
 	var fromProcessingRoom = true;  
 	var dirv = {
 		"denomination":$('#denomination'+str).text(),
