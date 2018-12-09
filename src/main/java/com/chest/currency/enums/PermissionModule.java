@@ -11,8 +11,8 @@ public enum PermissionModule {
 	PROCESSING_ROOM,
 	FAKE_NOTE_MANAGEMENT,
 	MIGRATION,
-	VERIFICATION,
-	REPORTS;
+	REPORTS,
+	VERIFICATION;
 	
 	public String value(){
 		return name();

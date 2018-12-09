@@ -187,7 +187,8 @@ public class CashPaymentServiceImpl implements CashPaymentService {
 			cashPaymentJpaDao.insertInSASAllocation(eligibleSASRequestList);
 			/*
 			 * for (SASAllocation allocation : eligibleSASRequestList) {
-			 * cashPaymentJpaDao.updateBranchReceiptForPayment(user, allocation); }
+			 * cashPaymentJpaDao.updateBranchReceiptForPayment(user,
+			 * allocation); }
 			 */
 			if (!sasAllocationParent.getProcessedOrUnprocessed().equalsIgnoreCase("UNPROCESS")) {
 				for (BinTransaction btx : txnList) {
@@ -234,8 +235,8 @@ public class CashPaymentServiceImpl implements CashPaymentService {
 				.add(sas.getTotalValueOfCoinsRs2().multiply(BigDecimal.valueOf(2).multiply(BigDecimal.valueOf(2500))))
 				.add(sas.getTotalValueOfCoinsRs5().multiply(BigDecimal.valueOf(5).multiply(BigDecimal.valueOf(2500))))
 				.add(sas.getTotalValueOfNotesRs2000A()
-						.add(sas.getTotalValueOfNotesRs2000F().add(sas.getTotalValueOfNotesRs2000I()))
-						.multiply(BigDecimal.valueOf(2000).multiply(BigDecimal.valueOf(1000))))
+						.add(sas.getTotalValueOfNotesRs2000F().add(sas.getTotalValueOfNotesRs2000I())).multiply(
+								BigDecimal.valueOf(2000).multiply(BigDecimal.valueOf(1000))))
 				.add(sas.getTotalValueOfNotesRs1000A()
 						.add(sas.getTotalValueOfNotesRs1000F().add(sas.getTotalValueOfNotesRs1000I()))
 						.multiply(BigDecimal.valueOf(1000).multiply(BigDecimal.valueOf(1000))))
@@ -1010,9 +1011,7 @@ public class CashPaymentServiceImpl implements CashPaymentService {
 		for (CRAAllocation craAllocation : cra.getCraAllocations()) {
 			craAllocation.setIcmcId(cra.getIcmcId());
 		}
-
 		this.findBinAndProcessCRAAllocation(user, cra);
-
 		return true;
 	}
 
@@ -1104,7 +1103,8 @@ public class CashPaymentServiceImpl implements CashPaymentService {
 			BigDecimal multiplyValue = new BigDecimal(1000);
 			/*
 			 * List<ProcessBundleForCRAPayment>
-			 * procesBundleCra=cashPaymentJpaDao.getProcessBundleCRARecord(cra. getId());
+			 * procesBundleCra=cashPaymentJpaDao.getProcessBundleCRARecord(cra.
+			 * getId());
 			 */
 			int craIdCount = 0;
 			for (CRAAllocation craAllocation : cra.getCraAllocations()) {
@@ -1117,9 +1117,10 @@ public class CashPaymentServiceImpl implements CashPaymentService {
 				}
 				if (craAllocation.getStatus().equals(OtherStatus.RELEASED)) {
 					/*
-					 * acceptTotalValue = totalValue.subtract(multiplyValue.multiply(denomination).
-					 * multiply(craAllocation.getPendingRequestedBundle())); totalValue =
-					 * totalValue.add(acceptTotalValue);
+					 * acceptTotalValue =
+					 * totalValue.subtract(multiplyValue.multiply(denomination).
+					 * multiply(craAllocation.getPendingRequestedBundle()));
+					 * totalValue = totalValue.add(acceptTotalValue);
 					 */
 					List<ProcessBundleForCRAPayment> procesBundleCra = cashPaymentJpaDao
 							.getProcessBundleCRARecord(cra.getId());
@@ -1436,7 +1437,8 @@ public class CashPaymentServiceImpl implements CashPaymentService {
 			throw new RuntimeException("you can not processing request");
 		}
 
-		// SoiledRemittanceAllocation soiledQRPath = this.getQRForSoiledBox(soiled);
+		// SoiledRemittanceAllocation soiledQRPath =
+		// this.getQRForSoiledBox(soiled);
 
 		return soiled;
 	}

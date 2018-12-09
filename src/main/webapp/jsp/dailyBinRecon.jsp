@@ -115,10 +115,11 @@ function doAjaxPostForBinRecon(str) {
 	    		 if(OK == 1){
 	    			 $("#eod").prop("disabled",true); 
 	    		 }else{
-	    			 if($('.pending').text()!=null || $('.pending').text()!=""){
-	    				 $("#eod").prop("disabled",false);
+	    			 var txt =$('.pending').text();
+	    			 if(txt != ""){
+	    				 $("#eod").prop("disabled",true);
 	    				}else{
-	    					 $("#eod").prop("disabled",true);
+	    					 $("#eod").prop("disabled",false);
 	    				}
 	    		 } 
 	    		 }
@@ -185,54 +186,22 @@ function doAjaxPostForBinRecon(str) {
 						</div>
 						<!-- /.panel-heading -->
 						<div class="row">
-							<div class="col-lg-12">
-								<div style="color: red" class="pending">
-									<c:out value="${SASmsg}"></c:out>
-								</div>
-								<div style="color: red" class="pending">
-									<c:out value="${craMsg}"></c:out>
-								</div>
-								<div style="color: red" class="pending">
-									<c:out value="${soiledMsg}"></c:out>
-								</div>
-								<div style="color: red" class="pending">
-									<c:out value="${otherBankMsg}"></c:out>
-								</div>
-								<div style="color: red" class="pending">
-									<c:out value="${indentMsg}"></c:out>
-								</div>
-								<div style="color: red" class="pending">
-									<c:out value="${mutilatedFullValueMsg}"></c:out>
-								</div>
-								<div style="color: red" class="pending">
-									<c:out value="${diversionMsg}"></c:out>
-								</div>
-
-								<div style="color: red" class="pending">
-									<c:out value="${mBranchMsg}"></c:out>
-								</div>
-								<div style="color: red" class="pending">
-									<c:out value="${mDSBMsg}"></c:out>
-								</div>
-								<div style="color: red" class="pending">
-									<c:out value="${mRBIMsg}"></c:out>
-								</div>
-								<div style="color: red" class="pending">
-									<c:out value="${mOtherBankMsg}"></c:out>
-								</div>
-								<div style="color: red" class="pending">
-									<c:out value="${mDiversionMsg}"></c:out>
-								</div>
-
-								<div style="color: red" class="pending">
-									<c:out value="${pOutPutMachineMsg}"></c:out>
-								</div>
-								<div style="color: red" class="pending">
-									<c:out value="${pOutPutManualMsg}"></c:out>
-								</div>
-
-
-							</div>
+						<div class="col-lg-12">
+							<div style="color: red" class="pending"><c:out value="${SASmsg}"></c:out></div>
+							<div style="color: red" class="pending"><c:out value="${craMsg}"></c:out></div>
+							<div style="color: red" class="pending"><c:out value="${soiledMsg}"></c:out></div>
+							<div style="color: red" class="pending"><c:out value="${otherBankMsg}"></c:out></div>
+							<div style="color: red" class="pending"><c:out value="${indentMsg}"></c:out></div>
+							<div style="color: red" class="pending"><c:out value="${mutilatedFullValueMsg}"></c:out></div>
+							<div style="color: red" class="pending"><c:out value="${diversionMsg}"></c:out></div>
+							<div style="color: red" class="pending"><c:out value="${mBranchMsg}"></c:out></div>
+							<div style="color: red" class="pending"><c:out value="${mDSBMsg}"></c:out></div>
+							<div style="color: red" class="pending"><c:out value="${mRBIMsg}"></c:out></div>
+							<div style="color: red" class="pending"><c:out value="${mOtherBankMsg}"></c:out></div>
+							<div style="color: red" class="pending"><c:out value="${mDiversionMsg}"></c:out></div>
+							<div style="color: red" class="pending"><c:out value="${pOutPutMachineMsg}"></c:out></div>
+							<div style="color: red" class="pending"><c:out value="${pOutPutManualMsg}"></c:out></div>
+						  </div>
 						</div>
 						<div class="panel-body">
 							<div class="dataTable_wrapper">

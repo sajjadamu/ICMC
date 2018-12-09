@@ -47,7 +47,7 @@ var rowCount = 0;
 var dataId=0;
 $(document).ready(function(){
 	//$("#member").keyup(function(){
-	 $('#waitingImg').hide();
+	// $('#waitingImg').hide();
 		$("#member").change(function() { 
     
 		var rowCount = ($('#table1 tr').length);
@@ -84,9 +84,6 @@ countrow++;
 
 function replicateValue(i){
 	
-    // alert(countrow)
-	//dataId = countrow-1;
-    // alert("value from ID="+dataId)
     var rowCount = ($('#table1 tr').length)-2;
 	countrow=rowCount;
 	dataId = countrow-1;
@@ -148,6 +145,7 @@ function addRow(i){
 			'<td><input type="hidden" maxlength="45" id="Total'+countrow+'"  class="form-control input-margin" name="Total" value="" autofocus readonly="true"></td>'+
 			'</tr>'
 	$('#table1').append(data);
+	countrow++;
 	$('#table1').append('<tr id=addmoreButton'+rowCount+'><td><button type="button" class="addmoreButton" onclick="replicateValue('+rowCount+');doAjaxForTotal()">Replicate Value</button></td><td><button type="button" class="addmoreButton" onclick="addRow('+rowCount+');doAjaxForTotal()">Add Blank Row</button></td><td>Total</td><td><input class="form-control input-margin" type="text" id="totalValue"  value="" readonly></td></tr>');
 
 }
@@ -292,8 +290,8 @@ for (i = 0; i < countrow; i++) {
 	    data: JSON.stringify(craWrapper),
 	    success: function(response){ 
 
-	    	 $('#waitingImg').hide();
-	    	
+	    	/*  $('#waitingImg').hide();
+	    	 */
 	    	//window.location='././viewCRA';
 	    }, 
 	    complete: function() {
@@ -374,7 +372,7 @@ $(function()
 
 <script type="text/javascript">
 function doAjaxForAccountNumber() {
-	addHeaderJson();
+	addHeader();
 	var vendor = $('#vendor').val();
 	var mspName = $('#mspName').val();
 	$.ajax({

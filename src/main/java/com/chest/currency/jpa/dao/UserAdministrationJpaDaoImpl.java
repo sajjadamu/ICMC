@@ -90,7 +90,7 @@ public class UserAdministrationJpaDaoImpl implements UserAdministrationJpaDao {
 		jpaQuery.where(QUser.user.id.equalsIgnoreCase(userId));
 		return jpaQuery.singleResult(QUser.user);
 	}
-	
+
 	@Override
 	public User isValidUser(String username, BigInteger icmcId) {
 		JPAQuery jpaQuery = getFromQueryForUser();
@@ -134,10 +134,7 @@ public class UserAdministrationJpaDaoImpl implements UserAdministrationJpaDao {
 	@Override
 	public User getUserById(String id) {
 		LOG.info("Featchin User by ldap id");
-		JPAQuery jpaQuery = getFromQueryForUser();
-		jpaQuery.where(QUser.user.id.equalsIgnoreCase(id));
-		return jpaQuery.singleResult(QUser.user);
-		// return em.find(User.class, id);
+		return em.find(User.class, id);
 	}
 
 	@Override
@@ -616,7 +613,10 @@ public class UserAdministrationJpaDaoImpl implements UserAdministrationJpaDao {
 	@Override
 	public IcmcPrinter getPrinter(User user) {
 		JPAQuery jpaQuery = getFromQueryForIcmcPrinter();
-		if ("Processing_Room_Live".equalsIgnoreCase(user.getRole().getId())) {
+		String role = user.getRole().getId();
+		boolean roleFirstCapital = role.contains("Processing");
+		boolean roleFirstSmall = role.contains("processing");
+		if (roleFirstCapital || roleFirstSmall) {
 			LOG.info("if getting printer by Role   " + user.getRole().getId());
 			LOG.info("icmc id   " + user.getIcmcId());
 			jpaQuery.where(QIcmcPrinter.icmcPrinter.icmcId.eq(user.getIcmcId())

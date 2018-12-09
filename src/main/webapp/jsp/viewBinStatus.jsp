@@ -158,6 +158,7 @@
 														<th>Bin Type</th>
 														<Th>Capacity</Th>
 														<th>Bundle</th>
+														<th>Pending Bundle</th>
 														<th>Available Space</th>
 													</tr>
 													<c:forEach var="row" items="${records}">
@@ -167,6 +168,7 @@
 															<td>${row.binType}</td>
 															<td>${row.maxCapacity}</td>
 															<td>${row.receiveBundle}</td>
+															<td>${row.pendingBundleRequest}</td>
 															<td>${row.maxCapacity-row.receiveBundle}</td>
 														</tr>
 													</c:forEach>

@@ -36,15 +36,30 @@ img.light-logo {
 }
 
 /*******************
-/*Top bar
+/*Top bar icici
 *******************/
-.topbar {
+/* .topbar {
     background: #f5821f;
 }
 
 .topbar .navbar-header {
     background: #053c6d;
+} */
+
+
+/*******************
+/*Top bar yes
+*******************/
+
+.topbar {
+    background: #1f27f5;
 }
+
+.topbar .navbar-header {
+    background: #ffff;
+}
+
+
 .topbar .top-navbar .navbar-header .navbar-brand .dark-logo {
   display: none;
 }

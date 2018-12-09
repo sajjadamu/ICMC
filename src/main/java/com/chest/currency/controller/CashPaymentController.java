@@ -777,11 +777,11 @@ public class CashPaymentController {
 		// eDate);
 
 		List<Sas> solIdList = new ArrayList<>();
-
 		List<SASAllocation> acceptedListFromSASAllocation = cashPaymentService
 				.getAllTodayAcceptedFromSASAllocation(user.getIcmcId(), sDate, eDate);
 
 		Set<Long> pList = new HashSet<Long>();
+		Set<Long> parentList = new HashSet<Long>();
 		for (SASAllocation parentId : acceptedListFromSASAllocation) {
 			if (parentId.getParentId() != null) {
 				pList.add(parentId.getParentId());
@@ -796,11 +796,13 @@ public class CashPaymentController {
 		for (Long sasId : pList) {
 			SASAllocation allocation = cashPaymentService.getRequestedFromSASAllocation(user.getIcmcId(), sDate, eDate,
 					sasId);
-			if (allocation != null)
-				pList.remove(sasId);
+			/*if (allocation != null)
+				pList.remove(sasId);*/
+			if (allocation == null)
+				parentList.remove(sasId);
 		}
 		if (acceptedListFromSASAllocation.size() != 0 || sasFileUploadList.size() != 0) {
-			solIdList = cashPaymentService.solIdForSASPaymentAccepted(user.getIcmcId(), sDate, eDate, pList);
+			solIdList = cashPaymentService.solIdForSASPaymentAccepted(user.getIcmcId(), sDate, eDate, parentList);
 		}
 		map.put("user", obj);
 		map.put("sas", solIdList);
@@ -822,6 +824,7 @@ public class CashPaymentController {
 		List<SASAllocation> acceptedListFromSASAllocation = cashPaymentService
 				.getAllTodayAcceptedFromSASAllocation(user.getIcmcId(), sDate, eDate);
 		Set<Long> pList = new HashSet<Long>();
+		Set<Long> parentList = new HashSet<Long>();
 		for (SASAllocation parentId : acceptedListFromSASAllocation) {
 			if (parentId.getParentId() != null)
 				pList.add(parentId.getParentId());
@@ -834,14 +837,18 @@ public class CashPaymentController {
 		for (Long sasId : pList) {
 			SASAllocation allocation = cashPaymentService.getRequestedFromSASAllocation(user.getIcmcId(), sDate, eDate,
 					sasId);
-			if (allocation != null)
-				pList.remove(sasId);
+			/*
+			 * if (allocation != null) pList.remove(sasId);
+			 */
+			if (allocation == null)
+				parentList.add(sasId);
 		}
 		if (acceptedListFromSASAllocation.size() != 0 || sasFileUploadList.size() != 0) {
-			solIdList = cashPaymentService.solIdForSASPaymentAccepted(user.getIcmcId(), sDate, eDate, pList);
+			solIdList = cashPaymentService.solIdForSASPaymentAccepted(user.getIcmcId(), sDate, eDate, parentList);
 		}
 		/*
-		 * ProcessBundleForCRAPayment processDetails = new ProcessBundleForCRAPayment();
+		 * ProcessBundleForCRAPayment processDetails = new
+		 * ProcessBundleForCRAPayment();
 		 * 
 		 * processDetails = cashPaymentService.getCRAId(user.getIcmcId());
 		 */
@@ -857,7 +864,8 @@ public class CashPaymentController {
 			for (ProcessBundleForCRAPayment process : processDetails) {
 				sortingCraId.add(process.getCraId());
 				/*
-				 * List<CRA> solIdForCraById = cashPaymentService.valueFromCRA(user.getIcmcId(),
+				 * List<CRA> solIdForCraById =
+				 * cashPaymentService.valueFromCRA(user.getIcmcId(),
 				 * process.getCraId()); solIdForCra.addAll(solIdForCraById);
 				 */
 			}
@@ -1891,7 +1899,6 @@ public class CashPaymentController {
 	@ResponseBody
 	public CRA insertCRA(@RequestBody CRA cra, HttpSession session) {
 		User user = (User) session.getAttribute("login");
-
 		boolean isAllSuccess = false;
 
 		synchronized (icmcService.getSynchronizedIcmc(user)) {
@@ -1900,7 +1907,7 @@ public class CashPaymentController {
 			cra.setUpdateBy(user.getId());
 			cra.setInsertTime(Calendar.getInstance());
 			cra.setUpdateTime(Calendar.getInstance());
-
+			LOG.info("CRAAllocation " + cra);
 			isAllSuccess = cashPaymentService.processCRAAllocation(cra, user);
 
 			if (!isAllSuccess) {
@@ -1917,7 +1924,8 @@ public class CashPaymentController {
 		craDetails = cashPaymentService.getCRADetailById(id);
 		int row = craDetails.getCraAllocations().size();
 		/*
-		 * if(craDetails.getStatus().toString().equals("ACCEPTED")){ row=row-1; }
+		 * if(craDetails.getStatus().toString().equals("ACCEPTED")){ row=row-1;
+		 * }
 		 */
 		User user = (User) session.getAttribute("login");
 		List<CRAAccountDetail> vendorName = cashPaymentService.getVendorAndMSPName(user.getIcmcId());
@@ -2096,7 +2104,8 @@ public class CashPaymentController {
 
 		/*
 		 * List<OtherBank> otherBankList =
-		 * cashPaymentService.getOtherBankPaymentRecord(user.getIcmcId(), sDate, eDate);
+		 * cashPaymentService.getOtherBankPaymentRecord(user.getIcmcId(), sDate,
+		 * eDate);
 		 */
 		List<OtherBank> otherBankList = cashPaymentService.getOtherBankPaymentRequestAcceptRecord(user.getIcmcId(),
 				sDate, eDate);
@@ -2352,14 +2361,14 @@ public class CashPaymentController {
 	 * @ResponseBody public List<Tuple> craPayment(@RequestBody List<CRA> cra,
 	 * HttpSession session) { User user = (User) session.getAttribute("login");
 	 * //List<Tuple> CRAPaymentIndentList =
-	 * cashPaymentService.craRequestSummary(user.getIcmcId(), cra.getId()); return
-	 * CRAPaymentIndentList; }
+	 * cashPaymentService.craRequestSummary(user.getIcmcId(), cra.getId());
+	 * return CRAPaymentIndentList; }
 	 */
 
 	/*
 	 * @RequestMapping("/soiledPreparation") public ModelAndView
-	 * soiledRemittancePreparation(HttpSession session, ModelMap model) { User user
-	 * = (User) session.getAttribute("login"); List<Tuple> soiledSummary =
+	 * soiledRemittancePreparation(HttpSession session, ModelMap model) { User
+	 * user = (User) session.getAttribute("login"); List<Tuple> soiledSummary =
 	 * cashPaymentService.getSoiledSummary(user.getIcmcId());
 	 * model.put("soiledBinSummary", soiledSummary); return new
 	 * ModelAndView("soiledRemittancePreparation", model); }
@@ -2377,14 +2386,14 @@ public class CashPaymentController {
 			soiledSummary = cashPaymentService.getSoiledSummary(user.getIcmcId(), CurrencyType.SOILED);
 		}
 		model.put("soiledBinSummary", soiledSummary);
-		
+
 		return new ModelAndView("soiledRemittancePreparation", model);
 	}
 
 	@RequestMapping("/getBinForSoiledAndBoxPreparation")
 	@ResponseBody
 	public List<SoiledRemittanceAllocation> deductSelectedBundleFromSoiled(
-			@RequestBody SoiledRemittanceAllocation soiled, HttpSession session) {
+			@RequestBody SoiledRemittanceAllocation soiled, HttpSession session) throws  Exception {
 		User user = (User) session.getAttribute("login");
 		List<SoiledRemittanceAllocation> eligibleIndentRequestList = new ArrayList<>();
 		StringBuilder sb = null;
@@ -2392,7 +2401,7 @@ public class CashPaymentController {
 		List<String> prnList = new ArrayList<>();
 
 		synchronized (icmcService.getSynchronizedIcmc(user)) {
-		
+
 			soiled.setInsertBy(user.getId());
 			soiled.setUpdateBy(user.getId());
 			soiled.setIcmcId(user.getIcmcId());
@@ -2440,7 +2449,8 @@ public class CashPaymentController {
 					}
 					LOG.info("Prepration Soild Remittence sbBinName.toString() " + sbBinName.toString());
 					/*
-					 * if(sbBinName.toString() !=""){ prnList.set(0, sbBinName.toString()); }
+					 * if(sbBinName.toString() !=""){ prnList.set(0,
+					 * sbBinName.toString()); }
 					 */
 					LOG.info("Prepration Soild Remittence ");
 				}
@@ -3206,7 +3216,7 @@ public class CashPaymentController {
 		ModelMap map = new ModelMap();
 		Calendar sDate = Calendar.getInstance();
 		Calendar eDate = Calendar.getInstance();
-		
+
 		if (dateRange.getFromDate() != null) {
 			sDate = dateRange.getFromDate();
 			eDate = (Calendar) dateRange.getFromDate().clone();
@@ -3226,12 +3236,12 @@ public class CashPaymentController {
 		diversionORV = cashPaymentService.getDiversionORVById(id);
 		int row = diversionORV.getDiversionAllocations().size();
 		ModelMap map = new ModelMap();
-		
+
 		map.put("user", diversionORV);
 		map.put("row", row);
 		map.put("status", diversionORV.getOtherStatus());
 		map.put("diversionAllocations", diversionORV.getDiversionAllocations());
-	
+
 		return new ModelAndView("editDiversionORV", map);
 	}
 
@@ -3242,9 +3252,9 @@ public class CashPaymentController {
 
 		/*
 		 * long id =diversionORV.getId();
-		 * cashPaymentService.processDiversionORVCancellation(user, id); long count =
-		 * cashPaymentService.updateOrvStatus1(id); //code for update long
-		 * count1=cashPaymentService.updateOrvAllocationStatus1(id);
+		 * cashPaymentService.processDiversionORVCancellation(user, id); long
+		 * count = cashPaymentService.updateOrvStatus1(id); //code for update
+		 * long count1=cashPaymentService.updateOrvAllocationStatus1(id);
 		 */
 
 		Calendar now = Calendar.getInstance();

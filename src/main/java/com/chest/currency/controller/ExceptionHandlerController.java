@@ -44,15 +44,31 @@ public class ExceptionHandlerController extends ResponseEntityExceptionHandler {
 	@ResponseBody
 	public Response ClassNotFoundException(HttpServletRequest request) {
 		LOG.info("========ClassNotFoundException=============");
-		return new Response();
+		/*
+		 * return Error.setErrorResponse(LamStatus.EXCEPTION,
+		 * ErrorCode.NOT_FOUND.getCode(), "Class Not Found .");
+		 */
+		return Response.setSuccessResponse(LamStatus.EXCEPTION, LamStatus.EXCEPTION.getCode(), "Class Not Found .");
+	}
+
+	@ExceptionHandler(ClassCastException.class)
+	@ResponseBody
+	public Response ClassCastException(HttpServletRequest request) {
+		LOG.info("========ClassCastException=============");
+		return Response.setSuccessResponse(LamStatus.EXCEPTION, LamStatus.EXCEPTION.getCode(), "Class Cast Exception.");
 	}
 
 	@ExceptionHandler(IndexOutOfBoundsException.class)
 	@ResponseBody
 	public Response IndexOutOfBoundsException(HttpServletRequest request) {
 		LOG.info("========IndexOutOfBoundsException=============");
-		return Error.setErrorResponse(LamStatus.EXCEPTION, ErrorCode.NOT_ACCEPTABLE.getCode(),
-				"Please check Roll or other field");
+		/*
+		 * return Error.setErrorResponse(LamStatus.EXCEPTION,
+		 * ErrorCode.NOT_ACCEPTABLE.getCode(),
+		 * "Please check Roll or other field");
+		 */
+		return Response.setSuccessResponse(LamStatus.EXCEPTION, LamStatus.EXCEPTION.getCode(),
+				"Index Please check Roll or other field .");
 
 	}
 
@@ -60,14 +76,37 @@ public class ExceptionHandlerController extends ResponseEntityExceptionHandler {
 	@ResponseBody
 	public Response TransientPropertyValueException(HttpServletRequest request) {
 		LOG.info("========TransientPropertyValueException=============");
-		return Error.setErrorResponse(LamStatus.EXCEPTION, ErrorCode.BAD_REQUEST.getCode(),
-				"Role is not Define or check other field");
+		/*
+		 * return Error.setErrorResponse(LamStatus.EXCEPTION,
+		 * ErrorCode.BAD_REQUEST.getCode(),
+		 * "Role is not Define or check other field");
+		 */
+		return Response.setSuccessResponse(LamStatus.EXCEPTION, LamStatus.EXCEPTION.getCode(),
+				"Transient Please check Roll or other field .");
+	}
+
+	@ExceptionHandler(NullPointerException.class)
+	@ResponseBody
+	public Response NullPointerException(HttpServletRequest request, Exception e) {
+		LOG.info("========NullPointerException============= " + e.getClass().getSimpleName());
+		/*
+		 * return Error.setErrorResponse(LamStatus.EXCEPTION,
+		 * ErrorCode.BAD_REQUEST.getCode(),
+		 * "Role is not Define or check other field");
+		 */
+		return Response.setSuccessResponse(LamStatus.EXCEPTION, LamStatus.EXCEPTION.getCode(),
+				"NULL Please check Roll or other field .");
 	}
 
 	@ExceptionHandler(Exception.class)
 	@ResponseBody
-	public Response Exception(HttpServletRequest request,Exception e) {
-		LOG.info("========Exception============= " + e.getClass().getSimpleName());
-		return Error.setErrorResponse(LamStatus.EXCEPTION, ErrorCode.BAD_REQUEST.getCode(), "Please check Request");
+	public Response Exception(HttpServletRequest request, Exception e) {
+		LOG.info("========Exception getSimpleName============= " + e.getClass().getSimpleName());
+		LOG.info("========Exception getMessage============= " + e.getMessage());
+		LOG.info("========Exception e============= " + e);
+		// return Error.setErrorResponse(LamStatus.EXCEPTION,
+		// ErrorCode.BAD_REQUEST.getCode(), "Please check Request");
+		return Response.setSuccessResponse(LamStatus.EXCEPTION, LamStatus.EXCEPTION.getCode(),
+				"Master e Please check Request .");
 	}
 }

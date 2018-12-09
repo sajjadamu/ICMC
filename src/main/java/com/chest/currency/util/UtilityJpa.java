@@ -8,6 +8,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.net.URL;
 import java.net.UnknownHostException;
@@ -1437,8 +1438,7 @@ public class UtilityJpa {
 			// sasBean.setTotalValueOfNotesRs500I(0);
 			sasBean.setTotalValueOfNotesRs500A(BigDecimal.ZERO);
 		} /*
-			 * else {
-			 * sasBean.setTotalValueOfNotesRs500I((Integer.parseInt(getValue(
+			 * else { sasBean.setTotalValueOfNotesRs500I((Integer.parseInt(getValue(
 			 * splitData, 44)) / 500) / 1000); }
 			 */
 		{
@@ -1451,8 +1451,7 @@ public class UtilityJpa {
 			// sasBean.setTotalValueOfNotesRs500I(0);
 			sasBean.setTotalValueOfNotesRs500F(BigDecimal.ZERO);
 		} /*
-			 * else {
-			 * sasBean.setTotalValueOfNotesRs500I((Integer.parseInt(getValue(
+			 * else { sasBean.setTotalValueOfNotesRs500I((Integer.parseInt(getValue(
 			 * splitData, 44)) / 500) / 1000); }
 			 */
 		{
@@ -1465,8 +1464,7 @@ public class UtilityJpa {
 			// sasBean.setTotalValueOfNotesRs500I(0);
 			sasBean.setTotalValueOfNotesRs500I(BigDecimal.ZERO);
 		} /*
-			 * else {
-			 * sasBean.setTotalValueOfNotesRs500I((Integer.parseInt(getValue(
+			 * else { sasBean.setTotalValueOfNotesRs500I((Integer.parseInt(getValue(
 			 * splitData, 44)) / 500) / 1000); }
 			 */
 		{
@@ -2366,8 +2364,8 @@ public class UtilityJpa {
 		}
 
 		/*
-		 * if(pendingBundleCount.compareTo(bundleRequired)>=0) { return
-		 * eligibleCRAList; } else { throw new BaseGuiException(
+		 * if(pendingBundleCount.compareTo(bundleRequired)>=0) { return eligibleCRAList;
+		 * } else { throw new BaseGuiException(
 		 * "Required Bundle is not available, TotalAvailableBundle is:" +
 		 * pendingBundleCount.toPlainString()); }
 		 */
@@ -2793,31 +2791,27 @@ public class UtilityJpa {
 
 	/*
 	 * public static List<Indent>
-	 * getRecordsFromIndentFormachineAllocation(List<Indent> indentList,
-	 * BigDecimal issuedBundle, User user) { List<Indent> eligibleIndentList =
-	 * new ArrayList<>(); Calendar now = Calendar.getInstance();
+	 * getRecordsFromIndentFormachineAllocation(List<Indent> indentList, BigDecimal
+	 * issuedBundle, User user) { List<Indent> eligibleIndentList = new
+	 * ArrayList<>(); Calendar now = Calendar.getInstance();
 	 * 
 	 * BigDecimal availableBundle = BigDecimal.ZERO; for (Indent indent :
-	 * indentList) { availableBundle = availableBundle.add(indent.getBundle());
-	 * } if (availableBundle.compareTo(issuedBundle) >= 0) { for (Indent indent
-	 * : indentList) {
+	 * indentList) { availableBundle = availableBundle.add(indent.getBundle()); } if
+	 * (availableBundle.compareTo(issuedBundle) >= 0) { for (Indent indent :
+	 * indentList) {
 	 * 
 	 * if (indent.getBundle().compareTo(issuedBundle) > 0) { issuedBundle =
-	 * indent.getBundle().subtract(issuedBundle);
-	 * indent.setBundle(issuedBundle); if
+	 * indent.getBundle().subtract(issuedBundle); indent.setBundle(issuedBundle); if
 	 * (issuedBundle.compareTo(BigDecimal.ZERO) == 0) {
 	 * indent.setStatus(OtherStatus.ACCEPTED); } else {
-	 * indent.setStatus(OtherStatus.PROCESSED); }
-	 * indent.setUpdateBy(user.getId()); indent.setUpdateTime(now); if
-	 * (indent.getBundle().compareTo(BigDecimal.ZERO) <= 0) {
-	 * indent.setDirty(true); } eligibleIndentList.add(indent); break; } else if
-	 * (issuedBundle.compareTo(indent.getBundle()) >= 0) { issuedBundle =
-	 * issuedBundle.subtract(indent.getBundle());
-	 * indent.setBundle(BigDecimal.ZERO);
+	 * indent.setStatus(OtherStatus.PROCESSED); } indent.setUpdateBy(user.getId());
+	 * indent.setUpdateTime(now); if (indent.getBundle().compareTo(BigDecimal.ZERO)
+	 * <= 0) { indent.setDirty(true); } eligibleIndentList.add(indent); break; }
+	 * else if (issuedBundle.compareTo(indent.getBundle()) >= 0) { issuedBundle =
+	 * issuedBundle.subtract(indent.getBundle()); indent.setBundle(BigDecimal.ZERO);
 	 * indent.setStatus(OtherStatus.ACCEPTED); indent.setUpdateBy(user.getId());
-	 * indent.setUpdateTime(now); if
-	 * (indent.getBundle().compareTo(BigDecimal.ZERO) <= 0) {
-	 * indent.setDirty(true); } eligibleIndentList.add(indent); } } } return
+	 * indent.setUpdateTime(now); if (indent.getBundle().compareTo(BigDecimal.ZERO)
+	 * <= 0) { indent.setDirty(true); } eligibleIndentList.add(indent); } } } return
 	 * eligibleIndentList; }
 	 */
 
@@ -2969,19 +2963,17 @@ public class UtilityJpa {
 	}
 
 	/*
-	 * public static BinTransaction setPendingBundleForDorvCancellation(User
-	 * user, BinTransaction binTxn, DiversionORVAllocation dorvAllocation) {
-	 * Calendar now = Calendar.getInstance();
-	 * if(binTxn.getPendingBundleRequest().compareTo(dorvAllocation.getBundle())
-	 * >= 0){
-	 * binTxn.setPendingBundleRequest(binTxn.getPendingBundleRequest().subtract(
+	 * public static BinTransaction setPendingBundleForDorvCancellation(User user,
+	 * BinTransaction binTxn, DiversionORVAllocation dorvAllocation) { Calendar now
+	 * = Calendar.getInstance();
+	 * if(binTxn.getPendingBundleRequest().compareTo(dorvAllocation.getBundle()) >=
+	 * 0){ binTxn.setPendingBundleRequest(binTxn.getPendingBundleRequest().subtract(
 	 * dorvAllocation.getBundle())); } binTxn.setUpdateBy(user.getId());
 	 * binTxn.setUpdateTime(now); return binTxn; }
 	 * 
-	 * public static BinTransaction
-	 * setPendingBundleForOtherBankCancellation(User user, BinTransaction
-	 * binTxn, OtherBankAllocation otherBankAllocation) { Calendar now =
-	 * Calendar.getInstance();
+	 * public static BinTransaction setPendingBundleForOtherBankCancellation(User
+	 * user, BinTransaction binTxn, OtherBankAllocation otherBankAllocation) {
+	 * Calendar now = Calendar.getInstance();
 	 * if(binTxn.getPendingBundleRequest().compareTo(otherBankAllocation.
 	 * getBundle()) >= 0){
 	 * binTxn.setPendingBundleRequest(binTxn.getPendingBundleRequest().subtract(
@@ -3006,36 +2998,13 @@ public class UtilityJpa {
 		// Socket clientSocket=new Socket("10.64.99.120",9100); //ICICI
 		// pushpanjali LAN
 		LOG.info("PrintToPrinter user.getId(): " + user.getId());
-		Socket clientSocket = new Socket(ip, port); // ICICI pushpanjali LAN
+		Socket clientSocket = new Socket(); // ICICI pushpanjali LAN
+		clientSocket.connect(new InetSocketAddress(ip, port), 1000);
 		LOG.info("PrintToPrinter clientSocket: " + clientSocket);
 		DataOutputStream outToServer = new DataOutputStream(clientSocket.getOutputStream());
 		outToServer.writeBytes(sb.toString());
 		clientSocket.close();
 	}
-
-	/*
-	 * public static void PrintToPrinter(StringBuilder sb, User user) throws
-	 * UnknownHostException, IOException { Socket clientSocket = null; try {
-	 * String ip = user.getIcmcPrinter().getPrinterIP(); LOG.info(
-	 * "PrintToPrinter ip " + ip); LOG.info("PrintToPrinter user id " +
-	 * user.getId()); int port = user.getIcmcPrinter().getPort().intValue();
-	 * LOG.info("PrintToPrinter port " + port); clientSocket = new Socket(ip,
-	 * port); LOG.info("PrintToPrinter clientSocket " + clientSocket);
-	 * DataOutputStream outToServer = new
-	 * DataOutputStream(clientSocket.getOutputStream());
-	 * outToServer.writeBytes(sb.toString());
-	 * 
-	 * } catch (IOException ioe) { LOG. info(
-	 * "PrintToPrinter METHOD IN CATCH IOException Printer is not able to connect "
-	 * + ioe); ioe.printStackTrace();
-	 * 
-	 * } catch (Exception e) { LOG. info(
-	 * "PrintToPrinter METHOD IN CATCH Exception Printer is not able to connect "
-	 * + e); e.printStackTrace();
-	 * 
-	 * } finally { LOG.info("PrintToPrinter METHOD IN finally clientSocket " +
-	 * clientSocket); if (clientSocket != null) clientSocket.close(); } }
-	 */
 
 	public static List<Mutilated> getMutilatedBin(Mutilated mutilated, List<BinTransaction> binTxs, User user) {
 		List<Mutilated> mutilatedList = new ArrayList<>();
@@ -3221,21 +3190,20 @@ public class UtilityJpa {
 	public static String getImages(String src) throws IOException {
 
 		/*
-		 * String folderPath="/home/inayat/image"; File file = new
-		 * File(folderPath);
+		 * String folderPath="/home/inayat/image"; File file = new File(folderPath);
 		 * 
 		 * int indexname = src.lastIndexOf("/");
 		 * 
 		 * if (indexname == src.length()) { src = src.substring(1, indexname); }
 		 * 
-		 * indexname = src.lastIndexOf("/"); String name =
-		 * src.substring(indexname, src.length()); // downloadImage=name[0];
-		 * //System.out.println("name===" + name);
+		 * indexname = src.lastIndexOf("/"); String name = src.substring(indexname,
+		 * src.length()); // downloadImage=name[0]; //System.out.println("name===" +
+		 * name);
 		 * 
 		 * URL url = new URL(src); InputStream in = url.openStream();
 		 * 
-		 * OutputStream out = new BufferedOutputStream(new FileOutputStream(file
-		 * + name));
+		 * OutputStream out = new BufferedOutputStream(new FileOutputStream(file +
+		 * name));
 		 * 
 		 * for (int b; (b = in.read()) != -1;) { out.write(b); } out.close();
 		 * in.close();

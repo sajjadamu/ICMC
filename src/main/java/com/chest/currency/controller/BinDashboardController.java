@@ -89,6 +89,7 @@ import com.chest.currency.enums.VaultSize;
 import com.chest.currency.enums.YesNo;
 import com.chest.currency.enums.Zone;
 import com.chest.currency.jpa.dao.CashPaymentJpaDao;
+import com.chest.currency.jpa.persistence.converter.ConvertNumberInWords;
 import com.chest.currency.jpa.persistence.converter.CurrencyFormatter;
 import com.chest.currency.service.BinDashboardService;
 import com.chest.currency.service.BinTransactionService;
@@ -559,20 +560,10 @@ public class BinDashboardController {
 	@RequestMapping("/dailyBinRecon")
 	public ModelAndView dailyBinRecon(HttpSession session) {
 		BinTransaction obj = new BinTransaction();
-		Calendar sDate = Calendar.getInstance();
-		Calendar eDate = Calendar.getInstance();
-
-		sDate.set(Calendar.HOUR, 0);
-		sDate.set(Calendar.HOUR_OF_DAY, 0);
-		sDate.set(Calendar.MINUTE, 0);
-		sDate.set(Calendar.SECOND, 0);
-		sDate.set(Calendar.MILLISECOND, 0);
-
-		eDate.set(Calendar.HOUR, 24);
-		eDate.set(Calendar.HOUR_OF_DAY, 23);
-		eDate.set(Calendar.MINUTE, 59);
-		eDate.set(Calendar.SECOND, 59);
-		eDate.set(Calendar.MILLISECOND, 999);
+		Calendar sDate = UtilityJpa.getStartDate();
+		Calendar eDate = UtilityJpa.getEndDate();
+		UtilityJpa.setStartDate(sDate);
+		UtilityJpa.setEndDate(eDate);
 
 		User user = (User) session.getAttribute("login");
 		ModelMap map = new ModelMap();
@@ -1189,9 +1180,7 @@ public class BinDashboardController {
 		} else {
 			icmcId = user.getIcmcId();
 		}
-		BinTransaction obj = new BinTransaction();
 		ModelMap map = new ModelMap();
-		// Bin Summary Code Start
 		List<Tuple> summaryList = binDashboardService.getRecordForSummary(icmcId);
 		Map<Integer, BinTransaction> mapList = new LinkedHashMap<>();
 
@@ -1218,18 +1207,19 @@ public class BinDashboardController {
 			}
 		}
 
+		SimpleDateFormat fmt = new SimpleDateFormat("dd-MM-yyyy");
+		Calendar sDate = UtilityJpa.getStartDate();
+		Date date = sDate.getTime();
+		map.put("currentDate", fmt.format(date));
 		List<Tuple> summaryListForCoins = binDashboardService.getRecordCoinsForSummary(icmcId);
 
 		BigDecimal totalICMCBalance = binDashboardService.getTotalICMCBalance(icmcId);
-
+		String totalICMCBalanceInWords = ConvertNumberInWords.getNumberInWords(totalICMCBalance.intValue());
 		map.put("summaryListForCoins", summaryListForCoins);
-		// map.put("denominationList", DenominationType.values());
-		// map.put("currencyProcessType", CurrencyType.values());
-		// map.put("user", obj);
 		map.put("summaryRecords", mapList);
-		// map.put("processingRoom", pendingBundleFromMachineAllocation);
 		map.put("totalICMCBalance", totalICMCBalance);
-		// map.put("chargeReport", "chargeReport");
+		map.put("totalICMCBalanceInWords", totalICMCBalanceInWords);
+
 		return new ModelAndView("chargeReport", map);
 	}
 
@@ -1255,25 +1245,15 @@ public class BinDashboardController {
 	public ModelAndView chestSlip(@ModelAttribute("reportDate") DateRange dateRange, HttpSession session) {
 		User user = (User) session.getAttribute("login");
 		ModelMap map = new ModelMap();
-		Calendar sDate = Calendar.getInstance();
-		Calendar eDate = Calendar.getInstance();
+		Calendar sDate = UtilityJpa.getStartDate();
+		Calendar eDate = UtilityJpa.getEndDate();
 
 		if (dateRange.getFromDate() != null) {
 			sDate = dateRange.getFromDate();
 			eDate = (Calendar) dateRange.getFromDate().clone();
 		}
-
-		sDate.set(Calendar.HOUR, 0);
-		sDate.set(Calendar.HOUR_OF_DAY, 0);
-		sDate.set(Calendar.MINUTE, 0);
-		sDate.set(Calendar.SECOND, 0);
-		sDate.set(Calendar.MILLISECOND, 0);
-
-		eDate.set(Calendar.HOUR, 24);
-		eDate.set(Calendar.HOUR_OF_DAY, 23);
-		eDate.set(Calendar.MINUTE, 59);
-		eDate.set(Calendar.SECOND, 59);
-		eDate.set(Calendar.MILLISECOND, 999);
+		UtilityJpa.setStartDate(sDate);
+		UtilityJpa.setEndDate(eDate);
 
 		List<BinTransactionBOD> binTxBodList = binDashboardService.processIO2(user.getIcmcId(), sDate, eDate,
 				dateRange);
@@ -1321,25 +1301,15 @@ public class BinDashboardController {
 	public ModelAndView cashBookDeposit(@ModelAttribute("reportDate") DateRange dateRange, HttpSession session) {
 		User user = (User) session.getAttribute("login");
 		ModelMap map = new ModelMap();
-		Calendar sDate = Calendar.getInstance();
-		Calendar eDate = Calendar.getInstance();
+		Calendar sDate = UtilityJpa.getStartDate();
+		Calendar eDate = UtilityJpa.getEndDate();
 
 		if (dateRange.getFromDate() != null) {
 			sDate = dateRange.getFromDate();
 			eDate = (Calendar) dateRange.getFromDate().clone();
 		}
-
-		sDate.set(Calendar.HOUR, 0);
-		sDate.set(Calendar.HOUR_OF_DAY, 0);
-		sDate.set(Calendar.MINUTE, 0);
-		sDate.set(Calendar.SECOND, 0);
-		sDate.set(Calendar.MILLISECOND, 0);
-
-		eDate.set(Calendar.HOUR, 24);
-		eDate.set(Calendar.HOUR_OF_DAY, 23);
-		eDate.set(Calendar.MINUTE, 59);
-		eDate.set(Calendar.SECOND, 59);
-		eDate.set(Calendar.MILLISECOND, 999);
+		UtilityJpa.setStartDate(sDate);
+		UtilityJpa.setEndDate(eDate);
 
 		Map<String, BranchReceipt> branchDepositList = binDashboardService.getBranchDepositList(user.getIcmcId(), sDate,
 				eDate);
@@ -2443,10 +2413,9 @@ public class BinDashboardController {
 
 	@RequestMapping("/saveAuditorIndent")
 	public ModelAndView saveAuditorIndent(@ModelAttribute("userPage") AuditorIndent auditorIndent,
-			HttpSession session) {
+			RedirectAttributes redirectAttributes, HttpSession session) {
 		User user = (User) session.getAttribute("login");
 		Calendar now = Calendar.getInstance();
-		boolean isAllSuccess = false;
 		synchronized (icmcService.getSynchronizedIcmc(user)) {
 			auditorIndent.setIcmcId(user.getIcmcId());
 			auditorIndent.setInsertBy(user.getId());
@@ -2455,25 +2424,13 @@ public class BinDashboardController {
 			auditorIndent.setUpdateTime(now);
 			auditorIndent.setStatus(OtherStatus.REQUESTED);
 			auditorIndent.setPendingBundleRequest(auditorIndent.getBundle());
-			isAllSuccess = binDashboardService.saveAuditorIndentRequest(auditorIndent);
-			if (!isAllSuccess) {
-				throw new RuntimeException("Error while indent by Auditor, Please try again");
-			}
-			auditorIndent.setDenomination(auditorIndent.getDenomination());
-			auditorIndent.setBinNumber(auditorIndent.getBinNumber());
-			BinTransaction binTxn = binDashboardService.getBinNumListForAuditorIndent(auditorIndent,
-					auditorIndent.getBinType());
-			BigDecimal pendingBundle = BigDecimal.ZERO;
-			BigDecimal pendingBundleFromVault = BigDecimal.ZERO;
-			BigDecimal bundleFromUI = BigDecimal.ZERO;
 
-			pendingBundleFromVault = binTxn.getPendingBundleRequest();
-			if (pendingBundleFromVault == null) {
-				pendingBundleFromVault = BigDecimal.ZERO;
+			try {
+				binDashboardService.saveAuditorIndentRequest(auditorIndent);
+			} catch (Exception e) {
+				redirectAttributes.addFlashAttribute("errorMsg", "" + e.getMessage() + "");
+				return new ModelAndView("redirect:./auditorIndent");
 			}
-			bundleFromUI = auditorIndent.getBundle();
-			pendingBundle = pendingBundleFromVault.add(bundleFromUI);
-			binDashboardService.updateBinTxn(user.getIcmcId(), pendingBundle);
 		}
 		return new ModelAndView("redirect:./viewAuditorIndent");
 	}

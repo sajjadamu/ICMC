@@ -1,11 +1,13 @@
 package com.chest.currency.controller;
 
+import java.io.StringReader;
 import java.net.UnknownHostException;
 import java.util.Calendar;
 import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import javax.xml.bind.JAXB;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -50,6 +52,31 @@ public class LAMIntegration {
 
 	@RequestMapping(value = "user", method = RequestMethod.POST, produces = MediaType.APPLICATION_XML_VALUE, consumes = MediaType.APPLICATION_XML_VALUE)
 	@ResponseBody
+	public Response getRequest(@RequestBody @Valid String requestData, BindingResult bindingResult,
+			HttpServletRequest request) throws UnknownHostException {
+		QueryRequestCo queryRequestCo = JAXB.unmarshal(new StringReader(requestData.replaceAll("%20", " ")),
+				QueryRequestCo.class);
+		LOG.info("requestData " + queryRequestCo);
+		return setRequest(queryRequestCo, bindingResult, request);
+	}
+
+	@ResponseBody
+	public Response setRequest(@RequestBody @Valid QueryRequestCo queryRequestCo, BindingResult bindingResult,
+			HttpServletRequest request) throws UnknownHostException {
+		LOG.info("bindingResult hasErrors " + bindingResult.hasErrors());
+		LamIntegrationCo lamIntegrationCo = new LamIntegrationCo();
+		lamIntegrationCo.setQueryrequest(queryRequestCo);
+		if (bindingResult.hasErrors()) {
+			LamRequestLog requestLog = UtilityService.setLamRequestLog(lamIntegrationCo.getQueryrequest(), request);
+			requestLog.setResponse(LamStatus.FAILURE);
+			userAdministrationService.createLamLog(requestLog);
+			return Response.setSuccessResponse(LamStatus.FAILURE, LamStatus.FAILURE.getCode(),
+					"Please check activity or Access Request");
+		}
+		return verifyActivity(lamIntegrationCo, bindingResult, request);
+	}
+
+	@ResponseBody
 	public Response verifyActivity(@RequestBody @Valid LamIntegrationCo lamIntegrationCo, BindingResult bindingResult,
 			HttpServletRequest request) throws UnknownHostException {
 		LOG.info("bindingResult " + bindingResult.hasErrors());
@@ -74,8 +101,11 @@ public class LAMIntegration {
 			response = deleteUser(lamIntegrationCo, bindingResult, request);
 			break;
 		default:
+			LamRequestLog requestLog = UtilityService.setLamRequestLog(lamIntegrationCo.getQueryrequest(), request);
+			requestLog.setResponse(LamStatus.FAILURE);
+			userAdministrationService.createLamLog(requestLog);
 			response = Response.setSuccessResponse(LamStatus.FAILURE, LamStatus.FAILURE.getCode(),
-					"default Please check activity");
+					"Activity should be I,U,UN,D.");
 			break;
 		}
 		return response;
@@ -244,167 +274,5 @@ public class LAMIntegration {
 		String[] userDetails = userId.split(Pattern.quote("|"));
 		return userDetails[2];
 	}
-
-	@RequestMapping(value = "user3", method = RequestMethod.POST, consumes = MediaType.APPLICATION_XML_VALUE)
-	@ResponseBody
-	public QueryRequestCo Test2(@RequestBody QueryRequestCo queryRequestCo, HttpServletRequest request) {
-		/*
-		 * LOG.info("globalRequestCo map" + queryRequestCo.getQueryrequest());
-		 * LOG.info("globalRequestCo co" + queryRequestCo.getQueryRequest());
-		 * User user =
-		 * UtilityService.setUserDetails(queryRequestCo.getQueryRequest(),
-		 * cashReceiptService.getICMCByName(getBranchName(queryRequestCo.
-		 * getQueryrequest (). getAccessRequest()))); System.out.println(
-		 * "user2 " + user);
-		 */
-		return queryRequestCo;
-	}
-
-	@RequestMapping(value = "test")
-	@ResponseBody
-	public Response test(HttpServletRequest request) {
-
-		return Response.setSuccessResponse(LamStatus.SUCCESS, LamStatus.SUCCESS.getCode(), "Test SUCCESS");
-	}
-
-	/*
-	 * @RequestMapping(value = "/create", method = RequestMethod.POST, consumes
-	 * = MediaType.APPLICATION_XML_VALUE)
-	 * 
-	 * @ResponseBody public Response addUser(@RequestBody @Valid QueryRequestCo
-	 * queryRequestCo, BindingResult bindingResult, HttpServletRequest request)
-	 * throws UnknownHostException { Activity activity = (Activity)
-	 * queryRequestCo.getQueryRequest().get("activity");
-	 * 
-	 * LamRequestLog requestLog =
-	 * UtilityService.setLamServiceLog(queryRequestCo.getQueryRequest(),
-	 * request); requestLog =
-	 * userAdministrationService.createLamLog(requestLog);
-	 * 
-	 * if (bindingResult.hasErrors() || !activity.equals(Activity.CREATE)) {
-	 * requestLog.setResponse(LamStatus.FAILURE);
-	 * userAdministrationService.updateLamLog(requestLog); return
-	 * Response.setSuccessResponse(LamStatus.FAILURE,
-	 * LamStatus.FAILURE.getCode()); } User user =
-	 * UtilityService.setUserDetails(queryRequestCo.getQueryRequest(),
-	 * cashReceiptService.getICMCByName(getBranchName(queryRequestCo.
-	 * getQueryRequest (). get("accessRequest"))));
-	 * 
-	 * if (userAdministrationService.isUserExists(user.getId()) != null) {
-	 * requestLog.setResponse(LamStatus.EXCEPTION);
-	 * userAdministrationService.updateLamLog(requestLog); return
-	 * Response.setSuccessResponse(LamStatus.EXCEPTION,
-	 * LamStatus.EXCEPTION.getCode()); }
-	 * userAdministrationService.createUser(user,
-	 * request.getRequestURL().toString());
-	 * requestLog.setResponse(LamStatus.SUCCESS);
-	 * userAdministrationService.updateLamLog(requestLog);
-	 * 
-	 * return Response.setSuccessResponse(LamStatus.SUCCESS,
-	 * LamStatus.SUCCESS.getCode()); }
-	 */
-
-	/*
-	 * @RequestMapping(value = "/modify", method = RequestMethod.PUT, consumes =
-	 * MediaType.APPLICATION_XML_VALUE)
-	 * 
-	 * @ResponseBody public Response updateUser(@RequestBody @Valid
-	 * QueryRequestCo queryRequestCo, BindingResult bindingResult,
-	 * HttpServletRequest request) throws UnknownHostException { Activity
-	 * activity = (Activity) queryRequestCo.getQueryRequest().get("activity");
-	 * 
-	 * LamRequestLog requestLog =
-	 * UtilityService.setLamServiceLog(queryRequestCo.getQueryRequest(),
-	 * request); requestLog =
-	 * userAdministrationService.createLamLog(requestLog);
-	 * 
-	 * if (bindingResult.hasErrors() || !activity.equals(Activity.MODIFY)) {
-	 * requestLog.setResponse(LamStatus.FAILURE);
-	 * userAdministrationService.updateLamLog(requestLog); return
-	 * Response.setSuccessResponse(LamStatus.FAILURE,
-	 * LamStatus.FAILURE.getCode()); } User userDb = userAdministrationService
-	 * .getUserById(getUserId(queryRequestCo.getQueryRequest().get(
-	 * "accessRequest")) ) ; if (userDb == null) {
-	 * requestLog.setResponse(LamStatus.EXCEPTION);
-	 * userAdministrationService.updateLamLog(requestLog); return
-	 * Response.setSuccessResponse(LamStatus.EXCEPTION,
-	 * LamStatus.EXCEPTION.getCode()); } User user =
-	 * UtilityService.setUserDetails(queryRequestCo.getQueryRequest(),
-	 * cashReceiptService.getICMCByName(getBranchName(queryRequestCo.
-	 * getQueryRequest (). get("accessRequest"))));
-	 * user.setPassword(userDb.getPassword());
-	 * userAdministrationService.updateUser(user);
-	 * requestLog.setResponse(LamStatus.SUCCESS);
-	 * userAdministrationService.updateLamLog(requestLog);
-	 * 
-	 * return Response.setSuccessResponse(LamStatus.SUCCESS,
-	 * LamStatus.SUCCESS.getCode()); }
-	 */
-
-	/*
-	 * @RequestMapping(value = "/unlock", method = RequestMethod.PUT, consumes =
-	 * MediaType.APPLICATION_XML_VALUE)
-	 * 
-	 * @ResponseBody public Response unlockUser(@RequestBody @Valid
-	 * QueryRequestCo queryRequestCo, BindingResult bindingResult,
-	 * HttpServletRequest request) throws UnknownHostException { Activity
-	 * activity = (Activity) queryRequestCo.getQueryRequest().get("activity");
-	 * 
-	 * LamRequestLog requestLog =
-	 * UtilityService.setLamServiceLog(queryRequestCo.getQueryRequest(),
-	 * request); requestLog =
-	 * userAdministrationService.createLamLog(requestLog);
-	 * 
-	 * if (bindingResult.hasErrors() || !activity.equals(Activity.UNLOCK)) {
-	 * requestLog.setResponse(LamStatus.FAILURE);
-	 * userAdministrationService.updateLamLog(requestLog); return
-	 * Response.setSuccessResponse(LamStatus.FAILURE,
-	 * LamStatus.FAILURE.getCode()); } User user = userAdministrationService
-	 * .getUserById(getUserId(queryRequestCo.getQueryRequest().get(
-	 * "accessRequest")) ) ; if (user == null) {
-	 * requestLog.setResponse(LamStatus.EXCEPTION);
-	 * userAdministrationService.updateLamLog(requestLog); return
-	 * Response.setSuccessResponse(LamStatus.EXCEPTION,
-	 * LamStatus.EXCEPTION.getCode()); } user.setStatus(Status.DISABLED);
-	 * userAdministrationService.updateUser(user);
-	 * requestLog.setResponse(LamStatus.SUCCESS);
-	 * userAdministrationService.updateLamLog(requestLog);
-	 * 
-	 * return Response.setSuccessResponse(LamStatus.SUCCESS,
-	 * LamStatus.SUCCESS.getCode()); }
-	 */
-
-	/*
-	 * @RequestMapping(value = "/delete", method = RequestMethod.PUT, consumes =
-	 * MediaType.APPLICATION_XML_VALUE)
-	 * 
-	 * @ResponseBody public Response deleteUser(@RequestBody @Valid
-	 * QueryRequestCo queryRequestCo, BindingResult bindingResult,
-	 * HttpServletRequest request) throws UnknownHostException { Activity
-	 * activity = (Activity) queryRequestCo.getQueryRequest().get("activity");
-	 * 
-	 * LamRequestLog requestLog =
-	 * UtilityService.setLamServiceLog(queryRequestCo.getQueryRequest(),
-	 * request); requestLog =
-	 * userAdministrationService.createLamLog(requestLog);
-	 * 
-	 * if (bindingResult.hasErrors() || !activity.equals(Activity.DELETE)) {
-	 * requestLog.setResponse(LamStatus.FAILURE);
-	 * userAdministrationService.updateLamLog(requestLog); return
-	 * Response.setSuccessResponse(LamStatus.FAILURE,
-	 * LamStatus.FAILURE.getCode()); } User user = userAdministrationService
-	 * .getUserById(getUserId(queryRequestCo.getQueryRequest().get(
-	 * "accessRequest")) ) ; if (user == null) {
-	 * requestLog.setResponse(LamStatus.EXCEPTION);
-	 * userAdministrationService.updateLamLog(requestLog); return
-	 * Response.setSuccessResponse(LamStatus.EXCEPTION,
-	 * LamStatus.EXCEPTION.getCode()); }
-	 * userAdministrationService.deleteUser(user);
-	 * requestLog.setResponse(LamStatus.SUCCESS);
-	 * userAdministrationService.updateLamLog(requestLog);
-	 * 
-	 * return Response.setSuccessResponse(LamStatus.SUCCESS,
-	 * LamStatus.SUCCESS.getCode()); }
-	 */
 
 }

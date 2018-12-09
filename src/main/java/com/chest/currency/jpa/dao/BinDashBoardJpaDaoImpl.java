@@ -230,8 +230,11 @@ public class BinDashBoardJpaDaoImpl implements BinDashBoardJpaDao {
 		JPAQuery jpaQuery = getFromQueryForBinTxn();
 		jpaQuery.where(QBinTransaction.binTransaction.icmcId.eq(icmcId)
 				.and(QBinTransaction.binTransaction.denomination.eq(denomination))
-				.and(QBinTransaction.binTransaction.binType.eq(binType))
 				.and(QBinTransaction.binTransaction.status.ne(BinStatus.EMPTY)));
+		if (binType.equals(CurrencyType.COINS))
+			jpaQuery.where(QBinTransaction.binTransaction.cashType.eq(CashType.COINS));
+		else
+			jpaQuery.where(QBinTransaction.binTransaction.binType.eq(binType));	
 		List<BinTransaction> list = jpaQuery.list(QBinTransaction.binTransaction);
 		UtilityJpa.setBinColorForTxn(list);
 		return list;
@@ -581,7 +584,7 @@ public class BinDashBoardJpaDaoImpl implements BinDashBoardJpaDao {
 		JPAQuery jpaQuery = getFromQueryForBranchReceipt();
 		jpaQuery.where(QBranchReceipt.branchReceipt.icmcId.eq(icmcId)
 				.and(QBranchReceipt.branchReceipt.status.ne(OtherStatus.CANCELLED))
-				.and(QBranchReceipt.branchReceipt.solId.ne("NULL"))
+				.and(QBranchReceipt.branchReceipt.solId.isNotNull())
 				.and(QBranchReceipt.branchReceipt.binCategoryType.ne(BinCategoryType.BAG))
 				.and(QBranchReceipt.branchReceipt.insertTime.between(sDate, eDate)));
 		jpaQuery.groupBy(QBranchReceipt.branchReceipt.denomination);
@@ -597,7 +600,7 @@ public class BinDashBoardJpaDaoImpl implements BinDashBoardJpaDao {
 		JPAQuery jpaQuery = getFromQueryForBranchReceipt();
 		jpaQuery.where(QBranchReceipt.branchReceipt.icmcId.eq(icmcId)
 				.and(QBranchReceipt.branchReceipt.status.ne(OtherStatus.CANCELLED))
-				.and(QBranchReceipt.branchReceipt.solId.ne("NULL"))
+				.and(QBranchReceipt.branchReceipt.solId.isNotNull())
 				.and(QBranchReceipt.branchReceipt.binCategoryType.ne(BinCategoryType.BAG))
 				.and(QBranchReceipt.branchReceipt.currencyType.eq(currencyType))
 				.and(QBranchReceipt.branchReceipt.insertTime.between(sDate, eDate)));
@@ -620,33 +623,34 @@ public class BinDashBoardJpaDaoImpl implements BinDashBoardJpaDao {
 				QProcess.process.bundle.sum().multiply(1000));
 		return summaryList;
 	}
+
 	@Override
 	public List<Tuple> getProcessFromProcessingOutPut(BigInteger icmcId, Calendar sDate, Calendar eDate) {
 		JPAQuery jpaQuery = getFromQueryForProcessList();
-		jpaQuery.where(QProcess.process.icmcId.eq(icmcId)
-				.and(QProcess.process.insertTime.between(sDate, eDate)));
+		jpaQuery.where(QProcess.process.icmcId.eq(icmcId).and(QProcess.process.insertTime.between(sDate, eDate)));
 		jpaQuery.groupBy(QProcess.process.denomination);
 		jpaQuery.orderBy(QProcess.process.denomination.asc());
 		List<Tuple> summaryList = jpaQuery.list(QProcess.process.denomination,
 				QProcess.process.bundle.sum().multiply(1000));
 		return summaryList;
 	}
+
 	@Override
 	public List<Tuple> getProcessBundleProcessingOutPut(BigInteger icmcId, Calendar sDate, Calendar eDate) {
 		JPAQuery jpaQuery = getFromQueryForProcessList();
-		jpaQuery.where(QProcess.process.icmcId.eq(icmcId)
-				.and(QProcess.process.insertTime.between(sDate, eDate)));
-		jpaQuery.groupBy(QProcess.process.denomination,QProcess.process.currencyType);
+		jpaQuery.where(QProcess.process.icmcId.eq(icmcId).and(QProcess.process.insertTime.between(sDate, eDate)));
+		jpaQuery.groupBy(QProcess.process.denomination, QProcess.process.currencyType);
 		jpaQuery.orderBy(QProcess.process.denomination.asc());
-		List<Tuple> summaryList = jpaQuery.list(QProcess.process.denomination,QProcess.process.currencyType,
+		List<Tuple> summaryList = jpaQuery.list(QProcess.process.denomination, QProcess.process.currencyType,
 				QProcess.process.bundle.sum());
 		return summaryList;
 	}
+
 	@Override
 	public List<Tuple> getDepositForDSB(BigInteger icmcId, Calendar sDate, Calendar eDate) {
 		JPAQuery jpaQuery = getFromQueryForDSB();
 		jpaQuery.where(QDSB.dSB.icmcId.eq(icmcId).and(QDSB.dSB.status.eq(OtherStatus.RECEIVED))
-				.and(QDSB.dSB.name.ne("NULL")).and(QDSB.dSB.insertTime.between(sDate, eDate)));
+				.and(QDSB.dSB.name.isNotNull()).and(QDSB.dSB.insertTime.between(sDate, eDate)));
 		jpaQuery.groupBy(QDSB.dSB.denomination);
 		jpaQuery.orderBy(QDSB.dSB.denomination.asc());
 		List<Tuple> dsbList = jpaQuery.list(QDSB.dSB.denomination, QDSB.dSB.bundle.sum().multiply(1000));
@@ -658,7 +662,7 @@ public class BinDashBoardJpaDaoImpl implements BinDashBoardJpaDao {
 		JPAQuery jpaQuery = getFromQueryForDiversion();
 		jpaQuery.where(QDiversionIRV.diversionIRV.icmcId.eq(icmcId)
 				.and(QDiversionIRV.diversionIRV.status.ne(OtherStatus.CANCELLED))
-				.and(QDiversionIRV.diversionIRV.bankName.ne("NULL"))
+				.and(QDiversionIRV.diversionIRV.bankName.isNotNull())
 				.and(QDiversionIRV.diversionIRV.updateTime.between(sDate, eDate)));
 		jpaQuery.groupBy(QDiversionIRV.diversionIRV.denomination, QDiversionIRV.diversionIRV.bankName,
 				QDiversionIRV.diversionIRV.rbiOrderNo);
@@ -673,7 +677,7 @@ public class BinDashBoardJpaDaoImpl implements BinDashBoardJpaDao {
 	public List<Tuple> getDepositForOtherBank(BigInteger icmcId, Calendar sDate, Calendar eDate) {
 		JPAQuery jpaQuery = getFromQueryForOtherBank();
 		jpaQuery.where(QBankReceipt.bankReceipt.icmcId.eq(icmcId).and(QBankReceipt.bankReceipt.status.eq(0))
-				.and(QBankReceipt.bankReceipt.branch.ne("NULL"))
+				.and(QBankReceipt.bankReceipt.branch.isNotNull())
 				.and(QBankReceipt.bankReceipt.updateTime.between(sDate, eDate)));
 		jpaQuery.groupBy(QBankReceipt.bankReceipt.denomination);
 		jpaQuery.orderBy(QBankReceipt.bankReceipt.denomination.asc());
@@ -690,7 +694,7 @@ public class BinDashBoardJpaDaoImpl implements BinDashBoardJpaDao {
 				QIndent.indent.icmcId.eq(icmcId)
 						.and(QIndent.indent.status.eq(OtherStatus.ACCEPTED)
 								.or(QIndent.indent.status.eq(OtherStatus.PROCESSED)))
-						.and(QIndent.indent.cashSource.ne(CashSource.RBI)).and(QIndent.indent.bin.ne("NULL"))
+						.and(QIndent.indent.cashSource.ne(CashSource.RBI)).and(QIndent.indent.bin.isNotNull())
 						.and(QIndent.indent.updateTime.between(sDate, eDate)));
 		jpaQuery.groupBy(QIndent.indent.denomination);
 		List<Tuple> ibitList = jpaQuery.list(QIndent.indent.denomination, QIndent.indent.bundle.sum().multiply(1000));
@@ -956,7 +960,7 @@ public class BinDashBoardJpaDaoImpl implements BinDashBoardJpaDao {
 		jpaQuery.where(QBranchReceipt.branchReceipt.icmcId.eq(icmcId)
 				.and(QBranchReceipt.branchReceipt.binCategoryType.ne(BinCategoryType.BAG))
 				.and(QBranchReceipt.branchReceipt.status.ne(OtherStatus.CANCELLED))
-				.and(QBranchReceipt.branchReceipt.branch.ne("NULL"))
+				.and(QBranchReceipt.branchReceipt.branch.isNotNull())
 				.and(QBranchReceipt.branchReceipt.insertTime.between(sDate, eDate)));
 		jpaQuery.groupBy(QBranchReceipt.branchReceipt.srNumber, QBranchReceipt.branchReceipt.solId,
 				QBranchReceipt.branchReceipt.branch, QBranchReceipt.branchReceipt.denomination);
@@ -972,7 +976,7 @@ public class BinDashBoardJpaDaoImpl implements BinDashBoardJpaDao {
 	public List<Tuple> getDSBDepositList(BigInteger icmcId, Calendar sDate, Calendar eDate) {
 		JPAQuery jpaQuery = getFromQueryForDSB();
 		jpaQuery.where(QDSB.dSB.icmcId.eq(icmcId).and(QDSB.dSB.status.ne(OtherStatus.CANCELLED))
-				.and(QDSB.dSB.name.ne("NULL")).and(QDSB.dSB.insertTime.between(sDate, eDate)));
+				.and(QDSB.dSB.name.isNotNull()).and(QDSB.dSB.insertTime.between(sDate, eDate)));
 		jpaQuery.groupBy(QDSB.dSB.receiptSequence, QDSB.dSB.receiptDate, QDSB.dSB.name, QDSB.dSB.accountNumber,
 				QDSB.dSB.denomination);
 		jpaQuery.orderBy(QDSB.dSB.denomination.desc());
@@ -985,7 +989,7 @@ public class BinDashBoardJpaDaoImpl implements BinDashBoardJpaDao {
 	public List<Tuple> getBankDepositList(BigInteger icmcId, Calendar sDate, Calendar eDate) {
 		JPAQuery jpaQuery = getFromQueryForOtherBank();
 		jpaQuery.where(QBankReceipt.bankReceipt.icmcId.eq(icmcId).and(QBankReceipt.bankReceipt.status.ne(4))
-				.and(QBankReceipt.bankReceipt.branch.ne("NULL"))
+				.and(QBankReceipt.bankReceipt.branch.isNotNull())
 				.and(QBankReceipt.bankReceipt.insertTime.between(sDate, eDate)));
 		jpaQuery.groupBy(QBankReceipt.bankReceipt.bankName, QBankReceipt.bankReceipt.rtgsUTRNo,
 				QBankReceipt.bankReceipt.denomination);
@@ -1751,7 +1755,7 @@ public class BinDashBoardJpaDaoImpl implements BinDashBoardJpaDao {
 				QIndent.indent.icmcId.eq(icmcId)
 						.and(QIndent.indent.status.eq(OtherStatus.ACCEPTED)
 								.or(QIndent.indent.status.eq(OtherStatus.PROCESSED)))
-						.and(QIndent.indent.cashSource.ne(CashSource.RBI)).and(QIndent.indent.bin.ne("NULL"))
+						.and(QIndent.indent.cashSource.ne(CashSource.RBI)).and(QIndent.indent.bin.isNotNull())
 						.and(QIndent.indent.updateTime.between(sDate, eDate)));
 		jpaQuery.groupBy(QIndent.indent.denomination);
 		List<Tuple> ibitList = jpaQuery.list(QIndent.indent.denomination, QIndent.indent.bundle.sum().multiply(1000));
@@ -2109,8 +2113,7 @@ public class BinDashBoardJpaDaoImpl implements BinDashBoardJpaDao {
 	public List<Indent> getIndentCash(BigInteger IcmcId, Calendar sDate, Calendar eDate) {
 		JPAQuery jpaQuery = getIndentCash();
 		jpaQuery.where(QIndent.indent.icmcId.eq(IcmcId).and(QIndent.indent.cashSource.ne(CashSource.RBI))
-				.and(QIndent.indent.status.eq(OtherStatus.ACCEPTED)
-				.or(QIndent.indent.status.eq(OtherStatus.PROCESSED)))
+				.and(QIndent.indent.status.eq(OtherStatus.ACCEPTED).or(QIndent.indent.status.eq(OtherStatus.PROCESSED)))
 				.and(QIndent.indent.insertTime.between(sDate, eDate)));
 		List<Indent> indentList = jpaQuery.list(QIndent.indent);
 		return indentList;

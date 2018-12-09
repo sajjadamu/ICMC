@@ -133,6 +133,9 @@
 							<div class="row">
 								<div class="col-lg-6">
 									<!--<form role="form">-->
+									<div align="center" style="color: red;">
+										<b>${errorMsg}</b>
+									</div>
 									<form:form id="userPage" name="userPage"
 										action="saveAuditorIndent" method="post" modelAttribute="user"
 										autocomplete="off">

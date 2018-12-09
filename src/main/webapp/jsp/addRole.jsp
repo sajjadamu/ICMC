@@ -65,12 +65,6 @@
 <link rel="stylesheet" type="text/css"
 	href="./resources/dist/css/style.css">
 
-<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-<!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
 
 </head>
 
@@ -206,7 +200,12 @@
 												<form:checkboxes items="${REPORTS}" path="rolePermission" />
 											</div>
 										</div>
-
+										<div class="panel panel-default">
+											<label>Verification</label>
+											<div class="form-group rolewrap">
+												<form:checkboxes items="${VERIFICATION}" path="rolePermission" />
+											</div>
+										</div>
 
 										<div class="form-group">
 											<label>Status</label>
@@ -239,8 +238,6 @@
 	</div>
 	<!-- /#wrapper -->
 
-	<!-- jQuery -->
-	<!-- <script src="./resources/bower_components/jquery/dist/jquery.min.js"></script> -->
 
 	<!-- Bootstrap Core JavaScript -->
 	<script
@@ -252,28 +249,42 @@
 
 	<!-- Custom Theme JavaScript -->
 	<script src="./resources/dist/js/sb-admin-2.js"></script>
-	<script>    
-	 $("#checkAll").click(function () {
-		    $('.rolebox1 input:checkbox').not(this).prop('checked', this.checked);
-		});
-	 $("#checkAllVMM").click(function () {
-		    $('.rolebox2 input:checkbox').not(this).prop('checked', this.checked);
-		});
-	 $("#checkAllCCD").click(function () {
-		    $('.rolebox3 input:checkbox').not(this).prop('checked', this.checked);
-		});
-	 $("#checkAllCRM").click(function () {
-		    $('.rolebox4 input:checkbox').not(this).prop('checked', this.checked);
-		});
-	 $("#checkAllCPM").click(function () {
-		    $('.rolebox5 input:checkbox').not(this).prop('checked', this.checked);
-		});
-	 $("#checkAllPRM").click(function () {
-		    $('.rolebox6 input:checkbox').not(this).prop('checked', this.checked);
-		});
-	 $("#checkAllFMM").click(function () {
-		    $('.rolebox7 input:checkbox').not(this).prop('checked', this.checked);
-		});
+	<script>
+		$("#checkAll").click(
+				function() {
+					$('.rolebox1 input:checkbox').not(this).prop('checked',
+							this.checked);
+				});
+		$("#checkAllVMM").click(
+				function() {
+					$('.rolebox2 input:checkbox').not(this).prop('checked',
+							this.checked);
+				});
+		$("#checkAllCCD").click(
+				function() {
+					$('.rolebox3 input:checkbox').not(this).prop('checked',
+							this.checked);
+				});
+		$("#checkAllCRM").click(
+				function() {
+					$('.rolebox4 input:checkbox').not(this).prop('checked',
+							this.checked);
+				});
+		$("#checkAllCPM").click(
+				function() {
+					$('.rolebox5 input:checkbox').not(this).prop('checked',
+							this.checked);
+				});
+		$("#checkAllPRM").click(
+				function() {
+					$('.rolebox6 input:checkbox').not(this).prop('checked',
+							this.checked);
+				});
+		$("#checkAllFMM").click(
+				function() {
+					$('.rolebox7 input:checkbox').not(this).prop('checked',
+							this.checked);
+				});
 	</script>
 	<script type="text/javascript">
 		$(function() {

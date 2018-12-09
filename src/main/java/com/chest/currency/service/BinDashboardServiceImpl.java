@@ -58,6 +58,7 @@ import com.chest.currency.enums.BinCategoryType;
 import com.chest.currency.enums.CashType;
 import com.chest.currency.enums.CurrencyType;
 import com.chest.currency.enums.OtherStatus;
+import com.chest.currency.exception.BaseGuiException;
 import com.chest.currency.jpa.dao.BinDashBoardJpaDaoImpl;
 import com.chest.currency.jpa.dao.UserAdministrationJpaDao;
 import com.chest.currency.util.UtilityMapper;
@@ -424,12 +425,14 @@ public class BinDashboardServiceImpl implements BinDashboardService {
 				eDate, currencyType);
 		return processFromProcessingOutPut;
 	}
+
 	@Override
 	public List<Tuple> getProcessFromProcessingOutPut(BigInteger icmcId, Calendar sDate, Calendar eDate) {
 		List<Tuple> processFromProcessingOutPut = binDashboardJpaDao.getProcessFromProcessingOutPut(icmcId, sDate,
 				eDate);
 		return processFromProcessingOutPut;
 	}
+
 	@Override
 	public List<Tuple> getProcessBundleProcessingOutPut(BigInteger icmcId, Calendar sDate, Calendar eDate) {
 		List<Tuple> processFromProcessingOutPut = binDashboardJpaDao.getProcessBundleProcessingOutPut(icmcId, sDate,
@@ -602,12 +605,13 @@ public class BinDashboardServiceImpl implements BinDashboardService {
 		return totalICMCBalance;
 	}
 
-	/*private BigDecimal getCoinsTotal(BigDecimal coinsTotal, Tuple tuple) {
-		int denom = tuple.get(1, Integer.class);
-		BigDecimal bundle = tuple.get(2, BigDecimal.class);
-		coinsTotal = coinsTotal.add(bundle.multiply(BigDecimal.valueOf(denom)).multiply(BigDecimal.valueOf(2500)));
-		return coinsTotal;
-	}*/
+	/*
+	 * private BigDecimal getCoinsTotal(BigDecimal coinsTotal, Tuple tuple) {
+	 * int denom = tuple.get(1, Integer.class); BigDecimal bundle = tuple.get(2,
+	 * BigDecimal.class); coinsTotal =
+	 * coinsTotal.add(bundle.multiply(BigDecimal.valueOf(denom)).multiply(
+	 * BigDecimal.valueOf(2500))); return coinsTotal; }
+	 */
 
 	private BigDecimal getNotesTotal(BigDecimal notesTotal, Tuple tuple) {
 		int denom = tuple.get(1, Integer.class);
@@ -1885,7 +1889,6 @@ public class BinDashboardServiceImpl implements BinDashboardService {
 																						SoiledDenomination2000.multiply(
 																								new BigDecimal(
 																										2000))))))))))));
-
 
 		binTxBodList.add(6, binTxnBODForSoiledNotes);
 
@@ -4240,8 +4243,28 @@ public class BinDashboardServiceImpl implements BinDashboardService {
 	}
 
 	@Override
+	@Transactional
 	public boolean saveAuditorIndentRequest(AuditorIndent auditorIndent) {
-		return binDashboardJpaDao.saveAuditorIndentRequest(auditorIndent);
+		binDashboardJpaDao.saveAuditorIndentRequest(auditorIndent);
+		auditorIndent.setDenomination(auditorIndent.getDenomination());
+		auditorIndent.setBinNumber(auditorIndent.getBinNumber());
+		BinTransaction binTxn = binDashboardJpaDao.getBinNumListForAuditorIndent(auditorIndent,
+				auditorIndent.getBinType());
+		BigDecimal pendingBundle = BigDecimal.ZERO;
+		BigDecimal pendingBundleFromVault = BigDecimal.ZERO;
+		BigDecimal bundleFromUI = BigDecimal.ZERO;
+
+		pendingBundleFromVault = binTxn.getPendingBundleRequest();
+		if (pendingBundleFromVault == null) {
+			pendingBundleFromVault = BigDecimal.ZERO;
+		}
+		bundleFromUI = auditorIndent.getBundle();
+		pendingBundle = pendingBundleFromVault.add(bundleFromUI);
+		binTxn.setPendingBundleRequest(pendingBundle);
+		if (binTxn.getReceiveBundle().compareTo(binTxn.getPendingBundleRequest()) < 0)
+			throw new BaseGuiException(
+					"please check Bundle . Indent Bundle should be less then or equal to receive bundld");
+		return binDashboardJpaDao.updateBinTxn(binTxn);
 	}
 
 	@Override

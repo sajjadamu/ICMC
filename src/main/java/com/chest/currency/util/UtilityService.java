@@ -2,7 +2,6 @@ package com.chest.currency.util;
 
 import java.math.BigInteger;
 import java.util.Calendar;
-import java.util.Map;
 import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
@@ -24,48 +23,6 @@ public class UtilityService {
 
 	private static final Logger LOG = LoggerFactory.getLogger(UtilityService.class);
 	static PasswordEncoder psw = new BCryptPasswordEncoder();
-
-	public static User setUserDetails(Map<String, ?> mapMap, ICMC icmc) {
-		User user = new User();
-		String roles = (String) mapMap.get("roles");
-		String[] roleName = roles.split(Pattern.quote("|"));
-		String accessRequest = (String) mapMap.get("accessRequest");
-		// String additionalDetail = (String) mapMap.get("additionalDetail");
-		String[] userDetails = accessRequest.split(Pattern.quote("|"));
-
-		user.setCreatedBy(userDetails[0]);
-		user.setUpdatedBy(userDetails[0]);
-		user.setId(userDetails[2]);
-		user.setName(userDetails[3]);
-		user.setEmail(userDetails[6]);
-		user.setCreatedDateTime(Calendar.getInstance());
-		user.setUpdatedDateTime(Calendar.getInstance());
-		Role role = new Role();
-		role.setId(roleName[0]);
-		user.setRole(role);
-		user.setPassword(psw.encode("null"));
-		user.setZoneId(icmc.getZone());
-		user.setRegionId(icmc.getRegion());
-		user.setStatus(Status.ENABLED);
-		user.setIcmcId(BigInteger.valueOf(icmc.getId()));
-
-		return user;
-	}
-
-	public static LamRequestLog setLamServiceLog(Map<String, ?> mapMap, HttpServletRequest request) {
-		LamRequestLog requestLog = new LamRequestLog();
-		// Activity activity = (Activity) mapMap.get("activity");
-
-		requestLog.setAccesRequest((String) mapMap.get("accessRequest"));
-		requestLog.setRoles((String) mapMap.get("roles"));
-		requestLog.setAdditionalDetails((String) mapMap.get("additionalDetail"));
-		requestLog.setRequestUrl(request.getRequestURI().toString());
-		requestLog.setCreatedDateTime(Calendar.getInstance());
-		requestLog.setUpdatedDateTime(Calendar.getInstance());
-		requestLog.setActivity((Activity) mapMap.get("activity"));
-
-		return requestLog;
-	}
 
 	public static User setUserDetail(QueryRequestCo queryRequest, ICMC icmc) {
 		User user = new User();
@@ -111,7 +68,8 @@ public class UtilityService {
 		requestLog.setRequestUrl(request.getRequestURI().toString());
 		requestLog.setCreatedDateTime(Calendar.getInstance());
 		requestLog.setUpdatedDateTime(Calendar.getInstance());
-		requestLog.setActivity((Activity.valueOf(queryRequest.getActivity())));
+		if (null != queryRequest.getActivity())
+			requestLog.setActivity((Activity.valueOf(queryRequest.getActivity())));
 		LOG.info("set lam requestLog " + requestLog);
 
 		return requestLog;

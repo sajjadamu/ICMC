@@ -799,16 +799,16 @@
 
 				</ul></li>
 		</sec:authorize>
+		<sec:authorize access="hasRole('VERIFICATION')">
+			<li class="dropdownn srk"><a href="#"><i
+					class="fa fa-table fa-fw"></i> Verification</a>
+				<ul>
+					<li><a href="././auditorIndent"> Auditor Indent</a></li>
+					<li><a href="././auditorProcessEntry"> Auditor Processing
+							Output</a></li>
 
-		<li class="dropdownn srk"><a href="#"><i
-				class="fa fa-table fa-fw"></i> Verification</a>
-			<ul>
-				<li><a href="././auditorIndent"> Auditor Indent</a></li>
-				<li><a href="././auditorProcessEntry"> Auditor Processing
-						Output</a></li>
-
-			</ul></li>
-
+				</ul></li>
+		</sec:authorize>
 		<%-- <sec:authorize access="hasAnyRole('VIEW_BIN_DASHBOARD')"> --%>
 		<!-- <li><a href="././printerSetting"><i class="fa fa-table fa-fw"></i>Printer Setting</a></li> -->
 		<%-- </sec:authorize> --%>

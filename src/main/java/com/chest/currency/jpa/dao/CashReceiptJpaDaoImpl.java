@@ -306,7 +306,7 @@ public class CashReceiptJpaDaoImpl implements CashReceiptJpaDao {
 		JPAQuery jpaQuery = getFromQueryForDiversionIRV();
 		jpaQuery.where(QDiversionIRV.diversionIRV.icmcId.eq(user.getIcmcId())
 				.and(QDiversionIRV.diversionIRV.status.ne(OtherStatus.CANCELLED))
-				.and(QDiversionIRV.diversionIRV.bankName.ne("NULL"))
+				.and(QDiversionIRV.diversionIRV.bankName.isNotNull())
 				.and(QDiversionIRV.diversionIRV.insertTime.between(sDate, eDate)));
 		List<DiversionIRV> diversionList = jpaQuery.list(QDiversionIRV.diversionIRV);
 		return diversionList;
@@ -842,7 +842,7 @@ public class CashReceiptJpaDaoImpl implements CashReceiptJpaDao {
 		jpaQuery.from(QIndent.indent);
 		jpaQuery.where(QIndent.indent.icmcId.eq(icmcId)
 				.and(QIndent.indent.status.eq(OtherStatus.ACCEPTED).or(QIndent.indent.status.eq(OtherStatus.PROCESSED)))
-				.and(QIndent.indent.cashSource.ne(CashSource.RBI)).and(QIndent.indent.bin.ne("NULL"))
+				.and(QIndent.indent.cashSource.ne(CashSource.RBI)).and(QIndent.indent.bin.isNotNull())
 				.and(QIndent.indent.insertTime.between(sDate, eDate)));
 		jpaQuery.groupBy(QIndent.indent.denomination);
 		List<Tuple> ibitList = jpaQuery.list(QIndent.indent.denomination, QIndent.indent.bundle.sum().multiply(1000));

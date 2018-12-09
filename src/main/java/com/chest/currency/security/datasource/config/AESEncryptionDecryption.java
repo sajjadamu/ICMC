@@ -1,8 +1,14 @@
 package com.chest.currency.security.datasource.config;
 
+import java.io.DataOutputStream;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.net.InetSocketAddress;
+import java.net.Socket;
+import java.net.UnknownHostException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Base64;
 
@@ -11,16 +17,18 @@ import javax.crypto.spec.SecretKeySpec;
 
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 
+import com.chest.currency.entity.model.User;
+
 public class AESEncryptionDecryption extends DriverManagerDataSource {
 
 	public AESEncryptionDecryption() {
 		super();
 	}
 
-	private static  SecretKeySpec secretKey;
-	private static  byte[] key;
+	private static SecretKeySpec secretKey;
+	private static byte[] key;
 
-	public static  void setKey(String myKey) {
+	public static void setKey(String myKey) {
 		MessageDigest sha = null;
 		try {
 			key = myKey.getBytes("UTF-8");
@@ -35,7 +43,7 @@ public class AESEncryptionDecryption extends DriverManagerDataSource {
 		}
 	}
 
-	public static  String encrypt(String strToEncrypt, String secret) {
+	public static String encrypt(String strToEncrypt, String secret) {
 		try {
 			setKey(secret);
 			Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
@@ -47,7 +55,7 @@ public class AESEncryptionDecryption extends DriverManagerDataSource {
 		return null;
 	}
 
-	public static  String decrypt(String strToDecrypt, String secret) {
+	public static String decrypt(String strToDecrypt, String secret) {
 		try {
 			setKey(secret);
 			Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5PADDING");
@@ -67,15 +75,16 @@ public class AESEncryptionDecryption extends DriverManagerDataSource {
 		super.setPassword(AESEncryptionDecryption.decrypt(encryptedPassword, "ssshhhhhhhhhhh!!!!"));
 	}
 
-	public static void main(String[] args) {
-	    String encryptedUsername = AESEncryptionDecryption.encrypt("ivault_live", "ssshhhhhhhhhhh!!!!") ;
-	    String encryptedPassword = AESEncryptionDecryption.encrypt("ivault_live_123", "ssshhhhhhhhhhh!!!!") ;
-	    String decryptedusername= AESEncryptionDecryption.decrypt(encryptedUsername, "ssshhhhhhhhhhh!!!!") ;
-	    String decryptedPassword = AESEncryptionDecryption.decrypt(encryptedPassword, "ssshhhhhhhhhhh!!!!") ;
-		System.out.println("Encrypted username :- " + encryptedUsername);
+	public static void main(String[] args) throws UnknownHostException, IOException {
+		/*String encryptedUsername = AESEncryptionDecryption.encrypt("icmc_user", "ssshhhhhhhhhhh!!!!");
+		String encryptedPassword = AESEncryptionDecryption.encrypt("Icici@2018#", "ssshhhhhhhhhhh!!!!");
+		String decryptedusername = AESEncryptionDecryption.decrypt(encryptedUsername, "ssshhhhhhhhhhh!!!!");
+		String decryptedPassword = AESEncryptionDecryption.decrypt(encryptedPassword, "ssshhhhhhhhhhh!!!!");*/
+		
+		/*System.out.println("Encrypted username :- " + encryptedUsername);
 		System.out.println("Encrypted password :- " + encryptedPassword);
-		System.out.println("Encrypted username :- " + decryptedusername);
-		System.out.println("Encrypted password :- " + decryptedPassword);
+		System.out.println("decryptedusername username :- " + decryptedusername);
+		System.out.println("decryptedPassword password :- " + decryptedPassword);*/
 	}
 
 }

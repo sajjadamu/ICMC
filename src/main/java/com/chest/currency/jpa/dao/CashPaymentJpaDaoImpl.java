@@ -734,26 +734,8 @@ public class CashPaymentJpaDaoImpl implements CashPaymentJpaDao {
 
 	@Override
 	public List<Sas> solIdForSASPaymentAccepted(BigInteger icmcId, Calendar sDate, Calendar eDate, Set<Long> pList) {
-		// JPAQuery jpaQuery = getFromQueryForSAS();
 		JPAQuery jpaQuery = new JPAQuery(em);
-		/*
-		 * jpaQuery.from(QSASAllocation.sASAllocation)
-		 * .where(QSASAllocation.sASAllocation.status.eq(OtherStatus.ACCEPTED)
-		 * .and(QSASAllocation.sASAllocation.insertTime.between(sDate, eDate)))
-		 * .orderBy(QSASAllocation.sASAllocation.parentId.asc());
-		 * List<SASAllocation> solIdForPaymenta =
-		 * jpaQuery.list(QSASAllocation.sASAllocation); Set<Long> pList=new
-		 * HashSet<Long>(); for(SASAllocation parentId : solIdForPaymenta){
-		 * pList.add(parentId.getParentId()); }
-		 */
-
-		/*
-		 * jpaQuery.innerJoin(QSASAllocation.sASAllocation)
-		 * .on((QSas.sas.id).eq(QSASAllocation.sASAllocation.parentId))
-		 * .where(QSas.sas.icmcId.eq(icmcId) .and(QSas.sas.status.eq(0))
-		 * .and(QSas.sas.insertTime.between(sDate, eDate))
-		 * .and(QSASAllocation.sASAllocation.status.eq(OtherStatus.ACCEPTED)));
-		 */
+		
 		jpaQuery.from(QSas.sas).distinct().where(QSas.sas.icmcId.eq(icmcId).and(QSas.sas.status.eq(1))
 				.and(QSas.sas.insertTime.between(sDate, eDate)).and(QSas.sas.id.in(pList)));
 		List<Sas> solIdForPayment = jpaQuery.list(QSas.sas);
@@ -1479,7 +1461,7 @@ public class CashPaymentJpaDaoImpl implements CashPaymentJpaDao {
 	public List<CRAAllocation> craPaymentDetails(BigInteger icmcId, long id) {
 		JPAQuery jpaQuery = getFromQueryForCRAAllocation();
 		jpaQuery.where(QCRAAllocation.cRAAllocation.icmcId.eq(icmcId).and(QCRAAllocation.cRAAllocation.craId.eq(id))
-				.and(QCRAAllocation.cRAAllocation.binNumber.ne("null"))
+				.and(QCRAAllocation.cRAAllocation.binNumber.isNotNull())
 				.and(QCRAAllocation.cRAAllocation.status.eq(OtherStatus.ACCEPTED)));
 		List<CRAAllocation> craAllocation = jpaQuery.list(QCRAAllocation.cRAAllocation);
 		return craAllocation;
@@ -2149,7 +2131,7 @@ public class CashPaymentJpaDaoImpl implements CashPaymentJpaDao {
 				QIndent.indent.icmcId.eq(icmcId)
 						.and(QIndent.indent.status.eq(OtherStatus.ACCEPTED)
 								.or(QIndent.indent.status.eq(OtherStatus.PROCESSED)))
-						.and(QIndent.indent.cashSource.ne(CashSource.RBI)).and(QIndent.indent.bin.ne("NULL"))
+						.and(QIndent.indent.cashSource.ne(CashSource.RBI)).and(QIndent.indent.bin.isNotNull())
 						.and(QIndent.indent.insertTime.between(sDate, eDate)));
 		jpaQuery.groupBy(QIndent.indent.denomination);
 		List<Tuple> ibitList = jpaQuery.list(QIndent.indent.denomination, QIndent.indent.bundle.sum().multiply(1000));

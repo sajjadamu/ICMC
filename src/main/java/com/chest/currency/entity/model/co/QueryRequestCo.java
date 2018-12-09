@@ -3,18 +3,36 @@ package com.chest.currency.entity.model.co;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+
+import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.NotEmpty;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+@XmlRootElement(name = "queryrequest")
 public class QueryRequestCo {
 
-//	QueryRequestCo queryrequest;
-
+	@NotEmpty
+	@NotBlank
+	@XmlElement(name = "Activity")
+	@JsonProperty("Activity")
 	private String Activity;
 
+	@NotEmpty
+	@NotBlank
+	@XmlElement(name = "AccessRequest")
+	@JsonProperty("AccessRequest")
 	private String AccessRequest;
 
+	@XmlElement(name = "Roles")
+	@JsonProperty("Roles")
 	private String Roles;
 
+	@XmlElement(name = "AdditionalDetail")
+	@JsonProperty("AdditionalDetail")
 	private String AdditionalDetail;
-
 
 	public String getActivity() {
 		return Activity;
@@ -48,30 +66,15 @@ public class QueryRequestCo {
 		AdditionalDetail = additionalDetail;
 	}
 
-	/*
-	 * public QueryRequestCo getQueryrequest() { return queryrequest; }
-	 * 
-	 * public void setQueryrequest(QueryRequestCo queryrequest) { this.queryrequest
-	 * = queryrequest; }
-	 */
 	public Map<String, ?> getQueryRequest() {
 		Map<String, Object> params = new LinkedHashMap<>();
 
-		params.put("activity", this.Activity);
-		params.put("accessRequest", this.AccessRequest);
-		params.put("roles", this.Roles);
-		params.put("additionalDetail", this.AdditionalDetail);
+		params.put("Activity", this.Activity);
+		params.put("AccessRequest", this.AccessRequest);
+		params.put("Roles", this.Roles);
+		params.put("AdditionalDetail", this.AdditionalDetail);
 
 		return params;
 	}
-
-	/*
-	 * public Map<String, ?> getQueryRequest() { Map<String, Object> params = new
-	 * LinkedHashMap<>();
-	 * 
-	 * params.put("queryrequest", this.getQueryrequest().getRequest());
-	 * 
-	 * return params; }
-	 */
 
 }

@@ -449,7 +449,7 @@ tr.ttlDiscBtm td:nth-child(2), tr.ttlDiscBtm td:nth-child(3) {
 																		<c:otherwise></c:otherwise>
 																	</c:choose></td>
 																<td><c:choose>
-																		<c:when test="${row.accountTellerCam == 'ACCOUNT'}">
+																		<c:when test="${row.accountTellerCam == 'ACCOUNT' || row.accountTellerCam == 'DSB'}">
 												${row.customerName}</c:when>
 																		<c:otherwise></c:otherwise>
 																	</c:choose></td>

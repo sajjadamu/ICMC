@@ -90,16 +90,36 @@
 									<div class="col-sm-12"></div>
 									<!-- /.row (nested) -->
 									<div class="row bins" id="printableArea">
-										<%-- <div class="totalICMCBal">
-											<label>Total ICMC Balance:</label> <span>Rs.
-												${totalICMCBalance}</span>
-										</div> --%>
-										<p>I, the undersigned, Reeta Bhatt has taken over the
-											charge of the Currency Chest from Anurag Bajpai ,on
-											25-09-2018 at 08:30 am. I have checked the cash balance
-											amounting to Rs 9,11,40,10,000/- at the opening of 25-09-2018
-											by verifying the bundles and packets are found correct. The
-											details are given below :-</p>
+										<div class="totalICMCBal">
+											<label>CHARGE REPORT</label>
+										</div>
+										<div class="col-sm-12">
+											<div class="col-sm-6">
+												<span>Date: <b>${currentDate}</b></span> <br> <br>
+												The Currency Management Unit <br> Chandivali <br>
+												Mumbai <br>
+											</div>
+											<br>
+
+										</div>
+										<div class="col-sm-12">
+											<div class="col-sm-10">
+												<br> <br> Dear Sir, <br> <br>
+												<p>
+													I, the undersigned, Reeta Bhatt has taken over the charge
+													of the Currency Chest from Anurag Bajpai ,on
+													${currentDate}. I have checked the cash balance amounting
+													to <b> Rs <strong> <fmt:formatNumber
+																type="number" maxFractionDigits="3"
+																value="${totalICMCBalance}" />
+													</strong>/-
+													</b> at the opening of ${currentDate} by verifying the bundles
+													and packets are found correct. The details are given below
+													:-
+												</p>
+											</div>
+										</div>
+
 										<div id="converter">
 											<table class="table table-striped table-bordered table-hover">
 												<thead>
@@ -166,18 +186,37 @@
 														<td>Total value</td>
 														<td></td>
 														<td></td>
-														<th style="text-align: right;">${totalICMCBalance}</th>
+														<th style="text-align: right;">
+														<strong> <fmt:formatNumber
+																	type="number" maxFractionDigits="3"
+																	value="${totalICMCBalance}" />
+															</strong></th>
 													</tr>
 												</tbody>
 											</table>
+											<div>${totalICMCBalanceInWords}</div>
 										</div>
 										<div class="col-sm-12">
-											<div id="table_wrapper">
-												<table
-													class="table table-striped table-bordered table-hover">
-													<%-- <jsp:include page="binSummary.jsp" /> --%>
-													<%-- <jsp:include page="binSummaryForCoins.jsp" /> --%>
-												</table>
+											<div class="col-sm-8">
+												I have taken possession of <br> A.Secret Documents <br>B.Steel
+												Sealer <br>C. Keys of Strong Room Door, Grill Door and
+												Cash Bins (No. of keys)
+											</div>
+											<div class="col-sm-4">
+												Yes <br>Not Issued By RBI <br>56 Keys, 11 Moving
+												Bin & 9 FICN Boxes Keys.
+											</div>
+										</div>
+
+										<div class="col-sm-4">Yours faithfully,</div>
+										<div class="col-sm-12">
+											<div class="col-sm-8">
+												Reeta Bhatt <br>Name & Signature of the <br>In-Coming
+												Officer
+											</div>
+											<div class="col-sm-4">
+												Anurag Bajpai <br>Name & Signature of the <br>Out-going
+												Officer
 											</div>
 										</div>
 									</div>
