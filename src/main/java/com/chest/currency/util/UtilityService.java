@@ -68,8 +68,23 @@ public class UtilityService {
 		requestLog.setRequestUrl(request.getRequestURI().toString());
 		requestLog.setCreatedDateTime(Calendar.getInstance());
 		requestLog.setUpdatedDateTime(Calendar.getInstance());
-		if (null != queryRequest.getActivity())
-			requestLog.setActivity((Activity.valueOf(queryRequest.getActivity())));
+		if (null != queryRequest.getActivity()) {
+			switch (queryRequest.getActivity().toUpperCase()) {
+			case "I":
+				requestLog.setActivity(Activity.valueOf("CREATE"));
+				break;
+			case "U":
+				requestLog.setActivity(Activity.valueOf("MODIFY"));
+				break;
+			case "UN":
+				requestLog.setActivity(Activity.valueOf("UNLOCK"));
+				break;
+			case "D":
+				requestLog.setActivity(Activity.valueOf("DELETE"));
+				break;
+			}
+			requestLog.setActivity(Activity.valueOf("CREATE"));
+		}
 		LOG.info("set lam requestLog " + requestLog);
 
 		return requestLog;

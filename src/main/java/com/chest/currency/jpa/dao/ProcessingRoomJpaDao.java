@@ -213,7 +213,8 @@ public interface ProcessingRoomJpaDao {
 	public boolean updateFreshFromRBI(FreshFromRBI br);
 
 	/*
-	 * public List<Tuple> getDataFromCRAAllocationForProcessing(BigInteger icmcId);
+	 * public List<Tuple> getDataFromCRAAllocationForProcessing(BigInteger
+	 * icmcId);
 	 */
 
 	public List<CRAAllocation> getDataFromCRAAllocationForProcessing(BigInteger icmcId);
@@ -229,6 +230,8 @@ public interface ProcessingRoomJpaDao {
 
 	public List<Indent> getIndentListForMachineAllocation(BigInteger icmcId, Integer denomination,
 			CashSource cashSource);
+
+	public List<AuditorIndent> getAuditorIndentListForMachineAllocation(BigInteger icmcId, Integer denomination);
 
 	public BigDecimal getTotalBundleInBin(int denomination, String bin, BigInteger icmcId);
 
@@ -388,5 +391,13 @@ public interface ProcessingRoomJpaDao {
 	Discrepancy getDiscrepancyForUploadingImage(User user, Calendar sDate, Calendar eDate);
 
 	void uploadDiscrepancyImage(Discrepancy discrepancy);
+
+	boolean updateBundleInAuditorIndent(AuditorIndent indent);
+
+	public List<MachineAllocation> getBundleFromMachineAllocation(BigInteger icmcId, Integer denomination);
+
+	List<AuditorProcess> getAuditorProcessedData(BigInteger icmcId, Calendar sDate, Calendar eDate);
+
+	AuditorProcess getRepritAuditorProcessRecord(Long id);
 
 }

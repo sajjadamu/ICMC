@@ -35,28 +35,25 @@
 <link rel="stylesheet" type="text/css"
 	href="./resources/dist/css/style.css">
 <script>
-    $(function()
-{
-  $('#btnsubmit').on('click',function()
-  {
-    $(this).val('Submit')
-      .attr('disabled','disabled');
-  
-  });
-  
-  
-});
-    </script>
+	$(function() {
+		$('#btnsubmit').on('click', function() {
+			$(this).val('Submit').attr('disabled', 'disabled');
+
+		});
+
+	});
+</script>
 
 <script type="text/javascript">
 	function getRadioButtonValue() {
 		addHeaderJson();
-		
+		$('#category').html("");
+		$('#denomination').html("");
 		var radioButtonValue = $('input[name=cashTransfer]:checked').val();
-		//clear values after click on radio button
+		$('#needToTransferBundle').html("");
 		$('#bundle').val('');
 		$('#bin').val('');
-		$('#binFromMaster').val('');
+		$('#binFromMaster').html('<option value="">Select Bin/Box</option>');
 		$('#remarks').val('');
 		//End clear value code
 		$.ajax({
@@ -65,7 +62,7 @@
 			data : "radioButtonValue=" + radioButtonValue,
 			success : function(response) {
 				var newStr = response.toString();
-				console.log("newStr  "+newStr);
+				console.log("newStr  " + newStr);
 				var data = newStr.split(",");
 				var option = '<option value="">Select Bin/Box</option>';
 				for (i = 0; i < data.length; i++) {
@@ -79,85 +76,99 @@
 			}
 		});
 	}
-	
+
 	function binOrBox() {
 		addHeaderJson();
 		var radioButtonValue = $('input[name=cashTransfer]:checked').val();
 		var binOrBox = $('#bin').val();
 		var bundle = $('#bundle').val();
-		$.ajax({
-			type : "POST",
-			url : "././getbinOrBoxFromMaster",
-			data : "binOrBox=" + binOrBox + "&bundle=" + bundle
-					+ "&radioButtonValue=" + radioButtonValue,
-			success : function(response) {
-				var newStr = response.toString();
-				var data = newStr.split(",");
-				var option = '<option value="">Select Bin/Box</option>';
-				for (i = 0; i < data.length; i++) {
-					option += '<option value="' + data[i].trim() + '">'
-							+ data[i].trim() + '</option>';
-				}
-				$('#binFromMaster').html(option);
-			},
-			error : function(e) {
-				alert('Bin Error: ' + e);
-			}
-		});
-	}
-	
-	
-	
-	function getBindetails() {
-		addHeaderJsonJson();
-		var binOrBox = $('#bin').val();
-		$.ajax({
-			type:"POST",
-			url:"././getBinDetailsFromcashTransfer",
-			data:"binOrBox="+binOrBox,
-			success:function(response){
-				$("#category").html(response.binType);
-				$("#denomination").html(response.denomination);
-				
-			},
-			error:function(e){
-				alert('Bin Details Error: ' + e);
-			}
-			
-		});
-		
-	} 
-	
-	function getPatialOrDefaulty()
-	{
-		
 		var reason = $('input[name=reason]:checked').val();
-		alert(reason)
-		if(reason=='partial')
-			{
-			alert("dgfd")
-			$("#bundle").removeAttr("readonly");
-			}
+		if (reason == 'partial') {
+			$('#binFromMaster')
+					.html('<option value="">Select Bin/Box</option>');
+		} else {
+			$.ajax({
+				type : "POST",
+				url : "././getbinOrBoxFromMaster",
+				data : "binOrBox=" + binOrBox + "&bundle=" + bundle
+						+ "&radioButtonValue=" + radioButtonValue,
+				success : function(response) {
+					var newStr = response.toString();
+					var data = newStr.split(",");
+					var option = '<option value="">Select Bin/Box</option>';
+					for (i = 0; i < data.length; i++) {
+						option += '<option value="' + data[i].trim() + '">'
+								+ data[i].trim() + '</option>';
+					}
+					$('#binFromMaster').html(option);
+				},
+				error : function(e) {
+					alert('Bin Error: ' + e);
+				}
+			});
+		}
 	}
 
-	
-	function getBinFromTxn()
-	{
-		var currencyType = $('#category').text();
-		alert(currencyType)
-		var denomination = $('#denomination').text();
-		alert(denomination)
-		var bundle = $('#bundle').val();
-		alert(bundle)
+	function getBindetails() {
+		addHeaderJson();
+		var binOrBox = $('#bin').val();
 		$.ajax({
 			type : "POST",
-			url : "././getbinFromBinTransactionForCashTransfer",
-			data : "currencyType=" + currencyType+ "&denomination=" + denomination + "&bundle=" + bundle,
+			url : "././getBinDetailsFromcashTransfer",
+			data : "binOrBox=" + binOrBox,
+			success : function(response) {
+				$("#category").html(response.binType);
+				$("#denomination").html(response.denomination);
+
+			},
+			error : function(e) {
+				alert('Bin Details Error: ' + e);
+			}
+
+		});
+
+	}
+
+	function getPatialOrDefaulty() {
+
+		$('#category').html("");
+		$('#denomination').html("");
+		$('#bundle').val('');
+		$('#bin').val('');
+		$('#binFromMaster').html('<option value="">Select Bin/Box</option>');
+		$('#remarks').val('');
+		$('#needToTransferBundle').html("");
+
+		var reason = $('input[name=reason]:checked').val();
+		if (reason == 'partial') {
+			//$("#bundle").removeAttr("readonly");
+			$("#bundle").removeAttr("readonly");
+			$('#binFromMaster')
+					.html('<option value="">Select Bin/Box</option>');
+		} else if (reason == 'defaulty') {
+			$('#bundle').attr('readonly', true);
+		}
+	}
+
+	function getBinFromTxn() {
+		var currencyType = $('#category').text();
+		var denomination = $('#denomination').text();
+		var bundle = $('#bundle').val();
+		var bin = $('#bin').val();
+		//alert(bin);
+		var radioButtonValue = $('input[name=cashTransfer]:checked').val();
+		addHeaderJson();
+		$.ajax({
+			type : "GET",
+			url : "././getbinOrBoxFromBinTransaction",
+			data : "currencyType=" + currencyType + "&denomination="
+					+ denomination + "&bundle=" + bundle + "&radioButtonValue="
+					+ radioButtonValue + "&bin=" + bin,
 			success : function(response) {
 				var newStr = response.toString();
 				//alert(newStr)
 				//$('#bundle').val(newStr);
-				$('#binFromMaster').val('');
+				$('#binFromMaster').html('');
 				var newStr = response.toString();
 				var data = newStr.split(",");
 				var option = '<option value="">Select Bin/Box</option>';
@@ -172,7 +183,7 @@
 			}
 		});
 	}
-	
+
 	function getbundle() {
 		addHeaderJson();
 		var binOrBox = $('#bin').val();
@@ -184,6 +195,7 @@
 				var newStr = response.toString();
 				//alert(newStr)
 				$('#bundle').val(newStr);
+				$('#needToTransferBundle').html(newStr);
 			},
 			error : function(e) {
 				alert('Bundle Error: ' + e);
@@ -199,24 +211,24 @@
 		var remarks = $('#remarks').val();
 		var reason = $('input[name=reason]:checked').val();
 		var radioButtonValue = $('input[name=cashTransfer]:checked').val();
-		
-		if(binOrBox != "" && bundle != "" && binFromMaster != "" && reason != ""  && radioButtonValue != ""){
-			 	$.ajax({
-			type : "POST",
-			url : "././transferCash",
-			data : "binOrBox=" + binOrBox + "&bundle=" + bundle
-					+ "&binFromMaster=" + binFromMaster + "&remarks=" + remarks
-					+ "&reason=" + reason + "&radioButtonValue="
-					+ radioButtonValue,
-			success : function(response) {
-				alert("success")
-			},
-			error : function(e) {
-				alert('Bin Error: ' + e);
-			}
-		}); 
-		}
-		else{
+
+		if (binOrBox != "" && bundle != "" && binFromMaster != ""
+				&& reason != "" && radioButtonValue != "") {
+			$.ajax({
+				type : "POST",
+				url : "././transferCash",
+				data : "binOrBox=" + binOrBox + "&bundle=" + bundle
+						+ "&binFromMaster=" + binFromMaster + "&remarks="
+						+ remarks + "&reason=" + reason + "&radioButtonValue="
+						+ radioButtonValue,
+				success : function(response) {
+					alert("success")
+				},
+				error : function(e) {
+					alert('Bin Error: ' + e);
+				}
+			});
+		} else {
 			alert("Please Select proper data");
 		}
 	}
@@ -266,14 +278,14 @@
 									<div class="form-group">
 										<label>Choose Reason</label> <input type="radio" name="reason"
 											id="reason" checked="checked" value="defaulty"
-											onclick="getPatialOrDefaulty()">Faulty
-
-										<!-- <input type="radio" name="reason"
-											id="reason" value="partial" onclick="getPatialOrDefaulty()">Partially -->
+											onclick="getPatialOrDefaulty()">Faulty <input
+											type="radio" name="reason" id="reason" value="partial"
+											onclick="getPatialOrDefaulty()">Partially
 									</div>
 
 									<div class="form-group">
 										<label>Bin/Box</label> <select id="bin"
+											class="browser-default custom-select"
 											onchange="binOrBox();getbundle();getBindetails()">
 											<option value="">Select Bin/Box</option>
 										</select>
@@ -281,67 +293,70 @@
 									<div class="form-group">
 										<label>Category</label>
 										<div id="category"></div>
-
 									</div>
-
 									<div class="form-group">
 										<label>Denomination</label>
 										<div id="denomination"></div>
-
 									</div>
 									<div class="form-group">
-										<label>Bundle</label> <input type="text" name="bundle"
-											id="bundle" readonly="readonly" onchange="getBinFromTxn()">
-									</div>
+										<label>Bundle</label>
+										<div id="needToTransferBundle"></div>
+										<div class="form-group">
+											<label>Bundle</label> <input type="text" name="bundle"
+												id="bundle" readonly="readonly" onchange="getBinFromTxn()">
+											<label class="text-danger" hidden="true">Please edit
+												Bundle</label>
+										</div>
 
-									<div class="form-group">
-										<label>Bin/Box</label> <select id="binFromMaster">
-											<option value="">Select Bin/Box</option>
-										</select>
-									</div>
+										<div class="form-group">
+											<label>Bin/Box</label> <select id="binFromMaster">
+												<option value="">Select Bin/Box</option>
+											</select>
+										</div>
 
-									<div class="form-group">
-										<label>Remarks</label> <input type="text" name=remarks
-											id="remarks">
-									</div>
+										<div class="form-group">
+											<label>Remarks</label> <input type="text" name=remarks
+												id="remarks">
+										</div>
 
-									<div class="form-group">
-										<!-- 										<input type="button" value="Submit"
+										<div class="form-group">
+											<!-- 										<input type="button" value="Submit"
 											onclick="cashTransferFromMasterToTransaction()"> -->
-										<input type="button" value="Submit" id="btnsubmit"
-											onclick="cashTransferFromMasterToTransaction()">
+											<input type="button" class="btn btn-primary" value="Submit"
+												id="btnsubmit"
+												onclick="cashTransferFromMasterToTransaction()">
+										</div>
+
 									</div>
-
+									<div class="col-lg-6"></div>
 								</div>
-								<div class="col-lg-6"></div>
+								<!-- /.row (nested) -->
 							</div>
-							<!-- /.row (nested) -->
+							<!-- /.panel-body -->
 						</div>
-						<!-- /.panel-body -->
+						<!-- /.panel -->
 					</div>
-					<!-- /.panel -->
+					<!-- /.col-lg-12 -->
 				</div>
-				<!-- /.col-lg-12 -->
+				<!-- /.row -->
 			</div>
-			<!-- /.row -->
+			<!-- /#page-wrapper -->
+
 		</div>
-		<!-- /#page-wrapper -->
+		<!-- /#wrapper -->
 
-	</div>
-	<!-- /#wrapper -->
+		<!-- Bootstrap Core JavaScript -->
+		<script
+			src="./resources/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 
-	<!-- Bootstrap Core JavaScript -->
-	<script
-		src="./resources/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+		<!-- Metis Menu Plugin JavaScript -->
+		<script
+			src="./resources/bower_components/metisMenu/dist/metisMenu.min.js"></script>
 
-	<!-- Metis Menu Plugin JavaScript -->
-	<script
-		src="./resources/bower_components/metisMenu/dist/metisMenu.min.js"></script>
+		<!-- Custom Theme JavaScript -->
+		<script src="./resources/dist/js/sb-admin-2.js"></script>
 
-	<!-- Custom Theme JavaScript -->
-	<script src="./resources/dist/js/sb-admin-2.js"></script>
-
-	<script type="text/javascript" src="./js/htmlInjection.js"></script>
+		<script type="text/javascript" src="./js/htmlInjection.js"></script>
 </body>
 
 </html>

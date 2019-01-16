@@ -173,7 +173,8 @@
 										</div>
 
 										<input type="button" id="print" name="print"
-											value="Save AND Print QR" onclick="SavePrint();"
+											value="Save AND Print QR"
+											onclick="SavePrint();"
 											class="btn btn-default qr-button">
 									</form:form>
 								</div>

@@ -4,7 +4,7 @@
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <html lang="en">
 <head>
-<link rel="shortcut icon" href="./resources/logo/favicon.ico"
+<link rel="shortcut icon" href="./resources/logo/yes_favicon.ico"
 	type="image/x-icon">
 <script type="text/javascript" src="./js/jquery-1.12.0.min.js"></script>
 <script type="text/javascript">
@@ -18,7 +18,7 @@ function pageSubmit(){
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="">
 <meta name="author" content="">
-<title>ICICI : Indent Request</title>
+<title> Indent Request</title>
 <script src="./resources/Currency/js/jquery.js"></script>
 <!-- Bootstrap Core CSS -->
 <link

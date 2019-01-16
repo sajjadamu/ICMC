@@ -138,7 +138,7 @@
 													<td id="currencyType${row.id}">${row.currencyType}</td>
 													<td id="binNumber${row.id}">${row.binNumber}</td>
 													<td><sec:authorize access="hasRole('ACCEPT_INDENT')">
-															<input type="button" value="Accept"
+															<input type="button" class="btn btn-primary" value="Accept"
 																onclick="doAjaxPostUpdateStatus(${row.id});this.disabled=true;">
 														</sec:authorize></td>
 													<%-- <td><sec:authorize access="hasRole('ACCEPT_INDENT')">

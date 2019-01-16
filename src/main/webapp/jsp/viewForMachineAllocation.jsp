@@ -215,7 +215,7 @@ function doAjaxPostForMachineAllocation(str,source,denom) {
 														id="issuedBundle${count}<%=CashSource.BRANCH%>"></td>
 													<td><sec:authorize
 															access="hasRole('ADD_MACHINE_ALLOCATION')">
-															<input type="button" value="Allocate"
+															<input type="button" class="btn btn-primary" value="Allocate"
 																onclick="doAjaxPostForMachineAllocation('${count}<%=CashSource.BRANCH%>','<%=CashSource.BRANCH%>','${row.denomination}');this.disabled=true;">
 														</sec:authorize></td>
 												</tr>
@@ -285,7 +285,7 @@ function doAjaxPostForMachineAllocation(str,source,denom) {
 														id="issuedBundle${count}<%=CashSource.DSB%>"></td>
 													<td><sec:authorize
 															access="hasRole('ADD_MACHINE_ALLOCATION')">
-															<input type="button" value="Allocate"
+															<input type="button" class="btn btn-primary" value="Allocate"
 																onclick="doAjaxPostForMachineAllocation('${count}<%=CashSource.DSB%>','<%=CashSource.DSB%>','${row.denomination}');this.disabled=true;">
 														</sec:authorize></td>
 												</tr>
@@ -357,7 +357,7 @@ function doAjaxPostForMachineAllocation(str,source,denom) {
 														id="issuedBundle${count}<%=CashSource.OTHERBANK%>"></td>
 													<td><sec:authorize
 															access="hasRole('ADD_MACHINE_ALLOCATION')">
-															<input type="button" value="Allocate"
+															<input type="button" class="btn btn-primary" value="Allocate"
 																onclick="doAjaxPostForMachineAllocation('${count}<%=CashSource.OTHERBANK%>','<%=CashSource.OTHERBANK%>','${row.denomination}');this.disabled=true;">
 														</sec:authorize></td>
 												</tr>
@@ -428,7 +428,7 @@ function doAjaxPostForMachineAllocation(str,source,denom) {
 														id="issuedBundle${count}<%=CashSource.DIVERSION%>"></td>
 													<td><sec:authorize
 															access="hasRole('ADD_MACHINE_ALLOCATION')">
-															<input type="button" value="Allocate"
+															<input type="button" class="btn btn-primary" value="Allocate"
 																onclick="doAjaxPostForMachineAllocation('${count}<%=CashSource.DIVERSION%>','<%=CashSource.DIVERSION%>','${row.denomination}');this.disabled=true;">
 														</sec:authorize></td>
 												</tr>

@@ -42,6 +42,7 @@ import com.chest.currency.entity.model.Process;
 import com.chest.currency.entity.model.ProcessBundleForCRAPayment;
 import com.chest.currency.entity.model.QAssignVaultCustodian;
 import com.chest.currency.entity.model.QAuditorIndent;
+import com.chest.currency.entity.model.QAuditorProcess;
 import com.chest.currency.entity.model.QBankReceipt;
 import com.chest.currency.entity.model.QBinMaster;
 import com.chest.currency.entity.model.QBinTransaction;
@@ -112,6 +113,12 @@ public class ProcessingRoomJpaDaoImpl implements ProcessingRoomJpaDao {
 		return jpaQuery;
 	}
 
+	private JPAQuery getFromQueryForAuditorProcess() {
+		JPAQuery jpaQuery = new JPAQuery(em);
+		jpaQuery.from(QAuditorProcess.auditorProcess);
+		return jpaQuery;
+	}
+
 	private JPAQuery getFromQueryForICMC() {
 		JPAQuery jpaQuery = new JPAQuery(em);
 		jpaQuery.from(QICMC.iCMC);
@@ -150,9 +157,11 @@ public class ProcessingRoomJpaDaoImpl implements ProcessingRoomJpaDao {
 	@Override
 	public List<Indent> viewBinDetail(int denomination, String bin, BigInteger icmcId) {
 		JPAQuery jpaQuery = getFromQueryForIndent();
+
 		jpaQuery.where(QIndent.indent.icmcId.eq(icmcId).and(QIndent.indent.status.eq(OtherStatus.REQUESTED))
 				.and(QIndent.indent.denomination.eq(denomination)).and(QIndent.indent.bin.eq(bin)));
 		List<Indent> indentList = jpaQuery.list(QIndent.indent);
+
 		return indentList;
 	}
 
@@ -183,14 +192,17 @@ public class ProcessingRoomJpaDaoImpl implements ProcessingRoomJpaDao {
 	}
 
 	private JPAQuery getFromQueryForIndentRequestFromBinTxn() {
+
 		JPAQuery jpaQuery = new JPAQuery(em);
 		jpaQuery.from(QBinTransaction.binTransaction).orderBy(QBinTransaction.binTransaction.insertTime.asc());
+
 		return jpaQuery;
 	}
 
 	@Override
 	public List<BinTransaction> getBinNumListForIndent(int denomination, BigDecimal bundle, BigInteger icmcId,
 			CashSource cashSource, BinCategoryType binCategoryType) {
+
 		JPAQuery jpaQuery = getFromQueryForIndentRequestFromBinTxn();
 		jpaQuery.where(QBinTransaction.binTransaction.icmcId.eq(icmcId)
 				.and(QBinTransaction.binTransaction.denomination.eq(denomination))
@@ -200,6 +212,7 @@ public class ProcessingRoomJpaDaoImpl implements ProcessingRoomJpaDao {
 				.and(QBinTransaction.binTransaction.status.ne(BinStatus.EMPTY))
 				.and(QBinTransaction.binTransaction.binCategoryType.eq(binCategoryType)));
 		List<BinTransaction> txnList = jpaQuery.list(QBinTransaction.binTransaction);
+
 		return txnList;
 	}
 
@@ -273,6 +286,7 @@ public class ProcessingRoomJpaDaoImpl implements ProcessingRoomJpaDao {
 				QBinTransaction.binTransaction.binNumber.eq(bin).and(QBinTransaction.binTransaction.icmcId.eq(icmcId))
 						.and(QBinTransaction.binTransaction.status.ne(BinStatus.EMPTY)));
 		BinTransaction binTransaction = jpaQuery.singleResult(QBinTransaction.binTransaction);
+
 		return binTransaction;
 	}
 
@@ -324,12 +338,28 @@ public class ProcessingRoomJpaDaoImpl implements ProcessingRoomJpaDao {
 	}
 
 	@Override
+	public boolean updateBundleInAuditorIndent(AuditorIndent indent) {
+		em.merge(indent);
+		return true;
+	}
+
+	@Override
 	public List<Process> getProcessedDataList(BigInteger icmcId, Calendar sDate, Calendar eDate) {
 		JPAQuery jpaQuery = getFromQueryForProcess();
 		jpaQuery.where(QProcess.process.icmcId.eq(icmcId).and(QProcess.process.status.eq(1))
 				.and(QProcess.process.insertTime.between(sDate, eDate)));
 		LOG.info("PROCESSED DATA");
 		List<Process> processList = jpaQuery.list(QProcess.process);
+		return processList;
+	}
+
+	@Override
+	public List<AuditorProcess> getAuditorProcessedData(BigInteger icmcId, Calendar sDate, Calendar eDate) {
+		JPAQuery jpaQuery = getFromQueryForAuditorProcess();
+		jpaQuery.where(QAuditorProcess.auditorProcess.icmcId.eq(icmcId)
+				.and(QAuditorProcess.auditorProcess.insertTime.between(sDate, eDate)));
+		LOG.info("PROCESSED DATA");
+		List<AuditorProcess> processList = jpaQuery.list(QAuditorProcess.auditorProcess);
 		return processList;
 	}
 
@@ -499,8 +529,10 @@ public class ProcessingRoomJpaDaoImpl implements ProcessingRoomJpaDao {
 				.and(QBinTransaction.binTransaction.cashSource.eq(cashSource))
 				.and(QBinTransaction.binTransaction.binType.eq(CurrencyType.UNPROCESS))
 				.and(QBinTransaction.binTransaction.status.ne(BinStatus.EMPTY)));
+
 		jpaQuery.groupBy(QBinTransaction.binTransaction.denomination, QBinTransaction.binTransaction.binCategoryType);
 		jpaQuery.orderBy(QBinTransaction.binTransaction.denomination.desc());
+
 		List<Tuple> list = jpaQuery.list(QBinTransaction.binTransaction.denomination,
 				QBinTransaction.binTransaction.insertTime.min().as("insertTime"),
 				QBinTransaction.binTransaction.receiveBundle.sum(),
@@ -1011,6 +1043,7 @@ public class ProcessingRoomJpaDaoImpl implements ProcessingRoomJpaDao {
 				.and(QBinTransaction.binTransaction.binCategoryType.eq(binCategoryType)));
 		List<BinTransaction> txnList = jpaQuery.list(QBinTransaction.binTransaction);
 		return txnList;
+
 	}
 
 	private JPAQuery getFromQueryForCRAForProcessing() {
@@ -1035,7 +1068,7 @@ public class ProcessingRoomJpaDaoImpl implements ProcessingRoomJpaDao {
 				.and(QDiscrepancy.discrepancy.insertTime.between(sDate, eDate)));
 		return jpaQuery.list(QDiscrepancy.discrepancy);
 	}
-	
+
 	@Override
 	public Discrepancy getDiscrepancyForUploadingImage(User user, Calendar sDate, Calendar eDate) {
 		JPAQuery jpaQuery = getFromQueryForDiscrepancy();
@@ -1045,7 +1078,7 @@ public class ProcessingRoomJpaDaoImpl implements ProcessingRoomJpaDao {
 		jpaQuery.orderBy(QDiscrepancy.discrepancy.id.desc());
 		return jpaQuery.singleResult(QDiscrepancy.discrepancy);
 	}
-	
+
 	@Override
 	public void uploadDiscrepancyImage(Discrepancy discrepancy) {
 		em.merge(discrepancy);
@@ -1081,6 +1114,18 @@ public class ProcessingRoomJpaDaoImpl implements ProcessingRoomJpaDao {
 				.and(QIndent.indent.bundle.gt(0)).and(QIndent.indent.status.eq(OtherStatus.ACCEPTED))
 				.and(QIndent.indent.cashSource.eq(cashSource)));
 		List<Indent> indentList = jpaQuery.list(QIndent.indent);
+		return indentList;
+	}
+
+	@Override
+	public List<AuditorIndent> getAuditorIndentListForMachineAllocation(BigInteger icmcId, Integer denomination) {
+		JPAQuery jpaQuery = new JPAQuery(em);
+		jpaQuery.from(QAuditorIndent.auditorIndent);
+		jpaQuery.where(QAuditorIndent.auditorIndent.icmcId.eq(icmcId)
+				.and(QAuditorIndent.auditorIndent.denomination.eq(denomination))
+				.and(QAuditorIndent.auditorIndent.bundle.gt(0))
+				.and(QAuditorIndent.auditorIndent.status.eq(OtherStatus.ACCEPTED)));
+		List<AuditorIndent> indentList = jpaQuery.list(QAuditorIndent.auditorIndent);
 		return indentList;
 	}
 
@@ -1205,8 +1250,7 @@ public class ProcessingRoomJpaDaoImpl implements ProcessingRoomJpaDao {
 		JPAQuery jpaQuery = getFromQueryForPendingBundleFromMachineAllocation();
 		jpaQuery.where(QMachineAllocation.machineAllocation.icmcId.eq(icmcId)
 				.and(QMachineAllocation.machineAllocation.pendingBundle.gt(0))
-				// .and(QMachineAllocation.machineAllocation.insertTime.between(sDate,
-				// edate))
+				.and(QMachineAllocation.machineAllocation.cashSource.isNotNull())
 				.and(QMachineAllocation.machineAllocation.ismanual.eq("YES")));
 		jpaQuery.groupBy(QMachineAllocation.machineAllocation.denomination,
 				QMachineAllocation.machineAllocation.cashSource);
@@ -1291,6 +1335,14 @@ public class ProcessingRoomJpaDaoImpl implements ProcessingRoomJpaDao {
 		jpaQuery.where(QProcess.process.id.eq(id));
 		Process process = jpaQuery.singleResult(QProcess.process);
 		return process;
+	}
+
+	@Override
+	public AuditorProcess getRepritAuditorProcessRecord(Long id) {
+		JPAQuery jpaQuery = getFromQueryForAuditorProcess();
+		jpaQuery.where(QAuditorProcess.auditorProcess.id.eq(id));
+		AuditorProcess Auditorprocess = jpaQuery.singleResult(QAuditorProcess.auditorProcess);
+		return Auditorprocess;
 	}
 
 	private JPAQuery getFromQueryForMitulatedFullValue() {
@@ -1484,13 +1536,28 @@ public class ProcessingRoomJpaDaoImpl implements ProcessingRoomJpaDao {
 
 	@Override
 	public List<Tuple> getPendingBundleForAuditor(BigInteger icmcId) {
-		JPAQuery jpaQuery = getFromQueryForPendingBundleFromAuditorIndent();
-		jpaQuery.where(
-				QAuditorIndent.auditorIndent.icmcId.eq(icmcId).and(QAuditorIndent.auditorIndent.pendingBundleRequest
-						.gt(0).and(QAuditorIndent.auditorIndent.status.eq(OtherStatus.ACCEPTED))));
-		jpaQuery.groupBy(QAuditorIndent.auditorIndent.denomination);
-		List<Tuple> bundleList = jpaQuery.list(QAuditorIndent.auditorIndent.denomination,
-				QAuditorIndent.auditorIndent.pendingBundleRequest.sum());
+		/*
+		 * JPAQuery jpaQuery = getFromQueryForPendingBundleFromAuditorIndent();
+		 * jpaQuery.where(
+		 * QAuditorIndent.auditorIndent.icmcId.eq(icmcId).and(QAuditorIndent.
+		 * auditorIndent.pendingBundleRequest
+		 * .gt(0).and(QAuditorIndent.auditorIndent.status.eq(OtherStatus.
+		 * ACCEPTED))));
+		 * jpaQuery.groupBy(QAuditorIndent.auditorIndent.denomination);
+		 * List<Tuple> bundleList =
+		 * jpaQuery.list(QAuditorIndent.auditorIndent.denomination,
+		 * QAuditorIndent.auditorIndent.pendingBundleRequest.sum()); return
+		 * bundleList;
+		 */
+
+		JPAQuery jpaQuery = getFromQueryForPendingBundleFromMachineAllocation();
+		jpaQuery.where(QMachineAllocation.machineAllocation.icmcId.eq(icmcId)
+				.and(QMachineAllocation.machineAllocation.pendingBundle.gt(0))
+				.and(QMachineAllocation.machineAllocation.cashSource.isNull()));
+		jpaQuery.groupBy(QMachineAllocation.machineAllocation.denomination,
+				QMachineAllocation.machineAllocation.cashSource);
+		List<Tuple> bundleList = jpaQuery.list(QMachineAllocation.machineAllocation.denomination,
+				QMachineAllocation.machineAllocation.pendingBundle.sum());
 		return bundleList;
 	}
 
@@ -1498,7 +1565,8 @@ public class ProcessingRoomJpaDaoImpl implements ProcessingRoomJpaDao {
 	public List<AuditorIndent> getPendingBundleFromAuditorIndent(BigInteger icmcId, Integer denomination) {
 		JPAQuery jpaQuery = getFromQueryForPendingBundleFromAuditorIndent();
 		jpaQuery.where(QAuditorIndent.auditorIndent.icmcId.eq(icmcId).and(QAuditorIndent.auditorIndent.denomination
-				.eq(denomination).and(QAuditorIndent.auditorIndent.status.eq(OtherStatus.ACCEPTED))));
+				.eq(denomination).and(QAuditorIndent.auditorIndent.status.eq(OtherStatus.PROCESSED))));
+		// .eq(denomination).and(QAuditorIndent.auditorIndent.status.eq(OtherStatus.ACCEPTED))));
 		List<AuditorIndent> auditorIndentList = jpaQuery.list(QAuditorIndent.auditorIndent);
 		return auditorIndentList;
 	}
@@ -1720,9 +1788,18 @@ public class ProcessingRoomJpaDaoImpl implements ProcessingRoomJpaDao {
 				.and(QMachineAllocation.machineAllocation.ismanual.eq(isMachineOrManual))
 				.and(QMachineAllocation.machineAllocation.status.eq(OtherStatus.REQUESTED))
 				.and(QMachineAllocation.machineAllocation.denomination.eq(denomination))
-				// .and(QMachineAllocation.machineAllocation.insertTime.between(sDate,
-				// eDate))
 				.and(QMachineAllocation.machineAllocation.cashSource.eq(cashSource)));
+		List<MachineAllocation> pendingBundleList = jpaQuery.list(QMachineAllocation.machineAllocation);
+		return pendingBundleList;
+	}
+
+	@Override
+	public List<MachineAllocation> getBundleFromMachineAllocation(BigInteger icmcId, Integer denomination) {
+		JPAQuery jpaQuery = getFromQueryForPendingBundleFromMachineAllocation();
+		jpaQuery.where(QMachineAllocation.machineAllocation.icmcId.eq(icmcId)
+				.and(QMachineAllocation.machineAllocation.status.eq(OtherStatus.REQUESTED))
+				.and(QMachineAllocation.machineAllocation.denomination.eq(denomination))
+				.and(QMachineAllocation.machineAllocation.cashSource.isNull()));
 		List<MachineAllocation> pendingBundleList = jpaQuery.list(QMachineAllocation.machineAllocation);
 		return pendingBundleList;
 	}

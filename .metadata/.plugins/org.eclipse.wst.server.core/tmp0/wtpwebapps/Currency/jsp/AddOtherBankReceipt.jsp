@@ -7,7 +7,7 @@
 <html lang="en">
 
 <head>
-<link rel="shortcut icon" href="./resources/logo/favicon.ico"
+<link rel="shortcut icon" href="./resources/logo/yes_favicon.ico"
 	type="image/x-icon">
 <script src="./js/jquery-1.12.0.min.js"></script>
 <meta charset="utf-8">
@@ -16,7 +16,7 @@
 <meta name="description" content="">
 <meta name="author" content="">
 
-<title>ICICI : Add Other Bank Receipt</title>
+<title> Add Other Bank Receipt</title>
 
 <link href="./resources/css/calendar.css" rel="stylesheet"
 	type="text/css" />

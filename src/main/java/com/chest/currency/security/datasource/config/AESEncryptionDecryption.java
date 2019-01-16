@@ -1,14 +1,10 @@
 package com.chest.currency.security.datasource.config;
 
-import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.net.InetSocketAddress;
-import java.net.Socket;
 import java.net.UnknownHostException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Base64;
 
@@ -16,8 +12,6 @@ import javax.crypto.Cipher;
 import javax.crypto.spec.SecretKeySpec;
 
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
-
-import com.chest.currency.entity.model.User;
 
 public class AESEncryptionDecryption extends DriverManagerDataSource {
 
@@ -85,6 +79,7 @@ public class AESEncryptionDecryption extends DriverManagerDataSource {
 		System.out.println("Encrypted password :- " + encryptedPassword);
 		System.out.println("decryptedusername username :- " + decryptedusername);
 		System.out.println("decryptedPassword password :- " + decryptedPassword);*/
+		System.out.println("Encrypted username :- ");
 	}
 
 }

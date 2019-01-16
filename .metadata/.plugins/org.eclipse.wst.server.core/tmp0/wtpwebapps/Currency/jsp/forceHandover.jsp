@@ -5,7 +5,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jstl/core_rt"%>
 <html lang="en">
 <head>
-<link rel="shortcut icon" href="./resources/logo/favicon.ico"
+<link rel="shortcut icon" href="./resources/logo/yes_favicon.ico"
 	type="image/x-icon">
 <script src="./js/jquery-1.12.0.min.js"></script>
 
@@ -570,7 +570,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="">
 <meta name="author" content="">
-<title>ICICI : Force Handover</title>
+<title> Force Handover</title>
 <script src="./resources/Currency/js/jquery.js"></script>
 <!-- Bootstrap Core CSS -->
 <link

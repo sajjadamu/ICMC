@@ -1,4 +1,3 @@
-
 package com.chest.currency.service;
 
 import java.math.BigDecimal;
@@ -84,6 +83,9 @@ public class ProcessingRoomServiceImpl implements ProcessingRoomService {
 
 	@Autowired
 	CashReceiptService cashReceiptService;
+
+	@Autowired
+	ICMCService icmcService;
 
 	@Override
 	public String getBinForIndentRequest(String denomination, String bundle) {
@@ -215,20 +217,15 @@ public class ProcessingRoomServiceImpl implements ProcessingRoomService {
 		BinTransaction txnBean = this.getBinFromTransaction(bin.trim(), user.getIcmcId());
 		LOG.info("processIndentRequest txnBean " + txnBean);
 		LOG.info("processIndentRequest indent " + indent);
-		if (indent != null && txnBean != null && txnBean.getReceiveBundle() != null
-				&& txnBean.getReceiveBundle().compareTo(BigDecimal.ZERO) > 0 && indent.getBundle() != null
-				&& indent.getBundle().compareTo(BigDecimal.ZERO) > 0) {
+		if (null != txnBean.getReceiveBundle() && txnBean.getReceiveBundle().compareTo(BigDecimal.ZERO) > 0
+				&& null != indent.getBundle() && indent.getBundle().compareTo(BigDecimal.ZERO) > 0) {
 			LOG.info("subtracting balance ");
 			BigDecimal balanceBundle = txnBean.getReceiveBundle().subtract(indent.getBundle());
 
 			LOG.info("processing available balanceBundle " + balanceBundle);
-			// indent.setStatus(OtherStatus.PROCESSED);// 0 means ready for
-			// machine
-			// allocation
 			isIndentUpdate = this.updateIndentStatus(indent);
 			LOG.info("update indentStatus " + isIndentUpdate);
 			if (isIndentUpdate && balanceBundle.compareTo(BigDecimal.ZERO) == 0) {
-				// txnBean.setRcvBundle(BigDecimal.ZERO);
 				txnBean.setReceiveBundle(BigDecimal.ZERO);
 				txnBean.setPendingBundleRequest(BigDecimal.ZERO);
 				txnBean.setStatus(BinStatus.EMPTY);
@@ -236,9 +233,7 @@ public class ProcessingRoomServiceImpl implements ProcessingRoomService {
 				txnBean.setVerified(YesNo.NULL);
 				txnBean.setUpdateBy(user.getId());
 				txnBean.setUpdateTime(Calendar.getInstance());
-				// update time
 				// int count = this.deleteDataFromBinTxn(txnBean);
-				// call merge
 				boolean count = this.updateBinTxn(txnBean);
 				LOG.info("update bintransaction" + count);
 				if (count) {
@@ -255,7 +250,6 @@ public class ProcessingRoomServiceImpl implements ProcessingRoomService {
 				txnBean.setUpdateTime(Calendar.getInstance());
 				isIndentUpdate = this.updateBinTxn(txnBean);
 			}
-
 		}
 		if (!isIndentUpdate) {
 			throw new BaseGuiException("Bin is Empty: While process Indent Request");
@@ -276,7 +270,6 @@ public class ProcessingRoomServiceImpl implements ProcessingRoomService {
 	}
 
 	@Override
-	@Transactional
 	public boolean updateBinTxn(BinTransaction binTransaction) {
 		if (binTransaction.getPendingBundleRequest().compareTo(BigDecimal.ZERO) < 0
 				|| binTransaction.getPendingBundleRequest().compareTo(binTransaction.getReceiveBundle()) > 0) {
@@ -301,6 +294,12 @@ public class ProcessingRoomServiceImpl implements ProcessingRoomService {
 	 */
 
 	@Override
+	public boolean updateBundleInAuditorIndent(AuditorIndent indent) {
+		boolean isSaved = processingRoomJpaDao.updateBundleInAuditorIndent(indent);
+		return isSaved;
+	}
+
+	@Override
 	public boolean updateBundleInIndent(Indent indent) {
 		boolean isSaved = processingRoomJpaDao.updateBundleInIndent(indent);
 		return isSaved;
@@ -319,6 +318,25 @@ public class ProcessingRoomServiceImpl implements ProcessingRoomService {
 			for (Indent indentTemp : eligibleIndentList) {
 				updateBundleInIndent(indentTemp);
 			}
+
+			isAllsuccess = this.insertInMachineAllocation(machine);
+		}
+		return isAllsuccess;
+	}
+
+	@Override
+	public boolean auditorMachineAllocation(MachineAllocation machine, AuditorIndent indent, User user) {
+		boolean isAllsuccess = false;
+
+		List<AuditorIndent> indentList = processingRoomJpaDao
+				.getAuditorIndentListForMachineAllocation(machine.getIcmcId(), machine.getDenomination());
+		List<AuditorIndent> eligibleIndentList = UtilityJpa.getEligibleAuditorIndentListForMachineAllocation(indentList,
+				machine.getIssuedBundle(), user);
+
+		if (!CollectionUtils.isEmpty(eligibleIndentList)) {
+			for (AuditorIndent indentTemp : eligibleIndentList) {
+				updateBundleInAuditorIndent(indentTemp);
+			}
 			isAllsuccess = this.insertInMachineAllocation(machine);
 		}
 		return isAllsuccess;
@@ -327,6 +345,12 @@ public class ProcessingRoomServiceImpl implements ProcessingRoomService {
 	@Override
 	public List<Process> getProcessedDataList(BigInteger icmcId, Calendar sDate, Calendar eDate) {
 		List<Process> processList = processingRoomJpaDao.getProcessedDataList(icmcId, sDate, eDate);
+		return processList;
+	}
+
+	@Override
+	public List<AuditorProcess> getAuditorProcessedData(BigInteger icmcId, Calendar sDate, Calendar eDate) {
+		List<AuditorProcess> processList = processingRoomJpaDao.getAuditorProcessedData(icmcId, sDate, eDate);
 		return processList;
 	}
 
@@ -377,8 +401,6 @@ public class ProcessingRoomServiceImpl implements ProcessingRoomService {
 
 		BigDecimal bundleFromTxn = BigDecimal.ZERO;
 
-		// Machine Allocation Table Code
-
 		String machineOrManual = "";
 		if (process.getProcessAction() == ProcessAction.MACHINE) {
 			machineOrManual = "NO";
@@ -387,27 +409,11 @@ public class ProcessingRoomServiceImpl implements ProcessingRoomService {
 			machineOrManual = "YES";
 		}
 
-		/*
-		 * List<MachineAllocation> pendingBundleListFromMachineAllocation =
-		 * processingRoomJpaDao
-		 * .getPendingBundleFromMachineAllocation(user.getIcmcId(),
-		 * process.getDenomination(), machineOrManual);
-		 * 
-		 */
-		Calendar sDate = Calendar.getInstance();
-		Calendar eDate = Calendar.getInstance();
+		Calendar sDate = UtilityJpa.getStartDate();
+		Calendar eDate = UtilityJpa.getEndDate();
+		UtilityJpa.setStartDate(sDate);
+		UtilityJpa.setEndDate(eDate);
 
-		sDate.set(Calendar.HOUR, 0);
-		sDate.set(Calendar.HOUR_OF_DAY, 0);
-		sDate.set(Calendar.MINUTE, 0);
-		sDate.set(Calendar.SECOND, 0);
-		sDate.set(Calendar.MILLISECOND, 0);
-
-		eDate.set(Calendar.HOUR, 24);
-		eDate.set(Calendar.HOUR_OF_DAY, 23);
-		eDate.set(Calendar.MINUTE, 59);
-		eDate.set(Calendar.SECOND, 59);
-		eDate.set(Calendar.MILLISECOND, 999);
 		List<MachineAllocation> pendingBundleListFromMachineAllocation = this.getBundleByCashSource(user.getIcmcId(),
 				machineOrManual, process.getDenomination(), process.getCashSource(), sDate, eDate);
 
@@ -797,7 +803,7 @@ public class ProcessingRoomServiceImpl implements ProcessingRoomService {
 			da.setDiscrepancyDate(discrepancy.getDiscrepancyDate());
 			da.setSolId(discrepancy.getSolId());
 			da.setBranch(discrepancy.getBranch());
-		//	da.setFilepath(discrepancy.getFilepath());
+			// da.setFilepath(discrepancy.getFilepath());
 			da.setAccountTellerCam(discrepancy.getAccountTellerCam());
 			da.setCustomerName(discrepancy.getCustomerName());
 			da.setAccountNumber(discrepancy.getAccountNumber());
@@ -949,6 +955,7 @@ public class ProcessingRoomServiceImpl implements ProcessingRoomService {
 	@Transactional
 	public boolean insertIndentRequestAndUpdateBinTxAndBranchReceipt(List<Indent> eligibleIndentRequestList,
 			List<BinTransaction> binTransactionList, List<BranchReceipt> branchReceiptList) {
+
 		boolean isSaved = processingRoomJpaDao.insertIndentRequest(eligibleIndentRequestList);
 
 		LOG.info("insertIndentRequestAndUpdateBinTxAndBranchReceipt " + binTransactionList);
@@ -997,7 +1004,6 @@ public class ProcessingRoomServiceImpl implements ProcessingRoomService {
 				LOG.info("sas branchReceipt update " + branchReceipt);
 			}
 		}
-
 		if (!isSaved) {
 			throw new RuntimeException("Error while Branch Payment Request");
 		}
@@ -1172,6 +1178,11 @@ public class ProcessingRoomServiceImpl implements ProcessingRoomService {
 	@Override
 	public Process getRepritRecord(Long id) {
 		return processingRoomJpaDao.getRepritRecord(id);
+	}
+
+	@Override
+	public AuditorProcess getRepritAuditorProcessRecord(Long id) {
+		return processingRoomJpaDao.getRepritAuditorProcessRecord(id);
 	}
 
 	public List<Mutilated> getMitulatedFullValue(BigInteger icmcId) {
@@ -1441,6 +1452,81 @@ public class ProcessingRoomServiceImpl implements ProcessingRoomService {
 		return true;
 	}
 
+	/*
+	 * @Override public List<AuditorProcess>
+	 * processRecordForAuditorIndent(AuditorProcess process, User user) {
+	 * 
+	 * List<BinMaster> binMasterList = new ArrayList<BinMaster>();
+	 * List<BinTransaction> binList = new ArrayList<>(); List<BinTransaction>
+	 * binTxs = new ArrayList<>(); List<AuditorProcess> processList = new
+	 * ArrayList<>(); List<BoxMaster> boxMasterList = new ArrayList<>();
+	 * 
+	 * BigDecimal bundleFromTxn = BigDecimal.ZERO;
+	 * 
+	 * if (process.getBinCategoryType() == BinCategoryType.BIN) {
+	 * List<BinCapacityDenomination> capacityList = cashReceiptService
+	 * .getMaxBundleCapacity(process.getDenomination(),
+	 * process.getCurrencyType());
+	 * 
+	 * binMasterList = getPriorityBinListByType(user,
+	 * process.getCurrencyType());
+	 * 
+	 * binList = getBinTxnListByDenomForAuditorProcess(process, user);
+	 * 
+	 * binTxs = UtilityJpa.getBinByCurrencyProcessType(binList, binMasterList,
+	 * process.getBundle(), true, capacityList, process.getCurrencyType(),
+	 * process.getCashSource());
+	 * 
+	 * for (BinTransaction binTxn : binTxs) { bundleFromTxn =
+	 * bundleFromTxn.add(binTxn.getCurrentBundle()); } if
+	 * (bundleFromTxn.compareTo(process.getBundle()) == 0) { processList =
+	 * UtilityJpa.getProcessBeanForAuditor(process, binTxs, user);
+	 * addTransactions(user, binTxs, process.getCurrencyType()); } else { throw
+	 * new BaseGuiException("Space is not available in BIN for " +
+	 * process.getCurrencyType() + " Category and " + process.getDenomination()
+	 * + " Denomination"); } }
+	 * 
+	 * if (process.getBinCategoryType() == BinCategoryType.BOX) { BoxMaster
+	 * boxMaster = new BoxMaster(); boxMaster.setIcmcId(user.getIcmcId());
+	 * boxMaster.setDenomination(process.getDenomination());
+	 * boxMaster.setCurrencyType(process.getCurrencyType()); boxMasterList =
+	 * cashReceiptService.getBoxFromBoxMaster(boxMaster); binList =
+	 * getBinTxnListByDenomForAuditorProcess(process, user);
+	 * 
+	 * binTxs = UtilityJpa.getBoxByCurrencyProcessType(binList, boxMasterList,
+	 * process.getBundle(), true, process.getCurrencyType(),
+	 * process.getCashSource());
+	 * 
+	 * for (BinTransaction binTxn : binTxs) { bundleFromTxn =
+	 * bundleFromTxn.add(binTxn.getCurrentBundle()); } if
+	 * (bundleFromTxn.compareTo(process.getBundle()) == 0) { processList =
+	 * UtilityJpa.getProcessBeanForAuditor(process, binTxs, user);
+	 * addInTransactionsForBox(user, binTxs); } else { throw new
+	 * BaseGuiException("Space is not available in BOX for " +
+	 * process.getCurrencyType() + " Category and " + process.getDenomination()
+	 * + " Denomination"); } }
+	 * 
+	 * List<AuditorIndent> pendingBundleListFromAuditorIndent =
+	 * processingRoomJpaDao .getPendingBundleFromAuditorIndent(user.getIcmcId(),
+	 * process.getDenomination());
+	 * 
+	 * List<AuditorIndent> eligiblePendingBundleList = UtilityJpa
+	 * .getEligibleBundleListForAuditor(pendingBundleListFromAuditorIndent,
+	 * process.getBundle(), user);
+	 * 
+	 * if (eligiblePendingBundleList == null ||
+	 * eligiblePendingBundleList.isEmpty()) { throw new BaseGuiException(
+	 * "Required Bundle is Not available for Denomination:" +
+	 * process.getDenomination()); }
+	 * 
+	 * for (AuditorIndent auditorIndent : eligiblePendingBundleList) {
+	 * updatePendingBundleInAuditorIndent(auditorIndent); }
+	 * 
+	 * addProcessForAuditor(processList);
+	 * 
+	 * return processList; }
+	 */
+
 	@Override
 	public List<AuditorProcess> processRecordForAuditorIndent(AuditorProcess process, User user) {
 
@@ -1451,6 +1537,24 @@ public class ProcessingRoomServiceImpl implements ProcessingRoomService {
 		List<BoxMaster> boxMasterList = new ArrayList<>();
 
 		BigDecimal bundleFromTxn = BigDecimal.ZERO;
+
+		List<MachineAllocation> pendingBundleListFromMachineAllocation = this
+				.getBundleFromMachineAllocation(user.getIcmcId(), process.getDenomination());
+
+		List<MachineAllocation> eligiblePendingBundleList = UtilityJpa.getEligibleBundleListForMachineAllocation(
+				pendingBundleListFromMachineAllocation, process.getBundle(), user);
+
+		if (eligiblePendingBundleList == null || eligiblePendingBundleList.isEmpty()) {
+			throw new BaseGuiException(
+					"Required Bundle is Not available for Denomination:" + process.getDenomination());
+		}
+
+		for (MachineAllocation machineAllocation : eligiblePendingBundleList) {
+			updatePendingBundleInMachineAllocation(machineAllocation);
+			// process.setMachineId(machineAllocation.getId());
+		}
+
+		// End Of Machine Allocation Code
 
 		if (process.getBinCategoryType() == BinCategoryType.BIN) {
 			List<BinCapacityDenomination> capacityList = cashReceiptService
@@ -1496,21 +1600,6 @@ public class ProcessingRoomServiceImpl implements ProcessingRoomService {
 				throw new BaseGuiException("Space is not available in BOX for " + process.getCurrencyType()
 						+ " Category and " + process.getDenomination() + " Denomination");
 			}
-		}
-
-		List<AuditorIndent> pendingBundleListFromAuditorIndent = processingRoomJpaDao
-				.getPendingBundleFromAuditorIndent(user.getIcmcId(), process.getDenomination());
-
-		List<AuditorIndent> eligiblePendingBundleList = UtilityJpa
-				.getEligibleBundleListForAuditor(pendingBundleListFromAuditorIndent, process.getBundle(), user);
-
-		if (eligiblePendingBundleList == null || eligiblePendingBundleList.isEmpty()) {
-			throw new BaseGuiException(
-					"Required Bundle is Not available for Denomination:" + process.getDenomination());
-		}
-
-		for (AuditorIndent auditorIndent : eligiblePendingBundleList) {
-			updatePendingBundleInAuditorIndent(auditorIndent);
 		}
 
 		addProcessForAuditor(processList);
@@ -1722,6 +1811,13 @@ public class ProcessingRoomServiceImpl implements ProcessingRoomService {
 	}
 
 	@Override
+	public List<MachineAllocation> getBundleFromMachineAllocation(BigInteger icmcId, Integer denomination) {
+		List<MachineAllocation> bundleListBySource = processingRoomJpaDao.getBundleFromMachineAllocation(icmcId,
+				denomination);
+		return bundleListBySource;
+	}
+
+	@Override
 	public List<Tuple> getKeySetDetail(String custodian, BigInteger icmcId) {
 		List<Tuple> list = processingRoomJpaDao.getKeySetDetail(custodian, icmcId);
 		return list;
@@ -1816,8 +1912,8 @@ public class ProcessingRoomServiceImpl implements ProcessingRoomService {
 	}
 
 	private boolean getUpdateCashReceiveForIndentRequest(Indent indent) {
-		Calendar sDate = this.getStartDate();
-		Calendar eDate = this.getEndDate();
+		Calendar sDate = UtilityJpa.getStartDate();
+		Calendar eDate = UtilityJpa.getEndDate();
 		if (CashSource.DSB.equals(indent.getCashSource())) {
 			List<DSB> dsbs = processingRoomJpaDao.getDSB(indent, sDate, eDate);
 			BigDecimal totalbundle = indent.getBundle();
@@ -1870,30 +1966,6 @@ public class ProcessingRoomServiceImpl implements ProcessingRoomService {
 			isUpdate = getUpdateCashReceiveForIndentRequest(indent);
 		}
 		return isUpdate;
-	}
-
-	private Calendar getStartDate() {
-		Calendar sDate = Calendar.getInstance();
-
-		sDate.set(Calendar.HOUR, 0);
-		sDate.set(Calendar.HOUR_OF_DAY, 0);
-		sDate.set(Calendar.MINUTE, 0);
-		sDate.set(Calendar.SECOND, 0);
-		sDate.set(Calendar.MILLISECOND, 0);
-
-		return sDate;
-	}
-
-	private Calendar getEndDate() {
-		Calendar eDate = Calendar.getInstance();
-
-		eDate.set(Calendar.HOUR, 24);
-		eDate.set(Calendar.HOUR_OF_DAY, 23);
-		eDate.set(Calendar.MINUTE, 59);
-		eDate.set(Calendar.SECOND, 59);
-		eDate.set(Calendar.MILLISECOND, 999);
-
-		return eDate;
 	}
 
 }

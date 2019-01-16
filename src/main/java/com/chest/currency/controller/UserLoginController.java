@@ -80,159 +80,93 @@ public class UserLoginController {
 		String parsedBinTxnDate = null;
 		User user = (User) session.getAttribute("login");
 
-		// EOD NOTIFICATION
-
 		// VAULT CUSTODIAN NOTIFICATION
-		String msgSAS, msgIndent, msgOtherBank, msgSoiled, msgDiversion = "";
-		String SASmsg = "";
-		String indentMsg = "";
-		String otherBankMsg = "";
-		String soiledMsg = "";
-		String diversionMsg = "";
-		String craMsg = "";
-		String processingOutPutPendingMsg = "";
-		String pendingMachineAloMsg = "";
+		String craMsg, msgSAS, msgIndent, msgOtherBank, msgSoiled, msgDiversion = "";
 		LOG.info("user " + user);
 		LOG.info("user.getRole().getIcmcAccess() " + user.getRole().getIcmcAccess());
 		LOG.info("user.getRole().getIcmcAccess().equals(IcmcAccess.ICMC) "
 				+ user.getRole().getIcmcAccess().equals(IcmcAccess.ICMC));
 		if (user.getRole().getIcmcAccess().equals(IcmcAccess.ICMC)) {
-			if (user.getRole().getIcmcAccess().equals(IcmcAccess.ICMC)) {
-				// List<BinTransactionBOD> lastEOD=
-				// userAdministrationService.getLastEODData(user.getIcmcId());
-				dateBinTxn = userAdministrationService.getNotificationFromBinTransactionForEOD(user.getIcmcId());
-				LOG.info("Calendar date from binTransaction " + dateBinTxn);
-				if (dateBinTxn != null) {
-					LOG.info("Calendar date from binTransaction " + dateBinTxn.getTime());
-					parsedBinTxnDate = parsingDateFormate(dateBinTxn.getTime());
-					map.put("binTransactionDate", parsingDateFormate(dateBinTxn.getTime()));
+			// List<BinTransactionBOD> lastEOD=
+			// userAdministrationService.getLastEODData(user.getIcmcId());
+			dateBinTxn = userAdministrationService.getNotificationFromBinTransactionForEOD(user.getIcmcId());
+			LOG.info("Calendar date from binTransaction " + dateBinTxn);
+			if (dateBinTxn != null) {
+				LOG.info("Calendar date from binTransaction " + dateBinTxn.getTime());
+				parsedBinTxnDate = parsingDateFormate(dateBinTxn.getTime());
+				map.put("binTransactionDate", parsingDateFormate(dateBinTxn.getTime()));
 
-					Calendar sDate = (Calendar) dateBinTxn.clone();
-					Calendar eDate = (Calendar) dateBinTxn.clone();
+				Calendar sDate = (Calendar) dateBinTxn.clone();
+				Calendar eDate = (Calendar) dateBinTxn.clone();
+				UtilityJpa.setStartDate(sDate);
+				UtilityJpa.setEndDate(eDate);
 
-					UtilityJpa.setStartDate(sDate);
-					UtilityJpa.setEndDate(eDate);
-
-					LOG.info("sDate from binTransaction " + sDate.getTime());
-					LOG.info("eDate from binTransaction " + eDate.getTime());
-					dateEOD = userAdministrationService.getNotificationFromBinTransactionBODForEOD(user.getIcmcId(),
-							sDate, eDate);
-					if (dateEOD != null) {
-						/* map.put("binTransactioEODDate", dateEOD.getTime()); */
-						map.put("binTransactioEODDate", parsingDateFormate(dateEOD.getTime()));
-						parsedEodDate = parsingDateFormate(dateEOD.getTime());
-					} else {
-						map.put("binTransactioEODDate", dateEOD);
-					}
-					LOG.info("dateEOD Controller from binTransaction " + dateEOD);
+				LOG.info("sDate from binTransaction " + sDate.getTime());
+				LOG.info("eDate from binTransaction " + eDate.getTime());
+				dateEOD = userAdministrationService.getNotificationFromBinTransactionBODForEOD(user.getIcmcId(), sDate,
+						eDate);
+				if (dateEOD != null) {
+					map.put("binTransactioEODDate", parsingDateFormate(dateEOD.getTime()));
+					parsedEodDate = parsingDateFormate(dateEOD.getTime());
+				} else {
+					map.put("binTransactioEODDate", dateEOD);
 				}
-
-				// Notification pending bundle
-				msgSAS = userAdministrationService.getNotificationFromSASAllocation(user.getIcmcId());
-				msgIndent = userAdministrationService.getNotificationFromIndent(user.getIcmcId());
-				msgOtherBank = userAdministrationService.getNotificationFromOtherBankAllocation(user.getIcmcId());
-				msgSoiled = userAdministrationService.getNotificationFromSoiledAllocation(user.getIcmcId());
-				msgDiversion = userAdministrationService.getNotificationFromDiversion(user.getIcmcId());
-				craMsg = userAdministrationService.getNotificationFromCRA(user.getIcmcId());
-
-				// Machine Allocation Pending
-				// String pendingMachineAlo =
-				// userAdministrationService.getNotificationForMachineAllocation(user.getIcmcId());
-
-				// Processing Output Pending
-				// String processingOutPutPending =
-				// userAdministrationService.getNotificationForProcessingOutPut(user.getIcmcId());
-
-				dateBinTxn = userAdministrationService.getNotificationFromBinTransactionForEOD(user.getIcmcId());
-				LOG.info("Calendar date from binTransaction " + dateBinTxn);
-				if (dateBinTxn != null) {
-					/* map.put("binTransactionDate", dateBinTxn.getTime()); */
-					map.put("binTransactionDate", parsingDateFormate(dateBinTxn.getTime()));
-					parsedBinTxnDate = parsingDateFormate(dateBinTxn.getTime());
-					Calendar sDate = (Calendar) dateBinTxn.clone();
-					Calendar eDate = (Calendar) dateBinTxn.clone();
-
-					UtilityJpa.setStartDate(sDate);
-					UtilityJpa.setEndDate(eDate);
-
-					LOG.info("dateBinTxn.getTime() " + dateBinTxn.getTime());
-
-					LOG.info("sDate from binTransaction " + sDate.getTime());
-					LOG.info("eDate from binTransaction " + eDate.getTime());
-					dateEOD = userAdministrationService.getNotificationFromBinTransactionBODForEOD(user.getIcmcId(),
-							sDate, eDate);
-					if (dateEOD != null) {
-						/* map.put("binTransactioEODDate", dateEOD.getTime()); */
-						map.put("binTransactioEODDate", parsingDateFormate(dateEOD.getTime()));
-						parsedEodDate = parsingDateFormate(dateBinTxn.getTime());
-					} else {
-						map.put("binTransactioEODDate", dateEOD);
-					}
-					LOG.info("dateEOD Controller from binTransaction " + dateEOD);
-				}
-
-				// Notification pending bundle
-				msgSAS = userAdministrationService.getNotificationFromSASAllocation(user.getIcmcId());
-				msgIndent = userAdministrationService.getNotificationFromIndent(user.getIcmcId());
-				msgOtherBank = userAdministrationService.getNotificationFromOtherBankAllocation(user.getIcmcId());
-				msgSoiled = userAdministrationService.getNotificationFromSoiledAllocation(user.getIcmcId());
-				msgDiversion = userAdministrationService.getNotificationFromDiversion(user.getIcmcId());
-				craMsg = userAdministrationService.getNotificationFromCRA(user.getIcmcId());
-
-				// Machine Allocation Pending
-				String pendingMachineAlo = userAdministrationService
-						.getNotificationForMachineAllocation(user.getIcmcId());
-
-				// Processing Output Pending
-				String processingOutPutPending = userAdministrationService
-						.getNotificationForProcessingOutPut(user.getIcmcId());
-
-				if (pendingMachineAlo != null) {
-					pendingMachineAloMsg = "Pending In Machine Allocation";
-				}
-				if (processingOutPutPending != null) {
-					processingOutPutPendingMsg = "Pending in processing Output";
-
-				}
-
-				if (msgSAS != null) {
-					SASmsg = "Branch Indent Request.";
-				}
-
-				if (msgIndent != null) {
-					indentMsg = "Processing Room Indent Request.";
-				}
-
-				if (msgOtherBank != null) {
-					otherBankMsg = "Other Bank Indent Request.";
-				}
-
-				if (msgSoiled != null) {
-					soiledMsg = "Soiled Indent Request.";
-				}
-
-				if (msgDiversion != null) {
-					diversionMsg = "Diversion Indent";
-				}
-
-				if (craMsg != null) {
-					craMsg = "CRA Indent Request";
-				}
+				LOG.info("dateEOD Controller from binTransaction " + dateEOD);
 			}
-			// Close NOTIFICATION CODE
-			// map.put("userName", userName);
-			map.put("SASmsg", SASmsg);
-			map.put("soiledMsg", soiledMsg);
-			map.put("otherBankMsg", otherBankMsg);
-			map.put("indentMsg", indentMsg);
-			map.put("diversionMsg", diversionMsg);
-			map.put("craMsg", craMsg);
-			map.put("craMsg", craMsg);
-			map.put("pendingMachineAloMsg", pendingMachineAloMsg);
-			map.put("processingOutPutPendingMsg", processingOutPutPendingMsg);
-			LOG.info("dateEOD  " + dateEOD);
-			LOG.info("dateBinTxn " + dateBinTxn);
+
+			// Notification pending bundle
+			msgSAS = userAdministrationService.getNotificationFromSASAllocation(user.getIcmcId());
+			msgIndent = userAdministrationService.getNotificationFromIndent(user.getIcmcId());
+			msgOtherBank = userAdministrationService.getNotificationFromOtherBankAllocation(user.getIcmcId());
+			msgSoiled = userAdministrationService.getNotificationFromSoiledAllocation(user.getIcmcId());
+			msgDiversion = userAdministrationService.getNotificationFromDiversion(user.getIcmcId());
+			craMsg = userAdministrationService.getNotificationFromCRA(user.getIcmcId());
+
+			dateBinTxn = userAdministrationService.getNotificationFromBinTransactionForEOD(user.getIcmcId());
+			LOG.info("Calendar date from binTransaction " + dateBinTxn);
+			if (dateBinTxn != null) {
+				map.put("binTransactionDate", parsingDateFormate(dateBinTxn.getTime()));
+				parsedBinTxnDate = parsingDateFormate(dateBinTxn.getTime());
+				Calendar sDate = (Calendar) dateBinTxn.clone();
+				Calendar eDate = (Calendar) dateBinTxn.clone();
+				UtilityJpa.setStartDate(sDate);
+				UtilityJpa.setEndDate(eDate);
+
+				LOG.info("dateBinTxn.getTime() " + dateBinTxn.getTime());
+				LOG.info("sDate from binTransaction " + sDate.getTime());
+				LOG.info("eDate from binTransaction " + eDate.getTime());
+				dateEOD = userAdministrationService.getNotificationFromBinTransactionBODForEOD(user.getIcmcId(), sDate,
+						eDate);
+				if (dateEOD != null) {
+					map.put("binTransactioEODDate", parsingDateFormate(dateEOD.getTime()));
+					parsedEodDate = parsingDateFormate(dateBinTxn.getTime());
+				} else {
+					map.put("binTransactioEODDate", dateEOD);
+				}
+				LOG.info("dateEOD Controller from binTransaction " + dateEOD);
+			}
+
+			// Notification pending bundle
+			msgSAS = userAdministrationService.getNotificationFromSASAllocation(user.getIcmcId());
+			msgIndent = userAdministrationService.getNotificationFromIndent(user.getIcmcId());
+			msgOtherBank = userAdministrationService.getNotificationFromOtherBankAllocation(user.getIcmcId());
+			msgSoiled = userAdministrationService.getNotificationFromSoiledAllocation(user.getIcmcId());
+			msgDiversion = userAdministrationService.getNotificationFromDiversion(user.getIcmcId());
+			craMsg = userAdministrationService.getNotificationFromCRA(user.getIcmcId());
+
+			// Machine Allocation Pending
+			String pendingMachineAlo = userAdministrationService.getNotificationForMachineAllocation(user.getIcmcId());
+
+			// Processing Output Pending
+			String processingOutPutPending = userAdministrationService
+					.getNotificationForProcessingOutPut(user.getIcmcId());
+			UtilityJpa.setNotification(pendingMachineAlo, processingOutPutPending, msgSAS, msgIndent, msgOtherBank,
+					msgSoiled, msgDiversion, craMsg, map);
+
 		}
+		// Close NOTIFICATION CODE
+		LOG.info("dateEOD  " + dateEOD);
+		LOG.info("dateBinTxn " + dateBinTxn);
 
 		if (parsedEodDate == null && parsedBinTxnDate != null
 				&& (!parsingDateFormate(new Date()).equals(parsedBinTxnDate))) {

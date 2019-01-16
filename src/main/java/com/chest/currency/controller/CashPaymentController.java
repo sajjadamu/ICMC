@@ -72,6 +72,7 @@ import com.chest.currency.enums.OtherStatus;
 import com.chest.currency.exception.BaseGuiException;
 import com.chest.currency.jpa.persistence.converter.ConvertNumberInWords;
 import com.chest.currency.jpa.persistence.converter.CurrencyFormatter;
+import com.chest.currency.service.BinDashboardService;
 import com.chest.currency.service.CashPaymentService;
 import com.chest.currency.service.ICMCService;
 import com.chest.currency.service.ProcessingRoomService;
@@ -94,6 +95,9 @@ public class CashPaymentController {
 
 	@Autowired
 	ProcessingRoomService processingRoomService;
+
+	@Autowired
+	BinDashboardService binDashboardService;
 
 	@Autowired
 	ICMCService icmcService;
@@ -351,7 +355,6 @@ public class CashPaymentController {
 		map.put("mutilatedList", mutilatedList);
 		map.put("user", obj);
 		return new ModelAndView("Soiled", map);
-		// return new ModelAndView("Soiled", "user", obj);
 	}
 
 	// View Soiled Data
@@ -597,13 +600,14 @@ public class CashPaymentController {
 		orv.setIcmcId(user.getIcmcId());
 		orv.setInsertBy(user.getId());
 		orv.setUpdateBy(user.getId());
-
-		boolean isAllSuccess = cashPaymentService.processORVAllocation(orv, user);
-
-		if (!isAllSuccess) {
-			throw new RuntimeException("Error while saving ORV And ORV Allocation, Please try again");
+		try {
+			boolean isAllSuccess = cashPaymentService.processORVAllocation(orv, user);
+			if (!isAllSuccess) {
+				throw new RuntimeException("Error while saving ORV And ORV Allocation, Please try again");
+			}
+		} catch (Exception e) {
+			LOG.info("orvBranchAllocation Exception " + e);
 		}
-
 		return orv;
 	}
 
@@ -796,8 +800,9 @@ public class CashPaymentController {
 		for (Long sasId : pList) {
 			SASAllocation allocation = cashPaymentService.getRequestedFromSASAllocation(user.getIcmcId(), sDate, eDate,
 					sasId);
-			/*if (allocation != null)
-				pList.remove(sasId);*/
+			/*
+			 * if (allocation != null) pList.remove(sasId);
+			 */
 			if (allocation == null)
 				parentList.remove(sasId);
 		}
@@ -906,8 +911,8 @@ public class CashPaymentController {
 	public ModelAndView ORVReports(@ModelAttribute("reportDate") DateRange dateRange, HttpSession session) {
 		User user = (User) session.getAttribute("login");
 		ModelMap map = new ModelMap();
-		Calendar sDate = Calendar.getInstance();
-		Calendar eDate = Calendar.getInstance();
+		Calendar sDate = UtilityJpa.getStartDate();
+		Calendar eDate = UtilityJpa.getEndDate();
 
 		if (dateRange.getFromDate() != null && dateRange.getToDate() != null) {
 			sDate = dateRange.getFromDate();
@@ -926,76 +931,24 @@ public class CashPaymentController {
 		}
 		List<CRA> craList = cashPaymentService.getCRARecord(user.getIcmcId(), sDate, eDate);
 		List<OtherBank> otherBankList = cashPaymentService.getOtherBankPaymentRecord(user.getIcmcId(), sDate, eDate);
-		// IBIT
-		BigDecimal deno1 = BigDecimal.ZERO;
-		BigDecimal deno2 = BigDecimal.ZERO;
-		BigDecimal deno5 = BigDecimal.ZERO;
-		BigDecimal deno10 = BigDecimal.ZERO;
-		BigDecimal deno20 = BigDecimal.ZERO;
-		BigDecimal deno50 = BigDecimal.ZERO;
-		BigDecimal deno100 = BigDecimal.ZERO;
-		BigDecimal deno200 = BigDecimal.ZERO;
-		BigDecimal deno500 = BigDecimal.ZERO;
-		BigDecimal deno1000 = BigDecimal.ZERO;
-		BigDecimal deno2000 = BigDecimal.ZERO;
-		BigDecimal sum = BigDecimal.ZERO;
 
-		List<Tuple> ibitList = cashPaymentService.getIBITForIRV(user.getIcmcId(), sDate, eDate);
+		// List<Tuple> ibitList =
+		// cashPaymentService.getIBITForIRV(user.getIcmcId(), sDate, eDate);
+		List<Tuple> ibitList = binDashboardService.getIBITForIRV(user.getIcmcId(), sDate, eDate);
 
-		for (Tuple tuple : ibitList) {
-			if (tuple.get(0, Integer.class).equals(2000)) {
-				deno2000 = tuple.get(1, BigDecimal.class).multiply(new BigDecimal(2000));
-			}
-			if (tuple.get(0, Integer.class).equals(1000)) {
-				deno1000 = tuple.get(1, BigDecimal.class).multiply(new BigDecimal(1000));
-			}
-			if (tuple.get(0, Integer.class).equals(500)) {
-				deno500 = tuple.get(1, BigDecimal.class).multiply(new BigDecimal(500));
-			}
-			if (tuple.get(0, Integer.class).equals(200)) {
-				deno200 = tuple.get(1, BigDecimal.class).multiply(new BigDecimal(200));
-			}
-			if (tuple.get(0, Integer.class).equals(100)) {
-				deno100 = tuple.get(1, BigDecimal.class).multiply(new BigDecimal(100));
-			}
-			if (tuple.get(0, Integer.class).equals(50)) {
-				deno50 = tuple.get(1, BigDecimal.class).multiply(new BigDecimal(50));
-			}
-			if (tuple.get(0, Integer.class).equals(20)) {
-				deno20 = tuple.get(1, BigDecimal.class).multiply(new BigDecimal(20));
-			}
-			if (tuple.get(0, Integer.class).equals(10)) {
-				deno10 = tuple.get(1, BigDecimal.class).multiply(new BigDecimal(10));
-			}
-			if (tuple.get(0, Integer.class).equals(5)) {
-				deno5 = tuple.get(1, BigDecimal.class).multiply(new BigDecimal(5));
-			}
-			if (tuple.get(0, Integer.class).equals(2)) {
-				deno2 = tuple.get(1, BigDecimal.class).multiply(new BigDecimal(2));
-			}
-			if (tuple.get(0, Integer.class).equals(1)) {
-				deno1 = tuple.get(1, BigDecimal.class).multiply(new BigDecimal(1));
-			}
-			sum = deno1.add(deno2).add(deno5).add(deno10).add(deno20).add(deno50).add(deno100).add(deno200).add(deno500)
-					.add(deno1000).add(deno2000);
-		}
-
-		map.put("sum", sum);
+		map.put("sum", UtilityJpa.getSumAllIndent(ibitList));
 
 		String linkBranchSolID = cashPaymentService.getLinkBranchSolID(user.getIcmcId().longValue());
 
 		String servicingICMC = cashPaymentService.getServicingICMC(linkBranchSolID);
 
 		map.put("servicingICMC", servicingICMC);
-
 		map.put("linkBranchSolID", linkBranchSolID);
-
 		map.put("records", orvList);
-		// map.put("records", list1);
-		// map.put("records", orvList2);
 		map.put("linkBranchSolID", linkBranchSolID);
 		map.put("craRecords", craList);
 		map.put("otherBankRecords", otherBankList);
+
 		return new ModelAndView("ORVReports", map);
 	}
 
@@ -2063,8 +2016,6 @@ public class CashPaymentController {
 	@ResponseBody
 	public List<CRAAllocation> craPayment(@RequestBody CRA cra, HttpSession session) {
 		User user = (User) session.getAttribute("login");
-		// Calendar now = Calendar.getInstance();
-		// cra.setIcmcId(user.getIcmcId());
 
 		synchronized (icmcService.getSynchronizedIcmc(user)) {
 			try {
@@ -2393,7 +2344,7 @@ public class CashPaymentController {
 	@RequestMapping("/getBinForSoiledAndBoxPreparation")
 	@ResponseBody
 	public List<SoiledRemittanceAllocation> deductSelectedBundleFromSoiled(
-			@RequestBody SoiledRemittanceAllocation soiled, HttpSession session) throws  Exception {
+			@RequestBody SoiledRemittanceAllocation soiled, HttpSession session) throws Exception {
 		User user = (User) session.getAttribute("login");
 		List<SoiledRemittanceAllocation> eligibleIndentRequestList = new ArrayList<>();
 		StringBuilder sb = null;

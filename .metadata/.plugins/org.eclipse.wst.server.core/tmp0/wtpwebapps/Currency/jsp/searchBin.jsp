@@ -11,10 +11,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="">
 <meta name="author" content="">
-<link rel="shortcut icon" href="./resources/logo/favicon.ico"
+<link rel="shortcut icon" href="./resources/logo/yes_favicon.ico"
 	type="image/x-icon">
 
-<title>ICICI : Search Bin</title>
+<title> Search Bin</title>
 
 <!-- Bootstrap Core CSS -->
 <link

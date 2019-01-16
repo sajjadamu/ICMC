@@ -18,9 +18,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="">
 <meta name="author" content="">
-<link rel="shortcut icon" href="./resources/logo/favicon.ico"
+<link rel="shortcut icon" href="./resources/logo/yes_favicon.ico"
 	type="image/x-icon">
-<title>ICICI : Machine Software Updation</title>
+<title> Machine Software Updation</title>
 <style type="text/css">
 table.table-bordered.dataTable thead tr th {
 	width: 50px;

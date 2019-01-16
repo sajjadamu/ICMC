@@ -238,7 +238,8 @@ public interface ProcessingRoomService {
 			CashSource cashSource, BinCategoryType binCategoryType, String rbiOrderNo);
 
 	/*
-	 * public List<Tuple> getDataFromCRAAllocationForProcessing(BigInteger icmcId);
+	 * public List<Tuple> getDataFromCRAAllocationForProcessing(BigInteger
+	 * icmcId);
 	 */
 
 	public List<CRAAllocation> getDataFromCRAAllocationForProcessing(BigInteger icmcId);
@@ -399,7 +400,8 @@ public interface ProcessingRoomService {
 
 	public boolean processMutilatedRequest(Long id);
 
-	// public boolean getUpdateCashReceiveForIndentRequest(CashSource cashSource,
+	// public boolean getUpdateCashReceiveForIndentRequest(CashSource
+	// cashSource,
 	// String binNum, BigInteger icmcId);
 
 	public boolean updateCashReceiveForIndentRequest(List<Indent> indenrRequest);
@@ -407,5 +409,15 @@ public interface ProcessingRoomService {
 	Discrepancy getDiscrepancyForUploadingImage(User user, Calendar sDate, Calendar eDate);
 
 	void uploadDiscrepancyImage(Discrepancy discrepancy);
+
+	boolean auditorMachineAllocation(MachineAllocation machine, AuditorIndent auditorIndent, User user);
+
+	boolean updateBundleInAuditorIndent(AuditorIndent indent);
+
+	public List<MachineAllocation> getBundleFromMachineAllocation(BigInteger icmcId, Integer denomination);
+
+	List<AuditorProcess> getAuditorProcessedData(BigInteger icmcId, Calendar sDate, Calendar eDate);
+
+	AuditorProcess getRepritAuditorProcessRecord(Long id);
 
 }

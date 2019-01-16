@@ -5,7 +5,7 @@
 <html lang="en">
 
 <head>
-<link rel="shortcut icon" href="./resources/logo/favicon.ico"
+<link rel="shortcut icon" href="./resources/logo/yes_favicon.ico"
 	type="image/x-icon">
 <script type="text/javascript" src="./js/jquery-1.12.0.min.js"></script>
 <meta charset="utf-8">
@@ -28,7 +28,7 @@ form#ORV {
 }
 </style>
 
-<title>ICICI : ORV Branch</title>
+<title> ORV Branch</title>
 
 <script src="./resources/Currency/js/jquery.js"></script>
 <!-- Bootstrap Core CSS -->

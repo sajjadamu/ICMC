@@ -11,10 +11,8 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -68,7 +66,7 @@ import com.mysema.query.Tuple;
 public class CashReceiptController {
 
 	private static final Logger LOG = LoggerFactory.getLogger(CashReceiptController.class);
-	
+
 	@Autowired
 	String documentFilePath;
 
@@ -102,82 +100,80 @@ public class CashReceiptController {
 		StringBuilder sbBinName = new StringBuilder();
 		List<BranchReceipt> shrinkBeanList = null;
 
+		LOG.info("branchReceipt " + branchReceipt);
+		LOG.info("branchReceipt.isFromProcessingRoom() " + branchReceipt.isFromProcessingRoom());
+		if (branchReceipt.isFromProcessingRoom()) {
+			branchReceipt.setBundle(branchReceipt.getBundle().multiply(BigDecimal.valueOf(10)));
+		}
+		branchReceipt.setInsertBy(user.getId());
+		branchReceipt.setUpdateBy(user.getId());
+		branchReceipt.setInsertTime(now);
+		branchReceipt.setUpdateTime(now);
+		branchReceipt.setPendingBundleRequest(new BigDecimal(0));
+		if (branchReceipt.getProcessedOrUnprocessed().equalsIgnoreCase("UNPROCESS")) {
+			branchReceipt.setCurrencyType(CurrencyType.UNPROCESS);
+		}
+		if (branchReceipt.getProcessedOrUnprocessed().equalsIgnoreCase("PROCESSED")) {
+			branchReceipt.setCurrencyType(branchReceipt.getCurrencyType());
+		}
 		synchronized (icmcService.getSynchronizedIcmc(user)) {
-			LOG.info("branchReceipt " + branchReceipt);
-			LOG.info("branchReceipt.isFromProcessingRoom() " + branchReceipt.isFromProcessingRoom());
-			if (branchReceipt.isFromProcessingRoom()) {
-				branchReceipt.setBundle(branchReceipt.getBundle().multiply(BigDecimal.valueOf(10)));
-			}
-			branchReceipt.setInsertBy(user.getId());
-			branchReceipt.setUpdateBy(user.getId());
-			branchReceipt.setInsertTime(now);
-			branchReceipt.setUpdateTime(now);
-			branchReceipt.setPendingBundleRequest(new BigDecimal(0));
-			if (branchReceipt.getProcessedOrUnprocessed().equalsIgnoreCase("UNPROCESS")) {
-				branchReceipt.setCurrencyType(CurrencyType.UNPROCESS);
-			}
-			if (branchReceipt.getProcessedOrUnprocessed().equalsIgnoreCase("PROCESSED")) {
-				branchReceipt.setCurrencyType(branchReceipt.getCurrencyType());
-			}
 			shrinkBeanList = cashReceiptService.processBranchReceipt(branchReceipt, user);
+		}
+		prnList.add(sbBinName.toString());
+		boolean isAllSuccess = shrinkBeanList != null && shrinkBeanList.size() > 0;
+		if (isAllSuccess) {
+			for (BranchReceipt br : shrinkBeanList) {
+				sbBinName.append(br.getBin()).append(",");
+				try {
+					String oldtext = readPRNFileData();
+					if (branchReceipt.getProcessedOrUnprocessed().equalsIgnoreCase("UNPROCESS")) {
+						String replacedtext = oldtext.replaceAll("bin", "" + br.getBin());
+						replacedtext = replacedtext.replaceAll("branch", "" + br.getBranch());
+						replacedtext = replacedtext.replaceAll("solId", "" + br.getSolId());
+						replacedtext = replacedtext.replaceAll("denom", "" + br.getDenomination());
+						replacedtext = replacedtext.replaceAll("bundle", "" + br.getBundle());
 
-			prnList.add(sbBinName.toString());
-			boolean isAllSuccess = shrinkBeanList != null && shrinkBeanList.size() > 0;
-			if (isAllSuccess) {
-				for (BranchReceipt br : shrinkBeanList) {
-					sbBinName.append(br.getBin()).append(",");
-					try {
-						String oldtext = readPRNFileData();
-						if (branchReceipt.getProcessedOrUnprocessed().equalsIgnoreCase("UNPROCESS")) {
-							String replacedtext = oldtext.replaceAll("bin", "" + br.getBin());
-							replacedtext = replacedtext.replaceAll("branch", "" + br.getBranch());
-							replacedtext = replacedtext.replaceAll("solId", "" + br.getSolId());
+						String formattedTotal = CurrencyFormatter.inrFormatter(br.getTotal()).toString();
+						replacedtext = replacedtext.replaceAll("total", "" + formattedTotal);
+
+						sb = new StringBuilder(replacedtext);
+						UtilityJpa.PrintToPrinter(sb, user);
+					} else if (branchReceipt.getProcessedOrUnprocessed().equalsIgnoreCase("PROCESSED")) {
+						for (int i = 0; i < branchReceipt.getBundle().intValue(); i++) {
+							String replacedtext = oldtext.replaceAll("bin", "" + br.getCurrencyType());
+							replacedtext = replacedtext.replaceAll("Bin: ", "" + "");
+							replacedtext = replacedtext.replaceAll("Branch: ", "" + br.getBranch());
+							replacedtext = replacedtext.replaceAll("Sol ID :", "" + "");
+							replacedtext = replacedtext.replaceAll("branch", "" + br.getDenomination());
+							replacedtext = replacedtext.replaceAll("solId", "" + br.getBin());
 							replacedtext = replacedtext.replaceAll("denom", "" + br.getDenomination());
-							replacedtext = replacedtext.replaceAll("bundle", "" + br.getBundle());
+							replacedtext = replacedtext.replaceAll("bundle", "" + BigDecimal.ONE);
 
-							String formattedTotal = CurrencyFormatter.inrFormatter(br.getTotal()).toString();
+							String formattedTotal = CurrencyFormatter
+									.inrFormatter(BigDecimal.valueOf(br.getDenomination() * 1000)).toString();
 							replacedtext = replacedtext.replaceAll("total", "" + formattedTotal);
 
 							sb = new StringBuilder(replacedtext);
 							UtilityJpa.PrintToPrinter(sb, user);
-						} else if (branchReceipt.getProcessedOrUnprocessed().equalsIgnoreCase("PROCESSED")) {
-							for (int i = 0; i < branchReceipt.getBundle().intValue(); i++) {
-								String replacedtext = oldtext.replaceAll("bin", "" + br.getCurrencyType());
-								replacedtext = replacedtext.replaceAll("Bin: ", "" + "");
-								replacedtext = replacedtext.replaceAll("Branch: ", "" + br.getBranch());
-								replacedtext = replacedtext.replaceAll("Sol ID :", "" + "");
-								replacedtext = replacedtext.replaceAll("branch", "" + br.getDenomination());
-								replacedtext = replacedtext.replaceAll("solId", "" + br.getBin());
-								replacedtext = replacedtext.replaceAll("denom", "" + br.getDenomination());
-								replacedtext = replacedtext.replaceAll("bundle", "" + BigDecimal.ONE);
-
-								String formattedTotal = CurrencyFormatter
-										.inrFormatter(BigDecimal.valueOf(br.getDenomination() * 1000)).toString();
-								replacedtext = replacedtext.replaceAll("total", "" + formattedTotal);
-
-								sb = new StringBuilder(replacedtext);
-								UtilityJpa.PrintToPrinter(sb, user);
-							}
 						}
-						prnList.add(sb.toString());
-						LOG.info("Branch Receipt PRN: " + sb);
-
-						// UtilityJpa.PrintToPrinter(sb, user);
-
-					} catch (IOException ioe) {
-						LOG.info("Branch Receipt IOException: " + ioe);
-						ioe.printStackTrace();
-					} catch (Exception e) {
-						e.printStackTrace();
-						LOG.info("Branch Receipt Exception: " + e);
 					}
+					prnList.add(sb.toString());
+					LOG.info("Branch Receipt PRN: " + sb);
+
+				} catch (IOException ioe) {
+					LOG.info("Branch Receipt IOException: " + ioe);
+					ioe.printStackTrace();
+				} catch (Exception e) {
+					e.printStackTrace();
+					LOG.info("Branch Receipt Exception: " + e);
 				}
-			} else {
-				throw new RuntimeException("Error while saving saveTxListAndShrink, Please try again");
 			}
-			prnList.set(0, sbBinName.toString());
-			LOG.info("BRANCH RECEIPT end");
+		} else {
+			throw new RuntimeException("Error while saving saveTxListAndShrink, Please try again");
 		}
+		prnList.set(0, sbBinName.toString());
+		LOG.info("BRANCH RECEIPT end");
+		// }
 		return prnList;
 	}
 
@@ -194,7 +190,6 @@ public class CashReceiptController {
 		List<FreshFromRBI> freshList = null;
 
 		synchronized (icmcService.getSynchronizedIcmc(user)) {
-
 			fresh.setInsertBy(user.getId());
 			fresh.setUpdateBy(user.getId());
 			fresh.setInsertTime(now);
@@ -220,8 +215,9 @@ public class CashReceiptController {
 					fresh.setBagSequenceFromDB(coinSequenceFromDB.getSequence());
 				}
 			}
-
-			freshList = cashReceiptService.processFreshFromRBI(fresh, user, YesNo.No, binCategoryType, cashType);
+			synchronized (icmcService.getSynchronizedIcmc(user)) {
+				freshList = cashReceiptService.processFreshFromRBI(fresh, user, YesNo.No, binCategoryType, cashType);
+			}
 			boolean isAllSuccess = freshList != null && freshList.size() > 0;
 			if (isAllSuccess) {
 				for (FreshFromRBI freshFromRBI : freshList) {
@@ -232,11 +228,8 @@ public class CashReceiptController {
 							String oldtext = readPRNFileData();
 							String replacedtext = UtilityMapper.getPRNToPrintForFreshNotes(freshFromRBI, oldtext);
 							sb = new StringBuilder(replacedtext);
-							// prnList.add(sb.toString());
-
 							LOG.info("Fresh From Notes RBI PRN: " + sb);
 							UtilityJpa.PrintToPrinter(sb, user);
-
 						} catch (IOException ioe) {
 							ioe.printStackTrace();
 						}
@@ -249,7 +242,6 @@ public class CashReceiptController {
 										sequence);
 								sb = new StringBuilder(replacedtext);
 								// prnList.add(sb.toString());
-
 								LOG.info("Fresh Coins From RBI PRN: " + sb);
 								UtilityJpa.PrintToPrinter(sb, user);
 
@@ -362,7 +354,6 @@ public class CashReceiptController {
 		StringBuilder sbBinName = new StringBuilder();
 		List<String> prnList = new ArrayList<>();
 		List<DSB> dsbList = null;
-
 		synchronized (icmcService.getSynchronizedIcmc(user)) {
 			prnList.add(sbBinName.toString());
 			dsb.setInsertBy(user.getId());
@@ -646,7 +637,6 @@ public class CashReceiptController {
 			bankReceipt.setStatus(1);
 			bankReceipt.setCurrencyType(CurrencyType.UNPROCESS);
 			bankReceipt.setBinCategoryType(bankReceipt.getBinCategoryType());
-
 			otherBankReceiptList = cashReceiptService.processBankReceipt(bankReceipt, user);
 			boolean isAllSuccess = otherBankReceiptList != null && otherBankReceiptList.size() > 0;
 			if (isAllSuccess) {
@@ -661,8 +651,6 @@ public class CashReceiptController {
 						replacedtext = replacedtext.replaceAll("solId", "" + otherBankReceipt.getRtgsUTRNo());
 						replacedtext = replacedtext.replaceAll("denom", "" + otherBankReceipt.getDenomination());
 						replacedtext = replacedtext.replaceAll("bundle", "" + otherBankReceipt.getBundle());
-						// replacedtext = replacedtext.replaceAll("total", "" +
-						// otherBankReceipt.getTotal());
 
 						String formattedTotal = CurrencyFormatter.inrFormatter(otherBankReceipt.getTotal()).toString();
 						replacedtext = replacedtext.replaceAll("total", "" + formattedTotal);
@@ -700,11 +688,8 @@ public class CashReceiptController {
 		User user = (User) session.getAttribute("login");
 		ModelMap map = new ModelMap();
 
-		LOG.info("From Date: " + dateRange.getFromDate());
-		LOG.info("To Date: " + dateRange.getToDate());
-
-		Calendar sDate = Calendar.getInstance();
-		Calendar eDate = Calendar.getInstance();
+		Calendar sDate = UtilityJpa.getStartDate();
+		Calendar eDate = UtilityJpa.getEndDate();
 
 		if (dateRange.getFromDate() != null && dateRange.getToDate() != null) {
 			sDate = dateRange.getFromDate();
@@ -752,67 +737,16 @@ public class CashReceiptController {
 		}
 		map.put("bankReceipts", bankReceipts);
 
-		BigDecimal deno1 = BigDecimal.ZERO;
-		BigDecimal deno2 = BigDecimal.ZERO;
-		BigDecimal deno5 = BigDecimal.ZERO;
-		BigDecimal deno10 = BigDecimal.ZERO;
-		BigDecimal deno20 = BigDecimal.ZERO;
-		BigDecimal deno50 = BigDecimal.ZERO;
-		BigDecimal deno100 = BigDecimal.ZERO;
-		BigDecimal deno200 = BigDecimal.ZERO;
-		BigDecimal deno500 = BigDecimal.ZERO;
-		BigDecimal deno1000 = BigDecimal.ZERO;
-		BigDecimal deno2000 = BigDecimal.ZERO;
-		BigDecimal sum = BigDecimal.ZERO;
-
-		List<Tuple> ibitList = cashReceiptService.getIBITForIRV(user.getIcmcId(), sDate, eDate);
-
-		for (Tuple tuple : ibitList) {
-			if (tuple.get(0, Integer.class).equals(2000)) {
-				deno2000 = tuple.get(1, BigDecimal.class).multiply(new BigDecimal(2000));
-			}
-			if (tuple.get(0, Integer.class).equals(1000)) {
-				deno1000 = tuple.get(1, BigDecimal.class).multiply(new BigDecimal(1000));
-			}
-			if (tuple.get(0, Integer.class).equals(500)) {
-				deno500 = tuple.get(1, BigDecimal.class).multiply(new BigDecimal(500));
-			}
-			if (tuple.get(0, Integer.class).equals(200)) {
-				deno200 = tuple.get(1, BigDecimal.class).multiply(new BigDecimal(200));
-			}
-			if (tuple.get(0, Integer.class).equals(100)) {
-				deno100 = tuple.get(1, BigDecimal.class).multiply(new BigDecimal(100));
-			}
-			if (tuple.get(0, Integer.class).equals(50)) {
-				deno50 = tuple.get(1, BigDecimal.class).multiply(new BigDecimal(50));
-			}
-			if (tuple.get(0, Integer.class).equals(20)) {
-				deno20 = tuple.get(1, BigDecimal.class).multiply(new BigDecimal(20));
-			}
-			if (tuple.get(0, Integer.class).equals(10)) {
-				deno10 = tuple.get(1, BigDecimal.class).multiply(new BigDecimal(10));
-			}
-			if (tuple.get(0, Integer.class).equals(5)) {
-				deno5 = tuple.get(1, BigDecimal.class).multiply(new BigDecimal(5));
-			}
-			if (tuple.get(0, Integer.class).equals(2)) {
-				deno2 = tuple.get(1, BigDecimal.class).multiply(new BigDecimal(2));
-			}
-			if (tuple.get(0, Integer.class).equals(1)) {
-				deno1 = tuple.get(1, BigDecimal.class).multiply(new BigDecimal(1));
-			}
-			sum = deno1.add(deno2).add(deno5).add(deno10).add(deno20).add(deno50).add(deno100).add(deno200).add(deno500)
-					.add(deno1000).add(deno2000);
-		}
-
-		map.put("sum", sum);
+		// List<Tuple> ibitList =
+		// cashReceiptService.getIBITForIRV(user.getIcmcId(), sDate, eDate);
+		List<Tuple> ibitList = binDashboardService.getIBITForIRV(user.getIcmcId(), sDate, eDate);
 
 		String linkBranchSolID = cashReceiptService.getLinkBranchSolID(user.getIcmcId().longValue());
 
 		String servicingICMC = cashReceiptService.getServicingICMC(linkBranchSolID);
 
+		map.put("sum", UtilityJpa.getSumAllIndent(ibitList));
 		map.put("servicingICMC", servicingICMC);
-
 		map.put("linkBranchSolID", linkBranchSolID);
 
 		return new ModelAndView("IRVReports", map);
@@ -1095,8 +1029,10 @@ public class CashReceiptController {
 
 				BinTransaction binTxn = cashReceiptService.getBinTxnRecordForUpdateedit(branchReceiptDb,
 						user.getIcmcId());
-				branchReceiptList = cashReceiptService.processForUpdatingShrinkEntry(binTxn, branchReceipt,
-						branchReceiptDb, user);
+				synchronized (icmcService.getSynchronizedIcmc(user)) {
+					branchReceiptList = cashReceiptService.processForUpdatingShrinkEntry(binTxn, branchReceipt,
+							branchReceiptDb, user);
+				}
 				prnList.add(sbBinName.toString());
 
 				boolean isAllSuccess = branchReceiptList != null && branchReceiptList.size() > 0;

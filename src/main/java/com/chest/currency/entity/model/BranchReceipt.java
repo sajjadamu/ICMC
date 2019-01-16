@@ -128,6 +128,9 @@ public class BranchReceipt {
 	@Transient
 	protected BigDecimal requestBundle;
 	
+	@Transient
+	protected boolean checkShrinkWrap=false;
+	
 	@Basic
 	@Column(name = "SAS_ID")
 	protected Long sasId;

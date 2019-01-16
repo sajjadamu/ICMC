@@ -12,9 +12,9 @@
 <meta name="author" content="">
 <script type="text/javascript" src="./resources/js/jquery-1.9.1.min.js"></script>
 
-<link rel="shortcut icon" href="./resources/logo/favicon.ico"
+<link rel="shortcut icon" href="./resources/logo/yes_favicon.ico"
 	type="image/x-icon">
-<title>ICICI : Bin Data</title>
+<title> Bin Data</title>
 
 <!-- Bootstrap Core CSS -->
 <link

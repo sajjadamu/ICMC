@@ -1,7 +1,3 @@
-/*******************************************************************************
- * /* Copyright (C) Indicsoft Technologies Pvt Ltd
- * * All Rights Reserved.
- *******************************************************************************/
 package com.chest.currency.service;
 
 import java.math.BigDecimal;
@@ -54,12 +50,16 @@ import com.chest.currency.entity.model.Sas;
 import com.chest.currency.entity.model.SoiledRemittanceAllocation;
 import com.chest.currency.entity.model.Summary;
 import com.chest.currency.entity.model.TrainingRegister;
+import com.chest.currency.entity.model.User;
 import com.chest.currency.enums.BinCategoryType;
+import com.chest.currency.enums.BinStatus;
+import com.chest.currency.enums.CashSource;
 import com.chest.currency.enums.CashType;
 import com.chest.currency.enums.CurrencyType;
 import com.chest.currency.enums.OtherStatus;
 import com.chest.currency.exception.BaseGuiException;
 import com.chest.currency.jpa.dao.BinDashBoardJpaDaoImpl;
+import com.chest.currency.jpa.dao.CashReceiptJpaDao;
 import com.chest.currency.jpa.dao.UserAdministrationJpaDao;
 import com.chest.currency.util.UtilityMapper;
 import com.ibm.icu.text.SimpleDateFormat;
@@ -77,6 +77,12 @@ public class BinDashboardServiceImpl implements BinDashboardService {
 
 	@Autowired
 	protected BinDashBoardJpaDaoImpl binDashboardJpaDao;
+
+	@Autowired
+	protected ProcessingRoomService processingRoomService;
+
+	@Autowired
+	protected CashReceiptJpaDao cashReceiptJpaDao;
 
 	private static final Logger LOG = LoggerFactory.getLogger(BinDashboardController.class);
 
@@ -4261,9 +4267,38 @@ public class BinDashboardServiceImpl implements BinDashboardService {
 		bundleFromUI = auditorIndent.getBundle();
 		pendingBundle = pendingBundleFromVault.add(bundleFromUI);
 		binTxn.setPendingBundleRequest(pendingBundle);
+
 		if (binTxn.getReceiveBundle().compareTo(binTxn.getPendingBundleRequest()) < 0)
 			throw new BaseGuiException(
-					"please check Bundle . Indent Bundle should be less then or equal to receive bundld");
+					"please check Bundle . Indent Bundle should be less then or equal to receive bundle");
+		if (binTxn.getBinType().equals(CurrencyType.UNPROCESS) && binTxn.getCashSource().equals(CashSource.BRANCH)) {
+
+			List<BranchReceipt> branchReceiptList = processingRoomService.getBinNumListForIndentFromBranchReceipt(
+					auditorIndent.getDenomination(), auditorIndent.getBundle(), auditorIndent.getIcmcId(),
+					CashSource.BRANCH, binTxn.getBinCategoryType());
+			BigDecimal bundleFromTxn = BigDecimal.ZERO;
+			BigDecimal bundleForRequest = auditorIndent.getBundle();
+			Boolean flag = true;
+			for (BranchReceipt branchReceipt : branchReceiptList) {
+				branchReceipt.setCheckShrinkWrap(true);
+				bundleForRequest = bundleForRequest.subtract(branchReceipt.getBundle());
+				if (bundleFromTxn.compareTo(bundleForRequest) == 0) {
+					flag = false;
+					break;
+				}
+			}
+			if (flag) {
+				throw new BaseGuiException(
+						"please check Bundle . bundle is Unprocess from branch we should featch according to shrink wrap for denominatio "
+								+ binTxn.getDenomination());
+			}
+			for (BranchReceipt branchReceipt : branchReceiptList) {
+				if (branchReceipt.isCheckShrinkWrap()) {
+					branchReceipt.setStatus(OtherStatus.PROCESSED);
+					cashReceiptJpaDao.updateBranchReceipt(branchReceipt);
+				}
+			}
+		}
 		return binDashboardJpaDao.updateBinTxn(binTxn);
 	}
 
@@ -4326,6 +4361,12 @@ public class BinDashboardServiceImpl implements BinDashboardService {
 	@Override
 	public List<AuditorIndent> viewAuditorIndentList(BigInteger icmcId) {
 		List<AuditorIndent> auditorIndentList = binDashboardJpaDao.viewAuditorIndentList(icmcId);
+		return auditorIndentList;
+	}
+
+	@Override
+	public List<AuditorIndent> auditorIndentForMachineAllocation(BigInteger icmcId) {
+		List<AuditorIndent> auditorIndentList = binDashboardJpaDao.auditorIndentForMachineAllocation(icmcId);
 		return auditorIndentList;
 	}
 
@@ -5367,10 +5408,10 @@ public class BinDashboardServiceImpl implements BinDashboardService {
 	}
 
 	@Override
-	public List<BinTransaction> getBinFroPartialTransfer(BigInteger icmcId, Integer denomination,
-			CurrencyType currencyType) {
-		List<BinTransaction> binDetailsFromBinTxn = binDashboardJpaDao.getBinFroPartialTransfer(icmcId, denomination,
-				currencyType);
+	public List<String> getBinFroPartialTransfer(BigInteger icmcId, Integer denomination, CurrencyType currencyType,
+			BigDecimal bundle, BinCategoryType binCategoryType, String bin) {
+		List<String> binDetailsFromBinTxn = binDashboardJpaDao.getBinFroPartialTransfer(icmcId, denomination,
+				currencyType, bundle, binCategoryType, bin);
 		return binDetailsFromBinTxn;
 	}
 
@@ -5431,5 +5472,43 @@ public class BinDashboardServiceImpl implements BinDashboardService {
 		List<DiversionIRV> diversionIRV = binDashboardJpaDao.getDiversionIRV(IcmcId, sDate, eDate);
 		return diversionIRV;
 	}
+
+	@Override
+	@Transactional
+	public boolean processForPartialCashTransfer(User user, String formBinOrBox, String toBinOrBox, BigDecimal bundle,
+			CashTransfer cashTransfer) {
+
+		BinTransaction binOrBoxFromDB = this.checkBinOrBox(user.getIcmcId(), formBinOrBox);
+		if (binOrBoxFromDB == null)
+			throw new BaseGuiException("please check BinorBox Name");
+		binOrBoxFromDB.setReceiveBundle(binOrBoxFromDB.getReceiveBundle().subtract(bundle));
+		binOrBoxFromDB.setUpdateBy(user.getId());
+		binOrBoxFromDB.setUpdateTime(Calendar.getInstance());
+		if (binOrBoxFromDB.getReceiveBundle().compareTo(new BigDecimal(0)) == 0)
+			binOrBoxFromDB.setStatus(BinStatus.EMPTY);
+		else
+			binOrBoxFromDB.setStatus(BinStatus.NOT_FULL);
+		this.updateBinTxn(binOrBoxFromDB);
+
+		BinTransaction toBinFromDB = this.checkBinOrBox(user.getIcmcId(), toBinOrBox);
+		if (toBinFromDB == null)
+			throw new BaseGuiException("please check BinorBox Name");
+		toBinFromDB.setReceiveBundle(toBinFromDB.getReceiveBundle().add(bundle));
+		toBinFromDB.setUpdateBy(user.getId());
+		toBinFromDB.setUpdateTime(Calendar.getInstance());
+		if (toBinFromDB.getMaxCapacity().compareTo(toBinFromDB.getReceiveBundle()) == 0)
+			toBinFromDB.setStatus(BinStatus.FULL);
+		this.updateBinTxn(toBinFromDB);
+
+		cashTransfer.setDenomination(toBinFromDB.getDenomination());
+		this.saveCashTransfer(cashTransfer);
+
+		return true;
+	}
+
+	/*
+	 * @Override public void saveAudit(Audit audit) {
+	 * binDashboardJpaDao.saveAudit(audit); }
+	 */
 
 }

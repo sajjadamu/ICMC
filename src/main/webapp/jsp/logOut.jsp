@@ -44,8 +44,11 @@
 				<i class="fa fa-caret-down"></i>
 		</a>
 			<ul class="dropdown-menu dropdown-user">
+				<li><a href="././viewUserPrinter"
+					class="glyphicon glyphicon-print"> PrinterProfile</a></li>
 				<li><a href="././logout.html"><i
 						class="fa fa-sign-out fa-fw"></i> Logout</a></li>
+
 			</ul> <!-- /.dropdown-user --></li>
 		<!-- /.dropdown -->
 	</ul>

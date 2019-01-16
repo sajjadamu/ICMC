@@ -18,9 +18,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="">
 <meta name="author" content="">
-<link rel="shortcut icon" href="./resources/logo/favicon.ico"
+<link rel="shortcut icon" href="./resources/logo/yes_favicon.ico"
 	type="image/x-icon">
-<title>ICICI : ACCEPT CRA PAYMENT</title>
+<title>ACCEPT CRA PAYMENT</title>
 
 <style type="text/css">
 .craCancelButton {

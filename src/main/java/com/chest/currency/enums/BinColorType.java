@@ -21,8 +21,4 @@ public enum BinColorType {
 	public static BinColorType fromValue(String v) {
 		return valueOf(v);
 	}
-
-	public static void main(String[] args) {
-		System.out.println("color" + BinColorType.ATM.getColor());
-	}
 }

@@ -38,36 +38,30 @@
 <script type="text/javascript">
 	function SavePrint() {
 		addHeaderJson();
-		var auditorIndentProcess={
-				"currencyType":$('input[name=currencyType]:checked').val(),
-				"denomination":$('input[name=denomination]:checked').val(),
-				"binCategoryType":$('input[name=binCategoryType]:checked').val(),
-				"bundle":$('#bundle').val(),
-				"bin":$('#bin').val(),
-				"total":$('#total').val(),
-			}
+		var auditorIndentProcess = {
+			"currencyType" : $('input[name=currencyType]:checked').val(),
+			"denomination" : $('input[name=denomination]:checked').val(),
+			"binCategoryType" : $('input[name=binCategoryType]:checked').val(),
+			"bundle" : $('#bundle').val(),
+			"bin" : $('#bin').val(),
+			"total" : $('#total').val(),
+		}
 		$.ajax({
-				type : "POST",
-				 contentType : 'application/json; charset=utf-8',
-			      dataType : 'json',
-				url : "././QRPathProcessAuditor",
-				data: JSON.stringify(auditorIndentProcess),
-				success : function(response) {
-					alert("Success..");
-					window.location='././auditorProcessEntry';
-				},
-				error : function(e) {
-					alert('Error: ' + e.responseJSON.message);
-				}
-			});
+			type : "POST",
+			contentType : 'application/json; charset=utf-8',
+			dataType : 'json',
+			url : "././QRPathProcessAuditor",
+			data : JSON.stringify(auditorIndentProcess),
+			success : function(response) {
+				alert("Success..");
+				window.location = '././auditorProcessEntry';
+			},
+			error : function(e) {
+				alert('Error: ' + e.responseJSON.message);
+				window.location = '././auditorProcessEntry';
+			}
+		});
 	}
-	
-function returnBackToVault(){
-	if (confirm('Are you sure you want to return unprocessed cash, back to vault?')) {
-		window.location='././returnBackToVault';
-	}
-}
-	
 </script>
 
 </head>
@@ -85,8 +79,8 @@ function returnBackToVault(){
 					<div class="panel panel-default">
 						<div class="panel-heading">
 							<ul>
-								<!-- <li><a href="././viewProcess"><i
-										class="fa fa-table fa-fw"></i> View Processed Data</a></li> -->
+								<li><a href="././viewAuditorProcess"><i
+										class="fa fa-table fa-fw"></i> View Auditor Processed Data</a></li>
 							</ul>
 							Auditor Processing Output
 						</div>
@@ -113,7 +107,7 @@ function returnBackToVault(){
 										<div class="form-group">
 											<label>Currency Type</label><br>
 											<form:radiobutton path="currencyType" id="currencyType"
-												name="currencyType" value="ATM" />
+												name="currencyType" value="ATM" checked="true" />
 											<span class="deno-value"><b>ATM</b></span>
 
 											<form:radiobutton path="currencyType" id="currencyType"
@@ -132,7 +126,8 @@ function returnBackToVault(){
 											<label>Denomination</label><br>
 											<form:radiobuttons items="${denominationList}"
 												itemLabel="denomination" itemValue="denomination"
-												path="denomination" id="denomination" name="denomination" />
+												path="denomination" id="denomination" name="denomination"
+												checked="true" />
 										</div>
 
 										<div class="form-group">
@@ -142,7 +137,8 @@ function returnBackToVault(){
 										</div>
 
 										<input type="button" name="print" value="Save AND Print QR"
-											onclick="SavePrint()" class="btn btn-default qr-button">
+											onclick="SavePrint(); this.disabled=true"
+											class="btn btn-default qr-button">
 									</form:form>
 								</div>
 								<div id="printSection" style="display: none;"></div>
@@ -179,30 +175,32 @@ function returnBackToVault(){
 	<script src="./resources/dist/js/sb-admin-2.js"></script>
 
 	<script type="text/javascript">
-	$(function() {
-	  $("form[name='processEntry']").validate({
-	    rules: {
-	    	processAction: "required",
-	    	binCategoryType: "required",
-	    	currencyType: "required",
-	    	denomination: "required",
-	    	bundle: "required",
-	    },
-	    messages: {
-	    	processAction: "Please Select Processed By",
-	    	binCategoryType: "Please Select BIN or BOX",
-	    	currencyType: "Please Select Currency Type",
-	    	denomination: "Please Select Denomination",
-	    	bundle: "Please Enter Bundle",
-	    },
-	    submitHandler: function(form) {
-	    	var isValid = $("form[name='processEntry']").validate().form();
-	    	if(isValid){
-	      		form.submit();
-	    	}
-	    }
-	  });
-	});
+		$(function() {
+			$("form[name='processEntry']").validate(
+					{
+						rules : {
+							processAction : "required",
+							binCategoryType : "required",
+							currencyType : "required",
+							denomination : "required",
+							bundle : "required",
+						},
+						messages : {
+							processAction : "Please Select Processed By",
+							binCategoryType : "Please Select BIN or BOX",
+							currencyType : "Please Select Currency Type",
+							denomination : "Please Select Denomination",
+							bundle : "Please Enter Bundle",
+						},
+						submitHandler : function(form) {
+							var isValid = $("form[name='processEntry']")
+									.validate().form();
+							if (isValid) {
+								form.submit();
+							}
+						}
+					});
+		});
 	</script>
 	<script type="text/javascript" src="./js/htmlInjection.js"></script>
 </body>

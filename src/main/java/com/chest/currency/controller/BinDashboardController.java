@@ -31,6 +31,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
@@ -88,6 +89,7 @@ import com.chest.currency.enums.OtherStatus;
 import com.chest.currency.enums.VaultSize;
 import com.chest.currency.enums.YesNo;
 import com.chest.currency.enums.Zone;
+import com.chest.currency.exception.BaseGuiException;
 import com.chest.currency.jpa.dao.CashPaymentJpaDao;
 import com.chest.currency.jpa.persistence.converter.ConvertNumberInWords;
 import com.chest.currency.jpa.persistence.converter.CurrencyFormatter;
@@ -822,7 +824,6 @@ public class BinDashboardController {
 	}
 
 	@RequestMapping("/saveDataInBinTransactionBOD")
-	/* @ModelAttribute("user") BinTransactionBOD binTransactionBOD */
 	public ModelAndView saveDataInBinTransactionBOD(@ModelAttribute("reportDate") DateRange dateRange,
 			HttpSession session, RedirectAttributes redirectAttributes) throws ParseException {
 		User user = (User) session.getAttribute("login");
@@ -1325,50 +1326,9 @@ public class BinDashboardController {
 		ICMC icmc = binDashboardService.getICMCObj(user.getIcmcId());
 
 		List<Tuple> ibitList = binDashboardService.getIBITForIRV(user.getIcmcId(), sDate, eDate);
-
 		List<Indent> ibitIndentList = new ArrayList<Indent>();
-		Indent indent = new Indent();
-
-		for (Tuple tuple : ibitList) {
-			if (tuple.get(0, Integer.class).equals(5)) {
-				indent.setDenom5Pieces(tuple.get(1, BigDecimal.class));
-
-			}
-			if (tuple.get(0, Integer.class).equals(10)) {
-				indent.setDenom10Pieces(tuple.get(1, BigDecimal.class));
-
-			}
-			if (tuple.get(0, Integer.class).equals(20)) {
-				indent.setDenom20Pieces(tuple.get(1, BigDecimal.class));
-
-			}
-			if (tuple.get(0, Integer.class).equals(50)) {
-				indent.setDenom50Pieces(tuple.get(1, BigDecimal.class));
-
-			}
-			if (tuple.get(0, Integer.class).equals(100)) {
-				indent.setDenom100Pieces(tuple.get(1, BigDecimal.class));
-
-			}
-			if (tuple.get(0, Integer.class).equals(200)) {
-				indent.setDenom200Pieces(tuple.get(1, BigDecimal.class));
-
-			}
-
-			if (tuple.get(0, Integer.class).equals(500)) {
-				indent.setDenom500Pieces(tuple.get(1, BigDecimal.class));
-
-			}
-			if (tuple.get(0, Integer.class).equals(1000)) {
-				indent.setDenom1000Pieces(tuple.get(1, BigDecimal.class));
-
-			}
-			if (tuple.get(0, Integer.class).equals(2000)) {
-				indent.setDenom2000Pieces(tuple.get(1, BigDecimal.class));
-
-			}
-
-		}
+		Indent indent = new Indent(true);
+		UtilityJpa.setAllIndentDenPieces(ibitList, indent);
 		ibitIndentList.add(indent);
 
 		ModelMap modelMap = UtilityMapper.getSummarisedTotalForCashBookDepositReport(branchDepositList, dsbDepositList,
@@ -1431,55 +1391,14 @@ public class BinDashboardController {
 		Map<String, SoiledRemittanceAllocation> soiledAllocationAllocationList = binDashboardService
 				.getSoiledAllocationForCashBookWithDrawal(user.getIcmcId(), sDate, eDate);
 
-		List<Tuple> ibitListValues = binDashboardService.getIBITForIRV(user.getIcmcId(), sDate, eDate);
-
+		List<Tuple> ibitList = binDashboardService.getIBITForIRV(user.getIcmcId(), sDate, eDate);
 		List<Indent> ibitIndentList = new ArrayList<Indent>();
-		Indent indent = new Indent();
-
-		for (Tuple tuple : ibitListValues) {
-			if (tuple.get(0, Integer.class).equals(5)) {
-				indent.setDenom5Pieces(tuple.get(1, BigDecimal.class));
-
-			}
-			if (tuple.get(0, Integer.class).equals(10)) {
-				indent.setDenom10Pieces(tuple.get(1, BigDecimal.class));
-
-			}
-			if (tuple.get(0, Integer.class).equals(20)) {
-				indent.setDenom20Pieces(tuple.get(1, BigDecimal.class));
-
-			}
-			if (tuple.get(0, Integer.class).equals(50)) {
-				indent.setDenom50Pieces(tuple.get(1, BigDecimal.class));
-
-			}
-			if (tuple.get(0, Integer.class).equals(100)) {
-				indent.setDenom100Pieces(tuple.get(1, BigDecimal.class));
-
-			}
-			if (tuple.get(0, Integer.class).equals(200)) {
-				indent.setDenom200Pieces(tuple.get(1, BigDecimal.class));
-
-			}
-
-			if (tuple.get(0, Integer.class).equals(500)) {
-				indent.setDenom500Pieces(tuple.get(1, BigDecimal.class));
-
-			}
-			if (tuple.get(0, Integer.class).equals(1000)) {
-				indent.setDenom1000Pieces(tuple.get(1, BigDecimal.class));
-
-			}
-			if (tuple.get(0, Integer.class).equals(2000)) {
-				indent.setDenom2000Pieces(tuple.get(1, BigDecimal.class));
-
-			}
-
-		}
+		Indent indent = new Indent(true);
+		UtilityJpa.setAllIndentDenPieces(ibitList, indent);
 		ibitIndentList.add(indent);
 
 		ModelMap modelMap = UtilityMapper.getSummarisedTotalForCashBookWithdrawalReport(craPaymentList,
-				diversionPaymentList, otherBankAllocationList, soiledAllocationAllocationList, ibitListValues);
+				diversionPaymentList, otherBankAllocationList, soiledAllocationAllocationList, ibitList);
 
 		ICMC icmc = binDashboardService.getICMCObj(user.getIcmcId());
 
@@ -1489,8 +1408,10 @@ public class BinDashboardController {
 
 		BigInteger chestSlipNo = binDashboardService.getChestSlipNumber(user.getIcmcId(), sDate, eDate);
 		map.put("chestSlipNo", chestSlipNo);
+
 		SimpleDateFormat fmt = new SimpleDateFormat("dd-MM-yyy");
 		Date date = sDate.getTime();
+
 		map.put("date", fmt.format(date));
 		map.put("craPaymentList", craPaymentList);
 		map.put("sasList", sasList);
@@ -1502,6 +1423,7 @@ public class BinDashboardController {
 		map.put("icmcAddress", icmc.getAddress());
 		map.put("ibitListValues", ibitIndentList);
 		map.put("servicingICMC", servicingICMC);
+
 		return new ModelAndView("/cashBookWithdrawal", map);
 	}
 
@@ -2185,180 +2107,199 @@ public class BinDashboardController {
 		StringBuilder sbBinName = new StringBuilder();
 		BinTransaction binTxn = new BinTransaction();
 		BinTransaction binOrBoxFromDB = binDashboardService.checkBinOrBox(user.getIcmcId(), binOrBox);
-		BoxMaster boXmasterCapacity = binDashboardService.getBoxCapacity(user.getIcmcId(), binFromMaster);
-		synchronized (icmcService.getSynchronizedIcmc(user)) {
-			prnList.add(sbBinName.toString());
-			binTxn.setInsertBy(user.getId());
-			binTxn.setUpdateBy(user.getId());
-			binTxn.setInsertTime(now);
-			binTxn.setUpdateTime(now);
-			binTxn.setBinNumber(binFromMaster);
-			binTxn.setDenomination(binOrBoxFromDB.getDenomination());
-			binTxn.setReceiveBundle(new BigDecimal(bundle));
-			binTxn.setBinType(binOrBoxFromDB.getBinType());
-			binTxn.setStatus(binOrBoxFromDB.getStatus());
-			binTxn.setIcmcId(user.getIcmcId());
-			binTxn.setCashSource(binOrBoxFromDB.getCashSource());
-			if (radioButtonValue.equalsIgnoreCase("binToBox")) {
-				binTxn.setBinCategoryType(BinCategoryType.BOX);
-				binTxn.setMaxCapacity(boXmasterCapacity.getMaxCapacity());
-			} else if (radioButtonValue.equalsIgnoreCase("boxToBin")) {
-				binTxn.setBinCategoryType(BinCategoryType.BIN);
-				binTxn.setMaxCapacity(binOrBoxFromDB.getMaxCapacity());
-			} else if (radioButtonValue.equalsIgnoreCase("binToBin")) {
-				binTxn.setBinCategoryType(BinCategoryType.BIN);
-				binTxn.setMaxCapacity(binOrBoxFromDB.getMaxCapacity());
-			} else if (radioButtonValue.equalsIgnoreCase("boxToBox")) {
-				binTxn.setBinCategoryType(BinCategoryType.BOX);
-				binTxn.setMaxCapacity(boXmasterCapacity.getMaxCapacity());
-			}
 
-			binTxn.setCashType(binOrBoxFromDB.getCashType());
-			binTxn.setVerified(binOrBoxFromDB.getVerified());
-			binTxn.setRbiOrderNo(binOrBoxFromDB.getRbiOrderNo());
-			try {
-				cashPaymentService.deleteEmptyBinFromBinTransaction(user.getIcmcId(), binTxn.getBinNumber());
-				binDashboardService.cashTransferInBinTxn(binTxn);
-				binDashboardService.updateBinTxnAfterCashTransfer(user.getIcmcId(), binOrBox);
-				BranchReceipt brReceipt = new BranchReceipt();
-				if (binTxn.getCashSource() != null) {
-					brReceipt.setDenomination(binTxn.getDenomination());
-					brReceipt.setBundle(binTxn.getReceiveBundle());
-					brReceipt.setBin(binTxn.getBinNumber());
-					brReceipt.setStatus(OtherStatus.RECEIVED);
-					brReceipt.setInsertTime(binTxn.getInsertTime());
-					brReceipt.setUpdateTime(binTxn.getUpdateTime());
-					brReceipt.setInsertBy(binTxn.getInsertBy());
-					brReceipt.setUpdateBy(binTxn.getUpdateBy());
-					brReceipt.setIcmcId(binTxn.getIcmcId());
-					brReceipt.setCurrencyType(binTxn.getBinType());
-					brReceipt.setCashSource(binTxn.getCashSource());
-					brReceipt.setBinCategoryType(binTxn.getBinCategoryType());
-					binDashboardService.insertBranchReceiptAftercashTransfer(brReceipt);
-					binDashboardService.updateBranchReceiptAfterCashTransfer(user.getIcmcId(), binOrBox);
-				}
-				// Update IS_ALLOCATED=2 in Bin Master AND IS_ALLOCATED = 1 in
-				// Box Master
-				if (radioButtonValue.equalsIgnoreCase("binToBox")) {
-					binDashboardService.updateBoxMaster(user.getIcmcId(), binFromMaster, 1);
-					binDashboardService.updateBinMaster(user.getIcmcId(), binOrBox, 2);
-				} else if (radioButtonValue.equalsIgnoreCase("boxToBin")) {
-					binDashboardService.updateBinMaster(user.getIcmcId(), binFromMaster, 1);
-					binDashboardService.updateBoxMaster(user.getIcmcId(), binOrBox, 2);
-				} else if (radioButtonValue.equalsIgnoreCase("binToBin")) {
-					binDashboardService.updateBinMaster(user.getIcmcId(), binFromMaster, 1);
-					binDashboardService.updateBinMaster(user.getIcmcId(), binOrBox, 2);
-				}
-			} catch (Exception ex) {
-				LOG.info("Error has occured", ex);
-				throw ex;
-			}
-
-			// Save data in Cash Transfer Table
+		if (reason.equalsIgnoreCase("partial")) {
 			CashTransfer cashTransfer = new CashTransfer();
-			cashTransfer.setDenomination(binOrBoxFromDB.getDenomination());
-			cashTransfer.setFromBinOrBox(binOrBox);
-			cashTransfer.setToBinOrBox(binFromMaster);
-			cashTransfer.setInsertBy(user.getId());
-			cashTransfer.setUpdateBy(user.getId());
-			cashTransfer.setIcmcId(user.getIcmcId());
-			cashTransfer.setInsertTime(now);
-			cashTransfer.setUpdateTime(now);
-			cashTransfer.setReason(reason);
-			cashTransfer.setRemarks(remarks);
-			cashTransfer.setReceiveBundle(new BigDecimal(bundle));
-			boolean isAllSuccess = binDashboardService.saveCashTransfer(cashTransfer);
-			prnList.add(sbBinName.toString());
-			if (isAllSuccess) {
-				sbBinName.append(binFromMaster).append(",");
+			try {
+				UtilityJpa.setForCashTransfer(radioButtonValue, binOrBox, binFromMaster, bundle, reason, remarks, now,
+						user, cashTransfer);
+				synchronized (icmcService.getSynchronizedIcmc(user)) {
+					binDashboardService.processForPartialCashTransfer(user, binOrBox, binFromMaster,
+							new BigDecimal(bundle), cashTransfer);
+				}
+			} catch (Exception e) {
+				throw new BaseGuiException(e.getLocalizedMessage());
+			}
+		} else {
+			BoxMaster boXmasterCapacity = binDashboardService.getBoxCapacity(user.getIcmcId(), binFromMaster);
 
+			synchronized (icmcService.getSynchronizedIcmc(user)) {
+				prnList.add(sbBinName.toString());
+				binTxn.setInsertBy(user.getId());
+				binTxn.setUpdateBy(user.getId());
+				binTxn.setInsertTime(now);
+				binTxn.setUpdateTime(now);
+				binTxn.setBinNumber(binFromMaster);
+				binTxn.setDenomination(binOrBoxFromDB.getDenomination());
+				binTxn.setReceiveBundle(new BigDecimal(bundle));
+				binTxn.setBinType(binOrBoxFromDB.getBinType());
+				binTxn.setStatus(binOrBoxFromDB.getStatus());
+				binTxn.setIcmcId(user.getIcmcId());
+				binTxn.setCashSource(binOrBoxFromDB.getCashSource());
+				if (radioButtonValue.equalsIgnoreCase("binToBox")) {
+					binTxn.setBinCategoryType(BinCategoryType.BOX);
+					binTxn.setMaxCapacity(boXmasterCapacity.getMaxCapacity());
+				} else if (radioButtonValue.equalsIgnoreCase("boxToBin")) {
+					binTxn.setBinCategoryType(BinCategoryType.BIN);
+					binTxn.setMaxCapacity(binOrBoxFromDB.getMaxCapacity());
+				} else if (radioButtonValue.equalsIgnoreCase("binToBin")) {
+					binTxn.setBinCategoryType(BinCategoryType.BIN);
+					binTxn.setMaxCapacity(binOrBoxFromDB.getMaxCapacity());
+				} else if (radioButtonValue.equalsIgnoreCase("boxToBox")) {
+					binTxn.setBinCategoryType(BinCategoryType.BOX);
+					binTxn.setMaxCapacity(boXmasterCapacity.getMaxCapacity());
+				}
+
+				binTxn.setCashType(binOrBoxFromDB.getCashType());
+				binTxn.setVerified(binOrBoxFromDB.getVerified());
+				binTxn.setRbiOrderNo(binOrBoxFromDB.getRbiOrderNo());
 				try {
-					String oldtext = readPRNFileData();
-					if (binTxn.getCashSource() == CashSource.BRANCH) {
-						BranchReceipt branchReceiptDetails = binDashboardService
-								.getBranchReceiptDetailsForCashTransferQR(user.getIcmcId(), binOrBox,
-										binTxn.getDenomination());
-						String replacedtext = oldtext.replaceAll("bin", "" + binFromMaster);
-						replacedtext = replacedtext.replaceAll("branch", "" + branchReceiptDetails.getBranch());
-						replacedtext = replacedtext.replaceAll("solId", "" + branchReceiptDetails.getSolId());
-						replacedtext = replacedtext.replaceAll("denom", "" + binOrBoxFromDB.getDenomination());
-						replacedtext = replacedtext.replaceAll("bundle", "" + new BigDecimal(bundle));
-						String formattedTotal = CurrencyFormatter.inrFormatter(branchReceiptDetails.getTotal())
-								.toString();
-						replacedtext = replacedtext.replaceAll("total", "" + formattedTotal);
-						sb = new StringBuilder(replacedtext);
-					} else if (binTxn.getCashSource() == CashSource.DSB) {
-						DSB dsbDetails = binDashboardService.getDSBDetailsForCashTransferQR(user.getIcmcId(), binOrBox,
-								binTxn.getDenomination());
-						String replacedtext = oldtext.replaceAll("bin", "" + binFromMaster);
-						replacedtext = replacedtext.replaceAll("Branch: ", "" + "Name: ");
-						replacedtext = replacedtext.replaceAll("Sol ID :", "" + "A/C No.: ");
-						replacedtext = replacedtext.replaceAll("branch", "" + dsbDetails.getName());
-						replacedtext = replacedtext.replaceAll("solId", "" + dsbDetails.getAccountNumber());
-						replacedtext = replacedtext.replaceAll("denom", "" + binOrBoxFromDB.getDenomination());
-						replacedtext = replacedtext.replaceAll("bundle", "" + new BigDecimal(bundle));
-						String formattedTotal = CurrencyFormatter.inrFormatter(dsbDetails.getTotal()).toString();
-						replacedtext = replacedtext.replaceAll("total", "" + formattedTotal);
+					cashPaymentService.deleteEmptyBinFromBinTransaction(user.getIcmcId(), binTxn.getBinNumber());
+					binDashboardService.cashTransferInBinTxn(binTxn);
+					binDashboardService.updateBinTxnAfterCashTransfer(user.getIcmcId(), binOrBox);
+					BranchReceipt brReceipt = new BranchReceipt();
+					if (binTxn.getCashSource() != null) {
+						brReceipt.setDenomination(binTxn.getDenomination());
+						brReceipt.setBundle(binTxn.getReceiveBundle());
+						brReceipt.setBin(binTxn.getBinNumber());
+						brReceipt.setStatus(OtherStatus.RECEIVED);
+						brReceipt.setInsertTime(binTxn.getInsertTime());
+						brReceipt.setUpdateTime(binTxn.getUpdateTime());
+						brReceipt.setInsertBy(binTxn.getInsertBy());
+						brReceipt.setUpdateBy(binTxn.getUpdateBy());
+						brReceipt.setIcmcId(binTxn.getIcmcId());
+						brReceipt.setCurrencyType(binTxn.getBinType());
+						brReceipt.setCashSource(binTxn.getCashSource());
+						brReceipt.setBinCategoryType(binTxn.getBinCategoryType());
+						binDashboardService.insertBranchReceiptAftercashTransfer(brReceipt);
+						binDashboardService.updateBranchReceiptAfterCashTransfer(user.getIcmcId(), binOrBox);
+					}
+					// Update IS_ALLOCATED=2 in Bin Master AND IS_ALLOCATED = 1
+					// in
+					// Box Master
+					if (radioButtonValue.equalsIgnoreCase("binToBox")) {
+						binDashboardService.updateBoxMaster(user.getIcmcId(), binFromMaster, 1);
+						binDashboardService.updateBinMaster(user.getIcmcId(), binOrBox, 2);
+					} else if (radioButtonValue.equalsIgnoreCase("boxToBin")) {
+						binDashboardService.updateBinMaster(user.getIcmcId(), binFromMaster, 1);
+						binDashboardService.updateBoxMaster(user.getIcmcId(), binOrBox, 2);
+					} else if (radioButtonValue.equalsIgnoreCase("binToBin")) {
+						binDashboardService.updateBinMaster(user.getIcmcId(), binFromMaster, 1);
+						binDashboardService.updateBinMaster(user.getIcmcId(), binOrBox, 2);
+					}
+				} catch (Exception ex) {
+					LOG.info("Error has occured", ex);
+					throw ex;
+				}
 
-						sb = new StringBuilder(replacedtext);
-					} else if (binTxn.getCashSource() == CashSource.DIVERSION) {
-						DiversionIRV dirvDetails = binDashboardService.getDiversionIRVDetailsForCashTransferQR(
-								user.getIcmcId(), binOrBox, binTxn.getDenomination());
-						String replacedtext = oldtext.replaceAll("bin", "" + binFromMaster);
-						replacedtext = replacedtext.replaceAll("Branch: ", "" + "Bank: ");
-						replacedtext = replacedtext.replaceAll("Sol ID :", "" + "OrderNo: ");
-						replacedtext = replacedtext.replaceAll("branch", "" + dirvDetails.getBankName());
-						replacedtext = replacedtext.replaceAll("solId", "" + dirvDetails.getRbiOrderNo());
-						replacedtext = replacedtext.replaceAll("denom", "" + binOrBoxFromDB.getDenomination());
-						replacedtext = replacedtext.replaceAll("bundle", "" + new BigDecimal(bundle));
-						String formattedTotal = CurrencyFormatter.inrFormatter(dirvDetails.getTotal()).toString();
-						replacedtext = replacedtext.replaceAll("total", "" + formattedTotal);
+				// Save data in Cash Transfer Table
+				CashTransfer cashTransfer = new CashTransfer();
+				cashTransfer.setDenomination(binOrBoxFromDB.getDenomination());
+				cashTransfer.setFromBinOrBox(binOrBox);
+				cashTransfer.setToBinOrBox(binFromMaster);
+				cashTransfer.setInsertBy(user.getId());
+				cashTransfer.setUpdateBy(user.getId());
+				cashTransfer.setIcmcId(user.getIcmcId());
+				cashTransfer.setInsertTime(now);
+				cashTransfer.setUpdateTime(now);
+				cashTransfer.setReason(reason);
+				cashTransfer.setRemarks(remarks);
+				cashTransfer.setReceiveBundle(new BigDecimal(bundle));
+				cashTransfer.setTransferType(radioButtonValue);
+				boolean isAllSuccess = binDashboardService.saveCashTransfer(cashTransfer);
 
-						sb = new StringBuilder(replacedtext);
-					} else if (binTxn.getCashSource() == CashSource.OTHERBANK) {
-						BankReceipt bankReceiptDetails = binDashboardService.getBankReceiptDetailsForCashTransferQR(
-								user.getIcmcId(), binOrBox, binTxn.getDenomination());
-						String replacedtext = oldtext.replaceAll("bin", "" + binFromMaster);
-						replacedtext = replacedtext.replaceAll("Branch: ", "" + "Bank: ");
-						replacedtext = replacedtext.replaceAll("Sol ID :", "" + "UTR No: ");
-						replacedtext = replacedtext.replaceAll("branch", "" + bankReceiptDetails.getBankName());
-						replacedtext = replacedtext.replaceAll("solId", "" + bankReceiptDetails.getRtgsUTRNo());
-						replacedtext = replacedtext.replaceAll("denom", "" + binOrBoxFromDB.getDenomination());
-						replacedtext = replacedtext.replaceAll("bundle", "" + new BigDecimal(bundle));
+				prnList.add(sbBinName.toString());
+				if (isAllSuccess) {
+					sbBinName.append(binFromMaster).append(",");
 
-						String formattedTotal = CurrencyFormatter.inrFormatter(bankReceiptDetails.getTotal())
-								.toString();
-						replacedtext = replacedtext.replaceAll("total", "" + formattedTotal);
-
-						sb = new StringBuilder(replacedtext);
-					} else {
-						for (int i = 0; i < binTxn.getReceiveBundle().intValue(); i++) {
+					try {
+						String oldtext = readPRNFileData();
+						if (binTxn.getCashSource() == CashSource.BRANCH) {
+							BranchReceipt branchReceiptDetails = binDashboardService
+									.getBranchReceiptDetailsForCashTransferQR(user.getIcmcId(), binOrBox,
+											binTxn.getDenomination());
 							String replacedtext = oldtext.replaceAll("bin", "" + binFromMaster);
-							replacedtext = replacedtext.replaceAll("Bin: ", "" + "");
-							replacedtext = replacedtext.replaceAll("Branch: ", "" + "");
-							replacedtext = replacedtext.replaceAll("Sol ID :", "" + "");
-							replacedtext = replacedtext.replaceAll("branch", "" + binOrBoxFromDB.getDenomination());
-							replacedtext = replacedtext.replaceAll("solId", "" + binOrBoxFromDB.getBinNumber());
+							replacedtext = replacedtext.replaceAll("branch", "" + branchReceiptDetails.getBranch());
+							replacedtext = replacedtext.replaceAll("solId", "" + branchReceiptDetails.getSolId());
 							replacedtext = replacedtext.replaceAll("denom", "" + binOrBoxFromDB.getDenomination());
-							replacedtext = replacedtext.replaceAll("bundle", "" + BigDecimal.ONE);
+							replacedtext = replacedtext.replaceAll("bundle", "" + new BigDecimal(bundle));
+							String formattedTotal = CurrencyFormatter.inrFormatter(branchReceiptDetails.getTotal())
+									.toString();
+							replacedtext = replacedtext.replaceAll("total", "" + formattedTotal);
+							sb = new StringBuilder(replacedtext);
+						} else if (binTxn.getCashSource() == CashSource.DSB) {
+							DSB dsbDetails = binDashboardService.getDSBDetailsForCashTransferQR(user.getIcmcId(),
+									binOrBox, binTxn.getDenomination());
+							String replacedtext = oldtext.replaceAll("bin", "" + binFromMaster);
+							replacedtext = replacedtext.replaceAll("Branch: ", "" + "Name: ");
+							replacedtext = replacedtext.replaceAll("Sol ID :", "" + "A/C No.: ");
+							replacedtext = replacedtext.replaceAll("branch", "" + dsbDetails.getName());
+							replacedtext = replacedtext.replaceAll("solId", "" + dsbDetails.getAccountNumber());
+							replacedtext = replacedtext.replaceAll("denom", "" + binOrBoxFromDB.getDenomination());
+							replacedtext = replacedtext.replaceAll("bundle", "" + new BigDecimal(bundle));
+							String formattedTotal = CurrencyFormatter.inrFormatter(dsbDetails.getTotal()).toString();
+							replacedtext = replacedtext.replaceAll("total", "" + formattedTotal);
 
-							String formattedTotal = CurrencyFormatter
-									.inrFormatter(BigDecimal.valueOf(binOrBoxFromDB.getDenomination() * 1000))
+							sb = new StringBuilder(replacedtext);
+						} else if (binTxn.getCashSource() == CashSource.DIVERSION) {
+							DiversionIRV dirvDetails = binDashboardService.getDiversionIRVDetailsForCashTransferQR(
+									user.getIcmcId(), binOrBox, binTxn.getDenomination());
+							String replacedtext = oldtext.replaceAll("bin", "" + binFromMaster);
+							replacedtext = replacedtext.replaceAll("Branch: ", "" + "Bank: ");
+							replacedtext = replacedtext.replaceAll("Sol ID :", "" + "OrderNo: ");
+							replacedtext = replacedtext.replaceAll("branch", "" + dirvDetails.getBankName());
+							replacedtext = replacedtext.replaceAll("solId", "" + dirvDetails.getRbiOrderNo());
+							replacedtext = replacedtext.replaceAll("denom", "" + binOrBoxFromDB.getDenomination());
+							replacedtext = replacedtext.replaceAll("bundle", "" + new BigDecimal(bundle));
+							String formattedTotal = CurrencyFormatter.inrFormatter(dirvDetails.getTotal()).toString();
+							replacedtext = replacedtext.replaceAll("total", "" + formattedTotal);
+
+							sb = new StringBuilder(replacedtext);
+						} else if (binTxn.getCashSource() == CashSource.OTHERBANK) {
+							BankReceipt bankReceiptDetails = binDashboardService.getBankReceiptDetailsForCashTransferQR(
+									user.getIcmcId(), binOrBox, binTxn.getDenomination());
+							String replacedtext = oldtext.replaceAll("bin", "" + binFromMaster);
+							replacedtext = replacedtext.replaceAll("Branch: ", "" + "Bank: ");
+							replacedtext = replacedtext.replaceAll("Sol ID :", "" + "UTR No: ");
+							replacedtext = replacedtext.replaceAll("branch", "" + bankReceiptDetails.getBankName());
+							replacedtext = replacedtext.replaceAll("solId", "" + bankReceiptDetails.getRtgsUTRNo());
+							replacedtext = replacedtext.replaceAll("denom", "" + binOrBoxFromDB.getDenomination());
+							replacedtext = replacedtext.replaceAll("bundle", "" + new BigDecimal(bundle));
+
+							String formattedTotal = CurrencyFormatter.inrFormatter(bankReceiptDetails.getTotal())
 									.toString();
 							replacedtext = replacedtext.replaceAll("total", "" + formattedTotal);
 
 							sb = new StringBuilder(replacedtext);
+						} else {
+							for (int i = 0; i < binTxn.getReceiveBundle().intValue(); i++) {
+								String replacedtext = oldtext.replaceAll("bin", "" + binFromMaster);
+								replacedtext = replacedtext.replaceAll("Bin: ", "" + "");
+								replacedtext = replacedtext.replaceAll("Branch: ", "" + "");
+								replacedtext = replacedtext.replaceAll("Sol ID :", "" + "");
+								replacedtext = replacedtext.replaceAll("branch", "" + binOrBoxFromDB.getDenomination());
+								replacedtext = replacedtext.replaceAll("solId", "" + binOrBoxFromDB.getBinNumber());
+								replacedtext = replacedtext.replaceAll("denom", "" + binOrBoxFromDB.getDenomination());
+								replacedtext = replacedtext.replaceAll("bundle", "" + BigDecimal.ONE);
+
+								String formattedTotal = CurrencyFormatter
+										.inrFormatter(BigDecimal.valueOf(binOrBoxFromDB.getDenomination() * 1000))
+										.toString();
+								replacedtext = replacedtext.replaceAll("total", "" + formattedTotal);
+
+								sb = new StringBuilder(replacedtext);
+							}
 						}
+						prnList.add(sb.toString());
+						LOG.info(binTxn.getCashSource() + "PRN: " + sb);
+
+						// Call Printer Method From UTILITY Class
+
+						UtilityJpa.PrintToPrinter(sb, user);
+
+					} catch (IOException ioe) {
+						ioe.printStackTrace();
 					}
-					prnList.add(sb.toString());
-					LOG.info(binTxn.getCashSource() + "PRN: " + sb);
-
-					// Call Printer Method From UTILITY Class
-
-					UtilityJpa.PrintToPrinter(sb, user);
-
-				} catch (IOException ioe) {
-					ioe.printStackTrace();
 				}
 			}
 		}
@@ -2402,9 +2343,13 @@ public class BinDashboardController {
 	}
 
 	@RequestMapping("/auditorIndent")
-	public ModelAndView auditorIndent() {
+	public ModelAndView auditorIndent(HttpSession session) {
 		ModelMap map = new ModelMap();
 		AuditorIndent obj = new AuditorIndent();
+		User user = (User) session.getAttribute("login");
+		List<Tuple> branchReceipts = processingRoomService.indentSummary(user.getIcmcId(), CashSource.BRANCH);
+
+		map.put("branchReceipts", branchReceipts);
 		map.put("denominationList", DenominationType.values());
 		map.put("currencyTypeList", CurrencyType.values());
 		map.put("user", obj);
@@ -2416,21 +2361,21 @@ public class BinDashboardController {
 			RedirectAttributes redirectAttributes, HttpSession session) {
 		User user = (User) session.getAttribute("login");
 		Calendar now = Calendar.getInstance();
-		synchronized (icmcService.getSynchronizedIcmc(user)) {
-			auditorIndent.setIcmcId(user.getIcmcId());
-			auditorIndent.setInsertBy(user.getId());
-			auditorIndent.setUpdateBy(user.getId());
-			auditorIndent.setInsertTime(now);
-			auditorIndent.setUpdateTime(now);
-			auditorIndent.setStatus(OtherStatus.REQUESTED);
-			auditorIndent.setPendingBundleRequest(auditorIndent.getBundle());
+		auditorIndent.setIcmcId(user.getIcmcId());
+		auditorIndent.setInsertBy(user.getId());
+		auditorIndent.setUpdateBy(user.getId());
+		auditorIndent.setInsertTime(now);
+		auditorIndent.setUpdateTime(now);
+		auditorIndent.setStatus(OtherStatus.REQUESTED);
+		auditorIndent.setPendingBundleRequest(auditorIndent.getBundle());
 
-			try {
+		try {
+			synchronized (icmcService.getSynchronizedIcmc(user)) {
 				binDashboardService.saveAuditorIndentRequest(auditorIndent);
-			} catch (Exception e) {
-				redirectAttributes.addFlashAttribute("errorMsg", "" + e.getMessage() + "");
-				return new ModelAndView("redirect:./auditorIndent");
 			}
+		} catch (Exception e) {
+			redirectAttributes.addFlashAttribute("errorMsg", "" + e.getMessage() + "");
+			return new ModelAndView("redirect:./auditorIndent");
 		}
 		return new ModelAndView("redirect:./viewAuditorIndent");
 	}
@@ -2466,6 +2411,13 @@ public class BinDashboardController {
 		return new ModelAndView("/viewAuditorIndent", "records", auditorIndentList);
 	}
 
+	@RequestMapping("/auditorMachineAllocation")
+	public ModelAndView auditorMachineAllocation(HttpSession session) {
+		User user = (User) session.getAttribute("login");
+		List<AuditorIndent> auditorIndentList = binDashboardService.auditorIndentForMachineAllocation(user.getIcmcId());
+		return new ModelAndView("/auditorMachineAllocation", "records", auditorIndentList);
+	}
+
 	@RequestMapping("/acceptAuditorIndent")
 	public ModelAndView acceptAuditorIndent(HttpSession session) {
 		User user = (User) session.getAttribute("login");
@@ -2481,16 +2433,16 @@ public class BinDashboardController {
 		AuditorIndent auditorIndent = new AuditorIndent();
 
 		synchronized (icmcService.getSynchronizedIcmc(user)) {
-			auditorIndent.setId(auditorIndentFromUI.getId());
-			auditorIndent.setIcmcId(user.getIcmcId());
-			binDashboardService.updateAuditorIndentStatus(auditorIndent);
-
 			BinTransaction binTxn = new BinTransaction();
 			binTxn.setBinNumber(auditorIndentFromUI.getBinNumber());
 			binTxn.setDenomination(auditorIndentFromUI.getDenomination());
 			binTxn.setReceiveBundle(auditorIndentFromUI.getBundle());
 			binTxn.setIcmcId(user.getIcmcId());
 			binTxn = binDashboardService.getBinRecordForAcceptInVault(binTxn);
+
+			auditorIndent.setId(auditorIndentFromUI.getId());
+			auditorIndent.setIcmcId(user.getIcmcId());
+			binDashboardService.updateAuditorIndentStatus(auditorIndent);
 
 			BigDecimal balanceBundle = binTxn.getReceiveBundle().subtract(auditorIndentFromUI.getBundle());
 
@@ -2772,29 +2724,29 @@ public class BinDashboardController {
 		return str;
 	}
 
-	@RequestMapping(value = "/getbinFromBinTransactionForCashTransfer")
+	@RequestMapping(value = "/getbinOrBoxFromBinTransaction", method = RequestMethod.GET)
 	@ResponseBody
 	public List<String> getbinFromBinTransactionForCashTransfer(
 			@RequestParam(value = "denomination") Integer denomination,
 			@RequestParam(value = "currencyType") CurrencyType currencyType,
-			@RequestParam(value = "bundle") BigDecimal bundle, HttpSession session) {
-		User user = (User) session.getAttribute("login");
-		List<BinTransaction> binList = binDashboardService.getBinFroPartialTransfer(user.getIcmcId(), denomination,
-				currencyType);
-		List<String> bList = new ArrayList<String>();
-		BigDecimal capacity = new BigDecimal(0);
-		BigDecimal receive = new BigDecimal(0);
-		BigDecimal available = new BigDecimal(0);
-		for (BinTransaction btxn : binList) {
-			capacity = btxn.getMaxCapacity();
-			receive = btxn.getReceiveBundle();
-			available = capacity.subtract(receive);
-			if (available.compareTo(bundle) >= 0) {
-				bList.add(btxn.getBinNumber());
-			}
+			@RequestParam(value = "bundle") BigDecimal bundle,
+			@RequestParam(value = "radioButtonValue") String radioButtonValue, @RequestParam(value = "bin") String bin,
+			HttpSession session) {
 
+		User user = (User) session.getAttribute("login");
+		String[] category = radioButtonValue.split("To");// boxToBin
+		BinCategoryType binCategoryType;
+
+		if (category[1].equals("Bin")) {
+			binCategoryType = BinCategoryType.fromValue("BIN");
+		} else {
+			binCategoryType = BinCategoryType.fromValue("BOX");
 		}
-		return bList;
+
+		List<String> binList = binDashboardService.getBinFroPartialTransfer(user.getIcmcId(), denomination,
+				currencyType, bundle, binCategoryType, bin);
+
+		return binList;
 	}
 
 	@RequestMapping("/stockMovementRegister")
@@ -2890,28 +2842,6 @@ public class BinDashboardController {
 		}
 		// getting bundle from sasAllocation
 
-		/*
-		 * for (SASAllocation sasAll : sasAllocation) { if
-		 * (sasAll.getDenomination() == 2000) { BundleDenomination2000 =
-		 * BundleDenomination2000.add(sasAll.getBundle()); } if
-		 * (sasAll.getDenomination() == 1000) { BundleDenomination1000 =
-		 * BundleDenomination1000.add(sasAll.getBundle()); } if
-		 * (sasAll.getDenomination() == 500) { BundleDenomination500 =
-		 * BundleDenomination500.add(sasAll.getBundle()); } if
-		 * (sasAll.getDenomination() == 200) { BundleDenomination200 =
-		 * BundleDenomination200.add(sasAll.getBundle()); } if
-		 * (sasAll.getDenomination() == 100) { BundleDenomination100 =
-		 * BundleDenomination100.add(sasAll.getBundle()); } if
-		 * (sasAll.getDenomination() == 50) { BundleDenomination50 =
-		 * BundleDenomination50.add(sasAll.getBundle()); } if
-		 * (sasAll.getDenomination() == 20) { BundleDenomination20 =
-		 * BundleDenomination20.add(sasAll.getBundle()); } if
-		 * (sasAll.getDenomination() == 10) { BundleDenomination10 =
-		 * BundleDenomination10.add(sasAll.getBundle()); } if
-		 * (sasAll.getDenomination() == 5) { BundleDenomination5 =
-		 * BundleDenomination5.add(sasAll.getBundle()); } }
-		 */
-
 		List<Tuple> process = binDashboardService.getProcessBundleProcessingOutPut(user.getIcmcId(), sDate, eDate);
 		for (Tuple tuple : process) {
 			if (tuple.get(0, Integer.class).equals(2000)) {
@@ -2996,179 +2926,6 @@ public class BinDashboardController {
 				}
 			}
 		}
-
-		/*
-		 * List<BranchReceipt> branchReceipt =
-		 * binDashboardService.getBranchReceiptValue(user.getIcmcId(), sDate,
-		 * eDate); List<DiversionIRV> diversionIRV =
-		 * binDashboardService.getDiversionIRV(user.getIcmcId(), sDate, eDate);
-		 * 
-		 * for (DiversionIRV diversionIRVCon : diversionIRV) { if
-		 * (diversionIRVCon.getDenomination() == 2000) { if
-		 * (diversionIRVCon.getCurrencyType() == CurrencyType.ATM) {
-		 * BundleDenomination2000Atm =
-		 * BundleDenomination2000Atm.add(diversionIRVCon.getBundle()); } else if
-		 * (diversionIRVCon.getCurrencyType() == CurrencyType.ISSUABLE) {
-		 * BundleDenomination2000Issuable =
-		 * BundleDenomination2000Issuable.add(diversionIRVCon.getBundle()); }
-		 * else { BundleDenomination2000Soiled =
-		 * BundleDenomination2000Soiled.add(diversionIRVCon.getBundle()); } } if
-		 * (diversionIRVCon.getDenomination() == 1000) { if
-		 * (diversionIRVCon.getCurrencyType() == CurrencyType.ATM) {
-		 * BundleDenomination1000Atm =
-		 * BundleDenomination1000Atm.add(diversionIRVCon.getBundle()); } else if
-		 * (diversionIRVCon.getCurrencyType() == CurrencyType.ISSUABLE) {
-		 * BundleDenomination1000Issuable =
-		 * BundleDenomination1000Issuable.add(diversionIRVCon.getBundle()); }
-		 * else { BundleDenomination1000Soiled =
-		 * BundleDenomination1000Soiled.add(diversionIRVCon.getBundle()); } } if
-		 * (diversionIRVCon.getDenomination() == 500) { if
-		 * (diversionIRVCon.getCurrencyType() == CurrencyType.ATM) {
-		 * BundleDenomination500Atm =
-		 * BundleDenomination500Atm.add(diversionIRVCon.getBundle()); } else if
-		 * (diversionIRVCon.getCurrencyType() == CurrencyType.ISSUABLE) {
-		 * BundleDenomination500Issuable =
-		 * BundleDenomination500Issuable.add(diversionIRVCon.getBundle()); }
-		 * else { BundleDenomination500Soiled =
-		 * BundleDenomination500Soiled.add(diversionIRVCon.getBundle()); } } if
-		 * (diversionIRVCon.getDenomination() == 200) { if
-		 * (diversionIRVCon.getCurrencyType() == CurrencyType.ATM) {
-		 * BundleDenomination200Atm =
-		 * BundleDenomination200Atm.add(diversionIRVCon.getBundle()); } else if
-		 * (diversionIRVCon.getCurrencyType() == CurrencyType.ISSUABLE) {
-		 * BundleDenomination200Issuable =
-		 * BundleDenomination200Issuable.add(diversionIRVCon.getBundle()); }
-		 * else { BundleDenomination200Soiled =
-		 * BundleDenomination200Soiled.add(diversionIRVCon.getBundle()); } } if
-		 * (diversionIRVCon.getDenomination() == 100) { if
-		 * (diversionIRVCon.getCurrencyType() == CurrencyType.ATM) {
-		 * BundleDenomination100Atm =
-		 * BundleDenomination100Atm.add(diversionIRVCon.getBundle()); } else if
-		 * (diversionIRVCon.getCurrencyType() == CurrencyType.ISSUABLE) {
-		 * BundleDenomination100Issuable =
-		 * BundleDenomination100Issuable.add(diversionIRVCon.getBundle()); }
-		 * else { BundleDenomination100Soiled =
-		 * BundleDenomination100Soiled.add(diversionIRVCon.getBundle()); } } if
-		 * (diversionIRVCon.getDenomination() == 50) { if
-		 * (diversionIRVCon.getCurrencyType() == CurrencyType.ATM) {
-		 * BundleDenomination50Atm =
-		 * BundleDenomination50Atm.add(diversionIRVCon.getBundle()); } else if
-		 * (diversionIRVCon.getCurrencyType() == CurrencyType.ISSUABLE) {
-		 * BundleDenomination50Issuable =
-		 * BundleDenomination50Issuable.add(diversionIRVCon.getBundle()); } else
-		 * { BundleDenomination50Soiled =
-		 * BundleDenomination50Soiled.add(diversionIRVCon.getBundle()); } } if
-		 * (diversionIRVCon.getDenomination() == 20) { if
-		 * (diversionIRVCon.getCurrencyType() == CurrencyType.ATM) {
-		 * BundleDenomination20Atm =
-		 * BundleDenomination20Atm.add(diversionIRVCon.getBundle()); } else if
-		 * (diversionIRVCon.getCurrencyType() == CurrencyType.ISSUABLE) {
-		 * BundleDenomination20Issuable =
-		 * BundleDenomination20Issuable.add(diversionIRVCon.getBundle()); } else
-		 * { BundleDenomination20Soiled =
-		 * BundleDenomination20Soiled.add(diversionIRVCon.getBundle()); } } if
-		 * (diversionIRVCon.getDenomination() == 10) { if
-		 * (diversionIRVCon.getCurrencyType() == CurrencyType.ATM) {
-		 * BundleDenomination10Atm =
-		 * BundleDenomination10Atm.add(diversionIRVCon.getBundle()); } else if
-		 * (diversionIRVCon.getCurrencyType() == CurrencyType.ISSUABLE) {
-		 * BundleDenomination10Issuable =
-		 * BundleDenomination10Issuable.add(diversionIRVCon.getBundle()); } else
-		 * { BundleDenomination10Soiled =
-		 * BundleDenomination10Soiled.add(diversionIRVCon.getBundle()); } } if
-		 * (diversionIRVCon.getDenomination() == 5) { if
-		 * (diversionIRVCon.getCurrencyType() == CurrencyType.ATM) {
-		 * BundleDenomination5Atm =
-		 * BundleDenomination5Atm.add(diversionIRVCon.getBundle()); } else if
-		 * (diversionIRVCon.getCurrencyType() == CurrencyType.ISSUABLE) {
-		 * BundleDenomination5Issuable =
-		 * BundleDenomination5Issuable.add(diversionIRVCon.getBundle()); } else
-		 * { BundleDenomination5Soiled =
-		 * BundleDenomination5Soiled.add(diversionIRVCon.getBundle()); } } }
-		 * 
-		 * for (BranchReceipt branchValue : branchReceipt) { if
-		 * (branchValue.getDenomination() == 2000) { if
-		 * (branchValue.getCurrencyType() == CurrencyType.ATM) {
-		 * BundleDenomination2000Atm =
-		 * BundleDenomination2000Atm.add(branchValue.getBundle()); } else if
-		 * (branchValue.getCurrencyType() == CurrencyType.ISSUABLE) {
-		 * BundleDenomination2000Issuable =
-		 * BundleDenomination2000Issuable.add(branchValue.getBundle()); } else {
-		 * BundleDenomination2000Soiled =
-		 * BundleDenomination2000Soiled.add(branchValue.getBundle()); } } if
-		 * (branchValue.getDenomination() == 1000) { if
-		 * (branchValue.getCurrencyType() == CurrencyType.ATM) {
-		 * BundleDenomination1000Atm =
-		 * BundleDenomination1000Atm.add(branchValue.getBundle()); } else if
-		 * (branchValue.getCurrencyType() == CurrencyType.ISSUABLE) {
-		 * BundleDenomination1000Issuable =
-		 * BundleDenomination1000Issuable.add(branchValue.getBundle()); } else {
-		 * BundleDenomination1000Soiled =
-		 * BundleDenomination1000Soiled.add(branchValue.getBundle()); } } if
-		 * (branchValue.getDenomination() == 500) { if
-		 * (branchValue.getCurrencyType() == CurrencyType.ATM) {
-		 * BundleDenomination500Atm =
-		 * BundleDenomination500Atm.add(branchValue.getBundle()); } else if
-		 * (branchValue.getCurrencyType() == CurrencyType.ISSUABLE) {
-		 * BundleDenomination500Issuable =
-		 * BundleDenomination500Issuable.add(branchValue.getBundle()); } else {
-		 * BundleDenomination500Soiled =
-		 * BundleDenomination500Soiled.add(branchValue.getBundle()); } } if
-		 * (branchValue.getDenomination() == 200) { if
-		 * (branchValue.getCurrencyType() == CurrencyType.ATM) {
-		 * BundleDenomination200Atm =
-		 * BundleDenomination200Atm.add(branchValue.getBundle()); } else if
-		 * (branchValue.getCurrencyType() == CurrencyType.ISSUABLE) {
-		 * BundleDenomination200Issuable =
-		 * BundleDenomination200Issuable.add(branchValue.getBundle()); } else {
-		 * BundleDenomination200Soiled =
-		 * BundleDenomination200Soiled.add(branchValue.getBundle()); } } if
-		 * (branchValue.getDenomination() == 100) { if
-		 * (branchValue.getCurrencyType() == CurrencyType.ATM) {
-		 * BundleDenomination100Atm =
-		 * BundleDenomination100Atm.add(branchValue.getBundle()); } else if
-		 * (branchValue.getCurrencyType() == CurrencyType.ISSUABLE) {
-		 * BundleDenomination100Issuable =
-		 * BundleDenomination100Issuable.add(branchValue.getBundle()); } else {
-		 * BundleDenomination100Soiled =
-		 * BundleDenomination100Soiled.add(branchValue.getBundle()); } } if
-		 * (branchValue.getDenomination() == 50) { if
-		 * (branchValue.getCurrencyType() == CurrencyType.ATM) {
-		 * BundleDenomination50Atm =
-		 * BundleDenomination50Atm.add(branchValue.getBundle()); } else if
-		 * (branchValue.getCurrencyType() == CurrencyType.ISSUABLE) {
-		 * BundleDenomination50Issuable =
-		 * BundleDenomination50Issuable.add(branchValue.getBundle()); } else {
-		 * BundleDenomination50Soiled =
-		 * BundleDenomination50Soiled.add(branchValue.getBundle()); } } if
-		 * (branchValue.getDenomination() == 20) { if
-		 * (branchValue.getCurrencyType() == CurrencyType.ATM) {
-		 * BundleDenomination20Atm =
-		 * BundleDenomination20Atm.add(branchValue.getBundle()); } else if
-		 * (branchValue.getCurrencyType() == CurrencyType.ISSUABLE) {
-		 * BundleDenomination20Issuable =
-		 * BundleDenomination20Issuable.add(branchValue.getBundle()); } else {
-		 * BundleDenomination20Soiled =
-		 * BundleDenomination20Soiled.add(branchValue.getBundle()); } } if
-		 * (branchValue.getDenomination() == 10) { if
-		 * (branchValue.getCurrencyType() == CurrencyType.ATM) {
-		 * BundleDenomination10Atm =
-		 * BundleDenomination10Atm.add(branchValue.getBundle()); } else if
-		 * (branchValue.getCurrencyType() == CurrencyType.ISSUABLE) {
-		 * BundleDenomination10Issuable =
-		 * BundleDenomination10Issuable.add(branchValue.getBundle()); } else {
-		 * BundleDenomination10Soiled =
-		 * BundleDenomination10Soiled.add(branchValue.getBundle()); } } if
-		 * (branchValue.getDenomination() == 5) { if
-		 * (branchValue.getCurrencyType() == CurrencyType.ATM) {
-		 * BundleDenomination5Atm =
-		 * BundleDenomination5Atm.add(branchValue.getBundle()); } else if
-		 * (branchValue.getCurrencyType() == CurrencyType.ISSUABLE) {
-		 * BundleDenomination5Issuable =
-		 * BundleDenomination5Issuable.add(branchValue.getBundle()); } else {
-		 * BundleDenomination5Soiled =
-		 * BundleDenomination5Soiled.add(branchValue.getBundle()); } } }
-		 */
 
 		map.put("BundleDenomination2000Atm", BundleDenomination2000Atm);
 		map.put("BundleDenomination1000Atm", BundleDenomination1000Atm);

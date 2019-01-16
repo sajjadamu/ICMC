@@ -9,8 +9,4 @@ public enum Activity {
 
 	}
 
-	public static Activity fromValue(String v) {
-		return valueOf(v);
-	}
-
 }

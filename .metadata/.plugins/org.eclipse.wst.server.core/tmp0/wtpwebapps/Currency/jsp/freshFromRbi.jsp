@@ -4,7 +4,7 @@
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <html lang="en">
 <head>
-<link rel="shortcut icon" href="./resources/logo/favicon.ico"
+<link rel="shortcut icon" href="./resources/logo/yes_favicon.ico"
 	type="image/x-icon">
 <script type="text/javascript" src="./js/jquery-1.12.0.min.js"></script>
 <script type="text/javascript" src="./js/jquery.validate.min.js"></script>
@@ -14,7 +14,7 @@
 <meta name="description" content="">
 <meta name="author" content="">
 
-<title>ICICI : Fresh From RBI</title>
+<title> Fresh From RBI</title>
 <link href="./resources/css/calendar.css" rel="stylesheet"
 	type="text/css" />
 <link rel="stylesheet" type="text/css"

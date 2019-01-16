@@ -5,7 +5,7 @@
 <html lang="en">
 
 <head>
-<link rel="shortcut icon" href="./resources/logo/favicon.ico"
+<link rel="shortcut icon" href="./resources/logo/yes_favicon.ico"
 	type="image/x-icon">
 <script type="text/javascript" src="./js/jquery-1.12.0.min.js"></script>
 <script src="./js/unprocess.js"></script>
@@ -27,7 +27,7 @@
 <meta name="description" content="">
 <meta name="author" content="">
 
-<title>ICICI : IRV</title>
+<title> IRV</title>
 
 <script src="./resources/Currency/js/jquery.js"></script>
 <!-- Bootstrap Core CSS -->

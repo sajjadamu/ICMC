@@ -79,6 +79,7 @@ function doAjaxPostInsert(str,source) {
 	    			errorMessage = errorMessage + ", in unit of:"+response.message;
 	    		}
 	    		alert(errorMessage);
+	    		window.location='././viewIndentRequest';
 	    	}else{
 		    	alert('Successfull : Record submit.');
 		    	window.location='././viewIndentRequest';
@@ -294,7 +295,7 @@ function doAjaxPostInsertForFresh(str,source) {
 										<td></td>
 										<td><input type="text" name="bundle"
 											id="requestBundle<%=tuple.get(0,Integer.class)%><%=tuple.get(4, BinCategoryType.class)%><%=CashSource.BRANCH%>"></td>
-										<td><input type="button" value="Request"
+										<td><input type="button" class="btn btn-primary" value="Request"
 											onclick="doAjaxPostInsert('<%=tuple.get(0, Integer.class)%><%=tuple.get(4, BinCategoryType.class)%><%=CashSource.BRANCH%>','<%=CashSource.BRANCH%>');this.disabled=true;"></td>
 									</tr>
 									<%
@@ -349,7 +350,7 @@ function doAjaxPostInsertForFresh(str,source) {
 										<td></td>
 										<td><input type="text" name="bundle"
 											id="requestBundle<%=tuple.get(0,Integer.class)%><%=tuple.get(4, BinCategoryType.class)%><%=CashSource.DSB%>"></td>
-										<td><input type="button" value="Request"
+										<td><input type="button" class="btn btn-primary" value="Request"
 											onclick="doAjaxPostInsert('<%=tuple.get(0, Integer.class)%><%=tuple.get(4, BinCategoryType.class)%><%=CashSource.DSB%>','<%=CashSource.DSB%>');this.disabled=true;"></td>
 									</tr>
 									<%
@@ -408,7 +409,7 @@ function doAjaxPostInsertForFresh(str,source) {
 										<Td></td>
 										<td><input type="text" name="bundle"
 											id="requestBundle<%=tuple.get(2,Integer.class)%><%=tuple.get(0, String.class)%><%=tuple.get(1, BinCategoryType.class)%><%=CashSource.RBI%>"></td>
-										<td><input type="button" value="Request"
+										<td><input type="button" class="btn btn-primary" value="Request"
 											onclick="doAjaxPostInsertForFresh('<%=tuple.get(2, Integer.class)%><%=tuple.get(0, String.class)%><%=tuple.get(1, BinCategoryType.class)%><%=CashSource.RBI%>','<%=CashSource.RBI%>');this.disabled=true;"></td>
 									</tr>
 									<%
@@ -463,7 +464,7 @@ function doAjaxPostInsertForFresh(str,source) {
 										<td></td>
 										<td><input type="text" name="bundle"
 											id="requestBundle<%=tuple.get(0,Integer.class)%><%=tuple.get(4, BinCategoryType.class)%><%=CashSource.DIVERSION%>"></td>
-										<td><input type="button" value="Request"
+										<td><input type="button" class="btn btn-primary" value="Request"
 											onclick="doAjaxPostInsert('<%=tuple.get(0, Integer.class)%><%=tuple.get(4, BinCategoryType.class)%><%=CashSource.DIVERSION%>','<%=CashSource.DIVERSION%>');this.disabled=true;"></td>
 									</tr>
 									<%
@@ -519,7 +520,7 @@ function doAjaxPostInsertForFresh(str,source) {
 										<td></td>
 										<td><input type="text" name="bundle"
 											id="requestBundle<%=tuple.get(0,Integer.class)%><%=tuple.get(4, BinCategoryType.class)%><%=CashSource.OTHERBANK%>"></td>
-										<td><input type="button" value="Request"
+										<td><input type="button" class="btn btn-primary" value="Request"
 											onclick="doAjaxPostInsert('<%=tuple.get(0, Integer.class)%><%=tuple.get(4, BinCategoryType.class)%><%=CashSource.OTHERBANK%>','<%=CashSource.OTHERBANK%>');this.disabled=true;"></td>
 									</tr>
 									<%

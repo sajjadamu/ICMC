@@ -13,9 +13,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="">
 <meta name="author" content="">
-<link rel="shortcut icon" href="./resources/logo/favicon.ico"
+<link rel="shortcut icon" href="./resources/logo/yes_favicon.ico"
 	type="image/x-icon">
-<link rel="shortcut icon" href="./resources/logo/favicon.ico"
+<link rel="shortcut icon" href="./resources/logo/yes_favicon.ico"
 	type="image/x-icon">
 <link href="./resources/css/calendar.css" rel="stylesheet"
 	type="text/css" />
@@ -174,7 +174,7 @@ function doAjaxPost(str) {
 	}  
 
 </script>
-<title>ICICI : View Prepared Soiled Boxes</title>
+<title> View Prepared Soiled Boxes</title>
 
 <!-- Bootstrap Core CSS -->
 <link

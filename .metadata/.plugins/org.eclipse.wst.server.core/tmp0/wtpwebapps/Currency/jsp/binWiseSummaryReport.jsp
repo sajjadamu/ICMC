@@ -12,9 +12,9 @@
 <meta name="description" content="">
 <meta name="author" content="">
 <link rel="shortcut icon"
-	href="./resoudiscrepancyDemandrces/logo/favicon.ico"
+	href="./resoudiscrepancyDemandrces/logo/yes_favicon.ico"
 	type="image/x-icon">
-<title>ICICI : BIN Wise Report</title>
+<title> BIN Wise Report</title>
 
 <!-- Bootstrap Core CSS -->
 <link

@@ -1,11 +1,3 @@
-/*******************************************************************************
- * /* Copyright (C) Indicsoft Technologies Pvt Ltd
- * * All Rights Reserved.
- *******************************************************************************/
-/**
- * 
- */
-
 package com.chest.currency.jpa.dao;
 
 import java.math.BigDecimal;
@@ -42,6 +34,7 @@ import com.chest.currency.entity.model.ORVAllocation;
 import com.chest.currency.entity.model.OtherBank;
 import com.chest.currency.entity.model.OtherBankAllocation;
 import com.chest.currency.entity.model.ProcessBundleForCRAPayment;
+import com.chest.currency.entity.model.QAuditorIndent;
 import com.chest.currency.entity.model.QBinMaster;
 import com.chest.currency.entity.model.QBinTransaction;
 import com.chest.currency.entity.model.QBranch;
@@ -735,7 +728,7 @@ public class CashPaymentJpaDaoImpl implements CashPaymentJpaDao {
 	@Override
 	public List<Sas> solIdForSASPaymentAccepted(BigInteger icmcId, Calendar sDate, Calendar eDate, Set<Long> pList) {
 		JPAQuery jpaQuery = new JPAQuery(em);
-		
+
 		jpaQuery.from(QSas.sas).distinct().where(QSas.sas.icmcId.eq(icmcId).and(QSas.sas.status.eq(1))
 				.and(QSas.sas.insertTime.between(sDate, eDate)).and(QSas.sas.id.in(pList)));
 		List<Sas> solIdForPayment = jpaQuery.list(QSas.sas);
@@ -806,6 +799,7 @@ public class CashPaymentJpaDaoImpl implements CashPaymentJpaDao {
 
 	@Override
 	public List<BinTransaction> getBinNumListForCRA(CRAAllocation cra, CurrencyType type) {
+
 		JPAQuery jpaQuery = getFromQueryForSASRequestFromBinTxn();
 		jpaQuery.where(QBinTransaction.binTransaction.icmcId.eq(cra.getIcmcId())
 				.and(QBinTransaction.binTransaction.denomination.eq(cra.getDenomination()))
@@ -1334,7 +1328,9 @@ public class CashPaymentJpaDaoImpl implements CashPaymentJpaDao {
 	}
 
 	public CRAAllocation findCraAllocation(CRAAllocation craAllocation) {
+
 		CRAAllocation craAllocationDb = em.find(CRAAllocation.class, craAllocation.getId());
+
 		return craAllocationDb;
 	}
 
@@ -1380,10 +1376,6 @@ public class CashPaymentJpaDaoImpl implements CashPaymentJpaDao {
 						.and(QBinTransaction.binTransaction.binNumber.like("BOX:%"))
 						.and(QBinTransaction.binTransaction.active.eq(0))
 						.and(QBinTransaction.binTransaction.id.eq(soiledAllocation.getId()))
-						/*
-						 * .and(QBinTransaction.binTransaction.binCategoryType.
-						 * eq(BinCategoryType.BOX))
-						 */
 						.and(QBinTransaction.binTransaction.binType.eq(type))));
 		List<BinTransaction> txnList = jpaQuery.list(QBinTransaction.binTransaction);
 		return txnList;
@@ -1391,6 +1383,7 @@ public class CashPaymentJpaDaoImpl implements CashPaymentJpaDao {
 
 	@Override
 	public BinTransaction getBoxRecordForCashReleassed(BinTransaction binTxn) {
+
 		JPAQuery jpaQuery = getFromQueryForCashReleasedFromBinTxn();
 		jpaQuery.where(QBinTransaction.binTransaction.icmcId.eq(binTxn.getIcmcId())
 				.and(QBinTransaction.binTransaction.active.eq(1))
@@ -1398,6 +1391,7 @@ public class CashPaymentJpaDaoImpl implements CashPaymentJpaDao {
 						.and(QBinTransaction.binTransaction.denomination.eq(binTxn.getDenomination())
 								.and(QBinTransaction.binTransaction.binType.eq(binTxn.getBinType())))));
 		BinTransaction binTransaction = jpaQuery.singleResult(QBinTransaction.binTransaction);
+
 		return binTransaction;
 	}
 
@@ -1441,10 +1435,13 @@ public class CashPaymentJpaDaoImpl implements CashPaymentJpaDao {
 
 	@Override
 	public CRAAllocation getCRAAllocationDataById(long id, BigInteger icmcId) {
+
 		JPAQuery jpaQuery = getFromQueryForCRAFromCRAALllocation();
 		jpaQuery.where(QCRAAllocation.cRAAllocation.id.eq(id).and(QCRAAllocation.cRAAllocation.icmcId.eq(icmcId)));
 		CRAAllocation craAllocation = jpaQuery.singleResult(QCRAAllocation.cRAAllocation);
+
 		return craAllocation;
+
 	}
 
 	@Override
@@ -1678,12 +1675,14 @@ public class CashPaymentJpaDaoImpl implements CashPaymentJpaDao {
 
 	@Override
 	public BinTransaction getBinRecordForAcceptInVault(BinTransaction txn) {
+
 		JPAQuery jpaQuery = getFromQueryForCashReleasedFromBinTxn();
 		jpaQuery.where(QBinTransaction.binTransaction.icmcId.eq(txn.getIcmcId())
 				.and(QBinTransaction.binTransaction.binNumber.eq(txn.getBinNumber())
 						.and(QBinTransaction.binTransaction.denomination.eq(txn.getDenomination()))));
 		BinTransaction binTransaction = jpaQuery.singleResult(QBinTransaction.binTransaction);
 		return binTransaction;
+
 	}
 
 	@Override
@@ -1948,9 +1947,11 @@ public class CashPaymentJpaDaoImpl implements CashPaymentJpaDao {
 
 	@Override
 	public CRA getCRARecordForCancellation(User user, Long id) {
+
 		JPAQuery jpaQuery = getFromQueryForCRA();
 		jpaQuery.where(QCRA.cRA.icmcId.eq(user.getIcmcId()).and(QCRA.cRA.id.eq(id)));
 		return jpaQuery.singleResult(QCRA.cRA);
+
 	}
 
 	@Override
@@ -2134,8 +2135,25 @@ public class CashPaymentJpaDaoImpl implements CashPaymentJpaDao {
 						.and(QIndent.indent.cashSource.ne(CashSource.RBI)).and(QIndent.indent.bin.isNotNull())
 						.and(QIndent.indent.insertTime.between(sDate, eDate)));
 		jpaQuery.groupBy(QIndent.indent.denomination);
-		List<Tuple> ibitList = jpaQuery.list(QIndent.indent.denomination, QIndent.indent.bundle.sum().multiply(1000));
-		return ibitList;
+		List<Tuple> ibitIndentList = jpaQuery.list(QIndent.indent.denomination,
+				QIndent.indent.bundle.sum().multiply(1000));
+
+		JPAQuery jpaQuery2 = new JPAQuery(em);
+		jpaQuery2.from(QAuditorIndent.auditorIndent);
+		jpaQuery2.where(QAuditorIndent.auditorIndent.icmcId.eq(icmcId)
+				.and(QAuditorIndent.auditorIndent.status.eq(OtherStatus.ACCEPTED)
+						.or(QAuditorIndent.auditorIndent.status.eq(OtherStatus.PROCESSED)))
+				.and(QAuditorIndent.auditorIndent.binNumber.isNotNull())
+				.and(QAuditorIndent.auditorIndent.insertTime.between(sDate, eDate)));
+		jpaQuery2.groupBy(QAuditorIndent.auditorIndent.denomination);
+		List<Tuple> ibitAuditorIndentList = jpaQuery2.list(QAuditorIndent.auditorIndent.denomination,
+				QAuditorIndent.auditorIndent.bundle.sum().multiply(1000));
+
+		for (Tuple tuple : ibitAuditorIndentList) {
+			ibitIndentList.add(tuple);
+		}
+
+		return ibitIndentList;
 	}
 
 	@Override
@@ -2318,28 +2336,31 @@ public class CashPaymentJpaDaoImpl implements CashPaymentJpaDao {
 		JPAQuery jpaQuery = getFromQueryForSASAllocation();
 		jpaQuery.where(QSASAllocation.sASAllocation.icmcId.eq(icmcId)
 				.and(QSASAllocation.sASAllocation.status.eq(OtherStatus.REQUESTED)));
-		
+
 		jpaQuery.groupBy(QSASAllocation.sASAllocation.binNumber, QSASAllocation.sASAllocation.denomination,
 				QSASAllocation.sASAllocation.cashType, QSASAllocation.sASAllocation.binType);
 		List<Tuple> sasAllocation = jpaQuery.list(QSASAllocation.sASAllocation.binNumber,
 				QSASAllocation.sASAllocation.denomination, QSASAllocation.sASAllocation.cashType,
 				QSASAllocation.sASAllocation.binType, QSASAllocation.sASAllocation.bundle.sum());
-		
+
 		return sasAllocation;
 	}
 
 	@Override
 	public List<SASAllocation> getSasAllocationByBinNumberBundle(SASAllocation sasAlo) {
-		JPAQuery jpaQuery = getFromQueryForSASAllocation().where(QSASAllocation.sASAllocation.binNumber.eq(sasAlo.getBinNumber())
-				.and(QSASAllocation.sASAllocation.status.eq(OtherStatus.REQUESTED))
+
+		JPAQuery jpaQuery = getFromQueryForSASAllocation().where(QSASAllocation.sASAllocation.binNumber
+				.eq(sasAlo.getBinNumber()).and(QSASAllocation.sASAllocation.status.eq(OtherStatus.REQUESTED))
 				.and(QSASAllocation.sASAllocation.bundle.eq(sasAlo.getBundle())));
 		List<SASAllocation> sasAllocation = jpaQuery.list(QSASAllocation.sASAllocation);
+
 		return sasAllocation;
 	}
+
 	@Override
 	public List<SASAllocation> getSasAllocationByBinNumber(SASAllocation sasAlo) {
-		JPAQuery jpaQuery = getFromQueryForSASAllocation().where(QSASAllocation.sASAllocation.binNumber.eq(sasAlo.getBinNumber())
-				.and(QSASAllocation.sASAllocation.status.eq(OtherStatus.REQUESTED)));
+		JPAQuery jpaQuery = getFromQueryForSASAllocation().where(QSASAllocation.sASAllocation.binNumber
+				.eq(sasAlo.getBinNumber()).and(QSASAllocation.sASAllocation.status.eq(OtherStatus.REQUESTED)));
 		List<SASAllocation> sasAllocation = jpaQuery.list(QSASAllocation.sASAllocation);
 		return sasAllocation;
 	}

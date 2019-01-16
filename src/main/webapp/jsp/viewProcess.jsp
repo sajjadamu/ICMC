@@ -88,9 +88,6 @@
 <link rel="stylesheet" type="text/css"
 	href="./resources/css/jquery.dataTables.css">
 
-<!-- DataTable -->
-
-
 <script type="text/javascript">
 	function cancelProcessedRecord(str) {
 		addHeaderJson();
@@ -100,12 +97,6 @@
 		var denomination = $('#denomination' + str).text();
 		var binNumber = $('#bin' + str).text();
 		var machineId = $('#machineId' + str).val();
-		/* alert(id);
-		alert(type);
-		alert(bundle);
-		alert(denomination);
-		alert(binNumber);
-		alert("machineId=" + machineId); */
 
 		$.ajax({
 			type : "POST",
@@ -115,7 +106,7 @@
 					+ binNumber + "&machineId=" + machineId,
 			success : function(response) {
 				alert("success")
-				window.location='././viewProcess';
+				window.location = '././viewProcess';
 			},
 			error : function(e) {
 				alert('Error: ' + e.responseJSON.message);
@@ -195,7 +186,6 @@
 									</table>
 								</form>
 							</div>
-
 						</div>
 						<!-- /.panel-body -->
 					</div>
@@ -206,6 +196,9 @@
 
 		</div>
 		<!-- /#page-wrapper -->
+
+
+
 
 	</div>
 	<!-- /#wrapper -->

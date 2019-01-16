@@ -131,7 +131,7 @@
 		    rules: {
 	            bundle: {
 	            	required:true,
-	            	maxlength:4,
+	            	maxlength:5,
 	            },
 		    },
 		    // Specify validation error messages

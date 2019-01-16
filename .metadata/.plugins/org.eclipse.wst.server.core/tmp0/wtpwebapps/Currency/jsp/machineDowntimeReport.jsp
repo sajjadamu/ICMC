@@ -13,9 +13,9 @@
 <meta name="author" content="">
 <link rel="stylesheet" type="text/css"
 	href="./resources/css/jquery.datetimepicker.css" />
-<link rel="shortcut icon" href="./resources/logo/favicon.ico"
+<link rel="shortcut icon" href="./resources/logo/yes_favicon.ico"
 	type="image/x-icon">
-<title>ICICI : Machine Down Time Register</title>
+<title> Machine Down Time Register</title>
 
 <!-- Bootstrap Core CSS -->
 <link

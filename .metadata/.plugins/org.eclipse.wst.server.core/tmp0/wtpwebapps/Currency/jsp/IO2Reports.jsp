@@ -14,13 +14,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="">
 <meta name="author" content="">
-<link rel="shortcut icon" href="./resources/logo/favicon.ico"
+<link rel="shortcut icon" href="./resources/logo/yes_favicon.ico"
 	type="image/x-icon">
 <link href="./resources/css/calendar.css" rel="stylesheet"
 	type="text/css" />
 <link rel="stylesheet" type="text/css"
 	href="./resources/css/jquery.datetimepicker.css" />
-<title>ICICI : IO2 Reports</title>
+<title> IO2 Reports</title>
 
 
 <style type="text/css">

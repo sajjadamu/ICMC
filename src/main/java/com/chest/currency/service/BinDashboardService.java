@@ -1,7 +1,3 @@
-/*******************************************************************************
- * /* Copyright (C) Indicsoft Technologies Pvt Ltd
- * * All Rights Reserved.
- *******************************************************************************/
 package com.chest.currency.service;
 
 import java.math.BigDecimal;
@@ -41,6 +37,7 @@ import com.chest.currency.entity.model.Sas;
 import com.chest.currency.entity.model.SoiledRemittanceAllocation;
 import com.chest.currency.entity.model.Summary;
 import com.chest.currency.entity.model.TrainingRegister;
+import com.chest.currency.entity.model.User;
 import com.chest.currency.enums.BinCategoryType;
 import com.chest.currency.enums.CashType;
 import com.chest.currency.enums.CurrencyType;
@@ -244,6 +241,8 @@ public interface BinDashboardService {
 
 	public List<AuditorIndent> viewAuditorIndentList(BigInteger icmcId);
 
+	List<AuditorIndent> auditorIndentForMachineAllocation(BigInteger icmcId);
+
 	public boolean updateAuditorIndentStatus(AuditorIndent auditorIndent);
 
 	public BinTransaction getBinRecordForAcceptInVault(BinTransaction txn);
@@ -341,8 +340,8 @@ public interface BinDashboardService {
 
 	public BigInteger getChestSlipNumber(BigInteger icmcId, Calendar sDate, Calendar eDate);
 
-	public List<BinTransaction> getBinFroPartialTransfer(BigInteger icmcId, Integer denomination,
-			CurrencyType currencyType);
+	public List<String> getBinFroPartialTransfer(BigInteger icmcId, Integer denomination, CurrencyType currencyType,
+			BigDecimal bundle, BinCategoryType binCategoryType, String bin);
 
 	public void deleteForMigration(BigInteger icmcId);
 
@@ -377,4 +376,10 @@ public interface BinDashboardService {
 	List<Tuple> getProcessFromProcessingOutPut(BigInteger icmcId, Calendar sDate, Calendar eDate);
 
 	List<Tuple> getProcessBundleProcessingOutPut(BigInteger icmcId, Calendar sDate, Calendar eDate);
+
+	// void saveAudit(Audit audit);
+
+	public boolean processForPartialCashTransfer(User user, String formBinOrBox, String toBinOrBox, BigDecimal bundle,
+			CashTransfer cashTransfer);
+
 }

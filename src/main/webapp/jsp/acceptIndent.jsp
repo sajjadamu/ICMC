@@ -274,7 +274,7 @@ function doAjaxPostUpdateStatus(str) {
 														</sec:authorize></td>
 
 													<td><sec:authorize access="hasRole('ACCEPT_INDENT')">
-															<input type="button" value="Accept"
+															<input type="button" class="btn btn-primary" value="Accept"
 																onclick="doAjaxPostUpdateStatus('${row.bin}');this.disabled=true;">
 														</sec:authorize></td>
 												</tr>

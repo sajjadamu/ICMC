@@ -51,6 +51,7 @@ import org.supercsv.io.ICsvBeanReader;
 import org.supercsv.prefs.CsvPreference;
 
 import com.chest.currency.entity.model.AssignVaultCustodian;
+import com.chest.currency.entity.model.AuditorIndent;
 import com.chest.currency.entity.model.AuditorProcess;
 import com.chest.currency.entity.model.BinRegister;
 import com.chest.currency.entity.model.BinTransaction;
@@ -163,7 +164,6 @@ public class ProcessingRoomController {
 			indent.setInsertBy(user.getId());
 			indent.setUpdateBy(user.getId());
 			indent.setIcmcId(user.getIcmcId());
-
 			if (indent.getBinCategoryType() == null) {
 				indent.setBinCategoryType(BinCategoryType.BIN);
 			}
@@ -174,7 +174,6 @@ public class ProcessingRoomController {
 				bundleFromTxn = bundleFromTxn
 						.add(UtilityJpa.getSubstarctedBundle(binTx, (UtilityJpa.getPendingBundleRequest(binTx))));
 			}
-
 			BigDecimal bundleForRequest = indent.getRequestBundle();
 			LOG.info("indentRequest controller bundleFromTxn " + bundleFromTxn);
 			LOG.info("indentRequest controller bundleForRequest " + bundleForRequest);
@@ -205,6 +204,7 @@ public class ProcessingRoomController {
 				BigDecimal moreBundleNeeded = UtilityJpa.checkMoreRequiredBundleNeeded(eligibleIndentRequestList,
 						bundleForRequest);
 				LOG.info("indent Request moreBundleNeeded " + moreBundleNeeded);
+
 				if (moreBundleNeeded.compareTo(BigDecimal.ZERO) == 0) {
 					isAllSuccess = processingRoomService.insertIndentRequestAndUpdateBinTxAndBranchReceipt(
 							eligibleIndentRequestList, binTransactionList, branchReceiptList);
@@ -218,20 +218,11 @@ public class ProcessingRoomController {
 					}
 				} else {
 					String message = "";
-					// String returnBundle = "";
 					if (!branchReceiptList.isEmpty()) {
 						for (BranchReceipt br : branchReceiptList) {
 							message = message + br.getBundle().toPlainString() + ", ";
-							/*
-							 * if(br.getFilepath() !=null && br.getSasId()
-							 * ==null){ returnBundle=returnBundle
-							 * +br.getBundle().toString() + ","; }else { message
-							 * = message + br.getBundle().toPlainString() + ", "
-							 * ; }
-							 */
 						}
 					}
-					// message = returnBundle + message;
 					indent.setMessage(message);
 					indent.setAvailableBundle(bundleFromTxn);
 					indent.setStatus(OtherStatus.CANCELLED);
@@ -245,7 +236,6 @@ public class ProcessingRoomController {
 	}
 
 	@RequestMapping("/searchDiscrepancy")
-
 	public ModelAndView searchDiscrepancy(HttpServletRequest request, HttpServletResponse response,
 			HttpSession session) {
 		User user = (User) session.getAttribute("login");
@@ -425,14 +415,14 @@ public class ProcessingRoomController {
 		User user = (User) session.getAttribute("login");
 		boolean isAllSuccess = false;
 
+		machineAllocation.setInsertBy(user.getId());
+		machineAllocation.setUpdateBy(user.getId());
+		machineAllocation.setInsertTime(now);
+		machineAllocation.setUpdateTime(now);
+		machineAllocation.setIcmcId(user.getIcmcId());
+		machineAllocation.setPendingBundle(machineAllocation.getIssuedBundle());
+		machineAllocation.setStatus(OtherStatus.REQUESTED);
 		synchronized (icmcService.getSynchronizedIcmc(user)) {
-			machineAllocation.setInsertBy(user.getId());
-			machineAllocation.setUpdateBy(user.getId());
-			machineAllocation.setInsertTime(now);
-			machineAllocation.setUpdateTime(now);
-			machineAllocation.setIcmcId(user.getIcmcId());
-			machineAllocation.setPendingBundle(machineAllocation.getIssuedBundle());
-			machineAllocation.setStatus(OtherStatus.REQUESTED);
 			isAllSuccess = processingRoomService.processMachineAllocation(machineAllocation, indent, user);
 			if (!isAllSuccess) {
 				throw new RuntimeException("Error while Machine Allocation and Indent Updation");
@@ -441,35 +431,66 @@ public class ProcessingRoomController {
 		return machineAllocation;
 	}
 
-	@RequestMapping("/updateIndentStatus")
+	@RequestMapping("/saveMachineAllocationAuditor")
+	@ResponseBody
+	public MachineAllocation saveMachineAllocationAuditor(@RequestBody MachineAllocation machineAllocation,
+			HttpSession session, AuditorIndent auditorIndent) {
+		Calendar now = Calendar.getInstance();
+		User user = (User) session.getAttribute("login");
+		boolean isAllSuccess = false;
+
+		machineAllocation.setInsertBy(user.getId());
+		machineAllocation.setUpdateBy(user.getId());
+		machineAllocation.setInsertTime(now);
+		machineAllocation.setUpdateTime(now);
+		machineAllocation.setIcmcId(user.getIcmcId());
+		machineAllocation.setPendingBundle(machineAllocation.getIssuedBundle());
+		machineAllocation.setStatus(OtherStatus.REQUESTED);
+		synchronized (icmcService.getSynchronizedIcmc(user)) {
+			isAllSuccess = processingRoomService.auditorMachineAllocation(machineAllocation, auditorIndent, user);
+		}
+		if (!isAllSuccess) {
+			throw new RuntimeException("Error while Machine Allocation and Indent Updation");
+		}
+		return machineAllocation;
+	}
+
+	@RequestMapping(value = "/updateIndentStatus", method = RequestMethod.POST)
 	public ModelAndView updateIndentStatus(@RequestParam(value = "bin") String bin,
 			@RequestParam(value = "bundle") BigDecimal bundle,
 			@RequestParam(value = "denomination") Integer denomination, HttpSession session) {
+		try {
+			User user = (User) session.getAttribute("login");
+			boolean isAllSuccess = false;
+			LOG.info("icmcService.getSynchronizedIcmc(user) " + icmcService.getSynchronizedIcmc(user).toString());
 
-		User user = (User) session.getAttribute("login");
-		boolean isAllSuccess = false;
-		synchronized (icmcService.getSynchronizedIcmc(user)) {
-			isAllSuccess = processingRoomService.processIndentRequest(bin, bundle, user);
-			if (!isAllSuccess) {
-				throw new BaseGuiException("Error while process Indent Request");
+			synchronized (icmcService.getSynchronizedIcmc(user)) {
+				isAllSuccess = processingRoomService.processIndentRequest(bin, bundle, user);
+				if (!isAllSuccess) {
+					throw new BaseGuiException("Error while process Indent Request");
+				}
 			}
-		}
+			// Bin Register Code
+			Calendar now = Calendar.getInstance();
+			BinRegister binRegister = new BinRegister();
+			binRegister.setBinNumber(bin);
+			binRegister.setWithdrawalBundle(bundle);
+			binRegister.setDenomination(denomination);
+			binRegister.setReceiveBundle(BigDecimal.ZERO);
+			binRegister.setInsertBy(user.getId());
+			binRegister.setUpdateBy(user.getId());
+			binRegister.setIcmcId(user.getIcmcId());
+			binRegister.setInsertTime(now);
+			binRegister.setUpdateTime(now);
+			binRegister.setType("U");
+			processingRoomService.saveDataInBinRegister(binRegister);
+			// Close bin Register Code
+		} catch (Exception e) {
+			LOG.info("updateIndentStatus catch " + e);
+			e.getLocalizedMessage();
+			throw new BaseGuiException("Error while process Indent Request catch");
 
-		// Bin Register Code
-		Calendar now = Calendar.getInstance();
-		BinRegister binRegister = new BinRegister();
-		binRegister.setBinNumber(bin);
-		binRegister.setWithdrawalBundle(bundle);
-		binRegister.setDenomination(denomination);
-		binRegister.setReceiveBundle(BigDecimal.ZERO);
-		binRegister.setInsertBy(user.getId());
-		binRegister.setUpdateBy(user.getId());
-		binRegister.setIcmcId(user.getIcmcId());
-		binRegister.setInsertTime(now);
-		binRegister.setUpdateTime(now);
-		binRegister.setType("U");
-		processingRoomService.saveDataInBinRegister(binRegister);
-		// Close bin Register Code
+		}
 		return new ModelAndView("welcome");
 	}
 
@@ -490,14 +511,13 @@ public class ProcessingRoomController {
 		StringBuilder sb = null;
 		List<String> prnList = new ArrayList<>();
 		StringBuilder sbBinName = new StringBuilder();
-
 		synchronized (icmcService.getSynchronizedIcmc(user)) {
-			prnList.add(sbBinName.toString());
-			process.setInsertBy(user.getId());
-			process.setUpdateBy(user.getId());
-			process.setInsertTime(now);
-			process.setUpdateTime(now);
 			try {
+				prnList.add(sbBinName.toString());
+				process.setInsertBy(user.getId());
+				process.setUpdateBy(user.getId());
+				process.setInsertTime(now);
+				process.setUpdateTime(now);
 				processList = processingRoomService.processRecordForMachine(process, user);
 			} catch (Exception ex) {
 				LOG.info("Error has occred", ex);
@@ -574,13 +594,21 @@ public class ProcessingRoomController {
 		return new ModelAndView("viewProcess", "records", list);
 	}
 
+	@RequestMapping("/viewAuditorProcess")
+	public ModelAndView viewAuditorProcess(HttpSession session) {
+		User user = (User) session.getAttribute("login");
+		List<AuditorProcess> list = processingRoomService.getAuditorProcessedData(user.getIcmcId(),
+				UtilityJpa.getStartDate(), UtilityJpa.getEndDate());
+
+		return new ModelAndView("viewAuditorProcess", "records", list);
+	}
+
 	@RequestMapping("/acceptProcessingRoomOutput")
 	public ModelAndView acceptProcessingRoomOutput(HttpSession session) {
 		User user = (User) session.getAttribute("login");
-		Calendar sDate = UtilityJpa.getStartDate();
-		Calendar eDate = UtilityJpa.getEndDate();
 
-		List<Process> list = processingRoomService.getProcessedDataList(user.getIcmcId(), sDate, eDate);
+		List<Process> list = processingRoomService.getProcessedDataList(user.getIcmcId(), UtilityJpa.getStartDate(),
+				UtilityJpa.getEndDate());
 		return new ModelAndView("acceptProcessingRoomOutput", "records", list);
 	}
 
@@ -1699,27 +1727,15 @@ public class ProcessingRoomController {
 		return new ModelAndView("returnBackToVault", map);
 	}
 
-	/*
-	 * @RequestMapping("/discrepancyRPCFormat") public ModelAndView
-	 * discrepancyRPCFormat(@ModelAttribute("reportDate") DateRange dateRange,
-	 * HttpSession session) { //User user = (User)
-	 * session.getAttribute("login"); ModelMap map = new ModelMap();
-	 * 
-	 * Calendar sDate = Calendar.getInstance(); Calendar eDate =
-	 * Calendar.getInstance();
-	 * 
-	 * if(dateRange.getFromDate() != null && dateRange.getToDate() != null){
-	 * sDate = dateRange.getFromDate(); eDate = dateRange.getToDate(); }
-	 * sDate.set(Calendar.HOUR, 0); sDate.set(Calendar.HOUR_OF_DAY, 0);
-	 * sDate.set(Calendar.MINUTE, 0); sDate.set(Calendar.SECOND, 0);
-	 * sDate.set(Calendar.MILLISECOND, 0);
-	 * 
-	 * eDate.set(Calendar.HOUR, 24); eDate.set(Calendar.HOUR_OF_DAY, 23);
-	 * eDate.set(Calendar.MINUTE, 59); eDate.set(Calendar.SECOND, 59);
-	 * eDate.set(Calendar.MILLISECOND, 999);
-	 * 
-	 * return new ModelAndView("/discrepancyRPCFormat", map); }
-	 */
+	@RequestMapping("/rePrintAuditorQR")
+	public ModelAndView rePrintAuditorQR(@RequestParam Long id, AuditorProcess Auditorprocess) {
+		ModelMap model = new ModelMap();
+		Auditorprocess = processingRoomService.getRepritAuditorProcessRecord(id);
+		if (Auditorprocess != null) {
+			model.put("user", Auditorprocess);
+		}
+		return new ModelAndView("rePrintAuditorQR", model);
+	}
 
 	@RequestMapping("/rePrintQR")
 	public ModelAndView rePrintQR(@RequestParam Long id, Process process) {
@@ -1766,6 +1782,43 @@ public class ProcessingRoomController {
 			ioe.printStackTrace();
 		}
 		return new ModelAndView("redirect:./viewProcess");
+	}
+
+	@RequestMapping("/auditorPrintingQR")
+	public ModelAndView auditorPrintingQR(@ModelAttribute("user") AuditorProcess process, HttpSession session) {
+		User user = (User) session.getAttribute("login");
+		StringBuilder sb = null;
+		try {
+			File file = new File(prnFilePath);
+			BufferedReader reader = new BufferedReader(new FileReader(file));
+			String line = "", oldtext = "";
+			while ((line = reader.readLine()) != null) {
+				oldtext += line + "\r\n";
+			}
+			reader.close();
+			for (int i = 0; i < process.getBundle().intValue(); i++) {
+				String replacedtext = oldtext.replaceAll("bin", "" + process.getCurrencyType());
+				replacedtext = replacedtext.replaceAll("Bin: ", "" + "");
+				replacedtext = replacedtext.replaceAll("Branch: ", "" + "");
+				replacedtext = replacedtext.replaceAll("Sol ID :", "" + "");
+				replacedtext = replacedtext.replaceAll("branch", "" + process.getDenomination());
+				replacedtext = replacedtext.replaceAll("solId", "" + process.getBinNumber());
+				replacedtext = replacedtext.replaceAll("denom", "" + process.getDenomination());
+				replacedtext = replacedtext.replaceAll("bundle", "" + BigDecimal.ONE);
+
+				String formattedTotal = CurrencyFormatter
+						.inrFormatter(BigDecimal.valueOf(process.getDenomination() * 1000)).toString();
+				replacedtext = replacedtext.replaceAll("total", "" + formattedTotal);
+
+				sb = new StringBuilder(replacedtext);
+				LOG.info("Auditor Processing Room O/P PRN  =" + sb);
+
+				UtilityJpa.PrintToPrinter(sb, user);
+			}
+		} catch (IOException ioe) {
+			ioe.printStackTrace();
+		}
+		return new ModelAndView("redirect:./viewAuditorProcess");
 	}
 
 	@RequestMapping("/fullValue")
@@ -2180,14 +2233,13 @@ public class ProcessingRoomController {
 		StringBuilder sb = null;
 		List<String> prnList = new ArrayList<>();
 		StringBuilder sbBinName = new StringBuilder();
-
 		synchronized (icmcService.getSynchronizedIcmc(user)) {
-			prnList.add(sbBinName.toString());
-			process.setInsertBy(user.getId());
-			process.setUpdateBy(user.getId());
-			process.setInsertTime(now);
-			process.setUpdateTime(now);
 			try {
+				prnList.add(sbBinName.toString());
+				process.setInsertBy(user.getId());
+				process.setUpdateBy(user.getId());
+				process.setInsertTime(now);
+				process.setUpdateTime(now);
 				processList = processingRoomService.processRecordForAuditorIndent(process, user);
 			} catch (Exception ex) {
 				LOG.info("Error has occred", ex);

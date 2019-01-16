@@ -1,7 +1,3 @@
-/*******************************************************************************
- * /* Copyright (C) Indicsoft Technologies Pvt Ltd
- * * All Rights Reserved.
- *******************************************************************************/
 package com.chest.currency.service;
 
 import java.math.BigDecimal;
@@ -1295,6 +1291,7 @@ public class CashReceiptServiceImpl implements CashReceiptService {
 		ICMC icmc = cashReceiptJpaDao.getICMCBySolId(solId);
 		return icmc;
 	}
+
 	@Override
 	public ICMC getICMCByName(String name) {
 		ICMC icmc = cashReceiptJpaDao.getICMCByName(name);
@@ -1711,11 +1708,11 @@ public class CashReceiptServiceImpl implements CashReceiptService {
 
 		/*
 		 * binTxn.setReceiveBundle(binTxn.getReceiveBundle().subtract(dsb.
-		 * getBundle())); if (binTxn.getReceiveBundle().equals(BigDecimal.ZERO)) {
-		 * binTxn.setStatus(BinStatus.EMPTY); } isAllSuccess =
+		 * getBundle())); if (binTxn.getReceiveBundle().equals(BigDecimal.ZERO))
+		 * { binTxn.setStatus(BinStatus.EMPTY); } isAllSuccess =
 		 * this.updateInBinTxn(binTxn); if (isAllSuccess) {
-		 * dsb.setStatus(OtherStatus.CANCELLED); cashReceiptJpaDao.updateDSB(dsb); }
-		 * return isAllSuccess;
+		 * dsb.setStatus(OtherStatus.CANCELLED);
+		 * cashReceiptJpaDao.updateDSB(dsb); } return isAllSuccess;
 		 */
 		return dsbReceiptList;
 	}

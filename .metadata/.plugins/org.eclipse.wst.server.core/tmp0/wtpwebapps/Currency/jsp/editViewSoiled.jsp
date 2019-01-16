@@ -5,7 +5,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <html lang="en">
 <head>
-<link rel="shortcut icon" href="./resources/logo/favicon.ico"
+<link rel="shortcut icon" href="./resources/logo/yes_favicon.ico"
 	type="image/x-icon">
 <link href="./resources/css/calendar.css" rel="stylesheet"
 	type="text/css" />
@@ -326,7 +326,7 @@ function doAjaxPost(str) {
 <meta name="description" content="">
 <meta name="author" content="">
 
-<title>ICICI : Soiled</title>
+<title> Soiled</title>
 <script src="./resources/js/jquery.js"></script>
 <!-- Bootstrap Core CSS -->
 <link

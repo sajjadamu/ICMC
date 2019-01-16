@@ -5,7 +5,7 @@
 <html lang="en">
 
 <head>
-<link rel="shortcut icon" href="./resources/logo/favicon.ico"
+<link rel="shortcut icon" href="./resources/logo/yes_favicon.ico"
 	type="image/x-icon">
 <script type="text/javascript" src="./js/jquery-1.12.0.min.js"></script>
 <script src="./js/unprocess.js"></script>
@@ -32,7 +32,7 @@
 <script src="./resources/dist/js/sb-admin-2.js"></script>
 
 <script src="./resources/js/jQuery.print.js"></script>
-<title>ICICI : Branch Receipt</title>
+<title> Branch Receipt</title>
 
 <script type="text/javascript">
 $(document).ready(function(){

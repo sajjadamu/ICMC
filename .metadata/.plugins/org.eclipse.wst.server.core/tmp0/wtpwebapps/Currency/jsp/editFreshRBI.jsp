@@ -5,7 +5,7 @@
 <html lang="en">
 
 <head>
-<link rel="shortcut icon" href="./resources/logo/favicon.ico"
+<link rel="shortcut icon" href="./resources/logo/yes_favicon.ico"
 	type="image/x-icon">
 <script src="./js/jquery-1.12.0.min.js"></script>
 <meta charset="utf-8">
@@ -39,7 +39,7 @@
 }</script>
 
 <script src="./resources/js/jQuery.print.js"></script>
-<title>ICICI : Edit Fresh Data RBI</title>
+<title> Edit Fresh Data RBI</title>
 
 <script src="./resources/Currency/js/jquery.js"></script>
 <!-- Bootstrap Core CSS -->

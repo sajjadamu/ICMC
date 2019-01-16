@@ -234,7 +234,7 @@ var getUrlParameter = function getUrlParameter(sParam) {
 										id="binBundle<%=tuple.get(0, Integer.class)%>"></td>
 									<td><input type="button"
 										id="buttonId<%=tuple.get(0, Integer.class)%>"
-										value="Create BOX & Generate QR"
+										class="btn btn-primary" value="Create BOX & Generate QR"
 										onclick="doAjaxPostForDeduction(<%=tuple.get(0, Integer.class)%>)"></td>
 								</tr>
 								<%

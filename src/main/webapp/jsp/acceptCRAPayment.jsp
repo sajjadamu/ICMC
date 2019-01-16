@@ -312,7 +312,7 @@ function doAjaxPostUpdateStatus(str) {
 							}
 						%>
 						<tr>
-							<td><input type="button" value="Submit"
+							<td><input type="button" class="btn btn-primary" value="Submit"
 								onclick="doAjaxPostInsert('<%=cRAWrapper.getCra().getId()%>','<%=count%>');this.disabled=true"></td>
 
 
@@ -349,7 +349,7 @@ function doAjaxPostUpdateStatus(str) {
 								<td id="category${row.id}">${row.currencyType}</td>
 								<td id="bundle${row.id }">${row.bundle}
 								<td id="bin${row.id}">${row.binNumber}</td>
-								<td><input type="button" value="Ok"
+								<td><input type="button" class="btn btn-primary" value="Ok"
 									onclick="doAjaxPostUpdateStatus(${row.id});this.disabled=true;">
 								</td>
 							</tr>

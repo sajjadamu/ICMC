@@ -191,7 +191,7 @@
 		}
 	}
 </script>
-<title>ICICI : View Prepared Soiled Boxes</title>
+<title>ICICI :Soiled Remittance</title>
 
 <!-- Bootstrap Core CSS -->
 <link

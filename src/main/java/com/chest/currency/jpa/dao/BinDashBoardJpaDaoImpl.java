@@ -8,10 +8,11 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
-import com.chest.currency.entity.model.SASAllocation;
+
 import com.chest.currency.entity.model.AuditorIndent;
 import com.chest.currency.entity.model.BankReceipt;
 import com.chest.currency.entity.model.BinMaster;
@@ -33,6 +34,7 @@ import com.chest.currency.entity.model.MachineAllocation;
 import com.chest.currency.entity.model.Process;
 import com.chest.currency.entity.model.QAssignVaultCustodian;
 import com.chest.currency.entity.model.QAuditorIndent;
+import com.chest.currency.entity.model.QAuditorProcess;
 import com.chest.currency.entity.model.QBankReceipt;
 import com.chest.currency.entity.model.QBinMaster;
 import com.chest.currency.entity.model.QBinRegister;
@@ -77,6 +79,7 @@ import com.chest.currency.entity.model.QSummary;
 import com.chest.currency.entity.model.QSuspenseOpeningBalance;
 import com.chest.currency.entity.model.QTrainingRegister;
 import com.chest.currency.entity.model.RegionSummary;
+import com.chest.currency.entity.model.SASAllocation;
 import com.chest.currency.entity.model.Sas;
 import com.chest.currency.entity.model.Summary;
 import com.chest.currency.entity.model.TrainingRegister;
@@ -93,10 +96,6 @@ import com.mysema.query.jpa.impl.JPADeleteClause;
 import com.mysema.query.jpa.impl.JPAQuery;
 import com.mysema.query.jpa.impl.JPAUpdateClause;
 
-/**
- * @author root
- *
- */
 @Repository
 public class BinDashBoardJpaDaoImpl implements BinDashBoardJpaDao {
 	private static final Logger LOG = LoggerFactory.getLogger(BinDashBoardJpaDaoImpl.class);
@@ -234,7 +233,7 @@ public class BinDashBoardJpaDaoImpl implements BinDashBoardJpaDao {
 		if (binType.equals(CurrencyType.COINS))
 			jpaQuery.where(QBinTransaction.binTransaction.cashType.eq(CashType.COINS));
 		else
-			jpaQuery.where(QBinTransaction.binTransaction.binType.eq(binType));	
+			jpaQuery.where(QBinTransaction.binTransaction.binType.eq(binType));
 		List<BinTransaction> list = jpaQuery.list(QBinTransaction.binTransaction);
 		UtilityJpa.setBinColorForTxn(list);
 		return list;
@@ -1390,6 +1389,24 @@ public class BinDashBoardJpaDaoImpl implements BinDashBoardJpaDao {
 	}
 
 	@Override
+	public List<AuditorIndent> auditorIndentForMachineAllocation(BigInteger icmcId) {
+		JPAQuery jpaQuery = getFromQueryForAuditorIndent();
+
+		jpaQuery.where(QAuditorIndent.auditorIndent.icmcId.eq(icmcId)
+				.and(QAuditorIndent.auditorIndent.status.eq(OtherStatus.ACCEPTED))
+				.and(QAuditorIndent.auditorIndent.bundle.gt(0)));
+		jpaQuery.groupBy(QAuditorIndent.auditorIndent.denomination);
+		jpaQuery.orderBy(QAuditorIndent.auditorIndent.denomination.desc());
+		List<Tuple> tupleList = jpaQuery.list(QAuditorIndent.auditorIndent.denomination,
+				QAuditorIndent.auditorIndent.bundle.sum(), QAuditorIndent.auditorIndent.pendingBundleRequest.sum());
+
+		LOG.info("AUDITOR INDENT REQUEST DATA FOR MACHINE ALLOCATION");
+		List<AuditorIndent> indentList = UtilityJpa.mapTuppleAuditorIndentForMachineAllocation(tupleList);
+		return indentList;
+
+	}
+
+	@Override
 	public boolean updateAuditorIndentStatus(AuditorIndent auditorIndent) {
 		QAuditorIndent qAuditorIndent = QAuditorIndent.auditorIndent;
 		long count = new JPAUpdateClause(em, qAuditorIndent)
@@ -1401,6 +1418,7 @@ public class BinDashBoardJpaDaoImpl implements BinDashBoardJpaDao {
 
 	@Override
 	public BinTransaction getBinRecordForAcceptInVault(BinTransaction txn) {
+
 		JPAQuery jpaQuery = getFromQueryForBinTxn();
 		jpaQuery.where(QBinTransaction.binTransaction.icmcId.eq(txn.getIcmcId())
 				.and(QBinTransaction.binTransaction.binNumber.eq(txn.getBinNumber())
@@ -1758,8 +1776,24 @@ public class BinDashBoardJpaDaoImpl implements BinDashBoardJpaDao {
 						.and(QIndent.indent.cashSource.ne(CashSource.RBI)).and(QIndent.indent.bin.isNotNull())
 						.and(QIndent.indent.updateTime.between(sDate, eDate)));
 		jpaQuery.groupBy(QIndent.indent.denomination);
-		List<Tuple> ibitList = jpaQuery.list(QIndent.indent.denomination, QIndent.indent.bundle.sum().multiply(1000));
-		return ibitList;
+		List<Tuple> ibitIndentList = jpaQuery.list(QIndent.indent.denomination,
+				QIndent.indent.bundle.sum().multiply(1000));
+
+		JPAQuery jpaQuery2 = new JPAQuery(em);
+		jpaQuery2.from(QAuditorIndent.auditorIndent);
+		jpaQuery2.where(QAuditorIndent.auditorIndent.icmcId.eq(icmcId)
+				.and(QAuditorIndent.auditorIndent.status.eq(OtherStatus.ACCEPTED)
+						.or(QAuditorIndent.auditorIndent.status.eq(OtherStatus.PROCESSED)))
+				.and(QAuditorIndent.auditorIndent.binNumber.isNotNull())
+				.and(QAuditorIndent.auditorIndent.insertTime.between(sDate, eDate)));
+		jpaQuery2.groupBy(QAuditorIndent.auditorIndent.denomination);
+		List<Tuple> ibitAuditorIndentList = jpaQuery2.list(QAuditorIndent.auditorIndent.denomination,
+				QAuditorIndent.auditorIndent.bundle.sum().multiply(1000));
+
+		for (Tuple tuple : ibitAuditorIndentList) {
+			ibitIndentList.add(tuple);
+		}
+		return ibitIndentList;
 	}
 
 	@Override
@@ -1870,11 +1904,19 @@ public class BinDashBoardJpaDaoImpl implements BinDashBoardJpaDao {
 
 	@Override
 	public List<String> getBinFromBinTransaction(BigInteger icmcId, int denomination, CurrencyType currencyType) {
+		CashType cashType;
+		if (currencyType.equals(CurrencyType.COINS)) {
+			currencyType = CurrencyType.FRESH;
+			cashType = CashType.COINS;
+		} else {
+			cashType = CashType.NOTES;
+		}
 		JPAQuery jpaQuery = getFromQueryForBinTxn();
 		jpaQuery.where(QBinTransaction.binTransaction.icmcId.eq(icmcId)
 				.and(QBinTransaction.binTransaction.denomination.eq(denomination))
 				.and(QBinTransaction.binTransaction.status.ne(BinStatus.EMPTY))
-				.and(QBinTransaction.binTransaction.binType.eq(currencyType)));
+				.and(QBinTransaction.binTransaction.binType.eq(currencyType))
+				.and(QBinTransaction.binTransaction.cashType.eq(cashType)));
 		List<String> binList = jpaQuery.list(QBinTransaction.binTransaction.binNumber);
 		return binList;
 	}
@@ -1937,12 +1979,19 @@ public class BinDashBoardJpaDaoImpl implements BinDashBoardJpaDao {
 	}
 
 	@Override
-	public List<BinTransaction> getBinFroPartialTransfer(BigInteger icmcId, Integer denomination,
-			CurrencyType currencyType) {
+	public List<String> getBinFroPartialTransfer(BigInteger icmcId, Integer denomination, CurrencyType currencyType,
+			BigDecimal bundle, BinCategoryType binCategoryType, String bin) {
 		JPAQuery jpaQuery = getFromQueryForBinTxn();
-		jpaQuery.where(QBinTransaction.binTransaction.icmcId.eq(icmcId).and(QBinTransaction.binTransaction.denomination
-				.eq(denomination).and(QBinTransaction.binTransaction.binType.eq(currencyType))));
-		List<BinTransaction> binListFromBinTxn = jpaQuery.list(QBinTransaction.binTransaction);
+		jpaQuery.where(QBinTransaction.binTransaction.icmcId.eq(icmcId)
+				.and(QBinTransaction.binTransaction.denomination.eq(denomination))
+				.and(QBinTransaction.binTransaction.binType.eq(currencyType))
+				.and(QBinTransaction.binTransaction.binNumber.ne(bin))
+				.and(QBinTransaction.binTransaction.binCategoryType.eq(binCategoryType))
+				.and(QBinTransaction.binTransaction.pendingBundleRequest.eq(new BigDecimal(0)))
+				.and(QBinTransaction.binTransaction.maxCapacity.subtract(QBinTransaction.binTransaction.receiveBundle)
+						.gt(bundle).or(QBinTransaction.binTransaction.maxCapacity
+								.subtract(QBinTransaction.binTransaction.receiveBundle).eq(bundle))));
+		List<String> binListFromBinTxn = jpaQuery.list(QBinTransaction.binTransaction.binNumber);
 		return binListFromBinTxn;
 	}
 
@@ -2024,6 +2073,12 @@ public class BinDashBoardJpaDaoImpl implements BinDashBoardJpaDao {
 
 		new JPADeleteClause(em, QCustodianKeySet.custodianKeySet)
 				.where(QCustodianKeySet.custodianKeySet.icmcId.eq(icmcId)).execute();
+
+		new JPADeleteClause(em, QAuditorIndent.auditorIndent).where(QAuditorIndent.auditorIndent.icmcId.eq(icmcId))
+				.execute();
+
+		new JPADeleteClause(em, QAuditorProcess.auditorProcess).where(QAuditorProcess.auditorProcess.icmcId.eq(icmcId))
+				.execute();
 
 	}
 

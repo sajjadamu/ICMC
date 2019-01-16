@@ -12,14 +12,13 @@ import javax.xml.bind.JAXB;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -50,55 +49,59 @@ public class LAMIntegration {
 
 	private static final Logger LOG = LoggerFactory.getLogger(UtilityService.class);
 
-	@RequestMapping(value = "user", method = RequestMethod.POST, produces = MediaType.APPLICATION_XML_VALUE, consumes = MediaType.APPLICATION_XML_VALUE)
+	@RequestMapping(value = "user", method = RequestMethod.GET, produces = "application/xml")
 	@ResponseBody
-	public Response getRequest(@RequestBody @Valid String requestData, BindingResult bindingResult,
-			HttpServletRequest request) throws UnknownHostException {
+	public Response getRequest(@RequestParam("data") @Valid String requestData, HttpServletRequest request)
+			throws UnknownHostException {
 		QueryRequestCo queryRequestCo = JAXB.unmarshal(new StringReader(requestData.replaceAll("%20", " ")),
 				QueryRequestCo.class);
 		LOG.info("requestData " + queryRequestCo);
-		return setRequest(queryRequestCo, bindingResult, request);
+		try {
+			return setRequest(queryRequestCo, request);
+		} catch (Exception e) {
+			return Response.setSuccessResponse(LamStatus.EXCEPTION, LamStatus.EXCEPTION.getCode(),
+					"Exception Please check Request Data " + e.getLocalizedMessage());
+		}
 	}
 
 	@ResponseBody
-	public Response setRequest(@RequestBody @Valid QueryRequestCo queryRequestCo, BindingResult bindingResult,
-			HttpServletRequest request) throws UnknownHostException {
-		LOG.info("bindingResult hasErrors " + bindingResult.hasErrors());
+	public Response setRequest(@RequestBody @Valid QueryRequestCo queryRequestCo, HttpServletRequest request)
+			throws UnknownHostException {
 		LamIntegrationCo lamIntegrationCo = new LamIntegrationCo();
 		lamIntegrationCo.setQueryrequest(queryRequestCo);
-		if (bindingResult.hasErrors()) {
+		if (queryRequestCo.getAccessRequest() == null || queryRequestCo.getActivity() == null) {
 			LamRequestLog requestLog = UtilityService.setLamRequestLog(lamIntegrationCo.getQueryrequest(), request);
 			requestLog.setResponse(LamStatus.FAILURE);
 			userAdministrationService.createLamLog(requestLog);
 			return Response.setSuccessResponse(LamStatus.FAILURE, LamStatus.FAILURE.getCode(),
 					"Please check activity or Access Request");
 		}
-		return verifyActivity(lamIntegrationCo, bindingResult, request);
+		return verifyActivity(lamIntegrationCo, request);
 	}
 
 	@ResponseBody
-	public Response verifyActivity(@RequestBody @Valid LamIntegrationCo lamIntegrationCo, BindingResult bindingResult,
-			HttpServletRequest request) throws UnknownHostException {
-		LOG.info("bindingResult " + bindingResult.hasErrors());
+	public Response verifyActivity(@RequestBody @Valid LamIntegrationCo lamIntegrationCo, HttpServletRequest request)
+			throws UnknownHostException {
+		LOG.info("lamIntegrationCo " + lamIntegrationCo);
 		String activity = lamIntegrationCo.getQueryrequest().getActivity();
 		LOG.info("activity " + activity);
 		Response response = null;
 		switch (activity.toUpperCase()) {
 		case "I":
 			lamIntegrationCo.getQueryrequest().setActivity("CREATE");
-			response = addUser(lamIntegrationCo, bindingResult, request);
+			response = addUser(lamIntegrationCo, request);
 			break;
 		case "U":
 			lamIntegrationCo.getQueryrequest().setActivity("MODIFY");
-			response = updateUser(lamIntegrationCo, bindingResult, request);
+			response = updateUser(lamIntegrationCo, request);
 			break;
 		case "UN":
 			lamIntegrationCo.getQueryrequest().setActivity("UNLOCK");
-			response = unlockUser(lamIntegrationCo, bindingResult, request);
+			response = unlockUser(lamIntegrationCo, request);
 			break;
 		case "D":
 			lamIntegrationCo.getQueryrequest().setActivity("DELETE");
-			response = deleteUser(lamIntegrationCo, bindingResult, request);
+			response = deleteUser(lamIntegrationCo, request);
 			break;
 		default:
 			LamRequestLog requestLog = UtilityService.setLamRequestLog(lamIntegrationCo.getQueryrequest(), request);
@@ -112,14 +115,14 @@ public class LAMIntegration {
 	}
 
 	@ResponseBody
-	public Response addUser(@RequestBody @Valid LamIntegrationCo lamIntegrationCo, BindingResult bindingResult,
-			HttpServletRequest request) throws UnknownHostException {
+	public Response addUser(@RequestBody @Valid LamIntegrationCo lamIntegrationCo, HttpServletRequest request)
+			throws UnknownHostException {
 		String activity = lamIntegrationCo.getQueryrequest().getActivity();
 
 		LamRequestLog requestLog = UtilityService.setLamRequestLog(lamIntegrationCo.getQueryrequest(), request);
 		requestLog = userAdministrationService.createLamLog(requestLog);
 
-		if (bindingResult.hasErrors() || !activity.equalsIgnoreCase("CREATE")) {
+		if (!activity.equalsIgnoreCase("CREATE")) {
 			requestLog.setResponse(LamStatus.FAILURE);
 			userAdministrationService.updateLamLog(requestLog);
 			return Response.setSuccessResponse(LamStatus.FAILURE, LamStatus.FAILURE.getCode(),
@@ -157,14 +160,14 @@ public class LAMIntegration {
 	}
 
 	@ResponseBody
-	public Response updateUser(@RequestBody @Valid LamIntegrationCo lamIntegrationCo, BindingResult bindingResult,
-			HttpServletRequest request) throws UnknownHostException {
+	public Response updateUser(@RequestBody @Valid LamIntegrationCo lamIntegrationCo, HttpServletRequest request)
+			throws UnknownHostException {
 		String activity = lamIntegrationCo.getQueryrequest().getActivity();
 
 		LamRequestLog requestLog = UtilityService.setLamRequestLog(lamIntegrationCo.getQueryrequest(), request);
 		requestLog = userAdministrationService.createLamLog(requestLog);
 
-		if (bindingResult.hasErrors() || !activity.equalsIgnoreCase("MODIFY")) {
+		if (!activity.equalsIgnoreCase("MODIFY")) {
 			requestLog.setResponse(LamStatus.FAILURE);
 			userAdministrationService.updateLamLog(requestLog);
 			return Response.setSuccessResponse(LamStatus.FAILURE, LamStatus.FAILURE.getCode(),
@@ -201,14 +204,14 @@ public class LAMIntegration {
 	}
 
 	@ResponseBody
-	public Response unlockUser(@RequestBody @Valid LamIntegrationCo lamIntegrationCo, BindingResult bindingResult,
-			HttpServletRequest request) throws UnknownHostException {
+	public Response unlockUser(@RequestBody @Valid LamIntegrationCo lamIntegrationCo, HttpServletRequest request)
+			throws UnknownHostException {
 		String activity = lamIntegrationCo.getQueryrequest().getActivity();
 
 		LamRequestLog requestLog = UtilityService.setLamRequestLog(lamIntegrationCo.getQueryrequest(), request);
 		requestLog = userAdministrationService.createLamLog(requestLog);
 
-		if (bindingResult.hasErrors() || !activity.equalsIgnoreCase("UNLOCK")) {
+		if (!activity.equalsIgnoreCase("UNLOCK")) {
 			requestLog.setResponse(LamStatus.FAILURE);
 			userAdministrationService.updateLamLog(requestLog);
 			return Response.setSuccessResponse(LamStatus.FAILURE, LamStatus.FAILURE.getCode(),
@@ -231,14 +234,14 @@ public class LAMIntegration {
 	}
 
 	@ResponseBody
-	public Response deleteUser(@RequestBody @Valid LamIntegrationCo lamIntegrationCo, BindingResult bindingResult,
-			HttpServletRequest request) throws UnknownHostException {
+	public Response deleteUser(@RequestBody @Valid LamIntegrationCo lamIntegrationCo, HttpServletRequest request)
+			throws UnknownHostException {
 		String activity = lamIntegrationCo.getQueryrequest().getActivity();
 
 		LamRequestLog requestLog = UtilityService.setLamRequestLog(lamIntegrationCo.getQueryrequest(), request);
 		requestLog = userAdministrationService.createLamLog(requestLog);
 
-		if (bindingResult.hasErrors() || !activity.equalsIgnoreCase("DELETE")) {
+		if (!activity.equalsIgnoreCase("DELETE")) {
 			requestLog.setResponse(LamStatus.FAILURE);
 			userAdministrationService.updateLamLog(requestLog);
 			return Response.setSuccessResponse(LamStatus.FAILURE, LamStatus.FAILURE.getCode(),

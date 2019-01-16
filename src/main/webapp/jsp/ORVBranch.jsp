@@ -761,7 +761,7 @@ $.ajax({
 										Enter Bundle</label>
 
 									<div class="frmsub">
-										<input type="button" value="Submit" id="btnsubmit"
+										<input type="button" class="btn btn-primary" value="Submit" id="btnsubmit"
 											onclick="doAjaxPostInsert('+i+');">
 									</div>
 

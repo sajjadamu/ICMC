@@ -24,6 +24,7 @@ public final class RequestWrapper extends HttpServletRequestWrapper {
 		for (int i = 0; i < count; i++) {
 			encodedValues[i] = cleanXSS(values[i]);
 		}
+		logger.info("InarameterValues .. encodedValues ......." + encodedValues);
 		return encodedValues;
 	}
 

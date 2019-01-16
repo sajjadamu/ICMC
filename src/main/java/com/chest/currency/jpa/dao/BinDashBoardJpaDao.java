@@ -42,10 +42,6 @@ import com.chest.currency.enums.CashType;
 import com.chest.currency.enums.CurrencyType;
 import com.mysema.query.Tuple;
 
-/**
- * @author root
- *
- */
 public interface BinDashBoardJpaDao {
 	public boolean insertChestMaster(ChestMaster cMaster);
 
@@ -247,6 +243,8 @@ public interface BinDashBoardJpaDao {
 
 	public List<AuditorIndent> viewAuditorIndentList(BigInteger icmcId);
 
+	List<AuditorIndent> auditorIndentForMachineAllocation(BigInteger icmcId);
+
 	public boolean updateAuditorIndentStatus(AuditorIndent auditorIndent);
 
 	public BinTransaction getBinRecordForAcceptInVault(BinTransaction txn);
@@ -335,8 +333,8 @@ public interface BinDashBoardJpaDao {
 
 	public BigInteger getChestSlipNumber(BigInteger icmcId, Calendar sDate, Calendar eDate);
 
-	public List<BinTransaction> getBinFroPartialTransfer(BigInteger icmcId, Integer denomination,
-			CurrencyType currencyType);
+	public List<String> getBinFroPartialTransfer(BigInteger icmcId, Integer denomination, CurrencyType currencyType,
+			BigDecimal bundle, BinCategoryType binCategoryType, String bin);
 
 	public void deleteForMigration(BigInteger icmcId);
 
@@ -379,4 +377,8 @@ public interface BinDashBoardJpaDao {
 	List<Tuple> getProcessFromProcessingOutPut(BigInteger icmcId, Calendar sDate, Calendar eDate);
 
 	List<Tuple> getProcessBundleProcessingOutPut(BigInteger icmcId, Calendar sDate, Calendar eDate);
+
+	// public void saveAudit(Audit audit);
+
+	// Boolean updateBranchReceipt(AuditorIndent auditorIndent);
 }

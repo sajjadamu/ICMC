@@ -738,6 +738,7 @@ public class UserAdministrationController {
 			Calendar now = Calendar.getInstance();
 			icmcPrinter.setInsertTime(now);
 			icmcPrinter.setUpdateTime(now);
+			icmcPrinter.setPrinterIP(icmcPrinter.getPrinterIP().trim());
 			userAdministrationService.savePrinter(icmcPrinter);
 			redirectAttributes.addFlashAttribute("successMsg", "New Printer has been added successfully");
 			return new ModelAndView("redirect:./viewPrinter");
@@ -783,6 +784,32 @@ public class UserAdministrationController {
 		LOG.info("ICMC_ID From Printer: " + icmc);
 		List<IcmcPrinter> icmcPrinterList = userAdministrationService.printerList(icmc);
 		return icmcPrinterList;
+	}
+
+	@RequestMapping("/viewUserPrinter")
+	public ModelAndView assignPrinter(HttpSession session) {
+		User user = (User) session.getAttribute("login");
+		ModelMap model = new ModelMap();
+		if (user.getIcmcId() != null) {
+			List<IcmcPrinter> icmcPrinterList = userAdministrationService.printerList(user.getIcmcId());
+			model.put("icmcPrinterList", icmcPrinterList);
+		}
+		model.put("user", user);
+		return new ModelAndView("printerMap", model);
+	}
+
+	@RequestMapping("/assignPrinter")
+	public ModelAndView assignPrinter(@ModelAttribute("bean") User user, HttpSession session,
+			RedirectAttributes redirectAttributes) {
+		User userDb = userAdministrationService.getUserById(user.getId());
+
+		userDb.setUpdatedDateTime(Calendar.getInstance());
+		userDb.setIcmcPrinter(user.getIcmcPrinter());
+		userAdministrationService.updateUser(userDb);
+
+		redirectAttributes.addFlashAttribute("updateMsg", "Printer has been changed successfully Please Re-Login");
+
+		return new ModelAndView("redirect:./logout");
 	}
 
 }

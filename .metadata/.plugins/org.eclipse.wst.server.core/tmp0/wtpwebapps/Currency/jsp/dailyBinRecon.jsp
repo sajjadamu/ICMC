@@ -12,9 +12,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="">
 <meta name="author" content="">
-<link rel="shortcut icon" href="./resources/logo/favicon.ico"
+<link rel="shortcut icon" href="./resources/logo/yes_favicon.ico"
 	type="image/x-icon">
-<title>ICICI : Daily Bin Recon</title>
+<title> Daily Bin Recon</title>
 
 <style type="text/css">
 .panel.panel-default .btn-success {

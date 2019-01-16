@@ -9,7 +9,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="">
 <meta name="author" content="">
-<link rel="shortcut icon" href="./resources/logo/favicon.ico"
+<link rel="shortcut icon" href="./resources/logo/yes_favicon.ico"
 	type="image/x-icon">
 <script type="text/javascript"
 	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
@@ -36,7 +36,7 @@ function doAjaxForProductivity() {
 
 </script>
 
-<title>ICICI : Machine Maintenance</title>
+<title> Machine Maintenance</title>
 
 <link href="./resources/css/calendar.css" rel="stylesheet"
 	type="text/css" />

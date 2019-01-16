@@ -103,10 +103,10 @@ public class UserAdministrationJpaDaoImpl implements UserAdministrationJpaDao {
 	public List<User> getUserList() {
 		LOG.info("Going to fetch Users:");
 
-		User user1 = isValidUser("inayat");
+		/*User user1 = isValidUser("inayat");
 		if (user1 != null) {
 			LOG.info("user with Id {} already exist:", user1.getId());
-		}
+		}*/
 		JPAQuery jpaQuery = getFromQueryForUser();
 		jpaQuery.where(QUser.user.status.eq(Status.ENABLED));
 		List<User> users = jpaQuery.list(QUser.user);

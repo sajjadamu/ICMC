@@ -29,7 +29,9 @@ import java.util.stream.IntStream;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.ui.ModelMap;
 import org.springframework.util.CollectionUtils;
 
 import com.chest.currency.entity.model.AuditorIndent;
@@ -48,6 +50,7 @@ import com.chest.currency.entity.model.CRA;
 import com.chest.currency.entity.model.CRAAllocation;
 import com.chest.currency.entity.model.CRAAllocationLog;
 import com.chest.currency.entity.model.CRALog;
+import com.chest.currency.entity.model.CashTransfer;
 import com.chest.currency.entity.model.CustodianKeySet;
 import com.chest.currency.entity.model.DSB;
 import com.chest.currency.entity.model.Discrepancy;
@@ -83,11 +86,15 @@ import com.chest.currency.enums.State;
 import com.chest.currency.enums.YesNo;
 import com.chest.currency.enums.Zone;
 import com.chest.currency.exception.BaseGuiException;
+import com.chest.currency.service.ICMCService;
 import com.chest.currency.viewBean.IRVVoucherWrapper;
 import com.chest.currency.viewBean.SASAllocationGrouped;
 import com.mysema.query.Tuple;
 
 public class UtilityJpa {
+
+	@Autowired
+	static ICMCService icmcService;
 
 	private static final Logger LOG = LoggerFactory.getLogger(UtilityJpa.class);
 
@@ -1438,7 +1445,8 @@ public class UtilityJpa {
 			// sasBean.setTotalValueOfNotesRs500I(0);
 			sasBean.setTotalValueOfNotesRs500A(BigDecimal.ZERO);
 		} /*
-			 * else { sasBean.setTotalValueOfNotesRs500I((Integer.parseInt(getValue(
+			 * else {
+			 * sasBean.setTotalValueOfNotesRs500I((Integer.parseInt(getValue(
 			 * splitData, 44)) / 500) / 1000); }
 			 */
 		{
@@ -1451,7 +1459,8 @@ public class UtilityJpa {
 			// sasBean.setTotalValueOfNotesRs500I(0);
 			sasBean.setTotalValueOfNotesRs500F(BigDecimal.ZERO);
 		} /*
-			 * else { sasBean.setTotalValueOfNotesRs500I((Integer.parseInt(getValue(
+			 * else {
+			 * sasBean.setTotalValueOfNotesRs500I((Integer.parseInt(getValue(
 			 * splitData, 44)) / 500) / 1000); }
 			 */
 		{
@@ -1464,7 +1473,8 @@ public class UtilityJpa {
 			// sasBean.setTotalValueOfNotesRs500I(0);
 			sasBean.setTotalValueOfNotesRs500I(BigDecimal.ZERO);
 		} /*
-			 * else { sasBean.setTotalValueOfNotesRs500I((Integer.parseInt(getValue(
+			 * else {
+			 * sasBean.setTotalValueOfNotesRs500I((Integer.parseInt(getValue(
 			 * splitData, 44)) / 500) / 1000); }
 			 */
 		{
@@ -2364,8 +2374,8 @@ public class UtilityJpa {
 		}
 
 		/*
-		 * if(pendingBundleCount.compareTo(bundleRequired)>=0) { return eligibleCRAList;
-		 * } else { throw new BaseGuiException(
+		 * if(pendingBundleCount.compareTo(bundleRequired)>=0) { return
+		 * eligibleCRAList; } else { throw new BaseGuiException(
 		 * "Required Bundle is not available, TotalAvailableBundle is:" +
 		 * pendingBundleCount.toPlainString()); }
 		 */
@@ -2789,29 +2799,46 @@ public class UtilityJpa {
 		return indentList;
 	}
 
+	public static List<AuditorIndent> mapTuppleAuditorIndentForMachineAllocation(List<Tuple> tupleList) {
+
+		List<AuditorIndent> indentList = new ArrayList<>();
+
+		for (Tuple tuple : tupleList) {
+			AuditorIndent indent = new AuditorIndent();
+			indent.setDenomination(tuple.get(0, Integer.class));
+			indent.setBundle(tuple.get(1, BigDecimal.class));
+			indent.setPendingBundleRequest(tuple.get(2, BigDecimal.class));
+			indentList.add(indent);
+		}
+		return indentList;
+	}
 	/*
 	 * public static List<Indent>
-	 * getRecordsFromIndentFormachineAllocation(List<Indent> indentList, BigDecimal
-	 * issuedBundle, User user) { List<Indent> eligibleIndentList = new
-	 * ArrayList<>(); Calendar now = Calendar.getInstance();
+	 * getRecordsFromIndentFormachineAllocation(List<Indent> indentList,
+	 * BigDecimal issuedBundle, User user) { List<Indent> eligibleIndentList =
+	 * new ArrayList<>(); Calendar now = Calendar.getInstance();
 	 * 
 	 * BigDecimal availableBundle = BigDecimal.ZERO; for (Indent indent :
-	 * indentList) { availableBundle = availableBundle.add(indent.getBundle()); } if
-	 * (availableBundle.compareTo(issuedBundle) >= 0) { for (Indent indent :
-	 * indentList) {
+	 * indentList) { availableBundle = availableBundle.add(indent.getBundle());
+	 * } if (availableBundle.compareTo(issuedBundle) >= 0) { for (Indent indent
+	 * : indentList) {
 	 * 
 	 * if (indent.getBundle().compareTo(issuedBundle) > 0) { issuedBundle =
-	 * indent.getBundle().subtract(issuedBundle); indent.setBundle(issuedBundle); if
+	 * indent.getBundle().subtract(issuedBundle);
+	 * indent.setBundle(issuedBundle); if
 	 * (issuedBundle.compareTo(BigDecimal.ZERO) == 0) {
 	 * indent.setStatus(OtherStatus.ACCEPTED); } else {
-	 * indent.setStatus(OtherStatus.PROCESSED); } indent.setUpdateBy(user.getId());
-	 * indent.setUpdateTime(now); if (indent.getBundle().compareTo(BigDecimal.ZERO)
-	 * <= 0) { indent.setDirty(true); } eligibleIndentList.add(indent); break; }
-	 * else if (issuedBundle.compareTo(indent.getBundle()) >= 0) { issuedBundle =
-	 * issuedBundle.subtract(indent.getBundle()); indent.setBundle(BigDecimal.ZERO);
+	 * indent.setStatus(OtherStatus.PROCESSED); }
+	 * indent.setUpdateBy(user.getId()); indent.setUpdateTime(now); if
+	 * (indent.getBundle().compareTo(BigDecimal.ZERO) <= 0) {
+	 * indent.setDirty(true); } eligibleIndentList.add(indent); break; } else if
+	 * (issuedBundle.compareTo(indent.getBundle()) >= 0) { issuedBundle =
+	 * issuedBundle.subtract(indent.getBundle());
+	 * indent.setBundle(BigDecimal.ZERO);
 	 * indent.setStatus(OtherStatus.ACCEPTED); indent.setUpdateBy(user.getId());
-	 * indent.setUpdateTime(now); if (indent.getBundle().compareTo(BigDecimal.ZERO)
-	 * <= 0) { indent.setDirty(true); } eligibleIndentList.add(indent); } } } return
+	 * indent.setUpdateTime(now); if
+	 * (indent.getBundle().compareTo(BigDecimal.ZERO) <= 0) {
+	 * indent.setDirty(true); } eligibleIndentList.add(indent); } } } return
 	 * eligibleIndentList; }
 	 */
 
@@ -2845,6 +2872,41 @@ public class UtilityJpa {
 						indent.setPendingBundleRequest(BigDecimal.ZERO);
 						indent.setStatus(OtherStatus.PROCESSED);
 						indent.setDescription("PROCESSED");
+						indent.setUpdateBy(user.getId());
+						indent.setUpdateTime(now);
+						eligibleIndentList.add(indent);
+					}
+				}
+			}
+		}
+		return eligibleIndentList;
+	}
+
+	public static List<AuditorIndent> getEligibleAuditorIndentListForMachineAllocation(List<AuditorIndent> indentList,
+			BigDecimal issuedBundle, User user) {
+		List<AuditorIndent> eligibleIndentList = new ArrayList<>();
+		Calendar now = Calendar.getInstance();
+
+		BigDecimal availableBundle = BigDecimal.ZERO;
+		for (AuditorIndent indent : indentList) {
+			availableBundle = availableBundle.add(indent.getPendingBundleRequest());
+		}
+		if (availableBundle.compareTo(issuedBundle) >= 0) {
+			for (AuditorIndent indent : indentList) {
+				if (issuedBundle.compareTo(BigDecimal.ZERO) > 0) {
+					if (indent.getPendingBundleRequest().compareTo(issuedBundle) >= 0) {
+						indent.setPendingBundleRequest(indent.getPendingBundleRequest().subtract(issuedBundle));
+						if (indent.getPendingBundleRequest().compareTo(BigDecimal.ZERO) == 0) {
+							indent.setStatus(OtherStatus.PROCESSED);
+						}
+						indent.setUpdateBy(user.getId());
+						indent.setUpdateTime(now);
+						eligibleIndentList.add(indent);
+						break;
+					} else if (indent.getPendingBundleRequest().compareTo(BigDecimal.ZERO) > 0) {
+						issuedBundle = issuedBundle.subtract(indent.getPendingBundleRequest());
+						indent.setPendingBundleRequest(BigDecimal.ZERO);
+						indent.setStatus(OtherStatus.PROCESSED);
 						indent.setUpdateBy(user.getId());
 						indent.setUpdateTime(now);
 						eligibleIndentList.add(indent);
@@ -2963,17 +3025,19 @@ public class UtilityJpa {
 	}
 
 	/*
-	 * public static BinTransaction setPendingBundleForDorvCancellation(User user,
-	 * BinTransaction binTxn, DiversionORVAllocation dorvAllocation) { Calendar now
-	 * = Calendar.getInstance();
-	 * if(binTxn.getPendingBundleRequest().compareTo(dorvAllocation.getBundle()) >=
-	 * 0){ binTxn.setPendingBundleRequest(binTxn.getPendingBundleRequest().subtract(
+	 * public static BinTransaction setPendingBundleForDorvCancellation(User
+	 * user, BinTransaction binTxn, DiversionORVAllocation dorvAllocation) {
+	 * Calendar now = Calendar.getInstance();
+	 * if(binTxn.getPendingBundleRequest().compareTo(dorvAllocation.getBundle())
+	 * >= 0){
+	 * binTxn.setPendingBundleRequest(binTxn.getPendingBundleRequest().subtract(
 	 * dorvAllocation.getBundle())); } binTxn.setUpdateBy(user.getId());
 	 * binTxn.setUpdateTime(now); return binTxn; }
 	 * 
-	 * public static BinTransaction setPendingBundleForOtherBankCancellation(User
-	 * user, BinTransaction binTxn, OtherBankAllocation otherBankAllocation) {
-	 * Calendar now = Calendar.getInstance();
+	 * public static BinTransaction
+	 * setPendingBundleForOtherBankCancellation(User user, BinTransaction
+	 * binTxn, OtherBankAllocation otherBankAllocation) { Calendar now =
+	 * Calendar.getInstance();
 	 * if(binTxn.getPendingBundleRequest().compareTo(otherBankAllocation.
 	 * getBundle()) >= 0){
 	 * binTxn.setPendingBundleRequest(binTxn.getPendingBundleRequest().subtract(
@@ -2993,16 +3057,19 @@ public class UtilityJpa {
 	}
 
 	public static void PrintToPrinter(StringBuilder sb, User user) throws UnknownHostException, IOException {
-		String ip = user.getIcmcPrinter().getPrinterIP();
+		String ip = user.getIcmcPrinter().getPrinterIP().trim();
 		int port = user.getIcmcPrinter().getPort().intValue();
-		// Socket clientSocket=new Socket("10.64.99.120",9100); //ICICI
-		// pushpanjali LAN
 		LOG.info("PrintToPrinter user.getId(): " + user.getId());
 		Socket clientSocket = new Socket(); // ICICI pushpanjali LAN
-		clientSocket.connect(new InetSocketAddress(ip, port), 1000);
+		clientSocket.connect(new InetSocketAddress(ip, port), 7000);
+		clientSocket.setSoTimeout(10000);
+
 		LOG.info("PrintToPrinter clientSocket: " + clientSocket);
 		DataOutputStream outToServer = new DataOutputStream(clientSocket.getOutputStream());
 		outToServer.writeBytes(sb.toString());
+		LOG.info("PrintToPrinter outToServer: " + outToServer);
+
+		outToServer.close();
 		clientSocket.close();
 	}
 
@@ -3190,20 +3257,21 @@ public class UtilityJpa {
 	public static String getImages(String src) throws IOException {
 
 		/*
-		 * String folderPath="/home/inayat/image"; File file = new File(folderPath);
+		 * String folderPath="/home/inayat/image"; File file = new
+		 * File(folderPath);
 		 * 
 		 * int indexname = src.lastIndexOf("/");
 		 * 
 		 * if (indexname == src.length()) { src = src.substring(1, indexname); }
 		 * 
-		 * indexname = src.lastIndexOf("/"); String name = src.substring(indexname,
-		 * src.length()); // downloadImage=name[0]; //System.out.println("name===" +
-		 * name);
+		 * indexname = src.lastIndexOf("/"); String name =
+		 * src.substring(indexname, src.length()); // downloadImage=name[0];
+		 * //System.out.println("name===" + name);
 		 * 
 		 * URL url = new URL(src); InputStream in = url.openStream();
 		 * 
-		 * OutputStream out = new BufferedOutputStream(new FileOutputStream(file +
-		 * name));
+		 * OutputStream out = new BufferedOutputStream(new FileOutputStream(file
+		 * + name));
 		 * 
 		 * for (int b; (b = in.read()) != -1;) { out.write(b); } out.close();
 		 * in.close();
@@ -3234,6 +3302,138 @@ public class UtilityJpa {
 			custodianList.add(custodianKeySet);
 		}
 		return custodianList;
+	}
+
+	public static BigDecimal getSumAllIndent(List<Tuple> indentList) {
+		BigDecimal sum = BigDecimal.ZERO;
+
+		BigDecimal deno1 = BigDecimal.ZERO;
+		BigDecimal deno2 = BigDecimal.ZERO;
+		BigDecimal deno5 = BigDecimal.ZERO;
+		BigDecimal deno10 = BigDecimal.ZERO;
+		BigDecimal deno20 = BigDecimal.ZERO;
+		BigDecimal deno50 = BigDecimal.ZERO;
+		BigDecimal deno100 = BigDecimal.ZERO;
+		BigDecimal deno200 = BigDecimal.ZERO;
+		BigDecimal deno500 = BigDecimal.ZERO;
+		BigDecimal deno1000 = BigDecimal.ZERO;
+		BigDecimal deno2000 = BigDecimal.ZERO;
+
+		for (Tuple tuple : indentList) {
+			if (tuple.get(0, Integer.class).equals(2000)) {
+				deno2000 = deno2000.add(tuple.get(1, BigDecimal.class).multiply(new BigDecimal(2000)));
+			} else if (tuple.get(0, Integer.class).equals(1000)) {
+				deno1000 = deno1000.add(tuple.get(1, BigDecimal.class).multiply(new BigDecimal(1000)));
+			} else if (tuple.get(0, Integer.class).equals(500)) {
+				deno500 = deno500.add(tuple.get(1, BigDecimal.class).multiply(new BigDecimal(500)));
+			} else if (tuple.get(0, Integer.class).equals(200)) {
+				deno200 = deno200.add(tuple.get(1, BigDecimal.class).multiply(new BigDecimal(200)));
+			} else if (tuple.get(0, Integer.class).equals(100)) {
+				deno100 = deno100.add(tuple.get(1, BigDecimal.class).multiply(new BigDecimal(100)));
+			} else if (tuple.get(0, Integer.class).equals(50)) {
+				deno50 = deno50.add(tuple.get(1, BigDecimal.class).multiply(new BigDecimal(50)));
+			} else if (tuple.get(0, Integer.class).equals(20)) {
+				deno20 = deno20.add(tuple.get(1, BigDecimal.class).multiply(new BigDecimal(20)));
+			} else if (tuple.get(0, Integer.class).equals(10)) {
+				deno10 = deno10.add(tuple.get(1, BigDecimal.class).multiply(new BigDecimal(10)));
+			} else if (tuple.get(0, Integer.class).equals(5)) {
+				deno5 = deno5.add(tuple.get(1, BigDecimal.class).multiply(new BigDecimal(5)));
+			} else if (tuple.get(0, Integer.class).equals(2)) {
+				deno2 = deno2.add(tuple.get(1, BigDecimal.class).multiply(new BigDecimal(2)));
+			} else if (tuple.get(0, Integer.class).equals(1)) {
+				deno1 = deno1.add(tuple.get(1, BigDecimal.class).multiply(new BigDecimal(1)));
+			}
+			sum = deno1.add(deno2).add(deno5).add(deno10).add(deno20).add(deno50).add(deno100).add(deno200).add(deno500)
+					.add(deno1000).add(deno2000);
+		}
+		return sum;
+	}
+
+	public static void setAllIndentDenPieces(List<Tuple> ibitList, Indent indent) {
+
+		for (Tuple tuple : ibitList) {
+			if (tuple.get(0, Integer.class).equals(5)) {
+				indent.setDenom5Pieces(indent.getDenom5Pieces().add(tuple.get(1, BigDecimal.class)));
+			} else if (tuple.get(0, Integer.class).equals(10)) {
+				indent.setDenom10Pieces(indent.getDenom10Pieces().add(tuple.get(1, BigDecimal.class)));
+			} else if (tuple.get(0, Integer.class).equals(20)) {
+				indent.setDenom20Pieces(indent.getDenom20Pieces().add(tuple.get(1, BigDecimal.class)));
+			} else if (tuple.get(0, Integer.class).equals(50)) {
+				indent.setDenom50Pieces(indent.getDenom50Pieces().add(tuple.get(1, BigDecimal.class)));
+			} else if (tuple.get(0, Integer.class).equals(100)) {
+				indent.setDenom100Pieces(indent.getDenom100Pieces().add(tuple.get(1, BigDecimal.class)));
+			} else if (tuple.get(0, Integer.class).equals(200)) {
+				indent.setDenom200Pieces(indent.getDenom200Pieces().add(tuple.get(1, BigDecimal.class)));
+			} else if (tuple.get(0, Integer.class).equals(500)) {
+				indent.setDenom500Pieces(indent.getDenom500Pieces().add(tuple.get(1, BigDecimal.class)));
+			} else if (tuple.get(0, Integer.class).equals(1000)) {
+				indent.setDenom1000Pieces(indent.getDenom1000Pieces().add(tuple.get(1, BigDecimal.class)));
+			} else if (tuple.get(0, Integer.class).equals(2000)) {
+				indent.setDenom2000Pieces(indent.getDenom2000Pieces().add(tuple.get(1, BigDecimal.class)));
+			}
+		}
+	}
+
+	public static void setNotification(String pendingMachineAlo, String processingOutPutPending, String msgSAS,
+			String msgIndent, String msgOtherBank, String msgSoiled, String msgDiversion, String craMsg, ModelMap map) {
+
+		String SASmsg = "";
+		String indentMsg = "";
+		String otherBankMsg = "";
+		String soiledMsg = "";
+		String diversionMsg = "";
+		String processingOutPutPendingMsg = "";
+		String pendingMachineAloMsg = "";
+
+		if (pendingMachineAlo != null) {
+			pendingMachineAloMsg = "Pending In Machine Allocation";
+		}
+		if (processingOutPutPending != null) {
+			processingOutPutPendingMsg = "Pending in processing Output";
+		}
+		if (msgSAS != null) {
+			SASmsg = "Branch Indent Request.";
+		}
+		if (msgIndent != null) {
+			indentMsg = "Processing Room Indent Request.";
+		}
+		if (msgOtherBank != null) {
+			otherBankMsg = "Other Bank Indent Request.";
+		}
+		if (msgSoiled != null) {
+			soiledMsg = "Soiled Indent Request.";
+		}
+		if (msgDiversion != null) {
+			diversionMsg = "Diversion Indent";
+		}
+		if (craMsg != null) {
+			craMsg = "CRA Indent Request";
+		}
+		map.put("SASmsg", SASmsg);
+		map.put("soiledMsg", soiledMsg);
+		map.put("otherBankMsg", otherBankMsg);
+		map.put("indentMsg", indentMsg);
+		map.put("diversionMsg", diversionMsg);
+		map.put("craMsg", craMsg);
+		map.put("craMsg", craMsg);
+		map.put("pendingMachineAloMsg", pendingMachineAloMsg);
+		map.put("processingOutPutPendingMsg", processingOutPutPendingMsg);
+	}
+
+	public static void setForCashTransfer(String radioButtonValue, String binOrBox, String binFromMaster, String bundle,
+			String reason, String remarks, Calendar now, User user, CashTransfer cashTransfer) {
+		cashTransfer.setFromBinOrBox(binOrBox);
+		cashTransfer.setToBinOrBox(binFromMaster);
+		cashTransfer.setInsertBy(user.getId());
+		cashTransfer.setUpdateBy(user.getId());
+		cashTransfer.setIcmcId(user.getIcmcId());
+		cashTransfer.setInsertTime(now);
+		cashTransfer.setUpdateTime(now);
+		cashTransfer.setReason(reason);
+		cashTransfer.setRemarks(remarks);
+		cashTransfer.setReceiveBundle(new BigDecimal(bundle));
+		cashTransfer.setTransferType(radioButtonValue);
+
 	}
 
 }

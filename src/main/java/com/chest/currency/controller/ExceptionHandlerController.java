@@ -5,8 +5,6 @@ import javax.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.InvalidDataAccessApiUsageException;
-import org.springframework.web.bind.annotation.ControllerAdvice;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.HttpClientErrorException;
@@ -17,8 +15,8 @@ import com.chest.currency.message.Error;
 import com.chest.currency.message.ErrorCode;
 import com.chest.currency.message.Response;
 
-@ControllerAdvice
-@CrossOrigin
+/*@ControllerAdvice
+@CrossOrigin*/
 public class ExceptionHandlerController extends ResponseEntityExceptionHandler {
 
 	private final static Logger LOG = LoggerFactory.getLogger(ExceptionHandlerController.class);
@@ -60,13 +58,15 @@ public class ExceptionHandlerController extends ResponseEntityExceptionHandler {
 
 	@ExceptionHandler(IndexOutOfBoundsException.class)
 	@ResponseBody
-	public Response IndexOutOfBoundsException(HttpServletRequest request) {
+	public Response IndexOutOfBoundsException(IndexOutOfBoundsException e, HttpServletRequest request) {
 		LOG.info("========IndexOutOfBoundsException=============");
-		/*
-		 * return Error.setErrorResponse(LamStatus.EXCEPTION,
-		 * ErrorCode.NOT_ACCEPTABLE.getCode(),
-		 * "Please check Roll or other field");
-		 */
+		LOG.info("========Exception request============= " + request.getRequestURL().toString());
+		String requestUrl = request.getRequestURL().toString();
+		String[] splitedUrl = requestUrl.split("/");
+		LOG.info("========splited request url============= " + splitedUrl[4]);
+		LOG.info("========splited request url============= " + splitedUrl[5]);
+/*		if (!splitedUrl[5].equalsIgnoreCase("api"))
+			globalExceptionHandler.IndexOutOfBoundsException(e, request);*/
 		return Response.setSuccessResponse(LamStatus.EXCEPTION, LamStatus.EXCEPTION.getCode(),
 				"Index Please check Roll or other field .");
 
@@ -106,6 +106,7 @@ public class ExceptionHandlerController extends ResponseEntityExceptionHandler {
 		LOG.info("========Exception e============= " + e);
 		// return Error.setErrorResponse(LamStatus.EXCEPTION,
 		// ErrorCode.BAD_REQUEST.getCode(), "Please check Request");
+		LOG.info("========Exception request============= " + request.getRemoteHost());
 		return Response.setSuccessResponse(LamStatus.EXCEPTION, LamStatus.EXCEPTION.getCode(),
 				"Master e Please check Request .");
 	}

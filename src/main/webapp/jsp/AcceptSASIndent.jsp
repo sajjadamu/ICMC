@@ -211,7 +211,7 @@
 												<td id="cashType<%=tuple.get(0,String.class)%>"><%=tuple.get(2, CashType.class)%></td>
 												<td id="binType<%=tuple.get(0,String.class)%>"><%=tuple.get(3, CurrencyType.class) %></td>
 												<td id="bundle<%=tuple.get(0,String.class)%>"><%=tuple.get(4, BigDecimal.class) %></td>
-												<td><input type="button" id="btnAccept" value="Accept"
+												<td><input type="button" class="btn btn-primary" id="btnAccept" value="Accept"
 													onclick="doAjaxPostUpdateStatus('<%=tuple.get(0, String.class)%>');this.disabled=true;"></td>
 											</tr>
 

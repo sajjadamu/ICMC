@@ -155,7 +155,7 @@ function deleteRow(i){
   	var fetchTotalValue=null;
 	var t1=parseFloat($('#totalValue').val());
 	var t2=parseFloat($('#Total'+i).val());
-	
+	countrow--;
 	jQuery('#main'+i).remove();
 	
 	for(var p=0;p<=countrow;p++){
@@ -166,7 +166,7 @@ function deleteRow(i){
 				$('#totalValue').val(MytotalValue.toLocaleString('en-IN'));
 			                  }  }
 	
-	if( ($('#table1 tr').length)-2==0){$('#totalValue').val(0)}
+	if( ($('#table1 tr').length)-1==0){$('#totalValue').val(0)}
 };
 	
 function doAjaxForTotal() { 
@@ -250,7 +250,7 @@ function doAjaxPostInsert(str) {
 	
 		
 //For Denomination Validation	
-for (i = 0; i < countrow; i++) {
+/* for (i = 0; i <= countrow; i++) {
 	var isRowValid = true;	
 	var denom = $('#Denomination'+i).val();
 	var bun = $('#Bundle'+i).val();
@@ -275,7 +275,28 @@ for (i = 0; i < countrow; i++) {
 	{
 			craAllocations.push({"currencyType":$('#Category'+i).val(),"denomination":$('#Denomination'+i).val(),"bundle":$('#Bundle'+i).val(),"total":$('#Total'+i).val(),"bin":$('#Bin'+i).val(),"box":$('#Box'+i).val(),"weight":$('#Weight'+i).val()});
 	}
-		}
+		} */
+		
+		for (i = 0; i <= countrow; i++) {
+			 if(($('#Denomination'+i).val()!=undefined) && $('#Denomination'+i).val()!=2000 
+					 && $('#Denomination'+i).val()!=1000 && $('#Denomination'+i).val()!=500 && $('#Denomination'+i).val()!=200 
+					 && $('#Denomination'+i).val()!=100 && $('#Denomination'+i).val()!=50 
+					 && $('#Denomination'+i).val()!=20 && $('#Denomination'+i).val()!=10 
+					 && $('#Denomination'+i).val()!=5 && $('#Denomination'+i).val()!=2 
+					 && $('#Denomination'+i).val()!=1){
+				$('#err7').show();
+				isValid = false;
+			}
+			if(($('#Bundle'+i).val() != undefined) &&   $('#Bundle'+i).val() == "" ||  $('#Bundle'+i).val() <= 0){
+				$('#err8').show();
+				isValid = false;
+			}
+			if(($('#Denomination'+i).val()!=undefined) &&  isValid){
+				craAllocations.push({"currencyType":$('#Category'+i).val(),
+					"denomination":$('#Denomination'+i).val(),"bundle":$('#Bundle'+i).val(),
+					"total":$('#Total'+i).val()});
+				}
+			}
 		
 		//Close Denomination Validation
 		

@@ -108,7 +108,7 @@ public class ICMCServiceImpl implements ICMCService {
 				LOG.info("icmc is already in map...in else ICMCServiceImpl.getSynchronizedIcmc");
 			}
 		} catch (Exception e) {
-			LOG.info("Catch Exception" + e);
+			LOG.info("Catch Exception in SynchronizedIcmc " + e);
 		}
 		return icmc;
 	}

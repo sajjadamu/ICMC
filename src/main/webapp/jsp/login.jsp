@@ -166,6 +166,15 @@ ul.loginwrap {
 		<div class="loginpage">
 			<h1>Please enter your Employee ID (NT ID) and NT Password for
 				login</h1>
+
+			<div align="center" style="color: white; background: green;">
+				<b> <%
+ 	String printerMsg = request.getParameter("updateMsg");
+ 	if (printerMsg != null)
+ 		out.print(printerMsg);
+ %>
+				</b>
+			</div>
 			<div class="loginbox">
 				<ul class="loginwrap">
 					<form:form name='loginForm' action="login" method='POST'

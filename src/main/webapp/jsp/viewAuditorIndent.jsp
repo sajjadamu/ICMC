@@ -112,6 +112,10 @@
                           				<a href="././addBranch"><i class="fa fa-table fa-fw"></i> Add/Upload Branch</a>
                           			</sec:authorize>
 								</li> --%>
+
+								<li><a href="././auditorIndent"><i
+										class="fa fa-table fa-fw"></i> Auditor Indent Request</a></li>
+
 							</ul>
 							Auditor's Indent List
 						</div>
@@ -181,14 +185,14 @@
 
 	<!-- Page-Level Demo Scripts - Tables - Use for reference -->
 	<script>
-    $(document).ready(function () {
-        $('#tableValue').dataTable({
-        	
-        	"pagingType": "full_numbers",
-        	
-        });
-    });
-    </script>
+		$(document).ready(function() {
+			$('#tableValue').dataTable({
+
+				"pagingType" : "full_numbers",
+
+			});
+		});
+	</script>
 	<script type="text/javascript" src="./js/htmlInjection.js"></script>
 </body>
 

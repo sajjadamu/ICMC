@@ -39,7 +39,6 @@ import lombok.ToString;
 @Data
 @EqualsAndHashCode(of = { "id" })
 @ToString
-
 public class BinMaster {
 
 	@Id

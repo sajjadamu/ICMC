@@ -14,7 +14,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="">
 <meta name="author" content="">
-<link rel="shortcut icon" href="./resources/logo/favicon.ico"
+<link rel="shortcut icon" href="./resources/logo/yes_favicon.ico"
 	type="image/x-icon">
 
 <script type="text/javascript"
@@ -23,7 +23,7 @@
 
 <script type="text/javascript" src="./js/crossSite.js"></script>
 
-<title>ICICI : Add Role</title>
+<title> Add Role</title>
 
 <style type="text/css">
 .form-group.rolewrap {

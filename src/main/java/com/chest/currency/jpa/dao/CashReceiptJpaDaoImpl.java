@@ -1,10 +1,3 @@
-/*******************************************************************************
- * /* Copyright (C) Indicsoft Technologies Pvt Ltd
- * * All Rights Reserved.
- *******************************************************************************/
-/**
- * 
- */
 package com.chest.currency.jpa.dao;
 
 import java.math.BigInteger;
@@ -58,10 +51,6 @@ import com.chest.currency.enums.YesNo;
 import com.mysema.query.Tuple;
 import com.mysema.query.jpa.impl.JPAQuery;
 
-/**
- * @author root
- *
- */
 @Repository
 public class CashReceiptJpaDaoImpl implements CashReceiptJpaDao {
 
@@ -145,12 +134,14 @@ public class CashReceiptJpaDaoImpl implements CashReceiptJpaDao {
 	}
 
 	private List<BinMaster> getFirstPriorityBinMaster(BinMaster master, JPAQuery jpaQuery) {
+
 		jpaQuery.where(QBinMaster.binMaster.firstPriority.eq(master.getFirstPriority())
 				.and(QBinMaster.binMaster.icmcId.eq(master.getIcmcId())).and(QBinMaster.binMaster.isAllocated.eq(0)));
 
 		jpaQuery.orderBy(QBinMaster.binMaster.locationPriority.asc()).orderBy(QBinMaster.binMaster.id.asc());
 
 		List<BinMaster> binList = jpaQuery.list(QBinMaster.binMaster);
+
 		return binList;
 	}
 
@@ -186,6 +177,7 @@ public class CashReceiptJpaDaoImpl implements CashReceiptJpaDao {
 
 	@Override
 	public List<BinTransaction> getBinTxnListByDenom(BinTransaction binTx) {
+
 		JPAQuery jpaQuery = getFromQueryForCashReceiptFromBinTxn();
 		jpaQuery.where(QBinTransaction.binTransaction.icmcId.eq(binTx.getIcmcId())
 				.and(QBinTransaction.binTransaction.cashSource.eq(binTx.getCashSource()))
@@ -195,11 +187,13 @@ public class CashReceiptJpaDaoImpl implements CashReceiptJpaDao {
 				.and(QBinTransaction.binTransaction.binCategoryType.eq(binTx.getBinCategoryType()))
 				.and(QBinTransaction.binTransaction.receiveBundle.lt(QBinTransaction.binTransaction.maxCapacity)));
 		List<BinTransaction> binList = jpaQuery.list(QBinTransaction.binTransaction);
+
 		return binList;
 	}
 
 	@Override
 	public List<BinTransaction> getBinTxnListByDenomForProcessed(BinTransaction binTx) {
+
 		JPAQuery jpaQuery = getFromQueryForCashReceiptFromBinTxn();
 		jpaQuery.where(QBinTransaction.binTransaction.icmcId.eq(binTx.getIcmcId())
 				.and(QBinTransaction.binTransaction.binCategoryType.eq(binTx.getBinCategoryType()))
@@ -212,7 +206,6 @@ public class CashReceiptJpaDaoImpl implements CashReceiptJpaDao {
 						.and(QBinTransaction.binTransaction.binType.eq(binTx.getBinType()))));
 
 		List<BinTransaction> binList = jpaQuery.list(QBinTransaction.binTransaction);
-
 		return binList;
 	}
 
@@ -587,11 +580,13 @@ public class CashReceiptJpaDaoImpl implements CashReceiptJpaDao {
 
 	@Override
 	public List<BoxMaster> getBoxFromBoxMaster(BoxMaster boxMaster) {
+
 		JPAQuery jpaQuery = getFromQueryForBoxMaster();
 		jpaQuery.where(QBoxMaster.boxMaster.icmcId.eq(boxMaster.getIcmcId()).and(QBoxMaster.boxMaster.isAllocated.eq(0))
 				.and(QBoxMaster.boxMaster.denomination.eq(boxMaster.getDenomination())
 						.and(QBoxMaster.boxMaster.currencyType.eq(boxMaster.getCurrencyType()))));
 		List<BoxMaster> boxMasterList = jpaQuery.list(QBoxMaster.boxMaster);
+
 		return boxMasterList;
 	}
 
@@ -840,10 +835,12 @@ public class CashReceiptJpaDaoImpl implements CashReceiptJpaDao {
 	public List<Tuple> getIBITForIRV(BigInteger icmcId, Calendar sDate, Calendar eDate) {
 		JPAQuery jpaQuery = new JPAQuery(em);
 		jpaQuery.from(QIndent.indent);
-		jpaQuery.where(QIndent.indent.icmcId.eq(icmcId)
-				.and(QIndent.indent.status.eq(OtherStatus.ACCEPTED).or(QIndent.indent.status.eq(OtherStatus.PROCESSED)))
-				.and(QIndent.indent.cashSource.ne(CashSource.RBI)).and(QIndent.indent.bin.isNotNull())
-				.and(QIndent.indent.insertTime.between(sDate, eDate)));
+		jpaQuery.where(
+				QIndent.indent.icmcId.eq(icmcId)
+						.and(QIndent.indent.status.eq(OtherStatus.ACCEPTED)
+								.or(QIndent.indent.status.eq(OtherStatus.PROCESSED)))
+						.and(QIndent.indent.cashSource.ne(CashSource.RBI)).and(QIndent.indent.bin.isNotNull())
+						.and(QIndent.indent.insertTime.between(sDate, eDate)));
 		jpaQuery.groupBy(QIndent.indent.denomination);
 		List<Tuple> ibitList = jpaQuery.list(QIndent.indent.denomination, QIndent.indent.bundle.sum().multiply(1000));
 		return ibitList;
