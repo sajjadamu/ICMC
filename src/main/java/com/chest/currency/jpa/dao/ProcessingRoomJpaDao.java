@@ -83,7 +83,7 @@ public interface ProcessingRoomJpaDao {
 
 	public Indent getIndentDataById(long id, BigInteger icmcId);
 
-	public BinTransaction getBinFromTransaction(String bin, BigInteger icmcId);
+	public BinTransaction getBinFromTransaction(String bin, BigInteger icmcId, Integer denomination);
 
 	public boolean updateIndentStatus(Indent indent);
 

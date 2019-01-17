@@ -77,26 +77,22 @@ public class CashPaymentServiceImpl implements CashPaymentService {
 
 	@Override
 	public boolean sasUpload(List<Sas> sasList, Sas sas) {
-		boolean isSaved = cashPaymentJpaDao.sasUpload(sasList, sas);
-		return isSaved;
+		return cashPaymentJpaDao.sasUpload(sasList, sas);
 	}
 
 	@Override
 	public List<Sas> getSASRecord(User user, Calendar sDate, Calendar eDate) {
-		List<Sas> sasList = cashPaymentJpaDao.getSASRecord(user, sDate, eDate);
-		return sasList;
+		return cashPaymentJpaDao.getSASRecord(user, sDate, eDate);
 	}
 
 	@Override
 	public List<Sas> getSASRecordForceHandover(User user, Calendar sDate, Calendar eDate) {
-		List<Sas> sasList = cashPaymentJpaDao.getSASRecordForceHandover(user, sDate, eDate);
-		return sasList;
+		return cashPaymentJpaDao.getSASRecordForceHandover(user, sDate, eDate);
 	}
 
 	@Override
 	public List<Sas> getSASRecordFromSasfile(User user) {
-		List<Sas> sasList = cashPaymentJpaDao.getSASRecordFromSasfile(user);
-		return sasList;
+		return cashPaymentJpaDao.getSASRecordFromSasfile(user);
 	}
 
 	@Override
@@ -104,16 +100,10 @@ public class CashPaymentServiceImpl implements CashPaymentService {
 
 		List<SASAllocation> sasList = UtilityJpa
 				.mapSasAllocationGroupedToSasAllocation(sasAllocationWrapper.getSasAllocationList());
-
-		// new Code
 		sas.setProcessedOrUnprocessed("PROCESSED");
-		//
-
 		findBinAndProcessSasAllocation(user, sasList, sas);
-
 		sas.setIcmcId(sasAllocationWrapper.getIcmcId());
 		this.updateSASStatus(sas);
-
 		return true;
 	}
 
@@ -263,56 +253,47 @@ public class CashPaymentServiceImpl implements CashPaymentService {
 						.multiply(BigDecimal.valueOf(1).multiply(BigDecimal.valueOf(1000))));
 
 		sas.setTotalValue(totalValue);
-		long count = cashPaymentJpaDao.updateSAS(sas);
-		return count;
+		return cashPaymentJpaDao.updateSAS(sas);
 	}
 
 	@Override
 	public List<SoiledRemittance> soiledRecord(BigInteger icmcId, Calendar sDate, Calendar eDate) {
-		List<SoiledRemittance> soiledList = cashPaymentJpaDao.soiledRecord(icmcId, sDate, eDate);
-		return soiledList;
+		return cashPaymentJpaDao.soiledRecord(icmcId, sDate, eDate);
 	}
 
 	@Override
 	public List<SoiledRemittance> getSoiledRequestAcceptRecord(BigInteger icmcId, Calendar sDate, Calendar eDate) {
-		List<SoiledRemittance> soiledList = cashPaymentJpaDao.getSoiledRequestAcceptRecord(icmcId, sDate, eDate);
-		return soiledList;
+		return cashPaymentJpaDao.getSoiledRequestAcceptRecord(icmcId, sDate, eDate);
 	}
 
 	@Override
 	public long updateSASStatus(Sas sas) {
-		long count = cashPaymentJpaDao.updateSASStatus(sas);
-		return count;
+		return cashPaymentJpaDao.updateSASStatus(sas);
 	}
 
 	@Override
 	public List<SASAllocation> getSASAllocationRecord(BigInteger icmcId) {
-		List<SASAllocation> sasAllocationList = cashPaymentJpaDao.getSASAllocationRecord(icmcId);
-		return sasAllocationList;
+		return cashPaymentJpaDao.getSASAllocationRecord(icmcId);
 	}
 
 	@Override
 	public List<SASAllocation> getSasAllocationBySasId(long sasId) {
-		List<SASAllocation> sasAllocationList = cashPaymentJpaDao.getSasAllocationBySasId(sasId);
-		return sasAllocationList;
+		return cashPaymentJpaDao.getSasAllocationBySasId(sasId);
 	}
 
 	@Override
 	public List<SASAllocation> getSasAllocationByBinNumberBundle(SASAllocation sasAlo) {
-		List<SASAllocation> sasAllocationList = cashPaymentJpaDao.getSasAllocationByBinNumberBundle(sasAlo);
-		return sasAllocationList;
+		return cashPaymentJpaDao.getSasAllocationByBinNumberBundle(sasAlo);
 	}
 
 	@Override
 	public List<SASAllocation> getSasAllocationByBinNumber(SASAllocation sasAlo) {
-		List<SASAllocation> sasAllocationList = cashPaymentJpaDao.getSasAllocationByBinNumber(sasAlo);
-		return sasAllocationList;
+		return cashPaymentJpaDao.getSasAllocationByBinNumber(sasAlo);
 	}
 
 	@Override
 	public boolean saveSoiledRemittance(SoiledRemittance soiledRemittance) {
-		boolean isSaved = cashPaymentJpaDao.saveSoiledRemittance(soiledRemittance);
-		return isSaved;
+		return cashPaymentJpaDao.saveSoiledRemittance(soiledRemittance);
 	}
 
 	@Override
@@ -344,26 +325,22 @@ public class CashPaymentServiceImpl implements CashPaymentService {
 
 	@Override
 	public List<Sas> getORVRecords(BigInteger icmcId, Calendar sDate, Calendar eDate) {
-		List<Sas> sasList = cashPaymentJpaDao.getORVRecords(icmcId, sDate, eDate);
-		return sasList;
+		return cashPaymentJpaDao.getORVRecords(icmcId, sDate, eDate);
 	}
 
 	@Override
 	public List<Sas> getRequestORVRecords(BigInteger icmcId, Calendar sDate, Calendar eDate) {
-		List<Sas> sasList = cashPaymentJpaDao.getRequestORVRecords(icmcId, sDate, eDate);
-		return sasList;
+		return cashPaymentJpaDao.getRequestORVRecords(icmcId, sDate, eDate);
 	}
 
 	@Override
 	public List<Sas> getRequestAcceptORVRecords(BigInteger icmcId, Calendar sDate, Calendar eDate) {
-		List<Sas> sasList = cashPaymentJpaDao.getRequestAcceptORVRecords(icmcId, sDate, eDate);
-		return sasList;
+		return cashPaymentJpaDao.getRequestAcceptORVRecords(icmcId, sDate, eDate);
 	}
 
 	@Override
 	public Sas getSASRecordById(BigInteger icmcId, Long id) {
-		Sas sasDetail = cashPaymentJpaDao.getSASRecordById(icmcId, id);
-		return sasDetail;
+		return cashPaymentJpaDao.getSASRecordById(icmcId, id);
 	}
 
 	@Override
@@ -373,20 +350,17 @@ public class CashPaymentServiceImpl implements CashPaymentService {
 
 	@Override
 	public List<SoiledRemittanceAllocation> getSoiledForAccept(BigInteger icmcId) {
-		List<SoiledRemittanceAllocation> soiledList = cashPaymentJpaDao.getSoiledForAccept(icmcId);
-		return soiledList;
+		return cashPaymentJpaDao.getSoiledForAccept(icmcId);
 	}
 
 	@Override
 	public List<ORVAllocation> getORVForAccept(BigInteger icmcId) {
-		List<ORVAllocation> orvList = cashPaymentJpaDao.getORVForAccept(icmcId);
-		return orvList;
+		return cashPaymentJpaDao.getORVForAccept(icmcId);
 	}
 
 	@Override
 	public List<DiversionORVAllocation> getDiversionORVForAccept(BigInteger icmcId) {
-		List<DiversionORVAllocation> dORVList = cashPaymentJpaDao.getDiversionORVForAccept(icmcId);
-		return dORVList;
+		return cashPaymentJpaDao.getDiversionORVForAccept(icmcId);
 	}
 
 	@Override
@@ -888,44 +862,37 @@ public class CashPaymentServiceImpl implements CashPaymentService {
 
 	@Override
 	public long updateDorvStatus(DiversionORVAllocation dorv) {
-		long count = cashPaymentJpaDao.updateDorvStatus(dorv);
-		return count;
+		return cashPaymentJpaDao.updateDorvStatus(dorv);
 	}
 
 	@Override
 	public long updateOrvStatus(ORVAllocation orv) {
-		long count = cashPaymentJpaDao.updateORVStatus(orv);
-		return count;
+		return cashPaymentJpaDao.updateORVStatus(orv);
 	}
 
 	@Override
 	public long updateSASStatus(SASAllocation sas) {
-		long count = cashPaymentJpaDao.updateSASstatus(sas);
-		return count;
+		return cashPaymentJpaDao.updateSASstatus(sas);
 	}
 
 	@Override
 	public boolean saveCashReleased(CashReleased cashReleased) {
-		boolean isSaved = cashPaymentJpaDao.saveCashReleased(cashReleased);
-		return isSaved;
+		return cashPaymentJpaDao.saveCashReleased(cashReleased);
 	}
 
 	@Override
 	public BinTransaction getBinRecordForCashReleassed(BinTransaction txn) {
-		BinTransaction binTxn = cashPaymentJpaDao.getBinRecordForCashReleassed(txn);
-		return binTxn;
+		return cashPaymentJpaDao.getBinRecordForCashReleassed(txn);
 	}
 
 	@Override
 	public boolean updateBinMaster(BinMaster binMaster) {
-		boolean isSaved = cashPaymentJpaDao.updateBinMaster(binMaster);
-		return isSaved;
+		return cashPaymentJpaDao.updateBinMaster(binMaster);
 	}
 
 	@Override
 	public int deleteDataFromBinTxn(BinTransaction txnBin) {
-		int count = cashPaymentJpaDao.deleteDataFromBinTxn(txnBin);
-		return count;
+		return cashPaymentJpaDao.deleteDataFromBinTxn(txnBin);
 	}
 
 	@Override
@@ -937,62 +904,52 @@ public class CashPaymentServiceImpl implements CashPaymentService {
 			throw new BaseGuiException("Can not update vault: icmc id " + binTransaction.getIcmcId() + " and bin "
 					+ binTransaction.getBinNumber());
 		}
-		boolean isSaved = cashPaymentJpaDao.updateBinTxn(binTransaction);
-		return isSaved;
+		return cashPaymentJpaDao.updateBinTxn(binTransaction);
 	}
 
 	@Override
 	public List<Sas> getORVReport(BigInteger icmcId, Calendar sDate, Calendar eDate) {
-		List<Sas> orvList = cashPaymentJpaDao.getORVReport(icmcId, sDate, eDate);
-		return orvList;
+		return cashPaymentJpaDao.getORVReport(icmcId, sDate, eDate);
 	}
 
 	@Override
 	public List<CITCRAVendor> getVendor() {
-		List<CITCRAVendor> vendorList = cashPaymentJpaDao.getVendor();
-		return vendorList;
+		return cashPaymentJpaDao.getVendor();
 	}
 
 	@Override
 	public List<String> getCustodianName(String vendor) {
-		List<String> driverList = cashPaymentJpaDao.getCustodianName(vendor);
-		return driverList;
+		return cashPaymentJpaDao.getCustodianName(vendor);
 	}
 
 	@Override
 	public List<String> getVehicleNumber(String vendor) {
-		List<String> vehicleList = cashPaymentJpaDao.getVehicleNumber(vendor);
-		return vehicleList;
+		return cashPaymentJpaDao.getVehicleNumber(vendor);
 	}
 
 	@Override
 	public List<Tuple> getRecordForSummary(BigInteger icmcId) {
-		List<Tuple> binList = cashPaymentJpaDao.getRecordForSummary(icmcId);
-		return binList;
+		return cashPaymentJpaDao.getRecordForSummary(icmcId);
 	}
 
 	@Override
 	public List<Sas> solIdForSASPayment(BigInteger icmcId, Calendar sDate, Calendar eDate) {
-		List<Sas> solIdList = cashPaymentJpaDao.solIdForSASPayment(icmcId, sDate, eDate);
-		return solIdList;
+		return cashPaymentJpaDao.solIdForSASPayment(icmcId, sDate, eDate);
 	}
 
 	@Override
 	public List<Sas> solIdForSASPaymentAccepted(BigInteger icmcId, Calendar sDate, Calendar eDate, Set<Long> pList) {
-		List<Sas> solIdList = cashPaymentJpaDao.solIdForSASPaymentAccepted(icmcId, sDate, eDate, pList);
-		return solIdList;
+		return cashPaymentJpaDao.solIdForSASPaymentAccepted(icmcId, sDate, eDate, pList);
 	}
 
 	@Override
 	public Sas sasPaymentDetails(long id) {
-		Sas sas = cashPaymentJpaDao.sasPaymentDetails(id);
-		return sas;
+		return cashPaymentJpaDao.sasPaymentDetails(id);
 	}
 
 	@Override
 	public Sas sasRecordByID(long id) {
-		Sas sas = cashPaymentJpaDao.sasRecordByID(id);
-		return sas;
+		return cashPaymentJpaDao.sasRecordByID(id);
 	}
 
 	@Override
@@ -1002,8 +959,7 @@ public class CashPaymentServiceImpl implements CashPaymentService {
 
 	@Override
 	public boolean createSASAllocationForORVPayment(SASAllocation sasAllocation) {
-		boolean isSuccess = cashPaymentJpaDao.createSASAllocationForORVPayment(sasAllocation);
-		return isSuccess;
+		return cashPaymentJpaDao.createSASAllocationForORVPayment(sasAllocation);
 	}
 
 	@Override
@@ -1039,8 +995,7 @@ public class CashPaymentServiceImpl implements CashPaymentService {
 
 	@Override
 	public List<CRAAccountDetail> getVendorAndMSPName(BigInteger icmcId) {
-		List<CRAAccountDetail> vendorAndMSPNameList = cashPaymentJpaDao.getVendorAndMSPName(icmcId);
-		return vendorAndMSPNameList;
+		return cashPaymentJpaDao.getVendorAndMSPName(icmcId);
 	}
 
 	@Override
@@ -1135,18 +1090,6 @@ public class CashPaymentServiceImpl implements CashPaymentService {
 						}
 					}
 				}
-
-				/*
-				 * if (craAllocation.getTotal() != null) {
-				 * 
-				 * totalValue = totalValue.add(craAllocation.getTotal()); }
-				 */
-
-				/*
-				 * if (acceptTotalValue != null) {
-				 * 
-				 * totalValue = totalValue.add(acceptTotalValue); }
-				 */
 			}
 			// acceptTotalValue=totalValue.subtract(pendingTotalValue);
 			cra.setTotalValue(totalValue);
@@ -1209,38 +1152,32 @@ public class CashPaymentServiceImpl implements CashPaymentService {
 
 	@Override
 	public List<Tuple> getRecordORVVoucher(String solId, Calendar sDate, Calendar eDate, BigInteger icmcId) {
-		List<Tuple> voucherList = cashPaymentJpaDao.getRecordORVVoucher(solId, sDate, eDate, icmcId);
-		return voucherList;
+		return cashPaymentJpaDao.getRecordORVVoucher(solId, sDate, eDate, icmcId);
 	}
 
 	@Override
 	public List<Tuple> getRecordORVVoucherById(long id, Calendar sDate, Calendar eDate) {
-		List<Tuple> voucherList = cashPaymentJpaDao.getRecordORVVoucherById(id, sDate, eDate);
-		return voucherList;
+		return cashPaymentJpaDao.getRecordORVVoucherById(id, sDate, eDate);
 	}
 
 	@Override
 	public List<Sas> getSolId(BigInteger icmcId, Calendar sDate, Calendar eDate) {
-		List<Sas> solIdList = cashPaymentJpaDao.getSolId(icmcId, sDate, eDate);
-		return solIdList;
+		return cashPaymentJpaDao.getSolId(icmcId, sDate, eDate);
 	}
 
 	@Override
 	public List<Sas> getSasRecordById(BigInteger icmcId, Long[] sasId) {
-		List<Sas> solIdList = cashPaymentJpaDao.getSasRecordById(icmcId, sasId);
-		return solIdList;
+		return cashPaymentJpaDao.getSasRecordById(icmcId, sasId);
 	}
 
 	@Override
 	public List<Sas> getAcceptSolId(BigInteger icmcId, Calendar sDate, Calendar eDate) {
-		List<Sas> solIdList = cashPaymentJpaDao.getAcceptSolId(icmcId, sDate, eDate);
-		return solIdList;
+		return cashPaymentJpaDao.getAcceptSolId(icmcId, sDate, eDate);
 	}
 
 	@Override
 	public Sas getFileName(BigInteger icmcId) {
-		Sas sas = cashPaymentJpaDao.getFileName(icmcId);
-		return sas;
+		return cashPaymentJpaDao.getFileName(icmcId);
 	}
 
 	@Override
@@ -1251,32 +1188,27 @@ public class CashPaymentServiceImpl implements CashPaymentService {
 
 	@Override
 	public boolean updateBinTransactionForEmpty(BinTransaction binTransaction) {
-		boolean isUpdate = cashPaymentJpaDao.updateBinTransactionForEmpty(binTransaction);
-		return isUpdate;
+		return cashPaymentJpaDao.updateBinTransactionForEmpty(binTransaction);
 	}
 
 	@Override
 	public List<CRAAllocation> getCRAForAccept(BigInteger icmcId) {
-		List<CRAAllocation> craList = cashPaymentJpaDao.getCRAForAccept(icmcId);
-		return craList;
+		return cashPaymentJpaDao.getCRAForAccept(icmcId);
 	}
 
 	@Override
 	public long updateCRAStatus(CRAAllocation cra) {
-		long count = cashPaymentJpaDao.updateCRAStatus(cra);
-		return count;
+		return cashPaymentJpaDao.updateCRAStatus(cra);
 	}
 
 	@Override
 	public long updateOtherBankStatus(OtherBankAllocation otherBank) {
-		long count = cashPaymentJpaDao.updateOtherBankStatus(otherBank);
-		return count;
+		return cashPaymentJpaDao.updateOtherBankStatus(otherBank);
 	}
 
 	@Override
 	public List<OtherBankAllocation> getOtherBankForAccept(BigInteger icmcId) {
-		List<OtherBankAllocation> otherBankList = cashPaymentJpaDao.getOtherBankForAccept(icmcId);
-		return otherBankList;
+		return cashPaymentJpaDao.getOtherBankForAccept(icmcId);
 	}
 
 	@Override
@@ -1312,8 +1244,7 @@ public class CashPaymentServiceImpl implements CashPaymentService {
 
 	@Override
 	public List<BinTransaction> getBinForCRAPayment(BinTransaction binTxn) {
-		List<BinTransaction> binTxnList = cashPaymentJpaDao.getBinForCRAPayment(binTxn);
-		return binTxnList;
+		return cashPaymentJpaDao.getBinForCRAPayment(binTxn);
 	}
 
 	@Override
@@ -1323,8 +1254,7 @@ public class CashPaymentServiceImpl implements CashPaymentService {
 
 	@Override
 	public List<Tuple> craRequestSummary(long id) {
-		List<Tuple> craPaymentList = cashPaymentJpaDao.craRequestSummary(id);
-		return craPaymentList;
+		return cashPaymentJpaDao.craRequestSummary(id);
 	}
 
 	@Transactional
@@ -1385,28 +1315,23 @@ public class CashPaymentServiceImpl implements CashPaymentService {
 
 	@Override
 	public List<CRA> getRecordFromCRA(BigInteger icmcId) {
-		List<CRA> solIdList = cashPaymentJpaDao.getRecordFromCRA(icmcId);
-		return solIdList;
+		return cashPaymentJpaDao.getRecordFromCRA(icmcId);
 	}
 
 	@Override
 	public List<Tuple> getSoiledSummary(BigInteger icmcId) {
-		List<Tuple> soiledSummary = cashPaymentJpaDao.getSoiledSummary(icmcId);
-		return soiledSummary;
+		return cashPaymentJpaDao.getSoiledSummary(icmcId);
 	}
 
 	@Override
 	public List<BinTransaction> getBundleFromBinTxnToCompareForSoiled(BigInteger icmcId, Integer denomination,
 			CurrencyType currencyType) {
-		List<BinTransaction> bundles = cashPaymentJpaDao.getBundleFromBinTxnToCompare(icmcId, denomination,
-				currencyType);
-		return bundles;
+		return cashPaymentJpaDao.getBundleFromBinTxnToCompare(icmcId, denomination, currencyType);
 	}
 
 	@Override
 	public List<BinTransaction> getBinNumListForSoiled(SoiledRemittanceAllocation soiled, CurrencyType type) {
-		List<BinTransaction> binFromTxnList = cashPaymentJpaDao.getBinNumListForSoiled(soiled, type);
-		return binFromTxnList;
+		return cashPaymentJpaDao.getBinNumListForSoiled(soiled, type);
 	}
 
 	@Transactional
@@ -1456,14 +1381,14 @@ public class CashPaymentServiceImpl implements CashPaymentService {
 
 	private String getQRForSoiled(SoiledRemittanceAllocation soiled) {
 		String filepath = qrCodeGen.generateQRForSoiled(soiled);
-		String path = getPath(filepath);
-		return path;
+		return getPath(filepath);
 	}
 
 	private boolean updateBinTransactionForSoiled(BigInteger icmcId, Integer denomination, String bin,
 			BigDecimal bundle, User user) {
 
-		BinTransaction txnBean = processingRoomService.getBinFromTransaction(bin.trim(), user.getIcmcId());
+		BinTransaction txnBean = processingRoomService.getBinFromTransaction(bin.trim(), user.getIcmcId(),
+				denomination);
 
 		if (txnBean != null && txnBean.getReceiveBundle() != null
 				&& txnBean.getReceiveBundle().compareTo(BigDecimal.ZERO) > 0) {
@@ -1530,20 +1455,17 @@ public class CashPaymentServiceImpl implements CashPaymentService {
 
 	@Override
 	public BinTransaction getBoxRecordForCashReleassed(BinTransaction binTxn) {
-		binTxn = cashPaymentJpaDao.getBoxRecordForCashReleassed(binTxn);
-		return binTxn;
+		return cashPaymentJpaDao.getBoxRecordForCashReleassed(binTxn);
 	}
 
 	@Override
 	public List<CRAAllocation> craPaymentDetailForAccept(BigInteger icmcId) {
-		List<CRAAllocation> craAllocationList = cashPaymentJpaDao.craPaymentDetailForAccept(icmcId);
-		return craAllocationList;
+		return cashPaymentJpaDao.craPaymentDetailForAccept(icmcId);
 	}
 
 	@Override
 	public boolean updateCRAAllocationStatus(CRAAllocation craAllocation) {
-		boolean IsSaved = cashPaymentJpaDao.updateCRAAllocationStatus(craAllocation);
-		return IsSaved;
+		return cashPaymentJpaDao.updateCRAAllocationStatus(craAllocation);
 	}
 
 	@Override
@@ -1610,62 +1532,52 @@ public class CashPaymentServiceImpl implements CashPaymentService {
 
 	@Override
 	public BinTransaction getBinFromTransaction(String bin, BigInteger icmcId) {
-		BinTransaction binTxn = cashPaymentJpaDao.getBinFromTransaction(bin, icmcId);
-		return binTxn;
+		return cashPaymentJpaDao.getBinFromTransaction(bin, icmcId);
 	}
 
 	@Override
 	public CRAAllocation getCRAAllocationDataById(long id, BigInteger icmcId) {
-		CRAAllocation craAllocation = cashPaymentJpaDao.getCRAAllocationDataById(id, icmcId);
-		return craAllocation;
+		return cashPaymentJpaDao.getCRAAllocationDataById(id, icmcId);
 	}
 
 	@Override
 	public void updateBinTxnForSoiledBox(BinTransaction binTxn) {
 		cashPaymentJpaDao.updateBinTxnForSoiledBox(binTxn);
-
 	}
 
 	@Override
 	public List<CRAAllocation> craPaymentDetails(BigInteger icmcId, long id) {
-		List<CRAAllocation> craAllocation = cashPaymentJpaDao.craPaymentDetails(icmcId, id);
-		return craAllocation;
+		return cashPaymentJpaDao.craPaymentDetails(icmcId, id);
 	}
 
 	@Override
 	public List<ProcessBundleForCRAPayment> forwardedCraPaymentDetails(BigInteger icmcId, long id) {
-		List<ProcessBundleForCRAPayment> forwardedCraList = cashPaymentJpaDao.forwardedCraPaymentDetails(icmcId, id);
-		return forwardedCraList;
+		return cashPaymentJpaDao.forwardedCraPaymentDetails(icmcId, id);
 	}
 
 	@Override
 	public List<CRA> solIdForCRAPayment(BigInteger icmcId, Calendar sDate, Calendar eDate) {
-		List<CRA> solIdFromCRA = cashPaymentJpaDao.solIdForCRAPayment(icmcId, sDate, eDate);
-		return solIdFromCRA;
+		return cashPaymentJpaDao.solIdForCRAPayment(icmcId, sDate, eDate);
 	}
 
 	@Override
 	public List<DiversionORV> diversionListForRbiOrderNo(BigInteger icmcId) {
-		List<DiversionORV> bankNameList = cashPaymentJpaDao.diversionListForRbiOrderNo(icmcId);
-		return bankNameList;
+		return cashPaymentJpaDao.diversionListForRbiOrderNo(icmcId);
 	}
 
 	@Override
 	public List<DiversionORVAllocation> dorvPaymentDetails(BigInteger icmcId, long id) {
-		List<DiversionORVAllocation> diversionOrvList = cashPaymentJpaDao.dorvPaymentDetails(icmcId, id);
-		return diversionOrvList;
+		return cashPaymentJpaDao.dorvPaymentDetails(icmcId, id);
 	}
 
 	@Override
 	public List<OtherBank> bankNameFromOtherBank(BigInteger icmcId) {
-		List<OtherBank> bankNameList = cashPaymentJpaDao.bankNameFromOtherBank(icmcId);
-		return bankNameList;
+		return cashPaymentJpaDao.bankNameFromOtherBank(icmcId);
 	}
 
 	@Override
 	public List<OtherBankAllocation> otherBankPaymentDetails(BigInteger icmcId, long id) {
-		List<OtherBankAllocation> otherBankList = cashPaymentJpaDao.otherBankPaymentDetails(icmcId, id);
-		return otherBankList;
+		return cashPaymentJpaDao.otherBankPaymentDetails(icmcId, id);
 	}
 
 	@Override
@@ -1684,8 +1596,7 @@ public class CashPaymentServiceImpl implements CashPaymentService {
 
 	@Override
 	public List<BinTransaction> getCoinsListForSas(SASAllocation sas) {
-		List<BinTransaction> binTxn = cashPaymentJpaDao.getCoinsListForSas(sas);
-		return binTxn;
+		return cashPaymentJpaDao.getCoinsListForSas(sas);
 	}
 
 	@Override
@@ -1697,51 +1608,42 @@ public class CashPaymentServiceImpl implements CashPaymentService {
 
 	@Override
 	public CoinsSequence getCoinsSequenceForDeduction(BigInteger icmcId, int denomination) {
-		CoinsSequence coinsSequence = cashPaymentJpaDao.getCoinsSequenceForDeduction(icmcId, denomination);
-		return coinsSequence;
+		return cashPaymentJpaDao.getCoinsSequenceForDeduction(icmcId, denomination);
 	}
 
 	@Override
 	public BinTransaction getBinRecordForAcceptInVault(BinTransaction txn) {
-		BinTransaction binTxn = cashPaymentJpaDao.getBinRecordForAcceptInVault(txn);
-		return binTxn;
+		return cashPaymentJpaDao.getBinRecordForAcceptInVault(txn);
 	}
 
 	@Override
 	public long updateOtherBankStatus(OtherBank otherBank) {
-		long count = cashPaymentJpaDao.updateOtherBankStatus(otherBank);
-		return count;
+		return cashPaymentJpaDao.updateOtherBankStatus(otherBank);
 	}
 
 	@Override
 	public long updateDorvStatus(DiversionORV dorv) {
-		long count = cashPaymentJpaDao.updateDorvStatus(dorv);
-		return count;
+		return cashPaymentJpaDao.updateDorvStatus(dorv);
 	}
 
 	@Override
 	public List<Tuple> getRecordCoinsForSummary(BigInteger icmcId) {
-		List<Tuple> coinsList = cashPaymentJpaDao.getRecordCoinsForSummary(icmcId);
-		return coinsList;
+		return cashPaymentJpaDao.getRecordCoinsForSummary(icmcId);
 	}
 
 	@Override
 	public long updateCoinsSequence(CoinsSequence coinsSequence) {
-		long count = cashPaymentJpaDao.updateCoinsSequence(coinsSequence);
-		return count;
+		return cashPaymentJpaDao.updateCoinsSequence(coinsSequence);
 	}
 
 	@Override
 	public List<SoiledRemittance> getRemittanceOrderNo(BigInteger icmcId) {
-		List<SoiledRemittance> soiledRemittanceOrderNo = cashPaymentJpaDao.getRemittanceOrderNo(icmcId);
-		return soiledRemittanceOrderNo;
+		return cashPaymentJpaDao.getRemittanceOrderNo(icmcId);
 	}
 
 	@Override
 	public List<SoiledRemittanceAllocation> soiledRemittancePaymentDetails(BigInteger icmcId, long id) {
-		List<SoiledRemittanceAllocation> soiledListForPayment = cashPaymentJpaDao.soiledRemittancePaymentDetails(icmcId,
-				id);
-		return soiledListForPayment;
+		return cashPaymentJpaDao.soiledRemittancePaymentDetails(icmcId, id);
 	}
 
 	@Override
@@ -1759,59 +1661,48 @@ public class CashPaymentServiceImpl implements CashPaymentService {
 
 	@Override
 	public long updateCRAOtherStatus(CRA cra) {
-		long count = cashPaymentJpaDao.updateCRAOtherStatus(cra);
-		return count;
+		return cashPaymentJpaDao.updateCRAOtherStatus(cra);
 	}
 
 	@Override
 	public List<Tuple> getBranchOutRecordFromSAS(BigInteger icmcId, Calendar sDate, Calendar eDate) {
-		List<Tuple> sasList = cashPaymentJpaDao.getBranchOutRecordFromSAS(icmcId, sDate, eDate);
-		return sasList;
+		return cashPaymentJpaDao.getBranchOutRecordFromSAS(icmcId, sDate, eDate);
 	}
 
 	@Override
 	public List<Sas> getRecordFromSAS(long id) {
-		List<Sas> tupleList = cashPaymentJpaDao.getRecordFromSAS(id);
-		return tupleList;
+		return cashPaymentJpaDao.getRecordFromSAS(id);
 	}
 
 	@Override
 	public long updateSASStatus(BigInteger icmcId, long id) {
-		long count = cashPaymentJpaDao.updateSASStatus(icmcId, id);
-		return count;
+		return cashPaymentJpaDao.updateSASStatus(icmcId, id);
 	}
 
 	@Override
 	public void updateSASStatusForSASFile(BigInteger icmcId, int status) {
 		cashPaymentJpaDao.updateSASStatusForSASFile(icmcId, status);
-
 	}
 
 	@Override
 	public long updateSASForceHandoverStatus(BigInteger icmcId, long id) {
-		long count = cashPaymentJpaDao.updateSASForceHandoverStatus(icmcId, id);
-		return count;
+		return cashPaymentJpaDao.updateSASForceHandoverStatus(icmcId, id);
 	}
 
 	@Override
 	public List<SASAllocation> getAllAcceptedFromSASAllocation(BigInteger icmcId) {
-		List<SASAllocation> statusListForAccepted = cashPaymentJpaDao.getAllAcceptedFromSASAllocation(icmcId);
-		return statusListForAccepted;
+		return cashPaymentJpaDao.getAllAcceptedFromSASAllocation(icmcId);
 	}
 
 	@Override
 	public List<SASAllocation> getAllTodayAcceptedFromSASAllocation(BigInteger icmcId, Calendar sDate, Calendar eDate) {
-		List<SASAllocation> statusListForAccepted = cashPaymentJpaDao.getAllTodayAcceptedFromSASAllocation(icmcId,
-				sDate, eDate);
-		return statusListForAccepted;
+		return cashPaymentJpaDao.getAllTodayAcceptedFromSASAllocation(icmcId, sDate, eDate);
 	}
 
 	@Override
 	public SASAllocation getRequestedFromSASAllocation(BigInteger icmcId, Calendar sDate, Calendar eDate,
 			Long parentId) {
-		SASAllocation requestedSasAllocation = cashPaymentJpaDao.getRequestedFromSASAllocation(icmcId, sDate, eDate,
-				parentId);
-		return requestedSasAllocation;
+		return cashPaymentJpaDao.getRequestedFromSASAllocation(icmcId, sDate, eDate, parentId);
 	}
 
 	@Override
@@ -1895,15 +1786,13 @@ public class CashPaymentServiceImpl implements CashPaymentService {
 
 	@Override
 	public List<Tuple> machineInputReport(BigInteger icmcId, Calendar sDate, Calendar eDate, int denomination) {
-		List<Tuple> machineInputList = cashPaymentJpaDao.machineInputReport(icmcId, sDate, eDate, denomination);
-		return machineInputList;
+		return cashPaymentJpaDao.machineInputReport(icmcId, sDate, eDate, denomination);
 	}
 
 	@Override
 	public List<Tuple> machineOutputReport(BigInteger icmcId, Calendar sDate, Calendar eDate, int denomination,
 			CurrencyType type) {
-		List<Tuple> machineOutputList = cashPaymentJpaDao.machineOutputReport(icmcId, sDate, eDate, denomination, type);
-		return machineOutputList;
+		return cashPaymentJpaDao.machineOutputReport(icmcId, sDate, eDate, denomination, type);
 	}
 
 	@Override
@@ -1939,98 +1828,82 @@ public class CashPaymentServiceImpl implements CashPaymentService {
 
 	@Override
 	public List<ProcessBundleForCRAPayment> processBundleForCRAPayment(BigInteger icmcId) {
-		List<ProcessBundleForCRAPayment> forwardedBundleList = cashPaymentJpaDao.processBundleForCRAPayment(icmcId);
-		return forwardedBundleList;
+		return cashPaymentJpaDao.processBundleForCRAPayment(icmcId);
 	}
 
 	@Override
 	public long updateProcessbundleForCRAPayment(BigInteger icmcId, long id) {
-		long count = cashPaymentJpaDao.updateProcessbundleForCRAPayment(icmcId, id);
-		return count;
+		return cashPaymentJpaDao.updateProcessbundleForCRAPayment(icmcId, id);
 	}
 
 	@Override
 	public long updateSasAllocationForCancelBranchPayment(BigInteger icmcId, long id) {
-		long count = cashPaymentJpaDao.updateSasAllocationForCancelBranchPayment(icmcId, id);
-		return count;
+		return cashPaymentJpaDao.updateSasAllocationForCancelBranchPayment(icmcId, id);
 	}
 
 	@Override
 	public long updateSasForCancelBranchPayment(BigInteger icmcId, long id) {
-		long count = cashPaymentJpaDao.updateSasForCancelBranchPayment(icmcId, id);
-		return count;
+		return cashPaymentJpaDao.updateSasForCancelBranchPayment(icmcId, id);
 	}
 
 	@Override
 	public long updateBinTransactionCancelBranchPayment(BigInteger icmcId, BinTransaction binTransaction) {
-		long count = cashPaymentJpaDao.updateBinTransactionCancelBranchPayment(icmcId, binTransaction);
-		return count;
+		return cashPaymentJpaDao.updateBinTransactionCancelBranchPayment(icmcId, binTransaction);
 	}
 
 	@Override
 	public BinTransaction getPendingBundleFromDB(BigInteger icmcId, BinTransaction binTxn) {
-		BinTransaction pendingBundleFromDB = cashPaymentJpaDao.getPendingBundleFromDB(icmcId, binTxn);
-		return pendingBundleFromDB;
+		return cashPaymentJpaDao.getPendingBundleFromDB(icmcId, binTxn);
 	}
 
 	@Override
 	public boolean history(List<History> historyList) {
-		boolean isSaved = cashPaymentJpaDao.history(historyList);
-		return isSaved;
+		return cashPaymentJpaDao.history(historyList);
 	}
 
 	@Override
 	public List<Tuple> getIBITForIRV(BigInteger icmcId, Calendar sDate, Calendar eDate) {
-		List<Tuple> ibitList = cashPaymentJpaDao.getIBITForIRV(icmcId, sDate, eDate);
-		return ibitList;
+		return cashPaymentJpaDao.getIBITForIRV(icmcId, sDate, eDate);
 	}
 
 	@Override
 	public String getLinkBranchSolID(long icmcId) {
-		String linkBranchSolID = cashPaymentJpaDao.getLinkBranchSolID(icmcId);
-		return linkBranchSolID;
+		return cashPaymentJpaDao.getLinkBranchSolID(icmcId);
 	}
 
 	@Override
 	public String getServicingICMC(String solId) {
-		String servicingICMC = cashPaymentJpaDao.getServicingICMC(solId);
-		return servicingICMC;
+		return cashPaymentJpaDao.getServicingICMC(solId);
 	}
 
 	@Override
 	public List<Tuple> getBranchPaymentTotal(BigInteger icmcId, Calendar sDate, Calendar eDate) {
-		List<Tuple> branchPaymentList = cashPaymentJpaDao.getBranchPaymentTotal(icmcId, sDate, eDate);
-		return branchPaymentList;
+		return cashPaymentJpaDao.getBranchPaymentTotal(icmcId, sDate, eDate);
 	}
 
 	@Override
 	public List<Tuple> getCraPaymentTotalProcessed(BigInteger icmcId, Calendar sDate, Calendar eDate) {
-		List<Tuple> processedCRAList = cashPaymentJpaDao.getCraPaymentTotalProcessed(icmcId, sDate, eDate);
-		return processedCRAList;
+		return cashPaymentJpaDao.getCraPaymentTotalProcessed(icmcId, sDate, eDate);
 	}
 
 	@Override
 	public List<Tuple> getCraPaymentTotalReleased(BigInteger icmcId, Calendar sDate, Calendar eDate) {
-		List<Tuple> releasedCRAList = cashPaymentJpaDao.getCraPaymentTotalReleased(icmcId, sDate, eDate);
-		return releasedCRAList;
+		return cashPaymentJpaDao.getCraPaymentTotalReleased(icmcId, sDate, eDate);
 	}
 
 	@Override
 	public boolean saveDataInBinRegister(BinRegister binRegister) {
-		boolean isSaved = cashPaymentJpaDao.saveDataInBinRegister(binRegister);
-		return isSaved;
+		return cashPaymentJpaDao.saveDataInBinRegister(binRegister);
 	}
 
 	@Override
 	public String getSRNumberBySolId(String solId) {
-		String srNumberList = cashPaymentJpaDao.getSRNumberBySolId(solId);
-		return srNumberList;
+		return cashPaymentJpaDao.getSRNumberBySolId(solId);
 	}
 
 	@Override
 	public String getSRNumberById(long Id) {
-		String srNumberList = cashPaymentJpaDao.getSRNumberById(Id);
-		return srNumberList;
+		return cashPaymentJpaDao.getSRNumberById(Id);
 	}
 
 	@Override
@@ -2040,8 +1913,7 @@ public class CashPaymentServiceImpl implements CashPaymentService {
 
 	@Override
 	public List<SoiledRemittanceAllocation> TRReports(BigInteger icmcId, Calendar sDate, Calendar eDate) {
-		List<SoiledRemittanceAllocation> trData = cashPaymentJpaDao.TRReports(icmcId, sDate, eDate);
-		return trData;
+		return cashPaymentJpaDao.TRReports(icmcId, sDate, eDate);
 	}
 
 	@Override
@@ -2052,48 +1924,39 @@ public class CashPaymentServiceImpl implements CashPaymentService {
 	@Override
 	public void updateSasAllocationForCancelEditBranchPayment(BigInteger icmcId, long id) {
 		cashPaymentJpaDao.updateSasAllocationForCancelEditBranchPayment(icmcId, id);
-
 	}
 
 	@Override
 	public List<SASAllocation> getAllAcceptedFromSASAllocation1(BigInteger icmcId) {
-		List<SASAllocation> statusListForAccepted = cashPaymentJpaDao.getAllAcceptedFromSASAllocation1(icmcId);
-		return statusListForAccepted;
+		return cashPaymentJpaDao.getAllAcceptedFromSASAllocation1(icmcId);
 	}
 
 	@Override
 	public List<Sas> getORVReport1(BigInteger icmcId, Calendar sDate, Calendar eDate, Long sasId) {
-		List<Sas> orvList = cashPaymentJpaDao.getORVReport1(icmcId, sDate, eDate, sasId);
-		return orvList;
+		return cashPaymentJpaDao.getORVReport1(icmcId, sDate, eDate, sasId);
 	}
 
 	@Override
 	@Transactional
 	public List<Tuple> getSASAllocationRecordFromTuple(BigInteger icmcId, Calendar sDate, Calendar eDate) {
-		List<Tuple> sasAllocationList = cashPaymentJpaDao.getSASAllocationRecordFromTuple(icmcId, sDate, eDate);
-		return sasAllocationList;
+		return cashPaymentJpaDao.getSASAllocationRecordFromTuple(icmcId, sDate, eDate);
 	}
 
 	@Override
 	public List<SASAllocation> getDataToUpdateBinTransaction(BigInteger icmcId, Long parentId) {
-		List<SASAllocation> sasAllocation = cashPaymentJpaDao.getDataToUpdateBinTransaction(icmcId, parentId);
-		return sasAllocation;
+		return cashPaymentJpaDao.getDataToUpdateBinTransaction(icmcId, parentId);
 	}
 
 	@Override
 	public BinTransaction getDataFromBinTransactionForSasAllocationCancel(BigInteger icmcId, String binNumber,
 			Integer denomination) {
-		BinTransaction binTransactionData = cashPaymentJpaDao.getDataFromBinTransactionForSasAllocationCancel(icmcId,
-				binNumber, denomination);
-		return binTransactionData;
+		return cashPaymentJpaDao.getDataFromBinTransactionForSasAllocationCancel(icmcId, binNumber, denomination);
 	}
 
 	@Override
 	public BinTransaction getDataFromBinTransactionForSoiledAllocationCancel(BigInteger icmcId, String box,
 			Integer denomination) {
-		BinTransaction binTransactionData = cashPaymentJpaDao.getDataFromBinTransactionForSasAllocationCancel(icmcId,
-				box, denomination);
-		return binTransactionData;
+		return cashPaymentJpaDao.getDataFromBinTransactionForSasAllocationCancel(icmcId, box, denomination);
 	}
 
 	@Override
@@ -2104,25 +1967,19 @@ public class CashPaymentServiceImpl implements CashPaymentService {
 			throw new BaseGuiException("Can not update vault: icmc id " + binTransaction.getIcmcId() + " and bin "
 					+ binTransaction.getBinNumber());
 		}
-		boolean isUpdate = cashPaymentJpaDao.updateBinTransactionPendingBundleForCashPaymentCancel(binTransaction);
-		return isUpdate;
+		return cashPaymentJpaDao.updateBinTransactionPendingBundleForCashPaymentCancel(binTransaction);
 	}
 
-	/*
-	 * ////sahabuddin
-	 */ @Override
+	// sahabuddin
+	@Override
 	public long updateOrvStatus1(long id) {
-		long count = cashPaymentJpaDao.updateOrvStatus1(id);
-		return count;
+		return cashPaymentJpaDao.updateOrvStatus1(id);
 	}
 
-	/*
-	 * ////sahabuddin
-	 */
+	// sahabuddin
 	@Override
 	public long updateOrvAllocationStatus1(long id) {
-		long count = cashPaymentJpaDao.updateOrvAllocationStatus1(id);
-		return count;
+		return cashPaymentJpaDao.updateOrvAllocationStatus1(id);
 	}
 
 	@Override
@@ -2132,27 +1989,23 @@ public class CashPaymentServiceImpl implements CashPaymentService {
 
 	@Override
 	public boolean updateSASStatusAccept(Sas sas) {
-		boolean isSaved = cashPaymentJpaDao.updateSASStatusAccept(sas);
-		return isSaved;
+		return cashPaymentJpaDao.updateSASStatusAccept(sas);
 
 	}
 
 	@Override
 	public ProcessBundleForCRAPayment getCRAId(BigInteger icmcId) {
-		ProcessBundleForCRAPayment craId = cashPaymentJpaDao.getCRAId(icmcId);
-		return craId;
+		return cashPaymentJpaDao.getCRAId(icmcId);
 	}
 
 	@Override
 	public List<ProcessBundleForCRAPayment> getListCRAId(BigInteger icmcId) {
-		List<ProcessBundleForCRAPayment> craId = cashPaymentJpaDao.getListCRAId(icmcId);
-		return craId;
+		return cashPaymentJpaDao.getListCRAId(icmcId);
 	}
 
 	@Override
 	public List<CRA> valueFromCRA(BigInteger icmcId, long craId) {
-		List<CRA> craList = cashPaymentJpaDao.valueFromCRA(icmcId, craId);
-		return craList;
+		return cashPaymentJpaDao.valueFromCRA(icmcId, craId);
 	}
 
 	@Override
@@ -2247,7 +2100,6 @@ public class CashPaymentServiceImpl implements CashPaymentService {
 				this.updateSASStatus(sasAccept);
 			}
 		}
-
 		// Bin Register
 		BinRegister binRegister = new BinRegister();
 		binRegister.setWithdrawalBundle(sasAccept.getBundle());
@@ -2263,7 +2115,7 @@ public class CashPaymentServiceImpl implements CashPaymentService {
 		binRegister.setUpdateBy(user.getId());
 		binRegister.setIcmcId(user.getIcmcId());
 		this.saveDataInBinRegister(binRegister);
-		// Close bin Register
+
 		return sasAccept;
 	}
 
@@ -2446,23 +2298,18 @@ public class CashPaymentServiceImpl implements CashPaymentService {
 	@Override
 	public Boolean deleteEmptyBinFromBinTransaction(BigInteger icmcId, String binNumber) {
 		LOG.info("CashPaymentServiceImp deleteEmptyBinFromBinTransaction icmcId " + icmcId + " binNumber " + binNumber);
-		Boolean isDeleted = cashPaymentJpaDao.deleteEmptyBinFromBinTransaction(icmcId, binNumber);
-		LOG.info("CashPaymentServiceImp  isDeleted " + isDeleted);
-		return isDeleted;
+		return cashPaymentJpaDao.deleteEmptyBinFromBinTransaction(icmcId, binNumber);
 	}
 
 	@Override
 	public List<Tuple> getAllShrinkWrapBundleFromBranchReceipt(BigInteger icmcId) {
-		List<Tuple> branchReceipts = cashPaymentJpaDao.getAllShrinkWrapBundleFromBranchReceipt(icmcId);
-		return branchReceipts;
+		return cashPaymentJpaDao.getAllShrinkWrapBundleFromBranchReceipt(icmcId);
 	}
 
 	@Override
 	public List<BranchReceipt> getShrinkWrapBundleByDenomination(int denomination, BigInteger icmcId,
 			BinCategoryType binCategoryType) {
-		List<BranchReceipt> shrinkBundle = cashPaymentJpaDao.getShrinkWrapBundleByDenomination(denomination, icmcId,
-				binCategoryType);
-		return shrinkBundle;
+		return cashPaymentJpaDao.getShrinkWrapBundleByDenomination(denomination, icmcId, binCategoryType);
 	}
 
 	@Override
@@ -2488,32 +2335,26 @@ public class CashPaymentServiceImpl implements CashPaymentService {
 			this.updatebBranchReceiptForBranchPaymentCancel(branchReceipt);
 		}
 		return id;
-
 	}
 
 	@Override
 	public boolean updatebBranchReceiptForBranchPaymentCancel(BranchReceipt branchReceipt) {
-		boolean isUpdate = cashPaymentJpaDao.updatebBranchReceiptForBranchPaymentCancel(branchReceipt);
-		return isUpdate;
+		return cashPaymentJpaDao.updatebBranchReceiptForBranchPaymentCancel(branchReceipt);
 	}
 
 	@Override
 	public BranchReceipt checkBinOrBoxFromBranchReceipt(BigInteger icmcId, int denomination, BigDecimal bundle,
 			String binNumber) {
-		BranchReceipt branchReceipt = cashPaymentJpaDao.checkBinOrBoxFromBranchReceipt(icmcId, denomination, bundle,
-				binNumber);
-		return branchReceipt;
+		return cashPaymentJpaDao.checkBinOrBoxFromBranchReceipt(icmcId, denomination, bundle, binNumber);
 	}
 
 	@Override
 	public List<Tuple> getSoiledSummary(BigInteger icmcId, CurrencyType currencyType) {
-		List<Tuple> soiledSummary = cashPaymentJpaDao.getSoiledSummary(icmcId, currencyType);
-		return soiledSummary;
+		return cashPaymentJpaDao.getSoiledSummary(icmcId, currencyType);
 	}
 
 	@Override
 	public List<SoiledRemittanceAllocation> getSoiledForAccept(BigInteger icmcId, Calendar sDate, Calendar eDate) {
-		List<SoiledRemittanceAllocation> soiledList = cashPaymentJpaDao.getSoiledForAccept(icmcId, sDate, eDate);
-		return soiledList;
+		return cashPaymentJpaDao.getSoiledForAccept(icmcId, sDate, eDate);
 	}
 }

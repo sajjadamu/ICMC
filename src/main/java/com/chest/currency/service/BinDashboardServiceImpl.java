@@ -88,50 +88,42 @@ public class BinDashboardServiceImpl implements BinDashboardService {
 
 	@Override
 	public List<BinMaster> getBinNumAndColorCode(BigInteger icmcId) {
-		List<BinMaster> binList = binDashboardJpaDao.getBinNumAndColorCode(icmcId);
-		return binList;
+		return binDashboardJpaDao.getBinNumAndColorCode(icmcId);
 	}
 
 	@Override
 	public List<BinTransaction> getAvailableCapacity(String bin, BigInteger icmcId) {
-		List<BinTransaction> binList = binDashboardJpaDao.getAvailableCapacity(bin, icmcId);
-		return binList;
+		return binDashboardJpaDao.getAvailableCapacity(bin, icmcId);
 	}
 
 	@Override
 	public List<Tuple> getRecordForSummary(BigInteger icmcId) {
-		List<Tuple> binList = binDashboardJpaDao.getRecordForSummary(icmcId);
-		return binList;
+		return binDashboardJpaDao.getRecordForSummary(icmcId);
 	}
 
 	@Override
 	public List<ICMC> getICMCName() {
-		List<ICMC> icmcList = binDashboardJpaDao.getICMCName();
-		return icmcList;
+		return binDashboardJpaDao.getICMCName();
 	}
 
 	@Override
 	public List<BinTransaction> searchBins(CurrencyType binType, int denomination, BigInteger icmcId) {
-		List<BinTransaction> binList = binDashboardJpaDao.searchBins(binType, denomination, icmcId);
-		return binList;
+		return binDashboardJpaDao.searchBins(binType, denomination, icmcId);
 	}
 
 	@Override
 	public List<BinTransaction> getAllNonEmptyBins(BigInteger icmcId) {
-		List<BinTransaction> binList = binDashboardJpaDao.getAllNonEmptyBins(icmcId);
-		return binList;
+		return binDashboardJpaDao.getAllNonEmptyBins(icmcId);
 	}
 
 	@Override
 	public List<BinTransaction> getAllNonEmptyBins(BigInteger icmcId, CurrencyType cType) {
-		List<BinTransaction> binList = binDashboardJpaDao.getAllNonEmptyBins(icmcId, cType);
-		return binList;
+		return binDashboardJpaDao.getAllNonEmptyBins(icmcId, cType);
 	}
 
 	@Override
 	public List<BinMaster> viewBinMaster(BigInteger icmcId) {
-		List<BinMaster> binList = binDashboardJpaDao.viewBinMaster(icmcId);
-		return binList;
+		return binDashboardJpaDao.viewBinMaster(icmcId);
 	}
 
 	@Override
@@ -147,13 +139,11 @@ public class BinDashboardServiceImpl implements BinDashboardService {
 
 	@Override
 	public List<BinTransaction> getRecordForFIFO(BigInteger icmcId) {
-		List<BinTransaction> fifoList = binDashboardJpaDao.getRecordForFIFO(icmcId);
-		return fifoList;
+		return binDashboardJpaDao.getRecordForFIFO(icmcId);
 	}
 
 	@Override
 	public List<Process> getProcessListAtm(BigInteger icmcId) {
-
 		return binDashboardJpaDao.getProcessListAtm(icmcId);
 	}
 
@@ -169,8 +159,7 @@ public class BinDashboardServiceImpl implements BinDashboardService {
 
 	@Override
 	public List<MachineAllocation> getMachineAllocationForMachineWiseStatus(BigInteger icmcId) {
-		List<MachineAllocation> machineList = binDashboardJpaDao.getMachineAllocationForMachineWiseStatus(icmcId);
-		return machineList;
+		return binDashboardJpaDao.getMachineAllocationForMachineWiseStatus(icmcId);
 	}
 
 	@Override
@@ -187,107 +176,84 @@ public class BinDashboardServiceImpl implements BinDashboardService {
 
 	@Override
 	public List<BinTransaction> recordForDailyBinRecon(BigInteger icmcId, Calendar sDate, Calendar eDate) {
-		List<BinTransaction> binTxnListForDailyBinRecon = binDashboardJpaDao.recordForDailyBinRecon(icmcId, sDate,
-				eDate);
-		return binTxnListForDailyBinRecon;
+		return binDashboardJpaDao.recordForDailyBinRecon(icmcId, sDate, eDate);
 	}
 
 	@Override
 	public float getReceiveBundleForDailyReconBin(BinTransaction binTransaction) {
-		float bundle = binDashboardJpaDao.getReceiveBundleForDailyReconBin(binTransaction);
-		return bundle;
+		return binDashboardJpaDao.getReceiveBundleForDailyReconBin(binTransaction);
 	}
 
 	@Override
 	public List<Summary> getZoneWiseSummaryList() {
-		List<Summary> zoneWiseSummaryList = binDashboardJpaDao.getZoneWiseSummaryList();
-		return zoneWiseSummaryList;
+		return binDashboardJpaDao.getZoneWiseSummaryList();
 	}
 
 	@Override
 	public List<Tuple> getRecordCoinsForSummary(BigInteger icmcId) {
-		List<Tuple> forCoinsList = binDashboardJpaDao.getRecordCoinsForSummary(icmcId);
-		return forCoinsList;
+		return binDashboardJpaDao.getRecordCoinsForSummary(icmcId);
 	}
 
 	@Override
 	public BinMaster isValidBin(BigInteger icmcId, String binNumber) {
-		BinMaster dbBinName = binDashboardJpaDao.isValidBin(icmcId, binNumber);
-		return dbBinName;
+		return binDashboardJpaDao.isValidBin(icmcId, binNumber);
 	}
 
 	@Override
 	public List<BinTransaction> getBinNumAndTypeFromBinTransactionForVefiedYes(BigInteger icmcId) {
-		List<BinTransaction> binNumFromBinTransactionList = binDashboardJpaDao
-				.getBinNumAndTypeFromBinTransactionForVefiedYes(icmcId);
-		return binNumFromBinTransactionList;
+		return binDashboardJpaDao.getBinNumAndTypeFromBinTransactionForVefiedYes(icmcId);
 	}
 
 	@Override
 	public List<BinTransaction> getBinNumAndTypeFromBinTransactionForVefiedYesBox(BigInteger icmcId) {
-		List<BinTransaction> boxNumFromBinTransactionList = binDashboardJpaDao
-				.getBinNumAndTypeFromBinTransactionForVefiedYesBox(icmcId);
-		return boxNumFromBinTransactionList;
+		return binDashboardJpaDao.getBinNumAndTypeFromBinTransactionForVefiedYesBox(icmcId);
 	}
 
 	@Override
 	public List<BinTransaction> getBinNumAndTypeFromBinTransactionForVefiedYesBin(BigInteger icmcId) {
-		List<BinTransaction> binNumFromBinTransactionList = binDashboardJpaDao
-				.getBinNumAndTypeFromBinTransactionForVefiedYesBin(icmcId);
-		return binNumFromBinTransactionList;
+		return binDashboardJpaDao.getBinNumAndTypeFromBinTransactionForVefiedYesBin(icmcId);
 	}
 
 	@Override
 	public List<BinTransaction> getBinNumAndTypeFromBinTransactionForVefiedYesBag(BigInteger icmcId) {
-		List<BinTransaction> bagNumFromBinTransactionList = binDashboardJpaDao
-				.getBinNumAndTypeFromBinTransactionForVefiedYesBag(icmcId);
-		return bagNumFromBinTransactionList;
+		return binDashboardJpaDao.getBinNumAndTypeFromBinTransactionForVefiedYesBag(icmcId);
 	}
 
 	@Override
 	public List<BinTransaction> getBinNumAndTypeFromBinTransactionForVefiedNo(BigInteger icmcId) {
-		List<BinTransaction> binNumFromBinTransactionList = binDashboardJpaDao
-				.getBinNumAndTypeFromBinTransactionForVefiedNo(icmcId);
-		return binNumFromBinTransactionList;
+		return binDashboardJpaDao.getBinNumAndTypeFromBinTransactionForVefiedNo(icmcId);
 	}
 
 	@Override
 	public List<Tuple> getOpeningBalanceForIO2Report(BigInteger icmcId, Calendar sDate, Calendar eDate,
 			CashType cashType) {
-		List<Tuple> totalSumForTO2 = binDashboardJpaDao.getOpeningBalanceForTO2Report(icmcId, sDate, eDate, cashType);
-		return totalSumForTO2;
+		return binDashboardJpaDao.getOpeningBalanceForTO2Report(icmcId, sDate, eDate, cashType);
 	}
 
 	@Override
 	public List<Tuple> getOpeningBalanceForIO2ReportFromIndent(BigInteger icmcId, Calendar sDate, Calendar eDate,
 			CashType cashType) {
-		List<Tuple> totalSumForTO2 = binDashboardJpaDao.getOpeningBalanceForIO2ReportFromIndent(icmcId, sDate, eDate,
-				cashType);
-		return totalSumForTO2;
+		return binDashboardJpaDao.getOpeningBalanceForIO2ReportFromIndent(icmcId, sDate, eDate, cashType);
 	}
 
 	@Override
 	public List<Tuple> getCoinsOpeningBalanceForIO2Report(BigInteger icmcId, CashType cashType) {
-		List<Tuple> totalCoinsSumForIO2 = binDashboardJpaDao.getCoinsOpeningBalanceForIO2Report(icmcId, cashType);
-		return totalCoinsSumForIO2;
+		return binDashboardJpaDao.getCoinsOpeningBalanceForIO2Report(icmcId, cashType);
 	}
 
 	@Override
 	public List<Tuple> getSoiledBalanceForEOD(BigInteger icmcId, CashType cashType) {
-		List<Tuple> totalSoiledSumForIO2 = binDashboardJpaDao.getSoiledBalanceForEOD(icmcId, cashType);
-		return totalSoiledSumForIO2;
+		return binDashboardJpaDao.getSoiledBalanceForEOD(icmcId, cashType);
 	}
 
 	@Override
 	public List<Tuple> getRemittanceReceivedForFresh(BigInteger icmcId, Calendar sDate, Calendar eDate) {
-		List<Tuple> totalSumForRemittance = binDashboardJpaDao.getRemittanceReceivedForFresh(icmcId, sDate, eDate);
-		return totalSumForRemittance;
+		return binDashboardJpaDao.getRemittanceReceivedForFresh(icmcId, sDate, eDate);
 	}
 
 	@Override
 	public boolean insertInBinTxnBOD(BinTransactionBOD binTransactionBod) {
-		boolean isSaved = binDashboardJpaDao.insertInBinTxnBOD(binTransactionBod);
-		return isSaved;
+		return binDashboardJpaDao.insertInBinTxnBOD(binTransactionBod);
 	}
 
 	@Override
@@ -407,153 +373,125 @@ public class BinDashboardServiceImpl implements BinDashboardService {
 
 	@Override
 	public List<Tuple> getRemittanceSentForSoiled(BigInteger icmcId, Calendar sDate, Calendar eDate) {
-		List<Tuple> remittanceSentForSoiledList = binDashboardJpaDao.getRemittanceSentForSoiled(icmcId, sDate, eDate);
-		return remittanceSentForSoiledList;
+		return binDashboardJpaDao.getRemittanceSentForSoiled(icmcId, sDate, eDate);
 	}
 
 	@Override
 	public List<Tuple> getDepositForBranch(BigInteger icmcId, Calendar sDate, Calendar eDate) {
-		List<Tuple> depositForBranchList = binDashboardJpaDao.getDepositForBranch(icmcId, sDate, eDate);
-		return depositForBranchList;
+		return binDashboardJpaDao.getDepositForBranch(icmcId, sDate, eDate);
 	}
 
 	@Override
 	public List<Tuple> getDepositFromBranch(BigInteger icmcId, Calendar sDate, Calendar eDate,
 			CurrencyType currencyType) {
-		List<Tuple> depositForBranchList = binDashboardJpaDao.getDepositFromBranch(icmcId, sDate, eDate, currencyType);
-		return depositForBranchList;
+		return binDashboardJpaDao.getDepositFromBranch(icmcId, sDate, eDate, currencyType);
 	}
 
 	@Override
 	public List<Tuple> getProcessFromProcessingOutPut(BigInteger icmcId, Calendar sDate, Calendar eDate,
 			CurrencyType currencyType) {
-		List<Tuple> processFromProcessingOutPut = binDashboardJpaDao.getProcessFromProcessingOutPut(icmcId, sDate,
-				eDate, currencyType);
-		return processFromProcessingOutPut;
+		return binDashboardJpaDao.getProcessFromProcessingOutPut(icmcId, sDate, eDate, currencyType);
 	}
 
 	@Override
 	public List<Tuple> getProcessFromProcessingOutPut(BigInteger icmcId, Calendar sDate, Calendar eDate) {
-		List<Tuple> processFromProcessingOutPut = binDashboardJpaDao.getProcessFromProcessingOutPut(icmcId, sDate,
-				eDate);
-		return processFromProcessingOutPut;
+		return binDashboardJpaDao.getProcessFromProcessingOutPut(icmcId, sDate, eDate);
 	}
 
 	@Override
 	public List<Tuple> getProcessBundleProcessingOutPut(BigInteger icmcId, Calendar sDate, Calendar eDate) {
-		List<Tuple> processFromProcessingOutPut = binDashboardJpaDao.getProcessBundleProcessingOutPut(icmcId, sDate,
-				eDate);
-		return processFromProcessingOutPut;
+		return binDashboardJpaDao.getProcessBundleProcessingOutPut(icmcId, sDate, eDate);
 	}
 
 	@Override
 	public List<Tuple> getDepositForDSB(BigInteger icmcId, Calendar sDate, Calendar eDate) {
-		List<Tuple> depositForDSBList = binDashboardJpaDao.getDepositForDSB(icmcId, sDate, eDate);
-		return depositForDSBList;
+		return binDashboardJpaDao.getDepositForDSB(icmcId, sDate, eDate);
 	}
 
 	@Override
 	public List<Tuple> getDepositForDiversion(BigInteger icmcId, Calendar sDate, Calendar eDate) {
-		List<Tuple> depositForDiversionList = binDashboardJpaDao.getDepositForDiversion(icmcId, sDate, eDate);
-		return depositForDiversionList;
+		return binDashboardJpaDao.getDepositForDiversion(icmcId, sDate, eDate);
 	}
 
 	@Override
 	public List<Tuple> getDepositForOtherBank(BigInteger icmcId, Calendar sDate, Calendar eDate) {
-		List<Tuple> depositForOtherBankList = binDashboardJpaDao.getDepositForOtherBank(icmcId, sDate, eDate);
-		return depositForOtherBankList;
+		return binDashboardJpaDao.getDepositForOtherBank(icmcId, sDate, eDate);
 	}
 
 	@Override
 	public List<Tuple> getDepositForIndent(BigInteger icmcId, Calendar sDate, Calendar eDate) {
-		List<Tuple> depositForIndent = binDashboardJpaDao.getDepositForIndent(icmcId, sDate, eDate);
-		return depositForIndent;
+		return binDashboardJpaDao.getDepositForIndent(icmcId, sDate, eDate);
 	}
 
 	@Override
 	public List<Tuple> getWithdrawalForDiversion(BigInteger icmcId, Calendar sDate, Calendar eDate) {
-		List<Tuple> diversionList = binDashboardJpaDao.getWithdrawalForDiversion(icmcId, sDate, eDate);
-		return diversionList;
+		return binDashboardJpaDao.getWithdrawalForDiversion(icmcId, sDate, eDate);
 	}
 
 	@Override
 	public List<Tuple> getWithdrawalForCRA(BigInteger icmcId, Calendar sDate, Calendar eDate) {
-		List<Tuple> craList = binDashboardJpaDao.getWithdrawalForCRA(icmcId, sDate, eDate);
-		return craList;
+		return binDashboardJpaDao.getWithdrawalForCRA(icmcId, sDate, eDate);
 	}
 
 	@Override
 	public List<Tuple> getWithdrawalForProcessCRA(BigInteger icmcId, Calendar sDate, Calendar eDate) {
-		List<Tuple> craList = binDashboardJpaDao.getWithdrawalForProcessCRA(icmcId, sDate, eDate);
-		return craList;
+		return binDashboardJpaDao.getWithdrawalForProcessCRA(icmcId, sDate, eDate);
 	}
 
 	@Override
 	public List<Tuple> getWithdrawalForOtherBank(BigInteger icmcId, Calendar sDate, Calendar eDate) {
-		List<Tuple> otherBankList = binDashboardJpaDao.getWithdrawalForOtherBank(icmcId, sDate, eDate);
-		return otherBankList;
+		return binDashboardJpaDao.getWithdrawalForOtherBank(icmcId, sDate, eDate);
 	}
 
 	@Override
 	public List<Tuple> getWithdrawalForBranch(BigInteger icmcId, Calendar sDate, Calendar eDate) {
-		List<Tuple> sasList = binDashboardJpaDao.getWithdrawalForBranch(icmcId, sDate, eDate);
-		return sasList;
+		return binDashboardJpaDao.getWithdrawalForBranch(icmcId, sDate, eDate);
 	}
 
 	@Override
 	public List<Tuple> getWithdrawalFromBranch(BigInteger icmcId, Calendar sDate, Calendar eDate,
 			CurrencyType currencyType) {
-		List<Tuple> sasList = binDashboardJpaDao.getWithdrawalFromBranch(icmcId, sDate, eDate, currencyType);
-		return sasList;
+		return binDashboardJpaDao.getWithdrawalFromBranch(icmcId, sDate, eDate, currencyType);
 	}
 
 	@Override
 	public List<Tuple> getSoiledNotes(BigInteger icmcId) {
-		List<Tuple> soiledNotesList = binDashboardJpaDao.getSoiledNotes(icmcId);
-		return soiledNotesList;
+		return binDashboardJpaDao.getSoiledNotes(icmcId);
 	}
 
 	@Override
 	public List<Tuple> getAdditionalInfoFreshNotes(BigInteger icmcId) {
-		List<Tuple> additionFreshNotes = binDashboardJpaDao.getAdditionalInfoFreshNotes(icmcId);
-		return additionFreshNotes;
+		return binDashboardJpaDao.getAdditionalInfoFreshNotes(icmcId);
 	}
 
 	@Override
 	public List<Tuple> getMachineAllocationSummary(BigInteger icmcId) {
-		List<Tuple> pendingBungleListFromMachineAllocation = binDashboardJpaDao.getMachineAllocationSummary(icmcId);
-		return pendingBungleListFromMachineAllocation;
+		return binDashboardJpaDao.getMachineAllocationSummary(icmcId);
 	}
 
 	@Override
 	public List<Tuple> getCurrentMachineAllocationSummary(BigInteger icmcId, Calendar sDate, Calendar eDate) {
-		List<Tuple> pendingBungleListFromMachineAllocation = binDashboardJpaDao
-				.getCurrentMachineAllocationSummary(icmcId, sDate, eDate);
-		return pendingBungleListFromMachineAllocation;
+		return binDashboardJpaDao.getCurrentMachineAllocationSummary(icmcId, sDate, eDate);
 	}
 
 	@Override
 	public List<RegionSummary> getRegionWiseSummaryList(String region) {
-		List<RegionSummary> regionWiseSummaryList = binDashboardJpaDao.getRegionWiseSummaryList(region);
-		return regionWiseSummaryList;
+		return binDashboardJpaDao.getRegionWiseSummaryList(region);
 	}
 
 	@Override
 	public List<Tuple> getGrandSummary() {
-		List<Tuple> grandSummaryList = binDashboardJpaDao.getGrandSummary();
-		return grandSummaryList;
+		return binDashboardJpaDao.getGrandSummary();
 	}
 
 	@Override
 	public List<Tuple> getZoneWiseGrandSummary() {
-		List<Tuple> zoneWiseGrandSummaryList = binDashboardJpaDao.getZoneWiseGrandSummary();
-		return zoneWiseGrandSummaryList;
+		return binDashboardJpaDao.getZoneWiseGrandSummary();
 	}
 
 	@Override
 	public List<Tuple> getFlatZoneSummaryList() {
-		List<Tuple> flatZoneSummaryList = binDashboardJpaDao.getFlatZoneSummaryList();
-		return flatZoneSummaryList;
+		return binDashboardJpaDao.getFlatZoneSummaryList();
 	}
 
 	@Override
@@ -566,7 +504,6 @@ public class BinDashboardServiceImpl implements BinDashboardService {
 		BigDecimal notesTotal = BigDecimal.ZERO;
 		BigDecimal coinsTotal = BigDecimal.ZERO;
 		BigDecimal processingRoomTotal = BigDecimal.ZERO;
-		BigDecimal totalICMCBalance = BigDecimal.ZERO;
 		List<Tuple> summaryList = binDashboardJpaDao.getRecordForSummary(icmcId);
 		for (Tuple tuple : summaryList) {
 			if (tuple.get(0, CurrencyType.class).equals(CurrencyType.FRESH)) {
@@ -607,8 +544,7 @@ public class BinDashboardServiceImpl implements BinDashboardService {
 		for (Tuple tuple : pendingBundleFromMachineAllocation) {
 			processingRoomTotal = processingRoomTotal.add(tuple.get(2, BigDecimal.class));
 		}
-		totalICMCBalance = notesTotal.add(coinsTotal).add(processingRoomTotal);
-		return totalICMCBalance;
+		return notesTotal.add(coinsTotal).add(processingRoomTotal);
 	}
 
 	/*
@@ -622,21 +558,17 @@ public class BinDashboardServiceImpl implements BinDashboardService {
 	private BigDecimal getNotesTotal(BigDecimal notesTotal, Tuple tuple) {
 		int denom = tuple.get(1, Integer.class);
 		BigDecimal bundle = tuple.get(2, BigDecimal.class);
-		notesTotal = notesTotal.add(bundle.multiply(BigDecimal.valueOf(denom)).multiply(BigDecimal.valueOf(1000)));
-		return notesTotal;
+		return notesTotal.add(bundle.multiply(BigDecimal.valueOf(denom)).multiply(BigDecimal.valueOf(1000)));
 	}
 
 	@Override
 	public List<Tuple> getCoinRemittanceReceivedForFresh(BigInteger icmcId, Calendar sDate, Calendar eDate) {
-		List<Tuple> totalSumForCoinRemittance = binDashboardJpaDao.getCoinRemittanceReceivedForFresh(icmcId, sDate,
-				eDate);
-		return totalSumForCoinRemittance;
+		return binDashboardJpaDao.getCoinRemittanceReceivedForFresh(icmcId, sDate, eDate);
 	}
 
 	@Override
 	public List<Tuple> getCoinsWithdrawalForBranch(BigInteger icmcId, Calendar sDate, Calendar eDate) {
-		List<Tuple> sasList = binDashboardJpaDao.getCoinsWithdrawalForBranch(icmcId, sDate, eDate);
-		return sasList;
+		return binDashboardJpaDao.getCoinsWithdrawalForBranch(icmcId, sDate, eDate);
 	}
 
 	@Override
@@ -2150,10 +2082,7 @@ public class BinDashboardServiceImpl implements BinDashboardService {
 								.add(coinClosingBalanceDenomination10.multiply(new BigDecimal(10))))));
 
 		binTxBodList.add(11, coinClosingBalanceBOD);
-		// End Closing balance
-
 		return binTxBodList;
-
 	}
 
 	@Override
@@ -2198,24 +2127,20 @@ public class BinDashboardServiceImpl implements BinDashboardService {
 	@Override
 	public Map<String, BankReceipt> getBankDepositList(BigInteger icmcId, Calendar sDate, Calendar eDate) {
 		List<Tuple> bankDepositTupleList = binDashboardJpaDao.getBankDepositList(icmcId, sDate, eDate);
-		Map<String, BankReceipt> bankDepositList = UtilityMapper.mapTupleToBankReceipt(bankDepositTupleList);
-		return bankDepositList;
+		return UtilityMapper.mapTupleToBankReceipt(bankDepositTupleList);
 	}
 
 	@Override
 	public Map<String, FreshFromRBI> getFreshDepositList(BigInteger icmcId, Calendar sDate, Calendar eDate) {
 		List<Tuple> freshRBINotesTupleList = binDashboardJpaDao.getRemittanceReceivedForFresh(icmcId, sDate, eDate);
 		List<Tuple> freshRBICoinsTupleList = binDashboardJpaDao.getCoinRemittanceReceivedForFresh(icmcId, sDate, eDate);
-		Map<String, FreshFromRBI> freshFromRBIList = UtilityMapper.mapTupleToFreshFromRBI(freshRBINotesTupleList,
-				freshRBICoinsTupleList);
-		return freshFromRBIList;
+		return UtilityMapper.mapTupleToFreshFromRBI(freshRBINotesTupleList, freshRBICoinsTupleList);
 	}
 
 	@Override
 	public Map<String, DiversionIRV> getDirvDepositList(BigInteger icmcId, Calendar sDate, Calendar eDate) {
 		List<Tuple> dirvDepositTupleList = binDashboardJpaDao.getDepositForDiversion(icmcId, sDate, eDate);
-		Map<String, DiversionIRV> dirvDepositList = UtilityMapper.mapTupleToDirvReceipt(dirvDepositTupleList);
-		return dirvDepositList;
+		return UtilityMapper.mapTupleToDirvReceipt(dirvDepositTupleList);
 	}
 
 	@Override
@@ -2232,8 +2157,7 @@ public class BinDashboardServiceImpl implements BinDashboardService {
 
 	@Override
 	public List<BinTransaction> getBinWiseSummary(BigInteger icmcId) {
-		List<BinTransaction> binWiseSummaryList = binDashboardJpaDao.getBinWiseSummary(icmcId);
-		return binWiseSummaryList;
+		return binDashboardJpaDao.getBinWiseSummary(icmcId);
 	}
 
 	@Override
@@ -2641,8 +2565,7 @@ public class BinDashboardServiceImpl implements BinDashboardService {
 	@Override
 	public Map<String, Mutilated> getMutilatedDataForDN2(BigInteger icmcId, Calendar sDate, Calendar eDate) {
 		List<Tuple> mutilatedList = binDashboardJpaDao.getMutilatedDataForDN2(icmcId, sDate, eDate);
-		Map<String, Mutilated> mutilatedDepositList = UtilityMapper.mapTupleToMutilated(mutilatedList);
-		return mutilatedDepositList;
+		return UtilityMapper.mapTupleToMutilated(mutilatedList);
 	}
 
 	@Override
@@ -3865,22 +3788,18 @@ public class BinDashboardServiceImpl implements BinDashboardService {
 						.multiply(new BigDecimal(5)).add(denominationCoin10Total.multiply(new BigDecimal(10))))));
 
 		binTxBodList.add(9, binTxnBODForCoinsTotal);
-		// Close Coins Total Calculation
-
 		return binTxBodList;
 
 	}
 
 	@Override
 	public List<Tuple> getRemittanceSentForAllSoiled(BigInteger icmcId) {
-		List<Tuple> soiledAllList = binDashboardJpaDao.getRemittanceSentForAllSoiled(icmcId);
-		return soiledAllList;
+		return binDashboardJpaDao.getRemittanceSentForAllSoiled(icmcId);
 	}
 
 	@Override
 	public List<Tuple> getTotalNotesForDiscrepancy(BigInteger icmcId, Calendar sDate, Calendar eDate) {
-		List<Tuple> notesList = binDashboardJpaDao.getTotalNotesForDiscrepancy(icmcId, sDate, eDate);
-		return notesList;
+		return binDashboardJpaDao.getTotalNotesForDiscrepancy(icmcId, sDate, eDate);
 	}
 
 	@Override
@@ -4156,8 +4075,6 @@ public class BinDashboardServiceImpl implements BinDashboardService {
 
 				// end by shahabuddin
 
-				//
-
 				discAllocation.setSairrem(shortValue.add(fakeValue).add(mutilValue));
 				discAllocation.setSadscash(sadMutilValue);
 
@@ -4186,40 +4103,33 @@ public class BinDashboardServiceImpl implements BinDashboardService {
 	@Override
 	public List<Tuple> getTotalNotesForDiscrepancy(BigInteger icmcId, Calendar sDate, Calendar eDate,
 			String normalOrSuspense) {
-		List<Tuple> notesList = binDashboardJpaDao.getTotalNotesForDiscrepancy(icmcId, sDate, eDate, normalOrSuspense);
-		return notesList;
+		return binDashboardJpaDao.getTotalNotesForDiscrepancy(icmcId, sDate, eDate, normalOrSuspense);
 	}
 
 	@Override
 	public List<BinTransaction> searchBins(int denomination, BigInteger icmcId) {
-		List<BinTransaction> binList = binDashboardJpaDao.searchBins(denomination, icmcId);
-		return binList;
+		return binDashboardJpaDao.searchBins(denomination, icmcId);
 	}
 
 	@Override
 	public List<String> getBinOrBoxFromBinTransactionForCashTransfer(BigInteger icmcId,
 			BinCategoryType binCategoryType) {
-		List<String> binOrBoxList = binDashboardJpaDao.getBinOrBoxFromBinTransactionForCashTransfer(icmcId,
-				binCategoryType);
-		return binOrBoxList;
+		return binDashboardJpaDao.getBinOrBoxFromBinTransactionForCashTransfer(icmcId, binCategoryType);
 	}
 
 	@Override
 	public List<String> getBinFromBinMasterForCashTransfer(BigInteger icmcId, CurrencyType binType) {
-		List<String> binNumberList = binDashboardJpaDao.getBinFromBinMasterForCashTransfer(icmcId, binType);
-		return binNumberList;
+		return binDashboardJpaDao.getBinFromBinMasterForCashTransfer(icmcId, binType);
 	}
 
 	@Override
 	public BinTransaction checkBinOrBox(BigInteger icmcId, String binNumber) {
-		BinTransaction binOrBox = binDashboardJpaDao.checkBinOrBox(icmcId, binNumber);
-		return binOrBox;
+		return binDashboardJpaDao.checkBinOrBox(icmcId, binNumber);
 	}
 
 	@Override
 	public BinTransaction binDetailsByBinNumber(BigInteger icmcId, String binNumber) {
-		BinTransaction binOrBox = binDashboardJpaDao.binDetailsByBinNumber(icmcId, binNumber);
-		return binOrBox;
+		return binDashboardJpaDao.binDetailsByBinNumber(icmcId, binNumber);
 	}
 
 	@Override
@@ -4244,8 +4154,7 @@ public class BinDashboardServiceImpl implements BinDashboardService {
 
 	@Override
 	public long updateBinTxnAfterCashTransfer(BigInteger icmcId, String binNumber) {
-		long count = binDashboardJpaDao.updateBinTxnAfterCashTransfer(icmcId, binNumber);
-		return count;
+		return binDashboardJpaDao.updateBinTxnAfterCashTransfer(icmcId, binNumber);
 	}
 
 	@Override
@@ -4304,20 +4213,17 @@ public class BinDashboardServiceImpl implements BinDashboardService {
 
 	@Override
 	public BinTransaction getDataFromBinTrxnForAuditor(BinTransaction binTxn) {
-		BinTransaction binTransaction = binDashboardJpaDao.getDataFromBinTrxnForAuditor(binTxn);
-		return binTransaction;
+		return binDashboardJpaDao.getDataFromBinTrxnForAuditor(binTxn);
 	}
 
 	@Override
 	public BinMaster getBinNumberById(Long id) {
-		BinMaster binMaster = binDashboardJpaDao.getBinNumberById(id);
-		return binMaster;
+		return binDashboardJpaDao.getBinNumberById(id);
 	}
 
 	@Override
 	public BinMaster getIsAllocatedValue(BigInteger icmcId, String binNumber) {
-		BinMaster binMaster = binDashboardJpaDao.getIsAllocatedValue(icmcId, binNumber);
-		return binMaster;
+		return binDashboardJpaDao.getIsAllocatedValue(icmcId, binNumber);
 	}
 
 	@Override
@@ -4332,8 +4238,7 @@ public class BinDashboardServiceImpl implements BinDashboardService {
 
 	@Override
 	public List<BinMaster> getDisableBin(BigInteger icmcId) {
-		List<BinMaster> disableBinList = binDashboardJpaDao.getDisableBin(icmcId);
-		return disableBinList;
+		return binDashboardJpaDao.getDisableBin(icmcId);
 	}
 
 	@Override
@@ -4343,8 +4248,7 @@ public class BinDashboardServiceImpl implements BinDashboardService {
 
 	@Override
 	public BinTransaction getBinNumListForAuditorIndent(AuditorIndent auditorIndent, CurrencyType type) {
-		BinTransaction binList = binDashboardJpaDao.getBinNumListForAuditorIndent(auditorIndent, type);
-		return binList;
+		return binDashboardJpaDao.getBinNumListForAuditorIndent(auditorIndent, type);
 	}
 
 	@Override
@@ -4354,20 +4258,17 @@ public class BinDashboardServiceImpl implements BinDashboardService {
 
 	@Override
 	public List<AuditorIndent> viewAuditorIndent(BigInteger icmcId) {
-		List<AuditorIndent> auditorIndentList = binDashboardJpaDao.viewAuditorIndent(icmcId);
-		return auditorIndentList;
+		return binDashboardJpaDao.viewAuditorIndent(icmcId);
 	}
 
 	@Override
 	public List<AuditorIndent> viewAuditorIndentList(BigInteger icmcId) {
-		List<AuditorIndent> auditorIndentList = binDashboardJpaDao.viewAuditorIndentList(icmcId);
-		return auditorIndentList;
+		return binDashboardJpaDao.viewAuditorIndentList(icmcId);
 	}
 
 	@Override
 	public List<AuditorIndent> auditorIndentForMachineAllocation(BigInteger icmcId) {
-		List<AuditorIndent> auditorIndentList = binDashboardJpaDao.auditorIndentForMachineAllocation(icmcId);
-		return auditorIndentList;
+		return binDashboardJpaDao.auditorIndentForMachineAllocation(icmcId);
 	}
 
 	@Override
@@ -4377,8 +4278,7 @@ public class BinDashboardServiceImpl implements BinDashboardService {
 
 	@Override
 	public BinTransaction getBinRecordForAcceptInVault(BinTransaction txn) {
-		BinTransaction binTxn = binDashboardJpaDao.getBinRecordForAcceptInVault(txn);
-		return binTxn;
+		return binDashboardJpaDao.getBinRecordForAcceptInVault(txn);
 	}
 
 	@Override
@@ -4393,8 +4293,7 @@ public class BinDashboardServiceImpl implements BinDashboardService {
 
 	@Override
 	public List<Sas> coinsRegister(BigInteger icmcId, Calendar sDate, Calendar eDate) {
-		List<Sas> coinsList = binDashboardJpaDao.coinsRegister(icmcId, sDate, eDate);
-		return coinsList;
+		return binDashboardJpaDao.coinsRegister(icmcId, sDate, eDate);
 	}
 
 	@Override
@@ -4404,67 +4303,53 @@ public class BinDashboardServiceImpl implements BinDashboardService {
 
 	@Override
 	public List<TrainingRegister> getTrainingRegisterData(BigInteger icmcId) {
-		List<TrainingRegister> trainingRegsiterList = binDashboardJpaDao.getTrainingRegisterData(icmcId);
-		return trainingRegsiterList;
+		return binDashboardJpaDao.getTrainingRegisterData(icmcId);
 	}
 
 	@Override
 	public TrainingRegister getTrainingDataBYId(Long id) {
-		TrainingRegister trainingRegister = binDashboardJpaDao.getTrainingDataBYId(id);
-		return trainingRegister;
+		return binDashboardJpaDao.getTrainingDataBYId(id);
 	}
 
 	@Override
 	public boolean updateTrainingRegsiter(TrainingRegister trainingRegsiter) {
-		boolean isUpdate = binDashboardJpaDao.updateTrainingRegsiter(trainingRegsiter);
-		return isUpdate;
+		return binDashboardJpaDao.updateTrainingRegsiter(trainingRegsiter);
 	}
 
 	@Override
 	public List<TrainingRegister> getTrainingRegisterReport(BigInteger icmcId, Calendar sDate, Calendar eDate) {
-		List<TrainingRegister> trainingRegsiterList = binDashboardJpaDao.getTrainingRegisterReport(icmcId, sDate,
-				eDate);
-		return trainingRegsiterList;
+		return binDashboardJpaDao.getTrainingRegisterReport(icmcId, sDate, eDate);
 	}
 
 	@Override
 	public BoxMaster getBoxCapacity(BigInteger icmcId, String boxName) {
-		BoxMaster boxMaster = binDashboardJpaDao.getBoxCapacity(icmcId, boxName);
-		return boxMaster;
+		return binDashboardJpaDao.getBoxCapacity(icmcId, boxName);
 	}
 
 	@Override
 	public BranchReceipt getBranchReceiptDetailsForCashTransferQR(BigInteger icmcId, String binNumber,
 			int denomination) {
-		BranchReceipt branchReceiptDetails = binDashboardJpaDao.getBranchReceiptDetailsForCashTransferQR(icmcId,
-				binNumber, denomination);
-		return branchReceiptDetails;
+		return binDashboardJpaDao.getBranchReceiptDetailsForCashTransferQR(icmcId, binNumber, denomination);
 	}
 
 	@Override
 	public DSB getDSBDetailsForCashTransferQR(BigInteger icmcId, String binNumber, int denomination) {
-		DSB dsbDetails = binDashboardJpaDao.getDSBDetailsForCashTransferQR(icmcId, binNumber, denomination);
-		return dsbDetails;
+		return binDashboardJpaDao.getDSBDetailsForCashTransferQR(icmcId, binNumber, denomination);
 	}
 
 	@Override
 	public DiversionIRV getDiversionIRVDetailsForCashTransferQR(BigInteger icmcId, String binNumber, int denomination) {
-		DiversionIRV diversionDetails = binDashboardJpaDao.getDiversionIRVDetailsForCashTransferQR(icmcId, binNumber,
-				denomination);
-		return diversionDetails;
+		return binDashboardJpaDao.getDiversionIRVDetailsForCashTransferQR(icmcId, binNumber, denomination);
 	}
 
 	@Override
 	public BankReceipt getBankReceiptDetailsForCashTransferQR(BigInteger icmcId, String binNumber, int denomination) {
-		BankReceipt bankReceiptDetails = binDashboardJpaDao.getBankReceiptDetailsForCashTransferQR(icmcId, binNumber,
-				denomination);
-		return bankReceiptDetails;
+		return binDashboardJpaDao.getBankReceiptDetailsForCashTransferQR(icmcId, binNumber, denomination);
 	}
 
 	@Override
 	public List<Tuple> getCRAAllocationData(BigInteger icmcId, Calendar sDate, Calendar eDate) {
-		List<Tuple> getCRAAllocationBundle = binDashboardJpaDao.getCRAAllocationData(icmcId, sDate, eDate);
-		return getCRAAllocationBundle;
+		return binDashboardJpaDao.getCRAAllocationData(icmcId, sDate, eDate);
 	}
 
 	@Override
@@ -4535,8 +4420,7 @@ public class BinDashboardServiceImpl implements BinDashboardService {
 
 	@Override
 	public CRA getBranchVendorAndMSPFromCRA(BigInteger icmcId, long id) {
-		CRA cra = binDashboardJpaDao.getBranchVendorAndMSPFromCRA(icmcId, id);
-		return cra;
+		return binDashboardJpaDao.getBranchVendorAndMSPFromCRA(icmcId, id);
 	}
 
 	@Override
@@ -4561,37 +4445,31 @@ public class BinDashboardServiceImpl implements BinDashboardService {
 
 	@Override
 	public String getBranchFromDiversion(BigInteger icmcId, long id) {
-		String branchName = binDashboardJpaDao.getBranchFromDiversion(icmcId, id);
-		return branchName;
+		return binDashboardJpaDao.getBranchFromDiversion(icmcId, id);
 	}
 
 	@Override
 	public String getBranchFromOtherBank(BigInteger icmcId, long id) {
-		String branchName = binDashboardJpaDao.getBranchFromOtherBank(icmcId, id);
-		return branchName;
+		return binDashboardJpaDao.getBranchFromOtherBank(icmcId, id);
 	}
 
 	@Override
 	public Map<String, SoiledRemittanceAllocation> getSoiledAllocationForCashBookWithDrawal(BigInteger icmcId,
 			Calendar sDate, Calendar eDate) {
 		List<Tuple> soiledList = binDashboardJpaDao.getSoiledAllocationForCashBookWithDrawal(icmcId, sDate, eDate);
-		Map<String, SoiledRemittanceAllocation> soiledListData = UtilityMapper.mapTupleToSoiledAllocation(soiledList);
-		return soiledListData;
+		return UtilityMapper.mapTupleToSoiledAllocation(soiledList);
 	}
 
 	@Override
 	public List<Tuple> getDataFromBranchForCashMovementRegister(BigInteger icmcId, Calendar sDate, Calendar eDate,
 			CurrencyType currencyType) {
-		List<Tuple> branchList = binDashboardJpaDao.getDataFromBranchForCashMovementRegister(icmcId, sDate, eDate,
-				currencyType);
-		return branchList;
+		return binDashboardJpaDao.getDataFromBranchForCashMovementRegister(icmcId, sDate, eDate, currencyType);
 	}
 
 	@Override
 	public List<Tuple> getWithdrawalForCRAForCashMovement(BigInteger icmcId, Calendar sDate, Calendar eDate,
 			CurrencyType currencyType) {
-		List<Tuple> craList = binDashboardJpaDao.getWithdrawalForCRAForCashMovement(icmcId, sDate, eDate, currencyType);
-		return craList;
+		return binDashboardJpaDao.getWithdrawalForCRAForCashMovement(icmcId, sDate, eDate, currencyType);
 	}
 
 	@Override
@@ -5253,83 +5131,68 @@ public class BinDashboardServiceImpl implements BinDashboardService {
 
 		binTxBodList.add(4, binTxnBODForWithdrawalSOILED);
 
-		// code end for soiled
-
 		return binTxBodList;
 	}
 
 	@Override
 	public List<Tuple> getDepositForBranchForCashMovement(BigInteger icmcId, Calendar sDate, Calendar eDate) {
-		List<Tuple> depositListForCashMovement = binDashboardJpaDao.getDepositForBranchForCashMovement(icmcId, sDate,
-				eDate);
-		return depositListForCashMovement;
+		return binDashboardJpaDao.getDepositForBranchForCashMovement(icmcId, sDate, eDate);
 	}
 
 	@Override
 	public List<Tuple> getDepositFromHistory(BigInteger icmcId, String binNumber, Calendar sDate, Calendar eDate) {
-		List<Tuple> historyList = binDashboardJpaDao.getDepositFromHistory(icmcId, binNumber, sDate, eDate);
-		return historyList;
+		return binDashboardJpaDao.getDepositFromHistory(icmcId, binNumber, sDate, eDate);
 	}
 
 	@Override
 	public Calendar getInsertTimeFromCRA(BigInteger icmcId, String branch, Calendar sDate, Calendar eDate) {
-		Calendar insertTime = binDashboardJpaDao.getInsertTimeFromCRA(icmcId, branch, sDate, eDate);
-		return insertTime;
+		return binDashboardJpaDao.getInsertTimeFromCRA(icmcId, branch, sDate, eDate);
 	}
 
 	@Override
 	public List<Tuple> getIBITForIRV(BigInteger icmcId, Calendar sDate, Calendar eDate) {
-		List<Tuple> ibitList = binDashboardJpaDao.getIBITForIRV(icmcId, sDate, eDate);
-		return ibitList;
+		return binDashboardJpaDao.getIBITForIRV(icmcId, sDate, eDate);
 	}
 
 	@Override
 	public String getLinkBranchSolID(long icmcId) {
-		String linkBranchSolID = binDashboardJpaDao.getLinkBranchSolID(icmcId);
-		return linkBranchSolID;
+		return binDashboardJpaDao.getLinkBranchSolID(icmcId);
 	}
 
 	@Override
 	public String getServicingICMC(String solId) {
-		String servicingICMC = binDashboardJpaDao.getServicingICMC(solId);
-		return servicingICMC;
+		return binDashboardJpaDao.getServicingICMC(solId);
 	}
 
 	@Override
 	public List<Tuple> getAllReceiptDataForBinRegister(BigInteger icmcId, Calendar sDate, Calendar eDate) {
-		List<Tuple> receiptDataList = binDashboardJpaDao.getAllReceiptDataForBinRegister(icmcId, sDate, eDate);
-		return receiptDataList;
+		return binDashboardJpaDao.getAllReceiptDataForBinRegister(icmcId, sDate, eDate);
 	}
 
 	@Override
 	public List<History> getBundleFromHistory(BigInteger icmcId, String binNumber, Integer denomination) {
-		List<History> bundleFromHistory = binDashboardJpaDao.getBundleFromHistory(icmcId, binNumber, denomination);
-		return bundleFromHistory;
+		return binDashboardJpaDao.getBundleFromHistory(icmcId, binNumber, denomination);
 	}
 
 	@Override
 	public boolean updateBundle(BigInteger icmcId, String binNumber, Integer Denomination, BigDecimal withdrawalBundle,
 			long id) {
-		boolean isUpdate = binDashboardJpaDao.updateBundle(icmcId, binNumber, Denomination, withdrawalBundle, id);
-		return isUpdate;
+		return binDashboardJpaDao.updateBundle(icmcId, binNumber, Denomination, withdrawalBundle, id);
 	}
 
 	@Override
 	public boolean updateStatus(BigInteger icmcId, long id) {
-		boolean statusUpdated = binDashboardJpaDao.updateStatus(icmcId, id);
-		return statusUpdated;
+		return binDashboardJpaDao.updateStatus(icmcId, id);
 	}
 
 	@Override
 	public History getWithdrawalbundle(BigInteger icmcId, String binNumber, Integer denomination) {
-		History withdrawalBundle = binDashboardJpaDao.getWithdrawalbundle(icmcId, binNumber, denomination);
-		return withdrawalBundle;
+		return binDashboardJpaDao.getWithdrawalbundle(icmcId, binNumber, denomination);
 	}
 
 	@Override
 	public boolean insertDataInBinRegister(BinRegister binRegister) {
-		boolean isSaved = binDashboardJpaDao.insertDataInBinRegister(binRegister);
-		return isSaved;
+		return binDashboardJpaDao.insertDataInBinRegister(binRegister);
 	}
 
 	@Override
@@ -5363,35 +5226,29 @@ public class BinDashboardServiceImpl implements BinDashboardService {
 
 	@Override
 	public List<Tuple> DN2Report(BigInteger icmcId, Calendar sDate, Calendar eDate) {
-		List<Tuple> dn2Report = binDashboardJpaDao.getMutilatedDataForDN2(icmcId, sDate, eDate);
-		return dn2Report;
+		return binDashboardJpaDao.getMutilatedDataForDN2(icmcId, sDate, eDate);
 	}
 
 	@Override
 	public List<String> getBinFromBinTransaction(BigInteger icmcId, int denomination, CurrencyType currencyType) {
-		List<String> binList = binDashboardJpaDao.getBinFromBinTransaction(icmcId, denomination, currencyType);
-		return binList;
+		return binDashboardJpaDao.getBinFromBinTransaction(icmcId, denomination, currencyType);
 	}
 
 	@Override
 	public List<Tuple> getIBITForIO2(BigInteger icmcId, Calendar sDate, Calendar eDate) {
-		List<Tuple> ibitList = binDashboardJpaDao.getIBITForIO2(icmcId, sDate, eDate);
-		return ibitList;
+		return binDashboardJpaDao.getIBITForIO2(icmcId, sDate, eDate);
 	}
 
 	@Override
 	public boolean checkAvlBundleByDenoCategory(BigInteger icmcId, BinTransaction binTransaction) {
 		// List<Tuple> ibitList = binDashboardJpaDao.getIBITForIO2(icmcId,
 		// sDate, eDate);
-		binDashboardJpaDao.checkAvlBundleByDenoCategory(icmcId, binTransaction);
-
-		return true;
+		return binDashboardJpaDao.checkAvlBundleByDenoCategory(icmcId, binTransaction);
 	}
 
 	@Override
 	public ChestMaster getLastChestSlipNumber(BigInteger icmcId) {
-		ChestMaster chestMaster = binDashboardJpaDao.getLastChestSlipNumber(icmcId);
-		return chestMaster;
+		return binDashboardJpaDao.getLastChestSlipNumber(icmcId);
 	}
 
 	@Override
@@ -5403,16 +5260,14 @@ public class BinDashboardServiceImpl implements BinDashboardService {
 
 	@Override
 	public BigInteger getChestSlipNumber(BigInteger icmcId, Calendar sDate, Calendar eDate) {
-		BigInteger chestMaster = binDashboardJpaDao.getChestSlipNumber(icmcId, sDate, eDate);
-		return chestMaster;
+		return binDashboardJpaDao.getChestSlipNumber(icmcId, sDate, eDate);
 	}
 
 	@Override
 	public List<String> getBinFroPartialTransfer(BigInteger icmcId, Integer denomination, CurrencyType currencyType,
 			BigDecimal bundle, BinCategoryType binCategoryType, String bin) {
-		List<String> binDetailsFromBinTxn = binDashboardJpaDao.getBinFroPartialTransfer(icmcId, denomination,
-				currencyType, bundle, binCategoryType, bin);
-		return binDetailsFromBinTxn;
+		return binDashboardJpaDao.getBinFroPartialTransfer(icmcId, denomination, currencyType, bundle, binCategoryType,
+				bin);
 	}
 
 	@Override
@@ -5428,8 +5283,7 @@ public class BinDashboardServiceImpl implements BinDashboardService {
 
 	@Override
 	public BinTransactionBOD checkEODHappenOrNot(BigInteger icmcId, CashType cashType, Calendar sDate, Calendar eDate) {
-		BinTransactionBOD binTransactionBOD = binDashboardJpaDao.checkEODHappenOrNot(icmcId, cashType, sDate, eDate);
-		return binTransactionBOD;
+		return binDashboardJpaDao.checkEODHappenOrNot(icmcId, cashType, sDate, eDate);
 	}
 
 	@Override
@@ -5440,37 +5294,31 @@ public class BinDashboardServiceImpl implements BinDashboardService {
 
 	@Override
 	public long updateBranchReceiptAfterCashTransfer(BigInteger icmcId, String binNumber) {
-		long count = binDashboardJpaDao.updateBranchReceiptAfterCashTransfer(icmcId, binNumber);
-		return count;
+		return binDashboardJpaDao.updateBranchReceiptAfterCashTransfer(icmcId, binNumber);
 	}
 
 	@Override
 	public BinTransactionBOD getDataFromBinTransactionBOD(BigInteger icmcId) {
-		BinTransactionBOD bodData = binDashboardJpaDao.getDataFromBinTransactionBOD(icmcId);
-		return bodData;
+		return binDashboardJpaDao.getDataFromBinTransactionBOD(icmcId);
 	}
 
 	public List<Indent> getIndentCash(BigInteger IcmcId, Calendar sDate, Calendar eDate) {
-		List<Indent> indentList = binDashboardJpaDao.getIndentCash(IcmcId, sDate, eDate);
-		return indentList;
+		return binDashboardJpaDao.getIndentCash(IcmcId, sDate, eDate);
 	}
 
 	@Override
 	public List<SASAllocation> getsasAllocation(BigInteger IcmcId, Calendar sDate, Calendar eDate) {
-		List<SASAllocation> sasAllocationList = binDashboardJpaDao.getsasAllocation(IcmcId, sDate, eDate);
-		return sasAllocationList;
+		return binDashboardJpaDao.getsasAllocation(IcmcId, sDate, eDate);
 	}
 
 	@Override
 	public List<BranchReceipt> getBranchReceiptValue(BigInteger IcmcId, Calendar sDate, Calendar eDate) {
-		List<BranchReceipt> branchReceipt = binDashboardJpaDao.getBranchReceiptValue(IcmcId, sDate, eDate);
-		return branchReceipt;
+		return binDashboardJpaDao.getBranchReceiptValue(IcmcId, sDate, eDate);
 	}
 
 	@Override
 	public List<DiversionIRV> getDiversionIRV(BigInteger IcmcId, Calendar sDate, Calendar eDate) {
-		List<DiversionIRV> diversionIRV = binDashboardJpaDao.getDiversionIRV(IcmcId, sDate, eDate);
-		return diversionIRV;
+		return binDashboardJpaDao.getDiversionIRV(IcmcId, sDate, eDate);
 	}
 
 	@Override

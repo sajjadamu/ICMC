@@ -90,9 +90,7 @@ public class ProcessingRoomServiceImpl implements ProcessingRoomService {
 	@Override
 	public String getBinForIndentRequest(String denomination, String bundle) {
 		LOG.info("Bin For Indent Request");
-		String binNumber = processingRoomDao.getBinForIndentRequest(denomination, bundle);
-		LOG.info("Bin For Indent Request");
-		return binNumber;
+		return processingRoomDao.getBinForIndentRequest(denomination, bundle);
 	}
 
 	@Override
@@ -113,61 +111,49 @@ public class ProcessingRoomServiceImpl implements ProcessingRoomService {
 
 	@Override
 	public List<Indent> viewBinDetail(int denomination, String bin, BigInteger icmcId) {
-		List<Indent> indentList = processingRoomJpaDao.viewBinDetail(denomination, bin, icmcId);
-		return indentList;
+		return processingRoomJpaDao.viewBinDetail(denomination, bin, icmcId);
 	}
 
 	@Override
 	public List<DiscrepancyAllocation> getDiscrepancyByDate(BigInteger icmcId, Date sDate, Date tDate,
 			String normalOrSuspense) {
-		List<DiscrepancyAllocation> discrepancyList = processingRoomJpaDao.getDiscrepancyByDate(icmcId, sDate, tDate,
-				normalOrSuspense);
-		return discrepancyList;
+		return processingRoomJpaDao.getDiscrepancyByDate(icmcId, sDate, tDate, normalOrSuspense);
 	}
 
 	@Override
 	public Indent getUpdateIndentOtherBankRequest(BankReceipt otherBankReceiptdb, BigInteger icmcId) {
-		Indent indentList = processingRoomJpaDao.viewUpdateIndentOtherBankRequest(otherBankReceiptdb, icmcId);
-		return indentList;
+		return processingRoomJpaDao.viewUpdateIndentOtherBankRequest(otherBankReceiptdb, icmcId);
 	}
 
 	@Override
 	public Indent getUpdateIndentIVRRequest(DiversionIRV diversionIRV, BigInteger icmcId) {
-		Indent indentList = processingRoomJpaDao.viewUpdateIndentIVRRequest(diversionIRV, icmcId);
-		return indentList;
+		return processingRoomJpaDao.viewUpdateIndentIVRRequest(diversionIRV, icmcId);
 	}
 
 	@Override
 	public List<BinTransaction> getBinNumListForIndent(int denomination, BigDecimal bundle, BigInteger icmcId,
 			CashSource cashSource, BinCategoryType binCategoryType) {
-		List<BinTransaction> binFromTxnList = processingRoomJpaDao.getBinNumListForIndent(denomination, bundle, icmcId,
-				cashSource, binCategoryType);
-
-		return binFromTxnList;
+		return processingRoomJpaDao.getBinNumListForIndent(denomination, bundle, icmcId, cashSource, binCategoryType);
 	}
 
 	@Override
 	public List<Indent> getBinFromIndent(int denomination) {
-		List<Indent> binListFromIndent = processingRoomJpaDao.getBinFromIndent(denomination);
-		return binListFromIndent;
+		return processingRoomJpaDao.getBinFromIndent(denomination);
 	}
 
 	@Override
 	public Indent getUpdateIndentRequest(DSB dsbdb, BigInteger icmcId) {
-		Indent indentList = processingRoomJpaDao.viewUpdateIndentRequest(dsbdb, icmcId);
-		return indentList;
+		return processingRoomJpaDao.viewUpdateIndentRequest(dsbdb, icmcId);
 	}
 
 	@Override
 	public Indent getIndentById(long id) {
-		Indent indent = processingRoomJpaDao.getIndentById(id);
-		return indent;
+		return processingRoomJpaDao.getIndentById(id);
 	}
 
 	@Override
 	public boolean updateIndentRequest(Indent indent) {
-		boolean isSaved = processingRoomJpaDao.updateIndentRequest(indent);
-		return isSaved;
+		return processingRoomJpaDao.updateIndentRequest(indent);
 	}
 
 	/*
@@ -180,41 +166,37 @@ public class ProcessingRoomServiceImpl implements ProcessingRoomService {
 	@Override
 	public List<Indent> getAggregatedIndentRequestForMachineAllocation(BigInteger icmcId, CashSource cashSource,
 			Calendar sDate, Calendar eDate) {
-		List<Indent> indentListForMachineAllocation = processingRoomJpaDao
-				.getAggregatedIndentRequestForMachineAllocation(icmcId, cashSource, sDate, eDate);
-		return indentListForMachineAllocation;
+		return processingRoomJpaDao.getAggregatedIndentRequestForMachineAllocation(icmcId, cashSource, sDate, eDate);
 	}
 
 	@Override
 
 	public Indent getIndentDataById(long id, BigInteger icmcId) {
-		Indent indent = processingRoomJpaDao.getIndentDataById(id, icmcId);
-		return indent;
+		return processingRoomJpaDao.getIndentDataById(id, icmcId);
 	}
 
 	@Override
-	public BinTransaction getBinFromTransaction(String bin, BigInteger icmcId) {
-		BinTransaction binTxn = processingRoomJpaDao.getBinFromTransaction(bin, icmcId);
-		return binTxn;
+	public BinTransaction getBinFromTransaction(String bin, BigInteger icmcId, Integer denomination) {
+		return processingRoomJpaDao.getBinFromTransaction(bin, icmcId, denomination);
 	}
 
 	@Override
 	public boolean updateIndentStatus(Indent indent) {
-		boolean IsSaved = processingRoomJpaDao.updateIndentRequest(indent);
-		return IsSaved;
+		return processingRoomJpaDao.updateIndentRequest(indent);
 	}
 
 	@Override
 	@Transactional
-	public boolean processIndentRequest(String bin, BigDecimal bundle, User user) {
+	public boolean processIndentRequest(String bin, BigDecimal bundle, User user, Integer denomination) {
 
 		Indent indent = new Indent();// this.getIndentDataById(id,
 		indent.setUpdateTime(Calendar.getInstance()); // user.getIcmcId());
 		indent.setBin(bin);
 		indent.setBundle(bundle);
 		indent.setIcmcId(user.getIcmcId());
+		indent.setDenomination(denomination);
 		boolean isIndentUpdate = false;
-		BinTransaction txnBean = this.getBinFromTransaction(bin.trim(), user.getIcmcId());
+		BinTransaction txnBean = this.getBinFromTransaction(bin.trim(), user.getIcmcId(), denomination);
 		LOG.info("processIndentRequest txnBean " + txnBean);
 		LOG.info("processIndentRequest indent " + indent);
 		if (null != txnBean.getReceiveBundle() && txnBean.getReceiveBundle().compareTo(BigDecimal.ZERO) > 0
@@ -259,14 +241,12 @@ public class ProcessingRoomServiceImpl implements ProcessingRoomService {
 
 	@Override
 	public int deleteDataFromBinTxn(BinTransaction txnBean) {
-		int count = processingRoomJpaDao.deleteDataFromBinTxn(txnBean);
-		return count;
+		return processingRoomJpaDao.deleteDataFromBinTxn(txnBean);
 	}
 
 	@Override
 	public boolean updateBinMaster(BinMaster binMaster) {
-		boolean isSaved = processingRoomJpaDao.updateBinMaster(binMaster);
-		return isSaved;
+		return processingRoomJpaDao.updateBinMaster(binMaster);
 	}
 
 	@Override
@@ -276,14 +256,12 @@ public class ProcessingRoomServiceImpl implements ProcessingRoomService {
 			throw new BaseGuiException("Can not update vault: icmc id " + binTransaction.getIcmcId() + " and bin "
 					+ binTransaction.getBinNumber());
 		}
-		boolean isSaved = processingRoomJpaDao.updateBinTxn(binTransaction);
-		return isSaved;
+		return processingRoomJpaDao.updateBinTxn(binTransaction);
 	}
 
 	@Override
 	public boolean insertInMachineAllocation(MachineAllocation machineAllocation) {
-		boolean isSaved = processingRoomJpaDao.insertInMachineAllocation(machineAllocation);
-		return isSaved;
+		return processingRoomJpaDao.insertInMachineAllocation(machineAllocation);
 	}
 
 	/*
@@ -295,14 +273,12 @@ public class ProcessingRoomServiceImpl implements ProcessingRoomService {
 
 	@Override
 	public boolean updateBundleInAuditorIndent(AuditorIndent indent) {
-		boolean isSaved = processingRoomJpaDao.updateBundleInAuditorIndent(indent);
-		return isSaved;
+		return processingRoomJpaDao.updateBundleInAuditorIndent(indent);
 	}
 
 	@Override
 	public boolean updateBundleInIndent(Indent indent) {
-		boolean isSaved = processingRoomJpaDao.updateBundleInIndent(indent);
-		return isSaved;
+		return processingRoomJpaDao.updateBundleInIndent(indent);
 	}
 
 	@Override
@@ -344,50 +320,42 @@ public class ProcessingRoomServiceImpl implements ProcessingRoomService {
 
 	@Override
 	public List<Process> getProcessedDataList(BigInteger icmcId, Calendar sDate, Calendar eDate) {
-		List<Process> processList = processingRoomJpaDao.getProcessedDataList(icmcId, sDate, eDate);
-		return processList;
+		return processingRoomJpaDao.getProcessedDataList(icmcId, sDate, eDate);
 	}
 
 	@Override
 	public List<AuditorProcess> getAuditorProcessedData(BigInteger icmcId, Calendar sDate, Calendar eDate) {
-		List<AuditorProcess> processList = processingRoomJpaDao.getAuditorProcessedData(icmcId, sDate, eDate);
-		return processList;
+		return processingRoomJpaDao.getAuditorProcessedData(icmcId, sDate, eDate);
 	}
 
 	@Override
 	public List<BinMaster> getPriorityBinListByType(BinMaster binMaster) {
-		List<BinMaster> priorityBinList = processingRoomJpaDao.getPriorityBinListByType(binMaster);
-		return priorityBinList;
+		return processingRoomJpaDao.getPriorityBinListByType(binMaster);
 	}
 
 	@Override
 	public List<BinTransaction> getBinTxnListByDenom(BinTransaction binTx) {
-		List<BinTransaction> binListFromTxn = processingRoomJpaDao.getBinTxnListByDenom(binTx);
-		return binListFromTxn;
+		return processingRoomJpaDao.getBinTxnListByDenom(binTx);
 	}
 
 	@Override
 	public boolean updateBinMasterForProcess(BinMaster binMaster) {
-		boolean isSaved = processingRoomJpaDao.updateBinMasterForProcess(binMaster);
-		return isSaved;
+		return processingRoomJpaDao.updateBinMasterForProcess(binMaster);
 	}
 
 	@Override
 	public boolean insertInBinTxn(BinTransaction binTransaction) {
-		boolean isSaved = processingRoomJpaDao.insertInBinTxn(binTransaction);
-		return isSaved;
+		return processingRoomJpaDao.insertInBinTxn(binTransaction);
 	}
 
 	@Override
 	public boolean updateInBinTxn(BinTransaction binTransaction) {
-		boolean isSaved = processingRoomJpaDao.updateInBinTxn(binTransaction);
-		return isSaved;
+		return processingRoomJpaDao.updateInBinTxn(binTransaction);
 	}
 
 	@Override
 	public boolean createProcess(List<Process> process) {
-		boolean isSaved = processingRoomJpaDao.createProcess(process);
-		return isSaved;
+		return processingRoomJpaDao.createProcess(process);
 	}
 
 	@Override
@@ -532,8 +500,7 @@ public class ProcessingRoomServiceImpl implements ProcessingRoomService {
 		BinMaster master = new BinMaster();
 		master.setFirstPriority(currencyType);
 		master.setIcmcId(user.getIcmcId());
-		List<BinMaster> binMasterList = this.getPriorityBinListByType(master);
-		return binMasterList;
+		return this.getPriorityBinListByType(master);
 	}
 
 	private List<BinTransaction> getBinTxnListByDenom(Process process, User user) {
@@ -543,8 +510,7 @@ public class ProcessingRoomServiceImpl implements ProcessingRoomService {
 		binTxTemp.setDenomination(process.getDenomination());
 		binTxTemp.setBinType(process.getCurrencyType());
 		binTxTemp.setBinCategoryType(process.getBinCategoryType());
-		List<BinTransaction> binList = this.getBinTxnListByDenom(binTxTemp);
-		return binList;
+		return this.getBinTxnListByDenom(binTxTemp);
 	}
 
 	private List<BinTransaction> getBinTxnListByDenomForAuditorProcess(AuditorProcess process, User user) {
@@ -554,8 +520,7 @@ public class ProcessingRoomServiceImpl implements ProcessingRoomService {
 		binTxTemp.setDenomination(process.getDenomination());
 		binTxTemp.setBinType(process.getCurrencyType());
 		binTxTemp.setBinCategoryType(process.getBinCategoryType());
-		List<BinTransaction> binList = this.getBinTxnListByDenom(binTxTemp);
-		return binList;
+		return this.getBinTxnListByDenom(binTxTemp);
 	}
 
 	private void addTransactions(User user, List<BinTransaction> binTxs, CurrencyType currencyType) {
@@ -600,32 +565,27 @@ public class ProcessingRoomServiceImpl implements ProcessingRoomService {
 
 	public String getQrCode(Process process) {
 		String filepath = qrCodeGen.generateProcessingRoomQR(process);
-		String path = getPath(filepath);
-		return path;
+		return getPath(filepath);
 	}
 
 	public String getQrCodeAuditor(AuditorProcess process) {
 		String filepath = qrCodeGen.generateProcessingRoomQRAuditor(process);
-		String path = getPath(filepath);
-		return path;
+		return getPath(filepath);
 	}
 
 	public String getQrCodeForCRA(ProcessBundleForCRAPayment process) {
 		String filepath = qrCodeGen.generateCRAPaymentProcessingRoomQR(process);
-		String path = getPath(filepath);
-		return path;
+		return getPath(filepath);
 	}
 
 	@Override
 	public boolean updatePrcocessStatus(Process process) {
-		boolean IsSaved = processingRoomJpaDao.updateProcessStatus(process);
-		return IsSaved;
+		return processingRoomJpaDao.updateProcessStatus(process);
 	}
 
 	@Override
 	public List<Tuple> indentSummary(BigInteger icmcId, CashSource cashSource) {
-		List<Tuple> list = processingRoomJpaDao.indentSummary(icmcId, cashSource);
-		return list;
+		return processingRoomJpaDao.indentSummary(icmcId, cashSource);
 	}
 
 	@Override
@@ -679,39 +639,32 @@ public class ProcessingRoomServiceImpl implements ProcessingRoomService {
 
 	@Override
 	public List<AssignVaultCustodian> getAssignVaultCustodian(BigInteger icmcId, Calendar sDate, Calendar eDate) {
-
 		return processingRoomJpaDao.getListAssignVaultCustodian(icmcId, sDate, eDate);
 	}
 
 	public List<MachineAllocation> getMachineAllocationRecordForProcessing(BigInteger icmcId, Calendar sDate,
 			Calendar eDate) {
-		List<MachineAllocation> machineList = processingRoomJpaDao.getMachineAllocationRecordForProcessing(icmcId,
-				sDate, eDate);
-		return machineList;
+		return processingRoomJpaDao.getMachineAllocationRecordForProcessing(icmcId, sDate, eDate);
 	}
 
 	@Override
 	public boolean saveAssignVaultCustodian(AssignVaultCustodian assignVaultCustodian,
 			AssignVaultCustodian vaultCustodian) {
-
 		return processingRoomJpaDao.saveAssignVaultCustodian(assignVaultCustodian, vaultCustodian);
 	}
 
 	@Override
 	public AssignVaultCustodian assignVaultCustodianRecordForModify(Long id) {
-
 		return processingRoomJpaDao.assignVaultCustodianRecordForModify(id);
 	}
 
 	@Override
 	public boolean updateAssignVaultCustodian(AssignVaultCustodian assignVaultCustodian) {
-
 		return processingRoomJpaDao.updateAssignVaultCustodian(assignVaultCustodian);
 	}
 
 	@Override
 	public List<RepeatabilityTestInput> getRepeatabilityTestInput(BigInteger icmcId) {
-
 		return processingRoomJpaDao.getRepeatabilityTestInput(icmcId);
 	}
 
@@ -723,7 +676,6 @@ public class ProcessingRoomServiceImpl implements ProcessingRoomService {
 
 	@Override
 	public RepeatabilityTestInput repeatabilityTestInputRecordForModify(Long id) {
-
 		return processingRoomJpaDao.repeatabilityTestInputRecordForModify(id);
 	}
 
@@ -762,19 +714,16 @@ public class ProcessingRoomServiceImpl implements ProcessingRoomService {
 
 	@Override
 	public List<FreshCurrency> getFreshCurrency(BigInteger icmcId) {
-
 		return processingRoomJpaDao.getFreshCurrency(icmcId);
 	}
 
 	@Override
 	public boolean insertFreshCurrency(FreshCurrency freshCurrency) {
-
 		return processingRoomJpaDao.insertFreshCurrency(freshCurrency);
 	}
 
 	@Override
 	public FreshCurrency freshCurrencyForModify(Long id) {
-
 		return processingRoomJpaDao.freshCurrencyForModify(id);
 	}
 
@@ -813,44 +762,37 @@ public class ProcessingRoomServiceImpl implements ProcessingRoomService {
 
 	@Override
 	public List<DiscrepancyAllocation> getDiscrepancy(BigInteger icmcId, String normalOrSuspense) {
-		List<DiscrepancyAllocation> discrepancyList = processingRoomJpaDao.getDiscrepancy(icmcId, normalOrSuspense);
-		return discrepancyList;
+		return processingRoomJpaDao.getDiscrepancy(icmcId, normalOrSuspense);
 	}
 
 	@Override
 	public List<FreshFromRBI> getFreshFromRBIRecord(User user) {
-		List<FreshFromRBI> potdarList = processingRoomJpaDao.getFreshFromRBIRecord(user);
-		return potdarList;
+		return processingRoomJpaDao.getFreshFromRBIRecord(user);
 	}
 
 	@Override
 	public boolean updateBinTransaction(BinTransaction binTransaction) {
-		boolean isUpdate = processingRoomJpaDao.updateBinTransaction(binTransaction);
-		return isUpdate;
+		return processingRoomJpaDao.updateBinTransaction(binTransaction);
 	}
 
 	@Override
 	public List<Tuple> indentSummaryForFresh(BigInteger icmcId, CashSource cashSource) {
-		List<Tuple> indentSummaryForFresh = processingRoomJpaDao.indentSummaryForFresh(icmcId, cashSource);
-		return indentSummaryForFresh;
+		return processingRoomJpaDao.indentSummaryForFresh(icmcId, cashSource);
 	}
 
 	@Override
 	public List<Machine> getMachineNumber(BigInteger icmcId) {
-		List<Machine> machineList = processingRoomJpaDao.getMachineNumber(icmcId);
-		return machineList;
+		return processingRoomJpaDao.getMachineNumber(icmcId);
 	}
 
 	@Override
 	public List<DefineKeySet> getKeyNumber(DefineKeySet defineKeySet) {
-		List<DefineKeySet> keyNumberList = processingRoomJpaDao.getKeyNumber(defineKeySet);
-		return keyNumberList;
+		return processingRoomJpaDao.getKeyNumber(defineKeySet);
 	}
 
 	@Override
 	public List<DefineKeySet> getLocationOfLock(DefineKeySet defineKeySet) {
-		List<DefineKeySet> locationOfLockList = processingRoomJpaDao.getLocationOfLock(defineKeySet);
-		return locationOfLockList;
+		return processingRoomJpaDao.getLocationOfLock(defineKeySet);
 	}
 
 	@Override
@@ -885,8 +827,7 @@ public class ProcessingRoomServiceImpl implements ProcessingRoomService {
 
 	@Override
 	public boolean saveCRAPaymentProcessRecord(ProcessBundleForCRAPayment processBundleForCRAPayment) {
-		boolean isSaved = processingRoomJpaDao.saveCRAPaymentProcessRecord(processBundleForCRAPayment);
-		return isSaved;
+		return processingRoomJpaDao.saveCRAPaymentProcessRecord(processBundleForCRAPayment);
 	}
 
 	@Override
@@ -935,20 +876,17 @@ public class ProcessingRoomServiceImpl implements ProcessingRoomService {
 
 	@Override
 	public List<Tuple> getForwardBundleTotalForCRAPayment(BigInteger icmcId) {
-		List<Tuple> list = processingRoomJpaDao.getForwardBundleTotalForCRAPayment(icmcId);
-		return list;
+		return processingRoomJpaDao.getForwardBundleTotalForCRAPayment(icmcId);
 	}
 
 	@Override
 	public ForwardBundleForCRAPayment getBundleFromForwardCRA(ForwardBundleForCRAPayment forwardBundle) {
-		ForwardBundleForCRAPayment denomination = processingRoomJpaDao.getBundleFromForwardCRA(forwardBundle);
-		return denomination;
+		return processingRoomJpaDao.getBundleFromForwardCRA(forwardBundle);
 	}
 
 	@Override
 	public boolean insertBranchIndentRequest(List<BranchReceipt> eligibleBranchIndentRequestList) {
-		boolean isSaved = processingRoomJpaDao.insertBranchIndentRequest(eligibleBranchIndentRequestList);
-		return isSaved;
+		return processingRoomJpaDao.insertBranchIndentRequest(eligibleBranchIndentRequestList);
 	}
 
 	@Override
@@ -1033,35 +971,29 @@ public class ProcessingRoomServiceImpl implements ProcessingRoomService {
 
 	@Override
 	public List<Tuple> indentSummaryForFreshFromBinTxn(BigInteger icmcId, CashSource cashSource) {
-		List<Tuple> indentSummaryForFreshFromBinTxn = processingRoomJpaDao.indentSummaryForFreshFromBinTxn(icmcId,
-				cashSource);
-		return indentSummaryForFreshFromBinTxn;
+		return processingRoomJpaDao.indentSummaryForFreshFromBinTxn(icmcId, cashSource);
 	}
 
 	@Override
 	public List<BinTransaction> getBinNumListForFreshIndent(int denomination, BigDecimal bundle, BigInteger icmcId,
 			CashSource cashSource, BinCategoryType binCategoryType, String rbiOrderNo) {
-		List<BinTransaction> binTxnListForFresh = processingRoomJpaDao.getBinNumListForFreshIndent(denomination, bundle,
-				icmcId, cashSource, binCategoryType, rbiOrderNo);
-		return binTxnListForFresh;
+		return processingRoomJpaDao.getBinNumListForFreshIndent(denomination, bundle, icmcId, cashSource,
+				binCategoryType, rbiOrderNo);
 	}
 
 	@Override
 	public List<CRAAllocation> getDataFromCRAAllocationForProcessing(BigInteger icmcId) {
-		List<CRAAllocation> craAllocationList = processingRoomJpaDao.getDataFromCRAAllocationForProcessing(icmcId);
-		return craAllocationList;
+		return processingRoomJpaDao.getDataFromCRAAllocationForProcessing(icmcId);
 	}
 
 	@Override
 	public List<Discrepancy> getDiscrepancyReports(BigInteger icmcId, Calendar sDate, Calendar eDate) {
-		List<Discrepancy> discrepancyReportList = processingRoomJpaDao.getDiscrepancyReports(icmcId, sDate, eDate);
-		return discrepancyReportList;
+		return processingRoomJpaDao.getDiscrepancyReports(icmcId, sDate, eDate);
 	}
 
 	@Override
 	public Discrepancy getDiscrepancyForUploadingImage(User user, Calendar sDate, Calendar eDate) {
-		Discrepancy discrepancyReportList = processingRoomJpaDao.getDiscrepancyForUploadingImage(user, sDate, eDate);
-		return discrepancyReportList;
+		return processingRoomJpaDao.getDiscrepancyForUploadingImage(user, sDate, eDate);
 	}
 
 	@Override
@@ -1072,8 +1004,7 @@ public class ProcessingRoomServiceImpl implements ProcessingRoomService {
 
 	@Override
 	public CRAAllocation getPendingBundleById(CRAAllocation craAllocation) {
-		CRAAllocation craAllocationData = processingRoomJpaDao.getPendingBundleById(craAllocation);
-		return craAllocationData;
+		return processingRoomJpaDao.getPendingBundleById(craAllocation);
 	}
 
 	@Override
@@ -1083,14 +1014,12 @@ public class ProcessingRoomServiceImpl implements ProcessingRoomService {
 
 	@Override
 	public List<Tuple> getMachineAllocationRecord(BigInteger icmcId, Calendar sDate, Calendar eDate) {
-		List<Tuple> machineAllocationReportList = processingRoomJpaDao.getMachineAllocationRecord(icmcId, sDate, eDate);
-		return machineAllocationReportList;
+		return processingRoomJpaDao.getMachineAllocationRecord(icmcId, sDate, eDate);
 	}
 
 	@Override
 	public List<Tuple> getProcessRecord(BigInteger icmcId, Calendar sDate, Calendar eDate, CurrencyType currencyType) {
-		List<Tuple> processReportList = processingRoomJpaDao.getProcessRecord(icmcId, sDate, eDate, currencyType);
-		return processReportList;
+		return processingRoomJpaDao.getProcessRecord(icmcId, sDate, eDate, currencyType);
 	}
 
 	@Override
@@ -1105,28 +1034,23 @@ public class ProcessingRoomServiceImpl implements ProcessingRoomService {
 
 	@Override
 	public List<Integer> getMachineNumberList(BigInteger icmcId) {
-		List<Integer> machineNumberList = processingRoomJpaDao.getMachineNumberList(icmcId);
-		return machineNumberList;
+		return processingRoomJpaDao.getMachineNumberList(icmcId);
 	}
 
 	@Override
 	public List<Tuple> getDiscrepancyListForIOReport(BigInteger icmcId, Calendar sDate, Calendar eDate) {
-		List<Tuple> processDiscrepancyList = processingRoomJpaDao.getDiscrepancyListForIOReport(icmcId, sDate, eDate);
-		return processDiscrepancyList;
+		return processingRoomJpaDao.getDiscrepancyListForIOReport(icmcId, sDate, eDate);
 	}
 
 	@Override
 	public List<MachineAllocation> getPendingBundleFromMachineAllocation(BigInteger icmcId, Integer denomination,
 			String machineOrManual) {
-		List<MachineAllocation> pendingBundleList = processingRoomJpaDao.getPendingBundleFromMachineAllocation(icmcId,
-				denomination, machineOrManual);
-		return pendingBundleList;
+		return processingRoomJpaDao.getPendingBundleFromMachineAllocation(icmcId, denomination, machineOrManual);
 	}
 
 	@Override
 	public boolean updatePendingBundleInMachineAllocation(MachineAllocation machineAllocation) {
-		boolean isUpdate = processingRoomJpaDao.updatePendingBundleInMachineAllocation(machineAllocation);
-		return isUpdate;
+		return processingRoomJpaDao.updatePendingBundleInMachineAllocation(machineAllocation);
 	}
 
 	private void addInTransactionsForBox(User user, List<BinTransaction> binTxs) {
@@ -1152,22 +1076,18 @@ public class ProcessingRoomServiceImpl implements ProcessingRoomService {
 
 	@Override
 	public List<Tuple> getPendingBundle(BigInteger icmcId, Calendar sDate, Calendar eDate) {
-		List<Tuple> list = processingRoomJpaDao.getPendingBundle(icmcId, sDate, eDate);
-		return list;
+		return processingRoomJpaDao.getPendingBundle(icmcId, sDate, eDate);
 	}
 
 	@Override
 	public List<Tuple> getPendingBundleByMachine(BigInteger icmcId, Calendar sDate, Calendar eDate) {
-		List<Tuple> list = processingRoomJpaDao.getPendingBundleByMachine(icmcId, sDate, eDate);
-		return list;
+		return processingRoomJpaDao.getPendingBundleByMachine(icmcId, sDate, eDate);
 	}
 
 	@Override
 	public List<MachineAllocation> getAggregatedBundleToBeReturnedToVault(BigInteger icmcId, CashSource cashSource,
 			Calendar sDate, Calendar eDate) {
-		List<MachineAllocation> bundleToBeReturnedList = processingRoomJpaDao
-				.getAggregatedBundleToBeReturnedToVault(icmcId, cashSource, sDate, eDate);
-		return bundleToBeReturnedList;
+		return processingRoomJpaDao.getAggregatedBundleToBeReturnedToVault(icmcId, cashSource, sDate, eDate);
 	}
 
 	@Override
@@ -1186,8 +1106,7 @@ public class ProcessingRoomServiceImpl implements ProcessingRoomService {
 	}
 
 	public List<Mutilated> getMitulatedFullValue(BigInteger icmcId) {
-		List<Mutilated> getMutilatedList = processingRoomJpaDao.getMitulatedFullValue(icmcId);
-		return getMutilatedList;
+		return processingRoomJpaDao.getMitulatedFullValue(icmcId);
 	}
 
 	@Override
@@ -1259,34 +1178,28 @@ public class ProcessingRoomServiceImpl implements ProcessingRoomService {
 		binTxTemp.setDenomination(mutilated.getDenomination());
 		binTxTemp.setBinType(mutilated.getCurrencyType());
 		binTxTemp.setBinCategoryType(mutilated.getBinCategoryType());
-		List<BinTransaction> binList = this.getBinTxnListByDenom(binTxTemp);
-		return binList;
+		return this.getBinTxnListByDenom(binTxTemp);
 	}
 
 	@Override
 	public boolean createMutilated(List<Mutilated> mutilatedList) {
-		boolean isSaved = processingRoomJpaDao.createMutilated(mutilatedList);
-		return isSaved;
+		return processingRoomJpaDao.createMutilated(mutilatedList);
 	}
 
 	@Override
 	public List<Tuple> indentSummaryForMutilated(BigInteger icmcId) {
-		List<Tuple> mutilatedList = processingRoomJpaDao.indentSummaryForMutilated(icmcId);
-		return mutilatedList;
+		return processingRoomJpaDao.indentSummaryForMutilated(icmcId);
 	}
 
 	@Override
 	public List<BinTransaction> getBinNumListForMutilatedIndent(int denomination, BigDecimal bundle, BigInteger icmcId,
 			BinCategoryType binCategoryType) {
-		List<BinTransaction> binLitsForMutilatedIndent = processingRoomJpaDao
-				.getBinNumListForMutilatedIndent(denomination, bundle, icmcId, binCategoryType);
-		return binLitsForMutilatedIndent;
+		return processingRoomJpaDao.getBinNumListForMutilatedIndent(denomination, bundle, icmcId, binCategoryType);
 	}
 
 	@Override
 	public boolean insertMitulatedIndentRequest(List<MutilatedIndent> eligibleIndentRequestList) {
-		boolean isSuccess = processingRoomJpaDao.insertMitulatedIndentRequest(eligibleIndentRequestList);
-		return isSuccess;
+		return processingRoomJpaDao.insertMitulatedIndentRequest(eligibleIndentRequestList);
 	}
 
 	@Override
@@ -1306,19 +1219,20 @@ public class ProcessingRoomServiceImpl implements ProcessingRoomService {
 
 	@Override
 	public List<MutilatedIndent> getMutilatedIndent(BigInteger icmcId) {
-		List<MutilatedIndent> mutilatedIndentList = processingRoomJpaDao.getMutilatedIndent(icmcId);
-		return mutilatedIndentList;
+		return processingRoomJpaDao.getMutilatedIndent(icmcId);
 	}
 
 	@Override
 	public boolean processMutilatedIndentRequest(String bin, BigDecimal bundle, User user, Long id) {
+
 		MutilatedIndent mutilatedIndent = new MutilatedIndent();
 		mutilatedIndent.setBin(bin);
 		mutilatedIndent.setBundle(bundle);
 		mutilatedIndent.setIcmcId(user.getIcmcId());
 		mutilatedIndent.setId(id);
 		boolean isIndentUpdate = false;
-		BinTransaction txnBin = this.getBinFromTransaction(bin.trim(), user.getIcmcId());
+
+		BinTransaction txnBin = this.getBinFromTransaction(bin.trim(), user.getIcmcId(), 2000);
 
 		if (mutilatedIndent != null && txnBin != null && txnBin.getReceiveBundle() != null
 				&& txnBin.getReceiveBundle().compareTo(BigDecimal.ZERO) > 0 && mutilatedIndent.getBundle() != null
@@ -1359,35 +1273,28 @@ public class ProcessingRoomServiceImpl implements ProcessingRoomService {
 
 	@Override
 	public boolean updateMutilatedIndentRequest(MutilatedIndent mutilatedIndent) {
-		boolean isUpdate = processingRoomJpaDao.updateMutilatedIndentRequest(mutilatedIndent);
-		return isUpdate;
+		return processingRoomJpaDao.updateMutilatedIndentRequest(mutilatedIndent);
 	}
 
 	@Override
 	public String getICMCName(long icmcId) {
-		String icmcName = processingRoomJpaDao.getICMCName(icmcId);
-		return icmcName;
+		return processingRoomJpaDao.getICMCName(icmcId);
 	}
 
 	@Override
 	public List<Discrepancy> getDiscrepancyReports(BigInteger icmcId, Calendar sDate, Calendar eDate,
 			String normalOrSuspense) {
-		List<Discrepancy> discrepancyReportList = processingRoomJpaDao.getDiscrepancyReports(icmcId, sDate, eDate,
-				normalOrSuspense);
-		return discrepancyReportList;
+		return processingRoomJpaDao.getDiscrepancyReports(icmcId, sDate, eDate, normalOrSuspense);
 	}
 
 	@Override
 	public Discrepancy getDescripancyDataForEdit(Long id, BigInteger icmcId) {
-		Discrepancy discrepancyDataForEdit = processingRoomJpaDao.getDescripancyDataForEdit(id, icmcId);
-		return discrepancyDataForEdit;
+		return processingRoomJpaDao.getDescripancyDataForEdit(id, icmcId);
 	}
 
 	@Override
 	public DiscrepancyAllocation getDescripancyAllocationDataForEdit(Long id, BigInteger icmcId) {
-		DiscrepancyAllocation discrepancyAllocation = processingRoomJpaDao.getDescripancyAllocationDataForEdit(id,
-				icmcId);
-		return discrepancyAllocation;
+		return processingRoomJpaDao.getDescripancyAllocationDataForEdit(id, icmcId);
 	}
 
 	@Override
@@ -1416,40 +1323,33 @@ public class ProcessingRoomServiceImpl implements ProcessingRoomService {
 
 	@Override
 	public List<Tuple> getMutilatedNotesSummary(BigInteger icmcId, Calendar sDate, Calendar eDate) {
-		List<Tuple> mutilatedNotesSummary = processingRoomJpaDao.getMutilatedNotesSummary(icmcId, sDate, eDate);
-		return mutilatedNotesSummary;
+		return processingRoomJpaDao.getMutilatedNotesSummary(icmcId, sDate, eDate);
 	}
 
 	@Override
 	public List<Tuple> getMutilatedNotesSummary(BigInteger icmcId, Calendar sDate, Calendar eDate,
 			String normalOrSuspense) {
-		List<Tuple> mutilatedNotesSummary = processingRoomJpaDao.getMutilatedNotesSummary(icmcId, sDate, eDate,
-				normalOrSuspense);
-		return mutilatedNotesSummary;
+		return processingRoomJpaDao.getMutilatedNotesSummary(icmcId, sDate, eDate, normalOrSuspense);
 	}
 
 	@Override
 	public boolean addMachineMaintenance(MachineMaintenance machineMaintainance) {
-		processingRoomJpaDao.addMachineMaintenance(machineMaintainance);
-		return true;
+		return processingRoomJpaDao.addMachineMaintenance(machineMaintainance);
 	}
 
 	@Override
 	public List<MachineMaintenance> viewMachineMaintenance(BigInteger icmcId) {
-		List<MachineMaintenance> machineMaintenanceList = processingRoomJpaDao.viewMachineMaintenance(icmcId);
-		return machineMaintenanceList;
+		return processingRoomJpaDao.viewMachineMaintenance(icmcId);
 	}
 
 	@Override
 	public MachineMaintenance getMachineMaintenanceById(long id) {
-		MachineMaintenance machineMaintenance = processingRoomJpaDao.getMachineMaintenanceById(id);
-		return machineMaintenance;
+		return processingRoomJpaDao.getMachineMaintenanceById(id);
 	}
 
 	@Override
 	public boolean updateMachineMaintenanceStatus(MachineMaintenance machineMaintenance) {
-		processingRoomJpaDao.updateMachineMaintenanceStatus(machineMaintenance);
-		return true;
+		return processingRoomJpaDao.updateMachineMaintenanceStatus(machineMaintenance);
 	}
 
 	/*
@@ -1614,29 +1514,23 @@ public class ProcessingRoomServiceImpl implements ProcessingRoomService {
 
 	@Override
 	public List<Tuple> getPendingBundleForAuditor(BigInteger icmcId) {
-		List<Tuple> pendingbundleList = processingRoomJpaDao.getPendingBundleForAuditor(icmcId);
-		return pendingbundleList;
+		return processingRoomJpaDao.getPendingBundleForAuditor(icmcId);
 	}
 
 	@Override
 	public List<AuditorIndent> getPendingBundleFromAuditorIndent(BigInteger icmcId, Integer denomination) {
-		List<AuditorIndent> auditorIndentList = processingRoomJpaDao.getPendingBundleFromAuditorIndent(icmcId,
-				denomination);
-		return auditorIndentList;
+		return processingRoomJpaDao.getPendingBundleFromAuditorIndent(icmcId, denomination);
 	}
 
 	@Override
 	public boolean updatePendingBundleInAuditorIndent(AuditorIndent auditorIndent) {
-		boolean isUpdate = processingRoomJpaDao.updatePendingBundleInAuditorIndent(auditorIndent);
-		return isUpdate;
+		return processingRoomJpaDao.updatePendingBundleInAuditorIndent(auditorIndent);
 	}
 
 	@Override
 	public BinTransaction getDataFromBinTransaction(String bin, BigInteger icmcId, Integer denomination,
 			CurrencyType currencyType) {
-		BinTransaction binTransaction = processingRoomJpaDao.getDataFromBinTransaction(bin, icmcId, denomination,
-				currencyType);
-		return binTransaction;
+		return processingRoomJpaDao.getDataFromBinTransaction(bin, icmcId, denomination, currencyType);
 	}
 
 	@Override
@@ -1705,89 +1599,73 @@ public class ProcessingRoomServiceImpl implements ProcessingRoomService {
 
 	@Override
 	public boolean insertSuspenseOpeningBalance(SuspenseOpeningBalance suspenseOpeningBalance) {
-		boolean saveSuspense = processingRoomJpaDao.insertSuspenseOpeningBalance(suspenseOpeningBalance);
-		return saveSuspense;
+		return processingRoomJpaDao.insertSuspenseOpeningBalance(suspenseOpeningBalance);
 	}
 
 	@Override
 	public List<SuspenseOpeningBalance> getSuspenseOpeningBalance(BigInteger icmcId) {
-		List<SuspenseOpeningBalance> suspenseOpeningBalance = processingRoomJpaDao.getSuspenseOpeningBalance(icmcId);
-		return suspenseOpeningBalance;
+		return processingRoomJpaDao.getSuspenseOpeningBalance(icmcId);
 	}
 
 	@Override
 	public List<SuspenseOpeningBalance> openingBalanceForSuspenseRegister(BigInteger icmcId) {
-		List<SuspenseOpeningBalance> suspenseOpeningBalanceList = processingRoomJpaDao
-				.openingBalanceForSuspenseRegister(icmcId);
-		return suspenseOpeningBalanceList;
+		return processingRoomJpaDao.openingBalanceForSuspenseRegister(icmcId);
 	}
 
 	@Override
 	public List<Tuple> getTotalNotesForWithdrawal(BigInteger icmcId, Calendar sDate, Calendar eDate) {
-		List<Tuple> withdrawalList = processingRoomJpaDao.getTotalNotesForWithdrawal(icmcId, sDate, eDate);
-		return withdrawalList;
+		return processingRoomJpaDao.getTotalNotesForWithdrawal(icmcId, sDate, eDate);
 	}
 
 	@Override
 	public List<Tuple> geTotalNotesForDeposit(BigInteger icmcId, Calendar sDate, Calendar eDate) {
-		List<Tuple> depositList = processingRoomJpaDao.geTotalNotesForDeposit(icmcId, sDate, eDate);
-		return depositList;
+		return processingRoomJpaDao.geTotalNotesForDeposit(icmcId, sDate, eDate);
 	}
 
 	@Override
 	public boolean branchHistory(List<History> historyList) {
-		boolean isSaved = processingRoomJpaDao.branchHistory(historyList);
-		return isSaved;
+		return processingRoomJpaDao.branchHistory(historyList);
 	}
 
 	@Override
 	public boolean updateCurrentVersionStatus(SuspenseOpeningBalance suspenseOpeningBalance) {
-		boolean isSaved = processingRoomJpaDao.updateCurrentVersionStatus(suspenseOpeningBalance);
-		return isSaved;
+		return processingRoomJpaDao.updateCurrentVersionStatus(suspenseOpeningBalance);
 	}
 
 	@Override
 	public List<SuspenseOpeningBalance> openingBalanceForSuspenseRegisterPreviousDate(BigInteger icmcId, Calendar sDate,
 			Calendar eDate) {
-		List<SuspenseOpeningBalance> openingBalance = processingRoomJpaDao
-				.openingBalanceForSuspenseRegisterPreviousDate(icmcId, sDate, eDate);
-		return openingBalance;
+		return processingRoomJpaDao.openingBalanceForSuspenseRegisterPreviousDate(icmcId, sDate, eDate);
 	}
 
 	@Override
 	public List<Tuple> getTotalNotesForWithdrawal(BigInteger icmcId) {
-		List<Tuple> withdrawalList = processingRoomJpaDao.getTotalNotesForWithdrawal(icmcId);
-		return withdrawalList;
+		return processingRoomJpaDao.getTotalNotesForWithdrawal(icmcId);
 	}
 
 	@Override
 	public List<Tuple> geTotalNotesForDeposit(BigInteger icmcId) {
-		List<Tuple> depositList = processingRoomJpaDao.geTotalNotesForDeposit(icmcId);
-		return depositList;
+		return processingRoomJpaDao.geTotalNotesForDeposit(icmcId);
 	}
 
 	@Override
 	public boolean saveDataInBinRegister(BinRegister binRegister) {
-		boolean isSave = processingRoomJpaDao.saveDataInBinRegister(binRegister);
-		return isSave;
+		return processingRoomJpaDao.saveDataInBinRegister(binRegister);
 	}
 
 	@Override
 	public boolean deleteDiscrepancy(long id, BigInteger icmcId) {
-		boolean isUpdate = processingRoomJpaDao.deleteDiscrepancy(id, icmcId);
-		return isUpdate;
+		return processingRoomJpaDao.deleteDiscrepancy(id, icmcId);
 	}
 
 	@Override
 	public boolean deleteDiscrepancywithooutallocation(long id, BigInteger icmcId) {
-		boolean isUpdate = processingRoomJpaDao.deleteDiscrepancywithooutallocation(id, icmcId);
-		return isUpdate;
+		return processingRoomJpaDao.deleteDiscrepancywithooutallocation(id, icmcId);
 	}
 
 	@Override
 	public boolean insertFullValueMutilated(Mutilated mutilated) {
-		boolean isSaved = processingRoomJpaDao.insertFullValueMutilated(mutilated);
-		return isSaved;
+		return processingRoomJpaDao.insertFullValueMutilated(mutilated);
 	}
 
 	@Override
@@ -1805,28 +1683,23 @@ public class ProcessingRoomServiceImpl implements ProcessingRoomService {
 	@Override
 	public List<MachineAllocation> getBundleByCashSource(BigInteger icmcId, String isMachineOrManual,
 			Integer denomination, CashSource cashSource, Calendar sDate, Calendar eDate) {
-		List<MachineAllocation> bundleListBySource = processingRoomJpaDao.getBundleByCashSource(icmcId,
-				isMachineOrManual, denomination, cashSource, sDate, eDate);
-		return bundleListBySource;
+		return processingRoomJpaDao.getBundleByCashSource(icmcId, isMachineOrManual, denomination, cashSource, sDate,
+				eDate);
 	}
 
 	@Override
 	public List<MachineAllocation> getBundleFromMachineAllocation(BigInteger icmcId, Integer denomination) {
-		List<MachineAllocation> bundleListBySource = processingRoomJpaDao.getBundleFromMachineAllocation(icmcId,
-				denomination);
-		return bundleListBySource;
+		return processingRoomJpaDao.getBundleFromMachineAllocation(icmcId, denomination);
 	}
 
 	@Override
 	public List<Tuple> getKeySetDetail(String custodian, BigInteger icmcId) {
-		List<Tuple> list = processingRoomJpaDao.getKeySetDetail(custodian, icmcId);
-		return list;
+		return processingRoomJpaDao.getKeySetDetail(custodian, icmcId);
 	}
 
 	@Override
 	public List<CustodianKeySet> getAssignVaultCustodian(BigInteger icmcId) {
-		List<CustodianKeySet> custodianList = processingRoomJpaDao.getAssignVaultCustodian(icmcId);
-		return custodianList;
+		return processingRoomJpaDao.getAssignVaultCustodian(icmcId);
 	}
 
 	@Override
@@ -1841,8 +1714,7 @@ public class ProcessingRoomServiceImpl implements ProcessingRoomService {
 
 	@Override
 	public User isValidUser(String username, BigInteger icmcId) {
-		User userBean = processingRoomJpaDao.isValidUser(username, icmcId);
-		return userBean;
+		return processingRoomJpaDao.isValidUser(username, icmcId);
 	}
 
 	@Override
@@ -1851,18 +1723,14 @@ public class ProcessingRoomServiceImpl implements ProcessingRoomService {
 			BigDecimal openingBalanceOfDenomination_50, BigDecimal openingBalanceOfDenomination_100,
 			BigDecimal openingBalanceOfDenomination_200, BigDecimal openingBalanceOfDenomination_500,
 			BigDecimal openingBalanceOfDenomination_2000) {
-		boolean IsUpdate = processingRoomJpaDao.InsertByDAteSuspeseOpeningBalance(id, icmcId,
-				openingBalanceOfDenomination_10, openingBalanceOfDenomination_20, openingBalanceOfDenomination_50,
-				openingBalanceOfDenomination_100, openingBalanceOfDenomination_200, openingBalanceOfDenomination_500,
-				openingBalanceOfDenomination_2000);
-
-		return IsUpdate;
+		return processingRoomJpaDao.InsertByDAteSuspeseOpeningBalance(id, icmcId, openingBalanceOfDenomination_10,
+				openingBalanceOfDenomination_20, openingBalanceOfDenomination_50, openingBalanceOfDenomination_100,
+				openingBalanceOfDenomination_200, openingBalanceOfDenomination_500, openingBalanceOfDenomination_2000);
 	}
 
 	@Override
 	public boolean insertSuspenseOpeningBalanceLink(SuspenseOpeningBalance suspenseOpeningBalance) {
-		boolean saveSuspense = processingRoomJpaDao.insertSuspenseOpeningBalance(suspenseOpeningBalance);
-		return saveSuspense;
+		return processingRoomJpaDao.insertSuspenseOpeningBalance(suspenseOpeningBalance);
 	}
 
 	@Override
@@ -1871,44 +1739,35 @@ public class ProcessingRoomServiceImpl implements ProcessingRoomService {
 			BigDecimal replenishment_20, BigDecimal replenishment_10, BigDecimal depletion_2000,
 			BigDecimal depletion_500, BigDecimal depletion_200, BigDecimal depletion_100, BigDecimal depletion_50,
 			BigDecimal depletion_20, BigDecimal depletion_10, String srNumber) {
-		boolean IsUpdate = processingRoomJpaDao.updateSuspenseBalanceFromLink(id, replenishment_2000, replenishment_500,
+		return processingRoomJpaDao.updateSuspenseBalanceFromLink(id, replenishment_2000, replenishment_500,
 				replenishment_200, replenishment_100, replenishment_50, replenishment_20, replenishment_10,
 				depletion_2000, depletion_500, depletion_200, depletion_100, depletion_50, depletion_20, depletion_10,
 				srNumber);
-		return IsUpdate;
 	}
 
 	@Override
 	public boolean updateSuspenseBalance(long id, BigDecimal deposit_2000, BigDecimal deposit_500,
 			BigDecimal deposit_200, BigDecimal deposit_100, BigDecimal deposit_50, BigDecimal deposit_20,
 			BigDecimal deposit_10, BigDecimal withdrawal_2000, BigDecimal withdrawal_500, BigDecimal withdrawal_200,
-			BigDecimal withdrawal_100, BigDecimal withdrawal_50, BigDecimal withdrawal_20, BigDecimal withdrawal_10)
-
-	{
-		boolean IsUpdate = processingRoomJpaDao.updateSuspenseBalance(id, deposit_2000, deposit_500, deposit_200,
-				deposit_100, deposit_50, deposit_20, deposit_10, withdrawal_2000, withdrawal_500, withdrawal_200,
-				withdrawal_100, withdrawal_50, withdrawal_20, withdrawal_10); // code
-																				// balance
-		return IsUpdate;
+			BigDecimal withdrawal_100, BigDecimal withdrawal_50, BigDecimal withdrawal_20, BigDecimal withdrawal_10) {
+		return processingRoomJpaDao.updateSuspenseBalance(id, deposit_2000, deposit_500, deposit_200, deposit_100,
+				deposit_50, deposit_20, deposit_10, withdrawal_2000, withdrawal_500, withdrawal_200, withdrawal_100,
+				withdrawal_50, withdrawal_20, withdrawal_10);
 	}
 
 	@Override
 	public List<SuspenseOpeningBalance> openingBalanceForSuspenseRegisterPreviousDateByDesc(BigInteger icmcId) {
-		List<SuspenseOpeningBalance> openingBalanceDesc = processingRoomJpaDao
-				.openingBalanceForSuspenseRegisterPreviousDateByDesc(icmcId);
-		return openingBalanceDesc;
+		return processingRoomJpaDao.openingBalanceForSuspenseRegisterPreviousDateByDesc(icmcId);
 	}
 
 	@Override
 	public List<Mutilated> getMutilatedValueDetails(BigInteger icmcId, Calendar sDate, Calendar eDate) {
-		List<Mutilated> mutilatedList = processingRoomJpaDao.getMutilatedValueDetails(icmcId, sDate, eDate);
-		return mutilatedList;
+		return processingRoomJpaDao.getMutilatedValueDetails(icmcId, sDate, eDate);
 	}
 
 	@Override
 	public boolean processMutilatedRequest(Long id) {
-		boolean isUpdate = processingRoomJpaDao.processMutilatedRequest(id);
-		return isUpdate;
+		return processingRoomJpaDao.processMutilatedRequest(id);
 	}
 
 	private boolean getUpdateCashReceiveForIndentRequest(Indent indent) {

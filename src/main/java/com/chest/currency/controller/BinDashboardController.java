@@ -818,7 +818,7 @@ public class BinDashboardController {
 			// eDate = sDate;
 			// sDate = eDate;
 			dateRange.setFromDate(eDate);
-		} // balance
+		}
 
 		return new ModelAndView("/IO2Reports", map);
 	}

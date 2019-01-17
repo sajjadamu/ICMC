@@ -38,8 +38,7 @@ public class BinTransactionServiceImpl implements BinTransactionService {
 
 	@Override
 	public BoxMaster isValidBox(BigInteger icmcId, String boxname) {
-		BoxMaster dbBoxName = binTransactionJpaDao.isValidBox(icmcId, boxname);
-		return dbBoxName;
+		return binTransactionJpaDao.isValidBox(icmcId, boxname);
 	}
 
 	@Override
@@ -55,8 +54,7 @@ public class BinTransactionServiceImpl implements BinTransactionService {
 
 	@Override
 	public BinTransaction isValidBin(BigInteger icmcId, String binNumber) {
-		BinTransaction dbBinName = binTransactionJpaDao.isValidBin(icmcId, binNumber);
-		return dbBinName;
+		return binTransactionJpaDao.isValidBin(icmcId, binNumber);
 	}
 
 	@Override
@@ -72,8 +70,7 @@ public class BinTransactionServiceImpl implements BinTransactionService {
 
 	@Override
 	public List<BinTransaction> getBinTransaction(BigInteger icmcId) {
-		List<BinTransaction> binTransactionList = binTransactionJpaDao.getBinTransaction(icmcId);
-		return binTransactionList;
+		return binTransactionJpaDao.getBinTransaction(icmcId);
 	}
 
 }

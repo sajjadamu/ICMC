@@ -462,10 +462,8 @@ public class ProcessingRoomController {
 		try {
 			User user = (User) session.getAttribute("login");
 			boolean isAllSuccess = false;
-			LOG.info("icmcService.getSynchronizedIcmc(user) " + icmcService.getSynchronizedIcmc(user).toString());
-
 			synchronized (icmcService.getSynchronizedIcmc(user)) {
-				isAllSuccess = processingRoomService.processIndentRequest(bin, bundle, user);
+				isAllSuccess = processingRoomService.processIndentRequest(bin, bundle, user, denomination);
 				if (!isAllSuccess) {
 					throw new BaseGuiException("Error while process Indent Request");
 				}

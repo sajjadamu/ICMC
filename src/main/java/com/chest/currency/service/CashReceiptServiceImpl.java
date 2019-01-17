@@ -76,53 +76,44 @@ public class CashReceiptServiceImpl implements CashReceiptService {
 
 	public String getQrCode(BranchReceipt branchReceipt) {
 		String filepath = qrCodeGen.generateQR(branchReceipt);
-		String path = getPath(filepath);
-		return path;
+		return getPath(filepath);
 	}
 
 	public String getDSBQRCode(DSB dsb) {
 		String filepath = qrCodeGen.generateDSBQR(dsb);
-		String path = getPath(filepath);
-		return path;
+		return getPath(filepath);
 	}
 
 	public String getRBIQrCode(FreshFromRBI freshFromRBI) {
 		String filepath = qrCodeGen.generateFreshFromRBIQR(freshFromRBI);
-		String path = getPath(filepath);
-		return path;
+		return getPath(filepath);
 	}
 
 	public String getDiversionIRVQRCode(DiversionIRV dirv) {
 		String filepath = qrCodeGen.generateDirvQR(dirv);
-		String path = getPath(filepath);
-		return path;
+		return getPath(filepath);
 	}
 
 	public String getICMCReceiptQRCode(BankReceipt icmcReceipt) {
 		String filepath = qrCodeGen.generateICMCReceiptQR(icmcReceipt);
-		String path = getPath(filepath);
-		return path;
+		return getPath(filepath);
 	}
 
 	public List<BinCapacityDenomination> getMaxBundleCapacity(int denomination, CurrencyType currencyType) {
 		LOG.info("FETCH CAPACITY");
-		List<BinCapacityDenomination> capacityList = cashReceiptJpaDao.getMaxBundleCapacity(denomination, currencyType);
-		return capacityList;
+		return cashReceiptJpaDao.getMaxBundleCapacity(denomination, currencyType);
 	}
 
 	public List<BinMaster> getPriorityBinListByType(BinMaster binMaster) {
-		List<BinMaster> priorityBinList = cashReceiptJpaDao.getPriorityBinListByType(binMaster);
-		return priorityBinList;
+		return cashReceiptJpaDao.getPriorityBinListByType(binMaster);
 	}
 
 	public List<BinTransaction> getBinTxnListByDenom(BinTransaction binTx) {
-		List<BinTransaction> binListFromTxn = cashReceiptJpaDao.getBinTxnListByDenom(binTx);
-		return binListFromTxn;
+		return cashReceiptJpaDao.getBinTxnListByDenom(binTx);
 	}
 
 	public boolean updateBinMaster(BinMaster binMaster) {
-		boolean isSaved = cashReceiptJpaDao.updateBinMaster(binMaster);
-		return isSaved;
+		return cashReceiptJpaDao.updateBinMaster(binMaster);
 	}
 
 	public boolean insertInBinTxn(BinTransaction binTransaction) {
@@ -130,34 +121,29 @@ public class CashReceiptServiceImpl implements CashReceiptService {
 				binTransaction.getBinNumber());
 		LOG.info("deleteEmptyBinFromBinTransaction" + isDeleted);
 		LOG.info("binTransaction" + binTransaction);
-		boolean isSaved = cashReceiptJpaDao.insertInBinTxn(binTransaction);
 
-		return isSaved;
+		return cashReceiptJpaDao.insertInBinTxn(binTransaction);
 	}
 
 	@Transactional
 	public boolean updateInBinTxn(BinTransaction binTransaction) {
-		boolean isSaved = cashReceiptJpaDao.updateInBinTxn(binTransaction);
-		return isSaved;
+		return cashReceiptJpaDao.updateInBinTxn(binTransaction);
 	}
 
 	@Transactional
 	public boolean createBranchReceipt(List<BranchReceipt> branchReceipt) {
-		boolean isSaved = cashReceiptJpaDao.createBranchReceipt(branchReceipt);
-		return isSaved;
+		return cashReceiptJpaDao.createBranchReceipt(branchReceipt);
 	}
 
 	public List<BranchReceipt> getBrachReceiptRecord(User user, Calendar sDate, Calendar eDate) {
-		List<BranchReceipt> branchList = cashReceiptJpaDao.getBrachReceiptRecord(user, sDate, eDate);
-		return branchList;
+		return cashReceiptJpaDao.getBrachReceiptRecord(user, sDate, eDate);
 	}
 
 	private List<BinMaster> getPriorityBinListByType(User user, CurrencyType currencyType) {
 		BinMaster master = new BinMaster();
 		master.setFirstPriority(currencyType);
 		master.setIcmcId(user.getIcmcId());
-		List<BinMaster> binMasterList = this.getPriorityBinListByType(master);
-		return binMasterList;
+		return this.getPriorityBinListByType(master);
 	}
 
 	@Override
@@ -319,8 +305,7 @@ public class CashReceiptServiceImpl implements CashReceiptService {
 	}
 
 	private boolean updatePendingBundleInMachineAllocationForReturnBackToVault(MachineAllocation machineAllocation) {
-		boolean isUpdate = cashReceiptJpaDao.updatePendingBundleInMachineAllocation(machineAllocation);
-		return isUpdate;
+		return cashReceiptJpaDao.updatePendingBundleInMachineAllocation(machineAllocation);
 	}
 
 	@Override
@@ -993,8 +978,8 @@ public class CashReceiptServiceImpl implements CashReceiptService {
 		// binTxTemp.setBinCategoryType(BinCategoryType.BIN);
 		binTxTemp.setBinType(fresh.getCurrencyType());
 		binTxTemp.setBinCategoryType(fresh.getBinCategoryType());
-		List<BinTransaction> binList = this.getBinTxnListByDenom(binTxTemp);
-		return binList;
+
+		return this.getBinTxnListByDenom(binTxTemp);
 	}
 
 	private List<BinTransaction> getBinTxnListByDenom(DiversionIRV dirv, User user) {
@@ -1005,8 +990,8 @@ public class CashReceiptServiceImpl implements CashReceiptService {
 		binTxTemp.setCashSource(CashSource.DIVERSION);
 		binTxTemp.setBinCategoryType(dirv.getBinCategoryType());
 		binTxTemp.setBinType(dirv.getCurrencyType());
-		List<BinTransaction> binList = this.getBinTxnListByDenom(binTxTemp);
-		return binList;
+
+		return this.getBinTxnListByDenom(binTxTemp);
 	}
 
 	private List<BinTransaction> getBinTxnListByDenom(DSB dsb, User user) {
@@ -1017,8 +1002,8 @@ public class CashReceiptServiceImpl implements CashReceiptService {
 		binTxTemp.setCashSource(CashSource.DSB);
 		binTxTemp.setBinType(dsb.getCurrencyType());
 		binTxTemp.setBinCategoryType(dsb.getBinCategoryType());
-		List<BinTransaction> binList = this.getBinTxnListByDenom(binTxTemp);
-		return binList;
+
+		return this.getBinTxnListByDenom(binTxTemp);
 	}
 
 	private List<BinTransaction> getBinTxnListByDenom(BankReceipt icmcReceipt, User user) {
@@ -1029,24 +1014,21 @@ public class CashReceiptServiceImpl implements CashReceiptService {
 		binTxTemp.setCashSource(CashSource.OTHERBANK);
 		binTxTemp.setBinType(icmcReceipt.getCurrencyType());
 		binTxTemp.setBinCategoryType(icmcReceipt.getBinCategoryType());
-		List<BinTransaction> binList = this.getBinTxnListByDenom(binTxTemp);
-		return binList;
+		return this.getBinTxnListByDenom(binTxTemp);
 	}
 
 	private List<BinMaster> getPriorityBinListByType(User user) {
 		BinMaster master = new BinMaster();
 		master.setFirstPriority(CurrencyType.UNPROCESS);
 		master.setIcmcId(user.getIcmcId());
-		List<BinMaster> binMasterList = this.getPriorityBinListByType(master);
-		return binMasterList;
+		return this.getPriorityBinListByType(master);
 	}
 
 	private List<BinMaster> getPriorityBinListByTypeForFresh(User user) {
 		BinMaster master = new BinMaster();
 		master.setFirstPriority(CurrencyType.FRESH);
 		master.setIcmcId(user.getIcmcId());
-		List<BinMaster> binMasterList = this.getPriorityBinListByType(master);
-		return binMasterList;
+		return this.getPriorityBinListByType(master);
 	}
 
 	@Transactional
@@ -1054,9 +1036,7 @@ public class CashReceiptServiceImpl implements CashReceiptService {
 		for (BranchReceipt br : branchRecieptList) {
 			br.setFilepath(getQrCode(br));
 		}
-		Boolean isSave = this.createBranchReceipt(branchRecieptList);
-
-		return isSave;
+		return this.createBranchReceipt(branchRecieptList);
 	}
 
 	private void addDSBForSave(List<DSB> dsbList) {
@@ -1084,8 +1064,7 @@ public class CashReceiptServiceImpl implements CashReceiptService {
 		for (DSB br : dsbList) {
 			br.setFilepath(getDSBQRCode(br));
 		}
-		Long id = this.createDSB(dsbList);
-		return id;
+		return this.createDSB(dsbList);
 	}
 
 	private void addICMCReceipt(List<BankReceipt> icmcReceiptList) {
@@ -1097,62 +1076,52 @@ public class CashReceiptServiceImpl implements CashReceiptService {
 
 	@Override
 	public boolean createFreshFromRBI(List<FreshFromRBI> freshFromRBI) {
-		boolean isSaved = cashReceiptJpaDao.createFreshFromRBI(freshFromRBI);
-		return isSaved;
+		return cashReceiptJpaDao.createFreshFromRBI(freshFromRBI);
 	}
 
 	@Override
 	public List<FreshFromRBI> getFreshFromRBIRecord(User user, Calendar sDate, Calendar eDate) {
-		List<FreshFromRBI> freshList = cashReceiptJpaDao.getFreshFromRBIRecord(user, sDate, eDate);
-		return freshList;
+		return cashReceiptJpaDao.getFreshFromRBIRecord(user, sDate, eDate);
 	}
 
 	@Override
 	public boolean createDiversionIRV(List<DiversionIRV> diversionIRV) {
-		boolean isSaved = cashReceiptJpaDao.createDiversionIRV(diversionIRV);
-		return isSaved;
+		return cashReceiptJpaDao.createDiversionIRV(diversionIRV);
 	}
 
 	@Override
 	public List<DiversionIRV> getDiversionIRVRecord(User user, Calendar sDate, Calendar eDate) {
-		List<DiversionIRV> diversionList = cashReceiptJpaDao.getDiversionIRVRecord(user, sDate, eDate);
-		return diversionList;
+		return cashReceiptJpaDao.getDiversionIRVRecord(user, sDate, eDate);
 	}
 
 	@Override
 	public Long createDSB(List<DSB> dsb) {
-		Long isSaved = cashReceiptJpaDao.createDSB(dsb);
-		return isSaved;
+		return cashReceiptJpaDao.createDSB(dsb);
 	}
 
 	@Override
 	public boolean saveDSB(List<DSB> dsb) {
-		boolean isSaved = cashReceiptJpaDao.saveDSB(dsb);
-		return isSaved;
+		return cashReceiptJpaDao.saveDSB(dsb);
 	}
 
 	@Override
 	public List<DSB> getDSBRecord(User user, Calendar sDate, Calendar eDate) {
-		List<DSB> dsbList = cashReceiptJpaDao.getDSBRecord(user, sDate, eDate);
-		return dsbList;
+		return cashReceiptJpaDao.getDSBRecord(user, sDate, eDate);
 	}
 
 	@Override
 	public boolean insertInIndent(Indent indent) {
-		boolean isSaved = cashReceiptJpaDao.insertInIndent(indent);
-		return isSaved;
+		return cashReceiptJpaDao.insertInIndent(indent);
 	}
 
 	@Override
 	public List<BankReceipt> getBankReceiptRecord(User user, Calendar sDate, Calendar eDate) {
-		List<BankReceipt> BankReceiptList = cashReceiptJpaDao.getBankReceiptRecord(user, sDate, eDate);
-		return BankReceiptList;
+		return cashReceiptJpaDao.getBankReceiptRecord(user, sDate, eDate);
 	}
 
 	@Override
 	public boolean createICMCReceipt(List<BankReceipt> icmcReceipt) {
-		boolean isSaved = cashReceiptJpaDao.createICMCReceipt(icmcReceipt);
-		return isSaved;
+		return cashReceiptJpaDao.createICMCReceipt(icmcReceipt);
 	}
 
 	@Override
@@ -1276,80 +1245,67 @@ public class CashReceiptServiceImpl implements CashReceiptService {
 
 	@Override
 	public List<ICMC> getICMCName() {
-		List<ICMC> icmcList = cashReceiptJpaDao.getICMCName();
-		return icmcList;
+		return cashReceiptJpaDao.getICMCName();
 	}
 
 	@Override
 	public String getBranchNameBySolId(String solId) {
-		String branch = cashReceiptJpaDao.getBranchBySolId(solId);
-		return branch;
+		return cashReceiptJpaDao.getBranchBySolId(solId);
 	}
 
 	@Override
 	public ICMC getICMCBySolId(String solId) {
-		ICMC icmc = cashReceiptJpaDao.getICMCBySolId(solId);
-		return icmc;
+		return cashReceiptJpaDao.getICMCBySolId(solId);
 	}
 
 	@Override
 	public ICMC getICMCByName(String name) {
-		ICMC icmc = cashReceiptJpaDao.getICMCByName(name);
-		return icmc;
+		return cashReceiptJpaDao.getICMCByName(name);
 	}
 
 	@Override
 	public List<BranchReceipt> getBrachFromBranchReceipt(BigInteger icmcId) {
-		List<BranchReceipt> branchList = cashReceiptJpaDao.getBrachFromBranchReceipt(icmcId);
-		return branchList;
+		return cashReceiptJpaDao.getBrachFromBranchReceipt(icmcId);
 	}
 
 	@Override
 	public List<Tuple> getVoucherRecord(String solId) {
-		List<Tuple> voucherList = cashReceiptJpaDao.getVoucherRecord(solId);
-		return voucherList;
+		return cashReceiptJpaDao.getVoucherRecord(solId);
 	}
 
 	@Override
 	public List<Tuple> getIRVReportRecord(BigInteger icmcId, Calendar sDate, Calendar eDate) {
-		List<Tuple> reportList = cashReceiptJpaDao.getIRVReportRecord(icmcId, sDate, eDate);
-		return reportList;
+		return cashReceiptJpaDao.getIRVReportRecord(icmcId, sDate, eDate);
 	}
 
 	@Override
 	public List<Tuple> getIRVReportRecordForOtherBanks(BigInteger icmcId, Calendar sDate, Calendar eDate) {
-		List<Tuple> reportList = cashReceiptJpaDao.getIRVReportRecordForOtherBanks(icmcId, sDate, eDate);
-		return reportList;
+		return cashReceiptJpaDao.getIRVReportRecordForOtherBanks(icmcId, sDate, eDate);
 	}
 
 	@Override
 	public List<Tuple> getIRVReportRecordsForDSb(BigInteger icmcId, Calendar sDate, Calendar eDate) {
-		List<Tuple> reportListForDSb = cashReceiptJpaDao.getIRVReportRecordsForDSb(icmcId, sDate, eDate);
-		return reportListForDSb;
+		return cashReceiptJpaDao.getIRVReportRecordsForDSb(icmcId, sDate, eDate);
 	}
 
 	@Override
 	public List<DSBAccountDetail> getDSBAccountDetail(BigInteger icmcId) {
-		List<DSBAccountDetail> dsbAccountDetailList = cashReceiptJpaDao.getDSBAccountDetail(icmcId);
-		return dsbAccountDetailList;
+		return cashReceiptJpaDao.getDSBAccountDetail(icmcId);
 	}
 
 	@Override
 	public List<String> getAccountNumberForDSB(String vendorName, BigInteger icmcId) {
-		List<String> accountNumber = cashReceiptJpaDao.getAccountNumberForDSB(vendorName, icmcId);
-		return accountNumber;
+		return cashReceiptJpaDao.getAccountNumberForDSB(vendorName, icmcId);
 	}
 
 	@Override
 	public CoinsSequence getSequence(BigInteger icmcId, int denomination) {
-		CoinsSequence coinSequence = cashReceiptJpaDao.getSequence(icmcId, denomination);
-		return coinSequence;
+		return cashReceiptJpaDao.getSequence(icmcId, denomination);
 	}
 
 	@Override
 	public boolean insertInCoinSequence(CoinsSequence coinSequence) {
-		boolean isSaved = cashReceiptJpaDao.insertInCoinSequence(coinSequence);
-		return isSaved;
+		return cashReceiptJpaDao.insertInCoinSequence(coinSequence);
 	}
 
 	@Override
@@ -1364,8 +1320,7 @@ public class CashReceiptServiceImpl implements CashReceiptService {
 		binTxTemp.setReceiveBundle(fresh.getBundle());
 		binTxTemp.setDenomination(fresh.getDenomination());
 		binTxTemp.setCashSource(CashSource.RBI);
-		List<BinTransaction> binList = this.getBinTxnListByDenom(binTxTemp);
-		return binList;
+		return this.getBinTxnListByDenom(binTxTemp);
 	}
 
 	@Override
@@ -1452,14 +1407,12 @@ public class CashReceiptServiceImpl implements CashReceiptService {
 
 	@Override
 	public List<Tuple> getDataFromIndentForFreshProcessing(BigInteger icmcId) {
-		List<Tuple> indentListForFresh = cashReceiptJpaDao.getDataFromIndentForFreshProcessing(icmcId);
-		return indentListForFresh;
+		return cashReceiptJpaDao.getDataFromIndentForFreshProcessing(icmcId);
 	}
 
 	@Override
 	public List<Indent> getIndentDataForBundleCalculation(BigInteger icmcId, int denomination) {
-		List<Indent> indentList = cashReceiptJpaDao.getIndentDataForBundleCalculation(icmcId, denomination);
-		return indentList;
+		return cashReceiptJpaDao.getIndentDataForBundleCalculation(icmcId, denomination);
 	}
 
 	@Override
@@ -1469,26 +1422,22 @@ public class CashReceiptServiceImpl implements CashReceiptService {
 
 	@Override
 	public List<BoxMaster> getBoxFromBoxMaster(BoxMaster boxMaster) {
-		List<BoxMaster> boxMasterList = cashReceiptJpaDao.getBoxFromBoxMaster(boxMaster);
-		return boxMasterList;
+		return cashReceiptJpaDao.getBoxFromBoxMaster(boxMaster);
 	}
 
 	@Override
 	public boolean saveBox(BoxMaster boxMaster) {
-		boolean isSaved = cashReceiptJpaDao.saveBox(boxMaster);
-		return isSaved;
+		return cashReceiptJpaDao.saveBox(boxMaster);
 	}
 
 	@Override
 	public List<BoxMaster> boxMasterDetails(BigInteger icmcId) {
-		List<BoxMaster> boxMasterList = cashReceiptJpaDao.boxMasterDetails(icmcId);
-		return boxMasterList;
+		return cashReceiptJpaDao.boxMasterDetails(icmcId);
 	}
 
 	@Override
 	public boolean updateBoxMaster(BoxMaster boxMaster) {
-		boolean isUpdate = cashReceiptJpaDao.updateBoxMaster(boxMaster);
-		return isUpdate;
+		return cashReceiptJpaDao.updateBoxMaster(boxMaster);
 	}
 
 	@Override
@@ -1555,11 +1504,7 @@ public class CashReceiptServiceImpl implements CashReceiptService {
 
 	@Override
 	public boolean processForUpdatingDSBReceipt1(DSB dsbdb, User user) {
-		boolean isAllSuccess = true;
-
-		cashReceiptJpaDao.updateDSB(dsbdb);
-
-		return isAllSuccess;
+		return cashReceiptJpaDao.updateDSB(dsbdb);
 	}
 
 	@Override
@@ -1739,7 +1684,6 @@ public class CashReceiptServiceImpl implements CashReceiptService {
 		dsb.setCurrencyType(dsbdb.getCurrencyType());
 		dsb.setBinCategoryType(BinCategoryType.PROCESSING);
 		dsb.setCashSource(CashSource.DSB);
-
 		dsb.setInsertTime(now);
 		dsb.setUpdateTime(now);
 		dsbReceiptList = this.processDSB(dsb, user);
@@ -1774,46 +1718,39 @@ public class CashReceiptServiceImpl implements CashReceiptService {
 
 	@Override
 	public BoxMaster isValidBox(BigInteger icmcId, String boxName) {
-		BoxMaster dbBoxName = cashReceiptJpaDao.isValidBox(icmcId, boxName);
-		return dbBoxName;
+		return cashReceiptJpaDao.isValidBox(icmcId, boxName);
 	}
 
 	@Override
 	public List<Tuple> getCashReceiptRecord(BigInteger icmcId, Calendar sDate, Calendar eDate) {
-		List<Tuple> cashReceiptRecorsList = cashReceiptJpaDao.getCashReceiptRecord(icmcId, sDate, eDate);
-		return cashReceiptRecorsList;
+		return cashReceiptJpaDao.getCashReceiptRecord(icmcId, sDate, eDate);
 	}
 
 	@Override
 	public Integer getDSBReceiptSequence(BigInteger icmcId, DSB dsb) {
 		Date todaysDate = UtilityJpa.getDateWithTimeZero();
 		dsb.setReceiptDate(todaysDate);
-		Integer sequence = cashReceiptJpaDao.getDSBReceiptSequence(icmcId, dsb);
-		return sequence;
+		return cashReceiptJpaDao.getDSBReceiptSequence(icmcId, dsb);
 	}
 
 	@Override
 	public BankReceipt getBankReceiptRecordById(Long id, BigInteger icmcId) {
-		BankReceipt bankReceipt = cashReceiptJpaDao.getBankReceiptRecordById(id, icmcId);
-		return bankReceipt;
+		return cashReceiptJpaDao.getBankReceiptRecordById(id, icmcId);
 	}
 
 	@Override
 	public FreshFromRBI getFreshFromRBIRecordById(Long id, BigInteger icmcId) {
-		FreshFromRBI freshFromRBI = cashReceiptJpaDao.getFreshFromRBIRecordById(id, icmcId);
-		return freshFromRBI;
+		return cashReceiptJpaDao.getFreshFromRBIRecordById(id, icmcId);
 	}
 
 	@Override
 	public List<BinTransaction> getBinTxnListByDenomForProcessed(BinTransaction binTx) {
-		List<BinTransaction> binTransactionForProcessed = cashReceiptJpaDao.getBinTxnListByDenomForProcessed(binTx);
-		return binTransactionForProcessed;
+		return cashReceiptJpaDao.getBinTxnListByDenomForProcessed(binTx);
 	}
 
 	@Override
 	public boolean branchHistory(List<History> history) {
-		boolean isSaved = cashReceiptJpaDao.branchHistory(history);
-		return isSaved;
+		return cashReceiptJpaDao.branchHistory(history);
 	}
 
 	@Override
@@ -1849,7 +1786,6 @@ public class CashReceiptServiceImpl implements CashReceiptService {
 		otherBankReceipt.setRtgsUTRNo(otherBankReceiptDb.getRtgsUTRNo());
 		otherBankReceipt.setBinCategoryType(BinCategoryType.BIN);
 		otherBankReceipt.setCurrencyType(CurrencyType.UNPROCESS);
-
 		otherBankReceipt.setInsertTime(now);
 		otherBankReceipt.setUpdateTime(now);
 
@@ -1860,20 +1796,17 @@ public class CashReceiptServiceImpl implements CashReceiptService {
 
 	@Override
 	public List<Tuple> getIBITForIRV(BigInteger icmcId, Calendar sDate, Calendar eDate) {
-		List<Tuple> ibitList = cashReceiptJpaDao.getIBITForIRV(icmcId, sDate, eDate);
-		return ibitList;
+		return cashReceiptJpaDao.getIBITForIRV(icmcId, sDate, eDate);
 	}
 
 	@Override
 	public String getLinkBranchSolID(long icmcId) {
-		String linkBranchSolID = cashReceiptJpaDao.getLinkBranchSolID(icmcId);
-		return linkBranchSolID;
+		return cashReceiptJpaDao.getLinkBranchSolID(icmcId);
 	}
 
 	@Override
 	public String getServicingICMC(String solId) {
-		String servicingICMC = cashReceiptJpaDao.getServicingICMC(solId);
-		return servicingICMC;
+		return cashReceiptJpaDao.getServicingICMC(solId);
 	}
 
 	@Override
@@ -1913,7 +1846,7 @@ public class CashReceiptServiceImpl implements CashReceiptService {
 		diversionIRV.setCurrencyType(diversionIRVDB.getCurrencyType());
 		diversionIRV.setProcessedOrUnprocessed(diversionIRVDB.getProcessedOrUnprocessed());
 		irvReceiptList = this.processDiversionIRV(diversionIRV, user);
+
 		return irvReceiptList;
 	}
-
 }

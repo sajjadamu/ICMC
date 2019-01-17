@@ -30,15 +30,13 @@ public class BranchServiceImpl implements BranchService {
 	@Override
 	public List<Branch> getBranch() {
 		LOG.info("Fetched retail branch records");
-		List<Branch> branchList = branchJpaDao.getBranch();
-		return branchList;
+		return branchJpaDao.getBranch();
 	}
 
 	@Override
 	public List<ICMC> getServicingICMCName() {
 		LOG.info("Fetched ICMC Names");
-		List<ICMC> icmcList = branchJpaDao.getServicingICMCName();
-		return icmcList;
+		return branchJpaDao.getServicingICMCName();
 	}
 
 	@Override
@@ -54,14 +52,12 @@ public class BranchServiceImpl implements BranchService {
 	
 	@Override
 	public Branch isSolIdValid(String solId){
-		Branch dbBranch = branchJpaDao.isSolIdValid(solId);
-		return dbBranch;
+		return branchJpaDao.isSolIdValid(solId);
 	}
 	
 	@Override
 	public Branch isBranchNameValid(String branch){
-		Branch dbBranch = branchJpaDao.isBranchNameValid(branch);
-		return dbBranch;
+		return branchJpaDao.isBranchNameValid(branch);
 	}
 
 	@Override
@@ -86,8 +82,7 @@ public class BranchServiceImpl implements BranchService {
 	@Override
 	public Branch getBranchById(Long id) {
 		LOG.info("Going to Remove Branch Record..");
-		Branch branch = branchJpaDao.getBranchById(id);
-		return branch;
+		return branchJpaDao.getBranchById(id);
 	}
 
 	@Override
@@ -100,26 +95,22 @@ public class BranchServiceImpl implements BranchService {
 
 	@Override
 	public List<RbiMaster> getRBIMasterList() {
-		List<RbiMaster> rbiMasterList = branchJpaDao.getRBIMasterList();
-		return rbiMasterList;
+		return branchJpaDao.getRBIMasterList();
 	}
 
 	@Override
 	public List<RbiMaster> getZoneAndRegion(String rbiName) {
-		List<RbiMaster> zoneAndRegionList = branchJpaDao.getZoneAndRegion(rbiName);
-		return zoneAndRegionList;
+		return branchJpaDao.getZoneAndRegion(rbiName);
 	}
 
 	@Override
 	public List<String> getRBINameList() {
-		List<String> rbiNameList = branchJpaDao.getRBINameList();
-		return rbiNameList;
+		return branchJpaDao.getRBINameList();
 	}
 
 	@Override
 	public List<ZoneMaster> getRegionList(Branch branch) {
-		List<ZoneMaster> regionList = branchJpaDao.getRegionList(branch);
-		return regionList;
+		return branchJpaDao.getRegionList(branch);
 	}
 
 }

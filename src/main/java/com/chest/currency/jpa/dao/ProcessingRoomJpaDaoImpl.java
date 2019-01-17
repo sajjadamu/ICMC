@@ -243,6 +243,7 @@ public class ProcessingRoomJpaDaoImpl implements ProcessingRoomJpaDao {
 		QIndent qIndent = QIndent.indent;
 		Long count = new JPAUpdateClause(em, qIndent)
 				.where(QIndent.indent.icmcId.eq(indent.getIcmcId()).and(QIndent.indent.bin.eq(indent.getBin().trim()))
+						.and(QIndent.indent.denomination.eq(indent.getDenomination()))
 						.and(QIndent.indent.description.isNull()))
 				.set(qIndent.status, OtherStatus.ACCEPTED).set(qIndent.updateTime, indent.getUpdateTime()).execute();
 		return count > 0 ? true : false;
@@ -280,10 +281,11 @@ public class ProcessingRoomJpaDaoImpl implements ProcessingRoomJpaDao {
 	}
 
 	@Override
-	public BinTransaction getBinFromTransaction(String bin, BigInteger icmcId) {
+	public BinTransaction getBinFromTransaction(String bin, BigInteger icmcId, Integer denomination) {
 		JPAQuery jpaQuery = getFromQueryForBinFromBinTxn();
 		jpaQuery.where(
 				QBinTransaction.binTransaction.binNumber.eq(bin).and(QBinTransaction.binTransaction.icmcId.eq(icmcId))
+						.and(QBinTransaction.binTransaction.denomination.eq(denomination))
 						.and(QBinTransaction.binTransaction.status.ne(BinStatus.EMPTY)));
 		BinTransaction binTransaction = jpaQuery.singleResult(QBinTransaction.binTransaction);
 

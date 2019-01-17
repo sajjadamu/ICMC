@@ -89,7 +89,7 @@ public interface ProcessingRoomService {
 
 	public Indent getIndentDataById(long id, BigInteger icmcId);
 
-	public BinTransaction getBinFromTransaction(String bin, BigInteger icmcId);
+	public BinTransaction getBinFromTransaction(String bin, BigInteger icmcId, Integer denomination);
 
 	public boolean updateIndentStatus(Indent indent);
 
@@ -99,7 +99,7 @@ public interface ProcessingRoomService {
 
 	public boolean updateBinTxn(BinTransaction binTransaction);
 
-	public boolean processIndentRequest(String bin, BigDecimal bundle, User user);
+	public boolean processIndentRequest(String bin, BigDecimal bundle, User user, Integer denomination);
 
 	public boolean processMutilatedIndentRequest(String bin, BigDecimal bundle, User user, Long id);
 
