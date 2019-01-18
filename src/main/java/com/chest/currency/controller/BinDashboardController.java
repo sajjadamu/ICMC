@@ -690,12 +690,10 @@ public class BinDashboardController {
 	@RequestMapping("/IO2Reports")
 	public ModelAndView IO2Reports(@ModelAttribute("reportDate") DateRange dateRange, HttpSession session) {
 		User user = (User) session.getAttribute("login");
-
 		ModelMap map = new ModelMap();
 
 		Calendar sDate = UtilityJpa.getStartDate();
 		Calendar eDate = UtilityJpa.getEndDate();
-
 		if (dateRange.getFromDate() != null) {
 			sDate = dateRange.getFromDate();
 			eDate = (Calendar) dateRange.getFromDate().clone();

@@ -1411,8 +1411,10 @@ public class BinDashBoardJpaDaoImpl implements BinDashBoardJpaDao {
 		QAuditorIndent qAuditorIndent = QAuditorIndent.auditorIndent;
 		long count = new JPAUpdateClause(em, qAuditorIndent)
 				.where(QAuditorIndent.auditorIndent.id.eq(auditorIndent.getId())
-						.and(QAuditorIndent.auditorIndent.icmcId.eq(auditorIndent.getIcmcId())))
+						.and(QAuditorIndent.auditorIndent.icmcId.eq(auditorIndent.getIcmcId()))
+						.and(QAuditorIndent.auditorIndent.status.eq(OtherStatus.REQUESTED)))
 				.set(QAuditorIndent.auditorIndent.status, OtherStatus.ACCEPTED).execute();
+
 		return count > 0 ? true : false;
 	}
 
@@ -1424,6 +1426,7 @@ public class BinDashBoardJpaDaoImpl implements BinDashBoardJpaDao {
 				.and(QBinTransaction.binTransaction.binNumber.eq(txn.getBinNumber())
 						.and(QBinTransaction.binTransaction.denomination.eq(txn.getDenomination()))));
 		BinTransaction binTransaction = jpaQuery.singleResult(QBinTransaction.binTransaction);
+
 		return binTransaction;
 	}
 
@@ -1923,17 +1926,13 @@ public class BinDashBoardJpaDaoImpl implements BinDashBoardJpaDao {
 
 	@Override
 	public List<Tuple> getIBITForIO2(BigInteger icmcId, Calendar sDate, Calendar eDate) {
-		/*
-		 * JPAQuery jpaQuery = new JPAQuery(em); jpaQuery.from(QIndent.indent);
-		 */
 		JPAQuery jpaQuery = getFromQueryFromIndent();
 		jpaQuery.where(QIndent.indent.icmcId.eq(icmcId)
 				.and(QIndent.indent.status.eq(OtherStatus.ACCEPTED)
 						.or(QIndent.indent.status.eq(OtherStatus.PROCESSED).and(QIndent.indent.cashSource
 								.eq(CashSource.BRANCH).and(QIndent.indent.insertTime.between(sDate, eDate))))));
 		jpaQuery.groupBy(QIndent.indent.denomination);
-		List<Tuple> ibitList = jpaQuery.list(QIndent.indent.denomination, QIndent.indent.bundle.sum().multiply(1000));
-		return ibitList;
+		return jpaQuery.list(QIndent.indent.denomination, QIndent.indent.bundle.sum().multiply(1000));
 	}
 
 	@Override

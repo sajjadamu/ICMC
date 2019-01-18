@@ -1,4 +1,3 @@
-
 package com.chest.currency.service;
 
 import java.util.List;
@@ -24,23 +23,19 @@ public class RolePermissionServiceImpl implements RolePermissionService {
 	@Override
 	public List<Role> getRoleList() {
 		LOG.info("Going to fetch Roles List");
-		List<Role> roleList = rolePermissionJpaDao.getRoleList();
-		return roleList;
+		return rolePermissionJpaDao.getRoleList();
 	}
 
 	@Override
 	@Transactional
 	public boolean saveRole(Role role) {
-		boolean isAllSuccess = false;
-		isAllSuccess = rolePermissionJpaDao.saveRole(role);
 		LOG.info("New Role has been created");
-		return isAllSuccess;
+		return rolePermissionJpaDao.saveRole(role);
 	}
 
 	@Override
 	public Role getRoleById(String id) {
-		Role role = rolePermissionJpaDao.getRoleById(id);
-		return role;
+		return rolePermissionJpaDao.getRoleById(id);
 	}
 
 	@Override

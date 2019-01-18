@@ -105,8 +105,7 @@ public class ProcessingRoomServiceImpl implements ProcessingRoomService {
 
 	@Override
 	public List<Indent> getIndentRequest(BigInteger icmcId) {
-		List<Indent> indentList = processingRoomJpaDao.viewIndentRequest(icmcId);
-		return indentList;
+		return processingRoomJpaDao.viewIndentRequest(icmcId);
 	}
 
 	@Override

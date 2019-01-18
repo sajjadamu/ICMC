@@ -1,7 +1,3 @@
-/*******************************************************************************
- * /* Copyright (C) Indicsoft Technologies Pvt Ltd
- * * All Rights Reserved.
- *******************************************************************************/
 package com.chest.currency.service;
 
 import java.util.List;
@@ -26,16 +22,14 @@ public class VendorServiceImpl implements VendorService {
 
 	@Override
 	public boolean addVendor(Vendor vendor) {
-		boolean isSaved = vendorJpaDao.addVendor(vendor);
 		LOG.info("Vendor record has been saved");
-		return isSaved;
+		return vendorJpaDao.addVendor(vendor);
 	}
 
 	@Override
 	public List<Vendor> getVendorList() {
-		List<Vendor> vendorList = vendorJpaDao.getVendorList();
-		LOG.info("Fetched Vendor Records:", vendorList);
-		return vendorList;
+		LOG.info("Fetched Vendor Records:");
+		return vendorJpaDao.getVendorList();
 	}
 
 }

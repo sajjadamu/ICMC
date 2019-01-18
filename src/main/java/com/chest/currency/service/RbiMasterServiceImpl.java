@@ -1,7 +1,3 @@
-/*******************************************************************************
- * /* Copyright (C) Indicsoft Technologies Pvt Ltd
- * * All Rights Reserved.
- *******************************************************************************/
 package com.chest.currency.service;
 
 import java.util.List;
@@ -19,26 +15,26 @@ import com.chest.currency.jpa.dao.RbiMasterJpaDao;
 @Service
 @Transactional
 public class RbiMasterServiceImpl implements RbiMasterService {
-	
+
 	private static final Logger LOG = LoggerFactory.getLogger(RbiMasterServiceImpl.class);
 
 	@Autowired
 	RbiMasterJpaDao rbiMasterJpaDao;
-	
+
 	public boolean saveRbiMaster(RbiMaster rbiMaster) {
 		return rbiMasterJpaDao.saveRbiMaster(rbiMaster);
 	}
-	
+
 	@Override
 	public List<RbiMaster> getAllRbiMaster() {
 		return rbiMasterJpaDao.getAllRbiMaster();
 	}
-	
+
 	@Override
 	public RbiMaster getRbiMasterObject(Long id) {
 		return rbiMasterJpaDao.getRbiMasterObject(id);
 	}
-	
+
 	@Override
 	public boolean updateRbiMaster(RbiMaster rbiMaster) {
 		RbiMaster oldRbiMaster = rbiMasterJpaDao.getRbiMasterObject(rbiMaster.getId());
@@ -46,25 +42,23 @@ public class RbiMasterServiceImpl implements RbiMasterService {
 		rbiMaster.setInsertBy(oldRbiMaster.getInsertBy());
 		return rbiMasterJpaDao.updateRbiMaster(rbiMaster);
 	}
-	
+
 	@Override
 	public List<ZoneMaster> getRegionList(RbiMaster rbi) {
-		List<ZoneMaster> regionList = rbiMasterJpaDao.getRegionList(rbi);
-		return regionList;
+		return rbiMasterJpaDao.getRegionList(rbi);
 	}
-	
+
 	public RbiMaster isValidRbiName(String userId) {
-		RbiMaster userBean = rbiMasterJpaDao.isValidRbiName(userId);
-		return userBean;
+		return rbiMasterJpaDao.isValidRbiName(userId);
 	}
 
 	@Override
 	public boolean uploadRBIMaster(List<RbiMaster> rbiMasterList, RbiMaster rbiMaster) {
 		boolean isAllsuccess = false;
-		try{
+		try {
 			LOG.info("Uploading RBI Master Records From CSV..");
 			isAllsuccess = rbiMasterJpaDao.uploadRBIMaster(rbiMasterList, rbiMaster);
-		}catch(Exception ex){
+		} catch (Exception ex) {
 			throw new RuntimeException(ex);
 		}
 		return isAllsuccess;

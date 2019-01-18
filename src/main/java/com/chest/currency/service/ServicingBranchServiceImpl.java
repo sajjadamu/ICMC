@@ -1,7 +1,3 @@
-/*******************************************************************************
- * /* Copyright (C) Indicsoft Technologies Pvt Ltd
- * * All Rights Reserved.
- *******************************************************************************/
 package com.chest.currency.service;
 
 import java.util.List;
@@ -38,9 +34,8 @@ public class ServicingBranchServiceImpl implements ServicingBranchService {
 
 	@Override
 	public List<ServicingBranch> getServicingBranch() {
-		List<ServicingBranch> branchList = servicingBranchJpaDao.getServicingBranch();
-		LOG.info("Fetched Servicing Branch Records : " + branchList);
-		return branchList;
+		LOG.info("Fetched Servicing Branch Records : ");
+		return servicingBranchJpaDao.getServicingBranch();
 	}
 
 	@Override
@@ -50,10 +45,8 @@ public class ServicingBranchServiceImpl implements ServicingBranchService {
 
 	@Override
 	public boolean updateServicingBranch(ServicingBranch servicingBranch) {
-		boolean isSaved = false;
-		isSaved = servicingBranchJpaDao.updateServicingBranch(servicingBranch);
 		LOG.info("Servicing Branch Record updated");
-		return isSaved;
+		return servicingBranchJpaDao.updateServicingBranch(servicingBranch);
 	}
 
 }

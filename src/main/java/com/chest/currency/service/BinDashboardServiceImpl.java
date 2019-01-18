@@ -707,48 +707,27 @@ public class BinDashboardServiceImpl implements BinDashboardService {
 		for (Tuple t : summaryListForRemittanceRecieved) {
 			if (t.get(0, Integer.class).equals(1)) {
 				remittanceReceivedDenomination1 = remittanceReceivedDenomination1.add(t.get(1, BigDecimal.class));
-			}
-
-			if (t.get(0, Integer.class).equals(2)) {
+			} else if (t.get(0, Integer.class).equals(2)) {
 				remittanceReceivedDenomination2 = remittanceReceivedDenomination2.add(t.get(1, BigDecimal.class));
-			}
-
-			if (t.get(0, Integer.class).equals(5)) {
+			} else if (t.get(0, Integer.class).equals(5)) {
 				remittanceReceivedDenomination5 = remittanceReceivedDenomination5.add(t.get(1, BigDecimal.class));
-			}
-
-			if (t.get(0, Integer.class).equals(10)) {
+			} else if (t.get(0, Integer.class).equals(10)) {
 				remittanceReceivedDenomination10 = remittanceReceivedDenomination10.add(t.get(1, BigDecimal.class));
-			}
-
-			if (t.get(0, Integer.class).equals(20)) {
+			} else if (t.get(0, Integer.class).equals(20)) {
 				remittanceReceivedDenomination20 = remittanceReceivedDenomination20.add(t.get(1, BigDecimal.class));
-			}
-
-			if (t.get(0, Integer.class).equals(50)) {
+			} else if (t.get(0, Integer.class).equals(50)) {
 				remittanceReceivedDenomination50 = remittanceReceivedDenomination50.add(t.get(1, BigDecimal.class));
-			}
-
-			if (t.get(0, Integer.class).equals(100)) {
+			} else if (t.get(0, Integer.class).equals(100)) {
 				remittanceReceivedDenomination100 = remittanceReceivedDenomination100.add(t.get(1, BigDecimal.class));
-			}
-
-			if (t.get(0, Integer.class).equals(200)) {
+			} else if (t.get(0, Integer.class).equals(200)) {
 				remittanceReceivedDenomination200 = remittanceReceivedDenomination200.add(t.get(1, BigDecimal.class));
-			}
-
-			if (t.get(0, Integer.class).equals(500)) {
+			} else if (t.get(0, Integer.class).equals(500)) {
 				remittanceReceivedDenomination500 = remittanceReceivedDenomination500.add(t.get(1, BigDecimal.class));
-			}
-
-			if (t.get(0, Integer.class).equals(1000)) {
+			} else if (t.get(0, Integer.class).equals(1000)) {
 				remittanceReceivedDenomination1000 = remittanceReceivedDenomination1000.add(t.get(1, BigDecimal.class));
-			}
-
-			if (t.get(0, Integer.class).equals(2000)) {
+			} else if (t.get(0, Integer.class).equals(2000)) {
 				remittanceReceivedDenomination2000 = remittanceReceivedDenomination2000.add(t.get(1, BigDecimal.class));
 			}
-
 		}
 
 		List<Tuple> summrayListForDiversion = this.getDepositForDiversion(icmcId, sDate, eDate);
@@ -756,48 +735,27 @@ public class BinDashboardServiceImpl implements BinDashboardService {
 		for (Tuple t : summrayListForDiversion) {
 			if (t.get(0, Integer.class).equals(1)) {
 				remittanceReceivedDenomination1 = remittanceReceivedDenomination1.add(t.get(1, BigDecimal.class));
-			}
-
-			if (t.get(0, Integer.class).equals(2)) {
+			} else if (t.get(0, Integer.class).equals(2)) {
 				remittanceReceivedDenomination2 = remittanceReceivedDenomination2.add(t.get(1, BigDecimal.class));
-			}
-
-			if (t.get(0, Integer.class).equals(5)) {
+			} else if (t.get(0, Integer.class).equals(5)) {
 				remittanceReceivedDenomination5 = remittanceReceivedDenomination5.add(t.get(1, BigDecimal.class));
-			}
-
-			if (t.get(0, Integer.class).equals(10)) {
+			} else if (t.get(0, Integer.class).equals(10)) {
 				remittanceReceivedDenomination10 = remittanceReceivedDenomination10.add(t.get(1, BigDecimal.class));
-			}
-
-			if (t.get(0, Integer.class).equals(20)) {
+			} else if (t.get(0, Integer.class).equals(20)) {
 				remittanceReceivedDenomination20 = remittanceReceivedDenomination20.add(t.get(1, BigDecimal.class));
-			}
-
-			if (t.get(0, Integer.class).equals(50)) {
+			} else if (t.get(0, Integer.class).equals(50)) {
 				remittanceReceivedDenomination50 = remittanceReceivedDenomination50.add(t.get(1, BigDecimal.class));
-			}
-
-			if (t.get(0, Integer.class).equals(100)) {
+			} else if (t.get(0, Integer.class).equals(100)) {
 				remittanceReceivedDenomination100 = remittanceReceivedDenomination100.add(t.get(1, BigDecimal.class));
-			}
-
-			if (t.get(0, Integer.class).equals(200)) {
+			} else if (t.get(0, Integer.class).equals(200)) {
 				remittanceReceivedDenomination200 = remittanceReceivedDenomination200.add(t.get(1, BigDecimal.class));
-			}
-
-			if (t.get(0, Integer.class).equals(500)) {
+			} else if (t.get(0, Integer.class).equals(500)) {
 				remittanceReceivedDenomination500 = remittanceReceivedDenomination500.add(t.get(1, BigDecimal.class));
-			}
-
-			if (t.get(0, Integer.class).equals(1000)) {
+			} else if (t.get(0, Integer.class).equals(1000)) {
 				remittanceReceivedDenomination1000 = remittanceReceivedDenomination1000.add(t.get(1, BigDecimal.class));
-			}
-
-			if (t.get(0, Integer.class).equals(2000)) {
+			} else if (t.get(0, Integer.class).equals(2000)) {
 				remittanceReceivedDenomination2000 = remittanceReceivedDenomination2000.add(t.get(1, BigDecimal.class));
 			}
-
 		}
 
 		BinTransactionBOD binTxnBODForRemittanceNotes = new BinTransactionBOD();
@@ -861,48 +819,27 @@ public class BinDashboardServiceImpl implements BinDashboardService {
 		for (Tuple t : summrayListForBranch) {
 			if (t.get(0, Integer.class).equals(1)) {
 				denomination1 = t.get(1, BigDecimal.class);
-			}
-
-			if (t.get(0, Integer.class).equals(2)) {
+			} else if (t.get(0, Integer.class).equals(2)) {
 				denomination2 = t.get(1, BigDecimal.class);
-			}
-
-			if (t.get(0, Integer.class).equals(5)) {
+			} else if (t.get(0, Integer.class).equals(5)) {
 				denomination5 = t.get(1, BigDecimal.class);
-			}
-
-			if (t.get(0, Integer.class).equals(10)) {
+			} else if (t.get(0, Integer.class).equals(10)) {
 				denomination10 = t.get(1, BigDecimal.class);
-			}
-
-			if (t.get(0, Integer.class).equals(20)) {
+			} else if (t.get(0, Integer.class).equals(20)) {
 				denomination20 = t.get(1, BigDecimal.class);
-			}
-
-			if (t.get(0, Integer.class).equals(50)) {
+			} else if (t.get(0, Integer.class).equals(50)) {
 				denomination50 = t.get(1, BigDecimal.class);
-			}
-
-			if (t.get(0, Integer.class).equals(100)) {
+			} else if (t.get(0, Integer.class).equals(100)) {
 				denomination100 = t.get(1, BigDecimal.class);
-			}
-
-			if (t.get(0, Integer.class).equals(200)) {
+			} else if (t.get(0, Integer.class).equals(200)) {
 				denomination200 = t.get(1, BigDecimal.class);
-			}
-
-			if (t.get(0, Integer.class).equals(500)) {
+			} else if (t.get(0, Integer.class).equals(500)) {
 				denomination500 = t.get(1, BigDecimal.class);
-			}
-
-			if (t.get(0, Integer.class).equals(1000)) {
+			} else if (t.get(0, Integer.class).equals(1000)) {
 				denomination1000 = t.get(1, BigDecimal.class);
-			}
-
-			if (t.get(0, Integer.class).equals(2000)) {
+			} else if (t.get(0, Integer.class).equals(2000)) {
 				denomination2000 = t.get(1, BigDecimal.class);
 			}
-
 		}
 
 		List<Tuple> summrayListForDSB = this.getDepositForDSB(icmcId, sDate, eDate);
@@ -910,48 +847,27 @@ public class BinDashboardServiceImpl implements BinDashboardService {
 		for (Tuple t : summrayListForDSB) {
 			if (t.get(0, Integer.class).equals(1)) {
 				denomination1 = denomination1.add(t.get(1, BigDecimal.class));
-			}
-
-			if (t.get(0, Integer.class).equals(2)) {
+			} else if (t.get(0, Integer.class).equals(2)) {
 				denomination2 = denomination2.add(t.get(1, BigDecimal.class));
-			}
-
-			if (t.get(0, Integer.class).equals(5)) {
+			} else if (t.get(0, Integer.class).equals(5)) {
 				denomination5 = denomination5.add(t.get(1, BigDecimal.class));
-			}
-
-			if (t.get(0, Integer.class).equals(10)) {
+			} else if (t.get(0, Integer.class).equals(10)) {
 				denomination10 = denomination10.add(t.get(1, BigDecimal.class));
-			}
-
-			if (t.get(0, Integer.class).equals(20)) {
+			} else if (t.get(0, Integer.class).equals(20)) {
 				denomination20 = denomination20.add(t.get(1, BigDecimal.class));
-			}
-
-			if (t.get(0, Integer.class).equals(50)) {
+			} else if (t.get(0, Integer.class).equals(50)) {
 				denomination50 = denomination50.add(t.get(1, BigDecimal.class));
-			}
-
-			if (t.get(0, Integer.class).equals(100)) {
+			} else if (t.get(0, Integer.class).equals(100)) {
 				denomination100 = denomination100.add(t.get(1, BigDecimal.class));
-			}
-
-			if (t.get(0, Integer.class).equals(200)) {
+			} else if (t.get(0, Integer.class).equals(200)) {
 				denomination200 = denomination200.add(t.get(1, BigDecimal.class));
-			}
-
-			if (t.get(0, Integer.class).equals(500)) {
+			} else if (t.get(0, Integer.class).equals(500)) {
 				denomination500 = denomination500.add(t.get(1, BigDecimal.class));
-			}
-
-			if (t.get(0, Integer.class).equals(1000)) {
+			} else if (t.get(0, Integer.class).equals(1000)) {
 				denomination1000 = denomination1000.add(t.get(1, BigDecimal.class));
-			}
-
-			if (t.get(0, Integer.class).equals(2000)) {
+			} else if (t.get(0, Integer.class).equals(2000)) {
 				denomination2000 = denomination2000.add(t.get(1, BigDecimal.class));
 			}
-
 		}
 
 		List<Tuple> summrayListForOtherBank = this.getDepositForOtherBank(icmcId, sDate, eDate);
@@ -959,96 +875,55 @@ public class BinDashboardServiceImpl implements BinDashboardService {
 		for (Tuple t : summrayListForOtherBank) {
 			if (t.get(0, Integer.class).equals(1)) {
 				denomination1 = denomination1.add(t.get(1, BigDecimal.class));
-			}
-
-			if (t.get(0, Integer.class).equals(2)) {
+			} else if (t.get(0, Integer.class).equals(2)) {
 				denomination2 = denomination2.add(t.get(1, BigDecimal.class));
-			}
-
-			if (t.get(0, Integer.class).equals(5)) {
+			} else if (t.get(0, Integer.class).equals(5)) {
 				denomination5 = denomination5.add(t.get(1, BigDecimal.class));
-			}
-
-			if (t.get(0, Integer.class).equals(10)) {
+			} else if (t.get(0, Integer.class).equals(10)) {
 				denomination10 = denomination10.add(t.get(1, BigDecimal.class));
-			}
-
-			if (t.get(0, Integer.class).equals(20)) {
+			} else if (t.get(0, Integer.class).equals(20)) {
 				denomination20 = denomination20.add(t.get(1, BigDecimal.class));
-			}
-
-			if (t.get(0, Integer.class).equals(50)) {
+			} else if (t.get(0, Integer.class).equals(50)) {
 				denomination50 = denomination50.add(t.get(1, BigDecimal.class));
-			}
-
-			if (t.get(0, Integer.class).equals(100)) {
+			} else if (t.get(0, Integer.class).equals(100)) {
 				denomination100 = denomination100.add(t.get(1, BigDecimal.class));
-			}
-
-			if (t.get(0, Integer.class).equals(200)) {
+			} else if (t.get(0, Integer.class).equals(200)) {
 				denomination200 = denomination200.add(t.get(1, BigDecimal.class));
-			}
-
-			if (t.get(0, Integer.class).equals(500)) {
+			} else if (t.get(0, Integer.class).equals(500)) {
 				denomination500 = denomination500.add(t.get(1, BigDecimal.class));
-			}
-
-			if (t.get(0, Integer.class).equals(1000)) {
+			} else if (t.get(0, Integer.class).equals(1000)) {
 				denomination1000 = denomination1000.add(t.get(1, BigDecimal.class));
-			}
-
-			if (t.get(0, Integer.class).equals(2000)) {
+			} else if (t.get(0, Integer.class).equals(2000)) {
 				denomination2000 = denomination2000.add(t.get(1, BigDecimal.class));
 			}
-
 		}
+
 		List<Tuple> summrayListForIndent = this.getDepositForIndent(icmcId, sDate, eDate);
 
 		for (Tuple t : summrayListForIndent) {
 			if (t.get(0, Integer.class).equals(1)) {
 				denomination1 = denomination1.add(t.get(1, BigDecimal.class));
-			}
-
-			if (t.get(0, Integer.class).equals(2)) {
+			} else if (t.get(0, Integer.class).equals(2)) {
 				denomination2 = denomination2.add(t.get(1, BigDecimal.class));
-			}
-
-			if (t.get(0, Integer.class).equals(5)) {
+			} else if (t.get(0, Integer.class).equals(5)) {
 				denomination5 = denomination5.add(t.get(1, BigDecimal.class));
-			}
-
-			if (t.get(0, Integer.class).equals(10)) {
+			} else if (t.get(0, Integer.class).equals(10)) {
 				denomination10 = denomination10.add(t.get(1, BigDecimal.class));
-			}
-
-			if (t.get(0, Integer.class).equals(20)) {
+			} else if (t.get(0, Integer.class).equals(20)) {
 				denomination20 = denomination20.add(t.get(1, BigDecimal.class));
-			}
-
-			if (t.get(0, Integer.class).equals(50)) {
+			} else if (t.get(0, Integer.class).equals(50)) {
 				denomination50 = denomination50.add(t.get(1, BigDecimal.class));
-			}
-
-			if (t.get(0, Integer.class).equals(100)) {
+			} else if (t.get(0, Integer.class).equals(100)) {
 				denomination100 = denomination100.add(t.get(1, BigDecimal.class));
-			}
-
-			if (t.get(0, Integer.class).equals(200)) {
+			} else if (t.get(0, Integer.class).equals(200)) {
 				denomination200 = denomination200.add(t.get(1, BigDecimal.class));
-			}
-
-			if (t.get(0, Integer.class).equals(500)) {
+			} else if (t.get(0, Integer.class).equals(500)) {
 				denomination500 = denomination500.add(t.get(1, BigDecimal.class));
-			}
-
-			if (t.get(0, Integer.class).equals(1000)) {
+			} else if (t.get(0, Integer.class).equals(1000)) {
 				denomination1000 = denomination1000.add(t.get(1, BigDecimal.class));
-			}
-
-			if (t.get(0, Integer.class).equals(2000)) {
+			} else if (t.get(0, Integer.class).equals(2000)) {
 				denomination2000 = denomination2000.add(t.get(1, BigDecimal.class));
 			}
-
 		}
 
 		binTxnBODForDeposit.setDenomination1(denomination1);
@@ -1077,9 +952,6 @@ public class BinDashboardServiceImpl implements BinDashboardService {
 		binTxBodList.add(2, binTxnBODForDeposit);
 
 		// Close Deposit
-
-		// start Remittance Sent
-
 		BigDecimal denominationRemittanceSent1 = new BigDecimal(0);
 		BigDecimal denominationRemittanceSent2 = new BigDecimal(0);
 		BigDecimal denominationRemittanceSent5 = new BigDecimal(0);
@@ -1097,45 +969,25 @@ public class BinDashboardServiceImpl implements BinDashboardService {
 
 			if (t.get(0, Integer.class).equals(1)) {
 				denominationRemittanceSent1 = denominationRemittanceSent1.add(t.get(1, BigDecimal.class));
-			}
-
-			if (t.get(0, Integer.class).equals(2)) {
+			} else if (t.get(0, Integer.class).equals(2)) {
 				denominationRemittanceSent2 = denominationRemittanceSent2.add(t.get(1, BigDecimal.class));
-			}
-
-			if (t.get(0, Integer.class).equals(5)) {
+			} else if (t.get(0, Integer.class).equals(5)) {
 				denominationRemittanceSent5 = denominationRemittanceSent5.add(t.get(1, BigDecimal.class));
-			}
-
-			if (t.get(0, Integer.class).equals(10)) {
+			} else if (t.get(0, Integer.class).equals(10)) {
 				denominationRemittanceSent10 = denominationRemittanceSent10.add(t.get(1, BigDecimal.class));
-			}
-
-			if (t.get(0, Integer.class).equals(20)) {
+			} else if (t.get(0, Integer.class).equals(20)) {
 				denominationRemittanceSent20 = denominationRemittanceSent20.add(t.get(1, BigDecimal.class));
-			}
-
-			if (t.get(0, Integer.class).equals(50)) {
+			} else if (t.get(0, Integer.class).equals(50)) {
 				denominationRemittanceSent50 = denominationRemittanceSent50.add(t.get(1, BigDecimal.class));
-			}
-
-			if (t.get(0, Integer.class).equals(100)) {
+			} else if (t.get(0, Integer.class).equals(100)) {
 				denominationRemittanceSent100 = denominationRemittanceSent100.add(t.get(1, BigDecimal.class));
-			}
-
-			if (t.get(0, Integer.class).equals(200)) {
+			} else if (t.get(0, Integer.class).equals(200)) {
 				denominationRemittanceSent200 = denominationRemittanceSent200.add(t.get(1, BigDecimal.class));
-			}
-
-			if (t.get(0, Integer.class).equals(500)) {
+			} else if (t.get(0, Integer.class).equals(500)) {
 				denominationRemittanceSent500 = denominationRemittanceSent500.add(t.get(1, BigDecimal.class));
-			}
-
-			if (t.get(0, Integer.class).equals(1000)) {
+			} else if (t.get(0, Integer.class).equals(1000)) {
 				denominationRemittanceSent1000 = denominationRemittanceSent1000.add(t.get(1, BigDecimal.class));
-			}
-
-			if (t.get(0, Integer.class).equals(2000)) {
+			} else if (t.get(0, Integer.class).equals(2000)) {
 				denominationRemittanceSent2000 = denominationRemittanceSent2000.add(t.get(1, BigDecimal.class));
 			}
 		}
@@ -1145,48 +997,27 @@ public class BinDashboardServiceImpl implements BinDashboardService {
 		for (Tuple t : summaryListForRemittanceSent) {
 			if (t.get(0, Integer.class).equals(1)) {
 				denominationRemittanceSent1 = denominationRemittanceSent1.add(t.get(1, BigDecimal.class));
-			}
-
-			if (t.get(0, Integer.class).equals(2)) {
+			} else if (t.get(0, Integer.class).equals(2)) {
 				denominationRemittanceSent2 = denominationRemittanceSent2.add(t.get(1, BigDecimal.class));
-			}
-
-			if (t.get(0, Integer.class).equals(5)) {
+			} else if (t.get(0, Integer.class).equals(5)) {
 				denominationRemittanceSent5 = denominationRemittanceSent5.add(t.get(1, BigDecimal.class));
-			}
-
-			if (t.get(0, Integer.class).equals(10)) {
+			} else if (t.get(0, Integer.class).equals(10)) {
 				denominationRemittanceSent10 = denominationRemittanceSent10.add(t.get(1, BigDecimal.class));
-			}
-
-			if (t.get(0, Integer.class).equals(20)) {
+			} else if (t.get(0, Integer.class).equals(20)) {
 				denominationRemittanceSent20 = denominationRemittanceSent20.add(t.get(1, BigDecimal.class));
-			}
-
-			if (t.get(0, Integer.class).equals(50)) {
+			} else if (t.get(0, Integer.class).equals(50)) {
 				denominationRemittanceSent50 = denominationRemittanceSent50.add(t.get(1, BigDecimal.class));
-			}
-
-			if (t.get(0, Integer.class).equals(100)) {
+			} else if (t.get(0, Integer.class).equals(100)) {
 				denominationRemittanceSent100 = denominationRemittanceSent100.add(t.get(1, BigDecimal.class));
-			}
-
-			if (t.get(0, Integer.class).equals(200)) {
+			} else if (t.get(0, Integer.class).equals(200)) {
 				denominationRemittanceSent200 = denominationRemittanceSent200.add(t.get(1, BigDecimal.class));
-			}
-
-			if (t.get(0, Integer.class).equals(500)) {
+			} else if (t.get(0, Integer.class).equals(500)) {
 				denominationRemittanceSent500 = denominationRemittanceSent500.add(t.get(1, BigDecimal.class));
-			}
-
-			if (t.get(0, Integer.class).equals(1000)) {
+			} else if (t.get(0, Integer.class).equals(1000)) {
 				denominationRemittanceSent1000 = denominationRemittanceSent1000.add(t.get(1, BigDecimal.class));
-			}
-
-			if (t.get(0, Integer.class).equals(2000)) {
+			} else if (t.get(0, Integer.class).equals(2000)) {
 				denominationRemittanceSent2000 = denominationRemittanceSent2000.add(t.get(1, BigDecimal.class));
 			}
-
 		}
 
 		BinTransactionBOD remittanceSent = new BinTransactionBOD();
@@ -1247,48 +1078,27 @@ public class BinDashboardServiceImpl implements BinDashboardService {
 		for (Tuple t : craAllocationList) {
 			if (t.get(0, Integer.class).equals(1)) {
 				denomination1W = t.get(1, BigDecimal.class);
-			}
-
-			if (t.get(0, Integer.class).equals(2)) {
+			} else if (t.get(0, Integer.class).equals(2)) {
 				denomination2W = t.get(1, BigDecimal.class);
-			}
-
-			if (t.get(0, Integer.class).equals(5)) {
+			} else if (t.get(0, Integer.class).equals(5)) {
 				denomination5W = t.get(1, BigDecimal.class);
-			}
-
-			if (t.get(0, Integer.class).equals(10)) {
+			} else if (t.get(0, Integer.class).equals(10)) {
 				denomination10W = t.get(1, BigDecimal.class);
-			}
-
-			if (t.get(0, Integer.class).equals(20)) {
+			} else if (t.get(0, Integer.class).equals(20)) {
 				denomination20W = t.get(1, BigDecimal.class);
-			}
-
-			if (t.get(0, Integer.class).equals(50)) {
+			} else if (t.get(0, Integer.class).equals(50)) {
 				denomination50W = t.get(1, BigDecimal.class);
-			}
-
-			if (t.get(0, Integer.class).equals(100)) {
+			} else if (t.get(0, Integer.class).equals(100)) {
 				denomination100W = t.get(1, BigDecimal.class);
-			}
-
-			if (t.get(0, Integer.class).equals(200)) {
+			} else if (t.get(0, Integer.class).equals(200)) {
 				denomination200W = t.get(1, BigDecimal.class);
-			}
-
-			if (t.get(0, Integer.class).equals(500)) {
+			} else if (t.get(0, Integer.class).equals(500)) {
 				denomination500W = t.get(1, BigDecimal.class);
-			}
-
-			if (t.get(0, Integer.class).equals(1000)) {
+			} else if (t.get(0, Integer.class).equals(1000)) {
 				denomination1000W = t.get(1, BigDecimal.class);
-			}
-
-			if (t.get(0, Integer.class).equals(2000)) {
+			} else if (t.get(0, Integer.class).equals(2000)) {
 				denomination2000W = t.get(1, BigDecimal.class);
 			}
-
 		}
 		List<Tuple> processBundleForCraList = this.getWithdrawalForProcessCRA(icmcId, sDate, eDate);
 
