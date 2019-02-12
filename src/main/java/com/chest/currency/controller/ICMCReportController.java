@@ -32,7 +32,7 @@ public class ICMCReportController {
 
 	@RequestMapping("/viewICMCReport")
 	public ModelAndView viewICMCReport() {
-		LOG.info("viewICMCReport");
+		LOG.error("viewICMCReport");
 		List<ICMCReport> icmcReportList = icmcReportService.getICMCReport();
 		return new ModelAndView("viewICMCReport", "records", icmcReportList);
 	}
@@ -41,7 +41,7 @@ public class ICMCReportController {
 	public ModelAndView addICMCReport() {
 		ModelMap model = new ModelMap();
 		ICMCReport obj = new ICMCReport();
-		LOG.info("ICMC Report Page");
+		LOG.error("ICMC Report Page");
 		model.put("reportList", ReportType.values());
 		model.put("user", obj);
 		return new ModelAndView("addICMCReport", model);
@@ -65,7 +65,7 @@ public class ICMCReportController {
 
 		ICMCReport dbICMCReport = icmcReportService.isCustomReportTypeNameValid(icmcReport.getNewReportType());
 		if (dbICMCReport != null) {
-			LOG.info("ICMC Report Name Already Exists...");
+			LOG.error("ICMC Report Name Already Exists...");
 			model.put("reportList", ReportType.values());
 			model.put("user", icmcReport);
 			model.put("duplicateReport",

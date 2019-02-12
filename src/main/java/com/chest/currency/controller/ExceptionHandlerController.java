@@ -41,7 +41,7 @@ public class ExceptionHandlerController extends ResponseEntityExceptionHandler {
 	@ExceptionHandler(ClassNotFoundException.class)
 	@ResponseBody
 	public Response ClassNotFoundException(HttpServletRequest request) {
-		LOG.info("========ClassNotFoundException=============");
+		LOG.error("========ClassNotFoundException=============");
 		/*
 		 * return Error.setErrorResponse(LamStatus.EXCEPTION,
 		 * ErrorCode.NOT_FOUND.getCode(), "Class Not Found .");
@@ -52,21 +52,23 @@ public class ExceptionHandlerController extends ResponseEntityExceptionHandler {
 	@ExceptionHandler(ClassCastException.class)
 	@ResponseBody
 	public Response ClassCastException(HttpServletRequest request) {
-		LOG.info("========ClassCastException=============");
+		LOG.error("========ClassCastException=============");
 		return Response.setSuccessResponse(LamStatus.EXCEPTION, LamStatus.EXCEPTION.getCode(), "Class Cast Exception.");
 	}
 
 	@ExceptionHandler(IndexOutOfBoundsException.class)
 	@ResponseBody
 	public Response IndexOutOfBoundsException(IndexOutOfBoundsException e, HttpServletRequest request) {
-		LOG.info("========IndexOutOfBoundsException=============");
-		LOG.info("========Exception request============= " + request.getRequestURL().toString());
+		LOG.error("========IndexOutOfBoundsException=============");
+		LOG.error("========Exception request============= " + request.getRequestURL().toString());
 		String requestUrl = request.getRequestURL().toString();
 		String[] splitedUrl = requestUrl.split("/");
-		LOG.info("========splited request url============= " + splitedUrl[4]);
-		LOG.info("========splited request url============= " + splitedUrl[5]);
-/*		if (!splitedUrl[5].equalsIgnoreCase("api"))
-			globalExceptionHandler.IndexOutOfBoundsException(e, request);*/
+		LOG.error("========splited request url============= " + splitedUrl[4]);
+		LOG.error("========splited request url============= " + splitedUrl[5]);
+		/*
+		 * if (!splitedUrl[5].equalsIgnoreCase("api"))
+		 * globalExceptionHandler.IndexOutOfBoundsException(e, request);
+		 */
 		return Response.setSuccessResponse(LamStatus.EXCEPTION, LamStatus.EXCEPTION.getCode(),
 				"Index Please check Roll or other field .");
 
@@ -75,7 +77,7 @@ public class ExceptionHandlerController extends ResponseEntityExceptionHandler {
 	@ExceptionHandler(InvalidDataAccessApiUsageException.class)
 	@ResponseBody
 	public Response TransientPropertyValueException(HttpServletRequest request) {
-		LOG.info("========TransientPropertyValueException=============");
+		LOG.error("========TransientPropertyValueException=============");
 		/*
 		 * return Error.setErrorResponse(LamStatus.EXCEPTION,
 		 * ErrorCode.BAD_REQUEST.getCode(),
@@ -88,7 +90,7 @@ public class ExceptionHandlerController extends ResponseEntityExceptionHandler {
 	@ExceptionHandler(NullPointerException.class)
 	@ResponseBody
 	public Response NullPointerException(HttpServletRequest request, Exception e) {
-		LOG.info("========NullPointerException============= " + e.getClass().getSimpleName());
+		LOG.error("========NullPointerException============= " + e.getClass().getSimpleName());
 		/*
 		 * return Error.setErrorResponse(LamStatus.EXCEPTION,
 		 * ErrorCode.BAD_REQUEST.getCode(),
@@ -101,12 +103,12 @@ public class ExceptionHandlerController extends ResponseEntityExceptionHandler {
 	@ExceptionHandler(Exception.class)
 	@ResponseBody
 	public Response Exception(HttpServletRequest request, Exception e) {
-		LOG.info("========Exception getSimpleName============= " + e.getClass().getSimpleName());
-		LOG.info("========Exception getMessage============= " + e.getMessage());
-		LOG.info("========Exception e============= " + e);
+		LOG.error("========Exception getSimpleName============= " + e.getClass().getSimpleName());
+		LOG.error("========Exception getMessage============= " + e.getMessage());
+		LOG.error("========Exception e============= " + e);
 		// return Error.setErrorResponse(LamStatus.EXCEPTION,
 		// ErrorCode.BAD_REQUEST.getCode(), "Please check Request");
-		LOG.info("========Exception request============= " + request.getRemoteHost());
+		LOG.error("========Exception request============= " + request.getRemoteHost());
 		return Response.setSuccessResponse(LamStatus.EXCEPTION, LamStatus.EXCEPTION.getCode(),
 				"Master e Please check Request .");
 	}

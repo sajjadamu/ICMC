@@ -3436,4 +3436,46 @@ public class UtilityJpa {
 
 	}
 
+	public static void setBinTransaction(User user, BinTransaction binTxn, BinTransaction binOrBoxFromDB,
+			BoxMaster boXmasterCapacity, Calendar now, String binFromMaster, String radioButtonValue,
+			BigDecimal bundle) {
+		binTxn.setInsertBy(user.getId());
+		binTxn.setUpdateBy(user.getId());
+		binTxn.setInsertTime(now);
+		binTxn.setUpdateTime(now);
+		binTxn.setBinNumber(binFromMaster);
+		binTxn.setDenomination(binOrBoxFromDB.getDenomination());
+		binTxn.setReceiveBundle(bundle);
+		binTxn.setBinType(binOrBoxFromDB.getBinType());
+		binTxn.setStatus(binOrBoxFromDB.getStatus());
+		binTxn.setIcmcId(user.getIcmcId());
+		binTxn.setCashSource(binOrBoxFromDB.getCashSource());
+		if (radioButtonValue.equalsIgnoreCase("binToBox") || radioButtonValue.equalsIgnoreCase("boxToBox")) {
+			binTxn.setBinCategoryType(BinCategoryType.BOX);
+			binTxn.setMaxCapacity(boXmasterCapacity.getMaxCapacity());
+		} else if (radioButtonValue.equalsIgnoreCase("boxToBin") || radioButtonValue.equalsIgnoreCase("binToBin")) {
+			binTxn.setBinCategoryType(BinCategoryType.BIN);
+			binTxn.setMaxCapacity(binOrBoxFromDB.getMaxCapacity());
+		}
+		binTxn.setCashType(binOrBoxFromDB.getCashType());
+		binTxn.setVerified(binOrBoxFromDB.getVerified());
+		binTxn.setRbiOrderNo(binOrBoxFromDB.getRbiOrderNo());
+	}
+
+	public static void setBranchReceipt(BranchReceipt brReceipt, User user, BinTransaction binTxn, Calendar now) {
+
+		brReceipt.setDenomination(binTxn.getDenomination());
+		brReceipt.setBundle(binTxn.getReceiveBundle());
+		brReceipt.setBin(binTxn.getBinNumber());
+		brReceipt.setStatus(OtherStatus.RECEIVED);
+		brReceipt.setInsertTime(now);
+		brReceipt.setUpdateTime(now);
+		brReceipt.setInsertBy(user.getId());
+		brReceipt.setUpdateBy(user.getId());
+		brReceipt.setIcmcId(user.getIcmcId());
+		brReceipt.setCurrencyType(binTxn.getBinType());
+		brReceipt.setCashSource(binTxn.getCashSource());
+		brReceipt.setBinCategoryType(binTxn.getBinCategoryType());
+
+	}
 }

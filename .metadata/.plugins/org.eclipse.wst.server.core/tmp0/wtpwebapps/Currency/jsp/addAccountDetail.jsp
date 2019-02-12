@@ -13,8 +13,7 @@
 <link rel="shortcut icon" href="./resources/logo/yes_favicon.ico"
 	type="image/x-icon">
 
-<script type="text/javascript"
-	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script src="./resources/bower_components/jquery/dist/jquery.min.js"></script>
 <script type="text/javascript" src="./js/jquery.validate.min.js"></script>
 
 <title> Add Account Detail</title>

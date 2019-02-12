@@ -281,10 +281,10 @@ public class CashPaymentController {
 			// cashPaymentService.updateSASStatusForSASFile(user.getIcmcId(),
 			// status);
 		} catch (Exception ex) {
-			LOG.info("Error has occred", ex);
+			LOG.error("Error has occred", ex);
 			throw ex;
 		}
-		LOG.info("INSERT IN SAS ALLOCATION==" + sASAllocationWrapper);
+		LOG.error("INSERT IN SAS ALLOCATION==" + sASAllocationWrapper);
 		return sASAllocationWrapper;
 	}
 
@@ -424,10 +424,10 @@ public class CashPaymentController {
 		User user = (User) session.getAttribute("login");
 		synchronized (icmcService.getSynchronizedIcmc(user)) {
 			try {
-				LOG.info("ID From UI==" + idFromUI);
+				LOG.error("ID From UI==" + idFromUI);
 				cashPaymentService.updateInsertSoiledAndSoiledAllocation(user.getIcmcId(), idFromUI);
 			} catch (Exception ex) {
-				LOG.info("Error has occred", ex);
+				LOG.error("Error has occred", ex);
 				throw ex;
 			}
 		}
@@ -534,12 +534,12 @@ public class CashPaymentController {
 		model.put("total", sasDetails.getTotalValue());
 
 		List<SASAllocation> sasAlList = cashPaymentService.getSasAllocationBySasId(id);
-		LOG.info("sasAlList " + sasAlList);
+		LOG.error("sasAlList " + sasAlList);
 		int row = sasAlList.size();
 
 		BranchReceipt branchReceipt = cashPaymentService.checkBinOrBoxFromBranchReceipt(user.getIcmcId(),
 				sasAlList.get(0).getDenomination(), sasAlList.get(0).getBundle(), sasAlList.get(0).getBinNumber());
-		LOG.info("branchReceipt " + branchReceipt);
+		LOG.error("branchReceipt " + branchReceipt);
 		if (branchReceipt != null) {
 			sasDetails.setBinCategoryType(branchReceipt.getBinCategoryType());
 		}
@@ -581,7 +581,7 @@ public class CashPaymentController {
 	public List<BranchReceipt> viewShrinkBundle(@RequestParam int denomination,
 			@RequestParam BinCategoryType binCategoryType, HttpSession session) {
 		User user = (User) session.getAttribute("login");
-		LOG.info("binCategoryType " + binCategoryType);
+		LOG.error("binCategoryType " + binCategoryType);
 		/*
 		 * List<BranchReceipt> shrinkBundle =
 		 * cashPaymentService.getShrinkWrapBundleByDenomination(denomination,
@@ -594,19 +594,15 @@ public class CashPaymentController {
 
 	@RequestMapping(value = "/orvBranchAllocation")
 	@ResponseBody
-	public ORV insertORV(@RequestBody ORV orv, HttpSession session) {
+	public ORV insertORV(@RequestBody ORV orv, HttpSession session) throws Exception {
 		User user = (User) session.getAttribute("login");
 
 		orv.setIcmcId(user.getIcmcId());
 		orv.setInsertBy(user.getId());
 		orv.setUpdateBy(user.getId());
-		try {
-			boolean isAllSuccess = cashPaymentService.processORVAllocation(orv, user);
-			if (!isAllSuccess) {
-				throw new RuntimeException("Error while saving ORV And ORV Allocation, Please try again");
-			}
-		} catch (Exception e) {
-			LOG.info("orvBranchAllocation Exception " + e);
+		boolean isAllSuccess = cashPaymentService.processORVAllocation(orv, user);
+		if (!isAllSuccess) {
+			throw new RuntimeException("Error while saving ORV And ORV Allocation, Please try again");
 		}
 		return orv;
 	}
@@ -636,23 +632,23 @@ public class CashPaymentController {
 			if (row == 0) {
 				throw new BaseGuiException("Sas file Accepted value can not be Cancelled");
 			}
-			LOG.info("ID From UI==" + sas.get(0).getStatus());
+			LOG.error("ID From UI==" + sas.get(0).getStatus());
 			try {
-				LOG.info("ID From UI==" + idFromUI);
+				LOG.error("ID From UI==" + idFromUI);
 				if (sas.get(0).getStatus().toString().equals("ACCEPTED")) {
 					throw new BaseGuiException("Accepted value can not be Cancelled");
 				} else {
-					LOG.info("elseblock");
+					LOG.error("elseblock");
 					try {
 						cashPaymentService.processForCancelBranchPayment(user.getIcmcId(), idFromUI);
 					} catch (Exception ex) {
-						LOG.info("Error has occred", ex);
+						LOG.error("Error has occred", ex);
 						throw ex;
 					}
 
 				}
 			} catch (Exception ex) {
-				LOG.info("Error has occred", ex);
+				LOG.error("Error has occred", ex);
 				throw ex;
 			}
 
@@ -738,7 +734,7 @@ public class CashPaymentController {
 		try {
 			cashPaymentService.updateSasIndent(sasAccept, user);
 		} catch (Exception ex) {
-			LOG.info("Problem acceptSASIndent is", ex);
+			LOG.error("Problem acceptSASIndent is", ex);
 			// throw new BaseGuiException("Problem acceptSASIndent is
 			// "+ex.getMessage());
 			throw ex;
@@ -800,6 +796,7 @@ public class CashPaymentController {
 		for (Long sasId : pList) {
 			SASAllocation allocation = cashPaymentService.getRequestedFromSASAllocation(user.getIcmcId(), sDate, eDate,
 					sasId);
+			parentList.add(sasId);
 			/*
 			 * if (allocation != null) pList.remove(sasId);
 			 */
@@ -807,7 +804,11 @@ public class CashPaymentController {
 				parentList.remove(sasId);
 		}
 		if (acceptedListFromSASAllocation.size() != 0 || sasFileUploadList.size() != 0) {
-			solIdList = cashPaymentService.solIdForSASPaymentAccepted(user.getIcmcId(), sDate, eDate, parentList);
+			// solIdList =
+			// cashPaymentService.solIdForSASPaymentAccepted(user.getIcmcId(),
+			// sDate, eDate, parentList);
+			solIdList = cashPaymentService.sasForCashHandover(user.getIcmcId(), sDate, eDate, parentList);
+
 		}
 		map.put("user", obj);
 		map.put("sas", solIdList);
@@ -842,11 +843,12 @@ public class CashPaymentController {
 		for (Long sasId : pList) {
 			SASAllocation allocation = cashPaymentService.getRequestedFromSASAllocation(user.getIcmcId(), sDate, eDate,
 					sasId);
+			parentList.add(sasId);
 			/*
 			 * if (allocation != null) pList.remove(sasId);
 			 */
 			if (allocation == null)
-				parentList.add(sasId);
+				parentList.remove(sasId);
 		}
 		if (acceptedListFromSASAllocation.size() != 0 || sasFileUploadList.size() != 0) {
 			solIdList = cashPaymentService.solIdForSASPaymentAccepted(user.getIcmcId(), sDate, eDate, parentList);
@@ -926,7 +928,7 @@ public class CashPaymentController {
 		for (Sas sas : allSasList) {
 			SASAllocation allocation = cashPaymentService.getRequestedFromSASAllocation(user.getIcmcId(), sDate, eDate,
 					sas.getId());
-			if (allocation != null)
+			if (allocation == null)
 				orvList.remove(sas);
 		}
 		List<CRA> craList = cashPaymentService.getCRARecord(user.getIcmcId(), sDate, eDate);
@@ -970,7 +972,7 @@ public class CashPaymentController {
 	@ResponseBody
 	public List<SASReleased> bundleDetails(@RequestParam(value = "id") long id) {
 		List<SASAllocation> sasAlList = cashPaymentService.getSasAllocationBySasId(id);
-		LOG.info("sasAlList " + sasAlList);
+		LOG.error("sasAlList " + sasAlList);
 		SASReleased sasReleased = null;
 		List<SASReleased> sasReleasedList = new ArrayList<>();
 		for (SASAllocation sasAlo : sasAlList) {
@@ -1860,7 +1862,7 @@ public class CashPaymentController {
 			cra.setUpdateBy(user.getId());
 			cra.setInsertTime(Calendar.getInstance());
 			cra.setUpdateTime(Calendar.getInstance());
-			LOG.info("CRAAllocation " + cra);
+			LOG.error("CRAAllocation " + cra);
 			isAllSuccess = cashPaymentService.processCRAAllocation(cra, user);
 
 			if (!isAllSuccess) {
@@ -1921,7 +1923,7 @@ public class CashPaymentController {
 		return cra;
 	}
 
-	@RequestMapping(value = "/getAccountNumberForCRA")
+	@RequestMapping(value = "/getAccountNumberForCRA", method = RequestMethod.GET)
 	@ResponseBody
 	public String getAccountNumber(@RequestParam(value = "mspName") String mspName,
 			@RequestParam(value = "vendor") String vendor, HttpSession session) {
@@ -2021,7 +2023,7 @@ public class CashPaymentController {
 			try {
 				cashPaymentService.processCRAPayment(cra.getCraAllocations(), user);
 			} catch (Exception ex) {
-				LOG.info("Error has occred", ex);
+				LOG.error("Error has occred", ex);
 				throw ex;
 			}
 		}
@@ -2079,7 +2081,7 @@ public class CashPaymentController {
 		for (Sas sas : allSasList) {
 			SASAllocation allocation = cashPaymentService.getRequestedFromSASAllocation(user.getIcmcId(), sDate, eDate,
 					sas.getId());
-			if (allocation != null)
+			if (allocation == null)
 				sasList.remove(sas);
 		}
 		map.put("records", sasList);
@@ -2138,7 +2140,7 @@ public class CashPaymentController {
 		List<String> recordTotalInWordList = new ArrayList<>();
 		List<Tuple> allSummaryList = new ArrayList<>();
 		List<Sas> solIdList = cashPaymentService.getSolId(user.getIcmcId(), sDate, eDate);
-		LOG.info("solIdList for all printe vaucher " + solIdList);
+		LOG.error("solIdList for all printe vaucher " + solIdList);
 		String userName = user.getName();
 		String userId = user.getId();
 		if (solIdList != null) {
@@ -2154,7 +2156,7 @@ public class CashPaymentController {
 				BigDecimal totalValue = sas.getTotalValue();
 				String numberInwords = ConvertNumberInWords.getNumberInWords(totalValue.intValue());
 				recordTotalInWordList.add(numberInwords);
-				LOG.info("Number in Words: " + numberInwords);
+				LOG.error("Number in Words: " + numberInwords);
 			}
 		}
 		map.put("record", allSummaryList);
@@ -2173,7 +2175,7 @@ public class CashPaymentController {
 		List<String> recordTotalInWordList = new ArrayList<>();
 		List<Tuple> allSummaryList = new ArrayList<>();
 		List<Sas> solIdList = cashPaymentService.getSasRecordById(user.getIcmcId(), sasAutoId);
-		LOG.info("solIdList for all printe vaucher " + solIdList);
+		LOG.error("solIdList for all printe vaucher " + solIdList);
 		String userName = user.getName();
 		String userId = user.getId();
 		Calendar sDate = UtilityJpa.getStartDate();
@@ -2187,7 +2189,7 @@ public class CashPaymentController {
 				BigDecimal totalValue = sas.getTotalValue();
 				String numberInwords = ConvertNumberInWords.getNumberInWords(totalValue.intValue());
 				recordTotalInWordList.add(numberInwords);
-				LOG.info("Number in Words: " + numberInwords);
+				LOG.error("Number in Words: " + numberInwords);
 			}
 		}
 		map.put("record", allSummaryList);
@@ -2205,29 +2207,27 @@ public class CashPaymentController {
 		CRAAllocation obj = new CRAAllocation();
 		List<CRAWrapper> craWrapperList = new ArrayList<>();
 
-		synchronized (icmcService.getSynchronizedIcmc(user)) {
-			List<CRA> craListForID = cashPaymentService.getRecordFromCRA(user.getIcmcId());
-			ArrayList<CRA> MSPList = new ArrayList<CRA>();
-			for (CRA cralist : craListForID) {
-				MSPList.add(cralist);
-			}
-			List<CRAAllocation> craAllocation = cashPaymentService.craPaymentDetailForAccept(user.getIcmcId());
-			for (CRA cra : craListForID) {
-				List<Tuple> craAllocationList = cashPaymentService.craRequestSummary(cra.getId());
-
-				CRAWrapper craWrapper = new CRAWrapper();
-				craWrapper.setTupleList(craAllocationList);
-				craWrapper.setCra(cra);
-				craWrapper.getCra().setVendor(cra.getVendor());
-				craWrapper.getCra().setMspName(cra.getMspName());
-
-				craWrapperList.add(craWrapper);
-			}
-			map.put("user", obj);
-			map.put("craWrapperList", craWrapperList);
-			map.put("craAllocation", craAllocation);
-			map.put("craList", MSPList);
+		List<CRA> craListForID = cashPaymentService.getRecordFromCRA(user.getIcmcId());
+		List<CRA> MSPList = new LinkedList<CRA>();
+		for (CRA cralist : craListForID) {
+			MSPList.add(cralist);
 		}
+		List<CRAAllocation> craAllocation = cashPaymentService.craPaymentDetailForAccept(user.getIcmcId());
+		for (CRA cra : craListForID) {
+			List<Tuple> craAllocationList = cashPaymentService.craRequestSummary(cra.getId());
+
+			CRAWrapper craWrapper = new CRAWrapper();
+			craWrapper.setTupleList(craAllocationList);
+			craWrapper.setCra(cra);
+			craWrapper.getCra().setVendor(cra.getVendor());
+			craWrapper.getCra().setMspName(cra.getMspName());
+
+			craWrapperList.add(craWrapper);
+		}
+		map.put("user", obj);
+		map.put("craWrapperList", craWrapperList);
+		map.put("craAllocation", craAllocation);
+		map.put("craList", MSPList);
 		return new ModelAndView("/acceptCRAPayment", map);
 	}
 
@@ -2381,10 +2381,14 @@ public class CashPaymentController {
 					sbBinName.append(soiledQrData.getBinNumber()).append(",");
 					try {
 						String oldtext = readPRNFileData();
-						String replacedtext = oldtext.replaceAll("BIN TYPE", "" + "Soiled: ");
-						replacedtext = replacedtext.replaceAll("BOX NAME:", "" + soiledQrData.getBox());
-						replacedtext = replacedtext.replaceAll("Denomination:", "" + soiledQrData.getDenomination());
-						replacedtext = replacedtext.replaceAll("Total Bundle:", "" + soiledQrData.getBundle());
+						String replacedtext = oldtext.replaceAll("bin", "" + "SOILED");
+						replacedtext = replacedtext.replaceAll("Bin: ", "" + "");
+						replacedtext = replacedtext.replaceAll("Branch: ", "" + "");
+						replacedtext = replacedtext.replaceAll("Sol ID :", "" + "");
+						replacedtext = replacedtext.replaceAll("solId", "" + "");
+						replacedtext = replacedtext.replaceAll("branch", "" + soiledQrData.getBox());
+						replacedtext = replacedtext.replaceAll("denom", "" + soiledQrData.getDenomination());
+						replacedtext = replacedtext.replaceAll("bundle", "" + soiledQrData.getBundle());
 
 						String formattedTotal = CurrencyFormatter.inrFormatter(soiledQrData.getTotal()).toString();
 						replacedtext = replacedtext.replaceAll("total", "" + formattedTotal);
@@ -2393,17 +2397,17 @@ public class CashPaymentController {
 						prnList.add(sb.toString());
 
 						UtilityJpa.PrintToPrinter(sb, user);
-						LOG.info("Prepration Soild Remittence PRN: " + sb);
+						LOG.error("#### User Activity :-Prepration Soild Remittence PRN: " + sb);
 					} catch (IOException ioe) {
 						ioe.printStackTrace();
-						LOG.info("PRN CATCH " + ioe.getMessage());
+						LOG.error("PRN CATCH " + ioe.getMessage());
 					}
-					LOG.info("Prepration Soild Remittence sbBinName.toString() " + sbBinName.toString());
+					LOG.error("Prepration Soild Remittence sbBinName.toString() " + sbBinName.toString());
 					/*
 					 * if(sbBinName.toString() !=""){ prnList.set(0,
 					 * sbBinName.toString()); }
 					 */
-					LOG.info("Prepration Soild Remittence ");
+					LOG.error("Prepration Soild Remittence ");
 				}
 			}
 		}
@@ -2412,9 +2416,9 @@ public class CashPaymentController {
 
 	private String readPRNFileData() throws FileNotFoundException, IOException {
 		File file = new File(prnFilePath);
-		LOG.info("file for bank print " + file);
+		LOG.error("file for bank print " + file);
 		BufferedReader reader = new BufferedReader(new FileReader(file));
-		LOG.info("reader " + reader);
+		LOG.error("reader " + reader);
 		String line = "", oldtext = "";
 		while ((line = reader.readLine()) != null) {
 			oldtext += line + "\r\n";
@@ -2424,7 +2428,8 @@ public class CashPaymentController {
 	}
 
 	@RequestMapping("/updateCRAStatus")
-	public ModelAndView updateIndentStatus(@RequestParam(value = "id") long id, @RequestParam(value = "bin") String bin,
+	@ResponseBody
+	public String updateIndentStatus(@RequestParam(value = "id") long id, @RequestParam(value = "bin") String bin,
 			@RequestParam(value = "bundle") BigDecimal bundle, @RequestParam(value = "craId") long craId,
 			@RequestParam(value = "denomination") Integer denomination,
 			@RequestParam(value = "category", required = false) String category, HttpSession session) {
@@ -2436,7 +2441,6 @@ public class CashPaymentController {
 				throw new RuntimeException("Error while process CRA Request");
 			}
 		}
-
 		// Bin Register Code
 		Calendar now = Calendar.getInstance();
 		BinRegister binRegister = new BinRegister();
@@ -2452,9 +2456,8 @@ public class CashPaymentController {
 		binRegister.setDepositOrWithdrawal("WITHDRAWAL");
 		binRegister.setType(category);
 		cashPaymentService.saveDataInBinRegister(binRegister);
-		// Bin Register
 
-		return new ModelAndView("welcome");
+		return "success";
 	}
 
 	@RequestMapping("/updateOtherBankStatus")
@@ -2563,9 +2566,9 @@ public class CashPaymentController {
 
 			}
 
-			LOG.info("Count: " + count);
+			LOG.error("Count: " + count);
 		} catch (Exception ex) {
-			LOG.info("Error has occred", ex);
+			LOG.error("Error has occred", ex);
 			throw ex;
 		}
 		return new ModelAndView("redirect:./SAS");
@@ -2578,7 +2581,7 @@ public class CashPaymentController {
 			try {
 				cashPaymentService.processDiversionORVCancellation(user, id);
 			} catch (Exception ex) {
-				LOG.info("Error has occred", ex);
+				LOG.error("Error has occred", ex);
 				throw ex;
 			}
 		}
@@ -2592,7 +2595,7 @@ public class CashPaymentController {
 			try {
 				cashPaymentService.processOtherBankPaymentCancellation(user, id);
 			} catch (Exception ex) {
-				LOG.info("Error has occred", ex);
+				LOG.error("Error has occred", ex);
 				throw ex;
 			}
 		}
@@ -2604,10 +2607,10 @@ public class CashPaymentController {
 		User user = (User) session.getAttribute("login");
 		synchronized (icmcService.getSynchronizedIcmc(user)) {
 			try {
-				LOG.info("ID From UI==" + idFromUI);
+				LOG.error("ID From UI==" + idFromUI);
 				cashPaymentService.processCRAPaymentCancellation(user, idFromUI);
 			} catch (Exception ex) {
-				LOG.info("Error has occred", ex);
+				LOG.error("Error has occred", ex);
 				throw ex;
 			}
 		}
@@ -2792,6 +2795,16 @@ public class CashPaymentController {
 		User user = (User) session.getAttribute("login");
 		List<BinTransaction> preparedBoxList = cashPaymentService.getPreparedSoiledBoxes(user.getIcmcId());
 		return new ModelAndView("/viewPreparedSoiledBoxes", "records", preparedBoxList);
+	}
+
+	@RequestMapping("/cancelPreparedSoiledBox")
+	@ResponseBody
+	public String cancelPreparedSoiledBox(HttpSession session, @RequestParam(value = "binNum") String binNum) {
+		User user = (User) session.getAttribute("login");
+		synchronized (icmcService.getSynchronizedIcmc(user)) {
+			cashPaymentService.processForCancelPreparedSoildBox(binNum, user.getIcmcId());
+		}
+		return binNum;
 	}
 
 	@RequestMapping("/indentAndPayment")

@@ -35,11 +35,15 @@
 		<url-pattern>/app/*</url-pattern>
 	</servlet-mapping>
 
+	<session-config>
+		<session-timeout>15</session-timeout>
+	</session-config>
 
 	<!-- Spring Security -->
 	<filter>
 		<filter-name>springSecurityFilterChain</filter-name>
-		<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+		<filter-class>org.springframework.web.filter.DelegatingFilterProxy
+		</filter-class>
 	</filter>
 
 	<filter-mapping>
@@ -47,17 +51,9 @@
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
 
-	<!-- <filter>
-		<filter-name>XSS</filter-name>
-		<display-name>XSS</display-name>
-		<description></description>
-		<filter-class>com.chest.currency.security.CrossScriptingFilter
-		</filter-class>
-	</filter>
-
-	<filter-mapping>
-		<filter-name>XSS</filter-name>
-		<url-pattern>/*</url-pattern>
-	</filter-mapping> -->
+	<!-- <filter> <filter-name>XSS</filter-name> <display-name>XSS</display-name> 
+		<description></description> <filter-class>com.chest.currency.security.CrossScriptingFilter 
+		</filter-class> </filter> <filter-mapping> <filter-name>XSS</filter-name> 
+		<url-pattern>/*</url-pattern> </filter-mapping> -->
 
 </web-app>

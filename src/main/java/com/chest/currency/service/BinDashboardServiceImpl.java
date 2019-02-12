@@ -61,6 +61,7 @@ import com.chest.currency.exception.BaseGuiException;
 import com.chest.currency.jpa.dao.BinDashBoardJpaDaoImpl;
 import com.chest.currency.jpa.dao.CashReceiptJpaDao;
 import com.chest.currency.jpa.dao.UserAdministrationJpaDao;
+import com.chest.currency.util.UtilityJpa;
 import com.chest.currency.util.UtilityMapper;
 import com.ibm.icu.text.SimpleDateFormat;
 import com.mysema.query.Tuple;
@@ -83,6 +84,9 @@ public class BinDashboardServiceImpl implements BinDashboardService {
 
 	@Autowired
 	protected CashReceiptJpaDao cashReceiptJpaDao;
+
+	@Autowired
+	CashPaymentService cashPaymentService;
 
 	private static final Logger LOG = LoggerFactory.getLogger(BinDashboardController.class);
 
@@ -897,8 +901,9 @@ public class BinDashboardServiceImpl implements BinDashboardService {
 				denomination2000 = denomination2000.add(t.get(1, BigDecimal.class));
 			}
 		}
-
-		List<Tuple> summrayListForIndent = this.getDepositForIndent(icmcId, sDate, eDate);
+		// List<Tuple> summrayListForIndent = this.getDepositForIndent(icmcId,
+		// sDate, eDate);
+		List<Tuple> summrayListForIndent = this.getIBITForIRV(icmcId, sDate, eDate);
 
 		for (Tuple t : summrayListForIndent) {
 			if (t.get(0, Integer.class).equals(1)) {
@@ -1105,93 +1110,52 @@ public class BinDashboardServiceImpl implements BinDashboardService {
 		for (Tuple t : processBundleForCraList) {
 			if (t.get(0, Integer.class).equals(1)) {
 				denomination1W = denomination1W.add(t.get(1, BigDecimal.class));
-			}
-
-			if (t.get(0, Integer.class).equals(2)) {
+			} else if (t.get(0, Integer.class).equals(2)) {
 				denomination2W = denomination2W.add(t.get(1, BigDecimal.class));
-			}
-
-			if (t.get(0, Integer.class).equals(5)) {
+			} else if (t.get(0, Integer.class).equals(5)) {
 				denomination5W = denomination5W.add(t.get(1, BigDecimal.class));
-			}
-
-			if (t.get(0, Integer.class).equals(10)) {
+			} else if (t.get(0, Integer.class).equals(10)) {
 				denomination10W = denomination10W.add(t.get(1, BigDecimal.class));
-			}
-
-			if (t.get(0, Integer.class).equals(20)) {
+			} else if (t.get(0, Integer.class).equals(20)) {
 				denomination20W = denomination20W.add(t.get(1, BigDecimal.class));
-			}
-
-			if (t.get(0, Integer.class).equals(50)) {
+			} else if (t.get(0, Integer.class).equals(50)) {
 				denomination50W = denomination50W.add(t.get(1, BigDecimal.class));
-			}
-
-			if (t.get(0, Integer.class).equals(100)) {
+			} else if (t.get(0, Integer.class).equals(100)) {
 				denomination100W = denomination100W.add(t.get(1, BigDecimal.class));
-			}
-
-			if (t.get(0, Integer.class).equals(200)) {
+			} else if (t.get(0, Integer.class).equals(200)) {
 				denomination200W = denomination200W.add(t.get(1, BigDecimal.class));
-			}
-
-			if (t.get(0, Integer.class).equals(500)) {
+			} else if (t.get(0, Integer.class).equals(500)) {
 				denomination500W = denomination500W.add(t.get(1, BigDecimal.class));
-			}
-
-			if (t.get(0, Integer.class).equals(1000)) {
+			} else if (t.get(0, Integer.class).equals(1000)) {
 				denomination1000W = denomination1000W.add(t.get(1, BigDecimal.class));
-			}
-
-			if (t.get(0, Integer.class).equals(2000)) {
+			} else if (t.get(0, Integer.class).equals(2000)) {
 				denomination2000W = denomination2000W.add(t.get(1, BigDecimal.class));
 			}
-
 		}
 		List<Tuple> otherBankList = this.getWithdrawalForOtherBank(icmcId, sDate, eDate);
 		for (Tuple t : otherBankList) {
 
 			if (t.get(0, Integer.class).equals(1)) {
 				denomination1W = denomination1W.add(t.get(1, BigDecimal.class));
-			}
-
-			if (t.get(0, Integer.class).equals(2)) {
+			} else if (t.get(0, Integer.class).equals(2)) {
 				denomination2W = denomination2W.add(t.get(1, BigDecimal.class));
-			}
-
-			if (t.get(0, Integer.class).equals(5)) {
+			} else if (t.get(0, Integer.class).equals(5)) {
 				denomination5W = denomination5W.add(t.get(1, BigDecimal.class));
-			}
-
-			if (t.get(0, Integer.class).equals(10)) {
+			} else if (t.get(0, Integer.class).equals(10)) {
 				denomination10W = denomination10W.add(t.get(1, BigDecimal.class));
-			}
-
-			if (t.get(0, Integer.class).equals(20)) {
+			} else if (t.get(0, Integer.class).equals(20)) {
 				denomination20W = denomination20W.add(t.get(1, BigDecimal.class));
-			}
-
-			if (t.get(0, Integer.class).equals(50)) {
+			} else if (t.get(0, Integer.class).equals(50)) {
 				denomination50W = denomination50W.add(t.get(1, BigDecimal.class));
-			}
-
-			if (t.get(0, Integer.class).equals(100)) {
+			} else if (t.get(0, Integer.class).equals(100)) {
 				denomination100W = denomination100W.add(t.get(1, BigDecimal.class));
-			}
-
-			if (t.get(0, Integer.class).equals(200)) {
+			} else if (t.get(0, Integer.class).equals(200)) {
 				denomination200W = denomination200W.add(t.get(1, BigDecimal.class));
-			}
-
-			if (t.get(0, Integer.class).equals(500)) {
+			} else if (t.get(0, Integer.class).equals(500)) {
 				denomination500W = denomination500W.add(t.get(1, BigDecimal.class));
-			}
-
-			if (t.get(0, Integer.class).equals(1000)) {
+			} else if (t.get(0, Integer.class).equals(1000)) {
 				denomination1000W = denomination1000W.add(t.get(1, BigDecimal.class));
-			}
-
-			if (t.get(0, Integer.class).equals(2000)) {
+			} else if (t.get(0, Integer.class).equals(2000)) {
 				denomination2000W = denomination2000W.add(t.get(1, BigDecimal.class));
 			}
 		}
@@ -1202,93 +1166,54 @@ public class BinDashboardServiceImpl implements BinDashboardService {
 
 			if (t.get(0, Integer.class).equals(1)) {
 				denomination1W = denomination1W.add(t.get(1, BigDecimal.class));
-			}
-
-			if (t.get(0, Integer.class).equals(2)) {
+			} else if (t.get(0, Integer.class).equals(2)) {
 				denomination2W = denomination2W.add(t.get(1, BigDecimal.class));
-			}
-
-			if (t.get(0, Integer.class).equals(5)) {
+			} else if (t.get(0, Integer.class).equals(5)) {
 				denomination5W = denomination5W.add(t.get(1, BigDecimal.class));
-			}
-
-			if (t.get(0, Integer.class).equals(10)) {
+			} else if (t.get(0, Integer.class).equals(10)) {
 				denomination10W = denomination10W.add(t.get(1, BigDecimal.class));
-			}
-
-			if (t.get(0, Integer.class).equals(20)) {
+			} else if (t.get(0, Integer.class).equals(20)) {
 				denomination20W = denomination20W.add(t.get(1, BigDecimal.class));
-			}
-
-			if (t.get(0, Integer.class).equals(50)) {
+			} else if (t.get(0, Integer.class).equals(50)) {
 				denomination50W = denomination50W.add(t.get(1, BigDecimal.class));
-			}
-
-			if (t.get(0, Integer.class).equals(100)) {
+			} else if (t.get(0, Integer.class).equals(100)) {
 				denomination100W = denomination100W.add(t.get(1, BigDecimal.class));
-			}
-
-			if (t.get(0, Integer.class).equals(200)) {
+			} else if (t.get(0, Integer.class).equals(200)) {
 				denomination200W = denomination200W.add(t.get(1, BigDecimal.class));
-			}
-
-			if (t.get(0, Integer.class).equals(500)) {
+			} else if (t.get(0, Integer.class).equals(500)) {
 				denomination500W = denomination500W.add(t.get(1, BigDecimal.class));
-			}
-
-			if (t.get(0, Integer.class).equals(1000)) {
+			} else if (t.get(0, Integer.class).equals(1000)) {
 				denomination1000W = denomination1000W.add(t.get(1, BigDecimal.class));
-			}
-
-			if (t.get(0, Integer.class).equals(2000)) {
+			} else if (t.get(0, Integer.class).equals(2000)) {
 				denomination2000W = denomination2000W.add(t.get(1, BigDecimal.class));
 			}
 		}
-		List<Tuple> IndentForWidhral = this.getDepositForIndent(icmcId, sDate, eDate);
+		// List<Tuple> IndentForWidhral = this.getDepositForIndent(icmcId,
+		// sDate, eDate);
+		List<Tuple> IndentForWidhral = this.getIBITForIRV(icmcId, sDate, eDate);
 
 		for (Tuple t : IndentForWidhral) {
-
 			if (t.get(0, Integer.class).equals(1)) {
 				denomination1W = denomination1W.add(t.get(1, BigDecimal.class));
-			}
-
-			if (t.get(0, Integer.class).equals(2)) {
+			} else if (t.get(0, Integer.class).equals(2)) {
 				denomination2W = denomination2W.add(t.get(1, BigDecimal.class));
-			}
-
-			if (t.get(0, Integer.class).equals(5)) {
+			} else if (t.get(0, Integer.class).equals(5)) {
 				denomination5W = denomination5W.add(t.get(1, BigDecimal.class));
-			}
-
-			if (t.get(0, Integer.class).equals(10)) {
+			} else if (t.get(0, Integer.class).equals(10)) {
 				denomination10W = denomination10W.add(t.get(1, BigDecimal.class));
-			}
-
-			if (t.get(0, Integer.class).equals(20)) {
+			} else if (t.get(0, Integer.class).equals(20)) {
 				denomination20W = denomination20W.add(t.get(1, BigDecimal.class));
-			}
-
-			if (t.get(0, Integer.class).equals(50)) {
+			} else if (t.get(0, Integer.class).equals(50)) {
 				denomination50W = denomination50W.add(t.get(1, BigDecimal.class));
-			}
-
-			if (t.get(0, Integer.class).equals(100)) {
+			} else if (t.get(0, Integer.class).equals(100)) {
 				denomination100W = denomination100W.add(t.get(1, BigDecimal.class));
-			}
-
-			if (t.get(0, Integer.class).equals(200)) {
+			} else if (t.get(0, Integer.class).equals(200)) {
 				denomination200W = denomination200W.add(t.get(1, BigDecimal.class));
-			}
-
-			if (t.get(0, Integer.class).equals(500)) {
+			} else if (t.get(0, Integer.class).equals(500)) {
 				denomination500W = denomination500W.add(t.get(1, BigDecimal.class));
-			}
-
-			if (t.get(0, Integer.class).equals(1000)) {
+			} else if (t.get(0, Integer.class).equals(1000)) {
 				denomination1000W = denomination1000W.add(t.get(1, BigDecimal.class));
-			}
-
-			if (t.get(0, Integer.class).equals(2000)) {
+			} else if (t.get(0, Integer.class).equals(2000)) {
 				denomination2000W = denomination2000W.add(t.get(1, BigDecimal.class));
 			}
 		}
@@ -1516,45 +1441,25 @@ public class BinDashboardServiceImpl implements BinDashboardService {
 
 			if (t.get(0, Integer.class).equals(1)) {
 				SoiledDenomination1 = SoiledDenomination1.add(t.get(1, BigDecimal.class));
-			}
-
-			if (t.get(0, Integer.class).equals(2)) {
+			} else if (t.get(0, Integer.class).equals(2)) {
 				SoiledDenomination2 = SoiledDenomination2.add(t.get(1, BigDecimal.class));
-			}
-
-			if (t.get(0, Integer.class).equals(5)) {
+			} else if (t.get(0, Integer.class).equals(5)) {
 				SoiledDenomination5 = SoiledDenomination5.add(t.get(1, BigDecimal.class));
-			}
-
-			if (t.get(0, Integer.class).equals(10)) {
+			} else if (t.get(0, Integer.class).equals(10)) {
 				SoiledDenomination10 = SoiledDenomination10.add(t.get(1, BigDecimal.class));
-			}
-
-			if (t.get(0, Integer.class).equals(20)) {
+			} else if (t.get(0, Integer.class).equals(20)) {
 				SoiledDenomination20 = SoiledDenomination20.add(t.get(1, BigDecimal.class));
-			}
-
-			if (t.get(0, Integer.class).equals(50)) {
+			} else if (t.get(0, Integer.class).equals(50)) {
 				SoiledDenomination50 = SoiledDenomination50.add(t.get(1, BigDecimal.class));
-			}
-
-			if (t.get(0, Integer.class).equals(100)) {
+			} else if (t.get(0, Integer.class).equals(100)) {
 				SoiledDenomination100 = SoiledDenomination100.add(t.get(1, BigDecimal.class));
-			}
-
-			if (t.get(0, Integer.class).equals(200)) {
+			} else if (t.get(0, Integer.class).equals(200)) {
 				SoiledDenomination200 = SoiledDenomination200.add(t.get(1, BigDecimal.class));
-			}
-
-			if (t.get(0, Integer.class).equals(500)) {
+			} else if (t.get(0, Integer.class).equals(500)) {
 				SoiledDenomination500 = SoiledDenomination500.add(t.get(1, BigDecimal.class));
-			}
-
-			if (t.get(0, Integer.class).equals(1000)) {
+			} else if (t.get(0, Integer.class).equals(1000)) {
 				SoiledDenomination1000 = SoiledDenomination1000.add(t.get(1, BigDecimal.class));
-			}
-
-			if (t.get(0, Integer.class).equals(2000)) {
+			} else if (t.get(0, Integer.class).equals(2000)) {
 				SoiledDenomination2000 = SoiledDenomination2000.add(t.get(1, BigDecimal.class));
 			}
 		}
@@ -1565,45 +1470,25 @@ public class BinDashboardServiceImpl implements BinDashboardService {
 
 			if (t.get(0, Integer.class).equals(1)) {
 				SoiledDenomination1 = SoiledDenomination1.add(t.get(1, BigDecimal.class));
-			}
-
-			if (t.get(0, Integer.class).equals(2)) {
+			} else if (t.get(0, Integer.class).equals(2)) {
 				SoiledDenomination2 = SoiledDenomination2.add(t.get(1, BigDecimal.class));
-			}
-
-			if (t.get(0, Integer.class).equals(5)) {
+			} else if (t.get(0, Integer.class).equals(5)) {
 				SoiledDenomination5 = SoiledDenomination5.add(t.get(1, BigDecimal.class));
-			}
-
-			if (t.get(0, Integer.class).equals(10)) {
+			} else if (t.get(0, Integer.class).equals(10)) {
 				SoiledDenomination10 = SoiledDenomination10.add(t.get(1, BigDecimal.class));
-			}
-
-			if (t.get(0, Integer.class).equals(20)) {
+			} else if (t.get(0, Integer.class).equals(20)) {
 				SoiledDenomination20 = SoiledDenomination20.add(t.get(1, BigDecimal.class));
-			}
-
-			if (t.get(0, Integer.class).equals(50)) {
+			} else if (t.get(0, Integer.class).equals(50)) {
 				SoiledDenomination50 = SoiledDenomination50.add(t.get(1, BigDecimal.class));
-			}
-
-			if (t.get(0, Integer.class).equals(100)) {
+			} else if (t.get(0, Integer.class).equals(100)) {
 				SoiledDenomination100 = SoiledDenomination100.add(t.get(1, BigDecimal.class));
-			}
-
-			if (t.get(0, Integer.class).equals(200)) {
+			} else if (t.get(0, Integer.class).equals(200)) {
 				SoiledDenomination200 = SoiledDenomination200.add(t.get(1, BigDecimal.class));
-			}
-
-			if (t.get(0, Integer.class).equals(500)) {
+			} else if (t.get(0, Integer.class).equals(500)) {
 				SoiledDenomination500 = SoiledDenomination500.add(t.get(1, BigDecimal.class));
-			}
-
-			if (t.get(0, Integer.class).equals(1000)) {
+			} else if (t.get(0, Integer.class).equals(1000)) {
 				SoiledDenomination1000 = SoiledDenomination1000.add(t.get(1, BigDecimal.class));
-			}
-
-			if (t.get(0, Integer.class).equals(2000)) {
+			} else if (t.get(0, Integer.class).equals(2000)) {
 				SoiledDenomination2000 = SoiledDenomination2000.add(t.get(1, BigDecimal.class));
 			}
 		}
@@ -1646,50 +1531,30 @@ public class BinDashboardServiceImpl implements BinDashboardService {
 		List<Tuple> summrayListForAdditionalFreshNotes = this.getAdditionalInfoFreshNotes(icmcId);
 
 		for (Tuple t : summrayListForAdditionalFreshNotes) {
+
 			if (t.get(0, Integer.class).equals(1)) {
 				denomination1 = t.get(1, BigDecimal.class);
-			}
-
-			if (t.get(0, Integer.class).equals(2)) {
+			} else if (t.get(0, Integer.class).equals(2)) {
 				denomination2 = t.get(1, BigDecimal.class);
-			}
-
-			if (t.get(0, Integer.class).equals(5)) {
+			} else if (t.get(0, Integer.class).equals(5)) {
 				denomination5 = t.get(1, BigDecimal.class);
-			}
-
-			if (t.get(0, Integer.class).equals(10)) {
+			} else if (t.get(0, Integer.class).equals(10)) {
 				denomination10 = t.get(1, BigDecimal.class);
-			}
-
-			if (t.get(0, Integer.class).equals(20)) {
+			} else if (t.get(0, Integer.class).equals(20)) {
 				denomination20 = t.get(1, BigDecimal.class);
-			}
-
-			if (t.get(0, Integer.class).equals(50)) {
+			} else if (t.get(0, Integer.class).equals(50)) {
 				denomination50 = t.get(1, BigDecimal.class);
-			}
-
-			if (t.get(0, Integer.class).equals(100)) {
+			} else if (t.get(0, Integer.class).equals(100)) {
 				denomination100 = t.get(1, BigDecimal.class);
-			}
-
-			if (t.get(0, Integer.class).equals(200)) {
+			} else if (t.get(0, Integer.class).equals(200)) {
 				denomination200 = t.get(1, BigDecimal.class);
-			}
-
-			if (t.get(0, Integer.class).equals(500)) {
+			} else if (t.get(0, Integer.class).equals(500)) {
 				denomination500 = t.get(1, BigDecimal.class);
-			}
-
-			if (t.get(0, Integer.class).equals(1000)) {
+			} else if (t.get(0, Integer.class).equals(1000)) {
 				denomination1000 = t.get(1, BigDecimal.class);
-			}
-
-			if (t.get(0, Integer.class).equals(2000)) {
+			} else if (t.get(0, Integer.class).equals(2000)) {
 				denomination2000 = t.get(1, BigDecimal.class);
 			}
-
 		}
 
 		BinTransactionBOD binTxnBODForFreshNotes = new BinTransactionBOD();
@@ -1786,16 +1651,14 @@ public class BinDashboardServiceImpl implements BinDashboardService {
 		List<Tuple> coinSummaryListForRemittanceRecieved = this.getCoinRemittanceReceivedForFresh(icmcId, sDate, eDate);
 
 		for (Tuple t : coinSummaryListForRemittanceRecieved) {
+
 			if (t.get(0, Integer.class).equals(1)) {
 				coinRemittanceReceivedDenomination1 = BigDecimal.valueOf(t.get(1, int.class) * 2500);
-			}
-			if (t.get(0, Integer.class).equals(2)) {
+			} else if (t.get(0, Integer.class).equals(2)) {
 				coinRemittanceReceivedDenomination2 = BigDecimal.valueOf(t.get(1, int.class) * 2500);
-			}
-			if (t.get(0, Integer.class).equals(5)) {
+			} else if (t.get(0, Integer.class).equals(5)) {
 				coinRemittanceReceivedDenomination5 = BigDecimal.valueOf(t.get(1, int.class) * 2500);
-			}
-			if (t.get(0, Integer.class).equals(10)) {
+			} else if (t.get(0, Integer.class).equals(10)) {
 				coinRemittanceReceivedDenomination10 = BigDecimal.valueOf(t.get(1, int.class) * 2000);
 			}
 		}
@@ -1830,16 +1693,14 @@ public class BinDashboardServiceImpl implements BinDashboardService {
 		List<Tuple> coinPaymentList = this.getCoinsWithdrawalForBranch(icmcId, sDate, eDate);
 
 		for (Tuple t : coinPaymentList) {
+
 			if (t.get(0, Integer.class).equals(1)) {
 				denominationCoin1W = denominationCoin1W.add(t.get(1, BigDecimal.class).multiply(multiplier2500));
-			}
-			if (t.get(0, Integer.class).equals(2)) {
+			} else if (t.get(0, Integer.class).equals(2)) {
 				denominationCoin2W = denominationCoin2W.add(t.get(1, BigDecimal.class).multiply(multiplier2500));
-			}
-			if (t.get(0, Integer.class).equals(5)) {
+			} else if (t.get(0, Integer.class).equals(5)) {
 				denominationCoin5W = denominationCoin5W.add(t.get(1, BigDecimal.class).multiply(multiplier2500));
-			}
-			if (t.get(0, Integer.class).equals(10)) {
+			} else if (t.get(0, Integer.class).equals(10)) {
 				denominationCoin10W = denominationCoin10W.add(t.get(1, BigDecimal.class).multiply(multiplier2000));
 			}
 		}
@@ -1992,60 +1853,7 @@ public class BinDashboardServiceImpl implements BinDashboardService {
 								.valueOf(discAllocation.getDenomination() * discAllocation.getNumberOfNotes());
 					}
 
-					// previous code
-					/*
-					 * if
-					 * (!discAllocation.getDiscrepancyType().equalsIgnoreCase(
-					 * "SHORTAGE") &&
-					 * !discAllocation.getDiscrepancyType().equalsIgnoreCase(
-					 * "EXCESS") &&
-					 * !discAllocation.getDiscrepancyType().equalsIgnoreCase(
-					 * "MUTILATED") && discAllocation.getDenomination() >= 50 &&
-					 * discrepancy.getAccountTellerCam().equalsIgnoreCase(
-					 * "ACCOUNT")) {
-					 * 
-					 * fakeValue = BigDecimal
-					 * .valueOf(discAllocation.getDenomination() *
-					 * discAllocation.getNumberOfNotes()); }
-					 * 
-					 * if
-					 * (!discAllocation.getDiscrepancyType().equalsIgnoreCase(
-					 * "SHORTAGE") &&
-					 * !discAllocation.getDiscrepancyType().equalsIgnoreCase(
-					 * "EXCESS") &&
-					 * !discAllocation.getDiscrepancyType().equalsIgnoreCase(
-					 * "FAKE") && discAllocation.getDenomination() >= 50 &&
-					 * discrepancy.getAccountTellerCam().equalsIgnoreCase(
-					 * "ACCOUNT")) {
-					 * 
-					 * if (discAllocation.getDiscrepancyType() != null &&
-					 * discAllocation.getDiscrepancyType().equalsIgnoreCase(
-					 * "MUTILATED") &&
-					 * discAllocation.getMutilType().equalsIgnoreCase(
-					 * "HALF VALUE")) { mutilValue = BigDecimal
-					 * .valueOf(discAllocation.getDenomination() *
-					 * discAllocation.getNumberOfNotes() * 0.5); }
-					 * 
-					 * if (discAllocation.getDiscrepancyType() != null &&
-					 * discAllocation.getDiscrepancyType().equalsIgnoreCase(
-					 * "MUTILATED") &&
-					 * discAllocation.getMutilType().equalsIgnoreCase(
-					 * "ZERO VALUE")) { mutilValue = BigDecimal
-					 * .valueOf(discAllocation.getDenomination() *
-					 * discAllocation.getNumberOfNotes()); } }
-					 */
-
 					// code by shahabuddin
-
-					if (!discAllocation.getDiscrepancyType().equalsIgnoreCase("SHORTAGE")
-							&& !discAllocation.getDiscrepancyType().equalsIgnoreCase("EXCESS")
-							&& !discAllocation.getDiscrepancyType().equalsIgnoreCase("MUTILATED")
-							&& discAllocation.getDenomination() >= 10
-							&& discrepancy.getAccountTellerCam().equalsIgnoreCase("ACCOUNT")) {
-
-						fakeValue = BigDecimal
-								.valueOf(discAllocation.getDenomination() * discAllocation.getNumberOfNotes());
-					}
 
 					if (!discAllocation.getDiscrepancyType().equalsIgnoreCase("SHORTAGE")
 							&& !discAllocation.getDiscrepancyType().equalsIgnoreCase("EXCESS")
@@ -2068,13 +1876,6 @@ public class BinDashboardServiceImpl implements BinDashboardService {
 						}
 					}
 
-					if (discAllocation.getDiscrepancyType().equalsIgnoreCase("FAKE")
-							&& discAllocation.getDenomination() <= 10
-							&& (discrepancy.getAccountTellerCam().equalsIgnoreCase("ACCOUNT"))) {
-						fakeValue = BigDecimal.valueOf(discAllocation.getDenomination());
-						// discAllocation.setSairrem(mutilValue);
-					}
-
 					// end by shahabuddin
 
 					if (discAllocation.getDiscrepancyType().equalsIgnoreCase("FAKE")
@@ -2084,27 +1885,6 @@ public class BinDashboardServiceImpl implements BinDashboardService {
 								.valueOf(discAllocation.getDenomination() * discAllocation.getNumberOfNotes());
 						discAllocation.setSairrem(mutilValue);
 					}
-
-					// previous code
-					/*
-					 * if (discAllocation.getDiscrepancyType().equalsIgnoreCase(
-					 * "FAKE") && discAllocation.getDenomination() <= 20 &&
-					 * (discrepancy.getAccountTellerCam().equalsIgnoreCase(
-					 * "ACCOUNT"))) { fakeValue =
-					 * BigDecimal.valueOf(discAllocation.getDenomination()); //
-					 * discAllocation.setSairrem(mutilValue); }
-					 */
-
-					/*
-					 * if (discAllocation.getDiscrepancyType().equalsIgnoreCase(
-					 * "FAKE") && discAllocation.getDenomination() >= 100 &&
-					 * (discrepancy.getAccountTellerCam().equalsIgnoreCase(
-					 * "TELLER") ||
-					 * discrepancy.getAccountTellerCam().equalsIgnoreCase("CAM")
-					 * )) { sadMutilValue = BigDecimal
-					 * .valueOf(discAllocation.getDenomination() *
-					 * discAllocation.getNumberOfNotes()); }
-					 */
 
 					if (discAllocation.getDiscrepancyType().equalsIgnoreCase("FAKE")
 							&& discAllocation.getDenomination() <= 100
@@ -2147,16 +1927,7 @@ public class BinDashboardServiceImpl implements BinDashboardService {
 						discAllocation.setSairrem(mutilValue);
 					}
 
-					/*
-					 * if (discAllocation.getDiscrepancyType().equalsIgnoreCase(
-					 * "MUTILATED") &&
-					 * (discrepancy.getAccountTellerCam().equalsIgnoreCase(
-					 * "TELLER") && discAllocation.getDenomination() <= 50 &&
-					 * discAllocation.getMutilType().equalsIgnoreCase(
-					 * "ZERO VALUE" ))) { mutilValue =
-					 * BigDecimal.valueOf(discAllocation.getDenomination());
-					 * discAllocation.setSadscash(mutilValue); }
-					 */
+					
 
 					if (discAllocation.getDiscrepancyType().equalsIgnoreCase("MUTILATED")
 							&& (discrepancy.getAccountTellerCam().equalsIgnoreCase("TELLER")
@@ -2179,28 +1950,7 @@ public class BinDashboardServiceImpl implements BinDashboardService {
 						// discAllocation.setSadscash(mutilValue);
 						discAllocation.setSamutcur(sadMutilValue);
 					}
-					// previous code
-					/*
-					 * if (discAllocation.getDiscrepancyType().equalsIgnoreCase(
-					 * "MUTILATED") &&
-					 * (discrepancy.getAccountTellerCam().equalsIgnoreCase(
-					 * "CAM") && discAllocation.getDenomination() >= 100 &&
-					 * discAllocation.getMutilType().equalsIgnoreCase(
-					 * "HALF VALUE"))) { mutilValue = BigDecimal
-					 * .valueOf(discAllocation.getDenomination() *
-					 * discAllocation.getNumberOfNotes() * 0.5);
-					 * discAllocation.setSairrem(mutilValue); }
-					 * 
-					 * if (discAllocation.getDiscrepancyType().equalsIgnoreCase(
-					 * "MUTILATED") &&
-					 * (discrepancy.getAccountTellerCam().equalsIgnoreCase(
-					 * "CAM") && discAllocation.getDenomination() >= 100 &&
-					 * discAllocation.getMutilType().equalsIgnoreCase(
-					 * "ZERO VALUE"))) { mutilValue =
-					 * BigDecimal.valueOf(discAllocation.getDenomination());
-					 * discAllocation.setSairrem(mutilValue); }
-					 */
-
+				
 					// code by shahabuddin
 
 					if (discAllocation.getDiscrepancyType().equalsIgnoreCase("MUTILATED")
@@ -3648,48 +3398,6 @@ public class BinDashboardServiceImpl implements BinDashboardService {
 					}
 				}
 
-				if (!discAllocation.getDiscrepancyType().equalsIgnoreCase("SHORTAGE")
-						&& !discAllocation.getDiscrepancyType().equalsIgnoreCase("EXCESS")
-						&& !discAllocation.getDiscrepancyType().equalsIgnoreCase("MUTILATED")
-						&& discAllocation.getDenomination() >= 50
-						&& discrepancy.getAccountTellerCam().equalsIgnoreCase("ACCOUNT")) {
-					if (discAllocation.getDenomination() != null && discAllocation.getNumberOfNotes() != null) {
-						fakeValue = BigDecimal
-								.valueOf(discAllocation.getDenomination() * discAllocation.getNumberOfNotes());
-					}
-
-				}
-
-				// previous code
-				/*
-				 * if (!discAllocation.getDiscrepancyType().equalsIgnoreCase(
-				 * "SHORTAGE") &&
-				 * !discAllocation.getDiscrepancyType().equalsIgnoreCase(
-				 * "EXCESS") &&
-				 * !discAllocation.getDiscrepancyType().equalsIgnoreCase("FAKE")
-				 * && discAllocation.getDenomination() >= 50 &&
-				 * discrepancy.getAccountTellerCam().equalsIgnoreCase("ACCOUNT")
-				 * ) {
-				 * 
-				 * if (discAllocation.getDiscrepancyType() != null &&
-				 * discAllocation.getDiscrepancyType().equalsIgnoreCase(
-				 * "MUTILATED") &&
-				 * discAllocation.getMutilType().equalsIgnoreCase("HALF VALUE"))
-				 * { if(discAllocation.getDenomination() !=null &&
-				 * discAllocation.getNumberOfNotes() !=null){ mutilValue =
-				 * BigDecimal .valueOf(discAllocation.getDenomination() *
-				 * discAllocation.getNumberOfNotes() * 0.5); } }
-				 * 
-				 * 
-				 * if (discAllocation.getDiscrepancyType() != null &&
-				 * discAllocation.getDiscrepancyType().equalsIgnoreCase(
-				 * "MUTILATED") &&
-				 * discAllocation.getMutilType().equalsIgnoreCase("ZERO VALUE"))
-				 * { if(discAllocation.getDenomination() !=null &&
-				 * discAllocation.getNumberOfNotes() !=null){ mutilValue =
-				 * BigDecimal .valueOf(discAllocation.getDenomination() *
-				 * discAllocation.getNumberOfNotes()); } } }
-				 */
 				// code by shahabuddin
 
 				if (!discAllocation.getDiscrepancyType().equalsIgnoreCase("SHORTAGE")
@@ -3717,11 +3425,9 @@ public class BinDashboardServiceImpl implements BinDashboardService {
 					}
 				}
 
-				if (discAllocation.getDiscrepancyType().equalsIgnoreCase("FAKE")
-						&& discAllocation.getDenomination() <= 10
-						&& (discrepancy.getAccountTellerCam().equalsIgnoreCase("ACCOUNT"))) {
+				if (discAllocation.getDiscrepancyType().equalsIgnoreCase("FAKE")) {
 					fakeValue = BigDecimal.valueOf(discAllocation.getDenomination());
-					// discAllocation.setSairrem(mutilValue);
+					fakeValue = fakeValue.multiply(BigDecimal.valueOf(discAllocation.getNumberOfNotes()));
 				}
 
 				// end by shahabuddin
@@ -3735,28 +3441,6 @@ public class BinDashboardServiceImpl implements BinDashboardService {
 						discAllocation.setSairrem(mutilValue);
 					}
 				}
-				// previous code
-				/*
-				 * if
-				 * (discAllocation.getDiscrepancyType().equalsIgnoreCase("FAKE")
-				 * && discAllocation.getDenomination() <= 20 &&
-				 * (discrepancy.getAccountTellerCam().equalsIgnoreCase("ACCOUNT"
-				 * ))) { fakeValue =
-				 * BigDecimal.valueOf(discAllocation.getDenomination()); //
-				 * discAllocation.setSairrem(mutilValue); }
-				 */
-
-				/*
-				 * if
-				 * (discAllocation.getDiscrepancyType().equalsIgnoreCase("FAKE")
-				 * && discAllocation.getDenomination() >= 100 &&
-				 * (discrepancy.getAccountTellerCam().equalsIgnoreCase("TELLER")
-				 * ||
-				 * discrepancy.getAccountTellerCam().equalsIgnoreCase("CAM"))) {
-				 * sadMutilValue = BigDecimal
-				 * .valueOf(discAllocation.getDenomination() *
-				 * discAllocation.getNumberOfNotes()); }
-				 */
 
 				if (discAllocation.getDiscrepancyType().equalsIgnoreCase("FAKE")
 						&& discAllocation.getDenomination() <= 100
@@ -3805,17 +3489,6 @@ public class BinDashboardServiceImpl implements BinDashboardService {
 					discAllocation.setSairrem(mutilValue);
 				}
 
-				/*
-				 * if (discAllocation.getDiscrepancyType().equalsIgnoreCase(
-				 * "MUTILATED") &&
-				 * (discrepancy.getAccountTellerCam().equalsIgnoreCase("TELLER")
-				 * && discAllocation.getDenomination() <= 50 &&
-				 * discAllocation.getMutilType().equalsIgnoreCase("ZERO VALUE"
-				 * ))) { mutilValue =
-				 * BigDecimal.valueOf(discAllocation.getDenomination());
-				 * discAllocation.setSadscash(mutilValue); }
-				 */
-
 				if (discAllocation.getDiscrepancyType().equalsIgnoreCase("MUTILATED")
 						&& (discrepancy.getAccountTellerCam().equalsIgnoreCase("TELLER")
 								&& discAllocation.getDenomination() >= 100
@@ -3841,28 +3514,6 @@ public class BinDashboardServiceImpl implements BinDashboardService {
 						discAllocation.setSamutcur(sadMutilValue);
 					}
 				}
-				// previos code
-				/*
-				 * if (discAllocation.getDiscrepancyType().equalsIgnoreCase(
-				 * "MUTILATED") &&
-				 * (discrepancy.getAccountTellerCam().equalsIgnoreCase("CAM") &&
-				 * discAllocation.getDenomination() >= 100 &&
-				 * discAllocation.getMutilType().equalsIgnoreCase("HALF VALUE"
-				 * ))) { if(discAllocation.getDenomination() !=null &&
-				 * discAllocation.getNumberOfNotes() !=null){ mutilValue =
-				 * BigDecimal .valueOf(discAllocation.getDenomination() *
-				 * discAllocation.getNumberOfNotes() * 0.5);
-				 * discAllocation.setSairrem(mutilValue); } }
-				 * 
-				 * if (discAllocation.getDiscrepancyType().equalsIgnoreCase(
-				 * "MUTILATED") &&
-				 * (discrepancy.getAccountTellerCam().equalsIgnoreCase("CAM") &&
-				 * discAllocation.getDenomination() >= 100 &&
-				 * discAllocation.getMutilType().equalsIgnoreCase("ZERO VALUE"
-				 * ))) { mutilValue =
-				 * BigDecimal.valueOf(discAllocation.getDenomination());
-				 * discAllocation.setSairrem(mutilValue); }
-				 */
 
 				// code by shahabuddin
 
@@ -3944,9 +3595,9 @@ public class BinDashboardServiceImpl implements BinDashboardService {
 
 	@Override
 	public List<String> getBoxFromBoxMasterForCashTransfer(BigInteger icmcId, int denomination,
-			CurrencyType currencyType) {
+			CurrencyType currencyType, BigDecimal bundle) {
 		List<String> boxNumberList = binDashboardJpaDao.getBoxFromBoxMasterForCashTransfer(icmcId, denomination,
-				currencyType);
+				currencyType, bundle);
 		return boxNumberList;
 	}
 
@@ -5134,31 +4785,37 @@ public class BinDashboardServiceImpl implements BinDashboardService {
 	@Override
 	@Transactional
 	public boolean processForPartialCashTransfer(User user, String formBinOrBox, String toBinOrBox, BigDecimal bundle,
-			CashTransfer cashTransfer) {
-
+			CashTransfer cashTransfer, BinTransaction binTxn) {
+		if (binTxn.getBinNumber() != null) {
+			cashPaymentService.deleteEmptyBinFromBinTransaction(user.getIcmcId(), binTxn.getBinNumber());
+			this.cashTransferInBinTxn(binTxn);
+			this.updateBoxMaster(user.getIcmcId(), toBinOrBox, 1);
+			this.updateBinMaster(user.getIcmcId(), toBinOrBox, 1);
+		}
+		BranchReceipt brReceipt = new BranchReceipt();
+		if (binTxn.getBinNumber() != null && binTxn.getCashSource() != null) {
+			UtilityJpa.setBranchReceipt(brReceipt, user, binTxn, Calendar.getInstance());
+			this.insertBranchReceiptAftercashTransfer(brReceipt);
+			this.updateBranchReceiptAfterCashTransfer(user.getIcmcId(), formBinOrBox);
+		}
 		BinTransaction binOrBoxFromDB = this.checkBinOrBox(user.getIcmcId(), formBinOrBox);
-		if (binOrBoxFromDB == null)
-			throw new BaseGuiException("please check BinorBox Name");
 		binOrBoxFromDB.setReceiveBundle(binOrBoxFromDB.getReceiveBundle().subtract(bundle));
 		binOrBoxFromDB.setUpdateBy(user.getId());
 		binOrBoxFromDB.setUpdateTime(Calendar.getInstance());
-		if (binOrBoxFromDB.getReceiveBundle().compareTo(new BigDecimal(0)) == 0)
-			binOrBoxFromDB.setStatus(BinStatus.EMPTY);
-		else
-			binOrBoxFromDB.setStatus(BinStatus.NOT_FULL);
+		binOrBoxFromDB.setStatus(BinStatus.NOT_FULL);
+
 		this.updateBinTxn(binOrBoxFromDB);
+		if (binTxn.getBinNumber() == null) {
+			BinTransaction toBinFromDB = this.checkBinOrBox(user.getIcmcId(), toBinOrBox);
+			toBinFromDB.setReceiveBundle(toBinFromDB.getReceiveBundle().add(bundle));
+			toBinFromDB.setUpdateBy(user.getId());
+			toBinFromDB.setUpdateTime(Calendar.getInstance());
+			if (toBinFromDB.getMaxCapacity().compareTo(toBinFromDB.getReceiveBundle()) == 0)
+				toBinFromDB.setStatus(BinStatus.FULL);
 
-		BinTransaction toBinFromDB = this.checkBinOrBox(user.getIcmcId(), toBinOrBox);
-		if (toBinFromDB == null)
-			throw new BaseGuiException("please check BinorBox Name");
-		toBinFromDB.setReceiveBundle(toBinFromDB.getReceiveBundle().add(bundle));
-		toBinFromDB.setUpdateBy(user.getId());
-		toBinFromDB.setUpdateTime(Calendar.getInstance());
-		if (toBinFromDB.getMaxCapacity().compareTo(toBinFromDB.getReceiveBundle()) == 0)
-			toBinFromDB.setStatus(BinStatus.FULL);
-		this.updateBinTxn(toBinFromDB);
-
-		cashTransfer.setDenomination(toBinFromDB.getDenomination());
+			this.updateBinTxn(toBinFromDB);
+		}
+		cashTransfer.setDenomination(binOrBoxFromDB.getDenomination());
 		this.saveCashTransfer(cashTransfer);
 
 		return true;

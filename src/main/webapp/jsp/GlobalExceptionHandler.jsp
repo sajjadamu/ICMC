@@ -184,8 +184,8 @@ div {
 						<!-- /.panel-heading -->
 						<div class="panel-body">
 
-							status
-							<c:out value="${status }" />
+						<%-- 	status
+							<c:out value="${status }" /> --%>
 							<br /> message
 							<c:out value="${message }" />
 							<br /> Global Message

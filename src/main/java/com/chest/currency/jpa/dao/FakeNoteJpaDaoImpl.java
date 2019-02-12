@@ -24,7 +24,7 @@ public class FakeNoteJpaDaoImpl implements FakeNoteJpaDao {
 
 	@Override
 	public boolean fakeNoteEntry(FakeNote fakeNote) {
-		LOG.info("");
+		LOG.error("");
 		em.persist(fakeNote);
 		return true;
 	}
@@ -45,7 +45,7 @@ public class FakeNoteJpaDaoImpl implements FakeNoteJpaDao {
 
 	@Override
 	public boolean uploadFakeNote(List<FakeNote> fakeNoteList, FakeNote fakeNote) {
-		LOG.info("Going to insert list of Fake note");
+		LOG.error("Going to insert list of Fake note");
 		for(FakeNote fake : fakeNoteList){
 			fake.setInsertBy(fakeNote.getInsertBy());
 			fake.setUpdateBy(fakeNote.getUpdateBy());

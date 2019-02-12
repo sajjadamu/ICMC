@@ -3,8 +3,12 @@
 <html lang="en">
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+<script type="text/javascript" src="./js/jquery-1.11.1.min.js"></script>
+<script type="text/javascript" src="./js/jquery.validate.min.js"></script>
 <head>
 <meta charset="UTF-8">
+<link rel="shortcut icon" href="./resources/logo/favicon.ico"
+	type="image/x-icon">
 <title>ICICI : Login</title>
 
 <style type="text/css">
@@ -180,9 +184,16 @@ ul.loginwrap {
 					<form:form name='loginForm' action="login" method='POST'
 						autocomplete="off">
 						<li><label>NT ID:</label><span><input type="text"
-								id="username" name="username" placeholder="NT Id"></span></li>
+								autocomplete="off" readonly
+								onfocus="this.removeAttribute('readonly');disableautocompletion(this.id);"
+								onblur="disableautocompletion(this.id);" oncopy="return false"
+								onpaste="return false" id="username" name="username"
+								placeholder="NT Id"></span></li>
 						<li><label>NT Password:</label><span><input
-								type="password" id="password" name="password"
+								type="password" autocomplete="off" readonly
+								onfocus="this.removeAttribute('readonly');disableautocompletion(this.id);"
+								onblur="disableautocompletion(this.id);" oncopy="return false"
+								onpaste="return false" id="password" name="password"
 								placeholder="NT Password"></span></li>
 						<li><input type="submit" value="Login" class="loginsubmit"></li>
 						<li class="helptxt"><a href="">Help and Support</a></li>
@@ -198,5 +209,54 @@ ul.loginwrap {
 		</div>
 
 	</div>
+	<script type="text/javascript">
+		function disableautocompletion(id1) {
+			var passwordControl = document.getElementById(id1);
+			passwordControl.setAttribute("autocomplete", "off");
+		}
+
+		$.validator.addMethod("userIdRex", function(value, element) {
+			return this.optional(element) || /^[a-zA-Z0-9._-]+$/i.test(value);
+		}, "UserId must contain only letters,Space , dashes.");
+
+		$(function() {
+			$("form[name='loginForm']")
+					.validate(
+							{
+								rules : {
+									username : {
+										required : true,
+										maxlength : 15,
+										userIdRex : true
+									},
+									password : {
+										required : true,
+										maxlength : 30
+									}
+								},
+								// Specify validation error messages 
+								messages : {
+									username : {
+										required : " Enter User ID",
+										maxlength : "User ID can't have more than 15 characters",
+										userIdRex : "Please Enter only Numeric Value",
+									},
+									password : {
+										required : "Enter Password",
+										maxlength : "Password can't have more than 30 characters",
+									},
+
+								},
+								submitHandler : function(form) {
+									var isValid = $("form[name='loginForm']")
+											.validate().form();
+									//alert(isValid);
+									if (isValid) {
+										form.submit();
+									}
+								}
+							});
+		});
+	</script>
 </body>
 </html>

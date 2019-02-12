@@ -69,7 +69,7 @@ function doAjaxPostForDeduction(str) {
 	 var isValid=true;
 	 var bundle = parseInt(($('#bundle'+str).text()));
 	 var requestBundle = parseInt(($('#requestBundle'+str).val()));
-	 if(requestBundle<=bundle)
+	 if(requestBundle >0 && requestBundle<=bundle)
 	 {
 	  $.ajax({  
 	    type: "POST", 
@@ -136,7 +136,7 @@ function doAjaxPostForDeduction(str) {
 		  }
 	  else
 		  {
-		  	alert("Please Enter Extract Bundle Less Than or Equal to Total Bundle");
+		  	alert("Please Enter Extract Bundle Not Negative , Less Than or Equal to Total Bundle");
 		 	return false;
 		  }
 	} 
@@ -230,7 +230,8 @@ var getUrlParameter = function getUrlParameter(sParam) {
 									<td><input type="text" name="bundle"
 										id="requestBundle<%=tuple.get(0, Integer.class)%>"></td>
 									<%-- <td hidden id="currencyType<%=tuple.get(0,Integer.class)%>"><%=tuple.get(3,CurrencyType.class)%></td> --%>
-									<td><input type="text" name="binBundle" readonly="readonly"
+									<td><input type="text" name="binBundle"
+										readonly="readonly"
 										id="binBundle<%=tuple.get(0, Integer.class)%>"></td>
 									<td><input type="button"
 										id="buttonId<%=tuple.get(0, Integer.class)%>"

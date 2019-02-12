@@ -1,7 +1,3 @@
-/*******************************************************************************
- * /* Copyright (C) Indicsoft Technologies Pvt Ltd
- * * All Rights Reserved.
- *******************************************************************************/
 package com.chest.currency.controller;
 
 import java.io.BufferedOutputStream;
@@ -50,7 +46,7 @@ public class JurisdictionController {
 	@RequestMapping("/addJurisdiction")
 	public ModelAndView addJurisdiction() {
 		Jurisdiction obj = new Jurisdiction();
-		LOG.info("JURISDICTION PAGE");
+		LOG.error("JURISDICTION PAGE");
 		ModelMap map = new ModelMap();
 		map.addAttribute("documentFilePath", "./files/" + documentFilePath);
 		map.addAttribute("user", obj);

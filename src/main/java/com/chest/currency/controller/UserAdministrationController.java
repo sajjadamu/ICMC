@@ -160,7 +160,7 @@ public class UserAdministrationController {
 		User dbUser = userAdministrationService.isValidUser(user.getId());
 
 		if (dbUser != null) {
-			LOG.info("User with this UserId Already Exists...");
+			LOG.error("User with this UserId Already Exists...");
 			List<Role> roleList = userAdministrationService.getAllRole();
 			model.put("rolesList", roleList);
 			model.put("zoneList", Zone.values());
@@ -343,7 +343,7 @@ public class UserAdministrationController {
 	@RequestMapping("/viewBinCapacity")
 	public ModelAndView binCapacityDetails() {
 		List<BinCapacityDenomination> binCapacityList = userAdministrationService.getBinCapacity();
-		LOG.info("VIEW BIN CAPACITY RECORDS");
+		LOG.error("VIEW BIN CAPACITY RECORDS");
 		return new ModelAndView("/viewBinCapacity", "records", binCapacityList);
 	}
 
@@ -356,7 +356,7 @@ public class UserAdministrationController {
 	public ModelAndView viewDelegateRight(HttpSession session) {
 		User user = (User) session.getAttribute("login");
 		List<DelegateRight> delegateRightlist = userAdministrationService.getDelegateRightList(user.getIcmcId());
-		LOG.info("View delegate right list");
+		LOG.error("View delegate right list");
 		return new ModelAndView("/viewDelegateRight", "records", delegateRightlist);
 	}
 
@@ -412,7 +412,7 @@ public class UserAdministrationController {
 			redirectAttributes.addFlashAttribute("successMsg", "Right has been delegated successfully");
 			return new ModelAndView("redirect:./viewDelegateRight");
 		} else {
-			LOG.info("User with this userId doesn't exists...");
+			LOG.error("User with this userId doesn't exists...");
 			List<Role> roleList = userAdministrationService.getAllRole();
 			model.put("rolesList", roleList);
 			model.put("user", delegateRight);
@@ -725,7 +725,7 @@ public class UserAdministrationController {
 		IcmcPrinter dbIcmcPrinter = userAdministrationService.isValidPrinter(icmcPrinter.getPrinterName());
 
 		if (dbIcmcPrinter != null) {
-			LOG.info("Printer with this Name Already Exists...");
+			LOG.error("Printer with this Name Already Exists...");
 			List<ICMC> icmcList = userAdministrationService.getEnabledICMCList();
 			model.put("icmcList", icmcList);
 			model.put("statusList", Status.values());
@@ -781,7 +781,7 @@ public class UserAdministrationController {
 
 	@RequestMapping(value = "icmcPrinterList.json")
 	public @ResponseBody List<IcmcPrinter> printerList(@RequestParam(value = "icmc", required = true) BigInteger icmc) {
-		LOG.info("ICMC_ID From Printer: " + icmc);
+		LOG.error("ICMC_ID From Printer: " + icmc);
 		List<IcmcPrinter> icmcPrinterList = userAdministrationService.printerList(icmc);
 		return icmcPrinterList;
 	}
@@ -808,7 +808,6 @@ public class UserAdministrationController {
 		userAdministrationService.updateUser(userDb);
 
 		redirectAttributes.addFlashAttribute("updateMsg", "Printer has been changed successfully Please Re-Login");
-
 		return new ModelAndView("redirect:./logout");
 	}
 

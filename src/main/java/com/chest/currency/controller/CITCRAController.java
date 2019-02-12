@@ -164,7 +164,7 @@ public class CITCRAController {
 	@RequestMapping("/viewCITCRAVendor")
 	public ModelAndView getCITCRAVendorRecord() {
 		List<CITCRAVendor> vendorList = citCraService.getCITCRAVendor();
-		LOG.info("VIEW Vendor RECORD");
+		LOG.error("VIEW Vendor RECORD");
 		return new ModelAndView("/viewCITCRAVendor", "records", vendorList);
 	}
 
@@ -219,7 +219,7 @@ public class CITCRAController {
 	@RequestMapping("/viewCITCRAVehicle")
 	public ModelAndView getCITCRAVehicleRecord() {
 		List<CITCRAVehicle> vehicleList = citCraService.getVehicleDetails();
-		LOG.info("VIEW Vehicle RECORD");
+		LOG.error("VIEW Vehicle RECORD");
 		return new ModelAndView("/viewCITCRAVehicle", "records", vehicleList);
 	}
 
@@ -368,7 +368,7 @@ public class CITCRAController {
 	@RequestMapping("/viewCITCRADriver")
 	public ModelAndView getCITCRADriver() {
 		List<CITCRADriver> driverList = citCraService.getVehicleDriver();
-		LOG.info("VIEW DRIVER RECORD");
+		LOG.error("VIEW DRIVER RECORD");
 		return new ModelAndView("/viewCITCRADriver", "records", driverList);
 	}
 

@@ -313,7 +313,7 @@
 	<script type="text/javascript">
 
 	$.validator.addMethod("loginRegex", function(value, element) {
-	    return this.optional(element) || /^[0-9]([.,][0-9]{1,3})?$/i.test(value);
+	    return this.optional(element) || /^([1-9][0-9]{0,2}|1000)?$/i.test(value);
 	}, "Productivity Lost must contain only letters,Space , dashes."); 
 	$(function() {
 		  $("form[name='userPage']").validate({

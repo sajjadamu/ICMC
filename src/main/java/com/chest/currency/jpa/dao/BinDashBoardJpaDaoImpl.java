@@ -112,7 +112,7 @@ public class BinDashBoardJpaDaoImpl implements BinDashBoardJpaDao {
 
 	@Override
 	public List<BinMaster> getBinNumAndColorCode(BigInteger icmcId) {
-		LOG.info("BIN DASH BOARD");
+		LOG.error("BIN DASH BOARD");
 		JPAQuery jpaQuery = getFromQueryForBinDashboard();
 		jpaQuery.where(QBinMaster.binMaster.icmcId.eq(icmcId));
 		List<BinMaster> binList = jpaQuery.list(QBinMaster.binMaster);
@@ -278,7 +278,7 @@ public class BinDashBoardJpaDaoImpl implements BinDashBoardJpaDao {
 
 	@Override
 	public boolean insertDataInBinMaster(BinMaster binMaster) {
-		LOG.info("INSERT NEW BIN");
+		LOG.error("INSERT NEW BIN");
 		em.persist(binMaster);
 		return true;
 	}
@@ -427,7 +427,7 @@ public class BinDashBoardJpaDaoImpl implements BinDashBoardJpaDao {
 
 	@Override
 	public List<BinTransaction> getBinNumAndTypeFromBinTransactionForVefiedYesBox(BigInteger icmcId) {
-		LOG.info("BIN DASH BOARD FOR BIN");
+		LOG.error("BIN DASH BOARD FOR BIN");
 		JPAQuery jpaQuery = getFromQueryForBinDashboardFromBinTransaction();
 		jpaQuery.where(QBinTransaction.binTransaction.icmcId.eq(icmcId)
 				.and(QBinTransaction.binTransaction.cashType.eq(CashType.NOTES)
@@ -435,7 +435,7 @@ public class BinDashBoardJpaDaoImpl implements BinDashBoardJpaDao {
 								.and(QBinTransaction.binTransaction.verified.eq(YesNo.Yes)))));
 		jpaQuery.orderBy(QBinTransaction.binTransaction.binNumber.asc());
 		List<BinTransaction> binListFromTransaction = jpaQuery.list(QBinTransaction.binTransaction);
-		// LOG.info("BIN DASH BOARD LIS OF BIN "+binListFromTransaction);
+		// LOG.error("BIN DASH BOARD LIS OF BIN "+binListFromTransaction);
 		UtilityJpa.setBinColor(binListFromTransaction);
 		return binListFromTransaction;
 	}
@@ -615,7 +615,7 @@ public class BinDashBoardJpaDaoImpl implements BinDashBoardJpaDao {
 			CurrencyType currencyType) {
 		JPAQuery jpaQuery = getFromQueryForProcessList();
 		jpaQuery.where(QProcess.process.icmcId.eq(icmcId).and(QProcess.process.currencyType.eq(currencyType))
-				.and(QProcess.process.insertTime.between(sDate, eDate)));
+				.and(QProcess.process.insertTime.between(sDate, eDate)).and(QProcess.process.status.eq(1)));
 		jpaQuery.groupBy(QProcess.process.denomination);
 		jpaQuery.orderBy(QProcess.process.denomination.asc());
 		List<Tuple> summaryList = jpaQuery.list(QProcess.process.denomination,
@@ -637,7 +637,8 @@ public class BinDashBoardJpaDaoImpl implements BinDashBoardJpaDao {
 	@Override
 	public List<Tuple> getProcessBundleProcessingOutPut(BigInteger icmcId, Calendar sDate, Calendar eDate) {
 		JPAQuery jpaQuery = getFromQueryForProcessList();
-		jpaQuery.where(QProcess.process.icmcId.eq(icmcId).and(QProcess.process.insertTime.between(sDate, eDate)));
+		jpaQuery.where(QProcess.process.icmcId.eq(icmcId).and(QProcess.process.insertTime.between(sDate, eDate))
+				.and(QProcess.process.status.eq(1)));
 		jpaQuery.groupBy(QProcess.process.denomination, QProcess.process.currencyType);
 		jpaQuery.orderBy(QProcess.process.denomination.asc());
 		List<Tuple> summaryList = jpaQuery.list(QProcess.process.denomination, QProcess.process.currencyType,
@@ -1196,6 +1197,7 @@ public class BinDashBoardJpaDaoImpl implements BinDashBoardJpaDao {
 		JPAQuery jpaQuery = getFromQueryForBinTxn();
 		jpaQuery.where(QBinTransaction.binTransaction.icmcId.eq(icmcId)
 				.and(QBinTransaction.binTransaction.status.ne(BinStatus.EMPTY))
+				.and(QBinTransaction.binTransaction.pendingBundleRequest.eq(BigDecimal.ZERO))
 				.and(QBinTransaction.binTransaction.binCategoryType.eq(binCategoryType)));
 		List<String> list = jpaQuery.list(QBinTransaction.binTransaction.binNumber);
 		return list;
@@ -1219,10 +1221,12 @@ public class BinDashBoardJpaDaoImpl implements BinDashBoardJpaDao {
 
 	@Override
 	public List<String> getBoxFromBoxMasterForCashTransfer(BigInteger icmcId, int denomination,
-			CurrencyType currencyType) {
+			CurrencyType currencyType, BigDecimal bundle) {
 		JPAQuery jpaQuery = getFromQueryForBoxMaster();
 		jpaQuery.where(QBoxMaster.boxMaster.icmcId.eq(icmcId).and(QBoxMaster.boxMaster.denomination.eq(denomination))
-				.and(QBoxMaster.boxMaster.currencyType.eq(currencyType)).and(QBoxMaster.boxMaster.isAllocated.eq(0)));
+				.and(QBoxMaster.boxMaster.currencyType.eq(currencyType))
+				.and(QBoxMaster.boxMaster.maxCapacity.gt(bundle).or(QBoxMaster.boxMaster.maxCapacity.eq(bundle)))
+				.and(QBoxMaster.boxMaster.isAllocated.eq(0)));
 		List<String> boxMasterList = jpaQuery.list(QBoxMaster.boxMaster.boxName);
 		return boxMasterList;
 	}
@@ -1382,10 +1386,12 @@ public class BinDashBoardJpaDaoImpl implements BinDashBoardJpaDao {
 
 	@Override
 	public List<AuditorIndent> viewAuditorIndentList(BigInteger icmcId) {
+
 		JPAQuery jpaQuery = getFromQueryForAuditorIndent();
-		jpaQuery.where(QAuditorIndent.auditorIndent.icmcId.eq(icmcId));
-		List<AuditorIndent> auditorIndentList = jpaQuery.list(QAuditorIndent.auditorIndent);
-		return auditorIndentList;
+		jpaQuery.where(QAuditorIndent.auditorIndent.icmcId.eq(icmcId).and(
+				QAuditorIndent.auditorIndent.insertTime.between(UtilityJpa.getStartDate(), UtilityJpa.getEndDate())));
+
+		return jpaQuery.list(QAuditorIndent.auditorIndent);
 	}
 
 	@Override
@@ -1400,9 +1406,8 @@ public class BinDashBoardJpaDaoImpl implements BinDashBoardJpaDao {
 		List<Tuple> tupleList = jpaQuery.list(QAuditorIndent.auditorIndent.denomination,
 				QAuditorIndent.auditorIndent.bundle.sum(), QAuditorIndent.auditorIndent.pendingBundleRequest.sum());
 
-		LOG.info("AUDITOR INDENT REQUEST DATA FOR MACHINE ALLOCATION");
-		List<AuditorIndent> indentList = UtilityJpa.mapTuppleAuditorIndentForMachineAllocation(tupleList);
-		return indentList;
+		LOG.error("AUDITOR INDENT REQUEST DATA FOR MACHINE ALLOCATION");
+		return UtilityJpa.mapTuppleAuditorIndentForMachineAllocation(tupleList);
 
 	}
 
@@ -1425,9 +1430,8 @@ public class BinDashBoardJpaDaoImpl implements BinDashBoardJpaDao {
 		jpaQuery.where(QBinTransaction.binTransaction.icmcId.eq(txn.getIcmcId())
 				.and(QBinTransaction.binTransaction.binNumber.eq(txn.getBinNumber())
 						.and(QBinTransaction.binTransaction.denomination.eq(txn.getDenomination()))));
-		BinTransaction binTransaction = jpaQuery.singleResult(QBinTransaction.binTransaction);
 
-		return binTransaction;
+		return jpaQuery.singleResult(QBinTransaction.binTransaction);
 	}
 
 	@Override
@@ -1457,8 +1461,7 @@ public class BinDashBoardJpaDaoImpl implements BinDashBoardJpaDao {
 		JPAQuery jpaQuery = getFromQueryForCoins();
 		jpaQuery.where(QSas.sas.icmcId.eq(icmcId).and(QSas.sas.insertTime.between(sDate, eDate))
 				.and(QSas.sas.status.eq(1).or(QSas.sas.status.eq(2))));
-		List<Sas> coinsList = jpaQuery.list(QSas.sas);
-		return coinsList;
+		return jpaQuery.list(QSas.sas);
 	}
 
 	@Override
@@ -1477,8 +1480,7 @@ public class BinDashBoardJpaDaoImpl implements BinDashBoardJpaDao {
 	public List<TrainingRegister> getTrainingRegisterData(BigInteger icmcId) {
 		JPAQuery jpaQuery = getFromQueryForTrainingRegister();
 		jpaQuery.where(QTrainingRegister.trainingRegister.icmcId.eq(icmcId));
-		List<TrainingRegister> trainingRegisterList = jpaQuery.list(QTrainingRegister.trainingRegister);
-		return trainingRegisterList;
+		return jpaQuery.list(QTrainingRegister.trainingRegister);
 	}
 
 	@Override
@@ -1497,16 +1499,14 @@ public class BinDashBoardJpaDaoImpl implements BinDashBoardJpaDao {
 		JPAQuery jpaQuery = getFromQueryForTrainingRegister();
 		jpaQuery.where(QTrainingRegister.trainingRegister.icmcId.eq(icmcId)
 				.and(QTrainingRegister.trainingRegister.insertTime.between(sDate, eDate)));
-		List<TrainingRegister> trainingRegister = jpaQuery.list(QTrainingRegister.trainingRegister);
-		return trainingRegister;
+		return jpaQuery.list(QTrainingRegister.trainingRegister);
 	}
 
 	@Override
 	public BoxMaster getBoxCapacity(BigInteger icmcId, String boxName) {
 		JPAQuery jpaQuery = getFromQueryForBoxMaster();
 		jpaQuery.where(QBoxMaster.boxMaster.icmcId.eq(icmcId).and(QBoxMaster.boxMaster.boxName.eq(boxName)));
-		BoxMaster boxMaster = jpaQuery.singleResult(QBoxMaster.boxMaster);
-		return boxMaster;
+		return jpaQuery.singleResult(QBoxMaster.boxMaster);
 	}
 
 	@Override
@@ -1986,6 +1986,7 @@ public class BinDashBoardJpaDaoImpl implements BinDashBoardJpaDao {
 				.and(QBinTransaction.binTransaction.binType.eq(currencyType))
 				.and(QBinTransaction.binTransaction.binNumber.ne(bin))
 				.and(QBinTransaction.binTransaction.binCategoryType.eq(binCategoryType))
+				.and(QBinTransaction.binTransaction.status.ne(BinStatus.EMPTY))
 				.and(QBinTransaction.binTransaction.pendingBundleRequest.eq(new BigDecimal(0)))
 				.and(QBinTransaction.binTransaction.maxCapacity.subtract(QBinTransaction.binTransaction.receiveBundle)
 						.gt(bundle).or(QBinTransaction.binTransaction.maxCapacity

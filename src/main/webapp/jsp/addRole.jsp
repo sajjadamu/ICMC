@@ -17,9 +17,9 @@
 <link rel="shortcut icon" href="./resources/logo/favicon.ico"
 	type="image/x-icon">
 
-<script type="text/javascript"
-	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script type="text/javascript" src="./js/jquery-1.11.1.min.js"></script>
 <script type="text/javascript" src="./js/jquery.validate.min.js"></script>
+
 
 <script type="text/javascript" src="./js/crossSite.js"></script>
 
@@ -287,12 +287,20 @@
 				});
 	</script>
 	<script type="text/javascript">
+	
+	$.validator.addMethod("roleRegex", function(value, element) {
+	    return this.optional(element) || /^[A-Za-z\s]+$/i.test(value);
+	}, "Software must contain only letters,Space , dashes.");
+	
+	
+	
 		$(function() {
 			$("form[name='userPage']")
 					.validate(
 							{
 								rules : {
 									id : {
+										roleRegex:true,
 										required : true,
 										maxlength : 31,
 									},
@@ -306,6 +314,7 @@
 								// Specify validation error messages
 								messages : {
 									id : {
+										roleRegex: "This special character is not allowed",
 										required : "Please Enter New Role",
 										maxlength : "User ID can't have more than 32 characters",
 									},

@@ -61,7 +61,7 @@ public class CashReceiptJpaDaoImpl implements CashReceiptJpaDao {
 
 	@Override
 	public List<BinCapacityDenomination> getMaxBundleCapacity(int denomination, CurrencyType currencyType) {
-		LOG.info("FETCH CAPACITY BY DENOMINATION");
+		LOG.error("FETCH CAPACITY BY DENOMINATION");
 		JPAQuery jpaQuery = getFromQueryForBinCapacityDenomination();
 		jpaQuery.where(QBinCapacityDenomination.binCapacityDenomination.denomination.eq(denomination)
 				.and(QBinCapacityDenomination.binCapacityDenomination.currencyType.eq(currencyType))
@@ -72,7 +72,7 @@ public class CashReceiptJpaDaoImpl implements CashReceiptJpaDao {
 
 	@Override
 	public List<BinMaster> getPriorityBinListByType(BinMaster master) {
-		LOG.info("FETCH FROM BIN MASTER BY DENOMINATION");
+		LOG.error("FETCH FROM BIN MASTER BY DENOMINATION");
 		JPAQuery jpaQuery = getFromQueryForCashReceipt();
 		List<BinMaster> binList = getFirstPriorityBinMaster(master, jpaQuery);
 		getSecondPriorityBinMaster(master, binList);
@@ -230,7 +230,7 @@ public class CashReceiptJpaDaoImpl implements CashReceiptJpaDao {
 
 	@Override
 	public boolean insertInBinTxn(BinTransaction binTransaction) {
-		LOG.info("insertInBinTxn Dao binTransaction" + binTransaction);
+		LOG.error("insertInBinTxn Dao binTransaction" + binTransaction);
 		em.persist(binTransaction);
 		return true;
 	}
@@ -244,7 +244,7 @@ public class CashReceiptJpaDaoImpl implements CashReceiptJpaDao {
 	@Override
 	public boolean createBranchReceipt(List<BranchReceipt> branchReceiptList) {
 		for (BranchReceipt branchReceipt : branchReceiptList) {
-			LOG.info("createBranchReceipt jpaDaoImpl" + branchReceipt);
+			LOG.error("createBranchReceipt jpaDaoImpl" + branchReceipt);
 			try {
 				em.persist(branchReceipt);
 				return true;

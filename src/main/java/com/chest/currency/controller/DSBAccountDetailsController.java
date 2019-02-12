@@ -46,7 +46,7 @@ public class DSBAccountDetailsController {
 
 	@RequestMapping("/viewDSBAccountDetail")
 	public ModelAndView viewDSBAccountDetail(HttpSession session) {
-		LOG.info("Going to fetch DSB Account Details");
+		LOG.error("Going to fetch DSB Account Details");
 		List<DSBAccountDetail> dsbAccountDetailList = dsbAccountService.getDSBAccountDetailList();
 		return new ModelAndView("viewDSBAccountDetail", "records", dsbAccountDetailList);
 	}

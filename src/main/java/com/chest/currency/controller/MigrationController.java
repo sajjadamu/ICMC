@@ -73,7 +73,7 @@ public class MigrationController {
 
 	@RequestMapping("/binTransaction")
 	public ModelAndView viewHolidayMaster(HttpSession session) {
-		LOG.info("Going to upload Bin Transaction Data");
+		LOG.error("Going to upload Bin Transaction Data");
 		User user = (User) session.getAttribute("login");
 		ModelMap map = new ModelMap();
 		if (user.getIcmcId() != null) {
@@ -140,7 +140,7 @@ public class MigrationController {
 			}
 		} catch (Exception r) {
 			r.printStackTrace();
-			LOG.info("Error Message: " + r.getMessage());
+			LOG.error("Error Message: " + r.getMessage());
 			// redirectAttributes.addFlashAttribute("errorMsg", "CSV file is not
 			// of standard format");
 
@@ -174,12 +174,12 @@ public class MigrationController {
 		try {
 
 			boolean isSuccess = binTransactionService.UploadBinTransaction(binList, binTransaction, user.getIcmcId());
-			LOG.info("binTransactionService isSuccess " + isSuccess);
+			LOG.error("binTransactionService isSuccess " + isSuccess);
 
 			redirectAttributes.addFlashAttribute("successMsg",
 					"Bin Transaction records have been uploaded successfully");
 		} catch (Exception ex) {
-			LOG.info("binTransactionService isSuccess " + ex.getMessage());
+			LOG.error("binTransactionService isSuccess " + ex.getMessage());
 			redirectAttributes.addFlashAttribute("errorMsg", ex.getMessage());
 		}
 
@@ -242,7 +242,7 @@ public class MigrationController {
 			}
 		} catch (Exception r) {
 			r.printStackTrace();
-			LOG.info("Error Message: " + r.getMessage());
+			LOG.error("Error Message: " + r.getMessage());
 			redirectAttributes.addFlashAttribute("errorMsg", "" + r.getMessage() + "");
 			return new ModelAndView("redirect:./createBox");
 		}

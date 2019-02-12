@@ -158,8 +158,8 @@ public class ProcessingRoomController {
 		List<Indent> eligibleIndentRequestList = new ArrayList<>();
 		List<BinTransaction> binTransactionList = new ArrayList<>();
 		List<BranchReceipt> branchReceiptList = new ArrayList<>();
-		LOG.info("indentRequest controller user " + user);
-		LOG.info("indentRequest controller indent " + indent);
+		LOG.error("indentRequest controller user " + user);
+		LOG.error("indentRequest controller indent " + indent);
 		synchronized (icmcService.getSynchronizedIcmc(user)) {
 			indent.setInsertBy(user.getId());
 			indent.setUpdateBy(user.getId());
@@ -175,21 +175,21 @@ public class ProcessingRoomController {
 						.add(UtilityJpa.getSubstarctedBundle(binTx, (UtilityJpa.getPendingBundleRequest(binTx))));
 			}
 			BigDecimal bundleForRequest = indent.getRequestBundle();
-			LOG.info("indentRequest controller bundleFromTxn " + bundleFromTxn);
-			LOG.info("indentRequest controller bundleForRequest " + bundleForRequest);
+			LOG.error("indentRequest controller bundleFromTxn " + bundleFromTxn);
+			LOG.error("indentRequest controller bundleForRequest " + bundleForRequest);
 			if (bundleFromTxn.compareTo(bundleForRequest) >= 0) {
 
 				binTransactionList.addAll(txnList);
-				LOG.info("binTransactionList.addAll ");
+				LOG.error("binTransactionList.addAll ");
 				if (indent.getCashSource() == CashSource.BRANCH) {
 					branchReceiptList = processingRoomService.getBinNumListForIndentFromBranchReceipt(
 							indent.getDenomination(), indent.getRequestBundle(), user.getIcmcId(),
 							indent.getCashSource(), indent.getBinCategoryType());
-					LOG.info("branchReceiptList ");
+					LOG.error("branchReceiptList ");
 					eligibleIndentRequestList = UtilityJpa.getBinForBranchReceiptIndentRequest(txnList,
 							indent.getDenomination(), indent.getRequestBundle(), user, indent, branchReceiptList);
-					LOG.info("eligibleIndentRequestList txnList " + txnList);
-					LOG.info("eligibleIndentRequestList branchReceiptList " + branchReceiptList);
+					LOG.error("eligibleIndentRequestList txnList " + txnList);
+					LOG.error("eligibleIndentRequestList branchReceiptList " + branchReceiptList);
 				} else if (indent.getCashSource() == CashSource.RBI
 						&& indent.getBinCategoryType() == BinCategoryType.BOX) {
 
@@ -203,7 +203,7 @@ public class ProcessingRoomController {
 
 				BigDecimal moreBundleNeeded = UtilityJpa.checkMoreRequiredBundleNeeded(eligibleIndentRequestList,
 						bundleForRequest);
-				LOG.info("indent Request moreBundleNeeded " + moreBundleNeeded);
+				LOG.error("indent Request moreBundleNeeded " + moreBundleNeeded);
 
 				if (moreBundleNeeded.compareTo(BigDecimal.ZERO) == 0) {
 					isAllSuccess = processingRoomService.insertIndentRequestAndUpdateBinTxAndBranchReceipt(
@@ -484,7 +484,7 @@ public class ProcessingRoomController {
 			processingRoomService.saveDataInBinRegister(binRegister);
 			// Close bin Register Code
 		} catch (Exception e) {
-			LOG.info("updateIndentStatus catch " + e);
+			LOG.error("updateIndentStatus catch " + e);
 			e.getLocalizedMessage();
 			throw new BaseGuiException("Error while process Indent Request catch");
 
@@ -518,7 +518,7 @@ public class ProcessingRoomController {
 				process.setUpdateTime(now);
 				processList = processingRoomService.processRecordForMachine(process, user);
 			} catch (Exception ex) {
-				LOG.info("Error has occred", ex);
+				LOG.error("Error has occred", ex);
 				throw ex;
 			}
 			boolean isAllSuccess = processList != null && processList.size() > 0;
@@ -764,7 +764,7 @@ public class ProcessingRoomController {
 		User user = (User) session.getAttribute("login");
 		ModelMap map = new ModelMap();
 		List<MachineDowntimeUpdation> machinelist = machineService.getMachineDownTime(user.getIcmcId());
-		LOG.info("View machine downtime details");
+		LOG.error("View machine downtime details");
 		map.put("records", machinelist);
 		return new ModelAndView("/viewMachineDownTime", map);
 
@@ -809,7 +809,7 @@ public class ProcessingRoomController {
 	public ModelAndView viewMachineSoftware(HttpSession session) {
 		User user = (User) session.getAttribute("login");
 		List<MachineSoftwareUpdation> machineSoftlist = machineService.getMachineSoftwareUpdation(user.getIcmcId());
-		LOG.info("VIEW MachinpSoftware RECORD");
+		LOG.error("VIEW MachinpSoftware RECORD");
 		return new ModelAndView("/viewMachineSoftware", "records", machineSoftlist);
 	}
 
@@ -866,7 +866,7 @@ public class ProcessingRoomController {
 	public ModelAndView viewDefineKeySet(@ModelAttribute("user") CustodianKeySet defineKeySet, HttpSession session) {
 		User user = (User) session.getAttribute("login");
 		List<String> keySetList = processingRoomService.getDefineKeySet(user.getIcmcId());
-		LOG.info("VIEW DefineKeySet RECORD");
+		LOG.error("VIEW DefineKeySet RECORD");
 		return new ModelAndView("/viewDefineKeySet", "records", keySetList);
 	}
 
@@ -1215,7 +1215,7 @@ public class ProcessingRoomController {
 		User user = (User) session.getAttribute("login");
 		List<RepeatabilityTestInput> repeatabilityTestInputlist = processingRoomService
 				.getRepeatabilityTestInput(user.getIcmcId());
-		LOG.info("View Repeatability Test Input Details");
+		LOG.error("View Repeatability Test Input Details");
 		return new ModelAndView("/viewRepeatabilityTestInput", "records", repeatabilityTestInputlist);
 
 	}
@@ -1294,7 +1294,7 @@ public class ProcessingRoomController {
 		User user = (User) session.getAttribute("login");
 		List<RepeatabilityTestOutput> repeatabilityTestOutputlist = processingRoomService
 				.getRepeatabilityTestOutput(user.getIcmcId());
-		LOG.info("View Repeatability Test Output Details");
+		LOG.error("View Repeatability Test Output Details");
 		return new ModelAndView("/viewRepeatabilityTestOutput", "records", repeatabilityTestOutputlist);
 
 	}
@@ -1508,7 +1508,7 @@ public class ProcessingRoomController {
 						"Error while saving Discrepancy And Discrepancy Allocation, Please try again");
 			}
 		}
-		LOG.info("return discrepancy " + discrepancy);
+		LOG.error("return discrepancy " + discrepancy);
 		return discrepancy;
 	}
 
@@ -1529,7 +1529,7 @@ public class ProcessingRoomController {
 			while (itr.hasNext()) {
 				mpf = request.getFile(itr.next());
 				Discrepancy discrepancy = processingRoomService.getDiscrepancyForUploadingImage(user, sDate, eDate);
-				LOG.info("mpf.getOriginalFilename() " + mpf.getOriginalFilename());
+				LOG.error("mpf.getOriginalFilename() " + mpf.getOriginalFilename());
 				String discripencyImageName = UtilityJpa.setDiscrepancyImageName(
 						mpf.getOriginalFilename().replaceAll(" ", "-"), Calendar.getInstance(), user, discrepancy);
 				try {
@@ -1772,7 +1772,7 @@ public class ProcessingRoomController {
 				replacedtext = replacedtext.replaceAll("total", "" + formattedTotal);
 
 				sb = new StringBuilder(replacedtext);
-				LOG.info("Processing Room O/P PRN  =" + sb);
+				LOG.error("Processing Room O/P PRN  =" + sb);
 
 				UtilityJpa.PrintToPrinter(sb, user);
 			}
@@ -1809,7 +1809,7 @@ public class ProcessingRoomController {
 				replacedtext = replacedtext.replaceAll("total", "" + formattedTotal);
 
 				sb = new StringBuilder(replacedtext);
-				LOG.info("Auditor Processing Room O/P PRN  =" + sb);
+				LOG.error("Auditor Processing Room O/P PRN  =" + sb);
 
 				UtilityJpa.PrintToPrinter(sb, user);
 			}
@@ -2240,7 +2240,7 @@ public class ProcessingRoomController {
 				process.setUpdateTime(now);
 				processList = processingRoomService.processRecordForAuditorIndent(process, user);
 			} catch (Exception ex) {
-				LOG.info("Error has occred", ex);
+				LOG.error("Error has occred", ex);
 				throw ex;
 			}
 			boolean isAllSuccess = processList != null && processList.size() > 0;
@@ -2271,7 +2271,7 @@ public class ProcessingRoomController {
 
 							sb = new StringBuilder(replacedtext);
 							prnList.add(sb.toString());
-							LOG.info("Processing Room O/P PRN  =" + sb);
+							LOG.error("Processing Room O/P PRN  =" + sb);
 
 							UtilityJpa.PrintToPrinter(sb, user);
 						}
@@ -2287,7 +2287,7 @@ public class ProcessingRoomController {
 
 	@RequestMapping(value = "/cancelProcessedData")
 	@ResponseBody
-	public String cancelProcessedData(@RequestParam(value = "id") long id,
+	public Process cancelProcessedData(@RequestParam(value = "id") long id,
 			@RequestParam(value = "bundle") BigDecimal bundleFromUI,
 			@RequestParam(value = "denomination") int denomination, @RequestParam(value = "binNumber") String binNumber,
 			@RequestParam(value = "type") CurrencyType type, @RequestParam(value = "machineId") long machineId,
@@ -2295,14 +2295,13 @@ public class ProcessingRoomController {
 		user = (User) session.getAttribute("login");
 		process.setIcmcId(user.getIcmcId());
 		process.setId(id);
-		String cancelProcessedDataFromProcessingRoom = null;
 		try {
-			cancelProcessedDataFromProcessingRoom = processingRoomService.cancelProcessedDataFromProcessingRoom(id,
-					bundleFromUI, denomination, binNumber, type, machineId, user, process);
+			processingRoomService.cancelProcessedDataFromProcessingRoom(id, bundleFromUI, denomination, binNumber, type,
+					machineId, user, process);
 		} catch (Exception e) {
 			throw new BaseGuiException(e.getMessage());
 		}
-		return cancelProcessedDataFromProcessingRoom;
+		return process;
 	}
 
 	@RequestMapping("machineDowntimeReport")

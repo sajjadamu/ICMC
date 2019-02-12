@@ -60,7 +60,7 @@ public class ICMCController {
 	@RequestMapping("/addICMC")
 	public ModelAndView addICMC() {
 		ICMC obj = new ICMC();
-		LOG.info("ICMC PAGE");
+		LOG.error("ICMC PAGE");
 		List<String> rbiNameList = branchService.getRBINameList();
 		// List<String> regionList = icmcService.getRegionList(obj);
 		ModelMap map = new ModelMap();
@@ -102,7 +102,7 @@ public class ICMCController {
 			HttpServletRequest request, HttpSession session, RedirectAttributes redirectAttributes) {
 		User user = (User) session.getAttribute("login");
 		Calendar now = Calendar.getInstance();
-		LOG.info("Going to create new ICMC");
+		LOG.error("Going to create new ICMC");
 		icmc.setStatus(Status.DISABLED);
 		icmc.setInsertBy(user.getId());
 		icmc.setUpdateBy(user.getId());
@@ -127,7 +127,7 @@ public class ICMCController {
 		if (file.getSize() == 0) {
 			ICMC dbIcmc = icmcService.isIcmcNameValid(icmc.getName());
 			if (dbIcmc != null) {
-				LOG.info("ICMC Name Already Exists");
+				LOG.error("ICMC Name Already Exists");
 				model.put("user", icmc);
 				model.put("duplicateICMC", "ICMC with this name already exists");
 				return new ModelAndView("addICMC", model);
@@ -181,7 +181,7 @@ public class ICMCController {
 	@RequestMapping("/viewICMC")
 	public ModelAndView getICMCRecord() {
 		List<ICMC> icmcList = icmcService.getICMCList();
-		LOG.info("Going to fetch ICMC records");
+		LOG.error("Going to fetch ICMC records");
 		return new ModelAndView("/viewICMC", "records", icmcList);
 	}
 
@@ -257,7 +257,7 @@ public class ICMCController {
 		icmc.setUpdateTime(now);
 		icmc.setStatus(Status.DELETED);
 		icmcService.removeICMC(icmc);
-		LOG.info("ICMC has been removed");
+		LOG.error("ICMC has been removed");
 		redirectAttributes.addFlashAttribute("icmcRemovalSuccessMsg", "ICMC has been removed successfully");
 		return new ModelAndView("redirect:./viewICMC");
 	}

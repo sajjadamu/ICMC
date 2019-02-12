@@ -223,7 +223,7 @@ public interface CashPaymentJpaDao {
 	public List<Tuple> getRecordORVVoucher(String solId, Calendar sDate, Calendar eDate, BigInteger icmcId);
 
 	public List<Sas> getSolId(BigInteger icmcId, Calendar sDate, Calendar eDate);
-	
+
 	public List<Sas> getSasRecordById(BigInteger icmcId, Long[] sasId);
 
 	public Sas getFileName(BigInteger icmcId);
@@ -266,6 +266,8 @@ public interface CashPaymentJpaDao {
 	public boolean insertSoiledBoxInBinTx(BinTransaction binTx);
 
 	public boolean updateBinTrasactionForCRA(List<BinTransaction> binTxn);
+
+	CRA getCRAById(long id, BigInteger icmcId);
 
 	public boolean updateCRAAllocationForCRA(List<CRAAllocation> cra);
 
@@ -349,7 +351,8 @@ public interface CashPaymentJpaDao {
 
 	public List<SASAllocation> getAllTodayAcceptedFromSASAllocation(BigInteger icmcId, Calendar sDate, Calendar eDate);
 
-	public SASAllocation getRequestedFromSASAllocation(BigInteger icmcId, Calendar sDate, Calendar eDate,Long parentId);
+	public SASAllocation getRequestedFromSASAllocation(BigInteger icmcId, Calendar sDate, Calendar eDate,
+			Long parentId);
 
 	public String getICMCName(BigInteger icmcId);
 
@@ -464,5 +467,7 @@ public interface CashPaymentJpaDao {
 	public List<SoiledRemittanceAllocation> getSoiledForAccept(BigInteger icmcId, Calendar sDate, Calendar eDate);
 
 	List<SASAllocation> getSasAllocationByBinNumberBundle(SASAllocation sasAlo);
+
+	List<Sas> sasForCashHandover(BigInteger icmcId, Calendar sDate, Calendar eDate, Set<Long> pList);
 
 }

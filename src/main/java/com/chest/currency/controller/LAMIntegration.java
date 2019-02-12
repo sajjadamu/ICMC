@@ -19,9 +19,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.chest.currency.entity.model.ICMC;
 import com.chest.currency.entity.model.IcmcPrinter;
 import com.chest.currency.entity.model.LamRequestLog;
 import com.chest.currency.entity.model.User;
@@ -31,6 +31,7 @@ import com.chest.currency.enums.LamStatus;
 import com.chest.currency.enums.Status;
 import com.chest.currency.message.Response;
 import com.chest.currency.service.CashReceiptService;
+import com.chest.currency.service.ICMCService;
 import com.chest.currency.service.UserAdministrationService;
 import com.chest.currency.util.UtilityService;
 
@@ -45,26 +46,35 @@ public class LAMIntegration {
 	@Autowired
 	CashReceiptService cashReceiptService;
 
+	@Autowired
+	ICMCService iCMCService;
+
 	PasswordEncoder encoder = new BCryptPasswordEncoder();
 
 	private static final Logger LOG = LoggerFactory.getLogger(UtilityService.class);
 
-	@RequestMapping(value = "user", method = RequestMethod.GET, produces = "application/xml")
-	@ResponseBody
-	public Response getRequest(@RequestParam("data") @Valid String requestData, HttpServletRequest request)
+	@RequestMapping(value = "user", method = RequestMethod.POST, produces = "application/xml")
+	public String getRequest(@RequestParam("data") @Valid String requestData, HttpServletRequest request)
 			throws UnknownHostException {
 		QueryRequestCo queryRequestCo = JAXB.unmarshal(new StringReader(requestData.replaceAll("%20", " ")),
 				QueryRequestCo.class);
-		LOG.info("requestData " + queryRequestCo);
+		String str = requestData.replaceAll("%20", " ");
+		int endTag = 2 + str.indexOf("?>");
+		String sbString = str.substring(0, endTag);
+
+		LOG.error("sbString " + sbString);
 		try {
-			return setRequest(queryRequestCo, request);
+			Response response = setRequest(queryRequestCo, request);
+
+			return sbString + "<Output>" + response.getCode() + "|" + response.getMessage() + "</Output>";
+
 		} catch (Exception e) {
-			return Response.setSuccessResponse(LamStatus.EXCEPTION, LamStatus.EXCEPTION.getCode(),
-					"Exception Please check Request Data " + e.getLocalizedMessage());
+
+			return sbString + "<Output>" + LamStatus.FAILURE.getCode() + "|" + "Exception Please check Request Data "
+					+ e.getLocalizedMessage() + "</Output>";
 		}
 	}
 
-	@ResponseBody
 	public Response setRequest(@RequestBody @Valid QueryRequestCo queryRequestCo, HttpServletRequest request)
 			throws UnknownHostException {
 		LamIntegrationCo lamIntegrationCo = new LamIntegrationCo();
@@ -79,12 +89,11 @@ public class LAMIntegration {
 		return verifyActivity(lamIntegrationCo, request);
 	}
 
-	@ResponseBody
 	public Response verifyActivity(@RequestBody @Valid LamIntegrationCo lamIntegrationCo, HttpServletRequest request)
 			throws UnknownHostException {
-		LOG.info("lamIntegrationCo " + lamIntegrationCo);
+		LOG.error("lamIntegrationCo " + lamIntegrationCo);
 		String activity = lamIntegrationCo.getQueryrequest().getActivity();
-		LOG.info("activity " + activity);
+		LOG.error("activity " + activity);
 		Response response = null;
 		switch (activity.toUpperCase()) {
 		case "I":
@@ -114,7 +123,6 @@ public class LAMIntegration {
 		return response;
 	}
 
-	@ResponseBody
 	public Response addUser(@RequestBody @Valid LamIntegrationCo lamIntegrationCo, HttpServletRequest request)
 			throws UnknownHostException {
 		String activity = lamIntegrationCo.getQueryrequest().getActivity();
@@ -131,35 +139,47 @@ public class LAMIntegration {
 		User user = null;
 		try {
 			user = UtilityService.setUserDetail(lamIntegrationCo.getQueryrequest(), cashReceiptService
-					.getICMCByName(getBranchName(lamIntegrationCo.getQueryrequest().getAccessRequest())));
+					.getICMCByName(getBranchName(lamIntegrationCo.getQueryrequest().getAccessRequest())), user);
 		} catch (Exception e) {
-			LOG.info("Exception " + e);
+			LOG.error("Exception " + e);
 			return Response.setSuccessResponse(LamStatus.EXCEPTION, LamStatus.EXCEPTION.getCode(),
 					"Branch not exist in DB please check Branch name");
 		}
 		User existingUser = userAdministrationService.isUserExists(user.getId());
-		if (existingUser != null && (existingUser.getStatus().equals(Status.ENABLED)
-				|| existingUser.getStatus().equals(Status.DISABLED))) {
+		if (existingUser != null && (existingUser.getStatus().equals(Status.ENABLED))) {
 			requestLog.setResponse(LamStatus.FAILURE);
 			userAdministrationService.updateLamLog(requestLog);
 			return Response.setSuccessResponse(LamStatus.FAILURE, LamStatus.FAILURE.getCode(),
 					"User already exists with status of " + existingUser.getStatus());
+		} else if (existingUser != null) {
+			userAdministrationService.deleteUser(user);
 		}
-		userAdministrationService.deleteUser(user);
+
 		IcmcPrinter icmcPrinter = userAdministrationService.getPrinter(user);
-		if (icmcPrinter == null)
+		if (icmcPrinter == null) {
+			requestLog.setResponse(LamStatus.FAILURE);
+			requestLog.setUpdatedDateTime(Calendar.getInstance());
+			userAdministrationService.updateLamLog(requestLog);
 			return Response.setSuccessResponse(LamStatus.FAILURE, LamStatus.FAILURE.getCode(),
 					"Please add printer for this Branch");
+		}
 		user.setIcmcPrinter(icmcPrinter);
-		userAdministrationService.createUser(user, request.getRequestURL().toString());
-		requestLog.setResponse(LamStatus.SUCCESS);
+		try {
+			userAdministrationService.createUser(user, request.getRequestURL().toString());
+			requestLog.setResponse(LamStatus.SUCCESS);
+		} catch (Exception e) {
+			requestLog.setResponse(LamStatus.FAILURE);
+			requestLog.setUpdatedDateTime(Calendar.getInstance());
+			userAdministrationService.updateLamLog(requestLog);
+			return Response.setSuccessResponse(LamStatus.FAILURE, LamStatus.FAILURE.getCode(),
+					"please check Role and another field");
+		}
 		requestLog.setUpdatedDateTime(Calendar.getInstance());
 		userAdministrationService.updateLamLog(requestLog);
 
 		return Response.setSuccessResponse(LamStatus.SUCCESS, LamStatus.SUCCESS.getCode(), "user created successfully");
 	}
 
-	@ResponseBody
 	public Response updateUser(@RequestBody @Valid LamIntegrationCo lamIntegrationCo, HttpServletRequest request)
 			throws UnknownHostException {
 		String activity = lamIntegrationCo.getQueryrequest().getActivity();
@@ -180,14 +200,27 @@ public class LAMIntegration {
 			userAdministrationService.updateLamLog(requestLog);
 			return Response.setSuccessResponse(LamStatus.EXCEPTION, LamStatus.EXCEPTION.getCode(),
 					"User does not exist");
+		} else if (!userDb.getStatus().equals(Status.ENABLED)) {
+			requestLog.setResponse(LamStatus.EXCEPTION);
+			userAdministrationService.updateLamLog(requestLog);
+			return Response.setSuccessResponse(LamStatus.EXCEPTION, LamStatus.EXCEPTION.getCode(),
+					"Deleted or disabled User can not be modified");
 		}
 		User user = null;
 		try {
-			user = UtilityService.setUserDetail(lamIntegrationCo.getQueryrequest(), cashReceiptService
-					.getICMCByName(getBranchName(lamIntegrationCo.getQueryrequest().getAccessRequest())));
+			String icmcName = getBranchName(lamIntegrationCo.getQueryrequest().getAccessRequest());
+			String[] icmcNames = icmcName.split(Pattern.quote("|"));
+			ICMC icmc = null;
+			if (icmcNames.length == 0 || icmcNames.length == 1 || icmcNames[0].equalsIgnoreCase("na")
+					|| icmcNames[1].equalsIgnoreCase("na")) {
+				icmc = iCMCService.getICMCById(userDb.getIcmcId().longValue());
+			} else {
+				icmc = cashReceiptService.getICMCByName(icmcNames[1]);
+			}
+			user = UtilityService.setUserDetail(lamIntegrationCo.getQueryrequest(), icmc, userDb);
 		} catch (Exception e) {
 			return Response.setSuccessResponse(LamStatus.EXCEPTION, LamStatus.EXCEPTION.getCode(),
-					"new Branch not exist in DB please check Branch name");
+					"ICMC name does not exist");
 		}
 		IcmcPrinter icmcPrinter = userAdministrationService.getPrinter(user);
 		if (icmcPrinter == null)
@@ -203,7 +236,6 @@ public class LAMIntegration {
 		return Response.setSuccessResponse(LamStatus.SUCCESS, LamStatus.SUCCESS.getCode(), "user successfully update");
 	}
 
-	@ResponseBody
 	public Response unlockUser(@RequestBody @Valid LamIntegrationCo lamIntegrationCo, HttpServletRequest request)
 			throws UnknownHostException {
 		String activity = lamIntegrationCo.getQueryrequest().getActivity();
@@ -233,7 +265,6 @@ public class LAMIntegration {
 		return Response.setSuccessResponse(LamStatus.SUCCESS, LamStatus.SUCCESS.getCode(), "User successfully unlock");
 	}
 
-	@ResponseBody
 	public Response deleteUser(@RequestBody @Valid LamIntegrationCo lamIntegrationCo, HttpServletRequest request)
 			throws UnknownHostException {
 		String activity = lamIntegrationCo.getQueryrequest().getActivity();
@@ -267,7 +298,7 @@ public class LAMIntegration {
 		String solId = accessRequest;
 		String[] userDetails = solId.split(Pattern.quote("|"));
 		if (userDetails.length > 7) {
-			return userDetails[6];
+			return userDetails[4] + "|" + userDetails[6];
 		}
 		return userDetails[4];
 	}

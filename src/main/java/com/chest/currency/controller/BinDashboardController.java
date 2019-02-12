@@ -147,7 +147,7 @@ public class BinDashboardController {
 				.getBinNumAndTypeFromBinTransactionForVefiedYes(new BigInteger(zm.getIcmcName()));
 		List<BinTransaction> listForNull = binDashboardService
 				.getBinNumAndTypeFromBinTransactionForVefiedNo(new BigInteger(zm.getIcmcName()));
-		LOG.info("COLOR==" + list.size());
+		LOG.error("COLOR==" + list.size());
 		BinTransaction obj = new BinTransaction();
 		// Bin Summary Code Start
 		List<Tuple> summaryList = binDashboardService.getRecordForSummary(new BigInteger(zm.getIcmcName()));
@@ -220,10 +220,10 @@ public class BinDashboardController {
 
 			List<BinTransaction> listForNull = binDashboardService
 					.getBinNumAndTypeFromBinTransactionForVefiedNo(user.getIcmcId());
-			LOG.info("icmc id for listBox listBin listBag==" + user.getIcmcId());
-			LOG.info("listBox size ==" + listBox.size());
-			LOG.info("listBin size ==" + listBin.size());
-			LOG.info("listBag size ==" + listBag.size());
+			LOG.error("icmc id for listBox listBin listBag==" + user.getIcmcId());
+			LOG.error("listBox size ==" + listBox.size());
+			LOG.error("listBin size ==" + listBin.size());
+			LOG.error("listBag size ==" + listBag.size());
 			BinTransaction obj = new BinTransaction();
 			// Bin Summary Code Start
 			List<Tuple> summaryList = binDashboardService.getRecordForSummary(user.getIcmcId());
@@ -355,7 +355,7 @@ public class BinDashboardController {
 	public List<BinTransaction> availCapacity(@RequestParam(value = "binNumber") String bin, HttpSession session) {
 		User user = (User) session.getAttribute("login");
 		List<BinTransaction> list = binDashboardService.getAvailableCapacity(bin, user.getIcmcId());
-		LOG.info("LIST=" + list);
+		LOG.error("LIST=" + list);
 		return list;
 	}
 
@@ -447,7 +447,7 @@ public class BinDashboardController {
 			} catch (Exception r) {
 				r.printStackTrace();
 				// r.getMessage();
-				LOG.info("Error Message: " + r.getMessage());
+				LOG.error("Error Message: " + r.getMessage());
 				// redirectAttributes.addFlashAttribute("errorMsg", "Csv file is
 				// not of standard format ");
 				redirectAttributes.addFlashAttribute("errorMsg", "" + r.getMessage() + "");
@@ -723,101 +723,75 @@ public class BinDashboardController {
 		List<Tuple> ibitList = binDashboardService.getIBITForIO2(user.getIcmcId(), sDate, eDate);
 
 		for (Tuple tuple : ibitList) {
+
 			if (tuple.get(0, Integer.class).equals(2000)) {
 				deno2000 = tuple.get(1, BigDecimal.class).multiply(new BigDecimal(2000));
-			}
-			if (tuple.get(0, Integer.class).equals(1000)) {
+			} else if (tuple.get(0, Integer.class).equals(1000)) {
 				deno1000 = tuple.get(1, BigDecimal.class).multiply(new BigDecimal(1000));
-			}
-			if (tuple.get(0, Integer.class).equals(500)) {
+			} else if (tuple.get(0, Integer.class).equals(500)) {
 				deno500 = tuple.get(1, BigDecimal.class).multiply(new BigDecimal(500));
-			}
-			if (tuple.get(0, Integer.class).equals(200)) {
+			} else if (tuple.get(0, Integer.class).equals(200)) {
 				deno200 = tuple.get(1, BigDecimal.class).multiply(new BigDecimal(200));
-			}
-			if (tuple.get(0, Integer.class).equals(100)) {
+			} else if (tuple.get(0, Integer.class).equals(100)) {
 				deno100 = tuple.get(1, BigDecimal.class).multiply(new BigDecimal(100));
-			}
-			if (tuple.get(0, Integer.class).equals(50)) {
+			} else if (tuple.get(0, Integer.class).equals(50)) {
 				deno50 = tuple.get(1, BigDecimal.class).multiply(new BigDecimal(50));
-			}
-			if (tuple.get(0, Integer.class).equals(20)) {
+			} else if (tuple.get(0, Integer.class).equals(20)) {
 				deno20 = tuple.get(1, BigDecimal.class).multiply(new BigDecimal(20));
-			}
-			if (tuple.get(0, Integer.class).equals(10)) {
+			} else if (tuple.get(0, Integer.class).equals(10)) {
 				deno10 = tuple.get(1, BigDecimal.class).multiply(new BigDecimal(10));
-			}
-			if (tuple.get(0, Integer.class).equals(5)) {
+			} else if (tuple.get(0, Integer.class).equals(5)) {
 				deno5 = tuple.get(1, BigDecimal.class).multiply(new BigDecimal(5));
-			}
-			if (tuple.get(0, Integer.class).equals(2)) {
+			} else if (tuple.get(0, Integer.class).equals(2)) {
 				deno2 = tuple.get(1, BigDecimal.class).multiply(new BigDecimal(2));
-			}
-			if (tuple.get(0, Integer.class).equals(1)) {
+			} else if (tuple.get(0, Integer.class).equals(1)) {
 				deno1 = tuple.get(1, BigDecimal.class).multiply(new BigDecimal(1));
 			}
 			sum = deno1.add(deno2).add(deno5).add(deno10).add(deno20).add(deno50).add(deno100).add(deno200).add(deno500)
 					.add(deno1000).add(deno2000);
 		}
-
 		map.put("sum", sum);
 
 		String linkBranchSolID = binDashboardService.getLinkBranchSolID(user.getIcmcId().longValue());
-
 		String servicingICMC = binDashboardService.getServicingICMC(linkBranchSolID);
-
 		BigInteger chestSlipNo = binDashboardService.getChestSlipNumber(user.getIcmcId(), sDate, eDate);
+
 		map.put("chestSlipNo", chestSlipNo);
-
 		map.put("servicingICMC", servicingICMC);
-
 		map.put("linkBranchSolID", linkBranchSolID);
 		map.put("currentDate", fmt.format(date));
 		map.put("icmcName", icmc.getName());
 		map.put("icmcChestCode", icmc.getChestCode());
 		map.put("icmcChestCodeNumber", icmc.getId());
 		map.put("icmcAddress", icmc.getAddress());
-		map.put("summaryListForOpeningBalance", binTxBodList.get(0)); // getting
-																		// Opening
-																		// Balance
-		map.put("summaryListForRemittance", binTxBodList.get(1)); // getting
-																	// Remittance
-																	// Received
-		map.put("summaryListForDeposit", binTxBodList.get(2)); // getting
-																// Deposit
-		map.put("summaryListForRemittanceSoiled", binTxBodList.get(3)); // getting
-																		// Remittance
-																		// Sent
-		map.put("summaryListForWithdrawal", binTxBodList.get(4)); // geting
-																	// Withdrawal
-		map.put("closingBalanceList", binTxBodList.get(5)); // getting Closing
-															// balance
-		map.put("summaryListForSoiledNotes", binTxBodList.get(6)); // start
-																	// Soiled
-																	// Notes
-		map.put("summaryListForAddiotionInfoFreshNotes", binTxBodList.get(7)); //// getting
-																				//// Fresh
-																				//// Info
-		map.put("summaryListForCoins", binTxBodList.get(8)); // getting Coins
-																// opening
-																// balance Info
-		map.put("coinSummaryListForRemittance", binTxBodList.get(9)); // getting
-																		// Remittance
-																		// Received
-																		// for
-																		// Coins
-		map.put("summaryListForCoinWithdrawal", binTxBodList.get(10)); // getting
-																		// Coins
-																		// Withdrawal
-																		// Transfer
-		map.put("coinClosingBalanceList", binTxBodList.get(11)); // getting
-																	// Closing
+
+		// getting Opening Balance
+		map.put("summaryListForOpeningBalance", binTxBodList.get(0));
+		// getting Remittance Received
+		map.put("summaryListForRemittance", binTxBodList.get(1));
+		// getting Deposit
+		map.put("summaryListForDeposit", binTxBodList.get(2));
+		// getting Remittance Sent
+		map.put("summaryListForRemittanceSoiled", binTxBodList.get(3));
+		// getting Withdrawal
+		map.put("summaryListForWithdrawal", binTxBodList.get(4));
+		// getting Closing balance
+		map.put("closingBalanceList", binTxBodList.get(5));
+		// start Soiled Notes
+		map.put("summaryListForSoiledNotes", binTxBodList.get(6));
+		// getting Fresh Info
+		map.put("summaryListForAddiotionInfoFreshNotes", binTxBodList.get(7));
+		// getting Coins opening balance Info
+		map.put("summaryListForCoins", binTxBodList.get(8));
+		// getting Remittance Received for Coins
+		map.put("coinSummaryListForRemittance", binTxBodList.get(9));
+		// getting Coins Withdrawal Transfer
+		map.put("summaryListForCoinWithdrawal", binTxBodList.get(10));
+		// getting Closing
+		map.put("coinClosingBalanceList", binTxBodList.get(11));
 		if (dateRange.getFromDate() != null) {
-			// eDate = sDate;
-			// sDate = eDate;
 			dateRange.setFromDate(eDate);
 		}
-
 		return new ModelAndView("/IO2Reports", map);
 	}
 
@@ -830,14 +804,14 @@ public class BinDashboardController {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		Date dateWithoutTime = sdf.parse(sdf.format(new Date()));
 		if (cMaster != null) {
-			LOG.info("Current Date    " + dateWithoutTime);
-			LOG.info("insert database " + cMaster.getInsertTime().getTime());
+			LOG.error("Current Date    " + dateWithoutTime);
+			LOG.error("insert database " + cMaster.getInsertTime().getTime());
 			String currentDate = sdf.format(dateWithoutTime);
 			String databaseDate = sdf.format(cMaster.getInsertTime().getTime());
 			if (currentDate.compareTo(databaseDate) == 0) {
-				LOG.info("Equal");
+				LOG.error("Equal");
 			} else {
-				LOG.info("Not Equal");
+				LOG.error("Not Equal");
 				BigInteger nextChestNumber = cMaster.getChestNumber();
 				BigInteger increment = new BigInteger("1");
 				cMaster.setId(null);
@@ -888,16 +862,16 @@ public class BinDashboardController {
 		binTransactionBODForCoins.setInsertTime(sDate);
 		binTransactionBODForCoins.setUpdateTime(sDate);
 
-		LOG.info("binTransactionBOD.getInsertTime().getTime() " + binTransactionBOD.getInsertTime().getTime());
-		LOG.info("eDate.getTime " + eDate);
+		LOG.error("binTransactionBOD.getInsertTime().getTime() " + binTransactionBOD.getInsertTime().getTime());
+		LOG.error("eDate.getTime " + eDate);
 
 		List<Tuple> summaryListForOpeningBalance = binDashboardService.getOpeningBalanceForIO2Report(user.getIcmcId(),
 				sDate, eDate, CashType.NOTES);
-		LOG.info("summaryListForOpeningBalance " + summaryListForOpeningBalance);
+		LOG.error("summaryListForOpeningBalance " + summaryListForOpeningBalance);
 		List<Tuple> summaryListForOpeningBalanceFromIndent = binDashboardService
 				.getOpeningBalanceForIO2ReportFromIndent(user.getIcmcId(), sDate, eDate, CashType.NOTES);
-		LOG.info("summaryListForOpeningBalanceFromIndent " + summaryListForOpeningBalanceFromIndent);
-		LOG.info("binTransactionBOD " + binTransactionBOD);
+		LOG.error("summaryListForOpeningBalanceFromIndent " + summaryListForOpeningBalanceFromIndent);
+		LOG.error("binTransactionBOD " + binTransactionBOD);
 
 		mapTupleToBinTransactionBOD(binTransactionBOD, summaryListForOpeningBalance,
 				summaryListForOpeningBalanceFromIndent);
@@ -909,7 +883,7 @@ public class BinDashboardController {
 		binTransactionBODForCoins.setCurrentVersion("TRUE");
 		binTransactionBODForCoins.setCashType(CashType.COINS);
 
-		LOG.info("binTransactionBOD " + binTransactionBOD);
+		LOG.error("binTransactionBOD " + binTransactionBOD);
 		binDashboardService.insertInBinTxnBOD(binTransactionBOD);
 
 		List<Tuple> soiledBalanceForEOD = binDashboardService.getSoiledBalanceForEOD(user.getIcmcId(), CashType.NOTES);
@@ -923,8 +897,8 @@ public class BinDashboardController {
 				.getCoinsOpeningBalanceForIO2Report(user.getIcmcId(), CashType.COINS);
 		mapCoinsTupleToBinTransactionBOD(binTransactionBODForCoins, summaryListForCoinsOpeningBalance);
 
-		LOG.info("summaryListForCoinsOpeningBalance " + summaryListForCoinsOpeningBalance);
-		LOG.info("binTransactionBODForCoins " + binTransactionBODForCoins);
+		LOG.error("summaryListForCoinsOpeningBalance " + summaryListForCoinsOpeningBalance);
+		LOG.error("binTransactionBODForCoins " + binTransactionBODForCoins);
 
 		binDashboardService.insertInBinTxnBOD(binTransactionBODForCoins);
 		redirectAttributes.addFlashAttribute("successMsgForEOD", "EOD successfully");
@@ -1374,7 +1348,7 @@ public class BinDashboardController {
 		for (Sas sas : allSasList) {
 			SASAllocation allocation = cashPaymentService.getRequestedFromSASAllocation(user.getIcmcId(), sDate, eDate,
 					sas.getId());
-			if (allocation != null)
+			if (allocation == null)
 				sasList.remove(sas);
 		}
 		Map<String, CRAAllocation> craPaymentList = binDashboardService.getCRAForCashBookWithDrawal(user.getIcmcId(),
@@ -2021,30 +1995,24 @@ public class BinDashboardController {
 	@RequestMapping(value = "/getbinOrBoxFromMaster")
 	@ResponseBody
 	public List<String> getbinOrBoxFromMaster(@RequestParam(value = "binOrBox") String binOrBox,
-			@RequestParam(value = "bundle") String bundle,
+			@RequestParam(value = "bundle") String bundle, @RequestParam(value = "reason") String reason,
 			@RequestParam(value = "radioButtonValue") String radioButtonValue, HttpSession session) {
 		User user = (User) session.getAttribute("login");
 		List<String> binOrBoxList = null;
+		BigDecimal capacity = new BigDecimal(0);
 		BinTransaction binOrBoxFromDB = binDashboardService.checkBinOrBox(user.getIcmcId(), binOrBox);
-
-		if (radioButtonValue.equalsIgnoreCase("binToBox")) {
-			binOrBoxList = binDashboardService.getBoxFromBoxMasterForCashTransfer(user.getIcmcId(),
-					binOrBoxFromDB.getDenomination(), binOrBoxFromDB.getBinType());
-		} else if (radioButtonValue.equalsIgnoreCase("boxToBox")) {
-			binOrBoxList = binDashboardService.getBoxFromBoxMasterForCashTransfer(user.getIcmcId(),
-					binOrBoxFromDB.getDenomination(), binOrBoxFromDB.getBinType());
+		if (reason.equalsIgnoreCase("defaulty")) {
+			capacity = binOrBoxFromDB.getReceiveBundle();
+		} else {
+			capacity = new BigDecimal(bundle);
 		}
-
-		else if (radioButtonValue.equalsIgnoreCase("boxToBin")) {
+		if (radioButtonValue.equalsIgnoreCase("binToBox") || radioButtonValue.equalsIgnoreCase("boxToBox")) {
+			binOrBoxList = binDashboardService.getBoxFromBoxMasterForCashTransfer(user.getIcmcId(),
+					binOrBoxFromDB.getDenomination(), binOrBoxFromDB.getBinType(), capacity);
+		} else if (radioButtonValue.equalsIgnoreCase("boxToBin") || radioButtonValue.equalsIgnoreCase("binToBin")) {
 			binOrBoxList = binDashboardService.getBinFromBinMasterForCashTransfer(user.getIcmcId(),
 					binOrBoxFromDB.getBinType());
 		}
-
-		else if (radioButtonValue.equalsIgnoreCase("binToBin")) {
-			binOrBoxList = binDashboardService.getBinFromBinMasterForCashTransfer(user.getIcmcId(),
-					binOrBoxFromDB.getBinType());
-		}
-
 		return binOrBoxList;
 	}
 
@@ -2105,70 +2073,60 @@ public class BinDashboardController {
 		StringBuilder sbBinName = new StringBuilder();
 		BinTransaction binTxn = new BinTransaction();
 		BinTransaction binOrBoxFromDB = binDashboardService.checkBinOrBox(user.getIcmcId(), binOrBox);
+		BoxMaster boXmasterCapacity = binDashboardService.getBoxCapacity(user.getIcmcId(), binFromMaster);
 
 		if (reason.equalsIgnoreCase("partial")) {
 			CashTransfer cashTransfer = new CashTransfer();
 			try {
+				if (binDashboardService.checkBinOrBox(user.getIcmcId(), binFromMaster) == null) {
+					UtilityJpa.setBinTransaction(user, binTxn, binOrBoxFromDB, boXmasterCapacity, now, binFromMaster,
+							radioButtonValue, new BigDecimal(bundle));
+				}
 				UtilityJpa.setForCashTransfer(radioButtonValue, binOrBox, binFromMaster, bundle, reason, remarks, now,
 						user, cashTransfer);
+
 				synchronized (icmcService.getSynchronizedIcmc(user)) {
+
 					binDashboardService.processForPartialCashTransfer(user, binOrBox, binFromMaster,
-							new BigDecimal(bundle), cashTransfer);
+							new BigDecimal(bundle), cashTransfer, binTxn);
+
+					prnList.add(sbBinName.toString());
+					sbBinName.append(binFromMaster).append(",");
+					String oldtext = readPRNFileData();
+
+					for (int i = 0; i < new BigDecimal(bundle).intValue(); i++) {
+						String replacedtext = oldtext.replaceAll("bin", "" + binFromMaster);
+						replacedtext = replacedtext.replaceAll("Bin: ", "" + "");
+						replacedtext = replacedtext.replaceAll("Branch: ", "" + "");
+						replacedtext = replacedtext.replaceAll("Sol ID :", "" + "");
+						replacedtext = replacedtext.replaceAll("branch", "" + binOrBoxFromDB.getDenomination());
+						replacedtext = replacedtext.replaceAll("solId", "" + binOrBoxFromDB.getBinNumber());
+						replacedtext = replacedtext.replaceAll("denom", "" + binOrBoxFromDB.getDenomination());
+						replacedtext = replacedtext.replaceAll("bundle", "" + BigDecimal.ONE);
+
+						String formattedTotal = CurrencyFormatter
+								.inrFormatter(BigDecimal.valueOf(binOrBoxFromDB.getDenomination() * 1000)).toString();
+						replacedtext = replacedtext.replaceAll("total", "" + formattedTotal);
+
+						sb = new StringBuilder(replacedtext);
+						UtilityJpa.PrintToPrinter(sb, user);
+					}
 				}
 			} catch (Exception e) {
 				throw new BaseGuiException(e.getLocalizedMessage());
 			}
 		} else {
-			BoxMaster boXmasterCapacity = binDashboardService.getBoxCapacity(user.getIcmcId(), binFromMaster);
-
 			synchronized (icmcService.getSynchronizedIcmc(user)) {
 				prnList.add(sbBinName.toString());
-				binTxn.setInsertBy(user.getId());
-				binTxn.setUpdateBy(user.getId());
-				binTxn.setInsertTime(now);
-				binTxn.setUpdateTime(now);
-				binTxn.setBinNumber(binFromMaster);
-				binTxn.setDenomination(binOrBoxFromDB.getDenomination());
-				binTxn.setReceiveBundle(new BigDecimal(bundle));
-				binTxn.setBinType(binOrBoxFromDB.getBinType());
-				binTxn.setStatus(binOrBoxFromDB.getStatus());
-				binTxn.setIcmcId(user.getIcmcId());
-				binTxn.setCashSource(binOrBoxFromDB.getCashSource());
-				if (radioButtonValue.equalsIgnoreCase("binToBox")) {
-					binTxn.setBinCategoryType(BinCategoryType.BOX);
-					binTxn.setMaxCapacity(boXmasterCapacity.getMaxCapacity());
-				} else if (radioButtonValue.equalsIgnoreCase("boxToBin")) {
-					binTxn.setBinCategoryType(BinCategoryType.BIN);
-					binTxn.setMaxCapacity(binOrBoxFromDB.getMaxCapacity());
-				} else if (radioButtonValue.equalsIgnoreCase("binToBin")) {
-					binTxn.setBinCategoryType(BinCategoryType.BIN);
-					binTxn.setMaxCapacity(binOrBoxFromDB.getMaxCapacity());
-				} else if (radioButtonValue.equalsIgnoreCase("boxToBox")) {
-					binTxn.setBinCategoryType(BinCategoryType.BOX);
-					binTxn.setMaxCapacity(boXmasterCapacity.getMaxCapacity());
-				}
-
-				binTxn.setCashType(binOrBoxFromDB.getCashType());
-				binTxn.setVerified(binOrBoxFromDB.getVerified());
-				binTxn.setRbiOrderNo(binOrBoxFromDB.getRbiOrderNo());
+				UtilityJpa.setBinTransaction(user, binTxn, binOrBoxFromDB, boXmasterCapacity, now, binFromMaster,
+						radioButtonValue, new BigDecimal(bundle));
 				try {
 					cashPaymentService.deleteEmptyBinFromBinTransaction(user.getIcmcId(), binTxn.getBinNumber());
 					binDashboardService.cashTransferInBinTxn(binTxn);
 					binDashboardService.updateBinTxnAfterCashTransfer(user.getIcmcId(), binOrBox);
 					BranchReceipt brReceipt = new BranchReceipt();
 					if (binTxn.getCashSource() != null) {
-						brReceipt.setDenomination(binTxn.getDenomination());
-						brReceipt.setBundle(binTxn.getReceiveBundle());
-						brReceipt.setBin(binTxn.getBinNumber());
-						brReceipt.setStatus(OtherStatus.RECEIVED);
-						brReceipt.setInsertTime(binTxn.getInsertTime());
-						brReceipt.setUpdateTime(binTxn.getUpdateTime());
-						brReceipt.setInsertBy(binTxn.getInsertBy());
-						brReceipt.setUpdateBy(binTxn.getUpdateBy());
-						brReceipt.setIcmcId(binTxn.getIcmcId());
-						brReceipt.setCurrencyType(binTxn.getBinType());
-						brReceipt.setCashSource(binTxn.getCashSource());
-						brReceipt.setBinCategoryType(binTxn.getBinCategoryType());
+						UtilityJpa.setBranchReceipt(brReceipt, user, binTxn, now);
 						binDashboardService.insertBranchReceiptAftercashTransfer(brReceipt);
 						binDashboardService.updateBranchReceiptAfterCashTransfer(user.getIcmcId(), binOrBox);
 					}
@@ -2186,7 +2144,7 @@ public class BinDashboardController {
 						binDashboardService.updateBinMaster(user.getIcmcId(), binOrBox, 2);
 					}
 				} catch (Exception ex) {
-					LOG.info("Error has occured", ex);
+					LOG.error("Error has occured", ex);
 					throw ex;
 				}
 
@@ -2225,6 +2183,7 @@ public class BinDashboardController {
 									.toString();
 							replacedtext = replacedtext.replaceAll("total", "" + formattedTotal);
 							sb = new StringBuilder(replacedtext);
+							UtilityJpa.PrintToPrinter(sb, user);
 						} else if (binTxn.getCashSource() == CashSource.DSB) {
 							DSB dsbDetails = binDashboardService.getDSBDetailsForCashTransferQR(user.getIcmcId(),
 									binOrBox, binTxn.getDenomination());
@@ -2239,6 +2198,7 @@ public class BinDashboardController {
 							replacedtext = replacedtext.replaceAll("total", "" + formattedTotal);
 
 							sb = new StringBuilder(replacedtext);
+							UtilityJpa.PrintToPrinter(sb, user);
 						} else if (binTxn.getCashSource() == CashSource.DIVERSION) {
 							DiversionIRV dirvDetails = binDashboardService.getDiversionIRVDetailsForCashTransferQR(
 									user.getIcmcId(), binOrBox, binTxn.getDenomination());
@@ -2253,6 +2213,7 @@ public class BinDashboardController {
 							replacedtext = replacedtext.replaceAll("total", "" + formattedTotal);
 
 							sb = new StringBuilder(replacedtext);
+							UtilityJpa.PrintToPrinter(sb, user);
 						} else if (binTxn.getCashSource() == CashSource.OTHERBANK) {
 							BankReceipt bankReceiptDetails = binDashboardService.getBankReceiptDetailsForCashTransferQR(
 									user.getIcmcId(), binOrBox, binTxn.getDenomination());
@@ -2269,6 +2230,7 @@ public class BinDashboardController {
 							replacedtext = replacedtext.replaceAll("total", "" + formattedTotal);
 
 							sb = new StringBuilder(replacedtext);
+							UtilityJpa.PrintToPrinter(sb, user);
 						} else {
 							for (int i = 0; i < binTxn.getReceiveBundle().intValue(); i++) {
 								String replacedtext = oldtext.replaceAll("bin", "" + binFromMaster);
@@ -2286,14 +2248,11 @@ public class BinDashboardController {
 								replacedtext = replacedtext.replaceAll("total", "" + formattedTotal);
 
 								sb = new StringBuilder(replacedtext);
+								UtilityJpa.PrintToPrinter(sb, user);
 							}
 						}
 						prnList.add(sb.toString());
-						LOG.info(binTxn.getCashSource() + "PRN: " + sb);
-
-						// Call Printer Method From UTILITY Class
-
-						UtilityJpa.PrintToPrinter(sb, user);
+						LOG.error(binTxn.getCashSource() + "PRN: " + sb);
 
 					} catch (IOException ioe) {
 						ioe.printStackTrace();
@@ -2734,17 +2693,23 @@ public class BinDashboardController {
 		User user = (User) session.getAttribute("login");
 		String[] category = radioButtonValue.split("To");// boxToBin
 		BinCategoryType binCategoryType;
-
+		List<String> binOrBoxList = null;
+		List<String> binsOrBoxsList = new LinkedList<>();
 		if (category[1].equals("Bin")) {
 			binCategoryType = BinCategoryType.fromValue("BIN");
+			binOrBoxList = binDashboardService.getBinFromBinMasterForCashTransfer(user.getIcmcId(), currencyType);
 		} else {
 			binCategoryType = BinCategoryType.fromValue("BOX");
+			binOrBoxList = binDashboardService.getBoxFromBoxMasterForCashTransfer(user.getIcmcId(), denomination,
+					currencyType, bundle);
 		}
 
 		List<String> binList = binDashboardService.getBinFroPartialTransfer(user.getIcmcId(), denomination,
 				currencyType, bundle, binCategoryType, bin);
+		binsOrBoxsList.addAll(binList);
+		binsOrBoxsList.addAll(binOrBoxList);
 
-		return binList;
+		return binsOrBoxsList;
 	}
 
 	@RequestMapping("/stockMovementRegister")

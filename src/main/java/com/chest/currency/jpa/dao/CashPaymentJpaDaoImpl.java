@@ -86,7 +86,7 @@ public class CashPaymentJpaDaoImpl implements CashPaymentJpaDao {
 
 	@Override
 	public boolean sasUpload(List<Sas> sasList, Sas sas) {
-		LOG.info("SAS UPLOAD");
+		LOG.error("SAS UPLOAD");
 		for (Sas sasTemp : sasList) {
 			sasTemp.setInsertTime(sas.getInsertTime());
 			sasTemp.setUpdateTime(sas.getUpdateTime());
@@ -736,6 +736,17 @@ public class CashPaymentJpaDaoImpl implements CashPaymentJpaDao {
 	}
 
 	@Override
+	public List<Sas> sasForCashHandover(BigInteger icmcId, Calendar sDate, Calendar eDate, Set<Long> pList) {
+		JPAQuery jpaQuery = new JPAQuery(em);
+
+		jpaQuery.from(QSas.sas).distinct()
+				.where(QSas.sas.icmcId.eq(icmcId).and(QSas.sas.status.eq(1))
+						.and(QSas.sas.insertTime.between(sDate, eDate)).and(QSas.sas.id.in(pList)));
+		List<Sas> solIdForPayment = jpaQuery.list(QSas.sas);
+		return solIdForPayment;
+	}
+
+	@Override
 	public Sas sasPaymentDetails(long id) {
 		JPAQuery jpaQuery = getFromQueryForSAS();
 		jpaQuery.where(QSas.sas.id.eq(id));
@@ -1329,9 +1340,7 @@ public class CashPaymentJpaDaoImpl implements CashPaymentJpaDao {
 
 	public CRAAllocation findCraAllocation(CRAAllocation craAllocation) {
 
-		CRAAllocation craAllocationDb = em.find(CRAAllocation.class, craAllocation.getId());
-
-		return craAllocationDb;
+		return em.find(CRAAllocation.class, craAllocation.getId());
 	}
 
 	@Override
@@ -1377,8 +1386,8 @@ public class CashPaymentJpaDaoImpl implements CashPaymentJpaDao {
 						.and(QBinTransaction.binTransaction.active.eq(0))
 						.and(QBinTransaction.binTransaction.id.eq(soiledAllocation.getId()))
 						.and(QBinTransaction.binTransaction.binType.eq(type))));
-		List<BinTransaction> txnList = jpaQuery.list(QBinTransaction.binTransaction);
-		return txnList;
+
+		return jpaQuery.list(QBinTransaction.binTransaction);
 	}
 
 	@Override
@@ -1390,9 +1399,7 @@ public class CashPaymentJpaDaoImpl implements CashPaymentJpaDao {
 				.and(QBinTransaction.binTransaction.binCategoryType.eq(binTxn.getBinCategoryType())
 						.and(QBinTransaction.binTransaction.denomination.eq(binTxn.getDenomination())
 								.and(QBinTransaction.binTransaction.binType.eq(binTxn.getBinType())))));
-		BinTransaction binTransaction = jpaQuery.singleResult(QBinTransaction.binTransaction);
-
-		return binTransaction;
+		return jpaQuery.singleResult(QBinTransaction.binTransaction);
 	}
 
 	@Override
@@ -1401,20 +1408,14 @@ public class CashPaymentJpaDaoImpl implements CashPaymentJpaDao {
 		jpaQuery.where(QCRAAllocation.cRAAllocation.icmcId.eq(icmcId)
 				.and(QCRAAllocation.cRAAllocation.status.eq(OtherStatus.PROCESSED))
 				.and(QCRAAllocation.cRAAllocation.binNumber.isNotNull()));
-		List<CRAAllocation> craAllocationList = jpaQuery.list(QCRAAllocation.cRAAllocation);
-		return craAllocationList;
+		return jpaQuery.list(QCRAAllocation.cRAAllocation);
 	}
 
 	@Override
 	public boolean updateCRAAllocationStatus(CRAAllocation craAllocation) {
-		// em.merge(indent);
-		QCRAAllocation qCraAlloation = QCRAAllocation.cRAAllocation;
-		Long count = new JPAUpdateClause(em, qCraAlloation)
-				.where(QCRAAllocation.cRAAllocation.icmcId.eq(craAllocation.getIcmcId())
-						.and(QCRAAllocation.cRAAllocation.id.eq(craAllocation.getId())))
-				.set(qCraAlloation.status, OtherStatus.ACCEPTED)
-				.set(qCraAlloation.updateTime, craAllocation.getUpdateTime()).execute();
-		return count > 0 ? true : false;
+		LOG.error("CRA ACCEPTING");
+		em.merge(craAllocation);
+		return true;
 	}
 
 	private JPAQuery getFromQueryForBinFromBinTxn() {
@@ -1429,8 +1430,7 @@ public class CashPaymentJpaDaoImpl implements CashPaymentJpaDao {
 		jpaQuery.where(
 				QBinTransaction.binTransaction.icmcId.eq(icmcId).and(QBinTransaction.binTransaction.binNumber.eq(bin))
 						.and(QBinTransaction.binTransaction.status.ne(BinStatus.EMPTY)));
-		BinTransaction binTransaction = jpaQuery.singleResult(QBinTransaction.binTransaction);
-		return binTransaction;
+		return jpaQuery.singleResult(QBinTransaction.binTransaction);
 	}
 
 	@Override
@@ -1438,10 +1438,15 @@ public class CashPaymentJpaDaoImpl implements CashPaymentJpaDao {
 
 		JPAQuery jpaQuery = getFromQueryForCRAFromCRAALllocation();
 		jpaQuery.where(QCRAAllocation.cRAAllocation.id.eq(id).and(QCRAAllocation.cRAAllocation.icmcId.eq(icmcId)));
-		CRAAllocation craAllocation = jpaQuery.singleResult(QCRAAllocation.cRAAllocation);
+		return jpaQuery.singleResult(QCRAAllocation.cRAAllocation);
+	}
 
-		return craAllocation;
+	@Override
+	public CRA getCRAById(long id, BigInteger icmcId) {
 
+		JPAQuery jpaQuery = getFromQueryForCRA();
+		jpaQuery.where(QCRA.cRA.id.eq(id).and(QCRA.cRA.icmcId.eq(icmcId)));
+		return jpaQuery.singleResult(QCRA.cRA);
 	}
 
 	@Override
@@ -1765,11 +1770,8 @@ public class CashPaymentJpaDaoImpl implements CashPaymentJpaDao {
 
 	@Override
 	public long updateCRAOtherStatus(CRA cra) {
-		QCRA qCRA = QCRA.cRA;
-		long count = new JPAUpdateClause(em, qCRA)
-				.where(QCRA.cRA.icmcId.eq(cra.getIcmcId()).and(QCRA.cRA.id.eq(cra.getId())))
-				.set(QCRA.cRA.status, OtherStatus.ACCEPTED).set(qCRA.updateTime, cra.getUpdateTime()).execute();
-		return count;
+		em.merge(cra);
+		return 1l;
 	}
 
 	@Override
@@ -1853,7 +1855,7 @@ public class CashPaymentJpaDaoImpl implements CashPaymentJpaDao {
 			Long parentId) {
 		JPAQuery jpaQuery = new JPAQuery(em);
 		jpaQuery.distinct().from(QSASAllocation.sASAllocation)
-				.where(QSASAllocation.sASAllocation.status.eq(OtherStatus.REQUESTED)
+				.where(QSASAllocation.sASAllocation.status.eq(OtherStatus.ACCEPTED)
 						.and(QSASAllocation.sASAllocation.insertTime.between(sDate, eDate))
 						.and(QSASAllocation.sASAllocation.parentId.eq(parentId)));
 		SASAllocation solIdForPaymenta = jpaQuery.singleResult(QSASAllocation.sASAllocation);
@@ -2566,6 +2568,11 @@ public class CashPaymentJpaDaoImpl implements CashPaymentJpaDao {
 		List<SoiledRemittanceAllocation> soiledList = jpaQuery
 				.list(QSoiledRemittanceAllocation.soiledRemittanceAllocation);
 		return soiledList;
+	}
+
+	public void updateBinTransaction(String binNUm, BigInteger icmcId) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

@@ -7,6 +7,7 @@ import java.math.BigInteger;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 import org.slf4j.Logger;
@@ -943,6 +944,11 @@ public class CashPaymentServiceImpl implements CashPaymentService {
 	}
 
 	@Override
+	public List<Sas> sasForCashHandover(BigInteger icmcId, Calendar sDate, Calendar eDate, Set<Long> pList) {
+		return cashPaymentJpaDao.sasForCashHandover(icmcId, sDate, eDate, pList);
+	}
+
+	@Override
 	public Sas sasPaymentDetails(long id) {
 		return cashPaymentJpaDao.sasPaymentDetails(id);
 	}
@@ -1259,9 +1265,9 @@ public class CashPaymentServiceImpl implements CashPaymentService {
 
 	@Transactional
 	private void findBinAndProcessCRAPayment(User user, List<CRAAllocation> craAllocationList) {
-		List<CRAAllocation> eligibleCRARequestList = new ArrayList<>();
-		List<CRAAllocation> craAllocationDbList = new ArrayList<>();
-		List<BinTransaction> txnList = new ArrayList<>();
+		List<CRAAllocation> eligibleCRARequestList = new LinkedList<>();
+		List<CRAAllocation> craAllocationDbList = new LinkedList<>();
+		List<BinTransaction> txnList = new LinkedList<>();
 
 		for (CRAAllocation craAllocation : craAllocationList) {
 
@@ -1308,6 +1314,7 @@ public class CashPaymentServiceImpl implements CashPaymentService {
 	}
 
 	@Override
+	@Transactional
 	public boolean processCRAPayment(List<CRAAllocation> craAllocation, User user) {
 		this.findBinAndProcessCRAPayment(user, craAllocation);
 		return true;
@@ -1344,7 +1351,8 @@ public class CashPaymentServiceImpl implements CashPaymentService {
 		soiled.setIcmcId(soiledData.getIcmcId());
 		soiled.setDenomination(soiledData.getDenomination());
 		soiled.setBundle(soiledData.getRequestBundle());
-		// soiled.setBox("BOX");
+		soiled.setTotal(
+				soiled.getBundle().multiply(new BigDecimal(soiled.getDenomination())).multiply(new BigDecimal(1000)));
 		soiled.setBox("BOX:" + user.getIcmcId() + Instant.now().toEpochMilli());
 		// soiled.setStatus(OtherStatus.REQUESTED);
 		// soiled.setPendingBundle(soiledData.getRequestBundle());
@@ -1481,32 +1489,26 @@ public class CashPaymentServiceImpl implements CashPaymentService {
 				&& craAllocation.getBundle().compareTo(BigDecimal.ZERO) > 0) {
 
 			BigDecimal balanceBundle = txnBean.getReceiveBundle().subtract(craAllocation.getBundle());
-			// craAllocation.setStatus(OtherStatus.PROCESSED);// 0 means ready
-			// for machine
-			// allocation
+
 			craAllocation.setUpdateTime(now);
+			craAllocation.setStatus(OtherStatus.ACCEPTED);
 			boolean isCRAAllocationUpdate = this.updateCRAAllocationStatus(craAllocation);
-			CRA cra = new CRA();
+			LOG.info("processCRAPaymentRequest  isCRAAllocationUpdate " + isCRAAllocationUpdate);
+
+			CRA cra = this.getCRAById(craId, user.getIcmcId());
 			cra.setUpdateTime(now);
-			cra.setId(craId);
-			cra.setIcmcId(user.getIcmcId());
-			this.updateCRAOtherStatus(cra);
+			cra.setStatus(OtherStatus.ACCEPTED);
+			Long isUpdateCra = this.updateCRAOtherStatus(cra);
+			LOG.info("processCRAPaymentRequest  isUpdateCra " + isUpdateCra);
 			if (isCRAAllocationUpdate && balanceBundle.compareTo(BigDecimal.ZERO) == 0) {
-				// txnBean.setRcvBundle(BigDecimal.ZERO);
 				txnBean.setReceiveBundle(BigDecimal.ZERO);
 				txnBean.setPendingBundleRequest(BigDecimal.ZERO);
 				txnBean.setStatus(BinStatus.EMPTY);
 				txnBean.setVerified(YesNo.NULL);
 				txnBean.setUpdateBy(user.getId());
 				txnBean.setUpdateTime(now);
-
 				craAllocation.setStatus(OtherStatus.ACCEPTED);
-
-				// update time
-				// int count = this.deleteDataFromBinTxn(txnBean);
-				// call merge
 				boolean count = this.updateBinTxn(txnBean);
-				// this.deleteEmptyBinFromBinTransaction(user.getIcmcId(), bin);
 				LOG.info("if count " + count);
 				if (count) {
 					BinMaster binMater = new BinMaster();
@@ -1517,15 +1519,11 @@ public class CashPaymentServiceImpl implements CashPaymentService {
 			} else if (isCRAAllocationUpdate && balanceBundle.compareTo(BigDecimal.ZERO) > 0) {
 				txnBean.setReceiveBundle(balanceBundle);
 				txnBean.setUpdateTime(now);
-				LOG.info("txnBean.getPendingBundleRequest() " + txnBean.getPendingBundleRequest());
-				LOG.info("bundle " + bundle);
 				txnBean.setPendingBundleRequest(txnBean.getPendingBundleRequest().subtract(bundle));
 				isCRAAllocationUpdate = this.updateBinTxn(txnBean);
 				LOG.info("else if txnBean " + txnBean);
-				LOG.info("else if getpendingbundle " + txnBean.getPendingBundleRequest());
-				LOG.info("else if bundle " + bundle);
+				LOG.info("else if isCRAAllocationUpdate " + isCRAAllocationUpdate);
 			}
-
 		}
 		return true;
 	}
@@ -1538,6 +1536,11 @@ public class CashPaymentServiceImpl implements CashPaymentService {
 	@Override
 	public CRAAllocation getCRAAllocationDataById(long id, BigInteger icmcId) {
 		return cashPaymentJpaDao.getCRAAllocationDataById(id, icmcId);
+	}
+
+	@Override
+	public CRA getCRAById(long id, BigInteger icmcId) {
+		return cashPaymentJpaDao.getCRAById(id, icmcId);
 	}
 
 	@Override
@@ -1657,6 +1660,12 @@ public class CashPaymentServiceImpl implements CashPaymentService {
 	public void updateInsertSoiledAndSoiledAllocation(BigInteger icmcId, long id) {
 		cashPaymentJpaDao.updateInsertSoiledAndSoiledAllocation(icmcId, id);
 
+	}
+
+	@Override
+	@Transactional
+	public void processForCancelPreparedSoildBox(String binNUm, BigInteger icmcId) {
+		cashPaymentJpaDao.updateBinTransaction(binNUm, icmcId);
 	}
 
 	@Override

@@ -73,7 +73,7 @@ public class CRAAccountController {
 
 	@RequestMapping("/viewCRAAccountDetail")
 	public ModelAndView viewCRAAccountDetail(HttpSession session) {
-		LOG.info("Going to fetch CRA Account Details");
+		LOG.error("Going to fetch CRA Account Details");
 		List<CRAAccountDetail> craAccountDetailList = craAccountService.getCRAccountDetailList();
 		return new ModelAndView("viewCRAAccountDetail", "records", craAccountDetailList);
 	}

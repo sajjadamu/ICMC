@@ -29,7 +29,7 @@
 		addHeader();
 		var name = $('#name').val();
 		$.ajax({
-			type : "POST",
+			type : "GET",
 			url : "././getAccountNumber",
 			data : "name=" + name,
 
@@ -53,7 +53,7 @@
 		var name = $('#name').val();
 		//var accountNumber = $('#accountNumber').val();
 		$.ajax({
-			type : "POST",
+			type : "GET",
 			url : "././getReceiptSequence",
 			data : "name=" + name, //+ "&accountNumber="+accountNumber,
 			success : function(response) {

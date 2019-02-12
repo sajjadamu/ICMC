@@ -70,15 +70,34 @@ public class AESEncryptionDecryption extends DriverManagerDataSource {
 	}
 
 	public static void main(String[] args) throws UnknownHostException, IOException {
-		/*String encryptedUsername = AESEncryptionDecryption.encrypt("icmc_user", "ssshhhhhhhhhhh!!!!");
-		String encryptedPassword = AESEncryptionDecryption.encrypt("Icici@2018#", "ssshhhhhhhhhhh!!!!");
-		String decryptedusername = AESEncryptionDecryption.decrypt(encryptedUsername, "ssshhhhhhhhhhh!!!!");
-		String decryptedPassword = AESEncryptionDecryption.decrypt(encryptedPassword, "ssshhhhhhhhhhh!!!!");*/
-		
-		/*System.out.println("Encrypted username :- " + encryptedUsername);
-		System.out.println("Encrypted password :- " + encryptedPassword);
-		System.out.println("decryptedusername username :- " + decryptedusername);
-		System.out.println("decryptedPassword password :- " + decryptedPassword);*/
+		/*
+		 * String encryptedUsername =
+		 * AESEncryptionDecryption.encrypt("icmc_user", "ssshhhhhhhhhhh!!!!");
+		 * String encryptedPassword =
+		 * AESEncryptionDecryption.encrypt("Icici@2018#", "ssshhhhhhhhhhh!!!!");
+		 * String decryptedusername =
+		 * AESEncryptionDecryption.decrypt(encryptedUsername,
+		 * "ssshhhhhhhhhhh!!!!"); String decryptedPassword =
+		 * AESEncryptionDecryption.decrypt(encryptedPassword,
+		 * "ssshhhhhhhhhhh!!!!");
+		 */
+
+		/*
+		 * System.out.println("Encrypted username :- " + encryptedUsername);
+		 * System.out.println("Encrypted password :- " + encryptedPassword);
+		 * System.out.println("decryptedusername username :- " +
+		 * decryptedusername); System.out.println(
+		 * "decryptedPassword password :- " + decryptedPassword);
+		 */
+		/*
+		 * File file = new File("/home/inayat/Pictures/git_issue.jpg");
+		 * BufferedImage image = new BufferedImage(980, 640,
+		 * BufferedImage.TYPE_INT_ARGB); image = ImageIO.read(file);
+		 * System.out.println("image read " + file);
+		 * 
+		 * file = new File("out.jpg"); ImageIO.write(image, "jpg", file);
+		 */
+
 		System.out.println("Encrypted username :- ");
 	}
 

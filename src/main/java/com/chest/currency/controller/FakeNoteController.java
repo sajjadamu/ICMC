@@ -45,7 +45,7 @@ public class FakeNoteController {
 
 	@RequestMapping("/fakeNoteEntry")
 	public ModelAndView fakeNoteEntry() {
-		LOG.info("Displaying Fake Note Form..");
+		LOG.error("Displaying Fake Note Form..");
 		FakeNote obj = new FakeNote();
 		return new ModelAndView("/fakeNoteEntry", "user", obj);
 	}

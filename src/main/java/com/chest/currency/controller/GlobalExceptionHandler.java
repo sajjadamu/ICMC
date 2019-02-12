@@ -17,6 +17,7 @@ import org.springframework.web.servlet.ModelAndView;
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
+
 	private static final Logger logger = LoggerFactory.getLogger(GlobalExceptionHandler.class);
 
 	@ExceptionHandler(value = NullPointerException.class)
@@ -72,12 +73,18 @@ public class GlobalExceptionHandler {
 		logger.error("INTERNAL_SERVER_ERROR msg " + e.getMessage());
 		logger.error("INTERNAL_SERVER_ERROR exception " + e.getLocalizedMessage());
 		logger.info("INTERNAL_SERVER_ERROR Occured:: URL= " + request.getRequestURL());
-		ModelMap map = new ModelMap();
-		map.put("status", HttpStatus.INTERNAL_SERVER_ERROR);
-		map.put("message", e.getMessage());
-		map.put("GlobalExceptionMessage", e.getLocalizedMessage());
-		logger.error("INTERNAL_SERVER_ERROR");
-		return new ModelAndView("GlobalExceptionHandler", map);
+		String url = new String(request.getRequestURL());
+		if (url.contains("lam")) {
+			return null;
+		} else {
+			ModelMap map = new ModelMap();
+			map.put("status", HttpStatus.INTERNAL_SERVER_ERROR);
+			map.put("message", e.getMessage());
+			map.put("GlobalExceptionMessage", e.getLocalizedMessage());
+			logger.error("INTERNAL_SERVER_ERROR");
+			return new ModelAndView("GlobalExceptionHandler", map);
+		}
+
 	}
 
 	@ExceptionHandler(value = FileNotFoundException.class)
@@ -90,7 +97,7 @@ public class GlobalExceptionHandler {
 		map.put("status", HttpStatus.NOT_FOUND);
 		map.put("message", e.getMessage());
 		map.put("GlobalExceptionMessage", "FileNotFoundException");
-		logger.error("FileNotFoundException",e.getLocalizedMessage());
+		logger.error("FileNotFoundException", e.getLocalizedMessage());
 		return new ModelAndView("GlobalExceptionHandler", map);
 	}
 

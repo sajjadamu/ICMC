@@ -830,9 +830,7 @@ public class CashReceiptServiceImpl implements CashReceiptService {
 				throw new BaseGuiException("Space is not available for " + dsb.getBundle() + " bundles in "
 						+ dsb.getDenomination() + " denomination");
 			}
-		}
-
-		else if (dsb.getBinCategoryType() == BinCategoryType.PROCESSING) {
+		} else if (dsb.getBinCategoryType() == BinCategoryType.PROCESSING) {
 			LOG.info("dsb.getBinCategoryType() FOR PROCESSING " + dsb.getBinCategoryType());
 			dsb = UtilityJpa.getDSBForProcessing(dsb, user);
 			dsbList.add(dsb);

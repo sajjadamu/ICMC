@@ -1,7 +1,3 @@
-/*******************************************************************************
- * /* Copyright (C) Indicsoft Technologies Pvt Ltd
- * * All Rights Reserved.
- *******************************************************************************/
 package com.chest.currency.controller;
 
 import java.io.BufferedOutputStream;
@@ -59,7 +55,7 @@ public class RbiMasterController {
 
 	@RequestMapping("/viewRbiMaster")
 	public ModelAndView viewRbiMaster() {
-		LOG.info("View RBI Master");
+		LOG.error("View RBI Master");
 		List<RbiMaster> allRbiMaster = rbiMasterService.getAllRbiMaster();
 		return new ModelAndView("viewRbiMaster", "records", allRbiMaster);
 	}

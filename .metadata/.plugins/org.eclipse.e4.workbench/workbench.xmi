@@ -78,7 +78,6 @@
           <children xsi:type="basic:PartSashContainer" xmi:id="_XIDv5TGHEeidJdbTcOjDVw" selectedElement="_XIDv5jGHEeidJdbTcOjDVw" horizontal="true">
             <children xsi:type="basic:PartStack" xmi:id="_XIDv5jGHEeidJdbTcOjDVw" elementId="topLeft" containerData="2500" selectedElement="_XIDv5zGHEeidJdbTcOjDVw">
               <tags>active</tags>
-              <tags>noFocus</tags>
               <children xsi:type="advanced:Placeholder" xmi:id="_XIDv5zGHEeidJdbTcOjDVw" elementId="org.eclipse.ui.navigator.ProjectExplorer" ref="_XIEXcTGHEeidJdbTcOjDVw"/>
               <children xsi:type="advanced:Placeholder" xmi:id="_XIDv6DGHEeidJdbTcOjDVw" elementId="org.eclipse.ui.views.ResourceNavigator" toBeRendered="false" ref="_XIEX5jGHEeidJdbTcOjDVw"/>
               <children xsi:type="advanced:Placeholder" xmi:id="_XIDv6TGHEeidJdbTcOjDVw" elementId="org.eclipse.jdt.ui.TypeHierarchy" toBeRendered="false" ref="_XIEX5zGHEeidJdbTcOjDVw"/>
@@ -356,7 +355,7 @@
       </children>
       <children xsi:type="menu:ToolBar" xmi:id="_XIE-HTGHEeidJdbTcOjDVw" elementId="org.eclipse.ui.workbench.file">
         <tags>Draggable</tags>
-        <children xsi:type="menu:HandledToolItem" xmi:id="_w189cAHoEemWl4apCZQ34w" elementId="print" visible="false" iconURI="platform:/plugin/org.eclipse.ui/icons/full/etool16/print_edit.png" tooltip="Print" command="_XIJ2-TGHEeidJdbTcOjDVw"/>
+        <children xsi:type="menu:HandledToolItem" xmi:id="_A0ztgCK8EemococstpIe1g" elementId="print" visible="false" iconURI="platform:/plugin/org.eclipse.ui/icons/full/etool16/print_edit.png" tooltip="Print" command="_XIJ2-TGHEeidJdbTcOjDVw"/>
       </children>
       <children xsi:type="menu:ToolBar" xmi:id="_XIE-KjGHEeidJdbTcOjDVw" elementId="additions" toBeRendered="false">
         <tags>toolbarSeparator</tags>
@@ -386,7 +385,7 @@
       </children>
       <children xsi:type="menu:ToolBar" xmi:id="_XIE-izGHEeidJdbTcOjDVw" elementId="org.eclipse.ui.workbench.navigate">
         <tags>Draggable</tags>
-        <children xsi:type="menu:HandledToolItem" xmi:id="_w2CdAAHoEemWl4apCZQ34w" elementId="org.eclipse.ui.window.pinEditor" visible="false" iconURI="platform:/plugin/org.eclipse.ui/icons/full/etool16/pin_editor.png" tooltip="Pin Editor" type="Check" command="_XIJ2mjGHEeidJdbTcOjDVw"/>
+        <children xsi:type="menu:HandledToolItem" xmi:id="_A0_6wCK8EemococstpIe1g" elementId="org.eclipse.ui.window.pinEditor" visible="false" iconURI="platform:/plugin/org.eclipse.ui/icons/full/etool16/pin_editor.png" tooltip="Pin Editor" type="Check" command="_XIJ2mjGHEeidJdbTcOjDVw"/>
       </children>
       <children xsi:type="menu:ToolBar" xmi:id="_XIE-ljGHEeidJdbTcOjDVw" elementId="group.editor" toBeRendered="false">
         <tags>toolbarSeparator</tags>
@@ -671,6 +670,10 @@
     </bindings>
     <bindings xmi:id="_XIFlajGHEeidJdbTcOjDVw" keySequence="ALT+SHIFT+Q Q" command="_XIJRVDGHEeidJdbTcOjDVw"/>
     <bindings xmi:id="_XIFlazGHEeidJdbTcOjDVw" keySequence="ALT+SHIFT+X T" command="_XIJQSjGHEeidJdbTcOjDVw"/>
+    <bindings xmi:id="__8iowCK7EemococstpIe1g" keySequence="ALT+SHIFT+D N" command="__7FQMCK7EemococstpIe1g"/>
+    <bindings xmi:id="__8kd8CK7EemococstpIe1g" keySequence="ALT+SHIFT+D G" command="__7FQNCK7EemococstpIe1g"/>
+    <bindings xmi:id="__9ENMCK7EemococstpIe1g" keySequence="ALT+SHIFT+X G" command="__7FQMSK7EemococstpIe1g"/>
+    <bindings xmi:id="__9FbUCK7EemococstpIe1g" keySequence="ALT+SHIFT+X N" command="__7FQMiK7EemococstpIe1g"/>
   </bindingTables>
   <bindingTables xmi:id="_XIFlbDGHEeidJdbTcOjDVw" elementId="com.genuitec.eclipse.inlinesearch.context" bindingContext="_XIFmvzGHEeidJdbTcOjDVw"/>
   <bindingTables xmi:id="_XIFlcTGHEeidJdbTcOjDVw" elementId="org.eclipse.jdt.ui.javaEditorScope" bindingContext="_XIFmqjGHEeidJdbTcOjDVw">
@@ -1770,6 +1773,10 @@
   <descriptors xmi:id="_wH1TMAHoEemWl4apCZQ34w" elementId="org.kie.eclipse.navigator.view" label="Kie Navigator" iconURI="platform:/plugin/org.kie.eclipse.navigator/icons/navigator.gif" tooltip="" category="Drools" closeable="true" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView">
     <tags>View</tags>
     <tags>categoryTag:Drools</tags>
+  </descriptors>
+  <descriptors xmi:id="_ADGjwCK8EemococstpIe1g" elementId="org.testng.eclipse.ResultView" label="TestNG" iconURI="platform:/plugin/org.testng.eclipse/icons/full/main16/testng_blur.gif" tooltip="" category="Java" closeable="true" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView">
+    <tags>View</tags>
+    <tags>categoryTag:Java</tags>
   </descriptors>
   <trimContributions xmi:id="_2r10UF9tEeO-yojH_y4TJA" elementId="org.eclipse.ui.ide.application.trimcontribution.QuickAccess" contributorURI="platform:/plugin/org.eclipse.ui.ide.application" toBeRendered="false" parentId="org.eclipse.ui.main.toolbar" positionInParent="last">
     <children xsi:type="menu:ToolControl" xmi:id="_76uUAF9tEeO-yojH_y4TJA" elementId="Spacer Glue" contributorURI="platform:/plugin/org.eclipse.ui.ide.application" contributionURI="bundleclass://org.eclipse.e4.ui.workbench.renderers.swt/org.eclipse.e4.ui.workbench.renderers.swt.LayoutModifierToolControl">
@@ -3097,6 +3104,15 @@
   <commands xmi:id="_wwYg8QHoEemWl4apCZQ34w" elementId="AUTOGEN:::org.drools.eclipse.flow.common.editor.action.VerticalAutoLayoutAction/org.drools.eclipse.flow.common.editor.action.VerticalAutoLayoutAction" commandName="Auto Layout (Vertical)" description="Auto layout the workflow (vertical)" category="_XIJ4hzGHEeidJdbTcOjDVw"/>
   <commands xmi:id="_wwZIAAHoEemWl4apCZQ34w" elementId="AUTOGEN:::org.drools.eclipse.flow.common.editor.action.HorizontalAutoLayoutAction/org.drools.eclipse.flow.common.editor.action.HorizontalAutoLayoutAction" commandName="Auto Layout (Horizontal)" description="Auto layout the workflow (horizontal)" category="_XIJ4hzGHEeidJdbTcOjDVw"/>
   <commands xmi:id="_wwZvEAHoEemWl4apCZQ34w" elementId="AUTOGEN:::org.drools.eclipse.flow.common.editor.action.ExportImageAction/org.drools.eclipse.flow.common.editor.action.ExportImageAction" commandName="Export Image" description="Export image (PNG)" category="_XIJ4hzGHEeidJdbTcOjDVw"/>
+  <commands xmi:id="__7EpISK7EemococstpIe1g" elementId="org.testng.eclipse.createClassAction" commandName="Create TestNG class" description="Create a TestNG class to test this class" category="_XIJ4lzGHEeidJdbTcOjDVw"/>
+  <commands xmi:id="__7FQMCK7EemococstpIe1g" elementId="org.testng.eclipse.shortcut.debug" commandName="Debug TestNG Test" description="Debug TestNG Test" category="_XIJ4fTGHEeidJdbTcOjDVw"/>
+  <commands xmi:id="__7FQMSK7EemococstpIe1g" elementId="org.testng.eclipse.shortcut.testngSuite.run" commandName="Run TestNG Suite" description="Run TestNG Suite" category="_XIJ4fTGHEeidJdbTcOjDVw"/>
+  <commands xmi:id="__7FQMiK7EemococstpIe1g" elementId="org.testng.eclipse.shortcut.run" commandName="Run TestNG Test" description="Run TestNG Test" category="_XIJ4fTGHEeidJdbTcOjDVw"/>
+  <commands xmi:id="__7FQMyK7EemococstpIe1g" elementId="org.testng.eclipse.shortcut.rerunFailed" commandName="Rerun Failed TestNG Test" description="Rerun the failed TestNG Test" category="_XIJ4fTGHEeidJdbTcOjDVw"/>
+  <commands xmi:id="__7FQNCK7EemococstpIe1g" elementId="org.testng.eclipse.shortcut.testngSuite.debug" commandName="Debug TestNG Suite" description="Debug TestNG Suite" category="_XIJ4fTGHEeidJdbTcOjDVw"/>
+  <commands xmi:id="__7FQNSK7EemococstpIe1g" elementId="org.testng.eclipse.shortcut.rerunLast" commandName="Rerun TestNG Test" description="Rerun the last TestNG Test" category="_XIJ4fTGHEeidJdbTcOjDVw"/>
+  <commands xmi:id="__7FQNiK7EemococstpIe1g" elementId="org.testng.eclipse.convertToYamlAction" commandName="Convert to YAML" description="Convert the TestNG Suite XML file to YAML" category="_XIJ4hzGHEeidJdbTcOjDVw"/>
+  <commands xmi:id="__7FQNyK7EemococstpIe1g" elementId="org.testng.eclipse.convertAction" commandName="Convert to TestNG" description="Convert the selection to TestNG" category="_XIJ4lzGHEeidJdbTcOjDVw"/>
   <addons xmi:id="_XIJ4ZDGHEeidJdbTcOjDVw" elementId="org.eclipse.e4.core.commands.service" contributorURI="platform:/plugin/org.eclipse.platform" contributionURI="bundleclass://org.eclipse.e4.core.commands/org.eclipse.e4.core.commands.CommandServiceAddon"/>
   <addons xmi:id="_XIJ4ZTGHEeidJdbTcOjDVw" elementId="org.eclipse.e4.ui.contexts.service" contributorURI="platform:/plugin/org.eclipse.platform" contributionURI="bundleclass://org.eclipse.e4.ui.services/org.eclipse.e4.ui.services.ContextServiceAddon"/>
   <addons xmi:id="_XIJ4ZjGHEeidJdbTcOjDVw" elementId="org.eclipse.e4.ui.bindings.service" contributorURI="platform:/plugin/org.eclipse.platform" contributionURI="bundleclass://org.eclipse.e4.ui.bindings/org.eclipse.e4.ui.bindings.BindingServiceAddon"/>

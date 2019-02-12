@@ -25,7 +25,7 @@
 <meta name="author" content="">
 <link rel="shortcut icon" href="./resources/logo/favicon.ico"
 	type="image/x-icon">
-<title>ICICI : Cash Movement Register</title>
+<title>ICICI : Stock Movement Register</title>
 
 <style type="text/css">
 .reportbox {

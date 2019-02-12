@@ -11,29 +11,27 @@
 <meta name="author" content="">
 <link rel="shortcut icon" href="./resources/logo/favicon.ico"
 	type="image/x-icon">
-<script type="text/javascript"
-	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script src="./resources/bower_components/jquery/dist/jquery.min.js"></script>
 <script type="text/javascript" src="./js/jquery.validate.min.js"></script>
 
 <script type="text/javascript">
-function doAjaxForProductivity() {
-	addHeaderJson();
-	var modelType = $('#modelType').val();
-	$.ajax({
-		type : "POST",
-		url : "././getProductivity",
-		data : "modelType=" + modelType,
-		success : function(response) {
-			var newStr = response.substring(1, response .length-1); // Remove Array Brackets
-	        var data=newStr.split(",");
-			$('#standardProductivity').val(data)
-		},
-		error : function(e) {
-			alert('Productivity  Error: ' + e);
-		}
-	});
-}
-
+	function doAjaxForProductivity() {
+		addHeaderJson();
+		var modelType = $('#modelType').val();
+		$.ajax({
+			type : "POST",
+			url : "././getProductivity",
+			data : "modelType=" + modelType,
+			success : function(response) {
+				var newStr = response.substring(1, response.length - 1); // Remove Array Brackets
+				var data = newStr.split(",");
+				$('#standardProductivity').val(data)
+			},
+			error : function(e) {
+				alert('Productivity  Error: ' + e);
+			}
+		});
+	}
 </script>
 
 <title>ICICI : Machine Machine Details</title>
@@ -146,8 +144,6 @@ function doAjaxForProductivity() {
 												name="purchasedate" maxlength="32" onselect="ageingFind()"
 												cssClass="form-control" />
 										</div>
-
-
 										<div class="form-group">
 											<label>Make Company </label>
 											<%-- <form:input path="companyname" id="companyname" name="companyname" maxlength="32"
@@ -223,85 +219,84 @@ function doAjaxForProductivity() {
 	</script>
 
 	<script type="text/javascript">
-	
-	$.validator.addMethod("nameRegex", function(value, element) {
-	    return this.optional(element) || /^[A-Za-z\s]+$/i.test(value);
-	}, "Software must contain only letters,Space , dashes.");
-	
-	
-	
-	 $(function() {
-	  $("form[name='userPage']").validate({
-	    rules: {
-	    	
-	    	icmcId: {
-	            	required:true,
-	            },
-	            
-	    	
-	    	companyname: {
-            	required:true,
-            	maxlength:44,
-            	nameRegex:true,
-            },
-            machineNo: {
-            	required:true,
-            	maxlength:44,
-            },
-            
-            assetCode: {
-         		required:true,
-            },
-            purchasedate:{
-            	required:true,
-            },
-            machineSINo: {
-            	required:true,
-            },
-            modelType: {
-         		required:true,
-            },
-           /*  standardProductivity:{
-            	required:true,
-            }, */
-           
-	    },
-	    messages: {
-	    	
-	    	icmcId: {
-	    		required:"Please Select Icmc",
-	    	},
-	    	
-	    	companyname: {
-	    		required:"Please Enter Name",
-	    		maxlength:" Name can't have more than 45 characters",
-	    		nameRegex:"Special and Numeric characters are not allowed",
-	    	},
-	    	machineNo: {
-	    		required:"Please Enter Machine No.",
-	    	},
-	    	 assetCode: {
-	         		required:"Please Enter Asset Code",
-	            },
-	    	purchasedate:{
-	    		required:"Please Enter Purchase Date",
-	    	},
-	    	 machineSINo: {
-	            	required:"Please Enter Machine Sr. No.",
-	            },
-	            modelType: {
-	         		required:"Please Select Model Type",
-	            },
-	           /*  standardProductivity:{
-	            	required:"Please Enter Standard Productivity",
-	            }, */
-	    },
-	    submitHandler: function(form) {
-	    	var isValid = $("form[name='userPage']").validate().form();
-	      		form.submit();
-	    }
-	  });
-	});
+		$.validator.addMethod("nameRegex", function(value, element) {
+			return this.optional(element) || /^[A-Za-z\s]+$/i.test(value);
+		}, "Software must contain only letters,Space , dashes.");
+
+		$(function() {
+			$("form[name='userPage']")
+					.validate(
+							{
+								rules : {
+
+									icmcId : {
+										required : true,
+									},
+
+									companyname : {
+										required : true,
+										maxlength : 44,
+										nameRegex : true,
+									},
+									machineNo : {
+										required : true,
+										maxlength : 44,
+									},
+
+									assetCode : {
+										required : true,
+									},
+									purchasedate : {
+										required : true,
+									},
+									machineSINo : {
+										required : true,
+									},
+									modelType : {
+										required : true,
+									},
+								/*  standardProductivity:{
+								 	required:true,
+								 }, */
+
+								},
+								messages : {
+
+									icmcId : {
+										required : "Please Select Icmc",
+									},
+
+									companyname : {
+										required : "Please Enter Name",
+										maxlength : " Name can't have more than 45 characters",
+										nameRegex : "Special and Numeric characters are not allowed",
+									},
+									machineNo : {
+										required : "Please Enter Machine No.",
+									},
+									assetCode : {
+										required : "Please Enter Asset Code",
+									},
+									purchasedate : {
+										required : "Please Enter Purchase Date",
+									},
+									machineSINo : {
+										required : "Please Enter Machine Sr. No.",
+									},
+									modelType : {
+										required : "Please Select Model Type",
+									},
+								/*  standardProductivity:{
+								 	required:"Please Enter Standard Productivity",
+								 }, */
+								},
+								submitHandler : function(form) {
+									var isValid = $("form[name='userPage']")
+											.validate().form();
+									form.submit();
+								}
+							});
+		});
 	</script>
 	<script src="./resources/js/jquery.datetimepicker.js"></script>
 	<script>
@@ -309,7 +304,6 @@ function doAjaxForProductivity() {
 			format : 'Y-m-d',
 
 		});
-		
 	</script>
 	<script type="text/javascript" src="./js/htmlInjection.js"></script>
 </body>

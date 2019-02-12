@@ -124,11 +124,15 @@ function doAjaxPostUpdateStatus(str) {
 	    url: "././updateCRAStatus",
 	    data: "id="+id+"&bin="+bin+"&bundle="+bundle+"&craId="+craId+"&denomination="+denomination,
 	    success: function(response){  
-	     // $('#info').html(response);
+	    	 alert(' success ');
 	     $("#xy"+str).hide();
 	    }, 
-	    error: function(e){  
-	      alert(' Error: ' + e);  
+	    error: function (xhr, ajaxOptions, thrownError){ 
+	    	if(xhr.responseText=="success"){
+	    		 $("#xy"+str).hide();	
+	    	}else{
+	      alert(' Error: ' + thrownError.responseJSON.message);  
+	      }
 	    }  
 	  }); 
 	}  	
@@ -312,7 +316,8 @@ function doAjaxPostUpdateStatus(str) {
 							}
 						%>
 						<tr>
-							<td><input type="button" class="btn btn-primary" value="Submit"
+							<td><input type="button" class="btn btn-primary"
+								value="Submit"
 								onclick="doAjaxPostInsert('<%=cRAWrapper.getCra().getId()%>','<%=count%>');this.disabled=true"></td>
 
 

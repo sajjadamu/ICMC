@@ -109,6 +109,7 @@
 				window.location = '././viewProcess';
 			},
 			error : function(e) {
+				//window.location = '././viewProcess';
 				alert('Error: ' + e.responseJSON.message);
 			}
 		});

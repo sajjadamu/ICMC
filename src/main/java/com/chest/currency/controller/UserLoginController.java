@@ -82,17 +82,17 @@ public class UserLoginController {
 
 		// VAULT CUSTODIAN NOTIFICATION
 		String craMsg, msgSAS, msgIndent, msgOtherBank, msgSoiled, msgDiversion = "";
-		LOG.info("user " + user);
-		LOG.info("user.getRole().getIcmcAccess() " + user.getRole().getIcmcAccess());
-		LOG.info("user.getRole().getIcmcAccess().equals(IcmcAccess.ICMC) "
+		LOG.error("user " + user);
+		LOG.error("user.getRole().getIcmcAccess() " + user.getRole().getIcmcAccess());
+		LOG.error("user.getRole().getIcmcAccess().equals(IcmcAccess.ICMC) "
 				+ user.getRole().getIcmcAccess().equals(IcmcAccess.ICMC));
 		if (user.getRole().getIcmcAccess().equals(IcmcAccess.ICMC)) {
 			// List<BinTransactionBOD> lastEOD=
 			// userAdministrationService.getLastEODData(user.getIcmcId());
 			dateBinTxn = userAdministrationService.getNotificationFromBinTransactionForEOD(user.getIcmcId());
-			LOG.info("Calendar date from binTransaction " + dateBinTxn);
+			LOG.error("Calendar date from binTransaction " + dateBinTxn);
 			if (dateBinTxn != null) {
-				LOG.info("Calendar date from binTransaction " + dateBinTxn.getTime());
+				LOG.error("Calendar date from binTransaction " + dateBinTxn.getTime());
 				parsedBinTxnDate = parsingDateFormate(dateBinTxn.getTime());
 				map.put("binTransactionDate", parsingDateFormate(dateBinTxn.getTime()));
 
@@ -101,8 +101,8 @@ public class UserLoginController {
 				UtilityJpa.setStartDate(sDate);
 				UtilityJpa.setEndDate(eDate);
 
-				LOG.info("sDate from binTransaction " + sDate.getTime());
-				LOG.info("eDate from binTransaction " + eDate.getTime());
+				LOG.error("sDate from binTransaction " + sDate.getTime());
+				LOG.error("eDate from binTransaction " + eDate.getTime());
 				dateEOD = userAdministrationService.getNotificationFromBinTransactionBODForEOD(user.getIcmcId(), sDate,
 						eDate);
 				if (dateEOD != null) {
@@ -111,7 +111,7 @@ public class UserLoginController {
 				} else {
 					map.put("binTransactioEODDate", dateEOD);
 				}
-				LOG.info("dateEOD Controller from binTransaction " + dateEOD);
+				LOG.error("dateEOD Controller from binTransaction " + dateEOD);
 			}
 
 			// Notification pending bundle
@@ -123,7 +123,7 @@ public class UserLoginController {
 			craMsg = userAdministrationService.getNotificationFromCRA(user.getIcmcId());
 
 			dateBinTxn = userAdministrationService.getNotificationFromBinTransactionForEOD(user.getIcmcId());
-			LOG.info("Calendar date from binTransaction " + dateBinTxn);
+			LOG.error("Calendar date from binTransaction " + dateBinTxn);
 			if (dateBinTxn != null) {
 				map.put("binTransactionDate", parsingDateFormate(dateBinTxn.getTime()));
 				parsedBinTxnDate = parsingDateFormate(dateBinTxn.getTime());
@@ -132,9 +132,9 @@ public class UserLoginController {
 				UtilityJpa.setStartDate(sDate);
 				UtilityJpa.setEndDate(eDate);
 
-				LOG.info("dateBinTxn.getTime() " + dateBinTxn.getTime());
-				LOG.info("sDate from binTransaction " + sDate.getTime());
-				LOG.info("eDate from binTransaction " + eDate.getTime());
+				LOG.error("dateBinTxn.getTime() " + dateBinTxn.getTime());
+				LOG.error("sDate from binTransaction " + sDate.getTime());
+				LOG.error("eDate from binTransaction " + eDate.getTime());
 				dateEOD = userAdministrationService.getNotificationFromBinTransactionBODForEOD(user.getIcmcId(), sDate,
 						eDate);
 				if (dateEOD != null) {
@@ -143,7 +143,7 @@ public class UserLoginController {
 				} else {
 					map.put("binTransactioEODDate", dateEOD);
 				}
-				LOG.info("dateEOD Controller from binTransaction " + dateEOD);
+				LOG.error("dateEOD Controller from binTransaction " + dateEOD);
 			}
 
 			// Notification pending bundle
@@ -165,8 +165,10 @@ public class UserLoginController {
 
 		}
 		// Close NOTIFICATION CODE
-		LOG.info("dateEOD  " + dateEOD);
-		LOG.info("dateBinTxn " + dateBinTxn);
+		LOG.error("dateEOD  " + dateEOD);
+		LOG.error("dateBinTxn " + dateBinTxn);
+		user.setLastLogin(Calendar.getInstance());
+		userAdministrationService.updateUser(user);
 
 		if (parsedEodDate == null && parsedBinTxnDate != null
 				&& (!parsingDateFormate(new Date()).equals(parsedBinTxnDate))) {
@@ -230,17 +232,17 @@ public class UserLoginController {
 					Date currentDate = new Date();
 					Date endDate = new Date();
 					endDate = delegateRight.getPeriodTo();
-					LOG.info("currentDate " + currentDate);
-					LOG.info("startDate " + startDate);
-					LOG.info("endDate " + endDate);
+					LOG.error("currentDate " + currentDate);
+					LOG.error("startDate " + startDate);
+					LOG.error("endDate " + endDate);
 					if (currentDate.after(startDate) && currentDate.before(endDate)) {
-						LOG.info("in between ");
+						LOG.error("in between ");
 						if (user.getId().equalsIgnoreCase(delegateRight.getUserId())) {
 							access = delegateRight.getRole().getIcmcAccess();
 							user.setRole(delegateRight.getRole());
 						}
 					} else {
-						LOG.info("out of range ");
+						LOG.error("out of range ");
 					}
 
 				}
@@ -269,10 +271,11 @@ public class UserLoginController {
 					session.setAttribute("icmcName", "INDIA");
 
 				}
-
+				SimpleDateFormat fmt = new SimpleDateFormat("dd-M-yyyy hh:mm:ss");
 				session.setAttribute("loggedInUser", user.getRole());
 				session.setAttribute("login", user);
 				session.setAttribute("loggedInUserName", user.getName());
+				session.setAttribute("lastLogin", fmt.format(user.getLastLogin().getTime()));
 
 			}
 		} catch (Exception e) {

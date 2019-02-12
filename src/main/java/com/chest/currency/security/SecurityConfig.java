@@ -83,7 +83,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
 	public void configure(WebSecurity web) throws Exception {
-		web.ignoring().antMatchers("/app/resources/**", "/app/js/**", "/app/api/lam/**","/app/assets/plugins/**");
+		web.ignoring().antMatchers("/app/resources/**", "/app/js/**", "/app/api/lam/**", "/app/assets/plugins/**");
 	}
 
 	@Override
@@ -91,7 +91,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 		http.authorizeRequests().antMatchers("/app/login").permitAll().antMatchers("/app/resetPasswordRequest")
 				.permitAll().antMatchers("/app/resetPassword").permitAll()
-				
+
 				.antMatchers("/app/addRole/**").hasRole(PermissionName.ADD_ROLE.val).antMatchers("/app/saveRole/**")
 				.hasAnyRole(PermissionName.ADD_ROLE.val, PermissionName.UPDATE_ROLE.val).antMatchers("/app/editRole/**")
 				.hasRole(PermissionName.UPDATE_ROLE.val).antMatchers("/app/updateRole/**")

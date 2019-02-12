@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -100,8 +101,8 @@ public class CashReceiptController {
 		StringBuilder sbBinName = new StringBuilder();
 		List<BranchReceipt> shrinkBeanList = null;
 
-		LOG.info("branchReceipt " + branchReceipt);
-		LOG.info("branchReceipt.isFromProcessingRoom() " + branchReceipt.isFromProcessingRoom());
+		LOG.error("branchReceipt " + branchReceipt);
+		LOG.error("branchReceipt.isFromProcessingRoom() " + branchReceipt.isFromProcessingRoom());
 		if (branchReceipt.isFromProcessingRoom()) {
 			branchReceipt.setBundle(branchReceipt.getBundle().multiply(BigDecimal.valueOf(10)));
 		}
@@ -118,62 +119,64 @@ public class CashReceiptController {
 		}
 		synchronized (icmcService.getSynchronizedIcmc(user)) {
 			shrinkBeanList = cashReceiptService.processBranchReceipt(branchReceipt, user);
-		}
-		prnList.add(sbBinName.toString());
-		boolean isAllSuccess = shrinkBeanList != null && shrinkBeanList.size() > 0;
-		if (isAllSuccess) {
-			for (BranchReceipt br : shrinkBeanList) {
-				sbBinName.append(br.getBin()).append(",");
-				try {
-					String oldtext = readPRNFileData();
-					if (branchReceipt.getProcessedOrUnprocessed().equalsIgnoreCase("UNPROCESS")) {
-						String replacedtext = oldtext.replaceAll("bin", "" + br.getBin());
-						replacedtext = replacedtext.replaceAll("branch", "" + br.getBranch());
-						replacedtext = replacedtext.replaceAll("solId", "" + br.getSolId());
-						replacedtext = replacedtext.replaceAll("denom", "" + br.getDenomination());
-						replacedtext = replacedtext.replaceAll("bundle", "" + br.getBundle());
 
-						String formattedTotal = CurrencyFormatter.inrFormatter(br.getTotal()).toString();
-						replacedtext = replacedtext.replaceAll("total", "" + formattedTotal);
-
-						sb = new StringBuilder(replacedtext);
-						UtilityJpa.PrintToPrinter(sb, user);
-					} else if (branchReceipt.getProcessedOrUnprocessed().equalsIgnoreCase("PROCESSED")) {
-						for (int i = 0; i < branchReceipt.getBundle().intValue(); i++) {
-							String replacedtext = oldtext.replaceAll("bin", "" + br.getCurrencyType());
-							replacedtext = replacedtext.replaceAll("Bin: ", "" + "");
-							replacedtext = replacedtext.replaceAll("Branch: ", "" + br.getBranch());
-							replacedtext = replacedtext.replaceAll("Sol ID :", "" + "");
-							replacedtext = replacedtext.replaceAll("branch", "" + br.getDenomination());
-							replacedtext = replacedtext.replaceAll("solId", "" + br.getBin());
+			prnList.add(sbBinName.toString());
+			boolean isAllSuccess = shrinkBeanList != null && shrinkBeanList.size() > 0;
+			LOG.error("shrinkBeanList size " + shrinkBeanList.size());
+			LOG.error("shrinkBeanList " + shrinkBeanList);
+			if (isAllSuccess) {
+				for (BranchReceipt br : shrinkBeanList) {
+					sbBinName.append(br.getBin()).append(",");
+					try {
+						String oldtext = readPRNFileData();
+						if (branchReceipt.getProcessedOrUnprocessed().equalsIgnoreCase("UNPROCESS")) {
+							String replacedtext = oldtext.replaceAll("bin", "" + br.getBin());
+							replacedtext = replacedtext.replaceAll("branch", "" + br.getBranch());
+							replacedtext = replacedtext.replaceAll("solId", "" + br.getSolId());
 							replacedtext = replacedtext.replaceAll("denom", "" + br.getDenomination());
-							replacedtext = replacedtext.replaceAll("bundle", "" + BigDecimal.ONE);
+							replacedtext = replacedtext.replaceAll("bundle", "" + br.getBundle());
 
-							String formattedTotal = CurrencyFormatter
-									.inrFormatter(BigDecimal.valueOf(br.getDenomination() * 1000)).toString();
+							String formattedTotal = CurrencyFormatter.inrFormatter(br.getTotal()).toString();
 							replacedtext = replacedtext.replaceAll("total", "" + formattedTotal);
 
 							sb = new StringBuilder(replacedtext);
 							UtilityJpa.PrintToPrinter(sb, user);
-						}
-					}
-					prnList.add(sb.toString());
-					LOG.info("Branch Receipt PRN: " + sb);
+						} else if (branchReceipt.getProcessedOrUnprocessed().equalsIgnoreCase("PROCESSED")) {
+							for (int i = 0; i < branchReceipt.getBundle().intValue(); i++) {
+								String replacedtext = oldtext.replaceAll("bin", "" + br.getCurrencyType());
+								replacedtext = replacedtext.replaceAll("Bin: ", "" + "");
+								replacedtext = replacedtext.replaceAll("Branch: ", "" + br.getBranch());
+								replacedtext = replacedtext.replaceAll("Sol ID :", "" + "");
+								replacedtext = replacedtext.replaceAll("branch", "" + br.getDenomination());
+								replacedtext = replacedtext.replaceAll("solId", "" + br.getBin());
+								replacedtext = replacedtext.replaceAll("denom", "" + br.getDenomination());
+								replacedtext = replacedtext.replaceAll("bundle", "" + BigDecimal.ONE);
 
-				} catch (IOException ioe) {
-					LOG.info("Branch Receipt IOException: " + ioe);
-					ioe.printStackTrace();
-				} catch (Exception e) {
-					e.printStackTrace();
-					LOG.info("Branch Receipt Exception: " + e);
+								String formattedTotal = CurrencyFormatter
+										.inrFormatter(BigDecimal.valueOf(br.getDenomination() * 1000)).toString();
+								replacedtext = replacedtext.replaceAll("total", "" + formattedTotal);
+
+								sb = new StringBuilder(replacedtext);
+								UtilityJpa.PrintToPrinter(sb, user);
+							}
+						}
+						prnList.add(sb.toString());
+						LOG.error("Branch Receipt PRN: " + sb);
+
+					} catch (IOException ioe) {
+						LOG.error("Branch Receipt IOException: " + ioe);
+						ioe.printStackTrace();
+					} catch (Exception e) {
+						e.printStackTrace();
+						LOG.error("Branch Receipt Exception: " + e);
+					}
 				}
+			} else {
+				throw new RuntimeException("Error while saving saveTxListAndShrink, Please try again");
 			}
-		} else {
-			throw new RuntimeException("Error while saving saveTxListAndShrink, Please try again");
+			prnList.set(0, sbBinName.toString());
+			LOG.error("BRANCH RECEIPT end");
 		}
-		prnList.set(0, sbBinName.toString());
-		LOG.info("BRANCH RECEIPT end");
-		// }
 		return prnList;
 	}
 
@@ -217,47 +220,48 @@ public class CashReceiptController {
 			}
 			synchronized (icmcService.getSynchronizedIcmc(user)) {
 				freshList = cashReceiptService.processFreshFromRBI(fresh, user, YesNo.No, binCategoryType, cashType);
-			}
-			boolean isAllSuccess = freshList != null && freshList.size() > 0;
-			if (isAllSuccess) {
-				for (FreshFromRBI freshFromRBI : freshList) {
-					sbBinName.append(freshFromRBI.getBin()).append(",");
 
-					if (freshFromRBI.getCashType().equals(CashType.NOTES)) {
-						try {
-							String oldtext = readPRNFileData();
-							String replacedtext = UtilityMapper.getPRNToPrintForFreshNotes(freshFromRBI, oldtext);
-							sb = new StringBuilder(replacedtext);
-							LOG.info("Fresh From Notes RBI PRN: " + sb);
-							UtilityJpa.PrintToPrinter(sb, user);
-						} catch (IOException ioe) {
-							ioe.printStackTrace();
-						}
-					} else if (freshFromRBI.getCashType().equals(CashType.COINS)) {
-						for (int i = 1; i <= freshFromRBI.getNoOfBags(); i++) {
+				boolean isAllSuccess = freshList != null && freshList.size() > 0;
+				if (isAllSuccess) {
+					for (FreshFromRBI freshFromRBI : freshList) {
+						sbBinName.append(freshFromRBI.getBin()).append(",");
+
+						if (freshFromRBI.getCashType().equals(CashType.NOTES)) {
 							try {
 								String oldtext = readPRNFileData();
-								int sequence = freshFromRBI.getBagSequenceFromDB() + i;
-								String replacedtext = UtilityMapper.getPRNToPrintForFreshCoins(freshFromRBI, oldtext,
-										sequence);
+								String replacedtext = UtilityMapper.getPRNToPrintForFreshNotes(freshFromRBI, oldtext);
 								sb = new StringBuilder(replacedtext);
-								// prnList.add(sb.toString());
-								LOG.info("Fresh Coins From RBI PRN: " + sb);
+								LOG.error("Fresh From Notes RBI PRN: " + sb);
 								UtilityJpa.PrintToPrinter(sb, user);
-
 							} catch (IOException ioe) {
 								ioe.printStackTrace();
 							}
+						} else if (freshFromRBI.getCashType().equals(CashType.COINS)) {
+							for (int i = 1; i <= freshFromRBI.getNoOfBags(); i++) {
+								try {
+									String oldtext = readPRNFileData();
+									int sequence = freshFromRBI.getBagSequenceFromDB() + i;
+									String replacedtext = UtilityMapper.getPRNToPrintForFreshCoins(freshFromRBI,
+											oldtext, sequence);
+									sb = new StringBuilder(replacedtext);
+									// prnList.add(sb.toString());
+									LOG.error("Fresh Coins From RBI PRN: " + sb);
+									UtilityJpa.PrintToPrinter(sb, user);
+
+								} catch (IOException ioe) {
+									ioe.printStackTrace();
+								}
+							}
 						}
 					}
+				} else {
+					throw new RuntimeException("Problem while saving saveTxListAndFreshFromRBI, Please try again");
 				}
-			} else {
-				throw new RuntimeException("Problem while saving saveTxListAndFreshFromRBI, Please try again");
+				LOG.error("Fresh From RBI PRN: " + sbBinName.toString());
+				// prnList.set(0, sbBinName.toString());
 			}
-			LOG.info("Fresh From RBI PRN: " + sbBinName.toString());
-			// prnList.set(0, sbBinName.toString());
 		}
-		LOG.info("before Return RBI PRN: " + sbBinName.toString());
+		LOG.error("before Return RBI PRN: " + sbBinName.toString());
 		prnList.add(sbBinName.toString());
 		return prnList;
 	}
@@ -330,7 +334,7 @@ public class CashReceiptController {
 						}
 						prnList.add(sb.toString());
 
-						LOG.info("Diversion IRV PRN: " + sb);
+						LOG.error("Diversion IRV PRN: " + sb);
 					} catch (IOException ioe) {
 						ioe.printStackTrace();
 					}
@@ -339,7 +343,7 @@ public class CashReceiptController {
 				throw new RuntimeException("Error while saving saveTxListAndDiversionIRV, Please try again");
 			}
 			prnList.set(0, sbBinName.toString());
-			LOG.info("Diversion IRV ");
+			LOG.error("Diversion IRV ");
 		}
 		return prnList;
 	}
@@ -370,18 +374,20 @@ public class CashReceiptController {
 				dsb.setBinCategoryType(BinCategoryType.PROCESSING);
 			}
 			dsb.setCurrencyType(CurrencyType.UNPROCESS);
-			LOG.info("dsb  Form Data getProcessingOrVault" + dsb.getProcessingOrVault());
+			LOG.error("dsb  Form Data getProcessingOrVault" + dsb.getProcessingOrVault());
 			try {
-				LOG.info("dsb from Form Data after Validation: " + dsb);
+				LOG.error("dsb from Form Data after Validation: " + dsb);
 				dsbList = cashReceiptService.processDSB(dsb, user);
 			} catch (Exception ex) {
-				LOG.info("Error has occred " + ex);
+				LOG.error("Error has occred " + ex);
 				throw ex;
 			}
 			boolean isAllSuccess = dsbList != null && dsbList.size() > 0;
-			LOG.info("isAllSuccess DSB " + isAllSuccess);
+			LOG.error("isAllSuccess DSB " + isAllSuccess);
 			if (isAllSuccess) {
+				LOG.error("dsbList size " + dsbList.size());
 				for (DSB dsbQR : dsbList) {
+					LOG.error("dsbQR  " + dsbQR);
 					sbBinName.append(dsbQR.getBin()).append(",");
 					try {
 						String oldtext = readPRNFileData();
@@ -400,7 +406,7 @@ public class CashReceiptController {
 						prnList.add(sb.toString());
 
 						UtilityJpa.PrintToPrinter(sb, user);
-						LOG.info("DSB prn: " + sb);
+						LOG.error("DSB prn: " + sb);
 					} catch (IOException ioe) {
 						ioe.printStackTrace();
 					}
@@ -409,7 +415,7 @@ public class CashReceiptController {
 				throw new BaseGuiException("Error while saving saveTxListAndDSB, Please try again");
 			}
 			prnList.set(0, sbBinName.toString());
-			LOG.info("DSB end");
+			LOG.error("DSB end");
 		}
 		return prnList;
 	}
@@ -629,7 +635,7 @@ public class CashReceiptController {
 		List<BankReceipt> otherBankReceiptList = null;
 
 		synchronized (icmcService.getSynchronizedIcmc(user)) {
-			LOG.info("Other Bank Receipt bankReceipt " + bankReceipt);
+			LOG.error("Other Bank Receipt bankReceipt " + bankReceipt);
 			bankReceipt.setInsertBy(user.getId());
 			bankReceipt.setUpdateBy(user.getId());
 			bankReceipt.setInsertTime(now);
@@ -640,6 +646,7 @@ public class CashReceiptController {
 			otherBankReceiptList = cashReceiptService.processBankReceipt(bankReceipt, user);
 			boolean isAllSuccess = otherBankReceiptList != null && otherBankReceiptList.size() > 0;
 			if (isAllSuccess) {
+				LOG.error("otherBankReceiptList size " + otherBankReceiptList.size());
 				for (BankReceipt otherBankReceipt : otherBankReceiptList) {
 					sbBinName.append(otherBankReceipt.getBinNumber()).append(",");
 					try {
@@ -659,7 +666,7 @@ public class CashReceiptController {
 						prnList.add(sb.toString());
 
 						UtilityJpa.PrintToPrinter(sb, user);
-						LOG.info("Other Bank Receipt PRN: " + sb);
+						LOG.error("Other Bank Receipt PRN: " + sb);
 					} catch (IOException ioe) {
 						ioe.printStackTrace();
 					}
@@ -667,9 +674,9 @@ public class CashReceiptController {
 			} else {
 				throw new RuntimeException("Error while saving Other Bank Receipt, Please try again");
 			}
-			LOG.info("Other Bank Receipt sbBinName.toString() " + sbBinName.toString());
+			LOG.error("Other Bank Receipt sbBinName.toString() " + sbBinName.toString());
 
-			LOG.info("Other Bank Receipt return " + prnList);
+			LOG.error("Other Bank Receipt return " + prnList);
 		}
 		prnList.add(sbBinName.toString());
 		// prnList.set(0, sbBinName.toString());
@@ -821,7 +828,7 @@ public class CashReceiptController {
 			try {
 				freshList = cashReceiptService.processFreshFromRBIAfterCounting(freshFromRBi, user);
 			} catch (Exception ex) {
-				LOG.info("Error has occred", ex);
+				LOG.error("Error has occred", ex);
 				throw ex;
 			}
 
@@ -848,7 +855,7 @@ public class CashReceiptController {
 
 							sb = new StringBuilder(replacedtext);
 							prnList.add(sb.toString());
-							LOG.info("Process FreshFromRBI O/P PRN  =" + sb);
+							LOG.error("Process FreshFromRBI O/P PRN  =" + sb);
 
 							UtilityJpa.PrintToPrinter(sb, user);
 						}
@@ -1052,7 +1059,7 @@ public class CashReceiptController {
 
 							sb = new StringBuilder(replacedtext);
 							prnList.add(sb.toString());
-							LOG.info("Branch Receipt PRN: " + sb);
+							LOG.error("Branch Receipt PRN: " + sb);
 
 							UtilityJpa.PrintToPrinter(sb, user);
 
@@ -1222,7 +1229,7 @@ public class CashReceiptController {
 		return new ModelAndView("CashReceiptReports", map);
 	}
 
-	@RequestMapping(value = "/getReceiptSequence")
+	@RequestMapping(value = "/getReceiptSequence", method = RequestMethod.GET)
 	@ResponseBody
 	public Integer getReceiptSequence(@RequestParam(value = "name") String name, HttpSession session) {
 		User user = (User) session.getAttribute("login");
@@ -1230,7 +1237,7 @@ public class CashReceiptController {
 		dsb.setName(name);
 		Integer sequence = cashReceiptService.getDSBReceiptSequence(user.getIcmcId(), dsb);
 		if (sequence != null) {
-			sequence++;
+			++sequence;
 		} else {
 			sequence = 1;
 		}
@@ -1254,7 +1261,7 @@ public class CashReceiptController {
 			replacedtext = replacedtext.replaceAll("total", "" + formattedTotal);
 
 			sb = new StringBuilder(replacedtext);
-			LOG.info("Branch Receipt PRN: " + sb);
+			LOG.error("Branch Receipt PRN: " + sb);
 
 			UtilityJpa.PrintToPrinter(sb, user);
 
@@ -1282,7 +1289,7 @@ public class CashReceiptController {
 			String formattedTotal = CurrencyFormatter.inrFormatter(dsbQR.getTotal()).toString();
 			replacedtext = replacedtext.replaceAll("total", "" + formattedTotal);
 			sb = new StringBuilder(replacedtext);
-			LOG.info("DSB prn: " + sb);
+			LOG.error("DSB prn: " + sb);
 
 			UtilityJpa.PrintToPrinter(sb, user);
 		} catch (IOException ioe) {
@@ -1310,7 +1317,7 @@ public class CashReceiptController {
 			replacedtext = replacedtext.replaceAll("total", "" + formattedTotal);
 			sb = new StringBuilder(replacedtext);
 
-			LOG.info("Diversion IRV PRN: " + sb);
+			LOG.error("Diversion IRV PRN: " + sb);
 			UtilityJpa.PrintToPrinter(sb, user);
 		} catch (IOException ioe) {
 			ioe.printStackTrace();
@@ -1336,7 +1343,7 @@ public class CashReceiptController {
 			String formattedTotal = CurrencyFormatter.inrFormatter(bankReceipt.getTotal()).toString();
 			replacedtext = replacedtext.replaceAll("total", "" + formattedTotal);
 			sb = new StringBuilder(replacedtext);
-			LOG.info("Other Bank Receipt PRN: " + sb);
+			LOG.error("Other Bank Receipt PRN: " + sb);
 			UtilityJpa.PrintToPrinter(sb, user);
 		} catch (IOException ioe) {
 			ioe.printStackTrace();
@@ -1346,9 +1353,9 @@ public class CashReceiptController {
 
 	private String readPRNFileData() throws FileNotFoundException, IOException {
 		File file = new File(prnFilePath);
-		LOG.info("file for bank print " + file);
+		LOG.error("file for bank print " + file);
 		BufferedReader reader = new BufferedReader(new FileReader(file));
-		LOG.info("reader " + reader);
+		LOG.error("reader " + reader);
 		String line = "", oldtext = "";
 		while ((line = reader.readLine()) != null) {
 			oldtext += line + "\r\n";
@@ -1367,7 +1374,7 @@ public class CashReceiptController {
 				String oldtext = readPRNFileData();
 				String replacedtext = UtilityMapper.getPRNToPrintForFreshNotes(freshFromRBI, oldtext);
 				sb = new StringBuilder(replacedtext);
-				LOG.info("Fresh Notes From RBI PRN: " + sb);
+				LOG.error("Fresh Notes From RBI PRN: " + sb);
 				UtilityJpa.PrintToPrinter(sb, user);
 
 			} catch (IOException ioe) {
@@ -1381,7 +1388,7 @@ public class CashReceiptController {
 					int sequence = freshFromRBI.getBagSequenceFromDB() + i;
 					String replacedtext = UtilityMapper.getPRNToPrintForFreshCoins(freshFromRBI, oldtext, sequence);
 					sb = new StringBuilder(replacedtext);
-					LOG.info("Fresh Coins From RBI PRN: " + sb);
+					LOG.error("Fresh Coins From RBI PRN: " + sb);
 					UtilityJpa.PrintToPrinter(sb, user);
 
 				} catch (IOException ioe) {

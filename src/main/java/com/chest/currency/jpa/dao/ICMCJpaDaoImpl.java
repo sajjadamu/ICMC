@@ -28,7 +28,7 @@ public class ICMCJpaDaoImpl implements ICMCJpaDao {
 	@Override
 	public boolean createICMC(ICMC icmc) {
 		em.persist(icmc);
-		LOG.info("New ICMC has been created");
+		LOG.error("New ICMC has been created");
 		return true;
 	}
 	
@@ -67,7 +67,7 @@ public class ICMCJpaDaoImpl implements ICMCJpaDao {
 	
 	@Override
 	public boolean uploadICMC(List<ICMC> icmcList, ICMC icmc) {
-		LOG.info("Going to insert list of ICMC's");
+		LOG.error("Going to insert list of ICMC's");
 		for(ICMC icmcTemp : icmcList){
 			icmcTemp.setInsertBy(icmc.getInsertBy());
 			icmcTemp.setUpdateBy(icmc.getUpdateBy());

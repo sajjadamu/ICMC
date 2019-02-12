@@ -639,7 +639,8 @@ $(document).ready(function(){
 
 										<div class="form-group">
 											<label>Number of Shrink Wraps</label> <input type="text"
-												id="member" name="member" value="" class="form-control"><br />
+												autocomplete="off" id="member" name="member" value=""
+												class="form-control"><br />
 											<div id="container">
 												<table id="table1">
 												</table>
@@ -678,7 +679,7 @@ $(document).ready(function(){
 
 	</div>
 
-	
+
 	<!-- jQuery -->
 	<script src="./resources/bower_components/jquery/dist/jquery.min.js"></script>
 

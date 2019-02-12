@@ -55,7 +55,7 @@ public class HolidayMasterController {
 	public ModelAndView viewHoliday() {
 		ModelMap model = new ModelMap();
 		HolidayMaster obj = new HolidayMaster();
-		LOG.info("View Holiday List Page");
+		LOG.error("View Holiday List Page");
 		model.put("stateList", State.values());
 		model.put("user", obj);
 		return new ModelAndView("viewHoliday", model);

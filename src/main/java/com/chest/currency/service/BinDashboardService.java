@@ -205,7 +205,7 @@ public interface BinDashboardService {
 	public List<String> getBinFromBinMasterForCashTransfer(BigInteger icmcId, CurrencyType binType);
 
 	public List<String> getBoxFromBoxMasterForCashTransfer(BigInteger icmcId, int denomination,
-			CurrencyType currencyType);
+			CurrencyType currencyType,BigDecimal bundle);
 
 	public BinTransaction checkBinOrBox(BigInteger icmcId, String binNumber);
 
@@ -380,6 +380,6 @@ public interface BinDashboardService {
 	// void saveAudit(Audit audit);
 
 	public boolean processForPartialCashTransfer(User user, String formBinOrBox, String toBinOrBox, BigDecimal bundle,
-			CashTransfer cashTransfer);
+			CashTransfer cashTransfer, BinTransaction binTxn);
 
 }

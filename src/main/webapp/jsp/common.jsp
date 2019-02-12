@@ -1,7 +1,8 @@
 <head>
 <meta name="_csrf" content="${_csrf.token}" />
 </head>
-
+<link rel="shortcut icon" href="./resources/logo/favicon.ico"
+	type="image/x-icon">
 <script type="text/javascript">
 	function addHeader() {
 		$.ajaxSetup({

@@ -24,7 +24,7 @@ public class UtilityService {
 	private static final Logger LOG = LoggerFactory.getLogger(UtilityService.class);
 	static PasswordEncoder psw = new BCryptPasswordEncoder();
 
-	public static User setUserDetail(QueryRequestCo queryRequest, ICMC icmc) {
+	public static User setUserDetail(QueryRequestCo queryRequest, ICMC icmc, User userDb) throws Exception {
 		User user = new User();
 		String accessRequest = queryRequest.getAccessRequest();
 		// String additionalDetail = queryRequest.getAdditionalDetail();
@@ -37,19 +37,24 @@ public class UtilityService {
 		user.setEmail(userDetails[6]);
 		user.setCreatedDateTime(Calendar.getInstance());
 		user.setUpdatedDateTime(Calendar.getInstance());
-		if (queryRequest.getRoles() != null) {
+		String getRole = null;
+		if (queryRequest.getRoles() != null && !queryRequest.getRoles().equalsIgnoreCase("NA")) {
 			String roles = queryRequest.getRoles();
 			String[] roleName = roles.split(Pattern.quote("|"));
-			String getRole = null;
+			if (!roleName[0].equals("1") || roleName.length > 3)
+				throw new Exception("Application does not support multiple roles");
+
 			if (roleName.length == 2) {
 				getRole = roleName[1];
 			} else {
 				getRole = roleName[2];
 			}
-			Role role = new Role();
-			role.setId(getRole);
-			user.setRole(role);
+		} else if (userDb != null) {
+			getRole = userDb.getRole().getId();
 		}
+		Role role = new Role();
+		role.setId(getRole);
+		user.setRole(role);
 		user.setPassword(psw.encode("null"));
 		user.setZoneId(icmc.getZone());
 		user.setRegionId(icmc.getRegion());
@@ -68,24 +73,7 @@ public class UtilityService {
 		requestLog.setRequestUrl(request.getRequestURI().toString());
 		requestLog.setCreatedDateTime(Calendar.getInstance());
 		requestLog.setUpdatedDateTime(Calendar.getInstance());
-		if (null != queryRequest.getActivity()) {
-			switch (queryRequest.getActivity().toUpperCase()) {
-			case "I":
-				requestLog.setActivity(Activity.valueOf("CREATE"));
-				break;
-			case "U":
-				requestLog.setActivity(Activity.valueOf("MODIFY"));
-				break;
-			case "UN":
-				requestLog.setActivity(Activity.valueOf("UNLOCK"));
-				break;
-			case "D":
-				requestLog.setActivity(Activity.valueOf("DELETE"));
-				break;
-			}
-			requestLog.setActivity(Activity.valueOf("CREATE"));
-		}
-		LOG.info("set lam requestLog " + requestLog);
+		requestLog.setActivity(Activity.valueOf(queryRequest.getActivity()));
 
 		return requestLog;
 	}

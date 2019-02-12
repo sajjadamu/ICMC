@@ -66,24 +66,24 @@
 
 function doAjaxPostCancel(id){
 	addHeaderJson();
-	var idFromUI = id;
+	var binNum = id;
 
 	if (confirm('Are you sure you want to cancel this prepered soiled box?')) {
 		$("#cancel"+idFromUI).prop('disabled',true);
 		
 		$.ajax({
 			type : "POST",
-			url : "././",
-			data : "idFromUI=" + idFromUI,
+			url : "././cancelPreparedSoiledBox",
+			data : "binNum=" + binNum,
 			success : function(response) {
 				//alert('response: ' +response.responseJSON.message);
 				alert('Record Cancelled.');
-				window.location='././viewORV';
+				window.location='././viewPreparedSoiledBoxes';
 			},
 			error : function(e) {
 				//alert('Error Occured: ' + e);
-				alert(e.responseJSON.message);
-				//window.location='././viewORV';
+				//alert(e.responseJSON.message);
+				window.location='././viewPreparedSoiledBoxes';
 			}
 		});
 	} else {
@@ -135,7 +135,7 @@ function doAjaxPostCancel(id){
 														<th>Category</th>
 														<th>Prepared Date</th>
 														<th>Total Value</th>
-														<th>Cancel</th>
+														<!-- <th>Cancel</th> -->
 													</tr>
 												</thead>
 												<tfoot>
@@ -155,8 +155,9 @@ function doAjaxPostCancel(id){
 															<td><fmt:formatDate pattern="dd-MMM-yy"
 																	value="${row.insertTime.time}" /></td>
 															<td>${row.value}</td>
-															<td><input id="cancel${row.id}" type="button"
-																value="Cancel" onclick="doAjaxPostCancel(${row.id});"></td>
+															<%-- <td><input id="cancel${row.id}" type="button"
+																value="Cancel"
+																onclick="doAjaxPostCancel(${row.binNumber});"></td> --%>
 														</tr>
 													</c:forEach>
 												</tbody>

@@ -30,7 +30,7 @@ public class VendorController {
 	@RequestMapping("/addVendor")
 	public ModelAndView addVendor() {
 		Vendor obj = new Vendor();
-		LOG.info("Add Vendor Page");
+		LOG.error("Add Vendor Page");
 		return new ModelAndView("/vendor", "user", obj);
 	}
 
@@ -52,7 +52,7 @@ public class VendorController {
 	@RequestMapping("/viewVendor")
 	public ModelAndView getVendorRecord() {
 		List<Vendor> vendorList = vendorService.getVendorList();
-		LOG.info("VIEW VENDOR RECORD");
+		LOG.error("VIEW VENDOR RECORD");
 		return new ModelAndView("/viewVendor", "records", vendorList);
 	}
 

@@ -38,7 +38,7 @@ public class RolePermissionController {
 
 	@RequestMapping("/viewRole")
 	public ModelAndView viewRole() {
-		LOG.info("View existing Roles");
+		LOG.error("View existing Roles");
 		List<Role> roleList = rolePermissionService.getRoleList();
 		return new ModelAndView("/viewRole", "records", roleList);
 	}

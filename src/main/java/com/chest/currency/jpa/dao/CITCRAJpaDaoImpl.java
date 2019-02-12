@@ -37,11 +37,11 @@ public class CITCRAJpaDaoImpl implements CITCRAJpaDao {
 
 	@Override
 	public List<CITCRAVendor> getCITCRAVendor() {
-		LOG.info("Going to fetch CIT_CRA_Vendor List..");
+		LOG.error("Going to fetch CIT_CRA_Vendor List..");
 		JPAQuery jpaQuery = getFromQueryForCitCraVendor(); 
 		jpaQuery.where(QCITCRAVendor.cITCRAVendor.status.eq(Status.ENABLED));
 		List<CITCRAVendor> citcravendor = jpaQuery.list(QCITCRAVendor.cITCRAVendor);
-		LOG.info("Fetched citcraVendorList :", citcravendor);
+		LOG.error("Fetched citcraVendorList :", citcravendor);
 	    return citcravendor;
 	}
 	
@@ -70,7 +70,7 @@ public class CITCRAJpaDaoImpl implements CITCRAJpaDao {
 	@Override
 	public boolean addCitCraVendor(CITCRAVendor citcraVendor) {
 		em.persist(citcraVendor);
-		LOG.info("New CITCRAVendor saved");
+		LOG.error("New CITCRAVendor saved");
 		return true;
 	}
 	
@@ -141,18 +141,18 @@ public class CITCRAJpaDaoImpl implements CITCRAJpaDao {
 	
 	@Override
 	public List<CITCRAVehicle> getVehicleDetails() {
-		LOG.info("Going to fetch CITCRAVehical info...");
+		LOG.error("Going to fetch CITCRAVehical info...");
 		JPAQuery jpaQuery = getFromQueryForVehical(); 
 		jpaQuery.where(QCITCRAVehicle.cITCRAVehicle.status.eq(Status.ENABLED));
 		List<CITCRAVehicle> citcravehicle = jpaQuery.list(QCITCRAVehicle.cITCRAVehicle);
-		LOG.info("Fetched citcravehicleList :", citcravehicle);
+		LOG.error("Fetched citcravehicleList :", citcravehicle);
 	    return citcravehicle;
 	}
 	
 	@Override
 	public boolean addVehicle(CITCRAVehicle vehicle) {
 		em.persist(vehicle);
-		LOG.info("New CIT CRA Vehicle has been Saved");
+		LOG.error("New CIT CRA Vehicle has been Saved");
 		return true;
 	}
 	
@@ -175,7 +175,7 @@ public class CITCRAJpaDaoImpl implements CITCRAJpaDao {
 		JPAQuery jpaQuery = getFromQueryForCitCraVendor();
 		jpaQuery.where(QCITCRAVendor.cITCRAVendor.region.eq(regionId));
 		List<CITCRAVendor> vendorList = jpaQuery.list(QCITCRAVendor.cITCRAVendor);
-		LOG.info("Fetched citcraVendorList :", vendorList);
+		LOG.error("Fetched citcraVendorList :", vendorList);
 	    return vendorList;
 	}
 	
@@ -209,19 +209,19 @@ public class CITCRAJpaDaoImpl implements CITCRAJpaDao {
 	
 	@Override
 	public List<CITCRADriver> getVehicleDriverDetails() {
-		LOG.info("Going to fetch CITCRADriver info...");
+		LOG.error("Going to fetch CITCRADriver info...");
 		JPAQuery jpaQuery = getFromQueryForCitCraDriver(); 
 		jpaQuery.where(QCITCRADriver.cITCRADriver.status.eq(Status.ENABLED));
 		List<CITCRADriver> citcradriver = jpaQuery.list(QCITCRADriver.cITCRADriver);
 		
-		LOG.info("Fetched citcraDriverList :", citcradriver);
+		LOG.error("Fetched citcraDriverList :", citcradriver);
 	    return citcradriver;
 	}
 	
 	@Override
 	public boolean addDriver(CITCRADriver driver) {
 		em.persist(driver);
-		LOG.info("New CITCRADRiver save");
+		LOG.error("New CITCRADRiver save");
 		return true;
 	}
 	
@@ -245,7 +245,7 @@ public class CITCRAJpaDaoImpl implements CITCRAJpaDao {
 		JPAQuery jpaQuery = getFromQueryForVehical();
 		jpaQuery.where(QCITCRAVehicle.cITCRAVehicle.name.eq(vendor));
 		List<CITCRAVehicle> vehicleList = jpaQuery.list(QCITCRAVehicle.cITCRAVehicle);
-		LOG.info("Fetched citcraVendorList :", vehicleList);
+		LOG.error("Fetched citcraVendorList :", vehicleList);
 	    return vehicleList;
 	}
 	
@@ -259,7 +259,7 @@ public class CITCRAJpaDaoImpl implements CITCRAJpaDao {
 		JPAQuery jpaQuery = getFromQueryForVehical();
 		jpaQuery.where(QCITCRAVehicle.cITCRAVehicle.status.eq(Status.ENABLED));
 		List<String> vehicleList = jpaQuery.list(QCITCRAVehicle.cITCRAVehicle.number);
-		LOG.info("Fetched Vehicle List :", vehicleList);
+		LOG.error("Fetched Vehicle List :", vehicleList);
 		return vehicleList;
 	}
 	

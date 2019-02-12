@@ -38,9 +38,10 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 	@Transactional(readOnly = true)
 	@Override
 	public UserDetails loadUserByUsername(String userId) throws UsernameNotFoundException {
-		
+
 		LOG.info("userId getUserById.........." + userId);
 		User user = userAdministrationJpaDao.getUserById(userId);
+		// User user = userAdministrationJpaDao.isValidUser(userId);
 		LOG.info("user getUserById.........." + user);
 		DelegateRight delegateRight = userAdministrationJpaDao.getUserDelegatedRightById(user);
 		List<GrantedAuthority> authorities = buildUserAuthority(user.getRole(), delegateRight);

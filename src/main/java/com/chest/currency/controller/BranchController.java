@@ -57,7 +57,7 @@ public class BranchController {
 
 	@RequestMapping("/viewBranch")
 	public ModelAndView getBranchRecord() {
-		LOG.info("View Branch Records");
+		LOG.error("View Branch Records");
 		List<Branch> branchList = branchService.getBranch();
 		return new ModelAndView("/viewBranch", "records", branchList);
 	}
@@ -124,13 +124,13 @@ public class BranchController {
 			Branch dbBranch = branchService.isBranchNameValid(branch.getBranch());
 			List<ICMC> icmcList = branchService.getServicingICMCName();
 			if (dbBranch != null) {
-				LOG.info("Branch Name Already Exists");
+				LOG.error("Branch Name Already Exists");
 				model.put("records", icmcList);
 				model.put("user", branch);
 				model.put("duplicateBranch", "Branch name already exists, please choose any other name");
 				return new ModelAndView("/addBranch", model);
 			} else if (dbSolId != null) {
-				LOG.info("Sol ID Already Exists");
+				LOG.error("Sol ID Already Exists");
 				model.put("records", icmcList);
 				model.put("user", branch);
 				model.put("duplicateSolId", "Sol ID already exists, please choose any other Sol ID");

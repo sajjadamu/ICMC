@@ -24,7 +24,7 @@ public class HolidayMasterJpaDaoImpl implements HolidayMasterJpaDao {
 
 	@Override
 	public List<HolidayMaster> getHolidayList(String state) {
-		LOG.info("Fetching Holiday List");
+		LOG.error("Fetching Holiday List");
 		JPAQuery jpaQuery = getFromQueryForHolidayMaster();
 		
 		if(State.ANDAMAN_AND_NICOBAR_ISLANDS.name().equalsIgnoreCase(state)){

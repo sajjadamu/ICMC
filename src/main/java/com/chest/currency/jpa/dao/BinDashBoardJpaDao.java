@@ -207,7 +207,7 @@ public interface BinDashBoardJpaDao {
 	public List<String> getBinFromBinMasterForCashTransfer(BigInteger icmcId, CurrencyType binType);
 
 	public List<String> getBoxFromBoxMasterForCashTransfer(BigInteger icmcId, int denomination,
-			CurrencyType currencyType);
+			CurrencyType currencyType,BigDecimal bundle);
 
 	public BinTransaction checkBinOrBox(BigInteger icmcId, String binNumber);
 

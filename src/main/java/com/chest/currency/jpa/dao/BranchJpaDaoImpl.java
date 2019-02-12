@@ -37,11 +37,11 @@ public class BranchJpaDaoImpl implements BranchJpaDao {
 
 	@Override
 	public List<Branch> getBranch() {
-		LOG.info("Going to Fetch Retail Branch Records");
+		LOG.error("Going to Fetch Retail Branch Records");
 		JPAQuery jpaQuery = getFromQueryForBranch();
 		jpaQuery.where(QBranch.branch1.status.ne(Status.DELETED));
 		List<Branch> branchList = jpaQuery.list(QBranch.branch1);
-		LOG.info("Fetched Retail Branch Records:", branchList);
+		LOG.error("Fetched Retail Branch Records:", branchList);
 		return branchList;
 	}
 
@@ -53,7 +53,7 @@ public class BranchJpaDaoImpl implements BranchJpaDao {
 
 	@Override
 	public List<ICMC> getServicingICMCName() {
-		LOG.info("Going to Fetch ICMC Name");
+		LOG.error("Going to Fetch ICMC Name");
 		JPAQuery jpaQuery = getFromQueryForICMC();
 		jpaQuery.where(QICMC.iCMC.status.ne(Status.DELETED));
 		List<ICMC> icmcList = jpaQuery.list(QICMC.iCMC);
@@ -62,7 +62,7 @@ public class BranchJpaDaoImpl implements BranchJpaDao {
 
 	@Override
 	public boolean saveBranch(Branch branch) {
-		LOG.info("Going to insert branch records");
+		LOG.error("Going to insert branch records");
 		em.persist(branch);
 		return true;
 	}
@@ -85,7 +85,7 @@ public class BranchJpaDaoImpl implements BranchJpaDao {
 
 	@Override
 	public boolean uploadBranch(List<Branch> branchList, Branch branch) {
-		LOG.info("Going to insert list of branches");
+		LOG.error("Going to insert list of branches");
 		for(Branch branchTemp : branchList){
 			branchTemp.setInsertBy(branch.getInsertBy());
 			branchTemp.setUpdateBy(branch.getUpdateBy());

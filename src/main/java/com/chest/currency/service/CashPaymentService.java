@@ -232,6 +232,8 @@ public interface CashPaymentService {
 
 	public CRAAllocation getCRAAllocationDataById(long id, BigInteger icmcId);
 
+	CRA getCRAById(long id, BigInteger icmcId);
+
 	public void updateBinTxnForSoiledBox(BinTransaction binTxn);
 
 	public List<CRAAllocation> craPaymentDetails(BigInteger icmcId, long id);
@@ -345,7 +347,8 @@ public interface CashPaymentService {
 
 	public List<SASAllocation> getAllTodayAcceptedFromSASAllocation(BigInteger icmcId, Calendar sDate, Calendar eDate);
 
-	public SASAllocation getRequestedFromSASAllocation(BigInteger icmcId, Calendar sDate, Calendar eDate,Long parentId);
+	public SASAllocation getRequestedFromSASAllocation(BigInteger icmcId, Calendar sDate, Calendar eDate,
+			Long parentId);
 
 	public CRA getCRADetailById(long id);
 
@@ -398,5 +401,9 @@ public interface CashPaymentService {
 	public List<SoiledRemittanceAllocation> getSoiledForAccept(BigInteger icmcId, Calendar sDate, Calendar eDate);
 
 	List<SASAllocation> getSasAllocationByBinNumberBundle(SASAllocation sasAlo);
+
+	List<Sas> sasForCashHandover(BigInteger icmcId, Calendar sDate, Calendar eDate, Set<Long> pList);
+
+	public void processForCancelPreparedSoildBox(String binNum, BigInteger icmcId);
 
 }

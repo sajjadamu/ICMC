@@ -57,7 +57,7 @@
 		$('#remarks').val('');
 		//End clear value code
 		$.ajax({
-			type : "POST",
+			type : "GET",
 			url : "././getbinOrBox",
 			data : "radioButtonValue=" + radioButtonValue,
 			success : function(response) {
@@ -88,9 +88,9 @@
 					.html('<option value="">Select Bin/Box</option>');
 		} else {
 			$.ajax({
-				type : "POST",
+				type : "GET",
 				url : "././getbinOrBoxFromMaster",
-				data : "binOrBox=" + binOrBox + "&bundle=" + bundle
+				data : "binOrBox=" + binOrBox + "&bundle=" + bundle + "&reason=" + reason
 						+ "&radioButtonValue=" + radioButtonValue,
 				success : function(response) {
 					var newStr = response.toString();
@@ -155,33 +155,43 @@
 		var denomination = $('#denomination').text();
 		var bundle = $('#bundle').val();
 		var bin = $('#bin').val();
-		//alert(bin);
+		var transferalbleBundle = parseFloat(bundle);
+		var totalBundle = parseFloat(($("#needToTransferBundle").html()));
 		var radioButtonValue = $('input[name=cashTransfer]:checked').val();
-		addHeaderJson();
-		$.ajax({
-			type : "GET",
-			url : "././getbinOrBoxFromBinTransaction",
-			data : "currencyType=" + currencyType + "&denomination="
-					+ denomination + "&bundle=" + bundle + "&radioButtonValue="
-					+ radioButtonValue + "&bin=" + bin,
-			success : function(response) {
-				var newStr = response.toString();
-				//alert(newStr)
-				//$('#bundle').val(newStr);
-				$('#binFromMaster').html('');
-				var newStr = response.toString();
-				var data = newStr.split(",");
-				var option = '<option value="">Select Bin/Box</option>';
-				for (i = 0; i < data.length; i++) {
-					option += '<option value="' + data[i].trim() + '">'
-							+ data[i].trim() + '</option>';
+
+		if (transferalbleBundle < totalBundle) {
+			addHeaderJson();
+			$.ajax({
+				type : "GET",
+				url : "././getbinOrBoxFromBinTransaction",
+				data : "currencyType=" + currencyType + "&denomination="
+						+ denomination + "&bundle=" + bundle
+						+ "&radioButtonValue=" + radioButtonValue + "&bin="
+						+ bin,
+				success : function(response) {
+					var newStr = response.toString();
+					//alert(newStr)
+					//$('#bundle').val(newStr);
+					$('#binFromMaster').html('');
+					var newStr = response.toString();
+					var data = newStr.split(",");
+					var option = '<option value="">Select Bin/Box</option>';
+					for (i = 0; i < data.length; i++) {
+						option += '<option value="' + data[i].trim() + '">'
+								+ data[i].trim() + '</option>';
+					}
+					$('#binFromMaster').html(option);
+				},
+				error : function(e) {
+					alert('Bundle Error: ' + e);
 				}
-				$('#binFromMaster').html(option);
-			},
-			error : function(e) {
-				alert('Bundle Error: ' + e);
-			}
-		});
+			});
+		} else {
+			$('#binFromMaster')
+					.html('<option value="">Select Bin/Box</option>');
+			alert("partial transfer must be less then available bundle");
+			return false;
+		}
 	}
 
 	function getbundle() {
@@ -222,6 +232,7 @@
 						+ remarks + "&reason=" + reason + "&radioButtonValue="
 						+ radioButtonValue,
 				success : function(response) {
+					var newStr = response.toString();
 					alert("success")
 				},
 				error : function(e) {
@@ -286,7 +297,7 @@
 									<div class="form-group">
 										<label>Bin/Box</label> <select id="bin"
 											class="browser-default custom-select"
-											onchange="binOrBox();getbundle();getBindetails()">
+											onchange="getbundle();getBindetails();binOrBox()">
 											<option value="">Select Bin/Box</option>
 										</select>
 									</div>
@@ -303,7 +314,7 @@
 										<div id="needToTransferBundle"></div>
 										<div class="form-group">
 											<label>Bundle</label> <input type="text" name="bundle"
-												id="bundle" readonly="readonly" onchange="getBinFromTxn()">
+												id="bundle" readonly="readonly" onkeyup="getBinFromTxn()">
 											<label class="text-danger" hidden="true">Please edit
 												Bundle</label>
 										</div>

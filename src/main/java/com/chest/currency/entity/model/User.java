@@ -96,6 +96,10 @@ public class User {
 	@Column(name = "UPDATED_DATETIME")
 	protected Calendar updatedDateTime;
 
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "LAST_LOGIN")
+	protected Calendar lastLogin;
+
 	@Basic
 	@Column(name = "LAST_AUTH_OK")
 	protected String lastAuthOk;

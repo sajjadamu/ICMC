@@ -31,8 +31,9 @@
 						<%= "Welcome, "+loggedInUserName+", " %>
 						<%= icmcName %>
 					</div> --%>
-
-			<div id="loggedInUser" style="">
+			<div id="loggedInUser" style="line-height: 1.2">
+				<c:out value="Last Login- ${lastLogin}" />
+				<br>
 				<c:out value="Welcome, ${loggedInUserName},  ${icmcName} " />
 			</div>
 
