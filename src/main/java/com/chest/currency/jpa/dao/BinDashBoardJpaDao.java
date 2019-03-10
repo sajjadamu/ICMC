@@ -207,7 +207,7 @@ public interface BinDashBoardJpaDao {
 	public List<String> getBinFromBinMasterForCashTransfer(BigInteger icmcId, CurrencyType binType);
 
 	public List<String> getBoxFromBoxMasterForCashTransfer(BigInteger icmcId, int denomination,
-			CurrencyType currencyType,BigDecimal bundle);
+			CurrencyType currencyType, BigDecimal bundle);
 
 	public BinTransaction checkBinOrBox(BigInteger icmcId, String binNumber);
 
@@ -366,7 +366,15 @@ public interface BinDashBoardJpaDao {
 	public List<Tuple> getProcessFromProcessingOutPut(BigInteger icmcId, Calendar sDate, Calendar eDate,
 			CurrencyType currencyType);
 
+	public List<Tuple> getProcessFromAuditorProcessingOutPut(BigInteger icmcId, Calendar sDate, Calendar eDate,
+			CurrencyType currencyType);
+
+	public List<Tuple> getSoiledFromAuditorIndent(BigInteger icmcId, Calendar sDate, Calendar eDate,
+			CurrencyType currencyType);
+
 	public List<Indent> getIndentCash(BigInteger IcmcId, Calendar sDate, Calendar eDate);
+
+	public List<AuditorIndent> getAuditorIndent(BigInteger IcmcId, Calendar sDate, Calendar eDate);
 
 	public List<SASAllocation> getsasAllocation(BigInteger IcmcId, Calendar sDate, Calendar eDate);
 
@@ -377,6 +385,10 @@ public interface BinDashBoardJpaDao {
 	List<Tuple> getProcessFromProcessingOutPut(BigInteger icmcId, Calendar sDate, Calendar eDate);
 
 	List<Tuple> getProcessBundleProcessingOutPut(BigInteger icmcId, Calendar sDate, Calendar eDate);
+
+	List<Tuple> getProcessBundleAuditorProcessingOutPut(BigInteger icmcId, Calendar sDate, Calendar eDate);
+	
+	List<Tuple> getBundleReturnBackToVault(BigInteger icmcId, Calendar sDate, Calendar eDate);
 
 	// public void saveAudit(Audit audit);
 

@@ -1673,14 +1673,14 @@ public class ProcessingRoomController {
 
 		ModelMap map = new ModelMap();
 
-		Calendar sDate = Calendar.getInstance();
-		Calendar eDate = Calendar.getInstance();
+		Calendar sDate = UtilityJpa.getStartDate();
+		Calendar eDate = UtilityJpa.getEndDate();
 		if (dateRange.getFromDate() != null) {
 			sDate = dateRange.getFromDate();
 			eDate = (Calendar) dateRange.getFromDate().clone();
 		}
-		sDate = UtilityJpa.getStartDate();
-		eDate = UtilityJpa.getEndDate();
+		UtilityJpa.setStartDate(sDate);
+		UtilityJpa.setEndDate(eDate);
 
 		List<Tuple> machineAllocationList = processingRoomService.getMachineAllocationRecord(user.getIcmcId(), sDate,
 				eDate);

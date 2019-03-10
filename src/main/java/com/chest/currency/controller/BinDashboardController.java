@@ -2768,44 +2768,69 @@ public class BinDashboardController {
 		BigDecimal BundleDenomination10Soiled = BigDecimal.ZERO;
 		BigDecimal BundleDenomination5Soiled = BigDecimal.ZERO;
 
+		BigDecimal BundleDenomination2000Mixed = BigDecimal.ZERO;
+		BigDecimal BundleDenomination1000Mixed = BigDecimal.ZERO;
+		BigDecimal BundleDenomination500Mixed = BigDecimal.ZERO;
+		BigDecimal BundleDenomination200Mixed = BigDecimal.ZERO;
+		BigDecimal BundleDenomination100Mixed = BigDecimal.ZERO;
+		BigDecimal BundleDenomination50Mixed = BigDecimal.ZERO;
+		BigDecimal BundleDenomination20Mixed = BigDecimal.ZERO;
+		BigDecimal BundleDenomination10Mixed = BigDecimal.ZERO;
+		BigDecimal BundleDenomination5Mixed = BigDecimal.ZERO;
+
 		List<Indent> indent = binDashboardService.getIndentCash(user.getIcmcId(), sDate, eDate);
-		// List<SASAllocation> sasAllocation =
-		// binDashboardService.getsasAllocation(user.getIcmcId(), sDate, eDate);
+
+		List<AuditorIndent> auditorIndent = binDashboardService.getAuditorIndent(user.getIcmcId(), sDate, eDate);
 
 		// getting the bundle from indent
-
 		for (Indent ind : indent) {
 			if (ind.getDenomination() == 2000) {
 				BundleDenomination2000 = BundleDenomination2000.add(ind.getBundle());
-			}
-			if (ind.getDenomination() == 1000) {
+			} else if (ind.getDenomination() == 1000) {
 				BundleDenomination1000 = BundleDenomination1000.add(ind.getBundle());
-			}
-			if (ind.getDenomination() == 500) {
+			} else if (ind.getDenomination() == 500) {
 				BundleDenomination500 = BundleDenomination500.add(ind.getBundle());
-			}
-			if (ind.getDenomination() == 200) {
+			} else if (ind.getDenomination() == 200) {
 				BundleDenomination200 = BundleDenomination200.add(ind.getBundle());
-			}
-			if (ind.getDenomination() == 100) {
+			} else if (ind.getDenomination() == 100) {
 				BundleDenomination100 = BundleDenomination100.add(ind.getBundle());
-			}
-			if (ind.getDenomination() == 50) {
+			} else if (ind.getDenomination() == 50) {
 				BundleDenomination50 = BundleDenomination50.add(ind.getBundle());
-			}
-			if (ind.getDenomination() == 20) {
+			} else if (ind.getDenomination() == 20) {
 				BundleDenomination20 = BundleDenomination20.add(ind.getBundle());
-			}
-			if (ind.getDenomination() == 10) {
+			} else if (ind.getDenomination() == 10) {
 				BundleDenomination10 = BundleDenomination10.add(ind.getBundle());
+			} else if (ind.getDenomination() == 5) {
+				BundleDenomination5 = BundleDenomination5.add(ind.getBundle());
 			}
-			if (ind.getDenomination() == 5) {
+		}
+		for (AuditorIndent ind : auditorIndent) {
+			if (ind.getDenomination() == 2000) {
+				BundleDenomination2000 = BundleDenomination2000.add(ind.getBundle());
+			} else if (ind.getDenomination() == 1000) {
+				BundleDenomination1000 = BundleDenomination1000.add(ind.getBundle());
+			} else if (ind.getDenomination() == 500) {
+				BundleDenomination500 = BundleDenomination500.add(ind.getBundle());
+			} else if (ind.getDenomination() == 200) {
+				BundleDenomination200 = BundleDenomination200.add(ind.getBundle());
+			} else if (ind.getDenomination() == 100) {
+				BundleDenomination100 = BundleDenomination100.add(ind.getBundle());
+			} else if (ind.getDenomination() == 50) {
+				BundleDenomination50 = BundleDenomination50.add(ind.getBundle());
+			} else if (ind.getDenomination() == 20) {
+				BundleDenomination20 = BundleDenomination20.add(ind.getBundle());
+			} else if (ind.getDenomination() == 10) {
+				BundleDenomination10 = BundleDenomination10.add(ind.getBundle());
+			} else if (ind.getDenomination() == 5) {
 				BundleDenomination5 = BundleDenomination5.add(ind.getBundle());
 			}
 		}
 		// getting bundle from sasAllocation
 
 		List<Tuple> process = binDashboardService.getProcessBundleProcessingOutPut(user.getIcmcId(), sDate, eDate);
+		List<Tuple> auditorProcess = binDashboardService.getProcessBundleAuditorProcessingOutPut(user.getIcmcId(),
+				sDate, eDate);
+		List<Tuple> bundleReturnBack = binDashboardService.getBundleReturnBackToVault(user.getIcmcId(), sDate, eDate);
 		for (Tuple tuple : process) {
 			if (tuple.get(0, Integer.class).equals(2000)) {
 				if (tuple.get(1, Enum.class).equals(CurrencyType.ATM)) {
@@ -2815,8 +2840,7 @@ public class BinDashboardController {
 				} else {
 					BundleDenomination2000Soiled = BundleDenomination2000Soiled.add(tuple.get(2, BigDecimal.class));
 				}
-			}
-			if (tuple.get(0, Integer.class).equals(1000)) {
+			} else if (tuple.get(0, Integer.class).equals(1000)) {
 				if (tuple.get(1, Enum.class).equals(CurrencyType.ATM)) {
 					BundleDenomination1000Atm = BundleDenomination1000Atm.add(tuple.get(2, BigDecimal.class));
 				} else if (tuple.get(1, Enum.class).equals(CurrencyType.ISSUABLE)) {
@@ -2824,8 +2848,7 @@ public class BinDashboardController {
 				} else {
 					BundleDenomination1000Soiled = BundleDenomination1000Soiled.add(tuple.get(2, BigDecimal.class));
 				}
-			}
-			if (tuple.get(0, Integer.class).equals(500)) {
+			} else if (tuple.get(0, Integer.class).equals(500)) {
 				if (tuple.get(1, Enum.class).equals(CurrencyType.ATM)) {
 					BundleDenomination500Atm = BundleDenomination500Atm.add(tuple.get(2, BigDecimal.class));
 				} else if (tuple.get(1, Enum.class).equals(CurrencyType.ISSUABLE)) {
@@ -2833,8 +2856,7 @@ public class BinDashboardController {
 				} else {
 					BundleDenomination500Soiled = BundleDenomination500Soiled.add(tuple.get(2, BigDecimal.class));
 				}
-			}
-			if (tuple.get(0, Integer.class).equals(200)) {
+			} else if (tuple.get(0, Integer.class).equals(200)) {
 				if (tuple.get(1, Enum.class).equals(CurrencyType.ATM)) {
 					BundleDenomination200Atm = BundleDenomination200Atm.add(tuple.get(2, BigDecimal.class));
 				} else if (tuple.get(1, Enum.class).equals(CurrencyType.ISSUABLE)) {
@@ -2842,8 +2864,7 @@ public class BinDashboardController {
 				} else {
 					BundleDenomination200Soiled = BundleDenomination200Soiled.add(tuple.get(2, BigDecimal.class));
 				}
-			}
-			if (tuple.get(0, Integer.class).equals(100)) {
+			} else if (tuple.get(0, Integer.class).equals(100)) {
 				if (tuple.get(1, Enum.class).equals(CurrencyType.ATM)) {
 					BundleDenomination100Atm = BundleDenomination100Atm.add(tuple.get(2, BigDecimal.class));
 				} else if (tuple.get(1, Enum.class).equals(CurrencyType.ISSUABLE)) {
@@ -2851,8 +2872,7 @@ public class BinDashboardController {
 				} else {
 					BundleDenomination100Soiled = BundleDenomination100Soiled.add(tuple.get(2, BigDecimal.class));
 				}
-			}
-			if (tuple.get(0, Integer.class).equals(50)) {
+			} else if (tuple.get(0, Integer.class).equals(50)) {
 				if (tuple.get(1, Enum.class).equals(CurrencyType.ATM)) {
 					BundleDenomination50Atm = BundleDenomination50Atm.add(tuple.get(2, BigDecimal.class));
 				} else if (tuple.get(1, Enum.class).equals(CurrencyType.ISSUABLE)) {
@@ -2860,8 +2880,7 @@ public class BinDashboardController {
 				} else {
 					BundleDenomination50Soiled = BundleDenomination50Soiled.add(tuple.get(2, BigDecimal.class));
 				}
-			}
-			if (tuple.get(0, Integer.class).equals(20)) {
+			} else if (tuple.get(0, Integer.class).equals(20)) {
 				if (tuple.get(1, Enum.class).equals(CurrencyType.ATM)) {
 					BundleDenomination20Atm = BundleDenomination20Atm.add(tuple.get(2, BigDecimal.class));
 				} else if (tuple.get(1, Enum.class).equals(CurrencyType.ISSUABLE)) {
@@ -2869,8 +2888,7 @@ public class BinDashboardController {
 				} else {
 					BundleDenomination20Soiled = BundleDenomination20Soiled.add(tuple.get(2, BigDecimal.class));
 				}
-			}
-			if (tuple.get(0, Integer.class).equals(10)) {
+			} else if (tuple.get(0, Integer.class).equals(10)) {
 				if (tuple.get(1, Enum.class).equals(CurrencyType.ATM)) {
 					BundleDenomination10Atm = BundleDenomination10Atm.add(tuple.get(2, BigDecimal.class));
 				} else if (tuple.get(1, Enum.class).equals(CurrencyType.ISSUABLE)) {
@@ -2878,8 +2896,7 @@ public class BinDashboardController {
 				} else {
 					BundleDenomination10Soiled = BundleDenomination10Soiled.add(tuple.get(2, BigDecimal.class));
 				}
-			}
-			if (tuple.get(0, Integer.class).equals(5)) {
+			} else if (tuple.get(0, Integer.class).equals(5)) {
 				if (tuple.get(1, Enum.class).equals(CurrencyType.ATM)) {
 					BundleDenomination5Atm = BundleDenomination5Atm.add(tuple.get(2, BigDecimal.class));
 				} else if (tuple.get(1, Enum.class).equals(CurrencyType.ISSUABLE)) {
@@ -2889,6 +2906,113 @@ public class BinDashboardController {
 				}
 			}
 		}
+
+		for (Tuple tuple : auditorProcess) {
+			if (tuple.get(0, Integer.class).equals(2000)) {
+				if (tuple.get(1, Enum.class).equals(CurrencyType.ATM)) {
+					BundleDenomination2000Atm = BundleDenomination2000Atm.add(tuple.get(2, BigDecimal.class));
+				} else if (tuple.get(1, Enum.class).equals(CurrencyType.ISSUABLE)) {
+					BundleDenomination2000Issuable = BundleDenomination2000Issuable.add(tuple.get(2, BigDecimal.class));
+				} else {
+					BundleDenomination2000Soiled = BundleDenomination2000Soiled.add(tuple.get(2, BigDecimal.class));
+				}
+			} else if (tuple.get(0, Integer.class).equals(1000)) {
+				if (tuple.get(1, Enum.class).equals(CurrencyType.ATM)) {
+					BundleDenomination1000Atm = BundleDenomination1000Atm.add(tuple.get(2, BigDecimal.class));
+				} else if (tuple.get(1, Enum.class).equals(CurrencyType.ISSUABLE)) {
+					BundleDenomination1000Issuable = BundleDenomination1000Issuable.add(tuple.get(2, BigDecimal.class));
+				} else {
+					BundleDenomination1000Soiled = BundleDenomination1000Soiled.add(tuple.get(2, BigDecimal.class));
+				}
+			} else if (tuple.get(0, Integer.class).equals(500)) {
+				if (tuple.get(1, Enum.class).equals(CurrencyType.ATM)) {
+					BundleDenomination500Atm = BundleDenomination500Atm.add(tuple.get(2, BigDecimal.class));
+				} else if (tuple.get(1, Enum.class).equals(CurrencyType.ISSUABLE)) {
+					BundleDenomination500Issuable = BundleDenomination500Issuable.add(tuple.get(2, BigDecimal.class));
+				} else {
+					BundleDenomination500Soiled = BundleDenomination500Soiled.add(tuple.get(2, BigDecimal.class));
+				}
+			} else if (tuple.get(0, Integer.class).equals(200)) {
+				if (tuple.get(1, Enum.class).equals(CurrencyType.ATM)) {
+					BundleDenomination200Atm = BundleDenomination200Atm.add(tuple.get(2, BigDecimal.class));
+				} else if (tuple.get(1, Enum.class).equals(CurrencyType.ISSUABLE)) {
+					BundleDenomination200Issuable = BundleDenomination200Issuable.add(tuple.get(2, BigDecimal.class));
+				} else {
+					BundleDenomination200Soiled = BundleDenomination200Soiled.add(tuple.get(2, BigDecimal.class));
+				}
+			} else if (tuple.get(0, Integer.class).equals(100)) {
+				if (tuple.get(1, Enum.class).equals(CurrencyType.ATM)) {
+					BundleDenomination100Atm = BundleDenomination100Atm.add(tuple.get(2, BigDecimal.class));
+				} else if (tuple.get(1, Enum.class).equals(CurrencyType.ISSUABLE)) {
+					BundleDenomination100Issuable = BundleDenomination100Issuable.add(tuple.get(2, BigDecimal.class));
+				} else {
+					BundleDenomination100Soiled = BundleDenomination100Soiled.add(tuple.get(2, BigDecimal.class));
+				}
+			} else if (tuple.get(0, Integer.class).equals(50)) {
+				if (tuple.get(1, Enum.class).equals(CurrencyType.ATM)) {
+					BundleDenomination50Atm = BundleDenomination50Atm.add(tuple.get(2, BigDecimal.class));
+				} else if (tuple.get(1, Enum.class).equals(CurrencyType.ISSUABLE)) {
+					BundleDenomination50Issuable = BundleDenomination50Issuable.add(tuple.get(2, BigDecimal.class));
+				} else {
+					BundleDenomination50Soiled = BundleDenomination50Soiled.add(tuple.get(2, BigDecimal.class));
+				}
+			} else if (tuple.get(0, Integer.class).equals(20)) {
+				if (tuple.get(1, Enum.class).equals(CurrencyType.ATM)) {
+					BundleDenomination20Atm = BundleDenomination20Atm.add(tuple.get(2, BigDecimal.class));
+				} else if (tuple.get(1, Enum.class).equals(CurrencyType.ISSUABLE)) {
+					BundleDenomination20Issuable = BundleDenomination20Issuable.add(tuple.get(2, BigDecimal.class));
+				} else {
+					BundleDenomination20Soiled = BundleDenomination20Soiled.add(tuple.get(2, BigDecimal.class));
+				}
+			} else if (tuple.get(0, Integer.class).equals(10)) {
+				if (tuple.get(1, Enum.class).equals(CurrencyType.ATM)) {
+					BundleDenomination10Atm = BundleDenomination10Atm.add(tuple.get(2, BigDecimal.class));
+				} else if (tuple.get(1, Enum.class).equals(CurrencyType.ISSUABLE)) {
+					BundleDenomination10Issuable = BundleDenomination10Issuable.add(tuple.get(2, BigDecimal.class));
+				} else {
+					BundleDenomination10Soiled = BundleDenomination10Soiled.add(tuple.get(2, BigDecimal.class));
+				}
+			} else if (tuple.get(0, Integer.class).equals(5)) {
+				if (tuple.get(1, Enum.class).equals(CurrencyType.ATM)) {
+					BundleDenomination5Atm = BundleDenomination5Atm.add(tuple.get(2, BigDecimal.class));
+				} else if (tuple.get(1, Enum.class).equals(CurrencyType.ISSUABLE)) {
+					BundleDenomination5Issuable = BundleDenomination5Issuable.add(tuple.get(2, BigDecimal.class));
+				} else {
+					BundleDenomination5Soiled = BundleDenomination5Soiled.add(tuple.get(2, BigDecimal.class));
+				}
+			}
+		}
+		for (Tuple tuple : bundleReturnBack) {
+			if (tuple.get(0, Integer.class).equals(2000)) {
+				BundleDenomination2000Atm = BundleDenomination2000Mixed.add(tuple.get(1, BigDecimal.class));
+			} else if (tuple.get(0, Integer.class).equals(1000)) {
+				BundleDenomination1000Atm = BundleDenomination1000Mixed.add(tuple.get(1, BigDecimal.class));
+			} else if (tuple.get(0, Integer.class).equals(500)) {
+				BundleDenomination500Atm = BundleDenomination500Mixed.add(tuple.get(1, BigDecimal.class));
+			} else if (tuple.get(0, Integer.class).equals(200)) {
+				BundleDenomination200Atm = BundleDenomination200Mixed.add(tuple.get(1, BigDecimal.class));
+			} else if (tuple.get(0, Integer.class).equals(100)) {
+				BundleDenomination100Atm = BundleDenomination100Mixed.add(tuple.get(1, BigDecimal.class));
+			} else if (tuple.get(0, Integer.class).equals(50)) {
+				BundleDenomination50Atm = BundleDenomination50Mixed.add(tuple.get(1, BigDecimal.class));
+			} else if (tuple.get(0, Integer.class).equals(20)) {
+				BundleDenomination20Atm = BundleDenomination20Mixed.add(tuple.get(1, BigDecimal.class));
+			} else if (tuple.get(0, Integer.class).equals(10)) {
+				BundleDenomination10Atm = BundleDenomination10Mixed.add(tuple.get(1, BigDecimal.class));
+			} else if (tuple.get(0, Integer.class).equals(5)) {
+				BundleDenomination5Atm = BundleDenomination5Mixed.add(tuple.get(1, BigDecimal.class));
+			}
+		}
+		
+		map.put("BundleDenomination2000Atm", BundleDenomination2000Mixed);
+		map.put("BundleDenomination1000Atm", BundleDenomination1000Mixed);
+		map.put("BundleDenomination500Atm", BundleDenomination500Mixed);
+		map.put("BundleDenomination200Atm", BundleDenomination200Mixed);
+		map.put("BundleDenomination100Atm", BundleDenomination100Mixed);
+		map.put("BundleDenomination50Atm", BundleDenomination50Mixed);
+		map.put("BundleDenomination20Atm", BundleDenomination20Mixed);
+		map.put("BundleDenomination10Atm", BundleDenomination10Mixed);
+		map.put("BundleDenomination5Atm", BundleDenomination5Mixed);
 
 		map.put("BundleDenomination2000Atm", BundleDenomination2000Atm);
 		map.put("BundleDenomination1000Atm", BundleDenomination1000Atm);

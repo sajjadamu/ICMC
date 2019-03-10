@@ -448,16 +448,16 @@
 																<td>${BundleDenomination2000Atm}</td>
 																<td>${BundleDenomination2000Issuable}</td>
 																<td>${BundleDenomination2000Soiled}</td>
-																<td></td>
-																<td>${BundleDenomination2000Atm+BundleDenomination2000Issuable+BundleDenomination2000Soiled}</td>
-																<td>${(BundleDenomination2000Atm+BundleDenomination2000Issuable+BundleDenomination2000Soiled)*1000*2000}
+																<td>${BundleDenomination2000Mixed}</td>
+																<td>${BundleDenomination2000Atm+BundleDenomination2000Issuable+BundleDenomination2000Soiled+BundleDenomination2000Mixed}</td>
+																<td>${(BundleDenomination2000Atm+BundleDenomination2000Issuable+BundleDenomination2000Soiled+BundleDenomination2000Mixed)*1000*2000}
 																</td>
 															</tr>
 															<tr>
 																<td>${BundleDenomination1000Atm}</td>
 																<td>${BundleDenomination1000Issuable}</td>
 																<td>${BundleDenomination1000Soiled}</td>
-																<td></td>
+																<td>${BundleDenomination1000Mixed}</td>
 																<td>${BundleDenomination1000Atm+BundleDenomination1000Issuable+BundleDenomination1000Soiled}</td>
 																<td>${(BundleDenomination1000Atm+BundleDenomination1000Issuable+BundleDenomination1000Soiled)*1000*1000}
 																</td>
@@ -466,7 +466,7 @@
 																<td>${BundleDenomination500Atm}</td>
 																<td>${BundleDenomination500Issuable}</td>
 																<td>${BundleDenomination500Soiled}</td>
-																<td></td>
+																<td>${BundleDenomination500Mixed}</td>
 																<td>${BundleDenomination500Atm+BundleDenomination500Issuable+BundleDenomination500Soiled}</td>
 																<td>${(BundleDenomination500Atm+BundleDenomination500Issuable+BundleDenomination500Soiled)*1000*500}
 																</td>
@@ -475,54 +475,54 @@
 																<td>${BundleDenomination200Atm}</td>
 																<td>${BundleDenomination200Issuable}</td>
 																<td>${BundleDenomination200Soiled}</td>
-																<td></td>
-																<td>${BundleDenomination200Atm+BundleDenomination200Issuable+BundleDenomination200Soiled}</td>
-																<td>${(BundleDenomination200Atm+BundleDenomination200Issuable+BundleDenomination200Soiled)*1000*200}
+																<td>${BundleDenomination200Mixed}</td>
+																<td>${BundleDenomination200Atm+BundleDenomination200Issuable+BundleDenomination200Soiled+BundleDenomination200Mixed}</td>
+																<td>${(BundleDenomination200Atm+BundleDenomination200Issuable+BundleDenomination200Soiled+BundleDenomination200Mixed)*1000*200}
 																</td>
 															</tr>
 															<tr>
 																<td>${BundleDenomination100Atm}</td>
 																<td>${BundleDenomination100Issuable}</td>
 																<td>${BundleDenomination100Soiled}</td>
-																<td></td>
-																<td>${BundleDenomination100Atm+BundleDenomination100Issuable+BundleDenomination100Soiled}</td>
-																<td>${(BundleDenomination100Atm+BundleDenomination100Issuable+BundleDenomination100Soiled)*1000*100}
+																<td>${BundleDenomination100Mixed}</td>
+																<td>${BundleDenomination100Atm+BundleDenomination100Issuable+BundleDenomination100Soiled+BundleDenomination100Mixed}</td>
+																<td>${(BundleDenomination100Atm+BundleDenomination100Issuable+BundleDenomination100Soiled+BundleDenomination100Mixed)*1000*100}
 																</td>
 															</tr>
 															<tr>
 																<td>${BundleDenomination50Atm}</td>
 																<td>${BundleDenomination50Issuable}</td>
 																<td>${BundleDenomination50Soiled}</td>
-																<td></td>
-																<td>${BundleDenomination50Atm+BundleDenomination50Issuable+BundleDenomination50Soiled}</td>
-																<td>${(BundleDenomination50Atm+BundleDenomination50Issuable+BundleDenomination50Soiled)*1000*50}
+																<td>${BundleDenomination50Mixed}</td>
+																<td>${BundleDenomination50Atm+BundleDenomination50Issuable+BundleDenomination50Soiled+BundleDenomination50Mixed}</td>
+																<td>${(BundleDenomination50Atm+BundleDenomination50Issuable+BundleDenomination50Soiled+BundleDenomination50Mixed)*1000*50}
 																</td>
 															</tr>
 															<tr>
 																<td>${BundleDenomination20Atm}</td>
 																<td>${BundleDenomination20Issuable}</td>
 																<td>${BundleDenomination20Soiled}</td>
-																<td></td>
-																<td>${BundleDenomination20Atm+BundleDenomination20Issuable+BundleDenomination20Soiled}</td>
-																<td>${(BundleDenomination20Atm+BundleDenomination20Issuable+BundleDenomination20Soiled)*1000*20}
+																<td>${BundleDenomination20Mixed}</td>
+																<td>${BundleDenomination20Atm+BundleDenomination20Issuable+BundleDenomination20Soiled+BundleDenomination20Mixed}</td>
+																<td>${(BundleDenomination20Atm+BundleDenomination20Issuable+BundleDenomination20Soiled+BundleDenomination20Mixed)*1000*20}
 																</td>
 															</tr>
 															<tr>
 																<td>${BundleDenomination10Atm}</td>
 																<td>${BundleDenomination10Issuable}</td>
 																<td>${BundleDenomination10Soiled}</td>
-																<td></td>
-																<td>${BundleDenomination10Atm+BundleDenomination10Issuable+BundleDenomination10Soiled}</td>
-																<td>${(BundleDenomination10Atm+BundleDenomination10Issuable+BundleDenomination10Soiled)*1000*10}
+																<td>${BundleDenomination10Mixed}</td>
+																<td>${BundleDenomination10Atm+BundleDenomination10Issuable+BundleDenomination10Soiled+BundleDenomination10Mixed}</td>
+																<td>${(BundleDenomination10Atm+BundleDenomination10Issuable+BundleDenomination10Soiled+BundleDenomination10Mixed)*1000*10}
 																</td>
 															</tr>
 															<tr>
 																<td>${BundleDenomination5Atm}</td>
 																<td>${BundleDenomination5Issuable}</td>
 																<td>${BundleDenomination5Soiled}</td>
-																<td></td>
-																<td>${BundleDenomination5Atm+BundleDenomination5Issuable+BundleDenomination5Soiled}</td>
-																<td>${(BundleDenomination5Atm+BundleDenomination5Issuable+BundleDenomination5Soiled)*1000*5}
+																<td>${BundleDenomination5Mixed}</td>
+																<td>${BundleDenomination5Atm+BundleDenomination5Issuable+BundleDenomination5Soiled+BundleDenomination5Mixed}</td>
+																<td>${(BundleDenomination5Atm+BundleDenomination5Issuable+BundleDenomination5Soiled+BundleDenomination5Mixed)*1000*5}
 																</td>
 															</tr>
 

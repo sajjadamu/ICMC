@@ -303,6 +303,11 @@ public class BinDashBoardJpaDaoImpl implements BinDashBoardJpaDao {
 		return jpaQuery;
 	}
 
+	private JPAQuery getFromQueryForAuditorProcess() {
+		JPAQuery jpaQuery = new JPAQuery(em);
+		return jpaQuery.from(QAuditorProcess.auditorProcess);
+	}
+
 	public List<Process> getProcessListAtm(BigInteger icmcId) {
 		JPAQuery jpaQuery = getFromQueryForProcessList();
 		jpaQuery.where(QProcess.process.icmcId.eq(icmcId).and(QProcess.process.currencyType.eq(CurrencyType.ATM)));
@@ -624,6 +629,34 @@ public class BinDashBoardJpaDaoImpl implements BinDashBoardJpaDao {
 	}
 
 	@Override
+	public List<Tuple> getProcessFromAuditorProcessingOutPut(BigInteger icmcId, Calendar sDate, Calendar eDate,
+			CurrencyType currencyType) {
+		JPAQuery jpaQuery = getFromQueryForAuditorProcess();
+		jpaQuery.where(QAuditorProcess.auditorProcess.icmcId.eq(icmcId)
+				.and(QAuditorProcess.auditorProcess.currencyType.eq(currencyType))
+				.and(QAuditorProcess.auditorProcess.insertTime.between(sDate, eDate)));
+		jpaQuery.groupBy(QAuditorProcess.auditorProcess.denomination);
+		jpaQuery.orderBy(QAuditorProcess.auditorProcess.denomination.asc());
+		List<Tuple> summaryList = jpaQuery.list(QAuditorProcess.auditorProcess.denomination,
+				QAuditorProcess.auditorProcess.bundle.sum().multiply(1000));
+		return summaryList;
+	}
+
+	@Override
+	public List<Tuple> getSoiledFromAuditorIndent(BigInteger icmcId, Calendar sDate, Calendar eDate,
+			CurrencyType currencyType) {
+		JPAQuery jpaQuery = getFromQueryForAuditorIndent();
+		jpaQuery.where(QAuditorIndent.auditorIndent.icmcId.eq(icmcId)
+				.and(QAuditorIndent.auditorIndent.binType.eq(currencyType))
+				.and(QAuditorIndent.auditorIndent.insertTime.between(sDate, eDate)));
+		jpaQuery.groupBy(QAuditorIndent.auditorIndent.denomination);
+		jpaQuery.orderBy(QAuditorIndent.auditorIndent.denomination.asc());
+		List<Tuple> summaryList = jpaQuery.list(QAuditorIndent.auditorIndent.denomination,
+				QAuditorIndent.auditorIndent.bundle.sum().multiply(1000));
+		return summaryList;
+	}
+
+	@Override
 	public List<Tuple> getProcessFromProcessingOutPut(BigInteger icmcId, Calendar sDate, Calendar eDate) {
 		JPAQuery jpaQuery = getFromQueryForProcessList();
 		jpaQuery.where(QProcess.process.icmcId.eq(icmcId).and(QProcess.process.insertTime.between(sDate, eDate)));
@@ -643,6 +676,33 @@ public class BinDashBoardJpaDaoImpl implements BinDashBoardJpaDao {
 		jpaQuery.orderBy(QProcess.process.denomination.asc());
 		List<Tuple> summaryList = jpaQuery.list(QProcess.process.denomination, QProcess.process.currencyType,
 				QProcess.process.bundle.sum());
+		return summaryList;
+	}
+
+	@Override
+	public List<Tuple> getProcessBundleAuditorProcessingOutPut(BigInteger icmcId, Calendar sDate, Calendar eDate) {
+		JPAQuery jpaQuery = getFromQueryForAuditorProcess();
+		jpaQuery.where(QAuditorProcess.auditorProcess.icmcId.eq(icmcId)
+				.and(QAuditorProcess.auditorProcess.insertTime.between(sDate, eDate)));
+		jpaQuery.groupBy(QAuditorProcess.auditorProcess.denomination, QAuditorProcess.auditorProcess.currencyType);
+		jpaQuery.orderBy(QAuditorProcess.auditorProcess.denomination.asc());
+		List<Tuple> summaryList = jpaQuery.list(QAuditorProcess.auditorProcess.denomination,
+				QAuditorProcess.auditorProcess.currencyType, QAuditorProcess.auditorProcess.bundle.sum());
+		return summaryList;
+	}
+
+	@Override
+	public List<Tuple> getBundleReturnBackToVault(BigInteger icmcId, Calendar sDate, Calendar eDate) {
+		JPAQuery jpaQuery = getFromQueryForBranchReceipt();
+		jpaQuery.where(QBranchReceipt.branchReceipt.icmcId.eq(icmcId)
+				.and(QBranchReceipt.branchReceipt.insertTime.between(sDate, eDate))
+				.and(QBranchReceipt.branchReceipt.currencyType.eq(CurrencyType.UNPROCESS))
+				.and(QBranchReceipt.branchReceipt.solId.isEmpty()).and(QBranchReceipt.branchReceipt.branch.isEmpty())
+				.and(QBranchReceipt.branchReceipt.srNumber.isEmpty()));
+		jpaQuery.groupBy(QBranchReceipt.branchReceipt.denomination);
+		jpaQuery.orderBy(QBranchReceipt.branchReceipt.denomination.asc());
+		List<Tuple> summaryList = jpaQuery.list(QBranchReceipt.branchReceipt,
+				QBranchReceipt.branchReceipt.bundle.sum());
 		return summaryList;
 	}
 
@@ -2164,6 +2224,11 @@ public class BinDashBoardJpaDaoImpl implements BinDashBoardJpaDao {
 		return jpaQuery;
 	}
 
+	public JPAQuery getAuditorIndent() {
+		JPAQuery jpaQuery = new JPAQuery(em);
+		return jpaQuery.from(QAuditorIndent.auditorIndent);
+	}
+
 	@Override
 	public List<Indent> getIndentCash(BigInteger IcmcId, Calendar sDate, Calendar eDate) {
 		JPAQuery jpaQuery = getIndentCash();
@@ -2172,6 +2237,16 @@ public class BinDashBoardJpaDaoImpl implements BinDashBoardJpaDao {
 				.and(QIndent.indent.insertTime.between(sDate, eDate)));
 		List<Indent> indentList = jpaQuery.list(QIndent.indent);
 		return indentList;
+	}
+
+	@Override
+	public List<AuditorIndent> getAuditorIndent(BigInteger IcmcId, Calendar sDate, Calendar eDate) {
+		JPAQuery jpaQuery = getAuditorIndent();
+		jpaQuery.where(QAuditorIndent.auditorIndent.icmcId.eq(IcmcId)
+				.and(QAuditorIndent.auditorIndent.status.eq(OtherStatus.ACCEPTED)
+						.or(QAuditorIndent.auditorIndent.status.eq(OtherStatus.PROCESSED)))
+				.and(QAuditorIndent.auditorIndent.insertTime.between(sDate, eDate)));
+		return jpaQuery.list(QAuditorIndent.auditorIndent);
 	}
 
 	public JPAQuery getBranchReceivedCash() {

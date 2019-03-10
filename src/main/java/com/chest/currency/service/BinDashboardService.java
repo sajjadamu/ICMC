@@ -364,8 +364,15 @@ public interface BinDashboardService {
 
 	public List<Tuple> getProcessFromProcessingOutPut(BigInteger icmcId, Calendar sDate, Calendar eDate,
 			CurrencyType currencyType);
+	
+	public List<Tuple> getProcessFromAuditorProcessingOutPut(BigInteger icmcId, Calendar sDate, Calendar eDate,
+			CurrencyType currencyType);
+	public List<Tuple> getSoiledFromAuditorIndent(BigInteger icmcId, Calendar sDate, Calendar eDate,
+			CurrencyType currencyType);
 
 	public List<Indent> getIndentCash(BigInteger IcmcId, Calendar sDate, Calendar eDate);
+	
+	public List<AuditorIndent> getAuditorIndent(BigInteger IcmcId, Calendar sDate, Calendar eDate);
 
 	public List<SASAllocation> getsasAllocation(BigInteger IcmcId, Calendar sDate, Calendar eDate);
 
@@ -376,6 +383,10 @@ public interface BinDashboardService {
 	List<Tuple> getProcessFromProcessingOutPut(BigInteger icmcId, Calendar sDate, Calendar eDate);
 
 	List<Tuple> getProcessBundleProcessingOutPut(BigInteger icmcId, Calendar sDate, Calendar eDate);
+	
+	List<Tuple> getProcessBundleAuditorProcessingOutPut(BigInteger icmcId, Calendar sDate, Calendar eDate);
+	
+	List<Tuple> getBundleReturnBackToVault(BigInteger icmcId, Calendar sDate, Calendar eDate);
 
 	// void saveAudit(Audit audit);
 

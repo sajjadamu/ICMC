@@ -398,6 +398,18 @@ public class BinDashboardServiceImpl implements BinDashboardService {
 	}
 
 	@Override
+	public List<Tuple> getProcessFromAuditorProcessingOutPut(BigInteger icmcId, Calendar sDate, Calendar eDate,
+			CurrencyType currencyType) {
+		return binDashboardJpaDao.getProcessFromAuditorProcessingOutPut(icmcId, sDate, eDate, currencyType);
+	}
+
+	@Override
+	public List<Tuple> getSoiledFromAuditorIndent(BigInteger icmcId, Calendar sDate, Calendar eDate,
+			CurrencyType currencyType) {
+		return binDashboardJpaDao.getSoiledFromAuditorIndent(icmcId, sDate, eDate, currencyType);
+	}
+
+	@Override
 	public List<Tuple> getProcessFromProcessingOutPut(BigInteger icmcId, Calendar sDate, Calendar eDate) {
 		return binDashboardJpaDao.getProcessFromProcessingOutPut(icmcId, sDate, eDate);
 	}
@@ -405,6 +417,16 @@ public class BinDashboardServiceImpl implements BinDashboardService {
 	@Override
 	public List<Tuple> getProcessBundleProcessingOutPut(BigInteger icmcId, Calendar sDate, Calendar eDate) {
 		return binDashboardJpaDao.getProcessBundleProcessingOutPut(icmcId, sDate, eDate);
+	}
+
+	@Override
+	public List<Tuple> getProcessBundleAuditorProcessingOutPut(BigInteger icmcId, Calendar sDate, Calendar eDate) {
+		return binDashboardJpaDao.getProcessBundleAuditorProcessingOutPut(icmcId, sDate, eDate);
+	}
+
+	@Override
+	public List<Tuple> getBundleReturnBackToVault(BigInteger icmcId, Calendar sDate, Calendar eDate) {
+		return binDashboardJpaDao.getBundleReturnBackToVault(icmcId, sDate, eDate);
 	}
 
 	@Override
@@ -611,32 +633,26 @@ public class BinDashboardServiceImpl implements BinDashboardService {
 			if (openingBalanceDenomination5 == null) {
 				openingBalanceDenomination5 = new BigDecimal(0);
 			}
-
 			openingBalanceDenomination10 = bintxn.getDenomination10();
 			if (openingBalanceDenomination10 == null) {
 				openingBalanceDenomination10 = new BigDecimal(0);
 			}
-
 			openingBalanceDenomination20 = bintxn.getDenomination20();
 			if (openingBalanceDenomination20 == null) {
 				openingBalanceDenomination20 = new BigDecimal(0);
 			}
-
 			openingBalanceDenomination50 = bintxn.getDenomination50();
 			if (openingBalanceDenomination50 == null) {
 				openingBalanceDenomination50 = new BigDecimal(0);
 			}
-
 			openingBalanceDenomination100 = bintxn.getDenomination100();
 			if (openingBalanceDenomination100 == null) {
 				openingBalanceDenomination100 = new BigDecimal(0);
 			}
-
 			openingBalanceDenomination200 = bintxn.getDenomination200();
 			if (openingBalanceDenomination200 == null) {
 				openingBalanceDenomination200 = new BigDecimal(0);
 			}
-
 			openingBalanceDenomination500 = bintxn.getDenomination500();
 			if (openingBalanceDenomination500 == null) {
 				openingBalanceDenomination500 = new BigDecimal(0);
@@ -645,7 +661,6 @@ public class BinDashboardServiceImpl implements BinDashboardService {
 			if (openingBalanceDenomination1000 == null) {
 				openingBalanceDenomination1000 = new BigDecimal(0);
 			}
-
 			openingBalanceDenomination2000 = bintxn.getDenomination2000();
 			if (openingBalanceDenomination2000 == null) {
 				openingBalanceDenomination2000 = new BigDecimal(0);
@@ -1340,6 +1355,7 @@ public class BinDashboardServiceImpl implements BinDashboardService {
 		BigDecimal SoiledDenomination500 = new BigDecimal(0);
 		BigDecimal SoiledDenomination1000 = new BigDecimal(0);
 		BigDecimal SoiledDenomination2000 = new BigDecimal(0);
+		
 		for (BinTransactionBOD bintxn : summrayListForSoiledNotes) {
 			SoiledDenomination1 = bintxn.getDenomination1();
 			if (SoiledDenomination1 == null) {
@@ -1392,45 +1408,25 @@ public class BinDashboardServiceImpl implements BinDashboardService {
 
 			if (t.get(0, Integer.class).equals(1)) {
 				SoiledDenomination1 = SoiledDenomination1.subtract(t.get(1, BigDecimal.class));
-			}
-
-			if (t.get(0, Integer.class).equals(2)) {
+			} else if (t.get(0, Integer.class).equals(2)) {
 				SoiledDenomination2 = SoiledDenomination2.subtract(t.get(1, BigDecimal.class));
-			}
-
-			if (t.get(0, Integer.class).equals(5)) {
+			} else if (t.get(0, Integer.class).equals(5)) {
 				SoiledDenomination5 = SoiledDenomination5.subtract(t.get(1, BigDecimal.class));
-			}
-
-			if (t.get(0, Integer.class).equals(10)) {
+			} else if (t.get(0, Integer.class).equals(10)) {
 				SoiledDenomination10 = SoiledDenomination10.subtract(t.get(1, BigDecimal.class));
-			}
-
-			if (t.get(0, Integer.class).equals(20)) {
+			} else if (t.get(0, Integer.class).equals(20)) {
 				SoiledDenomination20 = SoiledDenomination20.subtract(t.get(1, BigDecimal.class));
-			}
-
-			if (t.get(0, Integer.class).equals(50)) {
+			} else if (t.get(0, Integer.class).equals(50)) {
 				SoiledDenomination50 = SoiledDenomination50.subtract(t.get(1, BigDecimal.class));
-			}
-
-			if (t.get(0, Integer.class).equals(100)) {
+			} else if (t.get(0, Integer.class).equals(100)) {
 				SoiledDenomination100 = SoiledDenomination100.subtract(t.get(1, BigDecimal.class));
-			}
-
-			if (t.get(0, Integer.class).equals(200)) {
+			} else if (t.get(0, Integer.class).equals(200)) {
 				SoiledDenomination200 = SoiledDenomination200.subtract(t.get(1, BigDecimal.class));
-			}
-
-			if (t.get(0, Integer.class).equals(500)) {
+			} else if (t.get(0, Integer.class).equals(500)) {
 				SoiledDenomination500 = SoiledDenomination500.subtract(t.get(1, BigDecimal.class));
-			}
-
-			if (t.get(0, Integer.class).equals(1000)) {
+			} else if (t.get(0, Integer.class).equals(1000)) {
 				SoiledDenomination1000 = SoiledDenomination1000.subtract(t.get(1, BigDecimal.class));
-			}
-
-			if (t.get(0, Integer.class).equals(2000)) {
+			} else if (t.get(0, Integer.class).equals(2000)) {
 				SoiledDenomination2000 = SoiledDenomination2000.subtract(t.get(1, BigDecimal.class));
 			}
 		}
@@ -1467,7 +1463,6 @@ public class BinDashboardServiceImpl implements BinDashboardService {
 		List<Tuple> processSoild = this.getProcessFromProcessingOutPut(icmcId, sDate, eDate, CurrencyType.SOILED);
 
 		for (Tuple t : processSoild) {
-
 			if (t.get(0, Integer.class).equals(1)) {
 				SoiledDenomination1 = SoiledDenomination1.add(t.get(1, BigDecimal.class));
 			} else if (t.get(0, Integer.class).equals(2)) {
@@ -1490,6 +1485,62 @@ public class BinDashboardServiceImpl implements BinDashboardService {
 				SoiledDenomination1000 = SoiledDenomination1000.add(t.get(1, BigDecimal.class));
 			} else if (t.get(0, Integer.class).equals(2000)) {
 				SoiledDenomination2000 = SoiledDenomination2000.add(t.get(1, BigDecimal.class));
+			}
+		}
+
+		List<Tuple> auditorProcessSoiled = this.getProcessFromAuditorProcessingOutPut(icmcId, sDate, eDate,
+				CurrencyType.SOILED);
+
+		for (Tuple t : auditorProcessSoiled) {
+			if (t.get(0, Integer.class).equals(1)) {
+				SoiledDenomination1 = SoiledDenomination1.add(t.get(1, BigDecimal.class));
+			} else if (t.get(0, Integer.class).equals(2)) {
+				SoiledDenomination2 = SoiledDenomination2.add(t.get(1, BigDecimal.class));
+			} else if (t.get(0, Integer.class).equals(5)) {
+				SoiledDenomination5 = SoiledDenomination5.add(t.get(1, BigDecimal.class));
+			} else if (t.get(0, Integer.class).equals(10)) {
+				SoiledDenomination10 = SoiledDenomination10.add(t.get(1, BigDecimal.class));
+			} else if (t.get(0, Integer.class).equals(20)) {
+				SoiledDenomination20 = SoiledDenomination20.add(t.get(1, BigDecimal.class));
+			} else if (t.get(0, Integer.class).equals(50)) {
+				SoiledDenomination50 = SoiledDenomination50.add(t.get(1, BigDecimal.class));
+			} else if (t.get(0, Integer.class).equals(100)) {
+				SoiledDenomination100 = SoiledDenomination100.add(t.get(1, BigDecimal.class));
+			} else if (t.get(0, Integer.class).equals(200)) {
+				SoiledDenomination200 = SoiledDenomination200.add(t.get(1, BigDecimal.class));
+			} else if (t.get(0, Integer.class).equals(500)) {
+				SoiledDenomination500 = SoiledDenomination500.add(t.get(1, BigDecimal.class));
+			} else if (t.get(0, Integer.class).equals(1000)) {
+				SoiledDenomination1000 = SoiledDenomination1000.add(t.get(1, BigDecimal.class));
+			} else if (t.get(0, Integer.class).equals(2000)) {
+				SoiledDenomination2000 = SoiledDenomination2000.add(t.get(1, BigDecimal.class));
+			}
+		}
+		List<Tuple> auditorIndentSoiled = this.getSoiledFromAuditorIndent(icmcId, sDate, eDate, CurrencyType.SOILED);
+
+		for (Tuple t : auditorIndentSoiled) {
+			if (t.get(0, Integer.class).equals(1)) {
+				SoiledDenomination1 = SoiledDenomination1.subtract(t.get(1, BigDecimal.class));
+			} else if (t.get(0, Integer.class).equals(2)) {
+				SoiledDenomination2 = SoiledDenomination2.subtract(t.get(1, BigDecimal.class));
+			} else if (t.get(0, Integer.class).equals(5)) {
+				SoiledDenomination5 = SoiledDenomination5.subtract(t.get(1, BigDecimal.class));
+			} else if (t.get(0, Integer.class).equals(10)) {
+				SoiledDenomination10 = SoiledDenomination10.subtract(t.get(1, BigDecimal.class));
+			} else if (t.get(0, Integer.class).equals(20)) {
+				SoiledDenomination20 = SoiledDenomination20.subtract(t.get(1, BigDecimal.class));
+			} else if (t.get(0, Integer.class).equals(50)) {
+				SoiledDenomination50 = SoiledDenomination50.subtract(t.get(1, BigDecimal.class));
+			} else if (t.get(0, Integer.class).equals(100)) {
+				SoiledDenomination100 = SoiledDenomination100.subtract(t.get(1, BigDecimal.class));
+			} else if (t.get(0, Integer.class).equals(200)) {
+				SoiledDenomination200 = SoiledDenomination200.subtract(t.get(1, BigDecimal.class));
+			} else if (t.get(0, Integer.class).equals(500)) {
+				SoiledDenomination500 = SoiledDenomination500.subtract(t.get(1, BigDecimal.class));
+			} else if (t.get(0, Integer.class).equals(1000)) {
+				SoiledDenomination1000 = SoiledDenomination1000.subtract(t.get(1, BigDecimal.class));
+			} else if (t.get(0, Integer.class).equals(2000)) {
+				SoiledDenomination2000 = SoiledDenomination2000.subtract(t.get(1, BigDecimal.class));
 			}
 		}
 		BinTransactionBOD binTxnBODForSoiledNotes = new BinTransactionBOD();
@@ -1927,8 +1978,6 @@ public class BinDashboardServiceImpl implements BinDashboardService {
 						discAllocation.setSairrem(mutilValue);
 					}
 
-					
-
 					if (discAllocation.getDiscrepancyType().equalsIgnoreCase("MUTILATED")
 							&& (discrepancy.getAccountTellerCam().equalsIgnoreCase("TELLER")
 									&& discAllocation.getDenomination() >= 100
@@ -1950,7 +1999,7 @@ public class BinDashboardServiceImpl implements BinDashboardService {
 						// discAllocation.setSadscash(mutilValue);
 						discAllocation.setSamutcur(sadMutilValue);
 					}
-				
+
 					// code by shahabuddin
 
 					if (discAllocation.getDiscrepancyType().equalsIgnoreCase("MUTILATED")
@@ -4763,8 +4812,14 @@ public class BinDashboardServiceImpl implements BinDashboardService {
 		return binDashboardJpaDao.getDataFromBinTransactionBOD(icmcId);
 	}
 
+	@Override
 	public List<Indent> getIndentCash(BigInteger IcmcId, Calendar sDate, Calendar eDate) {
 		return binDashboardJpaDao.getIndentCash(IcmcId, sDate, eDate);
+	}
+
+	@Override
+	public List<AuditorIndent> getAuditorIndent(BigInteger IcmcId, Calendar sDate, Calendar eDate) {
+		return binDashboardJpaDao.getAuditorIndent(IcmcId, sDate, eDate);
 	}
 
 	@Override

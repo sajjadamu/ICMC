@@ -247,12 +247,11 @@ public class CashReceiptJpaDaoImpl implements CashReceiptJpaDao {
 			LOG.error("createBranchReceipt jpaDaoImpl" + branchReceipt);
 			try {
 				em.persist(branchReceipt);
-				return true;
 			} catch (Exception e) {
 				return false;
 			}
 		}
-		return false;
+		return true;
 	}
 
 	@Override

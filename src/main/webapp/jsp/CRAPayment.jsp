@@ -393,15 +393,15 @@ $(function()
 
 <script type="text/javascript">
 function doAjaxForAccountNumber() {
-	addHeader();
+	addHeaderJson();
 	var vendor = $('#vendor').val();
 	var mspName = $('#mspName').val();
 	$.ajax({
-		type : "POST",
+		type : "GET",
 		url : "././getAccountNumberForCRA",
 		data : "mspName=" + mspName +"&vendor= "+vendor,
 		success : function(response) {
-	        var data=response.split(",");
+	        var data=response.toString().split(",");
 			$('#accountNumber').val(data)
 		},
 		error : function(e) {

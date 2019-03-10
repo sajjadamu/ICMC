@@ -361,7 +361,7 @@ tr.ttlDiscBtm td:nth-child(2), tr.ttlDiscBtm td:nth-child(3) {
 													<th>PRINT YEAR</th>
 													<th>Date On Shrink Wrap</th>
 												</tr>
-
+												<c:set var="totalBundle" value="${0}" />
 												<c:forEach var="row" items="${discrepancyList}">
 													<c:forEach var="innerRow"
 														items="${row.discrepancyAllocations}">
@@ -396,7 +396,7 @@ tr.ttlDiscBtm td:nth-child(2), tr.ttlDiscBtm td:nth-child(3) {
 																<td><c:choose>
 																		<c:when
 																			test="${innerRow.discrepancyType == 'FAKE' 
-												&& row.accountTellerCam == 'ACCOUNT'}">1</c:when>
+												&& row.accountTellerCam == 'DSB'}">${innerRow.numberOfNotes}</c:when>
 																		<c:otherwise></c:otherwise>
 																	</c:choose></td>
 																<td><c:choose>
@@ -422,8 +422,7 @@ tr.ttlDiscBtm td:nth-child(2), tr.ttlDiscBtm td:nth-child(3) {
 																	</c:choose></td>
 																<td><c:choose>
 																		<c:when
-																			test="${innerRow.discrepancyType == 'MUTILATED' 
-												&& row.accountTellerCam == 'ACCOUNT'}">1</c:when>
+																			test="${innerRow.discrepancyType == 'MUTILATED'}">1</c:when>
 																		<c:otherwise></c:otherwise>
 																	</c:choose></td>
 																<td><c:choose>
@@ -449,7 +448,8 @@ tr.ttlDiscBtm td:nth-child(2), tr.ttlDiscBtm td:nth-child(3) {
 																		<c:otherwise></c:otherwise>
 																	</c:choose></td>
 																<td><c:choose>
-																		<c:when test="${row.accountTellerCam == 'ACCOUNT' || row.accountTellerCam == 'DSB'}">
+																		<c:when
+																			test="${row.accountTellerCam == 'ACCOUNT' || row.accountTellerCam == 'DSB'}">
 												${row.customerName}</c:when>
 																		<c:otherwise></c:otherwise>
 																	</c:choose></td>
@@ -459,7 +459,17 @@ tr.ttlDiscBtm td:nth-child(2), tr.ttlDiscBtm td:nth-child(3) {
 												${row.accountNumber}</c:when>
 																		<c:otherwise></c:otherwise>
 																	</c:choose></td>
-																<td>${innerRow.sairrem}</td>
+																<c:if test="${innerRow.value eq 0}">
+																	<td>${innerRow.denomination}</td>
+																	<c:set var="totalBundle"
+																		value="${totalBundle+(innerRow.denomination)}" />
+																</c:if>
+																<c:if test="${innerRow.value ne 0}">
+																	<td>${innerRow.value}</td>
+																	<c:set var="totalBundle"
+																		value="${totalBundle+(innerRow.value)}" />
+																</c:if>
+
 																<td>${innerRow.samutcur}</td>
 																<td>${innerRow.sadscash}</td>
 																<td>${innerRow.excess}</td>
@@ -491,7 +501,8 @@ tr.ttlDiscBtm td:nth-child(2), tr.ttlDiscBtm td:nth-child(3) {
 													<td></td>
 													<td></td>
 													<td></td>
-													<td>${sairremTotal}</td>
+													<%-- <td>${sairremTotal}</td> --%>
+													<td>${totalBundle}</td>
 													<td>${samutcurTotal}</td>
 													<td>${sadscashTotal}</td>
 													<td>${excessTotal}</td>
