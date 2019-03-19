@@ -1923,13 +1923,15 @@ public class CashPaymentController {
 		return cra;
 	}
 
-	@RequestMapping(value = "/getAccountNumberForCRA", method = RequestMethod.GET)
+	@RequestMapping(value = "/getAccountNumberForCRA")
 	@ResponseBody
 	public String getAccountNumber(@RequestParam(value = "mspName") String mspName,
 			@RequestParam(value = "vendor") String vendor, HttpSession session) {
 		User user = (User) session.getAttribute("login");
 
-		return cashPaymentService.getAccountNumberByMSPName(mspName, vendor, user.getIcmcId());
+		String accountNumber = cashPaymentService.getAccountNumberByMSPName(mspName.trim(), vendor.trim(), user.getIcmcId());
+		LOG.info(accountNumber);
+		return accountNumber;
 	}
 
 	@RequestMapping("/otherBankPayment")

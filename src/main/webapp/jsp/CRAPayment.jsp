@@ -393,7 +393,7 @@ $(function()
 
 <script type="text/javascript">
 function doAjaxForAccountNumber() {
-	addHeaderJson();
+	addHeader();
 	var vendor = $('#vendor').val();
 	var mspName = $('#mspName').val();
 	$.ajax({
@@ -406,6 +406,8 @@ function doAjaxForAccountNumber() {
 		},
 		error : function(e) {
 			alert('account Number Error: ' + e);
+			/*  var data=response.toString().split(",");
+				$('#accountNumber').val(data) */
 		}
 	});
 }
